@@ -4,7 +4,8 @@ import { parseMap } from '../formats/map.ts';
 import { Battle, type BattleEvent } from '../rules/battle.ts';
 import type { Cell } from '../rules/board.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
-import { itemOf } from '../rules/data.ts';
+import { itemOf, type SkillDef } from '../rules/data.ts';
+import { isSupportSkill } from '../rules/skills.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
@@ -18,7 +19,14 @@ export interface BattleSceneData {
   seed?: number;
 }
 
-type Mode = { kind: 'idle' } | { kind: 'selected'; u: Unit } | { kind: 'attack'; u: Unit } | { kind: 'item'; u: Unit };
+type Mode =
+  | { kind: 'idle' }
+  | { kind: 'selected'; u: Unit }
+  | { kind: 'attack'; u: Unit }
+  | { kind: 'item'; u: Unit }
+  | { kind: 'skills'; u: Unit }
+  | { kind: 'skill'; u: Unit; skill: SkillDef };
+const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
 /** 人物身体的点击范围（相对格子中心，世界坐标） */
 const BODY_HALF_W = 24;
@@ -206,8 +214,24 @@ export class BattleScene extends Phaser.Scene {
     } else if (m.kind === 'attack') {
       for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, 0.25);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
+    } else if (m.kind === 'skill') {
+      const color = isSupportSkill(m.skill) ? 0x40b0e0 : 0xb050e0;
+      for (const c of this.battle.skillCells(u, m.skill)) this.diamond(g, c, color, 0.25);
+      for (const c of this.battle.skillTargets(u, m.skill)) this.diamond(g, c, color, 0.9, true);
     }
     this.diamond(g, u, 0xffffff, 0.8, true);
+    this.drawHover();
+  }
+
+  /** 悬停框；技能模式下悬停在可施放的格子上时画出作用范围 */
+  private drawHover() {
+    const g = this.hoverG.clear();
+    const c = this.hoverCell;
+    if (!c || !this.battle.board.inBounds(c.x, c.y)) return;
+    const m = this.mode;
+    if (m.kind === 'skill' && !this.busy && this.battle.skillTargets(m.u, m.skill).some((t) => sameCell(t, c)))
+      for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, 0xf09030, 0.45);
+    this.diamond(g, c, 0xffffff, 0.5, true);
   }
 
   private select(m: Mode) {
@@ -226,6 +250,20 @@ export class BattleScene extends Phaser.Scene {
     }
     const u = m.u;
     const hovered = this.hoverCell ? this.battle.unitAt(this.hoverCell.x, this.hoverCell.y) : undefined;
+    if (m.kind === 'skill') {
+      this.ui.setCommands(this.commands(m));
+      const c = this.hoverCell;
+      const b = this.battle;
+      const name = this.assets.tr(m.skill.name);
+      if (c && b.skillTargets(u, m.skill).some((t) => sameCell(t, c))) {
+        const hit = b.affected(u, m.skill, c);
+        const t = hit.find((h) => sameCell(h, c)) ?? hit[0];
+        const more = hit.length > 1 ? `${name}：范围内 ${hit.length} 人` : name;
+        if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, more);
+        else this.ui.showUnit(t, b.preview(u, t, m.skill), more);
+      } else this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}）：选择施放位置`);
+      return;
+    }
     const target = hovered && u.side === 'player' && this.battle.attackTargets(u).includes(hovered) ? hovered : undefined;
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
@@ -247,8 +285,21 @@ export class BattleScene extends Phaser.Scene {
         { label: '返回', run: () => this.select({ kind: 'selected', u }) },
       ];
     }
+    if (m.kind === 'skills' || m.kind === 'skill') {
+      return [
+        ...b.skillsOf(u).map(({ skill, usable }) => ({
+          label: `${this.assets.tr(skill.name)} ${skill.mpCost}`,
+          enabled: usable,
+          on: m.kind === 'skill' && m.skill === skill,
+          run: () => this.select({ kind: 'skill', u, skill }),
+        })),
+        { label: '返回', run: () => this.select({ kind: 'selected', u }) },
+      ];
+    }
+    const skills = b.skillsOf(u);
     return [
       { label: '攻击', enabled: b.attackTargets(u).length > 0, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
+      ...(skills.length ? [{ label: '技能', enabled: skills.some((k) => k.usable), run: () => this.select({ kind: 'skills', u }) }] : []),
       { label: '防御', run: () => this.exec(u, () => b.defend(u)) },
       { label: '休息', enabled: !u.acted, run: () => this.exec(u, () => b.rest(u)) },
       { label: '道具', enabled: b.usableSlots(u).length > 0, run: () => this.select({ kind: 'item', u }) },
@@ -340,6 +391,12 @@ export class BattleScene extends Phaser.Scene {
       .sort((a, z) => z.x + z.y - (a.x + a.y)); // 靠前（深度大）的优先
     if (!hits.length) return c;
     const m = this.mode;
+    if (m.kind === 'skill') {
+      const cells = b.skillTargets(m.u, m.skill);
+      if (cells.some((t) => sameCell(t, c))) return c;
+      const t = hits.find((h) => cells.some((k) => sameCell(k, h)));
+      if (t) return { x: t.x, y: t.y };
+    }
     if (m.kind === 'selected' || m.kind === 'attack') {
       const targets = b.attackTargets(m.u);
       const at = b.unitAt(c.x, c.y);
@@ -358,8 +415,7 @@ export class BattleScene extends Phaser.Scene {
   private hover(c: Cell) {
     if (this.hoverCell && this.hoverCell.x === c.x && this.hoverCell.y === c.y) return;
     this.hoverCell = c;
-    this.hoverG.clear();
-    if (this.battle.board.inBounds(c.x, c.y)) this.diamond(this.hoverG, c, 0xffffff, 0.5, true);
+    this.drawHover();
     if (!this.busy && !this.ui.inDialog) this.updatePanel();
   }
 
@@ -368,6 +424,11 @@ export class BattleScene extends Phaser.Scene {
     const b = this.battle;
     const at = b.unitAt(c.x, c.y);
     const m = this.mode;
+    if (m.kind === 'skill') {
+      const { u, skill } = m;
+      if (b.skillTargets(u, skill).some((t) => sameCell(t, c))) return void this.exec(u, () => b.useSkill(u, skill, c));
+      return this.select({ kind: 'selected', u });
+    }
     if (m.kind === 'selected' || m.kind === 'attack') {
       const u = m.u;
       if (at && u.side === 'player' && b.attackTargets(u).includes(at)) return void this.exec(u, () => b.attack(u, at));
@@ -520,32 +581,46 @@ export class BattleScene extends Phaser.Scene {
         this.pose(b.unit(e.uid)!);
         break;
       case 'attack': {
-        const u = b.unit(e.uid)!, t = b.unit(e.target)!;
-        const tv = this.vs(t);
-        this.vs(u).facing = e.facing;
-        await this.focusOn(t);
-        // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发
-        const skill = attackSkill(u, this.assets.data);
-        const hits = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
-        const frames = hits.length ? hits.map((h) => h.frame) : [1];
-        const parts = e.result.hit ? (e.result.parts.length === frames.length ? e.result.parts : [e.result.damage]) : [];
-        const impacts = frames.map((f, i) => {
-          const at = (f - 1) * ACTION_FRAME_MS;
-          return new Promise<void>((r) =>
-            this.time.delayedCall(at, () => {
-              if (!e.result.hit) {
-                if (i === 0) this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
-                return r();
+        const u = b.unit(e.uid)!;
+        const uv = this.vs(u);
+        uv.facing = e.facing;
+        const skill = e.skill;
+        const basic = skill === attackSkill(u, this.assets.data);
+        await this.focus(e.cell.x, e.cell.y);
+        let area: Phaser.GameObjects.Graphics | null = null;
+        if (!basic) {
+          area = this.add.graphics().setDepth(-0.4);
+          for (const c of e.area) this.diamond(area, c, isSupportSkill(skill) ? 0x40b0e0 : 0xf09030, 0.45);
+          this.float(uv.x, uv.y, this.assets.tr(skill.name));
+        }
+        // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发；范围内的人同时受击
+        const segs = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
+        const frames = segs.length ? segs.map((h) => h.frame) : [1];
+        const impacts = frames.map((f, i) =>
+          new Promise<void>((r) =>
+            this.time.delayedCall((f - 1) * ACTION_FRAME_MS, () => {
+              const hurt: Promise<void>[] = [];
+              for (const h of e.hits) {
+                const t = b.unit(h.uid)!;
+                const tv = this.vs(t);
+                const res = h.result;
+                if (!res.hit) {
+                  if (i === 0) this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                  continue;
+                }
+                const parts = res.parts.length === frames.length ? res.parts : null;
+                const dmg = parts ? parts[i] : i === frames.length - 1 ? res.damage : null;
+                if (dmg !== null) this.float(tv.x, tv.y, (res.crit ? '必杀 ' : '') + dmg, res.crit ? '#ffd040' : '#ffffff');
+                hurt.push(this.playOnce(t, ACTION.hurt, tv.facing, 400));
               }
-              const dmg = parts.length === frames.length ? parts[i] : i === frames.length - 1 ? e.result.damage : null;
-              if (dmg !== null) this.float(tv.x, tv.y, (e.result.crit ? '必杀 ' : '') + dmg, e.result.crit ? '#ffd040' : '#ffffff');
-              this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
+              Promise.all(hurt).then(() => r());
             }),
-          );
-        });
+          ),
+        );
         await Promise.all([this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500), ...impacts]);
+        area?.destroy();
         this.pose(u);
-        this.pose(t);
+        for (const h of e.hits) this.pose(b.unit(h.uid)!);
         break;
       }
       case 'hp': {

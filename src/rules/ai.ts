@@ -1,22 +1,29 @@
 // 敌方与友军 AI。按原版 EXE 0x407930 的模式分派（docs/game-design.md §8）。
 import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
-import { isHealing, itemOf } from './data.ts';
+import { isHealing, itemOf, type SkillDef } from './data.ts';
 import type { Battle } from './battle.ts';
-import { attackRange, attackSkill, dist, inAttackRange, type Unit } from './unit.ts';
+import { isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
 export interface AiPlan {
   path?: Cell[]; // 含起点
+  /** 主要目标（施放点上的单位） */
   target?: Unit;
+  skill?: SkillDef;
+  /** 施放点 */
+  cell?: Cell;
   healSlot?: number;
 }
 
 interface Option {
   cell: Cell;
   cost: number;
+  skill: SkillDef;
+  at: Cell;
   target: Unit;
   primary: boolean;
-  kill: boolean;
+  kills: number;
   expected: number;
 }
 
@@ -26,30 +33,41 @@ export function primaryFoe(b: Battle, u: Unit): Unit | undefined {
 }
 
 /**
- * 在移动范围内找攻击位置。原版（EXE 0x40d850）只按方向和距离逐格找到能打的位置，不挑目标；
- * 这里【新】：先打主要目标（primaryFoe），其次能击倒的，再次少走路、期望伤害高。
+ * 在移动范围内找攻击位置与招式。原版（EXE 0x40d850）只按方向和距离逐格找到能打的位置，不挑目标；
+ * 这里【新】：在普通攻击和气力够用的攻击技能里挑——先打主要目标（primaryFoe），其次击倒人数多的，
+ * 再次少走路，最后期望伤害高的（技能按"期望伤害 − 气力消耗 / 2"折算，免得为一点伤害耗光气力）。
  */
-function bestAttack(b: Battle, u: Unit, only?: Unit): { path: Cell[]; target: Unit } | null {
+function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
   const reach = b.reachOf(u, u.stats.move);
-  const range = attackRange(u, b.data);
-  const skill = attackSkill(u, b.data);
-  const foes = only ? [only] : b.foesOf(u);
+  const basic = attackSkill(u, b.data);
+  const skills = [basic, ...learnedSkills(u, b.data).filter((s) => !isSupportSkill(s) && s.mpCost <= u.mp)];
   const main = primaryFoe(b, u);
   let best: Option | null = null;
-  for (const n of reach.values())
-    for (const t of foes) {
-      if (!inAttackRange(n, t, range)) continue;
-      const p = previewAttack({ ...u, x: n.x, y: n.y }, t, skill);
-      const expected = (p.hit / 100) * p.damage;
-      const o: Option = { cell: n, cost: n.cost, target: t, primary: t === main, kill: p.damage >= t.hp, expected };
-      if (!best || better(o, best)) best = o;
-    }
-  return best ? { path: b.pathOf(reach, best.cell), target: best.target } : null;
+  for (const n of reach.values()) {
+    const at = { x: n.x, y: n.y };
+    const self = { ...u, x: n.x, y: n.y };
+    for (const skill of skills)
+      for (const cell of b.skillCells(u, skill, at)) {
+        const hit = b.affected(u, skill, cell, at);
+        if (!hit.length || (only && !hit.includes(only))) continue;
+        let expected = 0, kills = 0;
+        for (const t of hit) {
+          const p = previewAttack(self, t, skill);
+          expected += (p.hit / 100) * Math.min(t.hp, p.damage);
+          if (p.damage >= t.hp) kills++;
+        }
+        if (skill !== basic) expected -= skill.mpCost / 2;
+        const target = b.unitAt(cell.x, cell.y) && hit.includes(b.unitAt(cell.x, cell.y)!) ? b.unitAt(cell.x, cell.y)! : hit[0];
+        const o: Option = { cell, cost: n.cost, skill, at, target, primary: !!main && hit.includes(main), kills, expected };
+        if (!best || better(o, best)) best = o;
+      }
+  }
+  return best ? { path: b.pathOf(reach, best.at), target: best.target, skill: best.skill, cell: best.cell } : null;
 }
 
 function better(a: Option, b: Option) {
   if (a.primary !== b.primary) return a.primary;
-  if (a.kill !== b.kill) return a.kill;
+  if (a.kills !== b.kills) return a.kills > b.kills;
   if (a.cost !== b.cost) return a.cost < b.cost;
   return a.expected > b.expected;
 }
@@ -79,13 +97,30 @@ function healIfLow(b: Battle, u: Unit): AiPlan | null {
   return slot >= 0 ? { healSlot: slot } : null;
 }
 
+/** 体力低于一半时用回复技（原地施放）【新】 */
+function healSkill(b: Battle, u: Unit): AiPlan | null {
+  if (u.hp >= u.stats.maxHp / 2) return null;
+  const s = learnedSkills(u, b.data).find((k) => isHealSkill(k) && k.mpCost <= u.mp);
+  const cell = s && b.skillTargets(u, s).find((c) => b.affected(u, s, c).includes(u));
+  return s && cell ? { skill: s, cell } : null;
+}
+
+/** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
+function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
+  if (plan.skill || u.mp >= u.stats.maxMp / 2) return plan;
+  const s = learnedSkills(u, b.data).find(isChargeSkill);
+  if (!s) return plan;
+  const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
+  return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
+}
+
 function defaultPlan(b: Battle, u: Unit): AiPlan {
-  const heal = healIfLow(b, u);
+  const heal = healIfLow(b, u) ?? healSkill(b, u);
   if (heal) return heal;
   const atk = bestAttack(b, u);
   if (atk) return atk;
   const main = primaryFoe(b, u);
-  return approach(b, u, main ? [main] : []);
+  return withCharge(b, u, approach(b, u, main ? [main] : []));
 }
 
 function foesWithin(b: Battle, u: Unit, radius: number) {
@@ -104,8 +139,8 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     case 6: {
       // 迎击：警戒半径内有敌人才行动，否则原地待命（半径 = 移动 × 2 + 射程，推测）
       const near = foesWithin(b, u, u.stats.move * 2 + hi);
-      if (!near.length) return {};
-      return bestAttack(b, u) ?? approach(b, u, near);
+      if (!near.length) return withCharge(b, u, {});
+      return healSkill(b, u) ?? bestAttack(b, u) ?? withCharge(b, u, approach(b, u, near));
     }
     case 3: {
       // 固守：只攻击"移动 + 射程"内的敌人，打不到就不动
