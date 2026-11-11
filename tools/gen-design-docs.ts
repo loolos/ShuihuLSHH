@@ -1,4 +1,4 @@
-// 从原版数据生成设计阶段文档（docs/design/*.md）与结构化数据（extracted/*.json，不入库）。
+// 从原版数据生成设计阶段文档（docs/reference/*.md）与结构化数据（extracted/*.json，不入库）。
 // 用法：node tools/gen-design-docs.ts [原版目录]   （默认 gamedata/shuihu，或环境变量 SHUIHU_DATA）
 // 只读打开原版文件；Node 22.6+ 直接运行 .ts（类型擦除），无第三方依赖。
 import fs from 'node:fs';
@@ -12,7 +12,8 @@ import { parseMap } from '../src/formats/map.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DATA = path.resolve(process.argv[2] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/shuihu'));
-const DOCS = path.join(ROOT, 'docs/design');
+const DOCS = path.join(ROOT, 'docs/reference');
+const growth = (base: number, grade: string) => (grade.trim() ? `${base} · ${grade.trim().charCodeAt(0)}%` : `${base}`);
 const OUT = path.join(ROOT, 'extracted/data');
 fs.mkdirSync(DOCS, { recursive: true });
 fs.mkdirSync(OUT, { recursive: true });
@@ -45,17 +46,17 @@ const HEADER = (title: string, desc: string) =>
 function genDataTables(): string {
   let md = HEADER(
     '规则数据表（data-tables）',
-    '来源：`Human.hum`（职业）、`Goods.dab`（道具）、`ShuiHu.exe`（角色名、绰号、技能名）。按项目总纲 §2.2，这些数值是**参考基线**，重制版可以重新设计。',
+    '来源：`Human.hum`（职业）、`Goods.dab`（道具）、`ShuiHu.exe`（角色名、绰号、技能名）。重制版直接使用这些数值，见 [game-design.md](../game-design.md)。',
   );
 
   md += `## 1. 可控好汉（职业 0–${PLAYABLE_COUNT - 1}）\n\n`;
   md +=
-    '属性列顺序推测为 攻擊/防禦/命中/敏捷/必殺（值 + 成长等级字母），依据是 Editor 存档字段顺序与数值量级（攻、命大，防、敏小，必杀最小），置信度**中低**。生命/气力为推测的初始值。\n\n';
+    '每格为"1 级前的基础值 · 每级成长%"：属性(L) = 基础值 × (成长/100)^L（EXE 0x408540 确认，见 binary-formats §10）。\n\n';
   md += '| # | 姓名 | 绰号 | 生命 | 气力 | 移动 | 攻 | 防 | 命 | 敏 | 必 | 武器类别 | 默认装备（推测） | 技能数 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n';
   for (const c of classes.slice(0, PLAYABLE_COUNT)) {
-    const st = c.stats.map((s) => `${s.base}${s.grade.trim()}`);
+    const st = c.stats.map((s) => growth(s.base, s.grade));
     const eq = c.defaultItems.map((id, k) => slotItem(id, k, c.weaponType)).filter((x) => x !== '—');
-    md += `| ${c.id} | ${charName(c.id)} | ${exe.nicknames[c.id] || ''} | ${c.hp}${c.hpGrade} | ${c.mp}${c.mpGrade} | ${c.move} | ${st.join(' | ')} | ${WEAPON_TYPES[c.weaponType] ?? c.weaponType} | ${eq.join('、') || '—'} | ${c.skills.length} |\n`;
+    md += `| ${c.id} | ${charName(c.id)} | ${exe.nicknames[c.id] || ''} | ${growth(c.hp, c.hpGrade)} | ${growth(c.mp, c.mpGrade)} | ${c.move} | ${st.join(' | ')} | ${WEAPON_TYPES[c.weaponType] ?? c.weaponType} | ${eq.join('、') || '—'} | ${c.skills.length} |\n`;
   }
 
   md += '\n## 2. 好汉技能表\n\n每个技能：学习等级、名称，`*` 表示隐藏技（需古武術祕笈）。技能子项 58 B 中其余字段（推测含气力消耗、威力、范围）原样保留在 `extracted/data/classes.json`。\n\n';
@@ -66,7 +67,7 @@ function genDataTables(): string {
 
   md += '\n## 3. NPC 与敌方职业（18–71）\n\n| # | 名称 | 生命 | 气力 | 移动 | 攻 | 防 | 命 | 敏 | 必 | 武器类别 | 技能 |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n';
   for (const c of classes.slice(PLAYABLE_COUNT)) {
-    const st = c.stats.map((s) => `${s.base}${s.grade.trim()}`);
+    const st = c.stats.map((s) => growth(s.base, s.grade));
     const sk = c.skills.map((s) => skillName(s.skillId)).join('、');
     md += `| ${c.id} | ${charName(c.id)} | ${c.hp} | ${c.mp} | ${c.move} | ${st.join(' | ')} | ${WEAPON_TYPES[c.weaponType] ?? c.weaponType} | ${esc(sk) || '—'} |\n`;
   }
@@ -129,7 +130,7 @@ function unitLabel(u: ActUnit): string {
 function genStageBriefs(): string {
   let md = HEADER(
     '关卡简报（stage-briefs）',
-    '来源：EXE 关卡表（顺序、章节名）、`Map\\*.map`（尺寸）、`*.act`（单位）、`*.pab`（目标与条件文字、对白）。关卡顺序按 EXE 关卡表；空位是表中的空项。按项目总纲 §2.1，这里的内容属于"必须还原"。',
+    '来源：EXE 关卡表（顺序、章节名）、`Map\\*.map`（尺寸）、`*.act`（单位）、`*.pab`（目标与条件文字、对白）。关卡顺序按 EXE 关卡表；空位是表中的空项。这些内容按原版还原。',
   );
   md +=
     '**已知局限**：\n\n- 胜负条件取自剧本中的说明文字，**判定逻辑本身**（事件指令）尚未解析；同一条件在剧本里可能出现多次（开场说明与中途提示），这里去重显示。\n- 单位阵营/朝向/等级的字段解释为中等置信度；`AI/条件` 列是 ACT w7 的原值，含义未解。\n- 章节名取自 EXE，与地图编号存在错位（如 `n14` 对应"第15章"），以 EXE 原文为准，待游玩核对。\n- 坐标为地图格坐标 (x, y)。整图预览由 `node tools/render-maps.ts` 生成到 `extracted/maps/`（不入库）：(0,0) 在画面上方顶角，x 向右下、y 向左下；彩点为单位（蓝=我方、绿=友军、红=敌方、黄=物件）。渲染方式尚未与游戏截图核对。\n- 18×18 的室内图（多数 `Act*`）只有中间一块有内容，四周是绿色网格图块，推测为地图外区域。\n\n';
