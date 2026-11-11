@@ -5,8 +5,12 @@ import { parseAct, type ActUnit } from '../formats/act.ts';
 import { frameToCanvas, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, worldToCell } from './iso.ts';
 
-/** 人物动画：Man.lib 中每个职业的动作组按 4 个一组（4 个朝向）。 */
-const IDLE_ACTION = 0; // 动作 0（11 帧，站姿循环）。动作名称待人工标注（game-design §14）。
+/**
+ * 人物动画：Man.lib 中每个职业的动作组按 4 个一组（4 个朝向）。
+ * 动作组的 param 就是动作类型：1 = 走路（动作 0），2 = 普通攻击（动作 1），3 = 受击（动作 2，1 帧），0 = 技能。
+ * 原版没有单独的站立动作；站立时显示走路的第 1 帧（负责人确认动作 0 是走路，2026-11-11）。
+ */
+export const ACTION = { walk: 0, attack: 1, hurt: 2 } as const;
 const FRAME_MS = 120;
 
 export interface MapSceneData {
@@ -101,7 +105,7 @@ export class MapScene extends Phaser.Scene {
     }
     const cls = this.assets.man.classes[u.type];
     if (!cls) return;
-    const group = cls.first + IDLE_ACTION * 4 + (u.facing & 3);
+    const group = cls.first + ACTION.walk * 4 + (u.facing & 3);
     const range = this.assets.man.actions[group];
     const animKey = `man:${group}`;
     if (!this.anims.exists(animKey)) {
@@ -119,11 +123,17 @@ export class MapScene extends Phaser.Scene {
       this.anims.create({ key: animKey, frames, frameRate: 1000 / FRAME_MS, repeat: -1 });
     }
     const s = this.add.sprite(p.x, p.y, `man:${range.first}`).setDepth(depth);
-    s.play({ key: animKey, startFrame: Math.floor(Math.random() * (range.last - range.first + 1)) });
+    // 站立：停在走路的第 1 帧；悬停时播放走路动画，方便检查各朝向
+    s.play(animKey);
+    s.anims.pause(s.anims.currentAnim!.frames[0]);
+    s.on('pointerout', () => s.anims.pause(s.anims.currentAnim!.frames[0]));
     if (hidden) s.setAlpha(0.45);
     s.setData('info', `${this.assets.exe.characterNames[u.type] ?? u.type}（${sideName(u.side)}，Lv${u.level}，AI ${u.flags >> 8}）`);
     s.setInteractive({ pixelPerfect: false });
-    s.on('pointerover', () => this.onHover?.(s.getData('info')));
+    s.on('pointerover', () => {
+      this.onHover?.(s.getData('info'));
+      s.anims.resume();
+    });
   }
 
   private setupInput() {
