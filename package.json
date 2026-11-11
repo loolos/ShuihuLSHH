@@ -1,0 +1,11 @@
+{
+  "name": "shuihu-lshh",
+  "private": true,
+  "type": "module",
+  "description": "《水浒传之梁山好汉》网页版重制（Phaser 4 + TypeScript）",
+  "engines": { "node": ">=22.6" },
+  "scripts": {
+    "gen:docs": "node tools/gen-design-docs.ts",
+    "render:maps": "node tools/render-maps.ts"
+  }
+}

@@ -22,7 +22,7 @@
 | 每关敌我单位的初始配置：职业、位置、朝向、阵营、装备 | `Map\*.act` | 已解析大部分字段 |
 | 剧情对白：说话者、顺序、文本 | `Map\*.pab` | 对白已可抽取；事件指令未解 |
 | 关卡目标与胜负条件 | `.pab` 末尾目标文字 + 事件指令 | **部分未知**，需对照游玩补全 |
-| 登场人物阵容：主角武龍 + 17 名可控好汉，以及加入时机 | EXE 角色名表、关卡单位 | 名单已知，加入时机待整理 |
+| 登场人物阵容：主角武龍 + 17 名可控好汉，以及加入时机 | EXE 角色名表、关卡单位 | 已整理，见 design/game-design.md §1.4 |
 | 道具与装备的名称、说明、类别体系（11 类武器、衣服、头饰、消耗品、财宝） | `Goods.dab` | 已解析 |
 | 职业↔武器类别的对应、每个职业的技能**名称**与习得顺序 | `Human.hum`、EXE 技能名表 | 已解析 |
 | 美术风格：人物 Sprite、头像、地图图块、特效的整体观感 | `*.lib`、`*.grp` | 全部可解码（见 §5 资产来源问题） |
@@ -123,6 +123,9 @@
 | [binary-formats.md](binary-formats.md) | 各种二进制格式的结构说明与置信度 |
 | [extraction-plan.md](extraction-plan.md) | 资源可提取性评估、Editor 复用评估、提取里程碑 M1–M8 |
 | [mechanics-research.md](mechanics-research.md) | 有证据的原版机制与待验证问题 |
+| [design/README.md](design/README.md) | 设计阶段文档索引、新发现、设计路线图 |
+| [design/game-design.md](design/game-design.md) | **重制版完整设计方案**，含待拍板决定 |
+| [design/data-tables.md](design/data-tables.md) · [stage-briefs.md](design/stage-briefs.md) · [script.md](design/script.md) | 自动生成的规则数据表、关卡简报、剧本全文 |
 
 ### 计划中的文档
 
