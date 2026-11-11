@@ -20,10 +20,16 @@ export class BattleUI {
   private cmd = $('cmd');
   private dialog = $('dialog');
   private dialogNext: (() => void) | null = null;
+  private face = document.createElement('img');
+  /** 职业 → 头像图片地址；没有头像时返回 null */
+  portrait: (classId: number) => string | null = () => null;
   /** 文字转换（繁→简） */
   tr: (s: string) => string = (s) => s;
 
   constructor() {
+    this.face.id = 'dialog-face';
+    this.face.alt = '';
+    this.dialog.prepend(this.face);
     this.dialog.onclick = () => this.advance();
     window.addEventListener('keydown', (e) => {
       if (!this.dialog.hidden && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
@@ -65,7 +71,10 @@ export class BattleUI {
     const states = [u.defending && '防御中', u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && `昏迷 ${u.stunTurns}`, u.ended && u.side === 'player' && '已行动']
       .filter(Boolean)
       .join('　');
+    const face = this.portrait(u.classId);
     this.panel.innerHTML = `
+      ${face ? `<img class="face" alt="" src="${face}">` : ''}
+      <div class="info">
       <div class="name side-${u.side}">${esc(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}${u.side === 'player' ? `　经验 ${u.exp}` : ''}</small></div>
       <div class="bars">
         <div>体力 <span class="bar2"><i style="width:${pct(u.hp, s.maxHp)}"></i></span> ${u.hp}/${s.maxHp}</div>
@@ -74,7 +83,9 @@ export class BattleUI {
       <div class="grid"><span>攻 ${s.attack}</span><span>防 ${s.defense}</span><span>移 ${s.move}</span><span>命 ${s.hit}</span><span>敏 ${s.agility}</span><span>必 ${s.crit}</span></div>
       ${states ? `<div>${states}</div>` : ''}
       ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
-      ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}`;
+      ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}
+      </div>`;
+    this.panel.classList.toggle('has-face', !!face);
     this.panel.hidden = false;
   }
 
@@ -100,7 +111,11 @@ export class BattleUI {
   }
 
   /** 对白框：点击或按回车继续 */
-  say(speaker: string, text: string): Promise<void> {
+  say(speaker: string, text: string, classId: number | null = null): Promise<void> {
+    const face = classId === null ? null : this.portrait(classId);
+    this.face.hidden = !face;
+    if (face) this.face.src = face;
+    this.dialog.classList.toggle('has-face', !!face);
     $('dialog-who').textContent = this.tr(speaker);
     $('dialog-text').textContent = this.tr(text);
     this.dialog.hidden = false;

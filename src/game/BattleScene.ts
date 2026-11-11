@@ -473,7 +473,8 @@ export class BattleScene extends Phaser.Scene {
       case 'say': {
         const u = e.uid !== null ? b.unit(e.uid) : undefined;
         if (u?.present) await this.focusOn(u);
-        await this.ui.say(e.speaker, e.text);
+        const cls = u ? u.classId : this.assets.data.classes.findIndex((c) => c.name === e.speaker);
+        await this.ui.say(e.speaker, e.text, cls >= 0 ? cls : null);
         break;
       }
       case 'narrate':

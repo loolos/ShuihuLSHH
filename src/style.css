@@ -94,6 +94,12 @@ code { color: var(--ink); }
   background: #000; color: #fff; border: 2px solid var(--accent); border-radius: 8px; user-select: none;
 }
 #dialog[hidden] { display: none; }
+#dialog.has-face { padding-left: 132px; }
+#dialog-face { position: absolute; left: 10px; bottom: 8px; height: 150px; width: auto; pointer-events: none; }
+#dialog-face[hidden] { display: none; }
+#unit-panel.has-face { display: flex; gap: 10px; align-items: flex-start; }
+#unit-panel .face { flex: 0 0 auto; height: 104px; width: auto; margin-left: -4px; }
+#unit-panel .info { flex: 1 1 auto; min-width: 190px; }
 #dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
 #dialog-who:empty { display: none; }
 #dialog-text { color: #fff; font-size: 17px; line-height: 1.7; white-space: pre-line; }
@@ -120,4 +126,9 @@ code { color: var(--ink); }
   #cmd button { flex: 1 1 auto; min-width: 56px; min-height: 32px; font-size: 14px; text-align: center; padding: 2px 6px; }
   #dialog { bottom: 8px; padding: 8px 12px 22px; min-height: 90px; }
   #dialog-text, #dialog-who { font-size: 15px; }
+  #dialog.has-face { padding-left: 82px; }
+  #dialog-face { height: 96px; left: 6px; bottom: 6px; }
+  #unit-panel.has-face { gap: 6px; }
+  #unit-panel .face { height: 60px; }
+  #unit-panel .info { min-width: 0; }
 }
