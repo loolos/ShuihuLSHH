@@ -33,10 +33,10 @@ const charName = (id: number) => names[id] || `#${id}`;
 const skillName = (id: number) => exe.skillNames[id] || `#${id}`;
 const speakerName = (id: number) => (id < names.length ? names[id] : `特殊#${id}`);
 
-/** 槽位 0 的含义有歧义：道具 0 是"皮手套"（武器）。非武器槽里的 0 一定是空；武器槽里的 0 仅在职业武器类别为 0 时视为皮手套。 */
-function slotItem(id: number, slot: number, weaponType: number | null): string {
-  if (id === 0 && (slot > 0 || weaponType !== 0)) return '—';
-  return items[id]?.name ?? `#${id}`;
+/** 道具编号从 1 开始，0 = 空（EXE 0x4093f0：记录地址 = 表基址 + 编号 × 198 − 198）。 */
+function slotItem(id: number): string {
+  if (id === 0) return '—';
+  return items[id - 1]?.name ?? `#${id}`;
 }
 
 const HEADER = (title: string, desc: string) =>
@@ -55,7 +55,7 @@ function genDataTables(): string {
   md += '| # | 姓名 | 绰号 | 生命 | 气力 | 移动 | 攻 | 防 | 命 | 敏 | 必 | 武器类别 | 默认装备（推测） | 技能数 |\n|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n';
   for (const c of classes.slice(0, PLAYABLE_COUNT)) {
     const st = c.stats.map((s) => growth(s.base, s.grade));
-    const eq = c.defaultItems.map((id, k) => slotItem(id, k, c.weaponType)).filter((x) => x !== '—');
+    const eq = c.defaultItems.map((id, k) => slotItem(id)).filter((x) => x !== '—');
     md += `| ${c.id} | ${charName(c.id)} | ${exe.nicknames[c.id] || ''} | ${growth(c.hp, c.hpGrade)} | ${growth(c.mp, c.mpGrade)} | ${c.move} | ${st.join(' | ')} | ${WEAPON_TYPES[c.weaponType] ?? c.weaponType} | ${eq.join('、') || '—'} | ${c.skills.length} |\n`;
   }
 
@@ -123,7 +123,7 @@ const SIDE_LABEL: Record<Side, string> = { player: '我方', ally: '友军', ene
 const CONDITION_RE = /(回合|條件|勝利|失敗|撤退|---)/;
 
 function unitLabel(u: ActUnit): string {
-  if (u.side === 'object') return u.type === 1000 ? '特殊物件(1000)' : `${items[u.type]?.name ?? '#' + u.type}`;
+  if (u.side === 'object') return u.type === 1000 ? '特殊物件(1000)' : `${items[u.type - 1]?.name ?? '#' + u.type}`;
   return `${charName(u.type)} Lv${u.level}`;
 }
 
@@ -168,8 +168,7 @@ function genStageBriefs(): string {
       }
       md += '| 单位 | 坐标 | 朝向 | 装备/物品 | AI/条件(w7) | w1 | w8–10 |\n|---|---|---|---|---|---|---|\n';
       for (const u of us) {
-        const wt = classes[u.type]?.weaponType ?? null;
-        const eq = u.items.map((id, k) => slotItem(id, k, wt)).filter((x) => x !== '—');
+        const eq = u.items.map((id, k) => slotItem(id)).filter((x) => x !== '—');
         md += `| ${unitLabel(u)} | (${u.x},${u.y}) | ${u.facing} | ${eq.join('、') || '—'} | ${u.flags || ''} | ${u.group || ''} | ${u.extra.some(Boolean) ? u.extra.join(',') : ''} |\n`;
       }
     }

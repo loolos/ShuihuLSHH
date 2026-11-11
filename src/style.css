@@ -51,3 +51,73 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); }
 .hint { font-size: 13px; color: var(--muted); line-height: 1.6; }
 #setup-warn-text { color: var(--danger); white-space: pre-line; text-align: left; font-size: 13px; max-height: 30vh; overflow: auto; }
 code { color: var(--ink); }
+
+/* ───────── 战斗界面 ───────── */
+#turn { color: var(--accent); white-space: nowrap; }
+#hud button.primary { background: var(--accent); color: #1b1610; border-color: var(--accent); font-weight: bold; }
+#hud button:disabled { opacity: 0.4; cursor: default; }
+
+#bottom {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none;
+  display: flex; gap: 8px; align-items: flex-end; padding: 8px max(8px, env(safe-area-inset-left)) max(8px, env(safe-area-inset-bottom));
+}
+#bottom[hidden], #bottom [hidden] { display: none !important; }
+#bottom > * { pointer-events: auto; background: rgba(20, 17, 13, 0.88); border: 1px solid #4a3b29; border-radius: 6px; }
+#log {
+  flex: 1 1 auto; min-width: 0; max-height: 92px; overflow: hidden; padding: 6px 10px;
+  font-size: 13px; line-height: 1.45; color: var(--muted); display: flex; flex-direction: column; justify-content: flex-end;
+}
+#log:empty { display: none; }
+#log div:last-child { color: var(--ink); }
+#unit-panel { flex: 0 0 auto; padding: 8px 12px; font-size: 13px; line-height: 1.5; min-width: 190px; }
+#unit-panel .name { font-size: 16px; color: var(--accent); }
+#unit-panel .side-enemy { color: var(--danger); }
+#unit-panel .side-ally { color: #7fb4d8; }
+#unit-panel .bars div { display: flex; gap: 6px; align-items: center; }
+#unit-panel .bar2 { flex: 1; height: 6px; background: #1b1610; border-radius: 3px; overflow: hidden; min-width: 80px; }
+#unit-panel .bar2 i { display: block; height: 100%; background: #6fbf5a; }
+#unit-panel .bar2.mp i { background: #5a8fd0; }
+#unit-panel .grid { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; color: var(--muted); }
+#unit-panel .preview { margin-top: 4px; color: var(--ink); }
+#cmd { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
+#cmd button {
+  font: inherit; font-size: 15px; color: var(--ink); background: var(--panel); min-width: 84px; min-height: 34px;
+  border: 1px solid #5a4832; border-radius: 4px; cursor: pointer; padding: 4px 10px; text-align: left;
+}
+#cmd button:hover:not(:disabled) { border-color: var(--accent); }
+#cmd button.on { background: var(--accent); color: #1b1610; }
+#cmd button:disabled { opacity: 0.4; cursor: default; }
+
+#dialog {
+  position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 4;
+  width: min(760px, calc(100% - 16px)); min-height: 110px; padding: 12px 18px 26px; cursor: pointer;
+  background: rgba(28, 22, 15, 0.95); border: 2px solid var(--accent); border-radius: 8px; user-select: none;
+}
+#dialog[hidden] { display: none; }
+#dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
+#dialog-who:empty { display: none; }
+#dialog-text { font-size: 17px; line-height: 1.7; white-space: pre-line; }
+#dialog-hint { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--muted); }
+
+#result { position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 16px; background: rgba(10, 8, 6, 0.7); }
+#result[hidden] { display: none; }
+#result h2 { margin: 0 0 12px; color: var(--accent); font-size: 28px; letter-spacing: 0.2em; }
+#result p { line-height: 1.8; text-align: left; white-space: pre-line; }
+
+@media (max-width: 640px) {
+  #hud { font-size: 13px; gap: 4px; padding: 4px 6px; }
+  #hud select { max-width: 40vw; }
+  #hud select, #hud button { padding: 2px 6px; min-height: 30px; }
+  #reset { display: none; }
+  #bottom { flex-direction: column; align-items: stretch; gap: 4px; padding: 4px 6px max(4px, env(safe-area-inset-bottom)); }
+  #log { max-height: 42px; font-size: 12px; padding: 3px 8px; }
+  #unit-panel { min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
+  #unit-panel .name { font-size: 14px; }
+  #unit-panel .bars { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+  #unit-panel .bar2 { min-width: 30px; }
+  #unit-panel .grid { grid-template-columns: repeat(6, auto); }
+  #cmd { flex-direction: row; flex-wrap: wrap; padding: 4px; }
+  #cmd button { flex: 1 1 auto; min-width: 56px; min-height: 32px; font-size: 14px; text-align: center; padding: 2px 6px; }
+  #dialog { bottom: 8px; padding: 8px 12px 22px; min-height: 90px; }
+  #dialog-text, #dialog-who { font-size: 15px; }
+}

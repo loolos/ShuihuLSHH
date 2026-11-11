@@ -10,11 +10,29 @@
     <div id="game"></div>
     <div id="hud" hidden>
       <select id="stage" aria-label="关卡"></select>
-      <label class="chk"><input type="checkbox" id="hidden-units" /> 未登场单位</label>
+      <span id="turn"></span>
+      <button id="objective-btn">目标</button>
       <button id="zoom-out" aria-label="缩小">－</button>
       <button id="zoom-in" aria-label="放大">＋</button>
-      <span id="info"></span>
+      <button id="end-turn" class="primary">回合终了</button>
       <button id="reset" title="清除缓存，重新选择原版目录">更换目录</button>
+    </div>
+    <div id="bottom" hidden>
+      <div id="log"></div>
+      <div id="unit-panel" hidden></div>
+      <div id="cmd" hidden></div>
+    </div>
+    <div id="dialog" hidden>
+      <div id="dialog-who"></div>
+      <div id="dialog-text"></div>
+      <div id="dialog-hint">点击继续 ▸</div>
+    </div>
+    <div id="result" hidden>
+      <div class="panel">
+        <h2 id="result-title"></h2>
+        <p id="result-text"></p>
+        <button id="result-restart">重新开始</button>
+      </div>
     </div>
     <div id="setup">
       <div class="panel">

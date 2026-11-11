@@ -11,6 +11,27 @@ export interface Item {
   name: string; // +6
   description: string; // +26
   moveBonus: number; // +104 移动力加成
+  /** 装备加成与消耗品效果（全部 s16，见 binary-formats §9） */
+  attack: number; // +76 装备攻击；消耗品为增益值（+78 回合）
+  attackStep: number; // +80 每次打铁提升的攻击
+  attackSteps: number; // +82 可提升次数
+  defense: number; // +84
+  defenseStep: number; // +88
+  defenseSteps: number; // +90
+  hit: number; // +92
+  agility: number; // +96
+  crit: number; // +100
+  range: number; // +108 射程加成
+  maxHp: number; // +110 装备：生命上限加成
+  maxMp: number; // +112
+  healHp: number; // +114 消耗品：回复生命（−1 = 全满）
+  healMp: number; // +116
+  regenHp: number; // +118 装备：每回合回复生命
+  regenMp: number; // +120
+  curePoison: number; // +126
+  cureStun: number; // +128
+  poison: number; // +134 装备：攻击附带中毒 %
+  stun: number; // +136 装备：攻击附带昏迷 %
   buyPrice: number; // +142
   sellPrice: number; // +144
   params: number[]; // +86 起 27 个 s16，语义大多未解
@@ -25,6 +46,7 @@ export function parseGoods(buf: Buffer): Item[] {
   for (let i = 0; i < n; i++) {
     const o = 11 + i * GOO_RECORD;
     const str = (a: number, len: number) => decodeBig5(buf.subarray(o + a, o + a + len)).replace(/\0.*$/s, '');
+    const s16 = (a: number) => buf.readInt16LE(o + a);
     const params: number[] = [];
     for (let k = 0; k < 27; k++) params.push(buf.readInt16LE(o + 86 + 2 * k));
     const seq = (a: number) => Array.from({ length: 13 }, (_, k) => buf.readUInt16LE(o + a + 2 * k));
@@ -36,6 +58,26 @@ export function parseGoods(buf: Buffer): Item[] {
       name: str(6, 20),
       description: str(26, 60).trim(),
       moveBonus: buf.readInt16LE(o + 104),
+      attack: s16(76),
+      attackStep: s16(80),
+      attackSteps: s16(82),
+      defense: s16(84),
+      defenseStep: s16(88),
+      defenseSteps: s16(90),
+      hit: s16(92),
+      agility: s16(96),
+      crit: s16(100),
+      range: s16(108),
+      maxHp: s16(110),
+      maxMp: s16(112),
+      healHp: s16(114),
+      healMp: s16(116),
+      regenHp: s16(118),
+      regenMp: s16(120),
+      curePoison: s16(126),
+      cureStun: s16(128),
+      poison: s16(134),
+      stun: s16(136),
       buyPrice: buf.readUInt16LE(o + 142),
       sellPrice: buf.readUInt16LE(o + 144),
       params,

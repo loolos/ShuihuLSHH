@@ -3,6 +3,8 @@ import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/
 import { readExeTables, type ExeTables } from '../formats/exe.ts';
 import { parseGoods, type Item } from '../formats/goo.ts';
 import type { GameFiles } from '../platform/gamefiles.ts';
+import { buildT2S, loadGameData } from '../rules/load.ts';
+import type { GameData } from '../rules/data.ts';
 
 export interface Assets {
   files: GameFiles;
@@ -13,10 +15,17 @@ export interface Assets {
   objects: ReturnType<typeof openPic>;
   exe: ExeTables;
   items: Item[];
+  /** 规则引擎用的数据 */
+  data: GameData;
+  /** 繁→简（由 .pab/.pas 对齐得到） */
+  tr: (s: string) => string;
 }
 
 export function loadAssets(files: GameFiles): Assets {
+  const tr = buildT2S(files);
   return {
+    tr,
+    data: loadGameData(files, tr),
     files,
     palette: parsePalette(files.get('Data/Default.pal')),
     ground: openGrp(files.get('Data/Ground.grp'), 'Ground.grp'),

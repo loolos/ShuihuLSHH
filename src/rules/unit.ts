@@ -1,0 +1,158 @@
+// 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
+import { basicAttack, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
+
+export type Side = 'player' | 'ally' | 'enemy';
+
+export interface Stats {
+  maxHp: number;
+  maxMp: number;
+  attack: number;
+  defense: number;
+  hit: number;
+  agility: number;
+  crit: number;
+  move: number;
+  rangeBonus: number;
+  poison: number; // 装备附带中毒率
+  stun: number; // 装备附带昏迷率
+  regenHp: number;
+  regenMp: number;
+}
+
+export interface AiState {
+  mode: number; // ACT w7 高字节
+  target: number; // w8：目标角色号
+  point: { x: number; y: number }; // w9, w10
+}
+
+export interface Unit {
+  uid: number; // 本场战斗内唯一，等于 ACT 序号
+  classId: number; // = 角色号
+  name: string;
+  side: Side;
+  x: number;
+  y: number;
+  facing: number; // 0 = −y，1 = −x，2 = +y，3 = +x
+  level: number;
+  exp: number;
+  hp: number;
+  mp: number;
+  stats: Stats;
+  /** 7 个道具槽（原版不区分槽位类型；装备加成按道具类型计算），0 = 空 */
+  slots: number[];
+  gold: number;
+  ai: AiState;
+  present: boolean; // 是否在场（未登场或已战败为 false）
+  alive: boolean;
+  defending: boolean;
+  poisonTurns: number;
+  stunTurns: number;
+  // 本回合行动状态
+  movementRemaining: number;
+  forcedMarch: boolean;
+  acted: boolean; // 已攻击/使用道具等
+  ended: boolean; // 本回合行动结束
+  itemUsed: boolean; // 本回合已使用道具
+  turnStart: { x: number; y: number; facing: number; movement: number } | null; // 撤销移动用
+}
+
+export const DIRS = [
+  { x: 0, y: -1 },
+  { x: -1, y: 0 },
+  { x: 0, y: 1 },
+  { x: 1, y: 0 },
+] as const;
+
+export const CAP_HPMP = 510;
+export const CAP_STAT = 255;
+
+/** 属性(L) = floor(基础值 × (成长 / 100)^L) */
+export function grow(s: { base: number; growth: number }, level: number, cap = CAP_STAT): number {
+  return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
+}
+
+export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false): Stats {
+  const st: Stats = {
+    maxHp: grow(cls.hp, level, CAP_HPMP),
+    maxMp: grow(cls.mp, level, CAP_HPMP),
+    attack: grow(cls.attack, level),
+    defense: grow(cls.defense, level),
+    hit: grow(cls.hit, level),
+    agility: grow(cls.agility, level),
+    crit: grow(cls.crit, level),
+    move: cls.move,
+    rangeBonus: 0,
+    poison: 0,
+    stun: 0,
+    regenHp: 0,
+    regenMp: 0,
+  };
+  for (const id of slots) {
+    const it = itemOf(data, id);
+    if (!isEquipment(it)) continue;
+    st.attack += it!.attack;
+    st.defense += it!.defense;
+    st.hit += it!.hit;
+    st.agility += it!.agility;
+    st.crit += it!.crit;
+    st.move += it!.moveBonus;
+    st.rangeBonus += it!.range;
+    st.maxHp += it!.maxHp;
+    st.maxMp += it!.maxMp;
+    st.regenHp += it!.regenHp;
+    st.regenMp += it!.regenMp;
+    st.poison += it!.poison;
+    st.stun += it!.stun;
+  }
+  st.maxHp = Math.min(CAP_HPMP, st.maxHp);
+  st.maxMp = Math.min(CAP_HPMP, st.maxMp);
+  for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, Math.min(CAP_STAT, st[k]));
+  if (poisoned) {
+    st.attack = Math.floor(st.attack / 2);
+    st.defense = Math.floor(st.defense / 2);
+  }
+  return st;
+}
+
+export function refreshStats(u: Unit, data: GameData) {
+  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0);
+  u.hp = Math.min(u.hp, u.stats.maxHp);
+  u.mp = Math.min(u.mp, u.stats.maxMp);
+}
+
+/** 没有技能的职业（如宋江）用这个兜底的普通攻击 */
+const FALLBACK_ATTACK: SkillDef = {
+  name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false, effect: 0, power: 0, poison: 0, stun: 0,
+  rangeMin: 1, rangeMax: 1, area: 1, learnLevel: 1, mpCost: 0, hitMod: 0, critMod: 0, hits: [{ frame: 0, percent: 100, dir: 0 }], raw: '',
+};
+
+export function attackSkill(u: Unit, data: GameData): SkillDef {
+  return basicAttack(data.classes[u.classId]) ?? FALLBACK_ATTACK;
+}
+
+/** 普通攻击的射程 [下限, 上限]（技能子项 +12/+13，加装备射程；推测） */
+export function attackRange(u: Unit, data: GameData): [number, number] {
+  const s = attackSkill(u, data);
+  const lo = Math.max(1, s.rangeMin);
+  return [lo, Math.max(lo, s.rangeMax + u.stats.rangeBonus)];
+}
+
+/**
+ * 攻击只能沿 4 个方向直线进行：目标与攻方同行或同列，距离在射程内（EXE 0x40d850 按方向表 0x4460c4 逐格检查）。
+ */
+export function inAttackRange(a: { x: number; y: number }, t: { x: number; y: number }, [lo, hi]: [number, number]): boolean {
+  if (a.x !== t.x && a.y !== t.y) return false;
+  const d = Math.abs(a.x - t.x) + Math.abs(a.y - t.y);
+  return d >= lo && d <= hi;
+}
+
+export const isFoe = (a: Side, b: Side) => (a === 'enemy') !== (b === 'enemy');
+export const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+
+/** 从 a 看向 b 的朝向（取差值较大的轴） */
+export function facingTowards(a: { x: number; y: number }, b: { x: number; y: number }, fallback = 0): number {
+  const dx = b.x - a.x, dy = b.y - a.y;
+  if (!dx && !dy) return fallback;
+  if (Math.abs(dx) >= Math.abs(dy)) return dx > 0 ? 3 : 1;
+  return dy > 0 ? 2 : 0;
+}

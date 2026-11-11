@@ -1,0 +1,107 @@
+// 战斗结算（docs/game-design.md §4、§5；原版 EXE 0x406c60）。
+import type { GameData, SkillDef } from './data.ts';
+import type { Rng } from './rng.ts';
+import { dist, facingTowards, type Unit } from './unit.ts';
+
+/** 攻守双方朝向关系：相同 = 打背后，相反 = 打正面，其余 = 侧面 */
+export function facingRelation(attackerFacing: number, defenderFacing: number): 'back' | 'side' | 'front' {
+  if (attackerFacing === defenderFacing) return 'back';
+  if ((attackerFacing + 2) % 4 === defenderFacing) return 'front';
+  return 'side';
+}
+
+const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
+
+/** 命中率（%）。≥ 100 必中；我方攻击保底 80，其它保底 30。 */
+export function hitChance(att: Unit, def: Unit, skill: SkillDef): number {
+  let h = Math.max(0, att.stats.hit - def.stats.agility / 2 + skill.hitMod);
+  h *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
+  if (def.defending) h *= 0.7;
+  h = Math.floor(h);
+  return Math.min(100, Math.max(att.side === 'player' ? 80 : 30, h));
+}
+
+export function critChance(att: Unit, skill: SkillDef): number {
+  return Math.max(0, Math.floor((att.stats.crit + skill.critMod) / 2));
+}
+
+/** 不含随机部分的伤害：返回 [普通, 必杀]；≤ 0 时原版改为 10–59 的随机值，这里返回 null */
+export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number | null, number | null] {
+  const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
+  const n = att.stats.attack + power - def.stats.defense;
+  const c = 2 * (att.stats.attack + power) - def.stats.defense;
+  return [n > 0 ? n : null, c > 0 ? c : null];
+}
+
+export interface AttackPreview {
+  hit: number;
+  crit: number;
+  damage: number; // 普通命中时的期望伤害（不计浮动）
+  critDamage: number;
+}
+
+export function previewAttack(att: Unit, def: Unit, skill: SkillDef): AttackPreview {
+  const [n, c] = baseDamage(att, def, skill);
+  const k = def.defending ? 0.7 : 1;
+  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor((n ?? 34) * k), critDamage: Math.floor((c ?? 34) * k) };
+}
+
+export interface HitResult {
+  hit: boolean;
+  crit: boolean;
+  damage: number; // 总伤害
+  parts: number[]; // 多段伤害
+  poisoned: boolean;
+  stunned: boolean;
+  backstab: 'back' | 'side' | 'front';
+}
+
+/**
+ * 一次攻击的结算（不改动单位状态）。
+ * forceHit：反击必定命中。
+ */
+export function rollAttack(att: Unit, def: Unit, skill: SkillDef, rng: Rng, forceHit = false): HitResult {
+  const rel = facingRelation(facingTowards(att, def, att.facing), def.facing);
+  const hit = forceHit || rng.chance(hitChance(att, def, skill));
+  if (!hit) return { hit, crit: false, damage: 0, parts: [], poisoned: false, stunned: false, backstab: rel };
+  const crit = rng.chance(critChance(att, skill));
+  const [n, c] = baseDamage(att, def, skill);
+  let dmg = (crit ? c : n) ?? rng.range(10, 59);
+  if (def.defending) dmg *= 0.7;
+  dmg *= 0.9 + rng.next() * 0.2; // D-9【新】：±10% 浮动（原版无浮动）
+  dmg = Math.max(0, Math.floor(dmg));
+  const hits = skill.hits.length ? skill.hits.filter((h) => h.dir === skill.hits[0].dir) : [{ percent: 100 }];
+  const total = hits.reduce((s, h) => s + h.percent, 0) || 100;
+  const parts = hits.map((h) => Math.floor((dmg * h.percent) / total));
+  parts[parts.length - 1] += dmg - parts.reduce((s, p) => s + p, 0);
+  const poisonRate = skill.poison + att.stats.poison;
+  const stunRate = skill.stun + att.stats.stun;
+  return {
+    hit,
+    crit,
+    damage: dmg,
+    parts,
+    poisoned: poisonRate > 0 && rng.chance(poisonRate),
+    stunned: stunRate > 0 && rng.chance(stunRate),
+    backstab: rel,
+  };
+}
+
+/** 防御中闪避了正交相邻的攻击：50% 反击（原版） */
+export function canCounter(att: Unit, def: Unit): boolean {
+  return def.defending && def.alive && dist(att, def) === 1;
+}
+
+/** 击倒得到的经验：max(1, 敌等级 − 己等级) × 12 + 1–9 */
+export function killExp(att: Unit, def: Unit, rng: Rng): number {
+  return Math.max(1, def.level - att.level) * 12 + rng.range(1, 9);
+}
+/** 命中未击倒：伤害 / 10 + 1–2 */
+export function hitExp(damage: number, rng: Rng): number {
+  return Math.floor(damage / 10) + rng.range(1, 2);
+}
+/** 击倒敌人掉落的黄金：1 + rand % 上限（上限为 0 时不掉） */
+export function killGold(def: Unit, data: GameData, rng: Rng): number {
+  const cap = data.classes[def.classId].goldCap;
+  return cap > 0 ? 1 + rng.int(cap) : 0;
+}
