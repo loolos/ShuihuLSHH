@@ -4,7 +4,7 @@ import {
   GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
-import { loadAssets, type Assets } from './game/assets.ts';
+import { frameToCanvas, loadAssets, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
 
@@ -96,6 +96,11 @@ function startGame(assets: Assets) {
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
   ui.tr = assets.tr;
+  const faces = new Map<number, string | null>();
+  ui.portrait = (cls) => {
+    if (!faces.has(cls)) faces.set(cls, cls < assets.heads.count ? frameToCanvas(assets.heads.frame(cls), assets.palette).toDataURL() : null);
+    return faces.get(cls)!;
+  };
 
   const game = new Phaser.Game({
     type: Phaser.AUTO,

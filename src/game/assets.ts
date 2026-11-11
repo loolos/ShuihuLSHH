@@ -13,6 +13,8 @@ export interface Assets {
   upper: ReturnType<typeof openGrp>;
   man: ReturnType<typeof openLib>;
   objects: ReturnType<typeof openPic>;
+  /** 半身头像，第 i 张对应 HUM 第 i 个职业（按图比对，见 binary-formats §3） */
+  heads: ReturnType<typeof openPic>;
   exe: ExeTables;
   items: Item[];
   /** 规则引擎用的数据 */
@@ -32,6 +34,7 @@ export function loadAssets(files: GameFiles): Assets {
     upper: openGrp(files.get('Data/Upper.grp'), 'Upper.grp'),
     man: openLib(files.get('Data/Man.lib'), 'Man.lib'),
     objects: openPic(files.get('Data/Object.lib'), 'Object.lib'),
+    heads: openPic(files.get('Data/Head.lib'), 'Head.lib'),
     exe: readExeTables(files.get('ShuiHu.exe')),
     items: parseGoods(files.get('Data/Goods.dab')),
   };
