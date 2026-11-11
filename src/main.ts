@@ -52,12 +52,16 @@ function pickFiles(): Promise<Map<string, ArrayBuffer>> {
     };
     $('pick').onclick = async () => {
       const w = window as unknown as { showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle> };
-      if (w.showDirectoryPicker) {
+      // 嵌在 iframe 里（如内部试玩页面）时目录选择器不可用，直接用 <input webkitdirectory>
+      const framed = window.self !== window.top;
+      if (w.showDirectoryPicker && !framed) {
         try {
           const dir = await w.showDirectoryPicker();
           await finish(walkDirectory(dir));
         } catch (e) {
-          if ((e as Error).name !== 'AbortError') reject(e);
+          if ((e as Error).name === 'AbortError') return;
+          if ((e as Error).name === 'SecurityError') input.click();
+          else reject(e);
         }
       } else input.click();
     };
