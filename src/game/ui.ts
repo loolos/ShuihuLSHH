@@ -30,13 +30,41 @@ export class BattleUI {
     this.face.id = 'dialog-face';
     this.face.alt = '';
     this.dialog.prepend(this.face);
-    this.dialog.onclick = () => this.advance();
-    window.addEventListener('keydown', (e) => {
-      if (!this.dialog.hidden && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
+    // 对白期间：页面任何位置点击都继续（捕获阶段拦下，不让点击落到地图或按钮上）；
+    // 回车 / 空格继续；Esc 跳过这一段剩下的全部对白
+    window.addEventListener(
+      'click',
+      (e) => {
+        if (this.dialog.hidden) return;
         e.preventDefault();
+        e.stopPropagation();
+        this.advance();
+      },
+      true,
+    );
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.dialog.hidden && this.playing) {
+        this.skipping = true; // 对白之间的镜头移动时按 Esc 也算
+        return;
+      }
+      if (this.dialog.hidden) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.advance();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.skipping = true;
         this.advance();
       }
     });
+  }
+
+  /** Esc 之后，直到这段事件播完都不再显示对白 */
+  private skipping = false;
+  /** 正在播放一段事件（由场景设置） */
+  playing = false;
+  endSkip() {
+    this.skipping = false;
   }
 
   show() {
@@ -112,6 +140,7 @@ export class BattleUI {
 
   /** 对白框：点击或按回车继续 */
   say(speaker: string, text: string, classId: number | null = null): Promise<void> {
+    if (this.skipping) return Promise.resolve();
     const face = classId === null ? null : this.portrait(classId);
     this.face.hidden = !face;
     if (face) this.face.src = face;

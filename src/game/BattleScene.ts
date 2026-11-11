@@ -384,11 +384,14 @@ export class BattleScene extends Phaser.Scene {
 
   private async run(events: BattleEvent[]) {
     this.busy = true;
+    this.ui.playing = true;
     this.ui.setEndTurnEnabled(false);
     try {
       for (const e of events) await this.play(e);
     } finally {
       this.busy = false;
+      this.ui.playing = false;
+      this.ui.endSkip();
       this.syncView();
       this.refreshAll();
       const b = this.battle;
