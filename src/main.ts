@@ -1,7 +1,7 @@
 import './platform/buffer-shim.ts';
 import Phaser from 'phaser';
 import {
-  GameFiles, checkFiles, collectFromFileList, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
+  GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
 import { loadAssets, type Assets } from './game/assets.ts';
@@ -25,6 +25,11 @@ async function obtainFiles(): Promise<Map<string, ArrayBuffer>> {
   }
   const dev = await loadFromDevServer(progress);
   if (dev) return dev;
+  const bundled = await loadBundled(progress);
+  if (bundled) {
+    await saveCache(bundled);
+    return bundled;
+  }
   return pickFiles();
 }
 
