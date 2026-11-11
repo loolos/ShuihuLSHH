@@ -1,7 +1,7 @@
 import './platform/buffer-shim.ts';
 import Phaser from 'phaser';
 import {
-  GameFiles, checkFiles, collectFromFileList, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
+  GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
 import { loadAssets, type Assets } from './game/assets.ts';
@@ -25,6 +25,11 @@ async function obtainFiles(): Promise<Map<string, ArrayBuffer>> {
   }
   const dev = await loadFromDevServer(progress);
   if (dev) return dev;
+  const bundled = await loadBundled(progress);
+  if (bundled) {
+    await saveCache(bundled);
+    return bundled;
+  }
   return pickFiles();
 }
 
@@ -52,12 +57,16 @@ function pickFiles(): Promise<Map<string, ArrayBuffer>> {
     };
     $('pick').onclick = async () => {
       const w = window as unknown as { showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle> };
-      if (w.showDirectoryPicker) {
+      // 嵌在 iframe 里（如内部试玩页面）时目录选择器不可用，直接用 <input webkitdirectory>
+      const framed = window.self !== window.top;
+      if (w.showDirectoryPicker && !framed) {
         try {
           const dir = await w.showDirectoryPicker();
           await finish(walkDirectory(dir));
         } catch (e) {
-          if ((e as Error).name !== 'AbortError') reject(e);
+          if ((e as Error).name === 'AbortError') return;
+          if ((e as Error).name === 'SecurityError') input.click();
+          else reject(e);
         }
       } else input.click();
     };

@@ -8,6 +8,8 @@ import { frameToCanvas, type Assets } from './assets.ts';
 
 export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
 export const FRAME_MS = 120;
+/** 一次性动作（攻击、受击）的帧间隔：比循环动作快，免得出手拖沓【新】 */
+export const ACTION_FRAME_MS = 55;
 
 export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCanvasElement): string {
   if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
@@ -35,7 +37,7 @@ export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action
       f.pivotY = fr.anchorY / Math.max(1, fr.height);
       frames.push({ key: tk });
     }
-    scene.anims.create({ key, frames, frameRate: 1000 / FRAME_MS, repeat });
+    scene.anims.create({ key, frames, frameRate: 1000 / (repeat === 0 ? ACTION_FRAME_MS : FRAME_MS), repeat });
   }
   return key;
 }

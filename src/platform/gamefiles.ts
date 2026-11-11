@@ -103,6 +103,44 @@ export async function loadFromDevServer(progress?: Progress): Promise<Map<string
   return out;
 }
 
+/**
+ * 内部试玩页面：原版文件按 manifest 顺序拼接后切成若干块（可为 base64 文本），和页面一起发布在 ./gamedata/ 下。
+ * 公开构建里没有这个目录，请求失败时返回 null，照常让玩家选目录。
+ */
+export async function loadBundled(progress?: Progress): Promise<Map<string, ArrayBuffer> | null> {
+  if (import.meta.env.DEV) return null;
+  const r = await fetch('./gamedata/index.json').catch(() => null);
+  if (!r?.ok) return null;
+  const index = (await r.json().catch(() => null)) as { chunks: string[]; encoding?: 'base64'; files: { path: string; size: number }[] } | null;
+  if (!index?.chunks?.length) return null;
+  const parts: Uint8Array[] = [];
+  for (let i = 0; i < index.chunks.length; i++) {
+    progress?.(`下载原版文件 ${i + 1}/${index.chunks.length}`, i / index.chunks.length);
+    const c = await fetch(`./gamedata/${index.chunks[i]}`);
+    if (!c.ok) return null;
+    if (index.encoding === 'base64') {
+      // 发布平台只接受文本等常见类型，所以块以 base64 文本存放
+      const bin = atob((await c.text()).trim());
+      const u = new Uint8Array(bin.length);
+      for (let k = 0; k < bin.length; k++) u[k] = bin.charCodeAt(k);
+      parts.push(u);
+    } else parts.push(new Uint8Array(await c.arrayBuffer()));
+  }
+  const all = new Uint8Array(parts.reduce((n, p) => n + p.length, 0));
+  let o = 0;
+  for (const p of parts) {
+    all.set(p, o);
+    o += p.length;
+  }
+  const out = new Map<string, ArrayBuffer>();
+  o = 0;
+  for (const f of index.files) {
+    out.set(f.path, all.slice(o, o + f.size).buffer);
+    o += f.size;
+  }
+  return out;
+}
+
 export async function loadCached(): Promise<Map<string, ArrayBuffer> | null> {
   try {
     const m = await idbGetAll();
