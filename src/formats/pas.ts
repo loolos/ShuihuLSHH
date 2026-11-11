@@ -55,3 +55,82 @@ export function parsePas(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5', file = 
   }
   return { lines, otherStrings };
 }
+
+// ───────────── 区块与指令（事件脚本），结构见 docs/binary-formats.md §8 ─────────────
+
+export type PasTrigger =
+  | { kind: 'turn'; turn: number } // 参数 N：第 N + 1 回合开始时；0 = 开战
+  | { kind: 'death'; char: number } // 角色号；1000 = 主角
+  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number }
+  | { kind: 'unknown'; w0: number; type: number };
+
+export interface PasOp {
+  op: number;
+  flag: number | null; // 操作码 < 24 时才有
+  /** 操作码 12/14/15/16/17/18/19/35 等的数值参数（u16 或 u32） */
+  value: number;
+  /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容 */
+  text?: string;
+}
+
+export interface PasBlock {
+  index: number;
+  head: number[]; // w0..w8
+  trigger: PasTrigger;
+  ops: PasOp[];
+}
+
+const TEXT_OPS = new Set([13, 20, 21, 29, 30, 31, 32, 33]);
+
+/**
+ * 按区块切分 .pab。触发器：w0 = 1 时 w8 = 0 为回合、1 为死亡，参数在区块 +24；
+ * w0 = 4 为"某角色进入矩形区域"：+24 u32 角色号，+42/+44 与 +54/+56 为两角坐标（N01 区块 6 验证）。
+ */
+export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): PasBlock[] {
+  const dec = encoding === 'big5' ? decodeBig5 : decodeGbk;
+  const n = buf.readUInt16LE(7);
+  const blocks: PasBlock[] = [];
+  let o = 15;
+  for (let i = 0; i < n && o < buf.length; i++) {
+    const len = buf.readUInt16LE(o);
+    const head = Array.from({ length: 9 }, (_, k) => buf.readUInt16LE(o + 2 + 2 * k));
+    let trigger: PasTrigger;
+    let start: number;
+    if (head[0] === 1 && (head[8] === 0 || head[8] === 1)) {
+      const p = buf.readUInt16LE(o + 24);
+      trigger = head[8] === 0 ? { kind: 'turn', turn: p } : { kind: 'death', char: p };
+      start = 26;
+    } else if (head[0] === 4) {
+      trigger = {
+        kind: 'area',
+        char: buf.readUInt32LE(o + 24),
+        x1: buf.readUInt16LE(o + 42),
+        y1: buf.readUInt16LE(o + 44),
+        x2: buf.readUInt16LE(o + 54),
+        y2: buf.readUInt16LE(o + 56),
+      };
+      start = 58;
+    } else {
+      trigger = { kind: 'unknown', w0: head[0], type: head[8] };
+      start = len; // 未解的触发器：不执行指令
+    }
+    const ops: PasOp[] = [];
+    for (let p = o + start; p + 4 <= o + len; ) {
+      const l = buf.readUInt16LE(p);
+      const op = buf.readUInt16LE(p + 2);
+      const flag = op < 24 ? buf.readUInt16LE(p + 4) : null;
+      const body = p + (op < 24 ? 6 : 4);
+      const payload = buf.subarray(body, body + l);
+      const entry: PasOp = { op, flag, value: l >= 4 ? payload.readUInt32LE(0) : l >= 2 ? payload.readUInt16LE(0) : 0 };
+      if (TEXT_OPS.has(op)) {
+        const z = payload.indexOf(0);
+        entry.text = dec(z >= 0 ? payload.subarray(0, z) : payload).trim();
+      }
+      ops.push(entry);
+      p = body + l;
+    }
+    blocks.push({ index: i, head, trigger, ops });
+    o += len;
+  }
+  return blocks;
+}

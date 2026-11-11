@@ -36,7 +36,7 @@ Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需
 src/formats/   原版格式解析器，浏览器与 Node 共用（使用 Buffer 接口；浏览器里由 src/platform/buffer-shim.ts 提供）
 src/platform/  选择原版目录、校验、IndexedDB 缓存
 src/game/      Phaser 场景与表现层
-src/rules/     （待建）纯 TypeScript 规则引擎，不依赖 Phaser
+src/rules/     纯 TypeScript 规则引擎（属性、棋盘、战斗、AI、PAS 事件），不依赖 Phaser
 src/data/      manifest.json 等生成的数据
 tools/         Node 工具脚本
 tests/         Vitest 测试

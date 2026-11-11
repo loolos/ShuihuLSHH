@@ -5,7 +5,8 @@ import {
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
 import { loadAssets, type Assets } from './game/assets.ts';
-import { MapScene } from './game/MapScene.ts';
+import { BattleScene } from './game/BattleScene.ts';
+import { BattleUI } from './game/ui.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -77,15 +78,15 @@ function confirmMismatch(list: string[]): Promise<void> {
 }
 
 function startGame(assets: Assets) {
-  const stages = assets.exe.stages.filter((s) => s.mapName);
+  const stages = assets.exe.stages.filter((s) => s.mapName && assets.files.has(`Map/${s.mapName}.act`));
   const sel = $<HTMLSelectElement>('stage');
-  for (const s of stages) sel.add(new Option(`${s.index}. ${s.mapName.toUpperCase()}  ${s.title}`, s.mapName));
+  for (const s of stages) sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, s.mapName));
   const params = new URLSearchParams(location.search);
   sel.value = (params.get('stage') ?? 'n01').toLowerCase();
   if (!sel.value) sel.value = stages[0].mapName;
-  const hiddenBox = $<HTMLInputElement>('hidden-units');
-  hiddenBox.checked = params.has('hidden');
-  const info = $('info');
+  const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
+  const ui = new BattleUI();
+  ui.tr = assets.tr;
 
   const game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -95,23 +96,31 @@ function startGame(assets: Assets) {
     scale: { mode: Phaser.Scale.RESIZE, width: window.innerWidth, height: window.innerHeight },
     scene: [],
   });
+  const scene = () => game.scene.getScene('battle') as BattleScene | null;
   const run = () => {
-    const data = { assets, stage: sel.value, showHidden: hiddenBox.checked, onHover: (t: string) => (info.textContent = t) };
-    if (game.scene.getScene('map')) game.scene.getScene('map')!.scene.restart(data);
-    else game.scene.add('map', MapScene, true, data);
+    ui.hideResult();
+    const data = { assets, stage: sel.value, ui, seed };
+    if (scene()) scene()!.scene.restart(data);
+    else game.scene.add('battle', BattleScene, true, data);
     const u = new URL(location.href);
     u.searchParams.set('stage', sel.value);
     history.replaceState(null, '', u);
   };
   sel.onchange = run;
-  hiddenBox.onchange = run;
-  $('zoom-in').onclick = () => (game.scene.getScene('map') as MapScene).zoomBy(1.25);
-  $('zoom-out').onclick = () => (game.scene.getScene('map') as MapScene).zoomBy(1 / 1.25);
+  $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
+  $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);
+  $('end-turn').onclick = () => scene()?.endTurn();
+  $('objective-btn').onclick = () => {
+    const b = scene()?.battle;
+    if (b && !ui.inDialog) ui.say('', b.objectives.join('\n') || '（本关没有写明的胜负条件）');
+  };
   $('reset').onclick = async () => {
     await idbClear();
     location.reload();
   };
   $('hud').hidden = false;
+  ui.show();
+  (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
   run();
 }
 
