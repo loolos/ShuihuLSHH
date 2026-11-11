@@ -9,7 +9,7 @@ import { isSupportSkill } from '../rules/skills.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, textureFor } from './sprites.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, effectAnim, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -596,6 +596,26 @@ export class BattleScene extends Phaser.Scene {
         // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发；范围内的人同时受击
         const segs = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
         const frames = segs.length ? segs.map((h) => h.frame) : [1];
+        // 技能特效：在第一个命中帧出现在每个目标身上（没有目标时在施放点）【位置与时机为推测】
+        const fx = effectAnim(this, this.assets, skill.effect);
+        const fxDone = fx
+          ? new Promise<void>((r) =>
+              this.time.delayedCall((frames[0] - 1) * ACTION_FRAME_MS, () => {
+                const spots = e.hits.length ? e.hits.map((h) => this.vs(b.unit(h.uid)!)) : [e.cell];
+                let left = spots.length;
+                for (const c of spots) {
+                  const p = cellToWorld(c.x, c.y);
+                  const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(c.x, c.y, 10));
+                  s.play(fx);
+                  s.once('animationcomplete', () => {
+                    s.destroy();
+                    if (--left === 0) r();
+                  });
+                }
+                this.time.delayedCall(3000, r); // 保险：动画事件没来也不卡住
+              }),
+            )
+          : Promise.resolve();
         const impacts = frames.map((f, i) =>
           new Promise<void>((r) =>
             this.time.delayedCall((f - 1) * ACTION_FRAME_MS, () => {
@@ -617,7 +637,7 @@ export class BattleScene extends Phaser.Scene {
             }),
           ),
         );
-        await Promise.all([this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500), ...impacts]);
+        await Promise.all([this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500), fxDone, ...impacts]);
         area?.destroy();
         this.pose(u);
         for (const h of e.hits) this.pose(b.unit(h.uid)!);

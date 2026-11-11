@@ -41,3 +41,30 @@ export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action
   }
   return key;
 }
+
+/** 技能特效帧间隔（Effect.lib 组表 param 都是 4，推测为 4 个 tick；这里取 60 ms【待核】） */
+export const EFFECT_FRAME_MS = 60;
+
+/**
+ * 技能特效动画：技能子项 +6 为特效号，1 起，对应 Effect.lib 第 (特效号 − 1) 组。
+ * 证据：一柱擎天 +6 = 39 → 第 38 组是一道竖直光柱（负责人记得原版有光柱）；石破天驚 2 → 第 1 组火柱。0 表示没有特效。
+ */
+export function effectAnim(scene: Phaser.Scene, assets: Assets, effect: number): string | null {
+  const range = effect > 0 ? assets.effects.actions[effect - 1] : undefined;
+  if (!range) return null;
+  const key = `fx:${effect}`;
+  if (!scene.anims.exists(key)) {
+    const frames: Phaser.Types.Animations.AnimationFrame[] = [];
+    for (let i = range.first; i <= range.last; i++) {
+      const fr = assets.effects.frame(i);
+      const tk = textureFor(scene, `fx:f${i}`, () => frameToCanvas(fr, assets.palette));
+      const f = scene.textures.get(tk).get();
+      f.customPivot = true;
+      f.pivotX = fr.anchorX / Math.max(1, fr.width);
+      f.pivotY = fr.anchorY / Math.max(1, fr.height);
+      frames.push({ key: tk });
+    }
+    scene.anims.create({ key, frames, frameRate: 1000 / EFFECT_FRAME_MS, repeat: 0 });
+  }
+  return key;
+}

@@ -13,7 +13,7 @@ export interface ClassSkill {
   type: number; // +2：5 普通、6/10 遠程、7 連續、2 迴旋、8 集氣、0/1/3/4 氣功、9/11 回復
   group: number; // +3 技能组号（LV1/2/3 共用）
   hidden: boolean; // +5 u8 = 1 时为隐藏技（古武術祕笈）
-  effect: number; // +6 特效编号（推测）
+  effect: number; // +6 特效号：Effect.lib 第 (effect − 1) 组，0 = 无（一柱擎天 39 → 光柱）
   power: number; // +8 威力；回复技/集气技为回复除数
   poison: number; // +10 中毒率 %
   stun: number; // +11 昏迷率 %

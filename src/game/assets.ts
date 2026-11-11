@@ -12,6 +12,8 @@ export interface Assets {
   ground: ReturnType<typeof openGrp>;
   upper: ReturnType<typeof openGrp>;
   man: ReturnType<typeof openLib>;
+  /** 技能特效：60 组，技能子项 +6 = 组号 + 1（0 = 无特效） */
+  effects: ReturnType<typeof openLib>;
   objects: ReturnType<typeof openPic>;
   /** 半身头像，第 i 张对应 HUM 第 i 个职业（按图比对，见 binary-formats §3） */
   heads: ReturnType<typeof openPic>;
@@ -33,6 +35,7 @@ export function loadAssets(files: GameFiles): Assets {
     ground: openGrp(files.get('Data/Ground.grp'), 'Ground.grp'),
     upper: openGrp(files.get('Data/Upper.grp'), 'Upper.grp'),
     man: openLib(files.get('Data/Man.lib'), 'Man.lib'),
+    effects: openLib(files.get('Data/Effect.lib'), 'Effect.lib'),
     objects: openPic(files.get('Data/Object.lib'), 'Object.lib'),
     heads: openPic(files.get('Data/Head.lib'), 'Head.lib'),
     exe: readExeTables(files.get('ShuiHu.exe')),
