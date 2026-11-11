@@ -16,6 +16,13 @@
 
 **完整设计方案**：[game-design.md](game-design.md)（手写，含 §15 待拍板决定）。
 
+**原版数据深挖**：[original-data-findings.md](original-data-findings.md)（手写）。内容包括：
+
+- 从 EXE 反汇编出的命中、伤害、必杀、反击、状态、经验、金钱、成长公式；
+- ACT 的 AI 模式；
+- GOO 的装备、打铁、消耗品字段；
+- PAS 的脚本结构。
+
 另有 `node tools/render-maps.ts`：把 63 张地图渲染成整图预览，并标出单位位置，输出到 `extracted/maps/`（不入库）。
 
 结构化数据同时写到 `extracted/data/*.json`（不入库），以后游戏代码直接读取同一套解析器（`src/formats/*.ts`），不读这些 JSON。

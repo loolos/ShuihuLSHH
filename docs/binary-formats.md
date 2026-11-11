@@ -179,6 +179,8 @@ EOF-19N  索引表：N × 19 B（结构同 §3.3）
 
 ## 7. ACT（关卡单位配置）
 
+> 字段已用 EXE 反汇编确认，见 [design/original-data-findings.md](design/original-data-findings.md)。
+
 ```
 0x00 "ACT\x02"  0x04 u8 = 1  0x05 u16 n  0x07 u32 = 11
 0x0B n × 38 B，每条为 19 个 u16
@@ -201,6 +203,16 @@ EOF-19N  索引表：N × 19 B（结构同 §3.3）
 7 个槽与 Shuihu-Editor 解析出的存档单位"7 × 10 B 槽（武器/衣服/帽子/物品×4）"一致。
 
 ## 8. PAS（剧本与事件脚本）
+
+> **2026-11-11 补充**：以下几种格式的字段已经通过 EXE 静态反汇编确认，详见 [design/original-data-findings.md](design/original-data-findings.md)：
+>
+> - PAS 的区块、触发器和指令结构（§7）；
+> - HUM 技能子项（§4）；
+> - GOO 装备和消耗品字段（§5）；
+> - ACT 的朝向、阵营、AI 模式、目标单位和目标坐标（§6）。
+>
+> 其中，HUM 的"成长等级字母"其实是百分比字节（102–110 = 每级 ×1.02–1.10）。
+
 
 ```
 0x00 "PAS"
@@ -227,6 +239,8 @@ EOF-19N  索引表：N × 19 B（结构同 §3.3）
 
 ## 9. GOO（道具表，`Goods.dab`）
 
+> 字段已用 EXE 反汇编确认，见 [design/original-data-findings.md](design/original-data-findings.md)。
+
 ```
 0x00 "GOO\0"  0x04 u8 = 1  0x05 u16 = 200  0x07 u32 = 11
 0x0B 200 × 198 B
@@ -249,6 +263,8 @@ EOF-19N  索引表：N × 19 B（结构同 §3.3）
 说明文字中的"攻擊力加N/防御力加N"在 +86–+197 的数值区**找不到**对应数值，攻防加成可能由等级/升级公式计算或存放在 EXE 中（置信度：低，待查）。
 
 ## 10. HUM（职业表，`Human.hum`）
+
+> 字段已用 EXE 反汇编确认，见 [design/original-data-findings.md](design/original-data-findings.md)。
 
 ```
 0x00 "HUM\0"  0x04 u8 = 1  0x05 u16 = 72  0x07 u16 = 51  0x09 u32 = 13
