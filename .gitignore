@@ -1,7 +1,6 @@
-# 原版游戏文件与提取产物一律不入库（版权属于原出版公司）
+# 提取产物不入库；原版文件只放在 gamedata/（仓库须为私有，2026-11-11 用户决定）
 /original/
 /extracted/
-/gamedata/
 *.exe
 *.lib
 *.grp
@@ -22,6 +21,11 @@
 *.flc
 *.avi
 *.sav
+
+# 原版文件（不含 Sound/、Title/）只允许出现在 gamedata/ 下
+!/gamedata/**
+/gamedata/shuihu/Sound/
+/gamedata/shuihu/Title/
 
 node_modules/
 dist/
