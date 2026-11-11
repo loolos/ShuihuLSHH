@@ -1,0 +1,27 @@
+# 原版游戏文件与提取产物一律不入库（版权属于原出版公司）
+/original/
+/extracted/
+/gamedata/
+*.exe
+*.lib
+*.grp
+*.att
+*.pal
+*.tbl
+*.16f
+*.24f
+*.map
+*.act
+*.pab
+*.pas
+*.dab
+*.dat
+*.big
+*.hum
+*.wav
+*.flc
+*.avi
+*.sav
+
+node_modules/
+dist/
