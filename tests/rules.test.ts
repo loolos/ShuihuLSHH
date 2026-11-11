@@ -52,10 +52,10 @@ describe('命中与伤害', () => {
     expect(facingTowards({ x: 0, y: 1 }, { x: 0, y: 0 })).toBe(0);
     expect(facingTowards({ x: 0, y: 0 }, { x: 3, y: 1 })).toBe(3);
   });
-  it('命中 = 命中 − 敏捷/2，按朝向放大，我方保底 80、敌方保底 30', () => {
+  it('命中 = 命中 − 敏捷/2，按朝向放大，我方保底 90、敌方保底 30', () => {
     // 守方面向 +y（朝向 2），攻方从 +y 方向往 −y 打（朝向 0）：正面
     const d = unit({ side: 'enemy', x: 0, y: 0, facing: 2, classId: 1 });
-    expect(hitChance(a, d, punch)).toBe(80); // 80 − 20 = 60，保底 80
+    expect(hitChance(a, d, punch)).toBe(90); // 80 − 20 = 60，保底 90（原版 80）
     const e = unit({ side: 'enemy', x: 0, y: 1, facing: 0 });
     const p = unit({ side: 'player', x: 0, y: 0, facing: 2 });
     expect(hitChance(e, p, punch)).toBe(60);
