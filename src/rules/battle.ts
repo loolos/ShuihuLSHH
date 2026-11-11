@@ -4,7 +4,8 @@ import type { PasBlock } from '../formats/pas.ts';
 import { planAi } from './ai.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, hitExp, killExp, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
-import { isHealing, itemOf, type GameData } from './data.ts';
+import { isHealing, itemOf, type GameData, type SkillDef } from './data.ts';
+import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import {
   attackRange, attackSkill, computeStats, DIRS, facingTowards, inAttackRange, isFoe, refreshStats, type Side, type Unit,
@@ -25,7 +26,8 @@ export type BattleEvent =
   | { type: 'appear'; uid: number; x: number; y: number }
   | { type: 'move'; uid: number; path: Cell[]; facing: number }
   | { type: 'face'; uid: number; facing: number }
-  | { type: 'attack'; uid: number; target: number; facing: number; result: HitResult; counter: boolean }
+  /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
+  | { type: 'attack'; uid: number; skill: SkillDef; cell: Cell; area: Cell[]; facing: number; hits: { uid: number; result: HitResult }[]; counter: boolean }
   | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; text?: string }
   | { type: 'status'; uid: number; text: string }
   | { type: 'defend'; uid: number; on: boolean }
@@ -167,8 +169,38 @@ export class Battle {
       for (let k = lo; k <= hi; k++) if (this.board.inBounds(u.x + d.x * k, u.y + d.y * k)) out.push({ x: u.x + d.x * k, y: u.y + d.y * k });
     return out;
   }
-  preview(u: Unit, t: Unit): AttackPreview {
-    return previewAttack(u, t, attackSkill(u, this.data));
+  preview(u: Unit, t: Unit, skill = attackSkill(u, this.data)): AttackPreview {
+    return previewAttack(u, t, skill);
+  }
+
+  /** 技能菜单：已习得的技能及当前能否使用（气力足够、有可施放的位置） */
+  skillsOf(u: Unit): { skill: SkillDef; usable: boolean }[] {
+    return learnedSkills(u, this.data).map((skill) => ({
+      skill,
+      usable: this.canAct(u) && !u.acted && u.mp >= skill.mpCost && this.skillTargets(u, skill).length > 0,
+    }));
+  }
+  /** 施放距离内的全部格子（显示用）；at 为假设的站位 */
+  skillCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
+    return castCells(this.board, at, castRange(u, skill, this.data));
+  }
+  /** 施放点 cell 的作用范围 */
+  skillArea(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Cell[] {
+    return areaCells(this.board, at, skill, cell);
+  }
+  /** 施放点 cell 会影响的单位：攻击技为范围内的敌人，回复技为范围内的己方，集气技为自己 */
+  affected(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Unit[] {
+    if (isChargeSkill(skill)) return [u];
+    const area = new Set(this.skillArea(u, skill, cell, at).map((c) => key(c.x, c.y)));
+    const heal = isHealSkill(skill);
+    return this.active().filter((t) => {
+      const pos = t === u ? at : t;
+      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side));
+    });
+  }
+  /** 能施放的格子（范围内至少有一个可作用的单位） */
+  skillTargets(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
+    return this.skillCells(u, skill, at).filter((c) => this.affected(u, skill, c, at).length > 0);
   }
 
   // ───────────── 流程 ─────────────
@@ -285,12 +317,27 @@ export class Battle {
   attack(u: Unit, t: Unit): BattleEvent[] {
     this.out = [];
     if (!this.attackTargets(u).includes(t)) return [];
-    this.strike(u, t, false);
+    this.cast(u, attackSkill(u, this.data), t, false);
+    this.endAction(u);
+    return this.flush();
+  }
+
+  /** 使用技能：消耗气力，攻击后用完剩余移动力 */
+  useSkill(u: Unit, skill: SkillDef, cell: Cell): BattleEvent[] {
+    this.out = [];
+    if (!this.canAct(u) || u.acted || u.mp < skill.mpCost) return [];
+    if (!learnedSkills(u, this.data).includes(skill)) return [];
+    if (!this.skillTargets(u, skill).some((c) => c.x === cell.x && c.y === cell.y)) return [];
+    this.cast(u, skill, cell, false);
+    this.endAction(u);
+    return this.flush();
+  }
+
+  private endAction(u: Unit) {
     u.acted = true;
-    u.ended = true; // 攻击后用完剩余移动力
+    u.ended = true;
     u.movementRemaining = 0;
     this.afterAction();
-    return this.flush();
   }
 
   defend(u: Unit): BattleEvent[] {
@@ -377,35 +424,70 @@ export class Battle {
     this.emit({ type: 'message', text: `${u.name}得到了${this.tr(itemOf(this.data, g.item)!.name)}。` });
   }
 
-  private strike(u: Unit, t: Unit, counter: boolean) {
-    const skill = attackSkill(u, this.data);
-    u.facing = facingTowards(u, t, u.facing);
-    const r = rollAttack(u, t, skill, this.rng, counter);
-    this.emit({ type: 'attack', uid: u.uid, target: t.uid, facing: u.facing, result: r, counter });
-    if (counter) this.emit({ type: 'message', text: `${u.name}施展反擊技，` });
-    if (!r.hit) {
-      this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
-      // 防御中闪避相邻攻击：50% 反击，必定命中
-      if (!counter && canCounter(u, t) && this.rng.chance(50)) this.strike(t, u, true);
+  /**
+   * 普通攻击与技能的结算。范围内每个目标各自判定命中、必杀与伤害（原版逐个目标调用 0x406c60），
+   * 多段技能只是把这一次的伤害按比例分段显示。
+   */
+  private cast(u: Unit, skill: SkillDef, cell: Cell, counter: boolean) {
+    const targets = this.affected(u, skill, cell);
+    const area = this.skillArea(u, skill, cell);
+    if (cell.x !== u.x || cell.y !== u.y) u.facing = facingTowards(u, cell, u.facing);
+    u.mp -= skill.mpCost;
+    const basic = skill === attackSkill(u, this.data);
+    if (isSupportSkill(skill)) {
+      this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter });
+      if (skill.mpCost && !targets.includes(u)) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+      const name = this.tr(skill.name);
+      for (const t of targets) {
+        const hp0 = t.hp;
+        const div = Math.max(1, skill.power);
+        if (isChargeSkill(skill)) t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / div));
+        else t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / div));
+        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
+      }
+      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, this.rng.range(1, 10));
       return;
     }
-    const hp0 = t.hp;
-    t.hp = Math.max(0, t.hp - r.damage);
-    t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
-    this.emit({ type: 'face', uid: t.uid, facing: t.facing });
-    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0 });
-    this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。` : '未造成敵方傷害。' });
-    if (t.hp === 0) return this.kill(u, t);
-    if (r.poisoned && t.poisonTurns === 0) {
-      t.poisonTurns = this.rng.range(2, 4);
-      refreshStats(t, this.data);
-      this.emit({ type: 'status', uid: t.uid, text: '中毒了！' });
+    const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
+    this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: hits.map(({ t, r }) => ({ uid: t.uid, result: r })), counter });
+    if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+    if (counter) this.emit({ type: 'message', text: `${u.name}施展反擊技，` });
+    else if (!basic) this.emit({ type: 'message', text: `${u.name}使出${this.tr(skill.name)}！` });
+    let total = 0;
+    let counterBy: Unit | undefined;
+    let exp = 0;
+    for (const { t, r } of hits) {
+      if (!r.hit) {
+        if (hits.length === 1) this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
+        // 防御中闪避相邻攻击：50% 反击，必定命中
+        if (!counter && !counterBy && canCounter(u, t) && this.rng.chance(50)) counterBy = t;
+        continue;
+      }
+      const hp0 = t.hp;
+      t.hp = Math.max(0, t.hp - r.damage);
+      total += r.damage;
+      t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
+      this.emit({ type: 'face', uid: t.uid, facing: t.facing });
+      this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0 });
+      if (hits.length === 1) this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。` : '未造成敵方傷害。' });
+      if (t.hp === 0) {
+        this.kill(u, t);
+        continue;
+      }
+      if (r.poisoned && t.poisonTurns === 0) {
+        t.poisonTurns = this.rng.range(2, 4);
+        refreshStats(t, this.data);
+        this.emit({ type: 'status', uid: t.uid, text: '中毒了！' });
+      }
+      if (r.stunned && t.stunTurns === 0) {
+        t.stunTurns = this.rng.range(2, 4);
+        this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
+      }
+      exp += hitExp(r.damage, this.rng);
     }
-    if (r.stunned && t.stunTurns === 0) {
-      t.stunTurns = this.rng.range(2, 4);
-      this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
-    }
-    if (u.side === 'player') this.gainExp(u, hitExp(r.damage, this.rng));
+    if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
+    if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp);
+    if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
   private kill(u: Unit, t: Unit) {
@@ -428,12 +510,14 @@ export class Battle {
     u.exp += n;
     while (u.exp >= EXP_PER_LEVEL) {
       u.exp -= EXP_PER_LEVEL;
-      if (u.level < MAX_PLAYER_LEVEL) u.level++;
+      const up = u.level < MAX_PLAYER_LEVEL;
+      if (up) u.level++;
       refreshStats(u, this.data);
       u.hp = u.stats.maxHp;
       u.mp = u.stats.maxMp;
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, text: '升級了！' });
       this.emit({ type: 'message', text: `${u.name}升級了！（Lv${u.level}）` });
+      if (up) for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
     }
   }
 
@@ -446,8 +530,9 @@ export class Battle {
         this.walk(u, plan.path);
         this.afterAction();
       }
-      if (this.status === 'playing' && plan.target && plan.target.alive && u.alive) {
-        if (inAttackRange(u, plan.target, attackRange(u, this.data))) this.strike(u, plan.target, false);
+      if (this.status === 'playing' && plan.skill && plan.cell && u.alive && u.mp >= plan.skill.mpCost) {
+        const ok = this.skillCells(u, plan.skill).some((c) => c.x === plan.cell!.x && c.y === plan.cell!.y);
+        if (ok && this.affected(u, plan.skill, plan.cell).length) this.cast(u, plan.skill, plan.cell, false);
       }
     }
     u.ended = true;

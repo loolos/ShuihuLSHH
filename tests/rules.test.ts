@@ -6,6 +6,7 @@ import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, grow, type Unit } from '../src/rules/unit.ts';
 import { Battle } from '../src/rules/battle.ts';
+import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
 
@@ -159,10 +160,110 @@ describe('战斗流程', () => {
       const ev = b.endPlayerPhase();
       const atk = ev.filter((e) => e.type === 'attack');
       if (atk.length === 2) {
-        expect(atk[1].type === 'attack' && atk[1].counter && atk[1].result.hit).toBe(true);
+        expect(atk[1].type === 'attack' && atk[1].counter && atk[1].hits[0].result.hit).toBe(true);
         counters++;
       }
     }
     expect(counters).toBeGreaterThan(10);
+  });
+});
+
+describe('技能', () => {
+  const sk = (o: Partial<SkillDef>): SkillDef => ({ ...punch, hits: [{ frame: 5, percent: 100, dir: 0 }], ...o });
+  const line = sk({ name: '石破天驚', type: 0, power: 20, area: 3, mpCost: 20, learnLevel: 1 });
+  const cone = sk({ name: '氣蓋山河', type: 1, power: 20, area: 5, mpCost: 30, learnLevel: 1 });
+  const diamond = sk({ name: '聚氣LV1', type: 3, power: 10, rangeMin: 0, rangeMax: 0, area: 2, mpCost: 10, learnLevel: 1 });
+  const diamond2 = sk({ name: '聚氣LV2', type: 3, power: 20, rangeMin: 0, rangeMax: 0, area: 3, mpCost: 20, learnLevel: 3 });
+  const heal = sk({ name: '回復計', type: 11, power: 4, rangeMin: 0, rangeMax: 0, area: 2, mpCost: 10, learnLevel: 1, hits: [] });
+  const charge = sk({ name: '集氣技', type: 8, power: 3, rangeMin: 0, rangeMax: 0, area: 0, mpCost: 0, learnLevel: 1, hits: [] });
+  const hidden = sk({ name: '祕技', type: 0, hidden: true, learnLevel: 1 });
+  const later = sk({ name: '絕招', type: 0, learnLevel: 2 });
+  const sdata: GameData = {
+    ...data,
+    classes: [cls(0, { skills: [punch, line, cone, diamond, diamond2, heal, charge, hidden, later] }), cls(1), cls(2)],
+  };
+  const board = new Board(12, 12);
+  const keys = (cs: { x: number; y: number }[]) => cs.map((c) => `${c.x},${c.y}`).sort();
+
+  it('范围形状：直线、扇形、菱形、迴旋', () => {
+    const from = { x: 5, y: 5 };
+    expect(keys(areaCells(board, from, line, { x: 6, y: 5 }))).toEqual(['6,5', '7,5', '8,5']);
+    // 扇形第 i 行向两侧各 floor(i/2) 格：1 + 1 + 3 + 3 + 5 = 13
+    const c = areaCells(board, from, cone, { x: 5, y: 4 });
+    expect(c).toHaveLength(13);
+    expect(keys(c)).toContain('3,0');
+    expect(keys(areaCells(board, from, diamond, from))).toEqual(['4,5', '5,4', '5,5', '5,6', '6,5']);
+    expect(areaCells(board, from, charge, from)).toEqual([from]);
+    expect(keys(areaCells(board, from, sk({ type: 2 }), { x: 5, y: 4 }))).toEqual(['4,5', '5,4', '5,6', '6,5']);
+  });
+
+  it('习得：按等级、不含隐藏技，高级取代低级', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data: sdata, seed: 1 });
+    const p = b.unit(0)!;
+    expect(learnedSkills(p, sdata).map((s) => s.name)).toEqual(['石破天驚', '氣蓋山河', '聚氣LV1', '回復計', '集氣技']);
+    p.level = 3;
+    expect(learnedSkills(p, sdata).map((s) => s.name)).toContain('聚氣LV2');
+    expect(learnedSkills(p, sdata).map((s) => s.name)).not.toContain('聚氣LV1');
+  });
+
+  it('使用攻击技：扣气力，范围内每个敌人各自结算', () => {
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), data: sdata, seed: 3, blocks: [],
+      units: [act(0, 0, 'player', 2, 2), act(1, 1, 'enemy', 3, 2, 0x800), act(2, 1, 'enemy', 4, 2, 0x800), act(3, 1, 'enemy', 2, 5, 0x800)],
+    });
+    b.begin();
+    const p = b.unit(0)!;
+    const mp0 = p.mp;
+    expect(keys(b.skillTargets(p, line))).toEqual(['2,3', '3,2']); // 向下那条线能打到 (2,5)
+    const ev = b.useSkill(p, line, { x: 3, y: 2 });
+    const atk = ev.find((e) => e.type === 'attack');
+    expect(atk && atk.type === 'attack' && atk.hits.map((h) => h.uid).sort()).toEqual([1, 2]);
+    expect(p.mp).toBe(mp0 - 20);
+    expect(p.ended).toBe(true);
+    expect(b.useSkill(p, line, { x: 3, y: 2 })).toEqual([]);
+  });
+
+  it('回复技回复范围内己方体力，集气技回复自己气力', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 2, 2), act(1, 1, 'player', 3, 2)], blocks: [], data: sdata, seed: 1 });
+    b.begin();
+    const [p, q] = [b.unit(0)!, b.unit(1)!];
+    q.hp = 10;
+    b.useSkill(p, heal, { x: 2, y: 2 });
+    expect(q.hp).toBe(10 + Math.floor(q.stats.maxHp / 4));
+    expect(p.exp).toBeGreaterThan(0);
+    q.mp = 0;
+    b.useSkill(q, sdata.classes[1].skills[0], q); // 不是 q 的技能，无效
+    expect(q.mp).toBe(0);
+  });
+
+  it('集气技', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 2, 2)], blocks: [], data: sdata, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.mp = 0;
+    b.useSkill(p, charge, p);
+    expect(p.mp).toBe(Math.floor(p.stats.maxMp / 3));
+  });
+
+  it('升级时提示领悟新技能', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 2, 'enemy', 1, 0, 0x800)], blocks: [], data: sdata, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.exp = 99;
+    p.stats.hit = 255;
+    const ev = b.attack(p, b.unit(1)!);
+    expect(ev.some((e) => e.type === 'message' && e.text.includes('領悟了絕招'))).toBe(true);
+  });
+
+  it('敌人会用气力够用的攻击技', () => {
+    const edata: GameData = { ...sdata, classes: [cls(0), cls(1, { skills: [punch, line] }), cls(2)] };
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), data: edata, seed: 1, blocks: [],
+      units: [act(0, 0, 'player', 2, 2), act(1, 0, 'player', 2, 3), act(2, 1, 'enemy', 2, 6)],
+    });
+    b.begin();
+    const ev = b.endPlayerPhase();
+    const atk = ev.find((e) => e.type === 'attack');
+    expect(atk && atk.type === 'attack' && atk.skill.name).toBe('石破天驚');
   });
 });
