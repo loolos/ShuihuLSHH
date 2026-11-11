@@ -31,13 +31,22 @@ export class BattleUI {
     this.face.alt = '';
     this.dialog.prepend(this.face);
     // 对白期间：页面任何位置点击都继续（捕获阶段拦下，不让点击落到地图或按钮上）；
-    // 回车 / 空格继续；Esc 跳过这一段剩下的全部对白
+    // 回车 / 空格继续；Esc 跳过这一段剩下的全部对白。
+    // 手机上 Phaser 会对触摸调用 preventDefault，浏览器就不再补发 click，所以用 pointerup 推进；
+    // 推进后短时间内的鼠标/触摸/click 事件一并拦下，免得同一下点击又落到地图上。
+    let swallowUntil = 0;
+    const guard = (e: Event) => {
+      if (this.dialog.hidden && performance.now() > swallowUntil) return;
+      e.stopPropagation();
+      if (e.type === 'click') e.preventDefault();
+    };
+    for (const t of ['pointerdown', 'mousedown', 'mouseup', 'touchstart', 'touchend', 'click']) window.addEventListener(t, guard, true);
     window.addEventListener(
-      'click',
+      'pointerup',
       (e) => {
-        if (this.dialog.hidden) return;
-        e.preventDefault();
+        if (this.dialog.hidden) return guard(e);
         e.stopPropagation();
+        swallowUntil = performance.now() + 400;
         this.advance();
       },
       true,
