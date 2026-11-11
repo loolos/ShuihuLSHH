@@ -413,13 +413,15 @@ export class BattleScene extends Phaser.Scene {
     await wait(this, ms);
   }
 
-  private float(x: number, y: number, text: string, color: string) {
+  /** 地图上的飘字：黑底白字，停留一会儿再淡出，保证看得清 */
+  private float(x: number, y: number, text: string, _color?: string) {
     const p = cellToWorld(x, y);
     const t = this.add
-      .text(p.x, p.y - 70, text, { fontFamily: 'serif', fontSize: '20px', fontStyle: 'bold', color, stroke: '#000', strokeThickness: 4 })
+      .text(p.x, p.y - 72, text, { fontFamily: 'serif', fontSize: '20px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#000000', padding: { x: 6, y: 2 } })
       .setOrigin(0.5)
       .setDepth(100000);
-    this.tweens.add({ targets: t, y: p.y - 110, alpha: 0, duration: 1100, ease: 'Cubic.easeOut', onComplete: () => t.destroy() });
+    this.tweens.add({ targets: t, y: p.y - 92, duration: 350, ease: 'Cubic.easeOut' });
+    this.tweens.add({ targets: t, alpha: 0, delay: 900, duration: 300, onComplete: () => t.destroy() });
   }
 
   private async banner(text: string) {
