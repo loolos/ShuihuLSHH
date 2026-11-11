@@ -3,9 +3,27 @@
   "private": true,
   "type": "module",
   "description": "《水浒传之梁山好汉》网页版重制（Phaser 4 + TypeScript）",
-  "engines": { "node": ">=22.6" },
+  "engines": {
+    "node": ">=22.6"
+  },
   "scripts": {
+    "dev": "vite",
+    "build": "tsc -p . && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc -p .",
     "gen:docs": "node tools/gen-design-docs.ts",
-    "render:maps": "node tools/render-maps.ts"
+    "render:maps": "node tools/render-maps.ts",
+    "gen:manifest": "node tools/gen-manifest.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "phaser": "^4.2.1"
   }
 }

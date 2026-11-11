@@ -1,0 +1,50 @@
+# CLAUDE.md
+
+《水浒传之梁山好汉》（1999）网页重制。技术栈：Phaser 4 + TypeScript + Vite。唯一的设计文档是 `docs/game-design.md`。
+
+## 硬性规则
+
+- **不运行原版 EXE**（包括 `ShuiHu.exe`、`Autorun.exe`），只允许只读的静态分析。
+- **不修改 `gamedata/shuihu/` 里的任何文件。**
+- 从原版提取的产物（PNG、JSON、音频）只写到被忽略的 `extracted/`，不入库。
+- 仓库目前是**私有**的，因为 `gamedata/shuihu/` 里有原版文件。负责人以后会清理素材再公开。不要把原版素材放进构建产物或 `public/`。
+- 涉及原版的结论要写明证据（文件、偏移、EXE 地址）；推测要标明。
+
+## 文档约定
+
+- 设计改动只写进 `docs/game-design.md`，不要新开设计文档。
+- 文件格式和字段写进 `docs/binary-formats.md`。
+- `docs/reference/` 由 `npm run gen:docs` 生成，不要手改。
+
+## 命令
+
+| 命令 | 作用 |
+|---|---|
+| `npm run dev` | 开发服务器。开发模式会直接读取仓库里的 `gamedata/shuihu`，不用选目录 |
+| `npm run build` | 类型检查 + 生产构建（`dist/`，只含代码） |
+| `npm test` | Vitest 单元测试（没有 `gamedata/` 时自动跳过解析测试） |
+| `npm run typecheck` | 只做类型检查 |
+| `npm run gen:docs` | 重新生成 `docs/reference/` |
+| `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256） |
+| `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
+
+Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需要编译。
+
+## 目录
+
+```
+src/formats/   原版格式解析器，浏览器与 Node 共用（使用 Buffer 接口；浏览器里由 src/platform/buffer-shim.ts 提供）
+src/platform/  选择原版目录、校验、IndexedDB 缓存
+src/game/      Phaser 场景与表现层
+src/rules/     （待建）纯 TypeScript 规则引擎，不依赖 Phaser
+src/data/      manifest.json 等生成的数据
+tools/         Node 工具脚本
+tests/         Vitest 测试
+```
+
+## 工作方式
+
+- 在指定的功能分支上开发，按里程碑开 PR。负责人允许 Claude 自己合并 PR。
+- 合并前跑 `npm run build` 和 `npm test`；改了画面就用 Playwright 截图看一眼（电脑和手机两种尺寸）。
+- 目标平台：电脑浏览器；界面也要能在手机屏幕尺寸下浏览。
+- 部署：推送到 `main` 后由 `.github/workflows/pages.yml` 发布到 GitHub Pages。
