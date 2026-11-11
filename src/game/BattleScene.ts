@@ -5,10 +5,10 @@ import { Battle, type BattleEvent } from '../rules/battle.ts';
 import type { Cell } from '../rules/board.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { itemOf } from '../rules/data.ts';
-import type { Unit } from '../rules/unit.ts';
+import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { ACTION, animFor, textureFor } from './sprites.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -34,6 +34,11 @@ export class BattleScene extends Phaser.Scene {
   private seed?: number;
   battle!: Battle;
   private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics }>();
+  /**
+   * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
+   * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
+   */
+  private view = new Map<number, { x: number; y: number; facing: number; hp: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   private overlay!: Phaser.GameObjects.Graphics;
   private hoverG!: Phaser.GameObjects.Graphics;
@@ -53,6 +58,7 @@ export class BattleScene extends Phaser.Scene {
     this.stageName = data.stage;
     this.seed = data.seed;
     this.sprites = new Map();
+    this.view = new Map();
     this.groundItems = new Map();
     this.mode = { kind: 'idle' };
     this.busy = false;
@@ -112,10 +118,23 @@ export class BattleScene extends Phaser.Scene {
 
   // ───────────── 单位精灵 ─────────────
 
-  private spawn(u: Unit) {
-    const p = cellToWorld(u.x, u.y);
-    const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(u.x, u.y, 8));
-    const bar = this.add.graphics().setDepth(depthOf(u.x, u.y, 9));
+  private vs(u: Unit) {
+    let v = this.view.get(u.uid);
+    if (!v) this.view.set(u.uid, (v = { x: u.x, y: u.y, facing: u.facing, hp: u.hp }));
+    return v;
+  }
+
+  /** 回放结束后与引擎对齐 */
+  private syncView() {
+    for (const u of this.battle.units) if (this.view.has(u.uid)) this.view.set(u.uid, { x: u.x, y: u.y, facing: u.facing, hp: u.hp });
+  }
+
+  private spawn(u: Unit, at?: { x: number; y: number }) {
+    const v = this.vs(u);
+    if (at) Object.assign(v, at);
+    const p = cellToWorld(v.x, v.y);
+    const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
+    const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
     this.sprites.set(u.uid, { spr, bar });
     this.pose(u);
     return spr;
@@ -125,14 +144,15 @@ export class BattleScene extends Phaser.Scene {
   private pose(u: Unit) {
     const s = this.sprites.get(u.uid);
     if (!s) return;
+    const v = this.vs(u);
     const action = u.defending ? ACTION.defend : ACTION.walk;
-    const key = animFor(this, this.assets, u.classId, action, u.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, u.facing);
+    const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
     if (key) {
       s.spr.play(key);
       s.spr.anims.pause(s.spr.anims.currentAnim!.frames[0]);
     }
-    const p = cellToWorld(u.x, u.y);
-    s.spr.setPosition(p.x, p.y).setDepth(depthOf(u.x, u.y, 8));
+    const p = cellToWorld(v.x, v.y);
+    s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
     const dim = u.side === 'player' && u.ended && this.battle.phase === 'player';
     if (dim) s.spr.setTint(0x808080);
     else s.spr.clearTint();
@@ -142,9 +162,10 @@ export class BattleScene extends Phaser.Scene {
   private drawBar(u: Unit) {
     const s = this.sprites.get(u.uid);
     if (!s) return;
-    const p = cellToWorld(u.x, u.y);
-    const w = 30, r = Math.max(0, u.hp / Math.max(1, u.stats.maxHp));
-    s.bar.clear().setDepth(depthOf(u.x, u.y, 9));
+    const v = this.vs(u);
+    const p = cellToWorld(v.x, v.y);
+    const w = 30, r = Math.max(0, v.hp / Math.max(1, u.stats.maxHp));
+    s.bar.clear().setDepth(depthOf(v.x, v.y, 9));
     s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, p.y + 10, w + 2, 5);
     s.bar.fillStyle(SIDE_COLOR[u.side], 1).fillRect(p.x - w / 2, p.y + 11, Math.round(w * r), 3);
   }
@@ -368,12 +389,18 @@ export class BattleScene extends Phaser.Scene {
       for (const e of events) await this.play(e);
     } finally {
       this.busy = false;
+      this.syncView();
       this.refreshAll();
       const b = this.battle;
       this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       if (this.mode.kind !== 'idle') this.redraw();
     }
+  }
+
+  private focusOn(u: Unit, ms?: number) {
+    const v = this.vs(u);
+    return this.focus(v.x, v.y, ms);
   }
 
   private async focus(x: number, y: number, ms = 250) {
@@ -443,7 +470,7 @@ export class BattleScene extends Phaser.Scene {
     switch (e.type) {
       case 'say': {
         const u = e.uid !== null ? b.unit(e.uid) : undefined;
-        if (u?.present) await this.focus(u.x, u.y);
+        if (u?.present) await this.focusOn(u);
         await this.ui.say(e.speaker, e.text);
         break;
       }
@@ -458,15 +485,16 @@ export class BattleScene extends Phaser.Scene {
         this.refreshAll();
         if (e.side === 'player') {
           const first = b.active().find((u) => u.side === 'player' && !u.ended);
-          if (first) await this.focus(first.x, first.y, 400);
+          if (first) await this.focusOn(first, 400);
         }
         if (e.side === 'player' || b.units.some((u) => u.side === e.side && u.present && u.alive))
           await this.banner(e.side === 'player' ? `第 ${e.turn} 回合` : `${PHASE_NAME[e.side]}行动`);
         break;
       case 'appear': {
         const u = b.unit(e.uid)!;
-        await this.focus(u.x, u.y);
-        const spr = this.sprites.get(u.uid)?.spr ?? this.spawn(u);
+        Object.assign(this.vs(u), { x: e.x, y: e.y });
+        await this.focusOn(u);
+        const spr = this.sprites.get(u.uid)?.spr ?? this.spawn(u, { x: e.x, y: e.y });
         spr.setAlpha(0);
         this.pose(u);
         await new Promise<void>((r) => this.tweens.add({ targets: spr, alpha: 1, duration: 400, onComplete: () => r() }));
@@ -474,41 +502,59 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'move': {
         const u = b.unit(e.uid)!;
-        if (e.path.length === 1) this.pose(u);
-        else await this.walkPath(u, e.path);
+        const v = this.vs(u);
+        if (e.path.length > 1) await this.walkPath(u, e.path);
+        const last = e.path[e.path.length - 1];
+        Object.assign(v, { x: last.x, y: last.y, facing: e.facing });
         this.pose(u);
         break;
       }
       case 'face':
+        this.vs(b.unit(e.uid)!).facing = e.facing;
         this.pose(b.unit(e.uid)!);
         break;
       case 'attack': {
         const u = b.unit(e.uid)!, t = b.unit(e.target)!;
-        await this.focus(t.x, t.y);
-        await this.playOnce(u, ACTION.firstSkill, e.facing);
-        if (e.result.hit) {
-          const label = (e.result.crit ? '必杀 ' : '') + e.result.damage;
-          this.float(t.x, t.y, label, e.result.crit ? '#ffd040' : '#ffffff');
-          if (t.alive || t.hp === 0) await this.playOnce(t, ACTION.hurt, t.facing, 350);
-        } else {
-          this.float(t.x, t.y, 'MISS', '#9ab0c0');
-          await wait(this, 300);
-        }
+        const tv = this.vs(t);
+        this.vs(u).facing = e.facing;
+        await this.focusOn(t);
+        // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发
+        const skill = attackSkill(u, this.assets.data);
+        const hits = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
+        const frames = hits.length ? hits.map((h) => h.frame) : [1];
+        const parts = e.result.hit ? (e.result.parts.length === frames.length ? e.result.parts : [e.result.damage]) : [];
+        const impacts = frames.map((f, i) => {
+          const at = (f - 1) * ACTION_FRAME_MS;
+          return new Promise<void>((r) =>
+            this.time.delayedCall(at, () => {
+              if (!e.result.hit) {
+                if (i === 0) this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                return r();
+              }
+              const dmg = parts.length === frames.length ? parts[i] : i === frames.length - 1 ? e.result.damage : null;
+              if (dmg !== null) this.float(tv.x, tv.y, (e.result.crit ? '必杀 ' : '') + dmg, e.result.crit ? '#ffd040' : '#ffffff');
+              this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
+            }),
+          );
+        });
+        await Promise.all([this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500), ...impacts]);
         this.pose(u);
-        if (t.alive) this.pose(t);
+        this.pose(t);
         break;
       }
       case 'hp': {
         const u = b.unit(e.uid)!;
+        const v = this.vs(u);
+        v.hp = e.hp;
         this.drawBar(u);
-        if (e.text) this.float(u.x, u.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
-        else if (e.delta > 0) this.float(u.x, u.y, `+${e.delta}`, '#90e070');
+        if (e.text) this.float(v.x, v.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
+        else if (e.delta > 0) this.float(v.x, v.y, `+${e.delta}`, '#90e070');
         if (e.text) await wait(this, 400);
         break;
       }
       case 'status': {
-        const u = b.unit(e.uid)!;
-        this.float(u.x, u.y, tr(e.text), '#c080ff');
+        const v = this.vs(b.unit(e.uid)!);
+        this.float(v.x, v.y, tr(e.text), '#c080ff');
         await wait(this, 300);
         break;
       }
