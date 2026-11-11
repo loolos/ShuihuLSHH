@@ -7,10 +7,12 @@ import { cellToWorld, depthOf, worldToCell } from './iso.ts';
 
 /**
  * 人物动画：Man.lib 中每个职业的动作组按 4 个一组（4 个朝向）。
- * 动作组的 param 就是动作类型：1 = 走路（动作 0），2 = 普通攻击（动作 1），3 = 受击（动作 2，1 帧），0 = 技能。
- * 原版没有单独的站立动作；站立时显示走路的第 1 帧（负责人确认动作 0 是走路，2026-11-11）。
+ * 动作组的 param 就是动作类型（负责人看图确认，2026-11-11）：
+ *   1 = 走路（动作 0），2 = 受击（动作 1），3 = 防御（动作 2，1 帧），
+ *   0 = 攻击 / 技能（动作 3 起，每个技能一组；士兵的动作 3 是普通攻击）。
+ * 原版没有单独的站立动作；站立时显示走路的第 1 帧。
  */
-export const ACTION = { walk: 0, attack: 1, hurt: 2 } as const;
+export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
 const FRAME_MS = 120;
 
 export interface MapSceneData {
