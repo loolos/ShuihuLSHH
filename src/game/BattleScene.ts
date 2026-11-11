@@ -20,6 +20,9 @@ export interface BattleSceneData {
 
 type Mode = { kind: 'idle' } | { kind: 'selected'; u: Unit } | { kind: 'attack'; u: Unit } | { kind: 'item'; u: Unit };
 
+/** 人物身体的点击范围（相对格子中心，世界坐标） */
+const BODY_HALF_W = 24;
+const BODY_H = 82;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
 const wait = (scene: Phaser.Scene, ms: number) => new Promise<void>((r) => scene.time.delayedCall(ms, r));
@@ -264,7 +267,7 @@ export class BattleScene extends Phaser.Scene {
       this.pinch = null;
       if (d && !d.moved && p.button !== 2) {
         const w = cam.getWorldPoint(p.x, p.y);
-        this.click(worldToCell(w.x, w.y));
+        this.click(this.pick(w.x, w.y));
       }
     });
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
@@ -285,7 +288,7 @@ export class BattleScene extends Phaser.Scene {
         return;
       }
       const w = cam.getWorldPoint(p.x, p.y);
-      this.hover(worldToCell(w.x, w.y));
+      this.hover(this.pick(w.x, w.y));
     });
     this.input.on('wheel', (_p: unknown, _o: unknown, _dx: number, dy: number) => this.zoomBy(dy > 0 ? 1 / 1.2 : 1.2));
     this.input.mouse?.disableContextMenu();
@@ -297,6 +300,38 @@ export class BattleScene extends Phaser.Scene {
   zoomBy(f: number) {
     const cam = this.cameras.main;
     cam.setZoom(Phaser.Math.Clamp(cam.zoom * f, 0.4, 4));
+  }
+
+  /**
+   * 指针落点 → 格子。人物身体画在格子上方，玩家自然会点在身体上，
+   * 而身体覆盖的是后面一格；所以点到人物身体时按人物所在格处理：
+   * 攻击目标优先，其次是空格且不是可移动格时选中该人物。
+   */
+  private pick(wx: number, wy: number): Cell {
+    const c = worldToCell(wx, wy);
+    const b = this.battle;
+    const hits = b
+      .active()
+      .filter((u) => {
+        const p = cellToWorld(u.x, u.y);
+        return Math.abs(wx - p.x) <= BODY_HALF_W && wy >= p.y - BODY_H && wy <= p.y + HALF_H;
+      })
+      .sort((a, z) => z.x + z.y - (a.x + a.y)); // 靠前（深度大）的优先
+    if (!hits.length) return c;
+    const m = this.mode;
+    if (m.kind === 'selected' || m.kind === 'attack') {
+      const targets = b.attackTargets(m.u);
+      const at = b.unitAt(c.x, c.y);
+      if (at && targets.includes(at)) return c;
+      const t = hits.find((h) => targets.includes(h));
+      if (t) return { x: t.x, y: t.y };
+      if (m.kind === 'selected' && !at && m.u.side === 'player') {
+        const { green, yellow } = b.moveRange(m.u);
+        if ([...green, ...yellow].some((g) => g.x === c.x && g.y === c.y)) return c;
+      }
+    }
+    if (b.unitAt(c.x, c.y)) return c;
+    return { x: hits[0].x, y: hits[0].y };
   }
 
   private hover(c: Cell) {
@@ -390,7 +425,7 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
-  private async playOnce(u: Unit, action: number, facing: number, maxMs = 1400) {
+  private async playOnce(u: Unit, action: number, facing: number, maxMs = 800) {
     const s = this.sprites.get(u.uid);
     const key = s && animFor(this, this.assets, u.classId, action, facing, 0);
     if (!s || !key) return wait(this, 250);
@@ -454,7 +489,7 @@ export class BattleScene extends Phaser.Scene {
         if (e.result.hit) {
           const label = (e.result.crit ? '必杀 ' : '') + e.result.damage;
           this.float(t.x, t.y, label, e.result.crit ? '#ffd040' : '#ffffff');
-          if (t.alive || t.hp === 0) await this.playOnce(t, ACTION.hurt, t.facing, 500);
+          if (t.alive || t.hp === 0) await this.playOnce(t, ACTION.hurt, t.facing, 350);
         } else {
           this.float(t.x, t.y, 'MISS', '#9ab0c0');
           await wait(this, 300);
