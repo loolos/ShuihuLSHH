@@ -64,7 +64,7 @@
 | `title\tigeravi.avi`、`title\tailavi.avi` | 缺失 | 片头/片尾 AVI 视频（程序导入 `AVIFIL32`、`MSVFW32`） |
 | `tiger` + `.pcx` | 缺失 | 推测为与 tiger 视频配套的图片，用途未知 |
 | CD 音轨（推断） | 缺失 | 背景音乐无法从本副本提取 |
-| `ShuiHu.org`（Shuihu-Editor 引用的"原始未改 EXE"） | 本副本无此文件 | 不影响：Editor 的硬编码地址在本副本 `ShuiHu.exe` 上读出的角色名/技能名表完全正确（见 extraction-plan.md §1） |
+| `ShuiHu.org`（Shuihu-Editor 引用的"原始未改 EXE"） | 本副本无此文件 | 不影响：Editor 的硬编码地址在本副本 `ShuiHu.exe` 上读出的角色名/技能名表完全正确 |
 | `save\save*.sav` | 目录为空 | 无存档样本，存档格式只能参考 Editor 的结论 |
 
 ## 5. 重复与变体
@@ -99,7 +99,7 @@ act13-2 n13 act14-1 · n-add16 train2 act14-2 act14-3 n14
 
 ## 7. 完整文件表
 
-格式列为本次分析的识别结果，各格式的详细结构见 [binary-formats.md](binary-formats.md)。
+格式列为本次分析的识别结果，各格式的详细结构见 [binary-formats.md](../binary-formats.md)。
 
 | 路径 | 大小(B) | SHA256 | 格式 | 类别 | 备注 |
 |---|---:|---|---|---|---|
