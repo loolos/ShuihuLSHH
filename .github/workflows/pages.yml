@@ -1,0 +1,52 @@
+# 构建并部署到 GitHub Pages。构建产物只有代码；原版素材由玩家在浏览器中自行选择。
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npx vite build
+      - name: 确认构建产物不含原版文件
+        run: |
+          if find dist -iname '*.lib' -o -iname '*.grp' -o -iname '*.map' -o -iname '*.act' -o -iname '*.pab' \
+               -o -iname '*.hum' -o -iname '*.dab' -o -iname '*.exe' -o -iname '*.pal' | grep -q .; then
+            echo '构建产物中发现原版文件'; exit 1
+          fi
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

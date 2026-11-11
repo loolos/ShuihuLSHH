@@ -12,3 +12,14 @@
   - 规则数据表、关卡简报；
   - 剧本（简体和繁体）；
   - 原版文件清单（含 SHA256）。
+
+## 开发
+
+```bash
+npm install
+npm run dev     # 打开 http://localhost:5173 ，开发模式直接读取 gamedata/shuihu
+npm test
+npm run build
+```
+
+发布版（GitHub Pages）首次打开时，需要选择你自己的原版游戏目录（含 `ShuiHu.exe`、`Data`、`Map`）。文件只在浏览器本地读取并缓存，不会上传。
