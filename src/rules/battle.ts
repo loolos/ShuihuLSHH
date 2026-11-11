@@ -12,7 +12,7 @@ import {
 
 export const MAX_PLAYER_LEVEL = 30;
 export const EXP_PER_LEVEL = 100;
-/** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（暂定【待核】） */
+/** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：恢复上限的 1/15（暂定【待核】） */
 export const REST_DIVISOR = 15;
