@@ -26,18 +26,20 @@ export function critChance(att: Unit, skill: SkillDef): number {
 }
 
 /**
- * 保底伤害比例【新】（负责人 2026-11-12 选）：原版"攻 − 防 ≤ 0 时改为 10–59 随机"。
- * 防御每级 ×1.10、攻击只有 ×1.04–1.05，后期攻防都到 255 封顶后，普通攻击几乎都落到这个随机数上。
- * 重制版改为：伤害至少是 (攻 + 威力) 的 35%，必杀至少 70%。前期攻远大于防时不起作用。
+ * 伤害公式【新】（负责人 2026-11-12 选，比例公式）：设 A = 攻 + 技能威力，D = 防，
+ * 普通伤害 = A × A / (A + D)，必杀 = 普通 × 2。
+ * 原版是 A − D（必杀 2A − D），≤ 0 时改为 10–59 随机（EXE 0x406c60）。防御每级 ×1.10、攻击只有 ×1.04–1.05，
+ * 后期攻防都到 255 封顶后普通攻击几乎都落到这个随机数上；比例公式在任何阶段攻防都起作用。
  */
-export const DAMAGE_FLOOR = 0.35;
+export function ratioDamage(a: number, d: number): number {
+  return a > 0 ? (a * a) / (a + Math.max(0, d)) : 0;
+}
 
-/** 不含随机部分的伤害：返回 [普通, 必杀] */
+/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整） */
 export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
-  const a = att.stats.attack + power;
-  const d = def.stats.defense;
-  return [Math.max(a - d, Math.floor(a * DAMAGE_FLOOR)), Math.max(2 * a - d, Math.floor(2 * a * DAMAGE_FLOOR))];
+  const n = ratioDamage(att.stats.attack + power, def.stats.defense);
+  return [n, 2 * n];
 }
 
 export interface AttackPreview {
