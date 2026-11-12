@@ -784,6 +784,8 @@ export class Battle {
       this.applyItem(u, plan.healSlot);
     } else {
       if (plan.path && plan.path.length > 1) {
+        // 路程超过移动力就是强行军（跟随型 AI 才会这样走）
+        if (plan.path.length - 1 > u.stats.move) u.forcedMarch = true;
         this.walk(u, plan.path);
         this.afterAction();
       }
