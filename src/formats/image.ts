@@ -62,8 +62,8 @@ function decodeEntry(buf: Buffer, e: number, entSize: 19 | 20): Frame {
   const off = buf.readUInt32LE(e);
   const width = buf.readUInt16LE(e + 4);
   const height = buf.readUInt16LE(e + 8);
-  const anchorX = buf.readUInt16LE(e + 10);
-  const anchorY = buf.readUInt16LE(e + 12);
+  const anchorX = buf.readInt16LE(e + 10); // 有符号：Man.lib 跳跃类动作有负值（如 史進 龍爭虎鬥 −2…−70）
+  const anchorY = buf.readInt16LE(e + 12);
   const enc = entSize === 20 ? buf.readUInt16LE(e + 14) : buf[e + 14];
   const size = buf.readUInt32LE(e + (entSize === 20 ? 16 : 15));
   const src = buf.subarray(off, off + size);
