@@ -175,5 +175,26 @@ describe.skipIf(!has)('测试用跳关', () => {
     expect(back.members).toEqual(jumpTo(files, data, stages, early, newCampaign(0)).members);
     expect(back.members.find((m) => m.classId === 0)!.level).toBeLessThan(5);
     expect(back.gold).toBe(500);
+
+    // 直接进城镇：N-add07（25）之后是城镇 4，下一关 26
+    const { jumpToTown, expectedGold } = await import('../src/rules/preset.ts');
+    const t = jumpToTown(files, data, stages, 25, 4, 26, newCampaign(0));
+    const pos25 = stages.findIndex((s) => s.index === 25);
+    expect(t.stage).toBe(25);
+    expect(t.town).toBe(4);
+    // 等级按下一关配，装备只用城镇 4 之前的店（城镇 4 的鐵拳留给玩家自己买）
+    const at26 = jumpTo(files, data, stages, 26, newCampaign(0));
+    expect(t.members.find((m) => m.classId === 0)!.level).toBe(at26.members.find((m) => m.classId === 0)!.level);
+    expect(data.items[t.members.find((m) => m.classId === 0)!.slots[0] - 1].name).not.toBe('鐵拳');
+    expect(t.gold).toBe(expectedGold(files, data, stages, pos25));
+    expect(t.gold).toBeGreaterThan(1000);
+    // 手上钱更多就保留
+    expect(jumpToTown(files, data, stages, 25, 4, 26, { ...newCampaign(0), gold: 999999 }).gold).toBe(999999);
+    // 分路：小径（42）只算小径，不把大道（41）也算进去
+    const p41 = stages.findIndex((s) => s.index === 41);
+    const p42 = stages.findIndex((s) => s.index === 42);
+    const prev = expectedGold(files, data, stages, p41 - 1);
+    expect(expectedGold(files, data, stages, p42) - prev).toBeLessThan(expectedGold(files, data, stages, p41) - prev + 1000);
+    expect(expectedGold(files, data, stages, p42)).toBeLessThan(expectedGold(files, data, stages, p41) * 1.5);
   });
 });
