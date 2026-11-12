@@ -262,7 +262,7 @@ function startGame(assets: Assets) {
     history.replaceState(null, '', u);
   };
   sel.onchange = () => {
-    // 从下拉框跳关：保留已有人物并按那一关补等级和装备；选"新游戏"则清空
+    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空
     goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jumpTo(assets.files, assets.data, stages, Number(sel.value), campaign));
   };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
