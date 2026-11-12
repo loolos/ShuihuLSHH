@@ -22,14 +22,14 @@ const cls = (id: number, o: Partial<ClassDef> = {}): ClassDef => ({
   id, name: `C${id}`, hp: g(100), mp: g(50), attack: g(60), defense: g(20), hit: g(80), agility: g(40), crit: g(10), move: 4,
   weaponType: 0, goldCap: 50, defaultItems: [0, 0, 0, 0, 0, 0, 0], skills: [punch], ...o,
 });
-const glove = { type: 0, name: '皮手套', attack: 7, defense: 0, hit: 0, agility: 0, crit: 0, moveBonus: 0, range: 0, maxHp: 0, maxMp: 0, regenHp: 0, regenMp: 0, poison: 0, stun: 0 } as unknown as Item;
+const glove = { type: 0, name: '皮手套', attack: 7, defense: 0, attackStep: 0, attackSteps: 0, defenseStep: 0, defenseSteps: 0, hit: 0, agility: 0, crit: 0, moveBonus: 0, range: 0, maxHp: 0, maxMp: 0, regenHp: 0, regenMp: 0, poison: 0, stun: 0 } as unknown as Item;
 const data: GameData = { classes: [cls(0), cls(1), cls(2, { goldCap: 0 })], items: [glove], charNames: ['甲', '乙', '丙'], heroName: '甲' };
 
 function unit(o: Partial<Unit>): Unit {
   const stats = computeStats(data.classes[o.classId ?? 0], o.level ?? 0, o.slots ?? [], data);
   return {
     uid: 0, classId: 0, name: 'u', side: 'player', x: 0, y: 0, facing: 0, level: 0, exp: 0, hp: stats.maxHp, mp: stats.maxMp, stats,
-    slots: [], gold: 0, ai: { mode: 0, target: 0, point: { x: 0, y: 0 } }, present: true, alive: true, defending: false, poisonTurns: 0,
+    slots: [], forge: [], gold: 0, ai: { mode: 0, target: 0, point: { x: 0, y: 0 } }, present: true, alive: true, defending: false, poisonTurns: 0,
     stunTurns: 0, movementRemaining: 4, forcedMarch: false, acted: false, ended: false, turnStart: null, ...o,
   };
 }

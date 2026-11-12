@@ -15,6 +15,15 @@ const VA_STAGES = 0x4430f0; // 关卡地图路径表（76 项，可为空）
 const VA_PROMPTS = 0x443988;
 const VA_REPLIES = 0x4439b2;
 const PROMPT_COUNT = 3;
+/** 城镇（0x418a40 菜单、0x4149a0 选货、0x419360 酒店交谈）：店名 5 项，接着是各店的招呼语和告别语 */
+const VA_SHOP_NAMES = 0x44392c; // 酒店、武器店、打鐵鋪、藥鋪、當鋪
+const VA_SHOP_GREET = 0x44395c;
+const VA_SHOP_BYE = 0x443970;
+/** 酒店传闻：19 条文字指针；每个城镇 {s16 起始, s16 条数}（0x445f50，城镇号 0–13，−1 = 没有） */
+const VA_RUMORS = 0x4439d8;
+const RUMOR_COUNT = 19;
+const VA_TOWN_RUMORS = 0x445f50;
+export const TOWN_COUNT = 13;
 
 export const CLASS_COUNT = 72;
 export const PLAYABLE_COUNT = 18; // 绰号表只有前 18 项（可控好汉），其后紧接技能名表
@@ -52,6 +61,8 @@ export interface ExeTables {
   stages: { index: number; mapPath: string; mapName: string; title: string }[];
   /** 二选一对话框（见 VA_PROMPTS） */
   prompts: ExePrompt[];
+  /** 城镇的店名、招呼语、告别语（各 5 项，按店序号），以及每个城镇号（1–13）的酒店传闻 */
+  town: { shops: string[]; greet: string[]; bye: string[]; rumors: string[][] };
 }
 
 export function readExeTables(exe: Buffer): ExeTables {
@@ -76,6 +87,7 @@ export function readExeTables(exe: Buffer): ExeTables {
         ],
       };
     }),
+    town: readTown(exe),
     stages: paths.map((p, i) => ({
       index: i,
       mapPath: p,
@@ -83,4 +95,14 @@ export function readExeTables(exe: Buffer): ExeTables {
       title: skillsAndStages[SKILL_NAME_COUNT + i].replace(/\s+/g, ' ').trim(),
     })),
   };
+}
+
+function readTown(exe: Buffer): ExeTables['town'] {
+  const all = readPtrTable(exe, VA_RUMORS, RUMOR_COUNT);
+  const rumors = Array.from({ length: TOWN_COUNT + 1 }, (_, t) => {
+    const o = VA_TOWN_RUMORS - IMAGE_BASE + 4 * t;
+    const start = exe.readInt16LE(o), count = exe.readInt16LE(o + 2);
+    return start < 0 ? [] : all.slice(start, start + count);
+  });
+  return { shops: readPtrTable(exe, VA_SHOP_NAMES, 5), greet: readPtrTable(exe, VA_SHOP_GREET, 5), bye: readPtrTable(exe, VA_SHOP_BYE, 5), rumors };
 }

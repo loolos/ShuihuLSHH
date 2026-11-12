@@ -83,7 +83,10 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
 }
 
 /** 把 8 位索引帧转成 RGBA 画布；索引 0 透明。 */
-export function frameToCanvas(fr: Frame, palette: Uint8Array): HTMLCanvasElement {
+/** Object.lib（道具图标）用调色板 13 号纯蓝 (0,0,255) 当底色 */
+export const ICON_KEY = 13;
+
+export function frameToCanvas(fr: Frame, palette: Uint8Array, key = 0): HTMLCanvasElement {
   const c = document.createElement('canvas');
   c.width = Math.max(1, fr.width);
   c.height = Math.max(1, fr.height);
@@ -92,7 +95,7 @@ export function frameToCanvas(fr: Frame, palette: Uint8Array): HTMLCanvasElement
   const d = img.data;
   for (let i = 0; i < fr.pixels.length; i++) {
     const p = fr.pixels[i];
-    if (!p) continue;
+    if (!p || p === key) continue;
     d[i * 4] = palette[p * 3];
     d[i * 4 + 1] = palette[p * 3 + 1];
     d[i * 4 + 2] = palette[p * 3 + 2];
