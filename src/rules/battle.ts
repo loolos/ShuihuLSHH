@@ -654,7 +654,11 @@ export class Battle {
       t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
       this.emit({ type: 'face', uid: t.uid, facing: t.facing });
       this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0 });
-      if (hits.length === 1) this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。` : '未造成敵方傷害。' });
+      if (hits.length === 1) {
+        const n = r.partHit.length, got = r.partHit.filter(Boolean).length;
+        const seg = n > 1 && got < n ? `（${n} 段命中 ${got} 段）` : ''; // 多段攻击每段单独判定【新】
+        this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。${seg}` : '未造成敵方傷害。' });
+      }
       if (t.hp === 0) {
         this.kill(u, t);
         continue;

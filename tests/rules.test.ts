@@ -6,7 +6,8 @@ import { baseDamage, critChance, facingRelation, hitChance, rollAttack } from '.
 import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { computeStats, facingTowards, grow, refreshStats, type Unit } from '../src/rules/unit.ts';
+import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
+import { GRUNT, GRUNT_GEAR, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -36,11 +37,20 @@ function unit(o: Partial<Unit>): Unit {
 }
 
 describe('属性', () => {
-  it('属性 = 基础值 × (成长/100)^等级，截断取整并封顶', () => {
-    expect(grow({ base: 65, growth: 105 }, 1)).toBe(68); // 1 级武龍攻击
-    expect(grow({ base: 65, growth: 105 }, 10)).toBe(105);
-    expect(grow({ base: 65, growth: 105 }, 30)).toBe(255);
-    expect(grow({ base: 400, growth: 110 }, 5, 510)).toBe(510);
+  it('每级加 固定点数 + 初始值 × 百分比，累计后取整，不封顶', () => {
+    const wulong = cls(0, { attack: g(65, 105), defense: g(30, 110) });
+    expect(perLevel(wulong, 'attack')).toBeCloseTo(1.5 + 65 * 0.03); // 3.45
+    expect(statAt(wulong, 'attack', 1)).toBe(68);
+    expect(statAt(wulong, 'attack', 10)).toBe(99);
+    expect(statAt(wulong, 'attack', 30)).toBe(168);
+    expect(statAt(cls(0, { defense: g(300) }), 'defense', 30)).toBe(300 + 30 * (2 + 24)); // 不封顶
+  });
+  it('杂兵用模板：同等级属性一样，装备只给固定加成', () => {
+    const soldier = cls(32, { attack: g(55, 105) }), fisher = cls(21, { attack: g(50, 104) });
+    expect(statAt(soldier, 'attack', 20)).toBe(statAt(fisher, 'attack', 20));
+    expect(statAt(soldier, 'hit', 0)).toBe(GRUNT.hit);
+    const d2: GameData = { ...data, classes: [soldier] };
+    expect(computeStats(soldier, 0, [1], d2).attack).toBe(GRUNT.attack + GRUNT_GEAR.attack!); // 皮手套 +7 不算
   });
   it('装备加成按道具编号（从 1 开始）计算', () => {
     expect(computeStats(data.classes[0], 0, [1], data).attack).toBe(67);
@@ -66,20 +76,21 @@ describe('命中与伤害', () => {
     expect(facingTowards({ x: 0, y: 1 }, { x: 0, y: 0 })).toBe(0);
     expect(facingTowards({ x: 0, y: 0 }, { x: 3, y: 1 })).toBe(3);
   });
-  it('命中 = 命中 − 敏捷/2，按朝向放大，我方保底 90、敌方保底 30', () => {
+  it('命中 = 命中 / (命中 + 敏捷/2)，按朝向放大，敌我同一公式、没有保底', () => {
     // 守方面向 +y（朝向 2），攻方从 +y 方向往 −y 打（朝向 0）：正面
     const d = unit({ side: 'enemy', x: 0, y: 0, facing: 2, classId: 1 });
-    expect(hitChance(a, d, punch)).toBe(90); // 80 − 20 = 60，保底 90（原版 80）
+    expect(hitChance(a, d, punch)).toBe(80); // 80 / (80 + 20)
     const e = unit({ side: 'enemy', x: 0, y: 1, facing: 0 });
     const p = unit({ side: 'player', x: 0, y: 0, facing: 2 });
-    expect(hitChance(e, p, punch)).toBe(60);
+    expect(hitChance(e, p, punch)).toBe(80);
+    expect(hitChance(e, p, { ...punch, hitMod: -10 })).toBe(70);
     p.facing = 0; // 背后
-    expect(hitChance(e, p, punch)).toBe(90);
+    expect(hitChance(e, p, punch)).toBe(100);
     p.facing = 1; // 侧面
-    expect(hitChance(e, p, punch)).toBe(78);
+    expect(hitChance(e, p, punch)).toBe(100);
     p.defending = true;
-    expect(hitChance(e, p, punch)).toBe(54);
-    expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(30);
+    expect(hitChance(e, p, punch)).toBe(72);
+    expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
   it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
     const d = unit({ side: 'enemy' });
@@ -100,7 +111,24 @@ describe('命中与伤害', () => {
     const multi = { ...punch, hits: [25, 25, 25, 25].map((p, i) => ({ frame: i + 1, percent: p, dir: 0 })) };
     const r = rollAttack(a, unit({ side: 'enemy' }), multi, new Rng(3), true);
     expect(r.parts).toHaveLength(4);
+    expect(r.partHit).toEqual([true, true, true, true]);
     expect(r.parts.reduce((s, x) => s + x, 0)).toBe(r.damage);
+  });
+  it('多段攻击每段单独判定命中和必杀', () => {
+    const multi = { ...punch, hits: [25, 25, 25, 25].map((p, i) => ({ frame: i + 1, percent: p, dir: 0 })) };
+    const foe = unit({ side: 'enemy', x: 0, y: 0, facing: 2 }); // 正面，命中 80%
+    const atk = unit({ side: 'player', x: 0, y: 1, facing: 0, stats: { ...a.stats, crit: 100 } }); // 必杀 50%
+    const rng = new Rng(7);
+    let partial = 0, mixedCrit = 0;
+    for (let i = 0; i < 200; i++) {
+      const r = rollAttack(atk, foe, multi, rng);
+      r.partHit.forEach((h, k) => !h && expect(r.parts[k]).toBe(0));
+      expect(r.parts.reduce((s, x) => s + x, 0)).toBe(r.damage);
+      if (r.partHit.some(Boolean) && !r.partHit.every(Boolean)) partial++;
+      if (r.partCrit.some(Boolean) && r.partCrit.some((c, k) => r.partHit[k] && !c)) mixedCrit++;
+    }
+    expect(partial).toBeGreaterThan(50);
+    expect(mixedCrit).toBeGreaterThan(50);
   });
   it('击倒经验只看敌人等级', () => {
     const foe = unit({ level: 10 });

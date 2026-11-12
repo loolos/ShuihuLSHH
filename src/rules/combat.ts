@@ -12,13 +12,17 @@ export function facingRelation(attackerFacing: number, defenderFacing: number): 
 
 const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
 
-/** 命中率（%）。≥ 100 必中；我方攻击保底 90（原版 80，负责人 2026-11-11 改），其它保底 30。 */
+/**
+ * 命中率（%）【新】（负责人 2026-11-12）：命中 / (命中 + 守方敏捷/2) × 100 + 技能修正，再乘朝向和防御系数，最高 100。
+ * 敌我同一公式、没有保底。原版是"命中 − 敏捷/2"，我方保底 80、其它保底 30（EXE 0x406c60）。
+ */
 export function hitChance(att: Unit, def: Unit, skill: SkillDef): number {
-  let h = Math.max(0, att.stats.hit - def.stats.agility / 2 + skill.hitMod);
+  const hv = Math.max(1, att.stats.hit);
+  let h = Math.max(0, (100 * hv) / (hv + def.stats.agility / 2) + skill.hitMod);
   h *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
   if (def.defending) h *= 0.7;
   h = Math.floor(h);
-  return Math.min(100, Math.max(att.side === 'player' ? 90 : 30, h));
+  return Math.min(100, h);
 }
 
 export function critChance(att: Unit, skill: SkillDef): number {
@@ -59,40 +63,57 @@ export function previewAttack(att: Unit, def: Unit, skill: SkillDef): AttackPrev
 }
 
 export interface HitResult {
-  hit: boolean;
-  crit: boolean;
-  damage: number; // 总伤害
-  parts: number[]; // 多段伤害
+  hit: boolean; // 至少一段命中
+  crit: boolean; // 至少一段必杀
+  damage: number; // 总伤害（各段之和）
+  parts: number[]; // 多段伤害（落空的段为 0）
+  partHit: boolean[];
+  partCrit: boolean[];
   poisoned: boolean;
   stunned: boolean;
   backstab: 'back' | 'side' | 'front';
 }
 
 /**
- * 一次攻击的结算（不改动单位状态）。
- * forceHit：反击必定命中。
+ * 一次攻击的结算（不改动单位状态）。forceHit：反击必定命中。
+ * 多段攻击【新】（负责人 2026-11-12）：先算出总伤害，按各段比例拆开，每段再单独判定命中和必杀。
+ * 原版只判定一次，多段只是把同一次伤害分段显示。
  */
 export function rollAttack(att: Unit, def: Unit, skill: SkillDef, rng: Rng, forceHit = false): HitResult {
   const rel = facingRelation(facingTowards(att, def, att.facing), def.facing);
-  const hit = forceHit || rng.chance(hitChance(att, def, skill));
-  if (!hit) return { hit, crit: false, damage: 0, parts: [], poisoned: false, stunned: false, backstab: rel };
-  const crit = rng.chance(critChance(att, skill));
-  const [n, c] = baseDamage(att, def, skill);
-  let dmg: number = crit ? c : n;
-  if (def.defending) dmg *= 0.7;
-  dmg *= 0.9 + rng.next() * 0.2; // D-9【新】：±10% 浮动（原版无浮动）
-  dmg = Math.max(0, Math.floor(dmg));
   const hits = skill.hits.length ? skill.hits.filter((h) => h.dir === skill.hits[0].dir) : [{ percent: 100 }];
   const total = hits.reduce((s, h) => s + h.percent, 0) || 100;
-  const parts = hits.map((h) => Math.floor((dmg * h.percent) / total));
-  parts[parts.length - 1] += dmg - parts.reduce((s, p) => s + p, 0);
+  const hitRate = hitChance(att, def, skill);
+  const critRate = critChance(att, skill);
+  const partHit: boolean[] = [];
+  const partCrit: boolean[] = [];
+  for (let i = 0; i < hits.length; i++) {
+    const h = forceHit || rng.chance(hitRate);
+    partHit.push(h);
+    partCrit.push(h && rng.chance(critRate));
+  }
+  const hit = partHit.some(Boolean);
+  if (!hit) return { hit, crit: false, damage: 0, parts: hits.map(() => 0), partHit, partCrit, poisoned: false, stunned: false, backstab: rel };
+  const [n, c] = baseDamage(att, def, skill);
+  let k = def.defending ? 0.7 : 1;
+  k *= 0.9 + rng.next() * 0.2; // D-9【新】：±10% 浮动（原版无浮动）
+  const split = (v: number) => {
+    const ps = hits.map((h) => Math.floor((v * h.percent) / total));
+    ps[ps.length - 1] += v - ps.reduce((s, p) => s + p, 0);
+    return ps;
+  };
+  const normal = split(Math.max(0, Math.floor(n * k)));
+  const critical = split(Math.max(0, Math.floor(c * k)));
+  const parts = hits.map((_, i) => (!partHit[i] ? 0 : partCrit[i] ? critical[i] : normal[i]));
   const poisonRate = skill.poison + att.stats.poison;
   const stunRate = skill.stun + att.stats.stun;
   return {
     hit,
-    crit,
-    damage: dmg,
+    crit: partCrit.some(Boolean),
+    damage: parts.reduce((s, p) => s + p, 0),
     parts,
+    partHit,
+    partCrit,
     poisoned: poisonRate > 0 && rng.chance(poisonRate),
     stunned: stunRate > 0 && rng.chance(stunRate),
     backstab: rel,

@@ -1,4 +1,5 @@
-// 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
+// 战场单位与属性计算。成长规则见 growth.ts 与 docs/game-design.md §3。
+import { statAt, tierGear } from './growth.ts';
 import { basicAttack, type Buff, EQUIP_SLOTS, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
@@ -66,23 +67,15 @@ export const DIRS = [
   { x: 1, y: 0 },
 ] as const;
 
-export const CAP_HPMP = 510;
-export const CAP_STAT = 255;
-
-/** 属性(L) = floor(基础值 × (成长 / 100)^L) */
-export function grow(s: { base: number; growth: number }, level: number, cap = CAP_STAT): number {
-  return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
-}
-
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
-    maxHp: grow(cls.hp, level, CAP_HPMP),
-    maxMp: grow(cls.mp, level, CAP_HPMP),
-    attack: grow(cls.attack, level),
-    defense: grow(cls.defense, level),
-    hit: grow(cls.hit, level),
-    agility: grow(cls.agility, level),
-    crit: grow(cls.crit, level),
+    maxHp: statAt(cls, 'hp', level),
+    maxMp: statAt(cls, 'mp', level),
+    attack: statAt(cls, 'attack', level),
+    defense: statAt(cls, 'defense', level),
+    hit: statAt(cls, 'hit', level),
+    agility: statAt(cls, 'agility', level),
+    crit: statAt(cls, 'crit', level),
     move: cls.move,
     rangeBonus: 0,
     poison: 0,
@@ -90,9 +83,26 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     regenHp: 0,
     regenMp: 0,
   };
+  const tmplGear = tierGear(cls);
+  if (tmplGear) {
+    st.maxHp += tmplGear.hp ?? 0;
+    st.maxMp += tmplGear.mp ?? 0;
+    st.attack += tmplGear.attack ?? 0;
+    st.defense += tmplGear.defense ?? 0;
+    st.agility += tmplGear.agility ?? 0;
+  }
   for (let k = 0; k < EQUIP_SLOTS; k++) {
     const it = itemOf(data, slots[k]);
     if (!isEquipment(it)) continue;
+    // 模板兵：装备只保留射程、中毒、昏迷、回复这些"攻击方式"类效果
+    if (tmplGear) {
+      st.rangeBonus += it!.range;
+      st.regenHp += it!.regenHp;
+      st.regenMp += it!.regenMp;
+      st.poison += it!.poison;
+      st.stun += it!.stun;
+      continue;
+    }
     const f = forgedStats(it!, forge[k] ?? 0);
     st.attack += f.attack;
     st.defense += f.defense;
@@ -109,9 +119,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.stun += it!.stun;
   }
   for (const b of buffs) if (b.stat in st) st[b.stat as keyof Stats] += b.value;
-  st.maxHp = Math.min(CAP_HPMP, st.maxHp);
-  st.maxMp = Math.min(CAP_HPMP, st.maxMp);
-  for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, Math.min(CAP_STAT, st[k]));
+  for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, st[k]);
   if (poisoned) {
     st.attack = Math.floor(st.attack / 2);
     st.defense = Math.floor(st.defense / 2);
