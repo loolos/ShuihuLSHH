@@ -6,7 +6,8 @@ import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
-import { isSupportSkill } from '../rules/skills.ts';
+import { isHealSkill, isSupportSkill } from '../rules/skills.ts';
+import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
@@ -807,8 +808,10 @@ export class BattleScene extends Phaser.Scene {
           const first = b.active().find((u) => u.side === 'player' && !u.ended);
           if (first) await this.focusOn(first, 400);
         }
-        if (e.side === 'player' || b.units.some((u) => u.side === e.side && u.present && u.alive))
+        if (e.side === 'player' || b.units.some((u) => u.side === e.side && u.present && u.alive)) {
+          if (e.side === 'player') sound.play('turn');
           await this.banner(e.side === 'player' ? `第 ${e.turn} 回合` : `${PHASE_NAME[e.side]}行动`);
+        }
         break;
       case 'appear': {
         const u = b.unit(e.uid)!;
@@ -902,16 +905,19 @@ export class BattleScene extends Phaser.Scene {
                   if (!res.hit) {
                     // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
                     if (i > 0) return r();
+                    sound.play('miss');
                     this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
                     return void this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                   }
                   const perPart = res.parts.length === frames.length;
                   if (perPart && !res.partHit[i]) {
+                    sound.play('miss');
                     this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
                     return r();
                   }
                   const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
                   const crit = perPart ? res.partCrit[i] : res.crit;
+                  sound.play(crit ? 'crit' : 'hit');
                   if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
                   this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                 });
@@ -919,6 +925,7 @@ export class BattleScene extends Phaser.Scene {
           ),
         );
         // 集气技、类型 9 的回复技：出手动画放完才放特效（原版 0x407522）
+        sound.cast(skill.skillId, skill.type, basic);
         const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500);
         if (fx?.atEnd) waves.push(cast.then(fxWave));
         await Promise.all([cast, ...waves, ...impacts]);
@@ -932,6 +939,7 @@ export class BattleScene extends Phaser.Scene {
         const v = this.vs(u);
         v.hp = e.hp;
         this.drawBar(u);
+        if (e.delta > 0) sound.play('heal');
         if (e.text) this.float(v.x, v.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
         else if (e.delta > 0) this.float(v.x, v.y, `+${e.delta}`, '#90e070');
         if (e.text) await wait(this, 400);
@@ -939,6 +947,7 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'status': {
         const v = this.vs(b.unit(e.uid)!);
+        sound.play('status');
         this.float(v.x, v.y, tr(e.text), '#c080ff');
         await wait(this, 300);
         break;
@@ -948,6 +957,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'die':
       case 'leave': {
+        if (e.type === 'die') sound.play('ko');
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();
@@ -965,6 +975,7 @@ export class BattleScene extends Phaser.Scene {
         this.groundItems.delete(`${e.x},${e.y}`);
         break;
       case 'end':
+        sound.play(e.result === 'won' ? 'win' : 'lose');
         this.select({ kind: 'idle' });
         await wait(this, 300);
         if (this.onEnd) this.onEnd(this.battle, e.result === 'won', e.text);

@@ -7,6 +7,7 @@ import { idbClear } from './platform/idb.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
+import { installSound } from './game/sound.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { parsePasHeader } from './formats/pas.ts';
@@ -327,6 +328,8 @@ function setupUpdateButton() {
     ]);
   };
 }
+
+installSound($<HTMLButtonElement>('sound'));
 
 async function boot() {
   try {
