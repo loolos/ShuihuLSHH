@@ -2,7 +2,7 @@
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
 import type { Item } from '../formats/goo.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
-import { canEquip, equipSlotOf, EQUIP_SLOTS, forgedStats, forgeLimit, itemOf, SLOT_COUNT } from '../rules/data.ts';
+import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
 import { computeStats } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
@@ -167,22 +167,7 @@ export class TownUI {
 
   /** 道具的简短说明：装备列攻防等加成（含打铁），消耗品列效果 */
   private summary(it: Item, n = 0): string {
-    const p: string[] = [];
-    const f = forgedStats(it, n);
-    if (equipSlotOf(it) >= 0) {
-      if (f.attack) p.push(`攻${f.attack}`);
-      if (f.defense) p.push(`防${f.defense}`);
-      for (const [k, l] of [['hit', '命'], ['agility', '敏'], ['crit', '必'], ['moveBonus', '移'], ['range', '射程'], ['maxHp', '体'], ['maxMp', '气']] as const)
-        if (it[k]) p.push(`${l}${it[k] > 0 ? '+' : ''}${it[k]}`);
-      if (it.regenHp) p.push(`每回合回体${it.regenHp}`);
-      if (it.regenMp) p.push(`每回合回气${it.regenMp}`);
-    } else {
-      if (it.healHp) p.push(it.healHp < 0 ? '体力全满' : `回体${it.healHp}`);
-      if (it.healMp) p.push(it.healMp < 0 ? '气力全满' : `回气${it.healMp}`);
-      if (it.curePoison || it.type === 18) p.push('解毒');
-      if (it.cureStun || it.type === 19) p.push('解昏迷');
-    }
-    return p.join(' ');
+    return itemSummary(it, n);
   }
 
   private itemName(it: Item, n: number) {
