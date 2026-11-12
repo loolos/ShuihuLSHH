@@ -1,4 +1,6 @@
 # 构建并部署到 GitHub Pages。构建产物只有代码；原版素材由玩家在浏览器中自行选择。
+# 仓库目前是私有的，没有开 Pages（免费账号的私有仓库不能用 Pages）：
+# push / PR 只做构建和测试；部署只在手动运行（workflow_dispatch）时进行。仓库公开、开好 Pages 后再改回 push 自动部署。
 name: Pages
 
 on:
@@ -36,12 +38,12 @@ jobs:
             echo '构建产物中发现原版文件'; exit 1
           fi
       - uses: actions/upload-pages-artifact@v3
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
         with:
           path: dist
 
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ubuntu-latest
     environment:
