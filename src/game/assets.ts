@@ -7,6 +7,7 @@ import { parseMap } from '../formats/map.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
 import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
 import type { GameData } from '../rules/data.ts';
+import { fxGroups } from './effects.ts';
 
 export interface Assets {
   files: GameFiles;
@@ -74,10 +75,11 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
         const r = assets.man.actions[g];
         if (r) for (let i = r.first; i <= r.last; i++) add('Data/Man.lib', assets.man.span(i));
       }
-    for (const sk of assets.data.classes[cls]?.skills ?? []) {
-      const r = sk.effect > 0 ? assets.effects.actions[sk.effect - 1] : undefined;
-      if (r) for (let i = r.first; i <= r.last; i++) add('Data/Effect.lib', assets.effects.span(i));
-    }
+    for (const sk of assets.data.classes[cls]?.skills ?? [])
+      for (const g of fxGroups(sk)) {
+        const r = assets.effects.actions[g];
+        if (r) for (let i = r.first; i <= r.last; i++) add('Data/Effect.lib', assets.effects.span(i));
+      }
   }
   return files.ensure(want, progress);
 }

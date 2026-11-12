@@ -53,7 +53,7 @@ export function buildT2S(files: FileSource): (s: string) => string {
 export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
   const exe = readExeTables(files.get('ShuiHu.exe'));
   const classes = buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames);
-  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
+  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, effectTriggers: exe.effectTriggers, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
 }
 
 export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {

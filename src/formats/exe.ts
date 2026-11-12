@@ -25,6 +25,13 @@ const RUMOR_COUNT = 19;
 const VA_TOWN_RUMORS = 0x445f50;
 export const TOWN_COUNT = 13;
 
+/**
+ * 技能特效的触发帧（0x404348）：Effect.lib 每组一项 s16，特效从本组第一帧数起播到第 n 帧时，
+ * 接着播下一段特效，或者结算这一格的伤害 / 回复（0x4041e0 → 0x403ad0）。
+ */
+const VA_EFFECT_TRIGGERS = 0x4435e8;
+export const EFFECT_GROUP_COUNT = 60;
+
 export const CLASS_COUNT = 72;
 export const PLAYABLE_COUNT = 18; // 绰号表只有前 18 项（可控好汉），其后紧接技能名表
 export const STAGE_COUNT = 76;
@@ -63,6 +70,8 @@ export interface ExeTables {
   prompts: ExePrompt[];
   /** 城镇的店名、招呼语、告别语（各 5 项，按店序号），以及每个城镇号（1–13）的酒店传闻 */
   town: { shops: string[]; greet: string[]; bye: string[]; rumors: string[][] };
+  /** 下标 = Effect.lib 组号：播到第几帧（从 0 数）触发下一段特效或结算（见 VA_EFFECT_TRIGGERS） */
+  effectTriggers: number[];
 }
 
 export function readExeTables(exe: Buffer): ExeTables {
@@ -88,6 +97,7 @@ export function readExeTables(exe: Buffer): ExeTables {
       };
     }),
     town: readTown(exe),
+    effectTriggers: Array.from({ length: EFFECT_GROUP_COUNT }, (_, i) => exe.readInt16LE(VA_EFFECT_TRIGGERS - IMAGE_BASE + 2 * i)),
     stages: paths.map((p, i) => ({
       index: i,
       mapPath: p,

@@ -42,17 +42,19 @@ export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action
   return key;
 }
 
-/** 技能特效帧间隔（Effect.lib 组表 param 都是 4，推测为 4 个 tick；这里取 60 ms【待核】） */
+/**
+ * 技能特效帧间隔。原版每个特效对象自带 75 ms 计时（EXE 构造函数 0x4036ad 写 +0x2f = 0x4B，0x403610 按毫秒比较）；
+ * 这里和人物出手动作一样加快一些【新】。
+ */
 export const EFFECT_FRAME_MS = 60;
 
 /**
- * 技能特效动画：技能子项 +6 为特效号，1 起，对应 Effect.lib 第 (特效号 − 1) 组。
- * 证据：一柱擎天 +6 = 39 → 第 38 组是一道竖直光柱（负责人记得原版有光柱）；石破天驚 2 → 第 1 组火柱。0 表示没有特效。
+ * Effect.lib 第 group 组（0 起）的动画。技能用哪一组见 src/game/effects.ts（不是直接拿技能子项 +6）。
  */
-export function effectAnim(scene: Phaser.Scene, assets: Assets, effect: number): string | null {
-  const range = effect > 0 ? assets.effects.actions[effect - 1] : undefined;
+export function effectAnim(scene: Phaser.Scene, assets: Assets, group: number): string | null {
+  const range = group >= 0 ? assets.effects.actions[group] : undefined;
   if (!range) return null;
-  const key = `fx:${effect}`;
+  const key = `fx:g${group}`;
   if (!scene.anims.exists(key)) {
     const frames: Phaser.Types.Animations.AnimationFrame[] = [];
     for (let i = range.first; i <= range.last; i++) {

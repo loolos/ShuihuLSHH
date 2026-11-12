@@ -10,7 +10,8 @@ import { isSupportSkill } from '../rules/skills.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, effectAnim, textureFor } from './sprites.ts';
+import { dirIndex, fxChain, fxSpots, skillFx } from './effects.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -836,57 +837,79 @@ export class BattleScene extends Phaser.Scene {
         // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发；范围内的人同时受击
         const segs = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
         const frames = segs.length ? segs.map((h) => h.frame) : [1];
-        // 技能特效：在第一个命中帧出现在每个目标身上（没有目标时在施放点）【位置与时机为推测】
-        const fx = effectAnim(this, this.assets, skill.effect);
-        const fxDone = fx
-          ? new Promise<void>((r) =>
-              this.time.delayedCall((frames[0] - 1) * ACTION_FRAME_MS, () => {
-                const spots = e.hits.length ? e.hits.map((h) => this.vs(b.unit(h.uid)!)) : [e.cell];
-                let left = spots.length;
-                for (const c of spots) {
-                  const p = cellToWorld(c.x, c.y);
-                  const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(c.x, c.y, 10));
-                  s.play(fx);
-                  s.once('animationcomplete', () => {
-                    s.destroy();
-                    if (--left === 0) r();
+        // 技能特效（src/game/effects.ts，按原版 EXE 0x4073e0 / 0x403780 / 0x4041e0）：
+        // 每个命中帧放一轮；从施放点一圈圈往外，每格按"第一段 → 第二段 → 命中特效"接力，最后一段到触发帧时这一格的人才受击
+        const fx = skillFx(skill);
+        const from = { x: uv.x, y: uv.y };
+        const dir = dirIndex(from, e.cell, e.facing);
+        const triggers = this.assets.data.effectTriggers ?? [];
+        const key = (c: Cell) => `${c.x},${c.y}`;
+        const hitAt = new Set(e.hits.map((h) => key(this.vs(b.unit(h.uid)!))));
+        const spots = fx ? fxSpots(skill, from, e.cell, e.area, (c) => hitAt.has(key(c))) : [];
+        const chains = spots.map((sp) => ({ ...sp, chain: fxChain(fx!, dir, hitAt.has(key(sp.cell)), triggers) }));
+        /** 目标在特效开始后多久受击（ms） */
+        const fxDelay = (c: Cell) => {
+          const sp = chains.find((x) => x.cell.x === c.x && x.cell.y === c.y);
+          return sp ? (sp.ring + sp.chain.resolveFrame) * EFFECT_FRAME_MS : 0;
+        };
+        const fxWave = (): Promise<void> => {
+          const all: Promise<void>[] = [];
+          for (const sp of chains)
+            for (const part of sp.chain.parts) {
+              const anim = effectAnim(this, this.assets, part.group);
+              if (!anim) continue;
+              all.push(
+                new Promise<void>((r) => {
+                  this.time.delayedCall((sp.ring + part.startFrame) * EFFECT_FRAME_MS, () => {
+                    const p = cellToWorld(sp.cell.x, sp.cell.y);
+                    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(sp.cell.x, sp.cell.y, 10));
+                    s.play(anim);
+                    const done = () => {
+                      if (s.active) s.destroy();
+                      r();
+                    };
+                    s.once('animationcomplete', done);
+                    this.time.delayedCall(4000, done); // 保险：动画事件没来也不卡住
                   });
-                }
-                this.time.delayedCall(3000, r); // 保险：动画事件没来也不卡住
-              }),
-            )
-          : Promise.resolve();
-        const impacts = frames.map((f, i) =>
-          new Promise<void>((r) =>
-            this.time.delayedCall((f - 1) * ACTION_FRAME_MS, () => {
-              const hurt: Promise<void>[] = [];
-              for (const h of e.hits) {
+                }),
+              );
+            }
+          return Promise.all(all).then(() => undefined);
+        };
+        const segStart = (f: number) => (f - 1) * ACTION_FRAME_MS;
+        const waves: Promise<void>[] = [];
+        if (fx && !fx.atEnd) for (const f of frames) waves.push(new Promise<void>((r) => this.time.delayedCall(segStart(f), () => fxWave().then(r))));
+        const impacts = frames.flatMap((f, i) =>
+          e.hits.map(
+            (h) =>
+              new Promise<void>((r) => {
                 const t = b.unit(h.uid)!;
                 const tv = this.vs(t);
-                const res = h.result;
-                if (!res.hit) {
-                  // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
-                  if (i === 0) {
+                this.time.delayedCall(segStart(f) + (fx && !fx.atEnd ? fxDelay(tv) : 0), () => {
+                  const res = h.result;
+                  if (!res.hit) {
+                    // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
+                    if (i > 0) return r();
                     this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
-                    hurt.push(this.playOnce(t, ACTION.hurt, tv.facing, 400));
+                    return void this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                   }
-                  continue;
-                }
-                const perPart = res.parts.length === frames.length;
-                if (perPart && !res.partHit[i]) {
-                  this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
-                  continue;
-                }
-                const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
-                const crit = perPart ? res.partCrit[i] : res.crit;
-                if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
-                hurt.push(this.playOnce(t, ACTION.hurt, tv.facing, 400));
-              }
-              Promise.all(hurt).then(() => r());
-            }),
+                  const perPart = res.parts.length === frames.length;
+                  if (perPart && !res.partHit[i]) {
+                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
+                    return r();
+                  }
+                  const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
+                  const crit = perPart ? res.partCrit[i] : res.crit;
+                  if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
+                  this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
+                });
+              }),
           ),
         );
-        await Promise.all([this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500), fxDone, ...impacts]);
+        // 集气技、类型 9 的回复技：出手动画放完才放特效（原版 0x407522）
+        const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500);
+        if (fx?.atEnd) waves.push(cast.then(fxWave));
+        await Promise.all([cast, ...waves, ...impacts]);
         area?.destroy();
         this.pose(u);
         for (const h of e.hits) this.pose(b.unit(h.uid)!);
