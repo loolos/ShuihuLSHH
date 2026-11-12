@@ -13,6 +13,7 @@ export interface Item {
   moveBonus: number; // +104 移动力加成
   /** 装备加成与消耗品效果（全部 s16，见 binary-formats §9） */
   attack: number; // +76 装备攻击；消耗品为增益值（+78 回合）
+  attackTurns: number; // +78 消耗品：攻击增益的回合数
   attackStep: number; // +80 每次打铁提升的攻击
   attackSteps: number; // +82 可提升次数
   defense: number; // +84
@@ -59,6 +60,7 @@ export function parseGoods(buf: Buffer): Item[] {
       description: str(26, 60).trim(),
       moveBonus: buf.readInt16LE(o + 104),
       attack: s16(76),
+      attackTurns: s16(78),
       attackStep: s16(80),
       attackSteps: s16(82),
       defense: s16(84),

@@ -5,7 +5,7 @@ import { Battle, type BattleEvent } from '../rules/battle.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
-import { itemOf, type SkillDef } from '../rules/data.ts';
+import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
 import { isSupportSkill } from '../rules/skills.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
@@ -29,6 +29,8 @@ type Mode =
   | { kind: 'selected'; u: Unit }
   | { kind: 'attack'; u: Unit }
   | { kind: 'item'; u: Unit }
+  /** 选中了一格道具；op = 正在选使用 / 给予的对象，或确认丢弃 */
+  | { kind: 'itemSlot'; u: Unit; slot: number; op?: 'use' | 'give' | 'discard' }
   | { kind: 'skills'; u: Unit }
   | { kind: 'skill'; u: Unit; skill: SkillDef };
 const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
@@ -38,6 +40,7 @@ const BODY_HALF_W = 24;
 const BODY_H = 82;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
+const SLOT_LABEL = ['武器', '衣服', '头饰', '物品', '物品', '物品', '物品'];
 const wait = (scene: Phaser.Scene, ms: number) => new Promise<void>((r) => scene.time.delayedCall(ms, r));
 
 export class BattleScene extends Phaser.Scene {
@@ -231,6 +234,9 @@ export class BattleScene extends Phaser.Scene {
     } else if (m.kind === 'attack') {
       for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, 0.25);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
+    } else if (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give')) {
+      const color = m.op === 'use' ? 0x40c0e0 : 0x6fbf5a;
+      for (const t of this.itemOpTargets(m)) this.diamond(g, t, color, 0.35), this.diamond(g, t, color, 0.9, true);
     } else if (m.kind === 'skill') {
       const color = isSupportSkill(m.skill) ? 0x40b0e0 : 0xb050e0;
       for (const c of this.battle.skillCells(u, m.skill)) this.diamond(g, c, color, 0.25);
@@ -281,6 +287,23 @@ export class BattleScene extends Phaser.Scene {
       } else this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}）：选择施放位置`);
       return;
     }
+    if (m.kind === 'item' || m.kind === 'itemSlot') {
+      this.ui.setCommands(this.commands(m));
+      if (m.kind === 'item') return this.ui.showUnit(u, null, this.battle.canAct(u) && u.side === 'player' ? '选择道具：可使用、装备、给予或丢弃' : '');
+      const it = itemOf(this.assets.data, u.slots[m.slot]);
+      if (!it) return this.ui.showUnit(u);
+      const name = this.assets.tr(it.name);
+      if (m.op === 'use' || m.op === 'give') {
+        const t = hovered && this.itemOpTargets(m).includes(hovered) ? hovered : u;
+        return this.ui.showUnit(t, null, m.op === 'use' ? `使用${name}：选择自己或相邻的队友` : `给予${name}：选择相邻的队友`);
+      }
+      const n = u.forge[m.slot] ?? 0;
+      return this.ui.showUnit(u, null, '', {
+        title: `${SLOT_LABEL[m.slot]} · ${name}${n ? ` +${n}` : ''}`,
+        lines: [itemSummary(it, n), this.assets.tr(it.description)],
+        warn: m.op === 'discard' ? `确定丢弃${name}？丢掉就找不回来了。` : m.slot >= EQUIP_SLOTS && equipSlotOf(it) >= 0 ? (canEquip(this.assets.data.classes[u.classId], it, this.assets.data) ? '放在物品栏里不算加成，装备后才生效' : `${u.name}不能装备这件`) : '',
+      });
+    }
     const target = hovered && u.side === 'player' && this.battle.attackTargets(u).includes(hovered) ? hovered : undefined;
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
@@ -292,16 +315,11 @@ export class BattleScene extends Phaser.Scene {
     if (m.kind === 'idle') return null;
     const u = m.u;
     const b = this.battle;
-    if (u.side !== 'player' || !b.canAct(u) || this.busy) return null;
-    if (m.kind === 'item') {
-      return [
-        ...b.usableSlots(u).map((k) => ({
-          label: this.assets.tr(itemOf(this.assets.data, u.slots[k])!.name),
-          run: () => this.exec(u, () => b.useItem(u, k)),
-        })),
-        { label: '返回', run: () => this.select({ kind: 'selected', u }) },
-      ];
-    }
+    if (u.side !== 'player' || this.busy) return null;
+    if (m.kind === 'item') return this.itemList(u);
+    if (m.kind === 'itemSlot') return this.itemOps(m);
+    // 不能行动的我方人物（已行动、敌方回合）也能查看道具
+    if (!b.canAct(u)) return u.slots.some(Boolean) ? [{ label: '道具', run: () => this.select({ kind: 'item', u }) }] : null;
     if (m.kind === 'skills' || m.kind === 'skill') {
       return [
         ...b.skillsOf(u).map(({ skill, usable }) => ({
@@ -319,21 +337,86 @@ export class BattleScene extends Phaser.Scene {
       ...(skills.length ? [{ label: '技能', enabled: skills.some((k) => k.usable), run: () => this.select({ kind: 'skills', u }) }] : []),
       { label: '防御', run: () => this.exec(u, () => b.defend(u)) },
       { label: '休息', enabled: !u.acted, run: () => this.exec(u, () => b.rest(u)) },
-      { label: '道具', enabled: b.usableSlots(u).length > 0, run: () => this.select({ kind: 'item', u }) },
+      { label: '道具', enabled: u.slots.some(Boolean), run: () => this.select({ kind: 'item', u }) },
       { label: '待机', run: () => this.exec(u, () => b.wait(u)) },
       ...(b.canUndo(u) ? [{ label: '撤销移动', run: () => this.exec(u, () => b.undoMove(u)) }] : []),
     ];
   }
 
   /** 执行一个玩家指令并播放结果；单位还能行动就保持选中 */
-  private async exec(u: Unit, cmd: () => BattleEvent[]) {
+  private async exec(u: Unit, cmd: () => BattleEvent[], next?: Mode) {
     if (this.busy) return;
     this.overlay.clear();
     this.ui.setCommands(null);
     await this.run(cmd());
     if (this.battle.status !== 'playing') return;
     this.pose(u);
-    this.select(this.battle.canAct(u) ? { kind: 'selected', u } : { kind: 'idle' });
+    this.select(this.battle.canAct(u) ? (next ?? { kind: 'selected', u }) : { kind: 'idle' });
+  }
+
+  // ───────────── 道具 ─────────────
+
+  /** 道具栏：3 格装备（空着也列出来）+ 物品栏里有东西的格子 */
+  private itemList(u: Unit): Command[] {
+    const d = this.assets.data;
+    const rows: Command[] = [];
+    for (let k = 0; k < u.slots.length; k++) {
+      const it = itemOf(d, u.slots[k]);
+      if (!it && k >= EQUIP_SLOTS) continue;
+      const n = u.forge[k] ?? 0;
+      rows.push({
+        label: `${SLOT_LABEL[k]}｜${it ? this.assets.tr(it.name) + (n ? ` +${n}` : '') : '—'}`,
+        note: it ? itemSummary(it, n) : '',
+        enabled: !!it,
+        run: () => this.select({ kind: 'itemSlot', u, slot: k }),
+      });
+    }
+    rows.push({ label: '返回', run: () => this.select({ kind: 'selected', u }) });
+    return rows;
+  }
+
+  private itemOpTargets(m: Extract<Mode, { kind: 'itemSlot' }>): Unit[] {
+    if (m.op === 'use') return this.battle.itemTargets(m.u, m.slot);
+    if (m.op === 'give') return this.battle.giveTargets(m.u, m.slot);
+    return [];
+  }
+
+  /** 选中一格道具后的操作：使用 / 装备或卸下 / 给予 / 丢弃 */
+  private itemOps(m: Extract<Mode, { kind: 'itemSlot' }>): Command[] {
+    const { u, slot } = m;
+    const b = this.battle;
+    const it = itemOf(this.assets.data, u.slots[slot]);
+    const back = { label: '返回', run: () => this.select({ kind: 'item', u }) };
+    if (!it || !b.canAct(u)) return [back];
+    const list: Mode = { kind: 'item', u };
+    if (m.op === 'use') {
+      const self = b.itemTargets(u, slot).includes(u);
+      return [
+        ...(self ? [{ label: '对自己使用', run: () => this.exec(u, () => b.useItem(u, slot, u), list) }] : []),
+        ...b.itemTargets(u, slot).filter((t) => t !== u).map((t) => ({ label: `给${t.name}使用`, run: () => this.exec(u, () => b.useItem(u, slot, t), list) })),
+        { label: '返回', run: () => this.select({ ...m, op: undefined }) },
+      ];
+    }
+    if (m.op === 'give') {
+      return [
+        ...b.giveTargets(u, slot).map((t) => ({ label: `交给${t.name}`, run: () => this.exec(u, () => b.giveItem(u, slot, t), list) })),
+        { label: '返回', run: () => this.select({ ...m, op: undefined }) },
+      ];
+    }
+    if (m.op === 'discard') {
+      return [
+        { label: '确认丢弃', run: () => this.exec(u, () => b.discardItem(u, slot), list) },
+        { label: '返回', run: () => this.select({ ...m, op: undefined }) },
+      ];
+    }
+    const ops: Command[] = [];
+    if (isUsable(it)) ops.push({ label: '使用', enabled: b.itemTargets(u, slot).length > 0, run: () => this.select({ ...m, op: 'use' }) });
+    if (equipSlotOf(it) >= 0)
+      ops.push({ label: slot < EQUIP_SLOTS ? '卸下' : '装备', enabled: b.canEquipItem(u, slot), run: () => this.exec(u, () => b.equipItem(u, slot), list) });
+    ops.push({ label: '给予', enabled: b.giveTargets(u, slot).length > 0, note: b.giveTargets(u, slot).length ? '' : '旁边没有队友', run: () => this.select({ ...m, op: 'give' }) });
+    ops.push({ label: '丢弃', run: () => this.select({ ...m, op: 'discard' }) });
+    ops.push(back);
+    return ops;
   }
 
   async endTurn() {
@@ -420,6 +503,13 @@ export class BattleScene extends Phaser.Scene {
       const t = hits.find((h) => cells.some((k) => sameCell(k, h)));
       if (t) return { x: t.x, y: t.y };
     }
+    if (m.kind === 'itemSlot' && m.op) {
+      const targets = this.itemOpTargets(m);
+      const at = b.unitAt(c.x, c.y);
+      if (at && targets.includes(at)) return c;
+      const t = hits.find((h) => targets.includes(h));
+      if (t) return { x: t.x, y: t.y };
+    }
     if (m.kind === 'selected' || m.kind === 'attack') {
       const targets = b.attackTargets(m.u);
       const at = b.unitAt(c.x, c.y);
@@ -451,6 +541,18 @@ export class BattleScene extends Phaser.Scene {
       const { u, skill } = m;
       if (b.skillTargets(u, skill).some((t) => sameCell(t, c))) return void this.exec(u, () => b.useSkill(u, skill, c));
       return this.select({ kind: 'selected', u });
+    }
+    if (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give')) {
+      const { u, slot } = m;
+      if (at && this.itemOpTargets(m).includes(at)) {
+        const list: Mode = { kind: 'item', u };
+        return void this.exec(u, () => (m.op === 'use' ? b.useItem(u, slot, at) : b.giveItem(u, slot, at)), list);
+      }
+      return this.select({ ...m, op: undefined });
+    }
+    if (m.kind === 'item' || m.kind === 'itemSlot') {
+      if (at && at !== m.u) return this.select({ kind: 'selected', u: at });
+      return;
     }
     if (m.kind === 'selected' || m.kind === 'attack') {
       const u = m.u;

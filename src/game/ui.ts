@@ -1,6 +1,7 @@
 // 战斗界面的 HTML 部分：顶栏、战报、单位面板、指令菜单、对白框、结算画面。
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
+import { buffName } from '../rules/data.ts';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -9,6 +10,8 @@ export interface Command {
   label: string;
   enabled?: boolean;
   on?: boolean;
+  /** 按钮下面的小字（道具效果等） */
+  note?: string;
   run: () => void;
 }
 
@@ -105,14 +108,15 @@ export class BattleUI {
     this.log.replaceChildren();
   }
 
-  showUnit(u: Unit | null, preview?: AttackPreview | null, hint = '') {
+  showUnit(u: Unit | null, preview?: AttackPreview | null, hint = '', item?: { title: string; lines: string[]; warn?: string }) {
     if (!u) {
       this.panel.hidden = true;
       return;
     }
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
-    const states = [u.defending && '防御中', u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && `昏迷 ${u.stunTurns}`, u.ended && u.side === 'player' && '已行动']
+    const buffs = u.buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''} ${b.turns}`);
+    const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && `昏迷 ${u.stunTurns}`, u.ended && u.side === 'player' && '已行动']
       .filter(Boolean)
       .join('　');
     const face = this.portrait(u.classId);
@@ -128,6 +132,13 @@ export class BattleUI {
       ${states ? `<div>${states}</div>` : ''}
       ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
       ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}
+      ${
+        item
+          ? `<div class="item-detail"><b>${esc(this.tr(item.title))}</b>${item.lines.filter(Boolean).map((l) => `<div>${esc(this.tr(l))}</div>`).join('')}${
+              item.warn ? `<div class="warn">${esc(this.tr(item.warn))}</div>` : ''
+            }</div>`
+          : ''
+      }
       </div>`;
     this.panel.classList.toggle('has-face', !!face);
     this.panel.hidden = false;
@@ -141,7 +152,12 @@ export class BattleUI {
     this.cmd.replaceChildren(
       ...list.map((c) => {
         const b = document.createElement('button');
-        b.textContent = c.label;
+        b.textContent = this.tr(c.label);
+        if (c.note) {
+          const n = document.createElement('small');
+          n.textContent = this.tr(c.note);
+          b.append(n);
+        }
         b.disabled = c.enabled === false;
         if (c.on) b.classList.add('on');
         b.onclick = (e) => {
