@@ -2,6 +2,7 @@
 import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock } from '../formats/pas.ts';
 import { planAi } from './ai.ts';
+import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, hitExp, killExp, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { isHealing, itemOf, type GameData, type SkillDef } from './data.ts';
@@ -24,6 +25,10 @@ export type BattleEvent =
   | { type: 'objective'; lines: string[] }
   | { type: 'phase'; side: Side; turn: number }
   | { type: 'appear'; uid: number; x: number; y: number }
+  /** 剧情里退场或埋伏（离开地图，不算战败） */
+  | { type: 'leave'; uid: number }
+  /** 二选一：伏兵号令（EXE 0x407af3：AI 模式 9 的单位行动时弹出）。选第一项时调用 signal() */
+  | { type: 'ask'; options: [string, string] }
   | { type: 'move'; uid: number; path: Cell[]; facing: number }
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
@@ -54,6 +59,8 @@ export interface StageInput {
   seed?: number;
   /** 文字转换（繁→简等），用于原版字符串以外的名字 */
   text?: (s: string) => string;
+  /** 前面关卡延续下来的我方人物（按角色号） */
+  party?: Map<number, Member>;
 }
 
 export class Battle {
@@ -74,6 +81,12 @@ export class Battle {
   private pendingDeaths: number[] = [];
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
+  /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
+  private hadPlayers: boolean;
+  /** ACT 的编组号 → 单位（剧本用 1000 + 编组号指定单位） */
+  private groups = new Map<number, number>();
+  /** 埋伏中的单位（EXE 标志 0x40000，AI 模式 6/9）：剧本点名不会让它们登场 */
+  private ambushers = new Set<number>();
 
   constructor(input: StageInput) {
     this.name = input.name;
@@ -93,17 +106,30 @@ export class Battle {
       if (!cls) continue;
       const slots = cls.defaultItems.slice(0, 7);
       a.items.forEach((id, k) => id && (slots[k] = id));
-      const level = Math.max(1, a.level); // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）
-      const mode = a.flags >> 8;
+      // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）。延续的人物取两者较高者，装备沿用
+      const kept = a.side === 'player' ? input.party?.get(a.type) : undefined;
+      if (kept) slots.splice(0, slots.length, ...kept.slots);
+      const level = Math.max(1, a.level, kept?.level ?? 0);
+      const exp = kept && kept.level >= a.level ? kept.exp : 0;
+      // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
+      let mode = a.flags >> 8;
+      let hidden = (a.flags & 0xff) !== 0;
+      if (mode === 7) {
+        mode = 0;
+        hidden = true;
+      }
+      if (mode === 6 || mode === 9) this.ambushers.add(a.index);
+      if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
       const stats = computeStats(cls, level, slots, this.data);
       this.units.push({
         uid: a.index, classId: a.type, name: this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
-        level, exp: 0, hp: stats.maxHp, mp: stats.maxMp, stats, slots, gold: 0,
+        level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, gold: 0,
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
-        present: (a.flags & 0xff) === 0 && mode !== 7, alive: true, defending: false, poisonTurns: 0, stunTurns: 0,
+        present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0,
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, itemUsed: false, turnStart: null,
       });
     }
+    this.hadPlayers = this.units.some((u) => u.side === 'player');
   }
 
   // ───────────── 查询 ─────────────
@@ -219,9 +245,13 @@ export class Battle {
     if (this.status !== 'playing' || this.phase !== 'player') return [];
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
-      for (const u of this.active().filter((x) => x.side === side)) {
+      for (const u of this.units.filter((x) => x.side === side && x.alive && (x.present || this.ambushers.has(x.uid)))) {
         if (this.status !== 'playing') break;
-        if (!u.alive || !u.present || u.ended) continue;
+        if (!u.alive || u.ended) continue;
+        if (!u.present) {
+          if (this.ambushers.has(u.uid)) this.ambushTurn(u);
+          continue;
+        }
         this.runAi(u);
       }
       if (this.status !== 'playing') return this.flush();
@@ -267,6 +297,8 @@ export class Battle {
       u.ended = u.stunTurns > 0;
     }
     this.emit({ type: 'phase', side, turn: this.turn });
+    const opts = this.data.choices?.[0];
+    if (side === 'player' && this.awaitingSignal && opts) this.emit({ type: 'ask', options: opts });
   }
 
   private flush() {
@@ -521,6 +553,46 @@ export class Battle {
     }
   }
 
+  /**
+   * 埋伏中的单位轮到行动（EXE AI 跳转表 0x407bac）：
+   * 模式 6 用与模式 2 相同的检查（0x407dd0 + 0x407fa0：警戒半径内有敌人），成立就现身（0x408450，模式改为 0）并照常行动；
+   * 警戒半径沿用 ai.ts 模式 2 的推测值。模式 9 是等玩家号令，由我方阶段开始时的 ask 事件处理。
+   */
+  private ambushTurn(u: Unit) {
+    if (u.ai.mode !== 6) return void (u.ended = true);
+    const [, hi] = attackRange(u, this.data);
+    if (!this.foesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= u.stats.move * 2 + hi)) return void (u.ended = true);
+    u.ai.mode = 0;
+    this.appear(u);
+    u.ended = false;
+    this.runAi(u);
+  }
+
+  /** 是否有等待号令的伏兵（AI 模式 9） */
+  get awaitingSignal() {
+    return this.status === 'playing' && this.units.some((u) => u.alive && u.side !== 'enemy' && u.ai.mode === 9);
+  }
+
+  /**
+   * 伏兵号令（选"好！大家上！"，EXE 0x40de20）：我方与友军的隐藏、埋伏单位全部登场，AI 模式都改为 0；
+   * 然后执行 w8 = 2 的区块（N-add03 "有埋伏！"，推测）。
+   */
+  signal(): BattleEvent[] {
+    this.out = [];
+    if (!this.awaitingSignal) return [];
+    for (const u of this.units) {
+      if (u.side === 'enemy' || !u.alive) continue;
+      if (!u.present) {
+        this.appear(u);
+        u.ended = false;
+      }
+      u.ai.mode = 0;
+    }
+    for (const b of this.blocks) if (b.trigger.kind === 'signal' && b.trigger.type === 2) this.runBlock(b);
+    this.afterAction();
+    return this.flush();
+  }
+
   private runAi(u: Unit) {
     const plan = planAi(this, u);
     if (plan.healSlot !== undefined) {
@@ -549,6 +621,10 @@ export class Battle {
         if (b.trigger.kind === 'death' && (b.trigger.char === c || (b.trigger.char === 1000 && c === 0))) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
+    // 角色号 255：敌方全灭（推测：只在全灭时出现，如 N-add01 的胜利区块）
+    if (!this.units.some((u) => u.side === 'enemy' && u.alive && u.present))
+      for (const b of this.blocks) if (b.trigger.kind === 'death' && b.trigger.char === 255) this.runBlock(b);
+    if (this.status !== 'playing') return;
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'area' || this.fired.has(b.index)) continue;
@@ -557,14 +633,17 @@ export class Battle {
         this.runBlock(b);
       if (this.status !== 'playing') return;
     }
-    if (!this.units.some((u) => u.side === 'player' && u.alive)) this.finish('lost', '我方全軍覆沒。');
+    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive)) this.finish('lost', '我方全軍覆沒。');
   }
 
   private runTurnTriggers(param: number) {
     for (const b of this.blocks) if (b.trigger.kind === 'turn' && b.trigger.turn === param) this.runBlock(b);
   }
 
-  /** 执行一个 PAS 区块。已知指令：12 选人、13 说话、14/15/17 移动、18 登场（推测）、29/30 旁白/结局、31–33 条件、35 回合限制 */
+  /**
+   * 执行一个 PAS 区块（指令 12–21 由 EXE 0x411690 分派）：12 选人（隐藏的随之登场）、13 说话、14/15 坐标、16 AI 模式、
+   * 17 动作（见下）、29 过关旁白（区块结束后判胜）、30 失败结局、31–33 条件、35 回合限制。28 = 区块结束（0x411cf9）。
+   */
   private runBlock(b: PasBlock) {
     if (this.fired.has(b.index)) return;
     this.fired.add(b.index);
@@ -577,7 +656,9 @@ export class Battle {
     let sel: Unit | undefined;
     let selName = '';
     let px = 0, py = 0;
+    let mode = 0;
     let ending: string | null = null;
+    let cleared = false;
     let objective: string[] = [];
     const flushObjective = () => {
       if (objective.length) {
@@ -590,9 +671,13 @@ export class Battle {
       if (op.op < 31 || op.op > 33) flushObjective();
       switch (op.op) {
         case 12:
-          if (op.flag === 0 && op.value >= 1000) sel = this.units.find((u) => u.uid === op.value - 1000);
-          else sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && u.alive);
-          selName = sel ? sel.name : this.charName(op.value);
+          // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
+          if (op.value > 1000 && op.value < 0x10000) sel = this.unit(this.groups.get(op.value - 1000) ?? -1);
+          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && u.alive);
+          else sel = undefined; // 0xFFFFFFFF：旁白
+          selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
+          // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
+          if (sel && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
           break;
         case 13:
           this.emit({ type: 'say', uid: sel?.uid ?? null, speaker: selName, text: textOf(i) });
@@ -603,18 +688,38 @@ export class Battle {
         case 15:
           py = op.value;
           break;
-        case 17:
-          if (sel && sel.present && sel.alive) {
+        case 16:
+          mode = op.value;
+          break;
+        case 17: {
+          // 动作位（EXE 0x411580，按这个顺序）：8 改 AI 模式；4 设 AI 目标点；0x10 设 AI 目标角色；2 退场；1 走到 (14, 15)
+          if (!sel || !sel.alive) break;
+          const v = op.value;
+          if (v & 8) {
+            sel.ai.mode = mode;
+            if (mode === 7) {
+              sel.ai.mode = 0;
+              if (sel.present) this.hide(sel, false);
+            } else if (mode === 6 || mode === 9) {
+              if (sel.present) this.hide(sel, true);
+              else this.ambushers.add(sel.uid);
+            }
+          }
+          if (v & 4) sel.ai.point = { x: px, y: py };
+          if (v & 0x10) sel.ai.target = px;
+          if (v & 2) {
+            if (sel.present) this.hide(sel, false);
+          } else if (v & 1 && sel.present) {
             const reach = this.reachOf(sel, 99);
             const path = reach.has(key(px, py)) ? pathTo(reach, px, py) : [];
             if (path.length > 1) this.walk(sel, path);
           }
           break;
-        case 18:
-          if (sel && !sel.present && sel.alive) this.appear(sel);
-          break;
+        }
+        // 18/19：EXE 0x411706/0x411710 只是记下数值再调用 0x423970（推测为音效/表情），不影响登场
         case 29:
           this.emit({ type: 'narrate', text: textOf(i) });
+          cleared = true;
           break;
         case 30:
           ending = textOf(i);
@@ -631,7 +736,7 @@ export class Battle {
     });
     flushObjective();
     if (ending !== null) return this.finish('lost', ending);
-    if (b.trigger.kind === 'area') this.finish('won', '');
+    if (cleared) this.finish('won', '');
   }
 
   private appear(u: Unit) {
@@ -639,8 +744,16 @@ export class Battle {
     u.x = c.x;
     u.y = c.y;
     u.present = true;
+    this.ambushers.delete(u.uid);
     u.ended = u.side === this.phase;
     this.emit({ type: 'appear', uid: u.uid, x: u.x, y: u.y });
+  }
+
+  private hide(u: Unit, ambush: boolean) {
+    u.present = false;
+    u.defending = false;
+    if (ambush) this.ambushers.add(u.uid);
+    this.emit({ type: 'leave', uid: u.uid });
   }
 
   private finish(result: 'won' | 'lost', text: string) {

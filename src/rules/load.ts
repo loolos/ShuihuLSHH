@@ -53,14 +53,14 @@ export function buildT2S(files: FileSource): (s: string) => string {
 export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
   const exe = readExeTables(files.get('ShuiHu.exe'));
   const classes = buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames);
-  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, heroName: tr(exe.characterNames[0]) };
+  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, heroName: tr(exe.characterNames[0]), choices: exe.choices.map(([a, b]) => [tr(a), tr(b)]) };
 }
 
 export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {
   return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
 
-export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string } = {}): StageInput {
+export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party'] } = {}): StageInput {
   const mapFile = findStageFile(files, stage, '.map');
   if (!mapFile) throw new Error(`找不到地图 ${stage}`);
   const map = parseMap(files.get(mapFile), mapFile);
@@ -78,5 +78,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     data,
     seed: opts.seed,
     text: opts.text,
+    party: opts.party,
   };
 }
+

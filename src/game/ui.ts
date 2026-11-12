@@ -170,14 +170,28 @@ export class BattleUI {
     return !this.dialog.hidden;
   }
 
-  result(won: boolean, text: string, restart: () => void) {
-    $('result-title').textContent = won ? '胜利' : '失败';
+  /** 胜负面板：每个选项一个按钮，可附一行说明（如路线的胜利条件） */
+  result(won: boolean, text: string, choices: { label: string; note?: string; run: () => void }[], title?: string, compact = false) {
+    $('result').classList.toggle('compact', compact); // compact：不遮地图，面板放在下方
+    $('result-title').textContent = title ?? (won ? '胜利' : '失败');
     $('result-text').textContent = this.tr(text) || (won ? '达成了胜利条件。' : '');
+    const box = $('result-actions');
+    box.replaceChildren();
+    for (const c of choices) {
+      const b = document.createElement('button');
+      b.textContent = c.label;
+      if (c.note) {
+        const n = document.createElement('small');
+        n.textContent = this.tr(c.note);
+        b.append(n);
+      }
+      b.onclick = () => {
+        $('result').hidden = true;
+        c.run();
+      };
+      box.append(b);
+    }
     $('result').hidden = false;
-    $('result-restart').onclick = () => {
-      $('result').hidden = true;
-      restart();
-    };
   }
   hideResult() {
     $('result').hidden = true;

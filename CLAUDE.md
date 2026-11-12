@@ -7,7 +7,7 @@
 - **不运行原版 EXE**（包括 `ShuiHu.exe`、`Autorun.exe`），只允许只读的静态分析。
 - **不修改 `gamedata/shuihu/` 里的任何文件。**
 - 从原版提取的产物（PNG、JSON、音频）只写到被忽略的 `extracted/`，不入库。
-- 仓库目前是**私有**的，因为 `gamedata/shuihu/` 里有原版文件。负责人以后会清理素材再公开。不要把原版素材放进构建产物或 `public/`。例外：负责人同意（2026-11-11）内部试玩页面（私有 Artifact）可以附带原版文件，以 base64 文本块放在页面的 `gamedata/` 下，由 `loadBundled` 读取。
+- 仓库已于 2026-11-12 公开（为了 GitHub Pages），但 `gamedata/shuihu/` 里仍有原版文件（含历史）；负责人决定开发完成后再清理，不必再提。不要把原版素材放进构建产物或 `public/`。例外：负责人同意（2026-11-11）内部试玩页面（私有 Artifact）可以附带原版文件，以 base64 文本块放在页面的 `gamedata/` 下，由 `loadBundled` 读取。
 - 涉及原版的结论要写明证据（文件、偏移、EXE 地址）；推测要标明。
 
 ## 文档约定

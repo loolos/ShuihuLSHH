@@ -7,6 +7,8 @@ import { idbClear } from './platform/idb.ts';
 import { frameToCanvas, loadAssets, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
+import type { Battle } from './rules/battle.ts';
+import { newCampaign, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -86,13 +88,33 @@ function confirmMismatch(list: string[]): Promise<void> {
   });
 }
 
+const SAVE_KEY = 'shuihu.campaign';
+function loadSave(): CampaignState | null {
+  try {
+    return parseCampaign(localStorage.getItem(SAVE_KEY));
+  } catch {
+    return null;
+  }
+}
+function writeSave(c: CampaignState) {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(c));
+  } catch {
+    /* 隐私模式等：不存档也能玩 */
+  }
+}
+
 function startGame(assets: Assets) {
   const stages = assets.exe.stages.filter((s) => s.mapName && assets.files.has(`Map/${s.mapName}.act`));
   const sel = $<HTMLSelectElement>('stage');
-  for (const s of stages) sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, s.mapName));
+  sel.add(new Option('⟲ 新游戏（从第1章开始）', 'new'));
+  for (const s of stages) sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, String(s.index)));
   const params = new URLSearchParams(location.search);
-  sel.value = (params.get('stage') ?? 'n01').toLowerCase();
-  if (!sel.value) sel.value = stages[0].mapName;
+  let campaign = loadSave() ?? newCampaign(stages[0].index);
+  const asked = params.get('stage')?.toLowerCase();
+  const fromUrl = asked && stages.find((s) => s.mapName === asked || String(s.index) === asked);
+  if (fromUrl) campaign.stage = fromUrl.index;
+  if (!stages.some((s) => s.index === campaign.stage)) campaign = newCampaign(stages[0].index);
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
   ui.tr = assets.tr;
@@ -111,16 +133,50 @@ function startGame(assets: Assets) {
     scene: [],
   });
   const scene = () => game.scene.getScene('battle') as BattleScene | null;
+  const stageOf = (i: number) => stages.find((s) => s.index === i)!;
+  const label = (s: (typeof stages)[number]) => assets.tr(s.title) || s.mapName;
+  const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName);
+  // 分路：关卡表里第 k 处二选一对应 EXE 对话框 k + 1（1 = 第 3 章 正路/小径，2 = 第 8 章 大道/小径；EXE 0x4439b2）。
+  // 选项一对应 a 关：N-add04a 开场是官兵说「竟敢大剌剌的走关西正路」，N-add04b 是山贼要「买路财」
+  const forks = stages.filter((s, i) => { const n = nextStages(stages, stages[i - 1]?.index ?? -1); return n.length > 1 && n[0] === s; });
+
+  const goTo = (c: CampaignState) => {
+    campaign = c;
+    writeSave(c);
+    run();
+  };
+  const onEnd = (battle: Battle, won: boolean, text: string) => {
+    const cur = stageOf(campaign.stage);
+    const retry = { label: '重新开始本关', run };
+    if (!won) return ui.result(false, text, [retry]);
+    const after = recordResult(campaign, battle);
+    const next = nextStages(stages, cur.index);
+    if (!next.length) return ui.result(true, text, [retry], '通关');
+    // 过场关卡直接接下一关
+    if (isAct(cur) && next.length === 1) return goTo({ ...after, stage: next[0].index });
+    const fork = assets.data.choices?.[forks.indexOf(next[0]) + 1];
+    const choices = next.map((s, k) => ({
+      label: next.length > 1 ? fork?.[k] ?? `路线${'一二'[k]}：${label(s)}` : `继续：${label(s)}`,
+      run: () => goTo({ ...after, stage: s.index }),
+    }));
+    if (next.length > 1) ui.result(true, `${text}\n\n接下来走哪条路？`.trim(), choices, '分路');
+    else ui.result(true, text, [...choices, { label: '再打一次本关', run }]);
+  };
   const run = () => {
     ui.hideResult();
-    const data = { assets, stage: sel.value, ui, seed };
+    sel.value = String(campaign.stage);
+    const stage = stageOf(campaign.stage).mapName;
+    const data = { assets, stage, ui, seed, party: partyOf(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
     const u = new URL(location.href);
-    u.searchParams.set('stage', sel.value);
+    u.searchParams.set('stage', stage);
     history.replaceState(null, '', u);
   };
-  sel.onchange = run;
+  sel.onchange = () => {
+    // 从下拉框跳关：保留已有人物；选"新游戏"则清空
+    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : { ...campaign, stage: Number(sel.value) });
+  };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
   $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);
   $('end-turn').onclick = () => scene()?.endTurn();
