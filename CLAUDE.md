@@ -47,4 +47,4 @@ tests/         Vitest 测试
 - 在指定的功能分支上开发，按里程碑开 PR。负责人允许 Claude 自己合并 PR。
 - 合并前跑 `npm run build` 和 `npm test`；改了画面就用 Playwright 截图看一眼（电脑和手机两种尺寸）。
 - 目标平台：电脑浏览器；界面也要能在手机屏幕尺寸下浏览。
-- 部署：`.github/workflows/pages.yml` 在 push/PR 时只构建和测试；仓库私有、没开 Pages，部署改为手动运行（2026-11-11）。公开后再改回自动部署。
+- 部署：推送到 `main` 后由 `.github/workflows/pages.yml` 发布到 GitHub Pages（需要仓库 Settings → Pages 的 Source 设为 GitHub Actions；负责人 2026-11-11 选择自己开启）。
