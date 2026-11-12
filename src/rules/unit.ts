@@ -76,7 +76,7 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
 
 const G = JSON.parse(process.env.GROW ?? '{"hp":[2,2.5],"mp":[2,2],"attack":[1.5,3],"defense":[2,8],"hit":[2,4],"agility":[1,6],"crit":[0.4,3.5]}');
 type StatKey = 'hp' | 'mp' | 'attack' | 'defense' | 'hit' | 'agility' | 'crit';
-const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 6 };
+const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 0 };
 const OFFICER: Record<StatKey, number> = { hp: 70, mp: 80, attack: 62, defense: 25, hit: 70, agility: 30, crit: 12 };
 const GRUNTS = new Set([19, 20, 21, 22, 23, 32, 33, 34, 36, 37, 40, 41, 44, 45, 67]);
 const OFFICERS = new Set([38, 39, 42, 43, 65, 66]);
