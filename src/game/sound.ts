@@ -16,6 +16,10 @@
 // 原版 Sound/ 压成 MP3 放在仓库 gamedata/sound/（负责人 2026-11-12 同意，tools/gen-sound.ts 生成）。
 // 原版对某个事件没有声音，重制版也不出声；只有原版音效整体取不到时才用浏览器合成的简单音效兜底【新】。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
+import { music } from './music.ts';
+
+/** 播放时把背景音乐压低的音效：过关 m12、失败 m05【新】 */
+const DUCK = new Set(['m12', 'm05']);
 
 export type Sfx = 'click' | 'swing' | 'skill' | 'hit' | 'crit' | 'miss' | 'heal' | 'ko' | 'turn' | 'win' | 'lose' | 'status';
 
@@ -142,6 +146,7 @@ class SoundSystem {
       src.buffer = buf;
       src.connect(this.master!);
       src.start();
+      if (DUCK.has(k)) music.duckFor(buf.duration + 0.3);
     }
   }
 

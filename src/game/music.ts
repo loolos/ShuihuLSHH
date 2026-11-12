@@ -4,20 +4,65 @@
 //     "stages": { "N-add03": "tense", ... } }
 // 共 4 首（负责人 2026-11-12 定）：town 城镇/整备，battle 常规战斗，tense 紧张/首领战，story 剧情。
 // 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle。缺哪首就不放。过关 / 失败用原版音效 m12 / m05。
+// 播放（负责人 2026-11-12 要求）：
+// - 循环接缝：Suno 的曲子最后约 5 秒是渐弱，不能直接 loop。两个播放器轮流放：快到结尾时另一个从头淡入，前一个淡出。
+// - 换曲时旧曲 1 秒淡出、新曲淡入，不硬切。
+// - 过关 / 失败音效播放期间把音乐压低（duck），播完再恢复。
+// 只有开关，没有音量档（负责人定）。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
 
 const STORE = 'shuihu.music';
 const VOLUME = 0.45;
+/** 离结尾还剩多少秒时开始接下一遍（曲子尾部的渐弱大约从这里开始） */
+const LOOP_TAIL = 5;
+/** 循环接缝的交叉淡化时长（秒） */
+const LOOP_XFADE = 2.5;
+/** 换曲的淡出 / 淡入时长（秒） */
+const SWITCH_FADE = 1;
+/** 压低时的音量比例 */
+const DUCK_LEVEL = 0.2;
+const TICK = 50;
 
 interface BgmIndex {
   tracks: Record<string, string>;
   stages?: Record<string, string>;
 }
 
+/** 一个播放器：音量在 level 和 target 之间按 rate（每秒）线性变化，淡到 0 后暂停 */
+class Deck {
+  el = new Audio();
+  level = 0;
+  target = 0;
+  rate = 1;
+  track: string | null = null;
+  constructor() {
+    this.el.preload = 'auto';
+  }
+  fadeTo(target: number, secs: number) {
+    this.target = target;
+    this.rate = Math.abs(target - this.level) / Math.max(secs, 0.01);
+  }
+  step(dt: number) {
+    if (this.level < this.target) this.level = Math.min(this.target, this.level + this.rate * dt);
+    else if (this.level > this.target) this.level = Math.max(this.target, this.level - this.rate * dt);
+    if (this.level === 0 && this.target === 0 && !this.el.paused) this.el.pause();
+  }
+}
+
 class MusicPlayer {
-  private el = new Audio();
+  private decks = [new Deck(), new Deck()];
+  /** 当前（或即将）主放的播放器 */
+  private active = 0;
   private index: Promise<BgmIndex | null> | null = null;
   private current: string | null = null;
+  private duck = 1;
+  private duckUntil = 0;
+  private timer: ReturnType<typeof setInterval> | null = null;
+  private last = 0;
+  /** 浏览器不让自动播放，在等第一次用户操作 */
+  private blocked = false;
+  /** 最近一次用户操作补放成功的时间：同一次点击落在音乐按钮上时不再当作「关」 */
+  resumedAt = -1e9;
   on: boolean;
   onChange: () => void = () => {};
   /** 仓库里有没有配乐（index.json 读到之前为 null） */
@@ -31,8 +76,12 @@ class MusicPlayer {
       /* 隐私模式：默认开 */
     }
     this.on = v;
-    this.el.loop = true;
-    this.el.volume = VOLUME;
+    for (const d of this.decks) {
+      // 后台标签页里定时器会被放慢，接不上下一遍时至少在结束时马上接
+      d.el.addEventListener('ended', () => {
+        if (this.decks[this.active] === d) this.loopNow(LOOP_XFADE / 2);
+      });
+    }
   }
 
   private base() {
@@ -60,21 +109,95 @@ class MusicPlayer {
     return 'battle';
   }
 
+  private start(d: Deck, from = 0) {
+    try {
+      d.el.currentTime = from;
+    } catch {
+      /* 元数据还没到：从头放 */
+    }
+    d.el.play().then(
+      () => {
+        if (this.blocked) {
+          this.blocked = false;
+          this.onChange();
+        }
+      },
+      () => {
+        // 还没有用户操作，浏览器不让播：等第一次点击时再试
+        this.blocked = true;
+        this.onChange();
+      },
+    );
+    this.ensureTimer();
+  }
+  private ensureTimer() {
+    if (this.timer) return;
+    this.last = performance.now();
+    this.timer = setInterval(() => this.tick(), TICK);
+  }
+  private tick() {
+    const now = performance.now();
+    const dt = Math.min(1, (now - this.last) / 1000);
+    this.last = now;
+    // 压低：到时间后 0.6 秒回到原音量
+    const want = now < this.duckUntil ? DUCK_LEVEL : 1;
+    if (this.duck > want) this.duck = Math.max(want, this.duck - dt / 0.25);
+    else if (this.duck < want) this.duck = Math.min(want, this.duck + dt / 0.6);
+    const a = this.decks[this.active];
+    // 循环接缝：快到结尾时另一个播放器从头接上
+    if (a.target > 0 && !a.el.paused && a.el.duration > LOOP_TAIL * 3 && a.el.currentTime >= a.el.duration - LOOP_TAIL) this.loopNow(LOOP_XFADE);
+    for (const d of this.decks) {
+      d.step(dt);
+      d.el.volume = Math.max(0, Math.min(1, VOLUME * this.duck * d.level));
+    }
+    if (this.decks.every((d) => d.el.paused) && this.duck === 1) {
+      clearInterval(this.timer!);
+      this.timer = null;
+    }
+  }
+  /** 当前曲子从头再来一遍，和尾部交叉淡化 */
+  private loopNow(xfade: number) {
+    const old = this.decks[this.active];
+    const next = this.decks[1 - this.active];
+    if (!old.track) return;
+    if (next.el.src !== old.el.src) next.el.src = old.el.src;
+    next.track = old.track;
+    next.level = 0;
+    next.fadeTo(1, xfade);
+    old.fadeTo(0, xfade);
+    this.active = 1 - this.active;
+    this.start(next);
+  }
+
   /** 循环播放某首（同一首正在放就不重来）；null = 停 */
   async play(track: string | null) {
     this.current = track;
     const idx = await this.loadIndex();
     if (this.current !== track) return; // 等索引期间又换了曲
     const file = track ? idx?.tracks[track] : undefined;
+    const a = this.decks[this.active];
     if (!file || !this.on) {
-      this.el.pause();
+      for (const d of this.decks) d.fadeTo(0, SWITCH_FADE);
+      this.ensureTimer();
       return;
     }
-    const url = this.base() + file;
-    if (this.el.src !== new URL(url, location.href).href) this.el.src = url;
-    this.el.play().catch(() => {
-      /* 还没有用户操作，浏览器不让播：等第一次点击时再试 */
-    });
+    if (a.track === track && a.target > 0 && (!a.el.paused || this.blocked)) return;
+    const url = new URL(this.base() + file, location.href).href;
+    if (a.track === track && a.el.src === url) {
+      // 同一首刚淡出或正在淡出（比如关了又开）：接着原来的位置放
+      a.fadeTo(1, SWITCH_FADE);
+      if (a.el.paused) this.start(a, a.el.currentTime);
+      return;
+    }
+    // 换曲：旧的淡出，另一个播放器放新曲淡入
+    a.fadeTo(0, SWITCH_FADE);
+    this.active = 1 - this.active;
+    const d = this.decks[this.active];
+    d.track = track;
+    if (d.el.src !== url) d.el.src = url;
+    d.level = 0;
+    d.fadeTo(1, a.level > 0 ? SWITCH_FADE : 0.5);
+    this.start(d);
   }
   toggle() {
     this.on = !this.on;
@@ -84,18 +207,28 @@ class MusicPlayer {
       /* 忽略 */
     }
     if (this.on) void this.play(this.current);
-    else {
-      this.el.pause();
-    }
+    else for (const d of this.decks) d.fadeTo(0, 0.3), this.ensureTimer();
     this.onChange();
   }
   /** 第一次用户操作时补放（浏览器的自动播放限制） */
   resume() {
-    if (this.on && this.current && this.el.paused && this.el.src) this.el.play().catch(() => {});
+    if (!this.on || !this.blocked) return;
+    const a = this.decks[this.active];
+    if (!a.track || !a.el.src) return;
+    this.resumedAt = performance.now();
+    this.blocked = false;
+    this.start(a, a.el.currentTime);
+  }
+  /** 压低音乐 secs 秒（过关 / 失败音效） */
+  duckFor(secs: number) {
+    this.duckUntil = Math.max(this.duckUntil, performance.now() + secs * 1000);
+    this.ensureTimer();
   }
 }
 
 export const music = new MusicPlayer();
+// 开发模式下给 Playwright 测试脚本用
+if (import.meta.env.DEV) (window as unknown as { __music: MusicPlayer }).__music = music;
 
 export function installMusic(button: HTMLButtonElement) {
   const label = () => {
@@ -110,6 +243,8 @@ export function installMusic(button: HTMLButtonElement) {
   void music.loadIndex();
   button.addEventListener('click', (e) => {
     e.stopPropagation();
+    // 浏览器拦着自动播放时，按钮显示「开」但没声音：这一下点击已经让音乐响起来了，不要再把它关掉
+    if (performance.now() - music.resumedAt < 1500) return;
     music.toggle();
   });
   const resume = () => music.resume();
