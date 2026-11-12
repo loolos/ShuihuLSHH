@@ -74,17 +74,18 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
   return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
 }
 
-const growU = (s: { base: number }, r: number, L: number) => Math.floor(s.base * Math.pow(r / 100, L));
+const G = JSON.parse(process.env.GROW ?? '{"hp":[2,2.5],"mp":[2,2],"attack":[1.5,3],"defense":[2,8],"hit":[2,3.5],"agility":[3,8],"crit":[0.4,3.5]}');
+const growU = (s: { base: number }, k: string, L: number) => Math.floor(s.base + L * (G[k][0] + (s.base * G[k][1]) / 100));
 
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
-    maxHp: growU(cls.hp, 104, level),
-    maxMp: growU(cls.mp, 103.5, level),
-    attack: growU(cls.attack, 104.5, level),
-    defense: growU(cls.defense, 108.5, level),
-    hit: growU(cls.hit, 104.5, level),
-    agility: growU(cls.agility, 107, level),
-    crit: growU(cls.crit, 105, level),
+    maxHp: growU(cls.hp, 'hp', level),
+    maxMp: growU(cls.mp, 'mp', level),
+    attack: growU(cls.attack, 'attack', level),
+    defense: growU(cls.defense, 'defense', level),
+    hit: growU(cls.hit, 'hit', level),
+    agility: growU(cls.agility, 'agility', level),
+    crit: growU(cls.crit, 'crit', level),
     move: cls.move,
     rangeBonus: 0,
     poison: 0,
