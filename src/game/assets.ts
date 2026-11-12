@@ -15,6 +15,8 @@ export interface Assets {
   palette: Uint8Array;
   ground: ReturnType<typeof openGrp>;
   upper: ReturnType<typeof openGrp>;
+  /** Grid.grp：0–3 格子光标，4 = 宝箱（地图上的宝物都画这张，EXE 0x4010d0 / 0x40c24f） */
+  grid: ReturnType<typeof openGrp>;
   man: ReturnType<typeof openLib>;
   /** 技能特效：60 组，技能子项 +6 = 组号 + 1（0 = 无特效） */
   effects: ReturnType<typeof openLib>;
@@ -38,6 +40,7 @@ export function loadAssets(files: GameFiles): Assets {
     palette: parsePalette(files.get('Data/Default.pal')),
     ground: openGrp(files.get('Data/Ground.grp'), 'Ground.grp'),
     upper: openGrp(files.get('Data/Upper.grp'), 'Upper.grp'),
+    grid: openGrp(files.get('Data/Grid.grp'), 'Grid.grp'),
     man: openLib(files.get('Data/Man.lib'), 'Man.lib'),
     effects: openLib(files.get('Data/Effect.lib'), 'Effect.lib'),
     objects: openPic(files.get('Data/Object.lib'), 'Object.lib'),

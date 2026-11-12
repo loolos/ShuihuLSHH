@@ -250,6 +250,17 @@ describe('战斗流程', () => {
     expect(b.items).toHaveLength(1);
   });
 
+  it('隐藏的宝物：地图上不画，路过照样拾到', () => {
+    const hid = act(1, 1, 'object', 2, 0, 1);
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), hid], blocks: [], data, seed: 1 });
+    b.begin();
+    expect(b.items[0].hidden).toBe(true);
+    const p = b.unit(0)!;
+    p.slots = [1, 0, 0, 0, 0, 0, 0];
+    expect(b.move(p, 3, 0).some((e) => e.type === 'pickup')).toBe(true);
+    expect(b.items).toHaveLength(0);
+  });
+
   it('强行军：走进黄色范围后本回合结束', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
     b.begin();
