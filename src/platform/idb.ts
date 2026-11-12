@@ -28,6 +28,15 @@ export async function idbPutAll(entries: Map<string, ArrayBuffer>): Promise<void
   db.close();
 }
 
+/** 追加或覆盖一项（不清空） */
+export async function idbPut(k: string, v: ArrayBuffer): Promise<void> {
+  const db = await open();
+  const tx = db.transaction(STORE, 'readwrite');
+  tx.objectStore(STORE).put(v, k);
+  await done(tx);
+  db.close();
+}
+
 export async function idbGetAll(): Promise<Map<string, ArrayBuffer>> {
   const db = await open();
   const tx = db.transaction(STORE, 'readonly');

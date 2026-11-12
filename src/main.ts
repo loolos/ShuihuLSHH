@@ -4,7 +4,7 @@ import {
   GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, loadFromRepo, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
-import { frameToCanvas, loadAssets, type Assets } from './game/assets.ts';
+import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
 import type { Battle } from './rules/battle.ts';
@@ -19,30 +19,23 @@ const progress: Progress = (m, r) => {
   if (r !== undefined) bar.style.width = `${Math.round(r * 100)}%`;
 };
 
-async function obtainFiles(): Promise<Map<string, ArrayBuffer>> {
+async function obtainFiles(): Promise<GameFiles> {
   const cached = await loadCached();
   if (cached) {
     const { missing, mismatched } = await checkFiles(cached, progress, false);
-    if (!missing.length && !mismatched.length) return cached;
+    if (!missing.length && !mismatched.length) return new GameFiles(cached);
   }
   const dev = await loadFromDevServer(progress);
-  if (dev) return dev;
+  if (dev) return new GameFiles(dev);
   const bundled = await loadBundled(progress);
   if (bundled) {
     await saveCache(bundled);
-    return bundled;
+    return new GameFiles(bundled);
   }
-  // 网页版：直接用 GitHub 仓库里的原版文件；下载失败才让玩家自己选目录
-  const repo = await loadFromRepo(progress);
-  if (repo) {
-    const { missing, mismatched } = await checkFiles(repo, progress, false);
-    if (!missing.length && !mismatched.length) {
-      progress('写入浏览器缓存…', 1);
-      await saveCache(repo);
-      return repo;
-    }
-  }
-  return pickFiles();
+  // 网页版：从 GitHub 仓库取原版文件，大文件进关前按需下载；下载失败才让玩家自己选目录
+  const repo = await loadFromRepo(progress, cached ?? undefined);
+  if (repo) return new GameFiles(repo.files, repo.remote);
+  return new GameFiles(await pickFiles());
 }
 
 function pickFiles(): Promise<Map<string, ArrayBuffer>> {
@@ -172,10 +165,25 @@ function startGame(assets: Assets) {
     if (next.length > 1) ui.result(true, `${text}\n\n接下来走哪条路？`.trim(), choices, '分路');
     else ui.result(true, text, [...choices, { label: '再打一次本关', run }]);
   };
-  const run = () => {
+  let loading = 0;
+  const run = async () => {
     ui.hideResult();
     sel.value = String(campaign.stage);
     const stage = stageOf(campaign.stage).mapName;
+    // 网页版：先下载本关要用的人物、特效和图块（已缓存的不再下载）
+    const ticket = ++loading;
+    try {
+      await preloadStage(assets, stage, (m, r) => {
+        setupEl.hidden = false;
+        progress(m, r);
+      });
+    } catch (e) {
+      setupEl.hidden = false;
+      progress(`下载本关素材失败：${(e as Error).message}。请检查网络后刷新页面。`, 0);
+      return;
+    }
+    if (ticket !== loading) return; // 下载期间又换了关
+    setupEl.hidden = true;
     const data = { assets, stage, ui, seed, party: partyOf(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
@@ -206,9 +214,9 @@ function startGame(assets: Assets) {
 
 async function boot() {
   try {
-    const raw = await obtainFiles();
+    const files = await obtainFiles();
     progress('解码中…', 1);
-    const assets = loadAssets(new GameFiles(raw));
+    const assets = loadAssets(files);
     setupEl.hidden = true;
     startGame(assets);
   } catch (e) {
