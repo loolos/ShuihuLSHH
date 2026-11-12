@@ -74,15 +74,17 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
   return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
 }
 
+const growU = (s: { base: number }, r: number, L: number) => Math.floor(s.base * Math.pow(r / 100, L));
+
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
-    maxHp: grow(cls.hp, level, CAP_HPMP),
-    maxMp: grow(cls.mp, level, CAP_HPMP),
-    attack: grow(cls.attack, level),
-    defense: grow(cls.defense, level),
-    hit: grow(cls.hit, level),
-    agility: grow(cls.agility, level),
-    crit: grow(cls.crit, level),
+    maxHp: growU(cls.hp, 104, level),
+    maxMp: growU(cls.mp, 103.5, level),
+    attack: growU(cls.attack, 104.5, level),
+    defense: growU(cls.defense, 108.5, level),
+    hit: growU(cls.hit, 104.5, level),
+    agility: growU(cls.agility, 107, level),
+    crit: growU(cls.crit, 105, level),
     move: cls.move,
     rangeBonus: 0,
     poison: 0,
@@ -109,9 +111,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.stun += it!.stun;
   }
   for (const b of buffs) if (b.stat in st) st[b.stat as keyof Stats] += b.value;
-  st.maxHp = Math.min(CAP_HPMP, st.maxHp);
-  st.maxMp = Math.min(CAP_HPMP, st.maxMp);
-  for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, Math.min(CAP_STAT, st[k]));
+  for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, st[k]);
   if (poisoned) {
     st.attack = Math.floor(st.attack / 2);
     st.defense = Math.floor(st.defense / 2);
