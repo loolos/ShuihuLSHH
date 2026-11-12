@@ -1,5 +1,6 @@
-// 测试用跳关【新】：从关卡下拉框直接进后面的关卡时，按那一关的难度给我方人物补上等级和装备，
+// 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
+// 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留黄金。
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import type { CampaignState, Member } from './campaign.ts';
@@ -23,8 +24,9 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
 
 /**
  * 跳到第 target 关时的推荐状态：
- * - 等级 = 这一关敌人的平均等级（四舍五入；敌人全是 1 级的过场关看后面第一场真正的战斗），不低于原有等级；
- * - 装备 = 之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰（比原有的好才换）；
+ * - 我方人物从头配起，之前的等级、经验、装备一概不用；
+ * - 等级 = 这一关敌人的平均等级（四舍五入；敌人全是 1 级的过场关看后面第一场真正的战斗），不低于剧本里写的等级；
+ * - 装备 = 剧本里的初始装备；之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰比它好就换上；
  * - 物品栏补 2 个药铺里回复最多的药；
  * - 技能随等级自动领悟。
  */
@@ -51,15 +53,14 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   const drugs = town ? stock(data, 3, town) : [];
   const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
 
-  const members = new Map(c.members.map((m) => [m.classId, m]));
+  const members = new Map<number, Member>();
   for (const u of at(pos).units) {
     if (u.side !== 'player' || !data.classes[u.type]) continue;
     const cls = data.classes[u.type];
-    const old = members.get(u.type);
-    const slots = old ? [...old.slots] : cls.defaultItems.slice(0, SLOT_COUNT);
-    u.items.forEach((id, k) => !old && id && (slots[k] = id));
+    const slots = cls.defaultItems.slice(0, SLOT_COUNT);
+    u.items.forEach((id, k) => id && (slots[k] = id));
     while (slots.length < SLOT_COUNT) slots.push(0);
-    const forge = slots.map((_, k) => old?.forge?.[k] ?? 0);
+    const forge = slots.map(() => 0);
     for (let k = 0; k < 3; k++) {
       const score = (id: number) => {
         const it = itemOf(data, id);
@@ -77,10 +78,9 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
       let n = slots.filter((id, k) => k >= 3 && id === potion).length;
       for (let k = 3; k < SLOT_COUNT && n < 2; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
     }
-    const m: Member = { classId: u.type, level: Math.max(level, u.level, old?.level ?? 1), exp: old && old.level >= level ? old.exp : 0, slots, forge };
-    members.set(u.type, m);
+    members.set(u.type, { classId: u.type, level: Math.max(level, u.level), exp: 0, slots, forge });
   }
-  return { ...c, town: undefined, stage: target, members: [...members.values()] };
+  return { version: 1, stage: target, gold: c.gold, members: [...members.values()] };
 }
 
 const heal = (data: GameData, id: number) => {
