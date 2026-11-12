@@ -17,7 +17,7 @@ import type { Item } from '../src/formats/goo.ts';
 
 const g = (base: number, growth = 100) => ({ base, growth });
 const punch: SkillDef = {
-  name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false, effect: 0, power: 0, poison: 0, stun: 0, rangeMin: 1, rangeMax: 1,
+  name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false, effect: 0, effect2: 0, effect3: 0, power: 0, poison: 0, stun: 0, rangeMin: 1, rangeMax: 1,
   area: 1, learnLevel: 1, mpCost: 0, hitMod: 0, critMod: 0, hits: [{ frame: 1, percent: 100, dir: 0 }], raw: '',
 };
 const cls = (id: number, o: Partial<ClassDef> = {}): ClassDef => ({

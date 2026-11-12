@@ -13,7 +13,7 @@ export interface ClassSkill {
   type: number; // +2：5 普通、6/10 遠程、7 連續、2 迴旋、8 集氣、0/1/3/4 氣功、9/11 回復
   group: number; // +3 技能组号（LV1/2/3 共用）
   hidden: boolean; // +5 u8 = 1 时为隐藏技（古武術祕笈）
-  effect: number; // +6 特效号：Effect.lib 第 (effect − 1) 组，0 = 无（一柱擎天 39 → 光柱）
+  effect: number; // +6 特效号：Effect.lib 第 (effect − 1) 组，0 = 无。实际播放哪组还看类型，见 src/game/effects.ts
   power: number; // +8 威力；回复技/集气技为回复除数
   poison: number; // +10 中毒率 %
   stun: number; // +11 昏迷率 %
@@ -24,6 +24,8 @@ export interface ClassSkill {
   mpCost: number; // +18
   hitMod: number; // +20 s16
   critMod: number; // +22 s16
+  effect2: number; // +24 第二段特效号：第一段播到触发帧时在同一格接着播，0 = 无（EXE 0x40379e、0x404219）
+  effect3: number; // +26 命中特效号：前一段播到触发帧、且该格有可作用的单位时播，0 = 无（EXE 0x4037a8、0x404288）
   hits: SkillHit[]; // +28 起，每段 6 B，帧号为 0 时结束
   raw: string; // 58 B 原样（十六进制），未解字段保留
 }
@@ -90,6 +92,8 @@ export function parseHuman(buf: Buffer): ClassRecord[] {
         mpCost: buf.readInt16LE(s + 18),
         hitMod: buf.readInt16LE(s + 20),
         critMod: buf.readInt16LE(s + 22),
+        effect2: buf.readUInt16LE(s + 24),
+        effect3: buf.readUInt16LE(s + 26),
         hits,
         raw: hex(buf.subarray(s, s + 58)),
       });

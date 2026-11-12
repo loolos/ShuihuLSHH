@@ -135,7 +135,7 @@ export function refreshStats(u: Unit, data: GameData) {
 
 /** 没有技能的职业（如宋江）用这个兜底的普通攻击 */
 const FALLBACK_ATTACK: SkillDef = {
-  name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false, effect: 0, power: 0, poison: 0, stun: 0,
+  name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false, effect: 0, effect2: 0, effect3: 0, power: 0, poison: 0, stun: 0,
   rangeMin: 1, rangeMax: 1, area: 1, learnLevel: 1, mpCost: 0, hitMod: 0, critMod: 0, hits: [{ frame: 0, percent: 100, dir: 0 }], raw: '',
 };
 

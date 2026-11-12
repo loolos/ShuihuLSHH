@@ -35,6 +35,8 @@ export interface GameData {
   heroNickname?: string;
   /** EXE 里的二选一对话框（0 = 伏兵号令，1、2 = 第 3、8 章分路；src/formats/exe.ts VA_PROMPTS） */
   prompts?: ExePrompt[];
+  /** Effect.lib 每组的触发帧（EXE 0x4435e8；src/formats/exe.ts） */
+  effectTriggers?: number[];
 }
 
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
