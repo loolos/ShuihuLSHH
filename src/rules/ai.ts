@@ -2,7 +2,7 @@
 import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
-import type { Battle } from './battle.ts';
+import { forcedExtra, type Battle } from './battle.ts';
 import { castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
@@ -75,10 +75,10 @@ function better(a: Option, b: Option) {
 }
 
 /** 朝目标移动：在移动范围内取离目标地形距离最近的格子（stopAt：到这个距离就停，如跟随时停在相邻格） */
-function approach(b: Battle, u: Unit, goals: Cell[], stopAt = 1): AiPlan {
+function approach(b: Battle, u: Unit, goals: Cell[], stopAt = 1, budget = u.stats.move): AiPlan {
   if (!goals.length) return {};
   const field = b.board.distanceField(goals);
-  const reach = b.reachOf(u, u.stats.move);
+  const reach = b.reachOf(u, budget);
   const w = b.board.width;
   let best: { x: number; y: number; cost: number } | null = null;
   let bestD = field[u.y * w + u.x];
@@ -172,8 +172,16 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     }
     case 5: {
       // 跟随指定单位，不攻击；体力不满时走完顺便休息（负责人 2026-11-12 要求，原版没有）【新】
-      const plan = target ? approach(b, u, [target], 1) : {};
-      return u.hp < u.stats.maxHp ? { ...plan, rest: true } : plan;
+      // 体力满、普通移动到不了相邻格时用强行军追上去（走完本回合结束，所以不休息）（负责人 2026-11-12）【新】
+      if (!target) return u.hp < u.stats.maxHp ? { rest: true } : {};
+      if (u.hp < u.stats.maxHp) return { ...approach(b, u, [target], 1), rest: true };
+      const plan = approach(b, u, [target], 1);
+      const field = b.board.distanceField([target]);
+      const end = plan.path?.at(-1) ?? u;
+      if (field[end.y * b.board.width + end.x] <= 1) return plan;
+      const forced = approach(b, u, [target], 1, u.stats.move + forcedExtra(u));
+      const fEnd = forced.path?.at(-1) ?? u;
+      return field[fEnd.y * b.board.width + fEnd.x] < field[end.y * b.board.width + end.x] ? forced : plan;
     }
     case 8: // 原地不动
       return {};
