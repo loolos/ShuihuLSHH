@@ -202,6 +202,20 @@ describe('战斗流程', () => {
     expect(b.phase).toBe('player');
   });
 
+  it('我方全员行动完毕：昏迷、阵亡的人不算', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 2), act(2, 0, 'player', 0, 4), act(3, 1, 'enemy', 9, 9)], blocks: [], data, seed: 1 });
+    b.begin();
+    const [p, q, r] = [b.unit(0)!, b.unit(1)!, b.unit(2)!];
+    expect(b.playerPhaseDone()).toBe(false);
+    q.alive = false;
+    r.ended = true; // 昏迷的人在回合开始时就是 ended
+    expect(b.playerPhaseDone()).toBe(false);
+    b.move(p, 3, 0);
+    expect(b.playerPhaseDone()).toBe(false); // 移动后还能攻击/待机
+    b.wait(p);
+    expect(b.playerPhaseDone()).toBe(true);
+  });
+
   it('宝物：路过的格子也拾取，放进道具栏 3–6；敌人不拾', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 9, 9), act(2, 1, 'object', 2, 0), act(3, 1, 'object', 8, 9)], blocks: [], data, seed: 1 });
     b.begin();
