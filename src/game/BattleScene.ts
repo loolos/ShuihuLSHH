@@ -274,7 +274,7 @@ export class BattleScene extends Phaser.Scene {
     const u = m.u;
     const hovered = this.hoverCell ? this.battle.unitAt(this.hoverCell.x, this.hoverCell.y) : undefined;
     if (m.kind === 'skill') {
-      this.ui.setCommands(this.commands(m));
+      this.setFloatCommands(m);
       const c = this.hoverCell;
       const b = this.battle;
       const name = this.assets.tr(m.skill.name);
@@ -288,7 +288,7 @@ export class BattleScene extends Phaser.Scene {
       return;
     }
     if (m.kind === 'item' || m.kind === 'itemSlot') {
-      this.ui.setCommands(this.commands(m));
+      this.ui.setCommands(this.commands(m)); // 道具、装备菜单仍在右下角
       if (m.kind === 'item') return this.ui.showUnit(u, null, this.battle.canAct(u) && u.side === 'player' ? '选择道具：可使用、装备、给予或丢弃' : '');
       const it = itemOf(this.assets.data, u.slots[m.slot]);
       if (!it) return this.ui.showUnit(u);
@@ -308,7 +308,28 @@ export class BattleScene extends Phaser.Scene {
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
     else this.ui.showUnit(u, null, m.kind === 'attack' ? '选择攻击目标' : '');
-    this.ui.setCommands(this.commands(m));
+    this.setFloatCommands(m);
+  }
+
+  /** 攻击、技能、防御等指令放在人物旁边，跟着镜头移动（位置在 update 里每帧更新） */
+  private setFloatCommands(m: Mode) {
+    this.ui.setCommands(this.commands(m), true);
+    this.placeFloat();
+  }
+
+  private placeFloat() {
+    const m = this.mode;
+    if (m.kind === 'idle' || !this.ui.floatingCommands) return;
+    const s = this.sprites.get(m.u.uid);
+    if (!s) return;
+    const cam = this.cameras.main;
+    const v = cam.worldView;
+    // 人物身体中部大约在脚下格子中心往上 30 像素（世界坐标）
+    this.ui.placeCommands((s.spr.x - v.x) * cam.zoom + cam.x, (s.spr.y - 30 - v.y) * cam.zoom + cam.y, (HALF_W + 16) * cam.zoom);
+  }
+
+  update() {
+    this.placeFloat();
   }
 
   private commands(m: Mode): Command[] | null {

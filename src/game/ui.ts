@@ -21,6 +21,8 @@ export class BattleUI {
   private log = $('log');
   private panel = $('unit-panel');
   private cmd = $('cmd');
+  /** 跟着人物的指令菜单（攻击、技能、防御……）；道具菜单仍在右下角 */
+  private cmdFloat = $('cmd-float');
   private dialog = $('dialog');
   private dialogNext: (() => void) | null = null;
   private face = document.createElement('img');
@@ -146,12 +148,15 @@ export class BattleUI {
     this.panel.hidden = false;
   }
 
-  setCommands(list: Command[] | null) {
+  /** 显示指令菜单。`float` 为真时菜单跟着人物（位置由 placeCommands 每帧更新），否则放在右下角 */
+  setCommands(list: Command[] | null, float = false) {
+    const [box, other] = float ? [this.cmdFloat, this.cmd] : [this.cmd, this.cmdFloat];
+    other.hidden = true;
     if (!list) {
-      this.cmd.hidden = true;
+      box.hidden = true;
       return;
     }
-    this.cmd.replaceChildren(
+    box.replaceChildren(
       ...list.map((c) => {
         const b = document.createElement('button');
         b.textContent = this.tr(c.label);
@@ -169,7 +174,32 @@ export class BattleUI {
         return b;
       }),
     );
-    this.cmd.hidden = false;
+    box.hidden = false;
+  }
+
+  get floatingCommands() {
+    return !this.cmdFloat.hidden;
+  }
+
+  /**
+   * 把跟随菜单放在人物旁边：x 是人物中心的屏幕横坐标，y 是身体中部，reach 是人物到相邻格的横向距离。
+   * 默认放右边，放不下就放左边；上下限制在顶栏和底部面板之间。
+   */
+  placeCommands(x: number, y: number, reach: number) {
+    const el = this.cmdFloat;
+    if (el.hidden) return;
+    const w = el.offsetWidth, h = el.offsetHeight;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const gap = reach + 8;
+    let left = x + gap;
+    if (left + w > vw - 4) left = x - gap - w;
+    left = Math.max(4, Math.min(left, vw - w - 4));
+    const top0 = ($('hud').getBoundingClientRect().bottom || 0) + 4;
+    const bottomEl = $('bottom').getBoundingClientRect();
+    // 底部面板占得不多时避开它，屏幕太矮就允许盖住
+    const bottom1 = bottomEl.height && bottomEl.top - top0 > h + 8 ? bottomEl.top - 4 : vh - 4;
+    const top = Math.max(top0, Math.min(y - h / 2, bottom1 - h));
+    el.style.transform = `translate(${Math.round(left)}px, ${Math.round(top)}px)`;
   }
 
   /** 对白框：点击或按回车继续 */
