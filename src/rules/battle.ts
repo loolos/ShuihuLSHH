@@ -119,6 +119,7 @@ export class Battle {
       // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）。延续的人物取两者较高者，装备沿用
       const kept = a.side === 'player' ? input.party?.get(a.type) : undefined;
       if (kept) slots.splice(0, slots.length, ...kept.slots);
+      const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
       const level = Math.max(1, a.level, kept?.level ?? 0);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
@@ -130,10 +131,10 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const stats = computeStats(cls, level, slots, this.data);
+      const stats = computeStats(cls, level, slots, this.data, false, forge);
       this.units.push({
         uid: a.index, classId: a.type, name: this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
-        level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, gold: 0,
+        level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0,
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
@@ -432,6 +433,7 @@ export class Battle {
   private applyItem(u: Unit, slot: number) {
     const it = itemOf(this.data, u.slots[slot])!;
     u.slots[slot] = 0;
+    u.forge[slot] = 0;
     const hp0 = u.hp;
     if (it.healHp) u.hp = it.healHp < 0 ? u.stats.maxHp : Math.min(u.stats.maxHp, u.hp + it.healHp);
     if (it.healMp) u.mp = it.healMp < 0 ? u.stats.maxMp : Math.min(u.stats.maxMp, u.mp + it.healMp);
@@ -467,6 +469,7 @@ export class Battle {
     if (slot === undefined) return this.emit({ type: 'message', text: `${u.name}的道具已滿。` });
     const g = this.items.splice(i, 1)[0];
     u.slots[slot] = g.item;
+    u.forge[slot] = 0;
     u.turnStart = null; // 拾取后不能撤销移动
     refreshStats(u, this.data);
     this.emit({ type: 'pickup', uid: u.uid, x: g.x, y: g.y, item: g.item });

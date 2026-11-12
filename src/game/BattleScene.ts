@@ -8,7 +8,7 @@ import { findStageFile, loadStage } from '../rules/load.ts';
 import { itemOf, type SkillDef } from '../rules/data.ts';
 import { isSupportSkill } from '../rules/skills.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
-import { frameToCanvas, type Assets } from './assets.ts';
+import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, effectAnim, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
@@ -114,7 +114,7 @@ export class BattleScene extends Phaser.Scene {
       const item = itemOf(this.assets.data, g.item);
       if (!item) continue;
       const fr = this.assets.objects.frame(item.icon);
-      const key = textureFor(this, `obj:${item.icon}`, () => frameToCanvas(fr, this.assets.palette));
+      const key = textureFor(this, `obj:${item.icon}`, () => frameToCanvas(fr, this.assets.palette, ICON_KEY));
       const p = cellToWorld(g.x, g.y);
       this.groundItems.set(`${g.x},${g.y}`, this.add.image(p.x, p.y - 8, key).setDepth(depthOf(g.x, g.y, 7)));
     }

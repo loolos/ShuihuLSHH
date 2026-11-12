@@ -116,6 +116,57 @@ code { color: var(--ink); }
 #result-actions { display: flex; flex-direction: column; gap: 8px; }
 #result-actions button small { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); white-space: pre-line; text-align: left; }
 
+/* ───────── 城镇与整备 ───────── */
+#town {
+  position: fixed; inset: 0; z-index: 6; overflow: auto; display: flex; flex-direction: column; gap: 10px;
+  padding: 12px max(12px, env(safe-area-inset-left)) max(12px, env(safe-area-inset-bottom));
+  background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
+}
+#town[hidden] { display: none; }
+#town button {
+  font: inherit; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px;
+  padding: 6px 12px; min-height: 34px; cursor: pointer;
+}
+#town button:hover:not(:disabled) { border-color: var(--accent); }
+#town button.on { background: var(--accent); color: #1b1610; border-color: var(--accent); }
+#town button:disabled { opacity: 0.45; cursor: default; }
+.town-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.town-head h2 { margin: 0; color: var(--accent); font-size: 22px; letter-spacing: 0.08em; flex: 1 1 auto; }
+.town-head .gold { color: var(--muted); }
+.town-head .gold b { color: #f0c860; font-size: 18px; }
+#town .leave { background: var(--accent); color: #1b1610; border-color: var(--accent); font-weight: bold; }
+.town-shops, .town-actions, #town .ops { display: flex; flex-wrap: wrap; gap: 6px; }
+.town-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px; align-items: start; }
+.town-shop, .town-party { background: rgba(20, 17, 13, 0.85); border: 1px solid #4a3b29; border-radius: 6px; padding: 10px; }
+.town-party { display: flex; flex-direction: column; gap: 8px; }
+.town-line { margin: 10px 0; padding: 10px 14px; background: #000; border: 1px solid var(--accent); border-radius: 6px; line-height: 1.7; white-space: pre-line; }
+#town .hint { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 8px 0; }
+#town ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+#town li button { width: 100%; display: flex; align-items: center; gap: 8px; text-align: left; }
+#town li.sel button { border-color: var(--accent); background: #3a2e20; }
+#town .ico { width: 28px; height: 28px; object-fit: contain; image-rendering: pixelated; flex: 0 0 auto; }
+#town .nm { flex: 0 0 auto; min-width: 5.5em; }
+#town .nm.empty { color: #6a5a44; }
+#town .eff { flex: 1 1 auto; color: var(--muted); font-size: 12px; }
+#town .price { flex: 0 0 auto; color: #f0c860; font-size: 13px; }
+#town .lab { flex: 0 0 2.4em; color: var(--muted); font-size: 12px; }
+#town .plus { color: #7fd06a; font-weight: normal; margin-left: 2px; }
+#town .warn { color: var(--danger); margin-left: 4px; }
+#town .member { border: 1px solid #4a3b29; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 6px; }
+#town .member.open { border-color: var(--accent); }
+#town .who { display: flex; align-items: center; gap: 8px; text-align: left; background: none; border: none; padding: 0; }
+#town .who b { color: var(--accent); font-size: 16px; }
+#town .who small { color: var(--muted); }
+#town .face { height: 52px; width: auto; }
+@media (max-width: 640px) {
+  #town { padding: 8px 8px max(8px, env(safe-area-inset-bottom)); gap: 8px; }
+  .town-head h2 { font-size: 18px; }
+  .town-body { grid-template-columns: 1fr; }
+  #town button { padding: 4px 8px; min-height: 32px; }
+  #town .face { height: 40px; }
+  #town .eff { font-size: 11px; }
+}
+
 @media (max-width: 640px) {
   #hud { font-size: 13px; gap: 4px; padding: 4px 6px; }
   #hud select { max-width: 40vw; }

@@ -65,6 +65,33 @@ export function itemOf(data: GameData, id: number): Item | undefined {
 
 /** 道具类型码：0–12 武器、13 衣服、14 头饰，可以提供装备加成 */
 export const isEquipment = (it: Item | undefined) => !!it && it.type <= 14;
+/** 装备栏：前 3 格是武器（类型 0–12）、衣服（13）、头饰/饰品（14），只有这 3 格的装备算加成（EXE 0x408803 只循环 3 格）；其余 4 格是随身物品 */
+export const EQUIP_SLOTS = 3;
+export const SLOT_COUNT = 7;
+export function equipSlotOf(it: Item | undefined): number {
+  if (!it) return -1;
+  return it.type <= 12 ? 0 : it.type === 13 ? 1 : it.type === 14 ? 2 : -1;
+}
+/** 职业能不能装备这件道具：武器只能用职业的武器类型，或该职业默认武器的类型（阮小五武器类型 6 却默认带朴刀 3）【待核】 */
+export function canEquip(cls: ClassDef, it: Item | undefined, data: GameData): boolean {
+  const k = equipSlotOf(it);
+  if (k < 0) return false;
+  if (k > 0) return true;
+  const own = itemOf(data, cls.defaultItems[0]);
+  return it!.type === cls.weaponType || (!!own && own.type === it!.type);
+}
+/**
+ * 打铁 n 次后的攻防（EXE 0x418373：每次花买价的一半，攻击、防御中还有剩余次数的各加一次 +80 / +88，
+ * 实例的剩余次数 −1；实例在单位 +0xa6 起每格 10 字节 {id, 攻, 攻剩余, 防, 防剩余}，0x4093f0 装入时取道具表初值）
+ */
+export function forgedStats(it: Item, n: number) {
+  return {
+    attack: it.attack + it.attackStep * Math.min(n, it.attackSteps),
+    defense: it.defense + it.defenseStep * Math.min(n, it.defenseSteps),
+  };
+}
+export const forgeLimit = (it: Item) => Math.max(it.attackSteps, it.defenseSteps);
+
 /** 回复类消耗品 */
 export const isHealing = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 17;
 

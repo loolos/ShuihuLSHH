@@ -7,6 +7,8 @@ export interface Member {
   level: number;
   exp: number;
   slots: number[];
+  /** 每格道具打铁的次数（旧存档没有） */
+  forge?: number[];
 }
 
 export interface CampaignState {
@@ -15,6 +17,10 @@ export interface CampaignState {
   stage: number;
   members: Member[];
   gold: number;
+  /** 正在城镇里（过关后、去下一关之前），值为城镇号 1–13；存档时也记下，读档回到城镇 */
+  town?: number;
+  /** 上一关出场的我方角色号（整备、买东西只列这些人；旧存档没有时列全部） */
+  active?: number[];
 }
 
 export interface StageEntry {
@@ -70,12 +76,14 @@ export const partyOf = (c: CampaignState) => new Map(c.members.map((m) => [m.cla
 export function recordResult(c: CampaignState, battle: Battle): CampaignState {
   const members = new Map(c.members.map((m) => [m.classId, m]));
   let gold = c.gold;
+  const active: number[] = [];
   for (const u of battle.units) {
     if (u.side !== 'player') continue;
     gold += u.gold;
-    members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots: [...u.slots] });
+    if (u.present || !u.alive) active.push(u.classId); // 没登场或中途退场（如王進）的不算
+    members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots: [...u.slots], forge: [...u.forge] });
   }
-  return { ...c, members: [...members.values()], gold };
+  return { ...c, members: [...members.values()], gold, active };
 }
 
 /** 读取存档（坏档返回 null） */

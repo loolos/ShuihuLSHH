@@ -1,5 +1,5 @@
 // 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
-import { basicAttack, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
+import { basicAttack, EQUIP_SLOTS, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
 
@@ -38,8 +38,10 @@ export interface Unit {
   hp: number;
   mp: number;
   stats: Stats;
-  /** 7 个道具槽（原版不区分槽位类型；装备加成按道具类型计算），0 = 空 */
+  /** 7 个道具槽，0 = 空；前 3 格是装备栏（武器、衣服、头饰），见 data.ts EQUIP_SLOTS */
   slots: number[];
+  /** 每格道具打铁的次数（随道具移动） */
+  forge: number[];
   gold: number;
   ai: AiState;
   present: boolean; // 是否在场（未登场或已战败为 false）
@@ -70,7 +72,7 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
   return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
 }
 
-export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false): Stats {
+export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = []): Stats {
   const st: Stats = {
     maxHp: grow(cls.hp, level, CAP_HPMP),
     maxMp: grow(cls.mp, level, CAP_HPMP),
@@ -86,11 +88,12 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     regenHp: 0,
     regenMp: 0,
   };
-  for (const id of slots) {
-    const it = itemOf(data, id);
+  for (let k = 0; k < EQUIP_SLOTS; k++) {
+    const it = itemOf(data, slots[k]);
     if (!isEquipment(it)) continue;
-    st.attack += it!.attack;
-    st.defense += it!.defense;
+    const f = forgedStats(it!, forge[k] ?? 0);
+    st.attack += f.attack;
+    st.defense += f.defense;
     st.hit += it!.hit;
     st.agility += it!.agility;
     st.crit += it!.crit;
@@ -114,7 +117,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 }
 
 export function refreshStats(u: Unit, data: GameData) {
-  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0);
+  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge);
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);
 }

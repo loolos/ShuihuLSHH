@@ -7,6 +7,9 @@ import { idbClear } from './platform/idb.ts';
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
+import { TownUI } from './game/town.ts';
+import { parsePasHeader } from './formats/pas.ts';
+import { findStageFile } from './rules/load.ts';
 import type { Battle } from './rules/battle.ts';
 import { newCampaign, nextByHeader, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
@@ -159,31 +162,76 @@ function startGame(assets: Assets) {
     writeSave(c);
     run();
   };
+  /** 过关后去哪：剧本头 +9 城镇号、+11 下一关（城镇 2、5 离开时还要问分路）；没有剧本头时按关卡表顺序 */
+  const nextOf = (cur: (typeof stages)[number]) => {
+    const f = findStageFile(assets.files, cur.mapName, '.pab');
+    if (!f) return { town: 0, next: nextStages(stages, cur.index).slice(0, 1) };
+    const h = parsePasHeader(assets.files.get(f));
+    const n = nextByHeader(h);
+    return { town: h.town, route: n.route, next: stages.filter((s) => s.index === n.next) };
+  };
+  const go = async (c: CampaignState) => {
+    const { next, route } = nextOf(stageOf(c.stage));
+    // 城镇 2、5：离开时问走大道还是小径，小径进写死的另一关
+    const k = route ? await ask(route.prompt) : 0;
+    goTo({ ...c, town: undefined, stage: k === 1 && route ? route.alt : next[0].index });
+  };
+  const town = new TownUI(assets, (cls) => ui.portrait(cls));
+  const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
+    town.show(c, {
+      town: t,
+      title: t ? `城镇 · ${label(stageOf(c.stage))}之后` : '整备',
+      onChange: (x) => {
+        campaign = x;
+        if (t) writeSave(x); // 城镇里随时存档（读档回到城镇）；单独整备等进了下一关再存
+      },
+      onLeave: leave,
+    });
+  };
+  const enterTown = (c: CampaignState) => openTown(c, c.town!, (x) => void go(x));
+  /** 战役结算：继续下一关，或先整备 */
+  const proceed = (c: CampaignState, text: string) => {
+    const { next } = nextOf(stageOf(c.stage));
+    ui.result(true, text, [
+      { label: `继续：${label(next[0])}`, run: () => void go(c) },
+      { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => proceed(x, text)) },
+      { label: '再打一次本关', run },
+    ]);
+  };
   const onEnd = async (battle: Battle, won: boolean, text: string) => {
+    const before = campaign;
     const cur = stageOf(campaign.stage);
     const retry = { label: '重新开始本关', run };
     if (!won) return ui.result(false, text, [retry]);
     const after = recordResult(campaign, battle);
-    let next: (typeof stages)[number][];
-    let route: { prompt: number; alt: number } | undefined;
-    if (battle.header) {
-      const h = nextByHeader(battle.header);
-      route = h.route;
-      next = stages.filter((s) => s.index === h.next && s.mapName);
-    } else next = nextStages(stages, cur.index).slice(0, 1);
+    const { town: t, next } = nextOf(cur);
     if (!next.length) return ui.result(true, text, [retry], '通关');
-    const go = async () => {
-      // 城镇 2、5：离开时问走大道还是小径，小径进写死的另一关
-      const k = route ? await ask(route.prompt) : 0;
-      goTo({ ...after, stage: k === 1 && route ? route.alt : next[0].index });
-    };
+    if (t) {
+      // 过关进城（存档也记下城镇号，刷新回到城镇）
+      const c = { ...after, town: t };
+      campaign = c;
+      writeSave(c);
+      if (isAct(cur)) return enterTown(c);
+      const replay = () => {
+        campaign = before;
+        writeSave(before);
+        run();
+      };
+      return ui.result(true, text, [{ label: '进入城镇', run: () => enterTown(c) }, { label: '再打一次本关', run: replay }]);
+    }
     // 过场关卡直接接下一关
-    if (isAct(cur)) return go();
-    ui.result(true, text, [{ label: `继续：${label(next[0])}`, run: () => void go() }, { label: '再打一次本关', run }]);
+    if (isAct(cur)) return go(after);
+    proceed(after, text);
   };
   let loading = 0;
   const run = async () => {
     ui.hideResult();
+    town.hide();
+    if (campaign.town) {
+      // 存档停在城镇里
+      sel.value = String(campaign.stage);
+      return enterTown(campaign);
+    }
     sel.value = String(campaign.stage);
     const stage = stageOf(campaign.stage).mapName;
     // 网页版：先下载本关要用的人物、特效和图块（已缓存的不再下载）
@@ -209,7 +257,7 @@ function startGame(assets: Assets) {
   };
   sel.onchange = () => {
     // 从下拉框跳关：保留已有人物；选"新游戏"则清空
-    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : { ...campaign, stage: Number(sel.value) });
+    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : { ...campaign, town: undefined, stage: Number(sel.value) });
   };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
   $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);
