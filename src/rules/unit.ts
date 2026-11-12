@@ -52,7 +52,6 @@ export interface Unit {
   forcedMarch: boolean;
   acted: boolean; // 已攻击/使用道具等
   ended: boolean; // 本回合行动结束
-  itemUsed: boolean; // 本回合已使用道具
   turnStart: { x: number; y: number; facing: number; movement: number } | null; // 撤销移动用
 }
 
