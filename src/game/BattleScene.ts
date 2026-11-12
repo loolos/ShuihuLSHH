@@ -839,9 +839,14 @@ export class BattleScene extends Phaser.Scene {
                   }
                   continue;
                 }
-                const parts = res.parts.length === frames.length ? res.parts : null;
-                const dmg = parts ? parts[i] : i === frames.length - 1 ? res.damage : null;
-                if (dmg !== null) this.float(tv.x, tv.y, (res.crit ? '必杀 ' : '') + dmg, res.crit ? '#ffd040' : '#ffffff');
+                const perPart = res.parts.length === frames.length;
+                if (perPart && !res.partHit[i]) {
+                  this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
+                  continue;
+                }
+                const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
+                const crit = perPart ? res.partCrit[i] : res.crit;
+                if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
                 hurt.push(this.playOnce(t, ACTION.hurt, tv.facing, 400));
               }
               Promise.all(hurt).then(() => r());

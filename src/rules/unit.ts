@@ -1,4 +1,5 @@
-// 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
+// 战场单位与属性计算。成长规则见 growth.ts 与 docs/game-design.md §3。
+import { statAt, tierGear } from './growth.ts';
 import { basicAttack, type Buff, EQUIP_SLOTS, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
@@ -66,35 +67,15 @@ export const DIRS = [
   { x: 1, y: 0 },
 ] as const;
 
-export const CAP_HPMP = 510;
-export const CAP_STAT = 255;
-
-/** 属性(L) = floor(基础值 × (成长 / 100)^L) */
-export function grow(s: { base: number; growth: number }, level: number, cap = CAP_STAT): number {
-  return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
-}
-
-const G = JSON.parse(process.env.GROW ?? '{"hp":[2,2.5],"mp":[2,2],"attack":[1.5,3],"defense":[2,8],"hit":[2,4],"agility":[1,6],"crit":[0.4,3.5]}');
-type StatKey = 'hp' | 'mp' | 'attack' | 'defense' | 'hit' | 'agility' | 'crit';
-const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 0 };
-const OFFICER: Record<StatKey, number> = { hp: 70, mp: 80, attack: 62, defense: 25, hit: 70, agility: 30, crit: 12 };
-const GRUNTS = new Set([19, 20, 21, 22, 23, 32, 33, 34, 36, 37, 40, 41, 44, 45, 67]);
-const OFFICERS = new Set([38, 39, 42, 43, 65, 66]);
-/** 模板兵身上装备的属性加成不生效，改为固定加成（各关原版配装的平均值），不随等级成长 */
-const GRUNT_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 5, attack: 15, defense: 13, agility: 5 };
-const OFFICER_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 8, attack: 6, defense: 16, agility: 8 };
-const baseOf = (cls: ClassDef, k: StatKey) => (GRUNTS.has(cls.id) ? GRUNT[k] : OFFICERS.has(cls.id) ? OFFICER[k] : cls[k].base);
-const growU = (cls: ClassDef, k: StatKey, L: number) => { const b = baseOf(cls, k); return Math.floor(b + L * (G[k][0] + (b * G[k][1]) / 100)); };
-
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
-    maxHp: growU(cls, 'hp', level),
-    maxMp: growU(cls, 'mp', level),
-    attack: growU(cls, 'attack', level),
-    defense: growU(cls, 'defense', level),
-    hit: growU(cls, 'hit', level),
-    agility: growU(cls, 'agility', level),
-    crit: growU(cls, 'crit', level),
+    maxHp: statAt(cls, 'hp', level),
+    maxMp: statAt(cls, 'mp', level),
+    attack: statAt(cls, 'attack', level),
+    defense: statAt(cls, 'defense', level),
+    hit: statAt(cls, 'hit', level),
+    agility: statAt(cls, 'agility', level),
+    crit: statAt(cls, 'crit', level),
     move: cls.move,
     rangeBonus: 0,
     poison: 0,
@@ -102,7 +83,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     regenHp: 0,
     regenMp: 0,
   };
-  const tmplGear = GRUNTS.has(cls.id) ? GRUNT_GEAR : OFFICERS.has(cls.id) ? OFFICER_GEAR : null;
+  const tmplGear = tierGear(cls);
   if (tmplGear) {
     st.maxHp += tmplGear.hp ?? 0;
     st.maxMp += tmplGear.mp ?? 0;
