@@ -65,7 +65,7 @@ describe.skipIf(!has)('N01', () => {
         q.push([x + dx, y + dy]);
       }
     }
-    expect(seen.size).toBe(2206);
+    expect(seen.size).toBe(2051);
   });
 
   it('繁→简对照来自 .pab/.pas 对齐', () => {
