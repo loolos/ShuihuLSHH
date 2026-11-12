@@ -1,0 +1,27 @@
+{
+ "tracks": {
+  "town": "town.mp3",
+  "battle": "battle.mp3",
+  "tense": "tense.mp3",
+  "story": "story.mp3"
+ },
+ "stages": {
+  "n-add01": "tense",
+  "n-add03": "tense",
+  "n-add04a": "tense",
+  "n-add04b": "tense",
+  "n04": "tense",
+  "n05": "tense",
+  "n06": "tense",
+  "n07": "tense",
+  "n08": "tense",
+  "n09": "tense",
+  "n10": "tense",
+  "n11": "tense",
+  "n12": "tense",
+  "n-add15": "tense",
+  "n13": "tense",
+  "n-add16": "tense",
+  "n14": "tense"
+ }
+}
