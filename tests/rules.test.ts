@@ -81,16 +81,18 @@ describe('命中与伤害', () => {
     expect(hitChance(e, p, punch)).toBe(54);
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(30);
   });
-  it('伤害 = 攻 + 威力 − 防；必杀 = 2 × (攻 + 威力) − 防；≤ 0 时为 10–59', () => {
+  it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
     const d = unit({ side: 'enemy' });
-    expect(baseDamage(a, d, punch)).toEqual([40, 100]);
-    const tough = unit({ stats: { ...d.stats, defense: 200 } });
-    expect(baseDamage(a, tough, punch)).toEqual([null, null]);
+    expect(baseDamage(a, d, punch)).toEqual([36, 90]); // 60² / 100，120² / 160
+    const tough = unit({ stats: { ...d.stats, defense: 240 } });
+    const [n, c] = baseDamage(a, tough, punch);
+    expect(n).toBeCloseTo(3600 / 540);
+    expect(c).toBe(24); // 120² / 600
     const rng = new Rng(1);
     for (let i = 0; i < 50; i++) {
       const r = rollAttack(a, tough, punch, rng, true);
-      expect(r.damage).toBeGreaterThanOrEqual(9);
-      expect(r.damage).toBeLessThanOrEqual(64);
+      expect(r.damage).toBeGreaterThanOrEqual(r.crit ? 21 : 6);
+      expect(r.damage).toBeLessThanOrEqual(r.crit ? 26 : 7);
     }
     expect(critChance(a, { ...punch, critMod: 10 })).toBe(10);
   });

@@ -25,12 +25,24 @@ export function critChance(att: Unit, skill: SkillDef): number {
   return Math.max(0, Math.floor((att.stats.crit + skill.critMod) / 2));
 }
 
-/** 不含随机部分的伤害：返回 [普通, 必杀]；≤ 0 时原版改为 10–59 的随机值，这里返回 null */
-export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number | null, number | null] {
+/**
+ * 伤害公式【新】（负责人 2026-11-12 选，比例公式）：设 A = 攻 + 技能威力，D = 防，
+ * 普通伤害 = A² / (A + 2D)；必杀 = 把 A 翻倍再代入 = (2A)² / (2A + 2D)（同原版"先翻倍攻击再减防"的思路）。
+ * 防御权重取 2，是为了让前 5 章的伤害与原版相近（负责人要求前期节奏不变）。
+ * 原版是 A − D（必杀 2A − D），≤ 0 时改为 10–59 随机（EXE 0x406c60）。防御每级 ×1.10、攻击只有 ×1.04–1.05，
+ * 后期攻防都到 255 封顶后普通攻击几乎都落到这个随机数上；比例公式在任何阶段攻防都起作用。
+ */
+export const DEFENSE_WEIGHT = 2;
+
+export function ratioDamage(a: number, d: number): number {
+  return a > 0 ? (a * a) / (a + DEFENSE_WEIGHT * Math.max(0, d)) : 0;
+}
+
+/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整） */
+export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
-  const n = att.stats.attack + power - def.stats.defense;
-  const c = 2 * (att.stats.attack + power) - def.stats.defense;
-  return [n > 0 ? n : null, c > 0 ? c : null];
+  const a = att.stats.attack + power;
+  return [ratioDamage(a, def.stats.defense), ratioDamage(2 * a, def.stats.defense)];
 }
 
 export interface AttackPreview {
@@ -43,7 +55,7 @@ export interface AttackPreview {
 export function previewAttack(att: Unit, def: Unit, skill: SkillDef): AttackPreview {
   const [n, c] = baseDamage(att, def, skill);
   const k = def.defending ? 0.7 : 1;
-  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor((n ?? 34) * k), critDamage: Math.floor((c ?? 34) * k) };
+  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor(n * k), critDamage: Math.floor(c * k) };
 }
 
 export interface HitResult {
@@ -66,7 +78,7 @@ export function rollAttack(att: Unit, def: Unit, skill: SkillDef, rng: Rng, forc
   if (!hit) return { hit, crit: false, damage: 0, parts: [], poisoned: false, stunned: false, backstab: rel };
   const crit = rng.chance(critChance(att, skill));
   const [n, c] = baseDamage(att, def, skill);
-  let dmg = (crit ? c : n) ?? rng.range(10, 59);
+  let dmg: number = crit ? c : n;
   if (def.defending) dmg *= 0.7;
   dmg *= 0.9 + rng.next() * 0.2; // D-9【新】：±10% 浮动（原版无浮动）
   dmg = Math.max(0, Math.floor(dmg));
