@@ -38,8 +38,10 @@ export class BattleUI {
     // 手机上 Phaser 会对触摸调用 preventDefault，浏览器就不再补发 click，所以用 pointerup 推进；
     // 推进后短时间内的鼠标/触摸/click 事件一并拦下，免得同一下点击又落到地图上。
     let swallowUntil = 0;
+    // 检查更新的按钮和提示条不受对白影响
+    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast');
     const guard = (e: Event) => {
-      if (this.dialog.hidden && performance.now() > swallowUntil) return;
+      if ((this.dialog.hidden && performance.now() > swallowUntil) || exempt(e)) return;
       e.stopPropagation();
       if (e.type === 'click') e.preventDefault();
     };
@@ -47,7 +49,7 @@ export class BattleUI {
     window.addEventListener(
       'pointerup',
       (e) => {
-        if (this.dialog.hidden) return guard(e);
+        if (this.dialog.hidden || exempt(e)) return guard(e);
         e.stopPropagation();
         swallowUntil = performance.now() + 400;
         if ((e.target as Element | null)?.closest?.('#dialog-skip')) this.skip();

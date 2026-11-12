@@ -4,6 +4,7 @@ import {
   GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, loadFromRepo, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
+import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
@@ -272,10 +273,57 @@ function startGame(assets: Assets) {
     await idbClear();
     location.reload();
   };
+  setupUpdateButton();
   $('hud').hidden = false;
   ui.show();
   (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
   run();
+}
+
+/** 提示条：文字 + 可选按钮；不带按钮的几秒后自动消失 */
+let toastTimer = 0;
+function toast(text: string, actions: { label: string; primary?: boolean; run: () => void }[] = [], sticky = actions.length > 0) {
+  clearTimeout(toastTimer);
+  $('toast-text').textContent = text;
+  $('toast-actions').replaceChildren(
+    ...actions.map((a) => {
+      const b = document.createElement('button');
+      b.textContent = a.label;
+      if (a.primary) b.className = 'primary';
+      b.onclick = a.run;
+      return b;
+    }),
+  );
+  // 手机上顶栏会折成两行，提示条放在顶栏下面
+  $('toast').style.top = `${Math.round($('hud').getBoundingClientRect().bottom) + 8}px`;
+  $('toast').hidden = false;
+  if (!sticky) toastTimer = window.setTimeout(() => ($('toast').hidden = true), 3000);
+}
+const hideToast = () => ($('toast').hidden = true);
+
+function setupUpdateButton() {
+  const btn = $<HTMLButtonElement>('update');
+  btn.title = `检查有没有新版本（当前 ${versionLabel(BUILD)}）`;
+  btn.onclick = async () => {
+    btn.disabled = true;
+    toast('正在检查更新…', [], true);
+    const r = await checkForUpdate();
+    btn.disabled = false;
+    if (r.kind === 'latest') return toast(`已是最新版本 ${versionLabel(BUILD)}`);
+    if (r.kind === 'unavailable') return toast(r.reason);
+    // 刷新会丢掉本关进行中的战斗（存档记在关卡开头），所以先问一下
+    toast(`发现新版本 ${versionLabel(r)}。更新会刷新页面，本关从头开始，存档保留。`, [
+      {
+        label: '立即更新',
+        primary: true,
+        run: () => {
+          toast('正在更新…', [], true);
+          void applyUpdate();
+        },
+      },
+      { label: '稍后', run: hideToast },
+    ]);
+  };
 }
 
 async function boot() {
