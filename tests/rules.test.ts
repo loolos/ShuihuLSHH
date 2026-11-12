@@ -7,7 +7,7 @@ import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
-import { CLASS_OVERRIDES, GRUNT, GRUNT_GEAR, perLevel, statAt } from '../src/rules/growth.ts';
+import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -47,6 +47,15 @@ describe('属性', () => {
   });
   it('个别职业的初始值调整（王進攻击 80）', () => {
     expect(statAt(cls(1, { attack: g(70, 104) }), 'attack', 0)).toBe(CLASS_OVERRIDES[1].attack);
+  });
+  it('按职业的偏移：百分比和加点数', () => {
+    expect(CLASS_TWEAKS[66].pct!.hp).toBe(-15);
+    const assassin = cls(66), captain = cls(65), constable = cls(38);
+    expect(baseStat(constable, 'hp')).toBe(OFFICER.hp); // 都頭是标准
+    expect(baseStat(assassin, 'hp')).toBe(Math.round(OFFICER.hp * 0.85));
+    expect(baseStat(assassin, 'crit')).toBe(OFFICER.crit + 8);
+    expect(baseStat(captain, 'hp')).toBe(Math.round(OFFICER.hp * 1.15));
+    expect(baseStat(cls(59, { attack: g(100) }), 'attack')).toBe(70); // 陳達 −30%
   });
   it('杂兵用模板：同等级属性一样，装备只给固定加成', () => {
     const soldier = cls(32, { attack: g(55, 105) }), fisher = cls(21, { attack: g(50, 104) });
