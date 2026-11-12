@@ -3,7 +3,7 @@
 // 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留黄金。
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
-import type { CampaignState, Member } from './campaign.ts';
+import { ROUTES, type CampaignState, type Member } from './campaign.ts';
 import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
@@ -30,14 +30,16 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 物品栏补 2 个药铺里回复最多的药；
  * - 技能随等级自动领悟。
  */
-export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState): CampaignState {
+export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number } = {}): CampaignState {
   const pos = stages.findIndex((s) => s.index === target);
   if (pos < 0) return c;
   const info = new Map<number, ReturnType<typeof readStage>>();
   const at = (i: number) => info.get(i) ?? info.set(i, readStage(files, stages[i])).get(i)!;
 
+  // 进城镇时人物按城镇之后那一关的难度配等级
+  const lpos = opts.levelFrom === undefined ? pos : stages.findIndex((s) => s.index === opts.levelFrom);
   let level = 1;
-  for (let i = pos; i < stages.length; i++) {
+  for (let i = lpos < 0 ? pos : lpos; i < stages.length; i++) {
     const foes = at(i).units.filter((u) => u.side === 'enemy');
     if (!foes.some((u) => u.level > 1)) continue; // 过场关的敌人都是 1 级摆设
     level = Math.round(foes.reduce((a, u) => a + u.level, 0) / foes.length);
@@ -81,6 +83,35 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     members.set(u.type, { classId: u.type, level: Math.max(level, u.level), exp: 0, slots, forge });
   }
   return { version: 1, stage: target, gold: c.gold, members: [...members.values()] };
+}
+
+/**
+ * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
+ * - 人物和装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
+ * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
+ * - 黄金 = 从第一关打到第 stage 关、每个敌人掉钱的期望值之和（每个敌人掉 1..上限，期望 (上限+1)/2），
+ *   手上的黄金更多就保留。
+ */
+export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
+  const pos = stages.findIndex((s) => s.index === stage);
+  if (pos < 0) return c;
+  const base = jumpTo(files, data, stages, stage, c, { levelFrom: next });
+  return { ...base, town, gold: Math.max(c.gold, expectedGold(files, data, stages, pos)) };
+}
+
+/** 打到第 pos 关（含）为止，敌人掉钱的期望总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
+export function expectedGold(files: FileSource, data: GameData, stages: Stage[], pos: number): number {
+  const target = stages[pos].index;
+  const skip = new Set(Object.values(ROUTES).map((r) => (target === r.alt ? r.alt - 1 : r.alt)));
+  let sum = 0;
+  for (let i = 0; i <= pos; i++) {
+    if (skip.has(stages[i].index)) continue;
+    for (const u of readStage(files, stages[i]).units) {
+      const cap = u.side === 'enemy' ? (data.classes[u.type]?.goldCap ?? 0) : 0;
+      if (cap > 0) sum += (cap + 1) / 2;
+    }
+  }
+  return Math.round(sum);
 }
 
 const heal = (data: GameData, id: number) => {
