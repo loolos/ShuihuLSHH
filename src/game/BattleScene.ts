@@ -107,7 +107,7 @@ export class BattleScene extends Phaser.Scene {
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
     const allSkills = this.battle.units.flatMap((u) => [attackSkill(u, this.assets.data), ...learnedSkills(u, this.assets.data)]);
     sound.preload([
-      ...['m01', 'm02', 'm03', 'm09', '44', '46', 'm13', 'm04', 'm10', 'm07'],
+      ...['m01', 'm02', 'm03', 'm09', '44', '46', 'm13', 'm14', 'm04', 'm10', 'm07'],
       ...sound.skillSounds(allSkills),
       ...allSkills.flatMap((s) => fxGroups(s).map((g) => String(g + 1))),
     ]);
@@ -973,7 +973,13 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'die':
       case 'leave': {
-        if (e.type === 'die') sound.sfx('m13', 'ko'); // 被击倒（EXE 0x404c80「戰敗了！」）
+        if (e.type === 'die') {
+          // 原版 0x404c80：我方（阵营 0）倒下播 m13「戰敗了！」；敌方（阵营 2）只在掉落道具时播 m14，友军不出声。
+          // 重制版敌方倒下一律播 m14（负责人 2026-11-12：敌方不该用 m13，可以给一个专门的声音）【新】
+          const side = b.unit(e.uid)?.side;
+          if (side === 'player') sound.sfx('m13', 'ko');
+          else if (side === 'enemy') sound.sfx('m14', 'ko');
+        }
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();

@@ -42,7 +42,7 @@ export class BattleUI {
     // 推进后短时间内的鼠标/触摸/click 事件一并拦下，免得同一下点击又落到地图上。
     let swallowUntil = 0;
     // 检查更新的按钮和提示条不受对白影响
-    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast, #sound');
+    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast, #sound, #music');
     const guard = (e: Event) => {
       if ((this.dialog.hidden && performance.now() > swallowUntil) || exempt(e)) return;
       e.stopPropagation();
