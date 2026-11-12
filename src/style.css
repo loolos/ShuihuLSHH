@@ -29,7 +29,22 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 #hud button { min-width: 32px; cursor: pointer; }
 #hud .chk { display: flex; gap: 4px; align-items: center; color: var(--muted); }
 #info { flex: 1 1 160px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#reset { margin-left: auto; }
+#update { margin-left: auto; }
+
+/* 检查更新的提示条 */
+#toast {
+  position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 6;
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
+  max-width: calc(100vw - 32px); padding: 8px 14px; border: 1px solid var(--accent); border-radius: 6px;
+  background: rgba(42, 34, 25, 0.96); font-size: 14px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+#toast[hidden] { display: none; }
+#toast-actions { display: flex; gap: 6px; }
+#toast button {
+  font: inherit; color: var(--ink); background: var(--panel); cursor: pointer;
+  border: 1px solid #5a4832; border-radius: 4px; padding: 3px 10px; min-height: 30px;
+}
+#toast button.primary { background: var(--accent); color: #1b1610; border-color: var(--accent); font-weight: bold; }
 
 #setup {
   position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; z-index: 3;
@@ -178,6 +193,7 @@ code { color: var(--ink); }
   #hud select { max-width: 40vw; }
   #hud select, #hud button { padding: 2px 6px; min-height: 30px; }
   #reset { display: none; }
+  #toast { font-size: 13px; }
   #bottom { flex-direction: column; align-items: stretch; gap: 4px; padding: 4px 6px max(4px, env(safe-area-inset-bottom)); }
   #log { max-height: 42px; font-size: 12px; padding: 3px 8px; }
   #unit-panel { min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
