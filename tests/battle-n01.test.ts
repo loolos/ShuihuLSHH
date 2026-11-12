@@ -52,6 +52,22 @@ describe.skipIf(!has)('N01', () => {
     }
   });
 
+  it('通行：开局起点 (4,4) 能走到的格子数（EXE 规则）', () => {
+    const b = make();
+    const seen = new Set(['4,4']);
+    const q = [[4, 4]];
+    while (q.length) {
+      const [x, y] = q.pop()!;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const k = `${x + dx},${y + dy}`;
+        if (seen.has(k) || !b.board.passable(x + dx, y + dy)) continue;
+        seen.add(k);
+        q.push([x + dx, y + dy]);
+      }
+    }
+    expect(seen.size).toBe(2206);
+  });
+
   it('繁→简对照来自 .pab/.pas 对齐', () => {
     expect(tr('王進')).toBe('王进');
     expect(data.heroName).toBe('武龙');

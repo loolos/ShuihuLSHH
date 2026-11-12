@@ -1,5 +1,6 @@
 // 棋盘：通行与寻路。格子 4 邻接，每步消耗 1 点移动力（docs/game-design.md §2.2）。
 import type { MapData } from '../formats/map.ts';
+import { cellPassable } from './passability.ts';
 import { DIRS } from './unit.ts';
 
 export interface Cell {
@@ -18,11 +19,17 @@ export class Board {
     this.blocked = blocked ?? new Uint8Array(width * height);
   }
 
-  /** 图块属性 0xFF = 不可通行（Ground.att / Upper.att，任一层阻挡即阻挡；推测，见 binary-formats §6） */
+  /**
+   * 按 EXE 0x40bc30 的规则算出每格是否可通行（见 docs/binary-formats.md §5.1）：
+   * - 地表图块号为 0，或地表 Ground.att = 0xFF → 阻挡；
+   * - 没有地上物 → 可通行；
+   * - 只看第一层地上物：高度（flags）与地表相同时按 Upper.att 判断（0xFF 阻挡）；
+   *   比地表高 ≥ 0x40（悬在头顶的树冠、屋檐等）→ 可通行；比地表低 → 阻挡。
+   */
   static fromMap(map: MapData, groundAtt: Uint8Array, upperAtt: Uint8Array): Board {
     const b = new Board(map.width, map.height);
     map.cells.forEach((layers, i) => {
-      if (groundAtt[layers[0].tile] === 0xff || layers.slice(1).some((l) => upperAtt[l.tile] === 0xff)) b.blocked[i] = 1;
+      if (!cellPassable(layers, groundAtt, upperAtt)) b.blocked[i] = 1;
     });
     return b;
   }
@@ -101,3 +108,4 @@ export function pathTo(reach: Map<string, { x: number; y: number; prev: string |
   }
   return path;
 }
+
