@@ -25,8 +25,9 @@
 | `npm test` | Vitest 单元测试（没有 `gamedata/` 时自动跳过解析测试） |
 | `npm run typecheck` | 只做类型检查 |
 | `npm run gen:docs` | 重新生成 `docs/reference/` |
-| `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256） |
+| `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256）和 `src/data/frame-alias.json`（重复帧表） |
 | `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
+| `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版每关下载量、重复文件和重复帧 |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
 
 Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需要编译。

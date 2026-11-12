@@ -6,10 +6,10 @@ import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
-import { isHealSkill, isSupportSkill } from '../rules/skills.ts';
+import { isHealSkill, isSupportSkill, learnedSkills } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
-import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
+import { ensureSkill, frameToCanvas, ICON_KEY, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { dirIndex, fxChain, fxSpots, skillFx } from './effects.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
@@ -100,6 +100,8 @@ export class BattleScene extends Phaser.Scene {
     if (!mapFile) throw new Error(`找不到地图 ${this.stageName}`);
     const map = parseMap(files.get(mapFile), mapFile);
     this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party }));
+    // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
+    void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
 
     for (let y = 0; y < map.height; y++)
       for (let x = 0; x < map.width; x++) {
@@ -842,7 +844,7 @@ export class BattleScene extends Phaser.Scene {
         uv.facing = e.facing;
         const skill = e.skill;
         const basic = skill === attackSkill(u, this.assets.data);
-        await this.focus(e.cell.x, e.cell.y);
+        await Promise.all([this.focus(e.cell.x, e.cell.y), ensureSkill(this.assets, u.classId, skill)]);
         let area: Phaser.GameObjects.Graphics | null = null;
         if (!basic) {
           area = this.add.graphics().setDepth(-0.4);

@@ -597,7 +597,7 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 ### 12.2 关键设计
 
 - **原版文件来源**：
-  - 网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/` 下载（`loadFromRepo`）。小文件（剧本、地图、数据表、头像，约 3 MB）启动时整份下载；`Man.lib`、`Effect.lib`、`Ground.grp`、`Upper.grp` 只先取文件头和索引，进关前（`preloadStage`）用 HTTP Range 只取本关出场职业的动画、其技能特效和地图用到的图块。`Panel.lib` 暂不使用，不下载。
+  - 网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/` 下载（`loadFromRepo`）。小文件（剧本、地图、数据表、头像，约 3 MB）启动时整份下载；`Man.lib`、`Effect.lib`、`Ground.grp`、`Upper.grp` 只先取文件头和索引，进关前（`preloadStage`）用 HTTP Range 只取地图用到的图块，以及本关出场职业的走路、受击、防御动作和普通攻击（含特效）；各单位已学会的技能动画和特效开打后在后台下载（`prefetchSkills`），出招时还没下完就等它下完（`ensureSkill`，升级后新学的技能也在这时下载）。`Man.lib` 有 6480 帧、`Effect.lib` 有 76 帧与前面的帧字节完全相同（共约 11.5 MB），只下载第一份再复制过去（帧号表 `src/data/frame-alias.json`，由 `npm run gen:manifest` 生成）。`Panel.lib` 暂不使用，不下载。各关下载量用 `node --experimental-transform-types tools/measure-assets.ts` 统计：单关进关前最多从约 27 MB 降到约 12 MB，全部关卡玩完共下载约 42 MB（原来约 56 MB）。【新】
   - 下载过的文件和分段都存进 IndexedDB，再次打开或回到玩过的关卡不再下载。
   - 下载失败时退回到选择原版目录：File System Access API，不支持的浏览器用 `<input webkitdirectory>` 兜底。
   - 对照 `src/data/manifest.json`（267 个文件，65 MB）检查文件是否齐全、SHA256 是否一致；不一致时提示，但允许继续。

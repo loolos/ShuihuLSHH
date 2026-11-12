@@ -117,6 +117,14 @@ export class GameFiles {
     );
     return got;
   }
+  /**
+   * 把文件里一段字节复制到另一处（字节完全相同的帧只下载一份，下载后复制到各自的位置，见 src/data/frame-alias.json）。
+   * 整份在本地的文件本来就有，不用复制。
+   */
+  copy(path: string, from: number, to: number, len: number) {
+    const r = this.remote.get(key(path));
+    if (r) r.buf.copyWithin(to, from, from + len);
+  }
   list(dir: string, ext: string): string[] {
     const d = key(dir) + '/';
     return [...this.files.keys()].filter((k) => k.startsWith(d) && k.endsWith(ext.toLowerCase()));
