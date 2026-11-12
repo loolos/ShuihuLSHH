@@ -92,14 +92,6 @@ export function canCounter(att: Unit, def: Unit): boolean {
   return def.defending && def.alive && dist(att, def) === 1;
 }
 
-/** 击倒得到的经验：max(1, 敌等级 − 己等级) × 12 + 1–9 */
-export function killExp(att: Unit, def: Unit, rng: Rng): number {
-  return Math.max(1, def.level - att.level) * 12 + rng.range(1, 9);
-}
-/** 命中未击倒：伤害 / 10 + 1–2 */
-export function hitExp(damage: number, rng: Rng): number {
-  return Math.floor(damage / 10) + rng.range(1, 2);
-}
 /** 击倒敌人掉落的黄金：1 + rand % 上限（上限为 0 时不掉） */
 export function killGold(def: Unit, data: GameData, rng: Rng): number {
   const cap = data.classes[def.classId].goldCap;

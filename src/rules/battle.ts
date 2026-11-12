@@ -5,7 +5,8 @@ import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
-import { canCounter, hitExp, killExp, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { buffName, canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
@@ -13,8 +14,7 @@ import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
-export const MAX_PLAYER_LEVEL = 30;
-export const EXP_PER_LEVEL = 100;
+export { EXP_PER_LEVEL, MAX_PLAYER_LEVEL } from './exp.ts';
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
@@ -88,6 +88,8 @@ export class Battle {
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
   private pendingDeaths: number[] = [];
+  /** 本关累计的全队经验（击倒经验的一半），胜利后结算 */
+  teamExp = 0;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
   /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
@@ -438,6 +440,7 @@ export class Battle {
     this.out = [];
     if (!this.itemTargets(u, slot).includes(target)) return [];
     this.applyItem(u, slot, target);
+    this.gainExp(u, itemExp(this.rng));
     u.turnStart = null;
     return this.flush();
   }
@@ -617,14 +620,16 @@ export class Battle {
       this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter });
       if (skill.mpCost && !targets.includes(u)) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
       const name = this.tr(skill.name);
+      let healed = 0;
       for (const t of targets) {
         const hp0 = t.hp;
         const div = Math.max(1, skill.power);
         if (isChargeSkill(skill)) t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / div));
         else t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / div));
+        healed += t.hp - hp0;
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
       }
-      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, this.rng.range(1, 10));
+      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng));
       return;
     }
     const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
@@ -640,6 +645,7 @@ export class Battle {
         if (hits.length === 1) this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
         // 防御中闪避相邻攻击：50% 反击，必定命中
         if (!counter && !counterBy && canCounter(u, t) && this.rng.chance(50)) counterBy = t;
+        if (t.side === 'player' && t.defending) this.gainExp(t, dodgeExp(this.rng));
         continue;
       }
       const hp0 = t.hp;
@@ -662,7 +668,8 @@ export class Battle {
         t.stunTurns = this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
-      exp += hitExp(r.damage, this.rng);
+      exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
+      if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng));
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp);
@@ -681,11 +688,16 @@ export class Battle {
         u.gold += gold;
         this.emit({ type: 'message', text: `擊退了敵人，得到黃金 ${gold} 兩！` });
       }
-      this.gainExp(u, killExp(u, t, this.rng));
+    }
+    if (u.side !== 'enemy' && t.side === 'enemy') {
+      const total = killExp(u, t, this.rng);
+      this.gainExp(u, killerShare(total, u.side === 'player'));
+      this.teamExp += teamShare(total);
     }
   }
 
   private gainExp(u: Unit, n: number) {
+    if (u.side !== 'player' || !n) return;
     u.exp += n;
     while (u.exp >= EXP_PER_LEVEL) {
       u.exp -= EXP_PER_LEVEL;
@@ -705,6 +717,20 @@ export class Battle {
    * 模式 6 用与模式 2 相同的检查（0x407dd0 + 0x407fa0：警戒半径内有敌人），成立就现身（0x408450，模式改为 0）并照常行动；
    * 警戒半径见 ai.ts alertRadius。模式 9 是等玩家号令，由我方阶段开始时的 ask 事件处理。
    */
+  /** 战后结算全队经验：本关出过场的我方人物（含战败的）按注水式分配，先补落后的人。胜利时自动调用 */
+  settleTeamExp() {
+    const pool = this.teamExp;
+    this.teamExp = 0;
+    const team = this.units.filter((u) => u.side === 'player' && (u.present || !u.alive));
+    if (!pool || !team.length) return;
+    this.emit({ type: 'message', text: `全隊分得經驗 ${pool}。` });
+    splitTeamExp(team, pool).forEach((n, i) => {
+      if (!n) return;
+      this.emit({ type: 'message', text: `${team[i].name}得到經驗 ${n}。` });
+      this.gainExp(team[i], n);
+    });
+  }
+
   private ambushTurn(u: Unit) {
     if (u.ai.mode !== 6) return void (u.ended = true);
     const r = alertRadius(this, u);
@@ -975,6 +1001,7 @@ export class Battle {
 
   private finish(result: 'won' | 'lost', text: string) {
     if (this.status !== 'playing') return;
+    if (result === 'won') this.settleTeamExp();
     this.status = result;
     this.emit({ type: 'end', result, text });
   }
