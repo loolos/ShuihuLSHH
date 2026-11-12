@@ -15,43 +15,174 @@
   "eerie": "eerie.mp3"
  },
  "stages": {
-  "n-add01": "tense",
-  "n-add04b": "tense",
-  "n04": "tense",
-  "n05": "tense",
-  "n06": "tense",
-  "n07": "tense",
-  "n08": "tense",
-  "n09": "tense",
-  "n10": "tense",
-  "n11": "tense",
-  "n14": "tense",
-  "n-add16": "tense",
-  "n01": "army",
-  "n03": "army",
-  "n-add04a": "army",
-  "n-add08": "army",
-  "n-add09a": "army",
-  "n-add11": "army",
-  "n-add14": "army",
-  "n12": "army",
-  "n-add15": "army",
-  "n13": "army",
-  "n-add03": "night",
-  "n-add05": "night",
+  "n-add01": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n-add04b": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n04": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n05": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n06": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n07": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n08": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n09": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n10": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n11": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n14": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n-add16": [
+   "tense",
+   "army",
+   "battle2"
+  ],
+  "n01": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n03": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add04a": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add08": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add09a": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add11": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add14": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n12": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add15": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n13": [
+   "army",
+   "battle",
+   "tense"
+  ],
+  "n-add03": [
+   "night",
+   "battle",
+   "battle2"
+  ],
+  "n-add05": [
+   "night",
+   "battle",
+   "battle2"
+  ],
   "act4-2": "night",
   "act5-1a": "night",
   "act10-1": "night",
   "act11-1a": "night",
-  "n-add09b": "battle2",
-  "n-add10": "battle2",
-  "n-add12": "battle2",
-  "n-add13": "battle2",
-  "train2": "battle2",
+  "n-add09b": [
+   "battle2",
+   "battle"
+  ],
+  "n-add10": [
+   "battle2",
+   "battle"
+  ],
+  "n-add12": [
+   "battle2",
+   "battle"
+  ],
+  "n-add13": [
+   "battle2",
+   "battle"
+  ],
+  "train2": [
+   "battle2",
+   "battle"
+  ],
   "act6-3": "sad",
   "act7-1": "sad",
   "act7-1a": "eerie",
   "act9-1": "eerie",
-  "act14-2": "liangshan"
+  "act14-2": "liangshan",
+  "n-add02": [
+   "battle",
+   "battle2"
+  ],
+  "n02": [
+   "battle",
+   "battle2"
+  ],
+  "n-add06": [
+   "battle",
+   "battle2"
+  ],
+  "n-add07": [
+   "battle",
+   "battle2"
+  ],
+  "train1": [
+   "battle",
+   "battle2"
+  ]
  }
 }
