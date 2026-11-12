@@ -98,6 +98,8 @@ export class BattleScene extends Phaser.Scene {
       for (let x = 0; x < map.width; x++) {
         const p = cellToWorld(x, y);
         map.cells[y * map.width + x].forEach((l, k) => {
+          // 地表图块 0 是地图外的空格（通行判断 0x40bc30 也把它当不可走）；它的图是一块绿网格，不画（推测原版也不画）
+          if (k === 0 && l.tile === 0) return;
           const lib = k === 0 ? 'ground' : 'upper';
           const fr = this.assets[lib].frame(l.tile);
           const key = textureFor(this, `${lib}:${l.tile}`, () => frameToCanvas(fr, this.assets.palette));

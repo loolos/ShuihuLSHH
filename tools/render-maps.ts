@@ -64,7 +64,7 @@ for (const f of fs.readdirSync(path.join(DATA, 'Map')).filter((f) => f.toLowerCa
   for (let y = 0; y < m.height; y++)
     for (let x = 0; x < m.width; x++) {
       const [cx, cy] = center(x, y);
-      blit(ground.frame(m.cells[y * m.width + x][0].tile), cx, cy);
+      if (m.cells[y * m.width + x][0].tile) blit(ground.frame(m.cells[y * m.width + x][0].tile), cx, cy); // 0 = 地图外
     }
   for (let d = 0; d < m.width + m.height - 1; d++)
     for (let x = 0; x < m.width; x++) {

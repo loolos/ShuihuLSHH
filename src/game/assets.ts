@@ -61,7 +61,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
   for (const cell of map.cells)
     cell.forEach((l, k) => {
       const lib = k === 0 ? assets.ground : assets.upper;
-      if (l.tile < lib.count) add(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
+      if (l.tile < lib.count && (k > 0 || l.tile > 0)) add(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
     });
   const actFile = mapFile.replace(/\.map$/i, '.act');
   const classes = new Set([0]);
