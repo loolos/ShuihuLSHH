@@ -29,7 +29,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 #hud button { min-width: 32px; cursor: pointer; }
 #hud .chk { display: flex; gap: 4px; align-items: center; color: var(--muted); }
 #info { flex: 1 1 160px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#update { margin-left: auto; }
+#sound { margin-left: auto; }
 
 /* 检查更新的提示条 */
 #toast {
