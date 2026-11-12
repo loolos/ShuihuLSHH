@@ -1,7 +1,7 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
 import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock } from '../formats/pas.ts';
-import { planAi } from './ai.ts';
+import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, hitExp, killExp, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
@@ -16,8 +16,8 @@ export const MAX_PLAYER_LEVEL = 30;
 export const EXP_PER_LEVEL = 100;
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
-/** 休息：恢复上限的 1/15（暂定【待核】） */
-export const REST_DIVISOR = 15;
+/** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
+export const REST_DIVISOR = 5;
 
 export type BattleEvent =
   | { type: 'say'; uid: number | null; speaker: string; text: string }
@@ -126,7 +126,7 @@ export class Battle {
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, gold: 0,
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0,
-        movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, itemUsed: false, turnStart: null,
+        movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
       });
     }
     this.hadPlayers = this.units.some((u) => u.side === 'player');
@@ -292,7 +292,6 @@ export class Battle {
       u.movementRemaining = u.stats.move;
       u.forcedMarch = false;
       u.acted = false;
-      u.itemUsed = false;
       u.turnStart = null;
       u.ended = u.stunTurns > 0;
     }
@@ -400,19 +399,18 @@ export class Battle {
 
   /** 可以使用的道具槽（回复、解毒、解昏） */
   usableSlots(u: Unit): number[] {
-    if (!this.canAct(u) || u.itemUsed) return [];
+    if (!this.canAct(u)) return [];
     return u.slots.flatMap((id, k) => {
       const it = itemOf(this.data, id);
       return it && (isHealing(it) || it.type === 18 || it.type === 19) ? [k] : [];
     });
   }
 
-  /** 对自己使用道具：不消耗移动力，每回合一次【待核】 */
+  /** 对自己使用道具：不算行动、不消耗移动力、不限次数（原版 0x409798 → 0x408dc0 → 0x4094e0，不碰行动结束标志） */
   useItem(u: Unit, slot: number): BattleEvent[] {
     this.out = [];
     if (!this.usableSlots(u).includes(slot)) return [];
     this.applyItem(u, slot);
-    u.itemUsed = true;
     u.turnStart = null;
     return this.flush();
   }
@@ -556,12 +554,12 @@ export class Battle {
   /**
    * 埋伏中的单位轮到行动（EXE AI 跳转表 0x407bac）：
    * 模式 6 用与模式 2 相同的检查（0x407dd0 + 0x407fa0：警戒半径内有敌人），成立就现身（0x408450，模式改为 0）并照常行动；
-   * 警戒半径沿用 ai.ts 模式 2 的推测值。模式 9 是等玩家号令，由我方阶段开始时的 ask 事件处理。
+   * 警戒半径见 ai.ts alertRadius。模式 9 是等玩家号令，由我方阶段开始时的 ask 事件处理。
    */
   private ambushTurn(u: Unit) {
     if (u.ai.mode !== 6) return void (u.ended = true);
-    const [, hi] = attackRange(u, this.data);
-    if (!this.foesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= u.stats.move * 2 + hi)) return void (u.ended = true);
+    const r = alertRadius(this, u);
+    if (!this.foesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= r)) return void (u.ended = true);
     u.ai.mode = 0;
     this.appear(u);
     u.ended = false;

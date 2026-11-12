@@ -44,7 +44,7 @@ export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number
 
 /**
  * 可以选作施放点的格子：沿 4 个方向直线，距离在 [下限, 上限]；下限为 0 时含自身（原版 0x40d5d0）。
- * 原版遇到 0x40d7e0 判定失败的格子会停在那个方向（疑为高度/障碍检查），这里暂不阻挡，与普通攻击一致【待核】。
+ * 原版遇到 0x40d7e0 判定失败的格子会停在那个方向；那是高度检查，在现有地图上永远通过（binary-formats §5.1），所以这里不阻挡。
  */
 export function castCells(board: Board, at: Cell, [lo, hi]: [number, number]): Cell[] {
   const out: Cell[] = [];

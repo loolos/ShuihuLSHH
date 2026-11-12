@@ -3,7 +3,7 @@ import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import type { Battle } from './battle.ts';
-import { isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
 export interface AiPlan {
@@ -127,6 +127,19 @@ function foesWithin(b: Battle, u: Unit, radius: number) {
   return b.foesOf(u).filter((t) => dist(u, t) <= radius);
 }
 
+/**
+ * 迎击/埋伏的警戒半径（原版 0x407fa0 → 0x40d680，曼哈顿距离 0x41e470）：
+ * 剩余移动力（+0x8c）+ 当前技能射程上限（+0x80）+ 装备射程（+0x88）+ 技能范围大小（+0x86，子项 +16）。
+ * 原版的"当前技能"由 0x407dd0 先选好；这里取所有气力够用的攻击技能里能打到最远的那个。
+ */
+export function alertRadius(b: Battle, u: Unit): number {
+  const skills = [attackSkill(u, b.data), ...learnedSkills(u, b.data)].filter(
+    (s): s is SkillDef => !!s && !isSupportSkill(s) && s.mpCost <= u.mp,
+  );
+  const reach = Math.max(0, ...skills.map((s) => castRange(u, s, b.data)[1] + s.area));
+  return u.stats.move + reach;
+}
+
 export function planAi(b: Battle, u: Unit): AiPlan {
   const [, hi] = attackRange(u, b.data);
   const target = u.ai.target ? b.unitByChar(u.ai.target) : undefined;
@@ -137,8 +150,8 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       return bestAttack(b, u, target) ?? approach(b, u, [target]);
     case 2:
     case 6: {
-      // 迎击：警戒半径内有敌人才行动，否则原地待命（半径 = 移动 × 2 + 射程，推测）
-      const near = foesWithin(b, u, u.stats.move * 2 + hi);
+      // 迎击：警戒半径内有敌人才行动，否则原地待命（半径见 alertRadius）
+      const near = foesWithin(b, u, alertRadius(b, u));
       if (!near.length) return withCharge(b, u, {});
       return healSkill(b, u) ?? bestAttack(b, u) ?? withCharge(b, u, approach(b, u, near));
     }

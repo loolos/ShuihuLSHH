@@ -30,7 +30,7 @@ function unit(o: Partial<Unit>): Unit {
   return {
     uid: 0, classId: 0, name: 'u', side: 'player', x: 0, y: 0, facing: 0, level: 0, exp: 0, hp: stats.maxHp, mp: stats.maxMp, stats,
     slots: [], gold: 0, ai: { mode: 0, target: 0, point: { x: 0, y: 0 } }, present: true, alive: true, defending: false, poisonTurns: 0,
-    stunTurns: 0, movementRemaining: 4, forcedMarch: false, acted: false, ended: false, itemUsed: false, turnStart: null, ...o,
+    stunTurns: 0, movementRemaining: 4, forcedMarch: false, acted: false, ended: false, turnStart: null, ...o,
   };
 }
 
@@ -141,6 +141,26 @@ describe('战斗流程', () => {
     b.move(p, 6, 0); // 移动力 4 + 2
     expect(p.ended).toBe(true);
     expect(b.moveRange(p).green).toHaveLength(0);
+  });
+
+  it('休息恢复上限的 1/5；道具不算行动、可连用', () => {
+    const potion = { ...glove, type: 15, name: '藥', attack: 0, healHp: 10, healMp: 0 } as unknown as Item;
+    const d2: GameData = { ...data, items: [glove, potion] };
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data: d2, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.slots = [2, 2];
+    p.hp = 1;
+    b.useItem(p, 0);
+    b.useItem(p, 1);
+    expect(p.hp).toBe(21);
+    expect(p.ended).toBe(false);
+    expect(b.canAct(p)).toBe(true);
+    p.mp = 0;
+    b.rest(p);
+    expect(p.hp).toBe(21 + Math.floor(p.stats.maxHp / 5));
+    expect(p.mp).toBe(Math.floor(p.stats.maxMp / 5));
+    expect(p.ended).toBe(true);
   });
 
   it('敌方默认 AI 会接近并攻击', () => {
