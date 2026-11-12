@@ -54,3 +54,16 @@ describe.skipIf(!has)('原版文件解析', () => {
     expect(parseGoods(read('Data', 'Goods.dab'))[155].name).toBe('狗皮膏藥');
   });
 });
+
+describe.skipIf(!fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/shuihu/Data/Man.lib')))('图像锚点', () => {
+  it('锚点按有符号读：人物动画的每一帧锚点都在图像附近（龍爭虎鬥中段曾因按无符号读而消失）', () => {
+    const man = openLib(fs.readFileSync(path.resolve(import.meta.dirname, '../gamedata/shuihu/Data/Man.lib')), 'Man.lib');
+    let worst = 0;
+    for (let i = 0; i < man.count; i++) {
+      const f = man.frame(i);
+      worst = Math.max(worst, Math.abs(f.anchorX) - f.width, Math.abs(f.anchorY) - f.height);
+    }
+    expect(worst).toBeLessThan(200);
+    expect(man.frame(2478).anchorX).toBe(-2); // 史進 龍爭虎鬥 第 6 帧
+  });
+});
