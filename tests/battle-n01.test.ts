@@ -97,6 +97,8 @@ describe.skipIf(!has)('N01', () => {
     expect([wj.x, wj.y, mom.x, mom.y]).toEqual([6, 6, 6, 5]);
     expect(b.unitByChar(0)).toBeUndefined();
     expect(wj.slots.filter(Boolean).length).toBeGreaterThan(0); // 职业默认道具（EXE 0x4048ac）
+    // 开局武龍、王進各带 2 个狗皮膏藥（156）【新】
+    for (const u of b.units.filter((x) => x.classId === 0 || x.classId === 1)) expect(u.slots.filter((s) => s === 156)).toHaveLength(2);
   });
 
   it('第 3 回合武龍登场', () => {

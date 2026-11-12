@@ -1,7 +1,7 @@
 // 经验值【新】（docs/game-design.md §5.1，负责人 2026-11-12 选方案二并补充）。
 // 原版只有击倒、命中、回复技给经验（EXE 0x406f43 / 0x406f9d / 0x406bd0），强角色独占击倒，弱角色长期停在初始等级。
 // 新规则：
-// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、防御中闪开。
+// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、防御中闪开、休息。
 // - 击倒经验只看敌人等级：一半当场给击倒者，另一半进"全队经验"；友军击倒的也把这一半放进全队经验。
 // - 全队经验在战斗胜利后统一结算，先补给最落后的人（注水式：从等级最低的往上补齐）。
 // 数值用 tools/sim-exp.ts（双方 AI 跑整条主线）校准，让各关全队平均等级与原版规则相近。
@@ -57,6 +57,12 @@ export const dodgeExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.r
 export function healExp(amount: number, rng: Rng): number {
   if (EXP_RULES.mode === 'original') return rng.range(1, 10);
   return Math.floor(amount / 10) + rng.range(1, 5);
+}
+
+/** 休息：按实际回复的体力 + 气力给少量经验，(体力 + 气力) / 20 + 0–1；什么都没回复时不给【新】（负责人 2026-11-12） */
+export function restExp(hp: number, mp: number, rng: Rng): number {
+  if (EXP_RULES.mode === 'original' || hp + mp <= 0) return 0;
+  return Math.floor((hp + mp) / 20) + rng.range(0, 1);
 }
 
 /** 用回复药 / 解毒药：1–3（不占行动，给得少） */
