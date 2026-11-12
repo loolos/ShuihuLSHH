@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
-import { baseDamage, critChance, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
+import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
 import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
@@ -128,6 +128,17 @@ describe('命中与伤害', () => {
       expect(r.damage).toBeLessThanOrEqual(r.crit ? 26 : 7);
     }
     expect(critChance(a, { ...punch, critMod: 10 })).toBe(10);
+  });
+  it('远程攻击按距离打折：距离 1 为 50%，最远射程为 10%', () => {
+    const bow = { ...punch, type: 10, rangeMin: 1, rangeMax: 8 };
+    const d = unit({ side: 'enemy', x: 0, y: 0 });
+    const at = (y: number) => unit({ side: 'player', x: 0, y });
+    expect(rangedFactor(at(1), d, bow)).toBeCloseTo(0.5);
+    expect(rangedFactor(at(8), d, bow)).toBeCloseTo(0.1);
+    expect(rangedFactor(at(4), d, bow)).toBeCloseTo(0.5 - (0.4 * 3) / 7);
+    expect(rangedFactor(at(1), d, punch)).toBe(1);
+    const [n] = baseDamage(at(1), d, bow);
+    expect(n).toBeCloseTo(baseDamage(at(1), d, punch)[0] * 0.5);
   });
   it('多段攻击按比例分配，合计等于总伤害', () => {
     const multi = { ...punch, hits: [25, 25, 25, 25].map((p, i) => ({ frame: i + 1, percent: p, dir: 0 })) };
