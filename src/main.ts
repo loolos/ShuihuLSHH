@@ -8,6 +8,7 @@ import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/upd
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
+import { installMusic, music } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { parsePasHeader } from './formats/pas.ts';
@@ -184,6 +185,7 @@ function startGame(assets: Assets) {
   };
   const town = new TownUI(assets, (cls) => ui.portrait(cls));
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
+    void music.play('town');
     town.show(c, {
       town: t,
       title: t ? `城镇 · ${label(stageOf(c.stage))}之后` : '整备',
@@ -254,6 +256,7 @@ function startGame(assets: Assets) {
     }
     if (ticket !== loading) return; // 下载期间又换了关
     setupEl.hidden = true;
+    void music.stageTrack(stage).then((t) => music.play(t));
     const data = { assets, stage, ui, seed, party: partyOf(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
@@ -330,6 +333,7 @@ function setupUpdateButton() {
 }
 
 installSound($<HTMLButtonElement>('sound'));
+installMusic($<HTMLButtonElement>('music'));
 
 async function boot() {
   try {
