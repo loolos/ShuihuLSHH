@@ -27,19 +27,22 @@ export function critChance(att: Unit, skill: SkillDef): number {
 
 /**
  * 伤害公式【新】（负责人 2026-11-12 选，比例公式）：设 A = 攻 + 技能威力，D = 防，
- * 普通伤害 = A × A / (A + D)，必杀 = 普通 × 2。
+ * 普通伤害 = A² / (A + 2D)；必杀 = 把 A 翻倍再代入 = (2A)² / (2A + 2D)（同原版"先翻倍攻击再减防"的思路）。
+ * 防御权重取 2，是为了让前 5 章的伤害与原版相近（负责人要求前期节奏不变）。
  * 原版是 A − D（必杀 2A − D），≤ 0 时改为 10–59 随机（EXE 0x406c60）。防御每级 ×1.10、攻击只有 ×1.04–1.05，
  * 后期攻防都到 255 封顶后普通攻击几乎都落到这个随机数上；比例公式在任何阶段攻防都起作用。
  */
+export const DEFENSE_WEIGHT = 2;
+
 export function ratioDamage(a: number, d: number): number {
-  return a > 0 ? (a * a) / (a + Math.max(0, d)) : 0;
+  return a > 0 ? (a * a) / (a + DEFENSE_WEIGHT * Math.max(0, d)) : 0;
 }
 
 /** 不含随机部分的伤害：返回 [普通, 必杀]（未取整） */
 export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
-  const n = ratioDamage(att.stats.attack + power, def.stats.defense);
-  return [n, 2 * n];
+  const a = att.stats.attack + power;
+  return [ratioDamage(a, def.stats.defense), ratioDamage(2 * a, def.stats.defense)];
 }
 
 export interface AttackPreview {
