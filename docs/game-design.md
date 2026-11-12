@@ -587,31 +587,33 @@ N01 的原版事件（已全部由 PAS 直接驱动）：开战时王進、王�
   没用上的：m15（1 秒后自动关闭的窗口）、第 48 / 37 组特效（0x4075c0 / 0x4077a0）、logo、m06、m11、tt*，场合【待核】。
 - **现状**（2026-11-12）：原版 `Sound/` 245 个 WAV（29.9 MB）经负责人同意压成 MP3 放进仓库 `gamedata/sound/`：内容相同的只留一份，单声道 22,050 Hz 64 kbps，共 186 个文件 2.4 MB（`tools/gen-sound.ts`，`index.json` 记 名字 → 文件）。上表的事件都照原版播；原版不出声的场合（回合开始、落空、回复数字等）重制版也不出声（负责人 2026-11-12：能用原版的就用原版）。只有原版音效整体下载失败时才用浏览器合成的简单音效兜底【新】。进关时预先下载本关会用到的声音。敌方快进时不出声。
 - **音量**：顶栏"♪"按钮在 关 / 小 / 中 / 大 之间切换，记在浏览器里【新】。
-- **背景音乐**【新】：原版用光盘 CD 音轨（`music.ini`，本副本没有）。重制版用负责人用 Suno 生成的配乐（提示词见项目文件 `shuihu-design/bgm-suno-prompts.md`、`bgm-more-prompts.md`），放在仓库 `gamedata/bgm/`（96 kbps 立体声，共 13 首约 15 MB；每关只下载用到的那首）。`index.json` 写曲目文件和关卡指定的曲目，没指定的关 Act 剧情关放 story，其余放 battle。2026-11-12 的分配：
+- **背景音乐**【新】：原版用光盘 CD 音轨（`music.ini`，本副本没有）。重制版用负责人用 Suno 生成的配乐（提示词见项目文件 `shuihu-design/bgm-suno-prompts.md`、`bgm-more-prompts.md`），放在仓库 `gamedata/bgm/`（96 kbps 立体声，共 17 首约 20 MB；每关只下载用到的那首）。`index.json` 写曲目文件和关卡指定的曲目，没指定的关 Act 剧情关放 story，其余放 battle。2026-11-12 的分配：
 
   战斗关（玩的时间长）放 2–3 首轮流的歌单：一首放完，交叉淡化接下一首，循环往复（负责人 2026-11-12 要求）。剧情关和城镇只放一首。
 
   | 关卡类型 | 歌单（按顺序轮放） | 关卡 |
   |---|---|---|
-  | 前半程普通战斗 | battle(02) → battle2(06) | 没指定的战斗关，N-add02、N02、N-add06、N-add07、Train1 |
-  | 后半程普通战斗 | battle2(06) → battle(02) | N-add09b、N-add10、N-add12、N-add13、Train2 |
-  | 首领决战 | tense(03) → army(12) → battle2(06) | N-add01、N-add04b、N04–N11、N14、N-add16 |
+  | 前半程普通战斗 | battle(02) → rock(17) → battle2(06) | 没指定的战斗关，N-add02、N02、N-add06、N-add07、Train1 |
+  | 后半程普通战斗 | battle2(06) → rock(17) → battle(02) | N-add09b、N-add10、N-add12、N-add13、Train2 |
+  | 首领决战 | tense(03) → boss(18) → army(12) | N-add01、N-add04b、N04–N11、N14、N-add16 |
   | 官军围剿 | army(12) → battle(02) → tense(03) | N01、N03、N-add04a、N-add08、N-add09a、N-add11、N-add14、N12、N-add15、N13 |
-  | 夜战、埋伏 | night(09) → battle(02) → battle2(06) | N-add03、N-add05 |
+  | 夜战、埋伏 | night(09) → rock(17) → battle(02) | N-add03、N-add05 |
 
   | 单曲 | 原编号 | 用在哪里 |
   |---|---|---|
-  | town | 01 | 城镇的酒店分页、整备 |
+  | town | 01 | 城镇的整备分页 |
+  | inn | 11 | 城镇的酒店分页 |
   | shop | 05 | 城镇的武器店、打铁铺、药铺、当铺 |
   | story | 04 | 其余 Act 剧情关 |
-  | night | 09 | 计谋剧情：Act4-2、Act5-1a、Act10-1（智取生辰纲）、Act11-1a |
+  | comic | 21 | 诙谐剧情：鲁智深扮新娘（Act4-2）、打跑周通（Act4-3）、花和尚吃喝（Act5-1） |
+  | night | 09 | 计谋剧情：Act5-1a、Act10-1（智取生辰纲）、Act11-1a |
   | sad | 07 | 林冲蒙冤（Act6-3 白虎节堂）、休妻（Act7-1） |
   | eerie | 16 | 暗流：野猪林伏击前（Act7-1a）、陆谦密谋（Act9-1） |
   | liangshan | 08 | 上梁山（Act14-2）、通关画面 |
   | victory | 14 | 过关结算画面（剧情关直接接下一关，不放） |
   | defeat | 15 | 失败画面 |
 
-  某首缺失时用替身（shop→town、battle2/army/night→battle、sad/eerie→story、liangshan→town；victory/defeat 缺失则接着放战斗曲）。过关 / 失败时仍先播原版音效 m12 / m05。顶栏「音乐开 / 关」按钮单独控制，记在浏览器里；还没有配乐时按钮显示为不可用。播放方式（负责人 2026-11-12 要求）：Suno 的曲子最后约 5 秒是渐弱，所以不直接循环，而是离结尾 5 秒时另一个播放器从头接上，2.5 秒交叉淡化；换曲时 1 秒淡出淡入；过关 m12、失败 m05 播放期间音乐压到 20%，播完 0.6 秒恢复。音乐只有开关，不分音量档。浏览器拦住自动播放时，第一次点击（包括点音乐按钮）就开始放，不会把它关掉。
+  某首缺失时用替身（shop/inn→town、rock→battle、boss→tense、comic→story、battle2/army/night→battle、sad/eerie→story、liangshan→town；victory/defeat 缺失则接着放战斗曲）。过关 / 失败时仍先播原版音效 m12 / m05。顶栏「音乐开 / 关」按钮单独控制，记在浏览器里；还没有配乐时按钮显示为不可用。播放方式（负责人 2026-11-12 要求）：Suno 的曲子最后约 5 秒是渐弱，所以不直接循环，而是离结尾 5 秒时另一个播放器从头接上，2.5 秒交叉淡化；换曲时 1 秒淡出淡入；过关 m12、失败 m05 播放期间音乐压到 20%，播完 0.6 秒恢复。音乐只有开关，不分音量档。浏览器拦住自动播放时，第一次点击（包括点音乐按钮）就开始放，不会把它关掉。
 
 ---
 

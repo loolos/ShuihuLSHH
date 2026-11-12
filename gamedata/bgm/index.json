@@ -12,68 +12,72 @@
   "army": "army.mp3",
   "victory": "victory.mp3",
   "defeat": "defeat.mp3",
-  "eerie": "eerie.mp3"
+  "eerie": "eerie.mp3",
+  "inn": "inn.mp3",
+  "rock": "rock.mp3",
+  "boss": "boss.mp3",
+  "comic": "comic.mp3"
  },
  "stages": {
   "n-add01": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n-add04b": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n04": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n05": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n06": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n07": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n08": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n09": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n10": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n11": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n14": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n-add16": [
    "tense",
-   "army",
-   "battle2"
+   "boss",
+   "army"
   ],
   "n01": [
    "army",
@@ -127,36 +131,41 @@
   ],
   "n-add03": [
    "night",
-   "battle",
-   "battle2"
+   "rock",
+   "battle"
   ],
   "n-add05": [
    "night",
-   "battle",
-   "battle2"
+   "rock",
+   "battle"
   ],
-  "act4-2": "night",
+  "act4-2": "comic",
   "act5-1a": "night",
   "act10-1": "night",
   "act11-1a": "night",
   "n-add09b": [
    "battle2",
+   "rock",
    "battle"
   ],
   "n-add10": [
    "battle2",
+   "rock",
    "battle"
   ],
   "n-add12": [
    "battle2",
+   "rock",
    "battle"
   ],
   "n-add13": [
    "battle2",
+   "rock",
    "battle"
   ],
   "train2": [
    "battle2",
+   "rock",
    "battle"
   ],
   "act6-3": "sad",
@@ -166,23 +175,30 @@
   "act14-2": "liangshan",
   "n-add02": [
    "battle",
+   "rock",
    "battle2"
   ],
   "n02": [
    "battle",
+   "rock",
    "battle2"
   ],
   "n-add06": [
    "battle",
+   "rock",
    "battle2"
   ],
   "n-add07": [
    "battle",
+   "rock",
    "battle2"
   ],
   "train1": [
    "battle",
+   "rock",
    "battle2"
-  ]
+  ],
+  "act4-3": "comic",
+  "act5-1": "comic"
  }
 }
