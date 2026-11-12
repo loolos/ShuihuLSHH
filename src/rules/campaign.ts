@@ -32,7 +32,7 @@ const isBattle = (s: StageEntry) => !/^act/i.test(s.mapName);
  * - 跳过空位；
  * - 表里相邻两项标题相同且都是战役时，是二选一的路线（如 14/15 N-add04a/b），返回两项；
  * - 从这样的一条路线出来时跳过它的另一条。
- * 路线选择的真正条件还没解开，现在交给玩家选【待核】。
+ * 只在关卡没有剧本头时用；有剧本头时用 nextByHeader。
  */
 export function nextStages<T extends StageEntry>(stages: T[], current: number): T[] {
   const list = stages.filter((s) => s.mapName);
@@ -46,6 +46,21 @@ export function nextStages<T extends StageEntry>(stages: T[], current: number): 
   if (!a) return [];
   const b = list[i + 1];
   return sibling(a, b) && b.index === a.index + 1 ? [a, b] : [a];
+}
+
+/**
+ * 分路（EXE 0x418c60 → 0x418bd0 → 0x413650，答案处理 0x4138b9）：离开城镇 2（Act3-4 之后）问对话框 1，
+ * 离开城镇 5（N07 之后）问对话框 2。选第一项「大道」照剧本头的下一关走（14 N-add04a / 41 N-add09a），
+ * 选第二项「小徑」时 EXE 直接载入写死的关卡 15（N-add04b）/ 42（N-add09b）（0x401660(0xf) / (0x2a)）。
+ */
+export const ROUTES: Record<number, { prompt: number; alt: number }> = {
+  2: { prompt: 1, alt: 15 },
+  5: { prompt: 2, alt: 42 },
+};
+
+/** 剧本头决定的下一关；城镇 2、5 还要问分路（返回对话框序号与小径关卡） */
+export function nextByHeader(header: { town: number; next: number }): { next: number; route?: { prompt: number; alt: number } } {
+  return { next: header.next, route: ROUTES[header.town] };
 }
 
 /** 关卡开始时套用的我方状态 */

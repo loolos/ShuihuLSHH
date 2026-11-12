@@ -134,6 +134,19 @@ describe('战斗流程', () => {
     expect(b.phase).toBe('player');
   });
 
+  it('宝物：路过的格子也拾取，放进道具栏 3–6；敌人不拾', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 9, 9), act(2, 1, 'object', 2, 0), act(3, 1, 'object', 8, 9)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.slots = [1, 0, 0, 0, 0, 0, 0];
+    const ev = b.move(p, 3, 0);
+    expect(ev.some((e) => e.type === 'pickup')).toBe(true);
+    expect(p.slots).toEqual([1, 0, 0, 1, 0, 0, 0]);
+    expect(b.items).toHaveLength(1);
+    b.endPlayerPhase();
+    expect(b.items).toHaveLength(1);
+  });
+
   it('强行军：走进黄色范围后本回合结束', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
     b.begin();
@@ -304,7 +317,7 @@ describe('技能', () => {
 });
 
 describe('关卡串联', () => {
-  const blk = (index: number, trigger: PasBlock['trigger'], ops: PasBlock['ops']): PasBlock => ({ index, head: [], trigger, ops });
+  const blk = (index: number, trigger: PasBlock['trigger'], ops: PasBlock['ops'], cond: PasBlock['cond'] = { type: 0, arg: 0 }): PasBlock => ({ index, head: [], trigger, cond, ops });
   const say = (op: number, text: string) => ({ op, flag: null, value: 0, text });
 
   it('下一关：跳过空位与过场以外的另一条路线，同名相邻战役是二选一', () => {

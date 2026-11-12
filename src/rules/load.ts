@@ -4,7 +4,7 @@ import { readExeTables } from '../formats/exe.ts';
 import { parseGoods } from '../formats/goo.ts';
 import { parseHuman } from '../formats/hum.ts';
 import { parseMap } from '../formats/map.ts';
-import { parsePasBlocks } from '../formats/pas.ts';
+import { parsePasBlocks, parsePasHeader } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, type GameData } from './data.ts';
@@ -53,7 +53,7 @@ export function buildT2S(files: FileSource): (s: string) => string {
 export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
   const exe = readExeTables(files.get('ShuiHu.exe'));
   const classes = buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames);
-  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, heroName: tr(exe.characterNames[0]), choices: exe.choices.map(([a, b]) => [tr(a), tr(b)]) };
+  return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
 }
 
 export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {
@@ -74,6 +74,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     board,
     units: files.has(actFile) ? parseAct(files.get(actFile), actFile) : [],
     blocks: pabFile ? parsePasBlocks(files.get(pabFile), 'big5') : [],
+    header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
     displayBlocks: opts.simplified && pasFile ? parsePasBlocks(files.get(pasFile), 'gbk') : undefined,
     data,
     seed: opts.seed,

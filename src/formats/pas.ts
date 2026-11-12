@@ -56,15 +56,41 @@ export function parsePas(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5', file = 
   return { lines, otherStrings };
 }
 
+/**
+ * 剧本文件头（15 字节）：'PAS' + u32 未知(+3) + u16 区块数(+7) + u16 城镇号(+9) + u16 下一关(+11) + u16 是否过场(+13)。
+ * 城镇号非 0 时本关结束后进城（0x418c60 读取，城镇 2、5 离开时问分路）；下一关是 EXE 关卡表序号，
+ * 如 Act3-4 → 14（N-add04a），N-add04a/b → 16，N07 → 41（N-add09a），N-add09a/b → 43。
+ */
+export interface PasHeader {
+  blockCount: number;
+  town: number;
+  next: number;
+  /** 1 = 过场（Act*、Train*），0 = 战役 */
+  act: number;
+}
+
+export function parsePasHeader(buf: Buffer): PasHeader {
+  if (buf.subarray(0, 3).toString('latin1') !== 'PAS') throw new Error('魔数应为 PAS');
+  return { blockCount: buf.readUInt16LE(7), town: buf.readUInt16LE(9), next: buf.readUInt16LE(11), act: buf.readUInt16LE(13) };
+}
+
 // ───────────── 区块与指令（事件脚本），结构见 docs/binary-formats.md §8 ─────────────
 
 export type PasTrigger =
   | { kind: 'turn'; turn: number } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number }
-  /** w8 = 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——伏兵号令之后执行（推测）；w8 = 3：训练关等（参数 0），未解 */
+  /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
-  | { kind: 'unknown'; w0: number; type: number };
+  /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
+  | { kind: 'cond' };
+
+/**
+ * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
+ * 标记为 2 时后跟 1 个 u16 参数，为 4 时后跟 2 个；A = 0xFF 表示左边是子节点，B = 0xFF 表示右边是子节点，
+ * B = 0xFFFF 表示只有 A 一个叶子；组合 0 = 或、1 = 与。叶子类型见 docs/binary-formats.md §8。
+ */
+export type PasCond = { type: number; arg: number } | { op: 'and' | 'or'; a: PasCond; b: PasCond };
 
 export interface PasOp {
   op: number;
@@ -79,13 +105,15 @@ export interface PasBlock {
   index: number;
   head: number[]; // w0..w8
   trigger: PasTrigger;
+  cond: PasCond;
   ops: PasOp[];
 }
 
 const TEXT_OPS = new Set([13, 20, 21, 29, 30, 31, 32, 33]);
 
 /**
- * 按区块切分 .pab。触发器：w0 = 1 时 w8 = 0 为回合、1 为死亡，参数在区块 +24；
+ * 按区块切分 .pab。区块 +16 起是条件树（EXE 0x411410，见 docs/binary-formats.md §8），简单的回合/死亡/区域条件另外归类；
+ * 触发器：w0 = 1 时 w8 = 0 为回合、1 为死亡，参数在区块 +24；
  * w0 = 4 为"某角色进入矩形区域"：+24 u32 角色号，+42/+44 与 +54/+56 为两角坐标（N01 区块 6 验证）。
  */
 export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): PasBlock[] {
@@ -97,14 +125,33 @@ export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): 
     const len = buf.readUInt16LE(o);
     const head = Array.from({ length: 9 }, (_, k) => buf.readUInt16LE(o + 2 + 2 * k));
     let trigger: PasTrigger;
-    let start: number;
-    if (head[0] === 1 && (head[8] === 0 || head[8] === 1)) {
-      const p = buf.readUInt16LE(o + 24);
-      trigger = head[8] === 0 ? { kind: 'turn', turn: p } : { kind: 'death', char: p };
-      start = 26;
-    } else if (head[0] === 1 && (head[8] === 2 || head[8] === 3)) {
-      trigger = { kind: 'signal', type: head[8], param: buf.readUInt16LE(o + 24) };
-      start = 26;
+    let p = o + 16;
+    const node = (): PasCond => {
+      const [n, a, b, comb] = [0, 2, 4, 6].map((k) => buf.readUInt16LE(p + k));
+      p += 8;
+      let x = 0, y = 0;
+      if (n === 2) {
+        x = buf.readUInt16LE(p);
+        p += 2;
+      } else if (n === 4) {
+        x = buf.readUInt16LE(p);
+        y = buf.readUInt16LE(p + 2);
+        p += 4;
+      }
+      const op = comb === 1 ? 'and' : 'or';
+      if (a === 0xff) {
+        const l = node();
+        return { op, a: l, b: node() };
+      }
+      if (b === 0xffff) return { type: a, arg: x };
+      return { op, a: { type: a, arg: x }, b: b === 0xff ? node() : { type: b, arg: y } };
+    };
+    const cond = node();
+    const start = p - o;
+    if (head[0] === 1 && (head[8] === 0 || head[8] === 1) && 'type' in cond) {
+      trigger = head[8] === 0 ? { kind: 'turn', turn: cond.arg } : { kind: 'death', char: cond.arg };
+    } else if (head[0] === 1 && head[8] === 2 && 'type' in cond) {
+      trigger = { kind: 'signal', type: 2, param: cond.arg };
     } else if (head[0] === 4) {
       trigger = {
         kind: 'area',
@@ -114,10 +161,8 @@ export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): 
         x2: buf.readUInt16LE(o + 54),
         y2: buf.readUInt16LE(o + 56),
       };
-      start = 58;
     } else {
-      trigger = { kind: 'unknown', w0: head[0], type: head[8] };
-      start = len; // 未解的触发器：不执行指令
+      trigger = { kind: 'cond' };
     }
     const ops: PasOp[] = [];
     for (let p = o + start; p + 4 <= o + len; ) {
@@ -134,7 +179,7 @@ export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): 
       ops.push(entry);
       p = body + l;
     }
-    blocks.push({ index: i, head, trigger, ops });
+    blocks.push({ index: i, head, trigger, cond, ops });
     o += len;
   }
   return blocks;

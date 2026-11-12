@@ -8,7 +8,7 @@ import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/ass
 import { BattleScene } from './game/BattleScene.ts';
 import { BattleUI } from './game/ui.ts';
 import type { Battle } from './rules/battle.ts';
-import { newCampaign, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
+import { newCampaign, nextByHeader, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -139,31 +139,47 @@ function startGame(assets: Assets) {
   const stageOf = (i: number) => stages.find((s) => s.index === i)!;
   const label = (s: (typeof stages)[number]) => assets.tr(s.title) || s.mapName;
   const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName);
-  // 分路：关卡表里第 k 处二选一对应 EXE 对话框 k + 1（1 = 第 3 章 正路/小径，2 = 第 8 章 大道/小径；EXE 0x4439b2）。
-  // 选项一对应 a 关：N-add04a 开场是官兵说「竟敢大剌剌的走关西正路」，N-add04b 是山贼要「买路财」
-  const forks = stages.filter((s, i) => { const n = nextStages(stages, stages[i - 1]?.index ?? -1); return n.length > 1 && n[0] === s; });
+  // 没有剧本头的关卡才用关卡表顺序推断下一关（campaign.ts nextStages）
+  const speakerOf = (cls: number) => assets.data.classes[cls]?.name ?? '';
+  /** 原版的二选一对话框：问题 + 两个按钮，选后由主角说对应的台词（EXE 0x443988 / 0x4439b2） */
+  const ask = async (idx: number): Promise<number> => {
+    const p = assets.data.prompts?.[idx];
+    if (!p) return 0;
+    const k = await new Promise<number>((r) =>
+      ui.result(true, `${speakerOf(p.speaker)}：${p.question}`, p.options.map((label, i) => ({ label, run: () => r(i) })), '分路'),
+    );
+    ui.hideResult();
+    const reply = p.replies[k];
+    await ui.say(speakerOf(reply.speaker), reply.text, reply.speaker);
+    return k;
+  };
 
   const goTo = (c: CampaignState) => {
     campaign = c;
     writeSave(c);
     run();
   };
-  const onEnd = (battle: Battle, won: boolean, text: string) => {
+  const onEnd = async (battle: Battle, won: boolean, text: string) => {
     const cur = stageOf(campaign.stage);
     const retry = { label: '重新开始本关', run };
     if (!won) return ui.result(false, text, [retry]);
     const after = recordResult(campaign, battle);
-    const next = nextStages(stages, cur.index);
+    let next: (typeof stages)[number][];
+    let route: { prompt: number; alt: number } | undefined;
+    if (battle.header) {
+      const h = nextByHeader(battle.header);
+      route = h.route;
+      next = stages.filter((s) => s.index === h.next && s.mapName);
+    } else next = nextStages(stages, cur.index).slice(0, 1);
     if (!next.length) return ui.result(true, text, [retry], '通关');
+    const go = async () => {
+      // 城镇 2、5：离开时问走大道还是小径，小径进写死的另一关
+      const k = route ? await ask(route.prompt) : 0;
+      goTo({ ...after, stage: k === 1 && route ? route.alt : next[0].index });
+    };
     // 过场关卡直接接下一关
-    if (isAct(cur) && next.length === 1) return goTo({ ...after, stage: next[0].index });
-    const fork = assets.data.choices?.[forks.indexOf(next[0]) + 1];
-    const choices = next.map((s, k) => ({
-      label: next.length > 1 ? fork?.[k] ?? `路线${'一二'[k]}：${label(s)}` : `继续：${label(s)}`,
-      run: () => goTo({ ...after, stage: s.index }),
-    }));
-    if (next.length > 1) ui.result(true, `${text}\n\n接下来走哪条路？`.trim(), choices, '分路');
-    else ui.result(true, text, [...choices, { label: '再打一次本关', run }]);
+    if (isAct(cur)) return go();
+    ui.result(true, text, [{ label: `继续：${label(next[0])}`, run: () => void go() }, { label: '再打一次本关', run }]);
   };
   let loading = 0;
   const run = async () => {

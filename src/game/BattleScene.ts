@@ -634,14 +634,16 @@ export class BattleScene extends Phaser.Scene {
         await this.ui.say('', e.text);
         break;
       case 'ask': {
-        // 伏兵号令：原版在友军阶段由模式 9 的单位弹出（EXE 0x407af3），这里放在我方阶段开始时问【新】
-        const yes = await new Promise<boolean>((r) =>
-          this.ui.result(true, '伏兵已经埋伏好了。现在发出号令吗？', [
-            { label: e.options[0], run: () => r(true) },
-            { label: e.options[1], run: () => r(false) },
-          ], '号令', true),
+        // 伏兵号令：原版在友军阶段由模式 9 的单位弹出（EXE 0x407b26），这里放在我方阶段开始时问【新】。
+        // 文字取 EXE 对话框 0：问题 + 是/否，选后主角说对应台词；选「是」发出号令（0x413896 → 0x40de20）
+        const p = e.prompt;
+        const name = (cls: number) => this.assets.data.classes[cls]?.name ?? '';
+        const k = await new Promise<number>((r) =>
+          this.ui.result(true, `${name(p.speaker)}：${p.question}`, p.options.map((label, i) => ({ label, run: () => r(i) })), '号令', true),
         );
-        if (yes) for (const x of this.battle.signal()) await this.play(x);
+        this.ui.hideResult();
+        await this.ui.say(name(p.replies[k].speaker), p.replies[k].text, p.replies[k].speaker);
+        if (k === 0) for (const x of this.battle.signal()) await this.play(x);
         break;
       }
       case 'objective':
