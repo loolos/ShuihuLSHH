@@ -1,7 +1,8 @@
 // 取得原版文件：IndexedDB 缓存 → 开发服务器 → 试玩页面附带 → GitHub 仓库里的 gamedata/shuihu → 玩家选目录。
 // 构建产物里没有原版素材；网页版运行时从仓库下载（负责人 2026-11-12 决定）。
 import manifest from '../data/manifest.json';
-import { idbGetAll, idbPutAll } from './idb.ts';
+import { indexSpans } from '../formats/image.ts';
+import { idbGetAll, idbPut, idbPutAll } from './idb.ts';
 
 export interface ManifestEntry {
   path: string;
@@ -11,20 +12,110 @@ export interface ManifestEntry {
 const ENTRIES = (manifest as { files: ManifestEntry[] }).files;
 const key = (p: string) => p.replace(/\\/g, '/').toLowerCase();
 
+/** 网页版按需下载的大文件（人物动画、特效、图块；头像对白里随时会用，整份下载）：先取目录，进关前再按帧取 */
+export const LAZY_FILES = ['Data/Man.lib', 'Data/Effect.lib', 'Data/Upper.grp', 'Data/Ground.grp'];
+/** 目前用不到、网页版不下载的文件 */
+const UNUSED = new Set(['Data/Panel.lib']);
+const CHUNK = 'range:';
+
+/**
+ * 只下载了一部分的文件：按文件全长分配一块内存，下载到的字节范围填进去（没下载的地方是 0）。
+ * 下载到的每一段也存进 IndexedDB（键 range:路径:起-止），下次打开直接用。
+ */
+export class RemoteFile {
+  readonly buf: Uint8Array;
+  private have: [number, number][] = [];
+  constructor(readonly path: string, readonly size: number, private url: string) {
+    this.buf = new Uint8Array(size);
+  }
+  /** 填入一段已有的数据（来自缓存） */
+  fill(start: number, data: ArrayBuffer) {
+    this.buf.set(new Uint8Array(data), start);
+    this.mark(start, start + data.byteLength);
+  }
+  private mark(a: number, b: number) {
+    const all = [...this.have, [a, b] as [number, number]].sort((x, y) => x[0] - y[0]);
+    const out: [number, number][] = [];
+    for (const r of all) {
+      const last = out.at(-1);
+      if (last && r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+      else out.push([r[0], r[1]]);
+    }
+    this.have = out;
+  }
+  /** 还没下载的部分（相距不到 32 KB 的合并成一次请求） */
+  missing(spans: [number, number][]): [number, number][] {
+    const need: [number, number][] = [];
+    for (const [a0, b] of [...spans].sort((x, y) => x[0] - y[0])) {
+      let a = a0;
+      for (const [h0, h1] of this.have) {
+        if (h1 <= a || h0 >= b) continue;
+        if (h0 <= a) a = Math.max(a, h1);
+        else if (a < h0) {
+          need.push([a, h0]);
+          a = h1;
+        }
+      }
+      if (a < b) need.push([a, b]);
+    }
+    const merged: [number, number][] = [];
+    for (const r of need) {
+      const last = merged.at(-1);
+      if (last && r[0] - last[1] < 32768) last[1] = Math.max(last[1], r[1]);
+      else merged.push([...r]);
+    }
+    return merged;
+  }
+  async ensure(spans: [number, number][], onBytes?: (n: number) => void): Promise<void> {
+    await Promise.all(
+      this.missing(spans).map(async ([a, b]) => {
+        const r = await fetch(this.url, { headers: { Range: `bytes=${a}-${b - 1}` } });
+        if (!r.ok) throw new Error(`下载 ${this.path} 失败（${r.status}）`);
+        let data = await r.arrayBuffer();
+        if (r.status === 200) data = data.slice(a, b); // 服务器不支持 Range 时整份返回
+        this.fill(a, data);
+        onBytes?.(data.byteLength);
+        idbPut(`${CHUNK}${this.path}:${a}-${b}`, data).catch(() => {});
+      }),
+    );
+  }
+}
+
 /** 已载入的原版文件，按相对路径（不区分大小写）取用。 */
 export class GameFiles {
   private readonly files: Map<string, ArrayBuffer>;
-  constructor(files: Map<string, ArrayBuffer>) {
+  private readonly remote: Map<string, RemoteFile>;
+  constructor(files: Map<string, ArrayBuffer>, remote: RemoteFile[] = []) {
     this.files = new Map([...files].map(([k, v]) => [key(k), v]));
+    this.remote = new Map(remote.map((r) => [key(r.path), r]));
   }
   has(path: string): boolean {
-    return this.files.has(key(path));
+    return this.files.has(key(path)) || this.remote.has(key(path));
   }
   /** 返回 Buffer（浏览器中由 buffer-shim 提供），与离线工具共用解析器。 */
   get(path: string): Buffer {
+    const r = this.remote.get(key(path));
+    if (r) return Buffer.from(r.buf.buffer);
     const ab = this.files.get(key(path));
     if (!ab) throw new Error(`缺少原版文件：${path}`);
     return Buffer.from(ab);
+  }
+  /** 确保这些字节范围已经下载（整份在本地的文件直接返回）；返回新下载的字节数 */
+  async ensure(want: Map<string, [number, number][]>, progress?: Progress): Promise<number> {
+    const jobs = [...want].map(([p, spans]) => ({ r: this.remote.get(key(p)), spans })).filter((j) => j.r);
+    const total = jobs.reduce((n, j) => n + j.r!.missing(j.spans).reduce((m, [a, b]) => m + b - a, 0), 0);
+    if (!total) return 0;
+    let got = 0;
+    progress?.(`下载本关素材 0 / ${(total / 1048576).toFixed(1)} MB`, 0);
+    await Promise.all(
+      jobs.map((j) =>
+        j.r!.ensure(j.spans, (n) => {
+          got += n;
+          progress?.(`下载本关素材 ${(got / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB`, got / total);
+        }),
+      ),
+    );
+    return got;
   }
   list(dir: string, ext: string): string[] {
     const d = key(dir) + '/';
@@ -106,28 +197,62 @@ export async function loadFromDevServer(progress?: Progress): Promise<Map<string
 /** 网页版用的原版文件来源：本仓库 main 分支的 gamedata/shuihu（raw.githubusercontent.com 允许跨域） */
 export const REPO_GAMEDATA = 'https://raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/';
 
-/** 从 GitHub 仓库按 manifest 下载全部原版文件（约 65 MB，8 路并发）；任何一个失败就返回 null */
-export async function loadFromRepo(progress?: Progress, base = REPO_GAMEDATA): Promise<Map<string, ArrayBuffer> | null> {
+/**
+ * 网页版：从 GitHub 仓库取原版文件。小文件整份下载（约 2 MB），大文件（LAZY_FILES）只取目录，帧数据进关前按需下载。
+ * `cached` 是 IndexedDB 里已有的内容（整份文件，以及 range: 开头的分段）。任何一个请求失败就返回 null。
+ */
+export async function loadFromRepo(
+  progress?: Progress,
+  cached: Map<string, ArrayBuffer> = new Map(),
+  base = REPO_GAMEDATA,
+): Promise<{ files: Map<string, ArrayBuffer>; remote: RemoteFile[] } | null> {
   if (import.meta.env.DEV) return null;
-  const total = ENTRIES.reduce((n, e) => n + e.size, 0);
-  const out = new Map<string, ArrayBuffer>();
+  const url = (p: string) => base + p.split('/').map(encodeURIComponent).join('/');
+  const lazy = new Set(LAZY_FILES.map(key));
+  const small = ENTRIES.filter((e) => !lazy.has(key(e.path)) && !UNUSED.has(e.path));
+  const files = new Map<string, ArrayBuffer>();
+  const todo = small.filter((e) => {
+    const c = cached.get(e.path);
+    if (c && c.byteLength === e.size) files.set(e.path, c);
+    return !files.has(e.path);
+  });
+  const total = todo.reduce((n, e) => n + e.size, 0);
   let done = 0, next = 0, failed = false;
   const worker = async () => {
-    while (!failed && next < ENTRIES.length) {
-      const e = ENTRIES[next++];
-      const url = base + e.path.split('/').map(encodeURIComponent).join('/');
-      const r = await fetch(url).catch(() => null);
+    while (!failed && next < todo.length) {
+      const e = todo[next++];
+      const r = await fetch(url(e.path)).catch(() => null);
       if (!r?.ok) {
         failed = true;
         return;
       }
-      out.set(e.path, await r.arrayBuffer());
+      const ab = await r.arrayBuffer();
+      files.set(e.path, ab);
+      idbPut(e.path, ab).catch(() => {});
       done += e.size;
-      progress?.(`从 GitHub 下载原版文件 ${Math.round(done / 1048576)} / ${Math.round(total / 1048576)} MB`, done / total);
+      progress?.(`从 GitHub 下载基础文件 ${(done / 1048576).toFixed(1)} / ${(total / 1048576).toFixed(1)} MB`, done / total);
     }
   };
   await Promise.all(Array.from({ length: 8 }, worker));
-  return failed ? null : out;
+  if (failed) return null;
+  // 大文件：用缓存里的分段，再补齐文件头和目录
+  const remote: RemoteFile[] = [];
+  try {
+    for (const p of LAZY_FILES) {
+      const e = ENTRIES.find((x) => x.path === p)!;
+      const r = new RemoteFile(p, e.size, url(p));
+      for (const [k, v] of cached) {
+        if (!k.startsWith(`${CHUNK}${p}:`)) continue;
+        r.fill(Number(k.slice(k.lastIndexOf(':') + 1).split('-')[0]), v);
+      }
+      await r.ensure([[0, 15]]);
+      await r.ensure(indexSpans(Buffer.from(r.buf.buffer, 0, 15), e.size));
+      remote.push(r);
+    }
+  } catch {
+    return null;
+  }
+  return { files, remote };
 }
 
 /**

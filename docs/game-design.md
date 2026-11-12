@@ -28,7 +28,7 @@
 | 项目 | 决定 |
 |---|---|
 | 发布形态 | 主要自用，可以使用原版素材 |
-| 素材来源 | **用仓库里的原版文件**（负责人 2026-11-12）：网页版首次打开时从 GitHub 仓库 `gamedata/shuihu` 下载（约 65 MB），在浏览器中解码并缓存；构建产物里不含素材。下载失败时才让玩家选本机目录 |
+| 素材来源 | **用仓库里的原版文件**（负责人 2026-11-12）：网页版从 GitHub 仓库 `gamedata/shuihu` 下载，每关只下载本关用到的素材（负责人 2026-11-12），在浏览器中解码并缓存；构建产物里不含素材。下载失败时才让玩家选本机目录 |
 | 画面 | 画布随浏览器窗口自适应，不固定 640×480 |
 | 平台 | 电脑浏览器（鼠标、键盘）；界面也要能在手机屏幕尺寸下浏览（2026-11-11） |
 | 部署 | GitHub Pages，推送到 main 后自动发布；构建产物只有代码 |
@@ -528,7 +528,8 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 ### 12.2 关键设计
 
 - **原版文件来源**：
-  - 网页版首次启动时从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/` 按 manifest 下载（`loadFromRepo`，8 路并发）。
+  - 网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/` 下载（`loadFromRepo`）。小文件（剧本、地图、数据表、头像，约 3 MB）启动时整份下载；`Man.lib`、`Effect.lib`、`Ground.grp`、`Upper.grp` 只先取文件头和索引，进关前（`preloadStage`）用 HTTP Range 只取本关出场职业的动画、其技能特效和地图用到的图块。`Panel.lib` 暂不使用，不下载。
+  - 下载过的文件和分段都存进 IndexedDB，再次打开或回到玩过的关卡不再下载。
   - 下载失败时退回到选择原版目录：File System Access API，不支持的浏览器用 `<input webkitdirectory>` 兜底。
   - 对照 `src/data/manifest.json`（267 个文件，65 MB）检查文件是否齐全、SHA256 是否一致；不一致时提示，但允许继续。
   - 原始文件字节缓存到 IndexedDB，下次启动不用再选目录；图像按需解码，解码结果只留在内存里。

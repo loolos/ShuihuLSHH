@@ -2,8 +2,10 @@
 import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/image.ts';
 import { readExeTables, type ExeTables } from '../formats/exe.ts';
 import { parseGoods, type Item } from '../formats/goo.ts';
-import type { GameFiles } from '../platform/gamefiles.ts';
-import { buildT2S, loadGameData } from '../rules/load.ts';
+import { parseAct } from '../formats/act.ts';
+import { parseMap } from '../formats/map.ts';
+import type { GameFiles, Progress } from '../platform/gamefiles.ts';
+import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
 import type { GameData } from '../rules/data.ts';
 
 export interface Assets {
@@ -41,6 +43,43 @@ export function loadAssets(files: GameFiles): Assets {
     exe: readExeTables(files.get('ShuiHu.exe')),
     items: parseGoods(files.get('Data/Goods.dab')),
   };
+}
+
+/**
+ * 进关前下载本关要用的帧（网页版大文件按需下载；整份在本地时什么也不做）：
+ * 本关出场职业的人物动画、它们技能的特效，以及地图用到的图块。返回新下载的字节数。
+ */
+export async function preloadStage(assets: Assets, stage: string, progress?: Progress): Promise<number> {
+  const { files } = assets;
+  const want = new Map<string, [number, number][]>();
+  const add = (path: string, span: [number, number]) => {
+    if (span[1] > span[0]) (want.get(path) ?? want.set(path, []).get(path)!).push(span);
+  };
+  const mapFile = findStageFile(files, stage, '.map');
+  if (!mapFile) return 0;
+  const map = parseMap(files.get(mapFile), mapFile);
+  for (const cell of map.cells)
+    cell.forEach((l, k) => {
+      const lib = k === 0 ? assets.ground : assets.upper;
+      if (l.tile < lib.count) add(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
+    });
+  const actFile = mapFile.replace(/\.map$/i, '.act');
+  const classes = new Set([0]);
+  if (files.has(actFile))
+    for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
+  for (const cls of classes) {
+    const c = assets.man.classes[cls];
+    if (c)
+      for (let g = c.first; g <= c.last; g++) {
+        const r = assets.man.actions[g];
+        if (r) for (let i = r.first; i <= r.last; i++) add('Data/Man.lib', assets.man.span(i));
+      }
+    for (const sk of assets.data.classes[cls]?.skills ?? []) {
+      const r = sk.effect > 0 ? assets.effects.actions[sk.effect - 1] : undefined;
+      if (r) for (let i = r.first; i <= r.last; i++) add('Data/Effect.lib', assets.effects.span(i));
+    }
+  }
+  return files.ensure(want, progress);
 }
 
 /** 把 8 位索引帧转成 RGBA 画布；索引 0 透明。 */

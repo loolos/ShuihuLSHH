@@ -38,6 +38,26 @@ function packBits(src: Uint8Array, n: number): Uint8Array {
   return out;
 }
 
+/** 帧数据在文件里的字节范围 [起, 止)（按需下载用） */
+function entrySpan(buf: Buffer, e: number, entSize: 19 | 20): [number, number] {
+  const off = buf.readUInt32LE(e);
+  return [off, off + buf.readUInt32LE(e + (entSize === 20 ? 16 : 15))];
+}
+
+/**
+ * 图像库的"目录"所在字节范围：文件头 + 索引（含 LIB 的动作组表）。按需下载时先取这些，再按帧取数据。
+ * `head` 是文件的前 15 字节，`size` 是文件长度。
+ */
+export function indexSpans(head: Buffer, size: number): [number, number][] {
+  const magic = head.toString('latin1', 0, 4);
+  const count = head.readUInt16LE(5);
+  if (magic === 'LIB\0') return [[0, 15], [size - 19 * count - 8 * (head.readUInt16LE(7) + head.readUInt16LE(9)), size]];
+  const index = head.readUInt32LE(7);
+  if (magic === 'GRP\0') return [[0, 11], [index, index + 20 * count]];
+  if (magic === 'PIC\0') return [[0, 11], [index, index + 19 * count]];
+  throw new Error(`不支持按需下载：${magic}`);
+}
+
 function decodeEntry(buf: Buffer, e: number, entSize: 19 | 20): Frame {
   const off = buf.readUInt32LE(e);
   const width = buf.readUInt16LE(e + 4);
@@ -53,7 +73,7 @@ function decodeEntry(buf: Buffer, e: number, entSize: 19 | 20): Frame {
 }
 
 /** GRP 图块库：返回按帧号取帧的函数（懒解码）。 */
-export function openGrp(buf: Buffer, file = 'grp'): { count: number; frame(i: number): Frame } {
+export function openGrp(buf: Buffer, file = 'grp'): { count: number; frame(i: number): Frame; span(i: number): [number, number] } {
   expectMagic(buf, 'GRP\0', file);
   const count = buf.readUInt16LE(5);
   const index = buf.readUInt32LE(7);
@@ -65,11 +85,12 @@ export function openGrp(buf: Buffer, file = 'grp'): { count: number; frame(i: nu
       if (!f) cache.set(i, (f = decodeEntry(buf, index + 20 * i, 20)));
       return f;
     },
+    span: (i: number) => entrySpan(buf, index + 20 * i, 20),
   };
 }
 
 /** PIC 图像库（Head.lib、Object.lib）：11 B 头，索引表偏移在 +7，每条 19 B。 */
-export function openPic(buf: Buffer, file = 'pic'): { count: number; frame(i: number): Frame } {
+export function openPic(buf: Buffer, file = 'pic'): { count: number; frame(i: number): Frame; span(i: number): [number, number] } {
   expectMagic(buf, 'PIC\0', file);
   const count = buf.readUInt16LE(5);
   const index = buf.readUInt32LE(7);
@@ -81,6 +102,7 @@ export function openPic(buf: Buffer, file = 'pic'): { count: number; frame(i: nu
       if (!f) cache.set(i, (f = decodeEntry(buf, index + 19 * i, 19)));
       return f;
     },
+    span: (i: number) => entrySpan(buf, index + 19 * i, 19),
   };
 }
 
@@ -119,6 +141,7 @@ export function openLib(buf: Buffer, file = 'lib') {
       if (!f) cache.set(i, (f = decodeEntry(buf, index + 19 * i, 19)));
       return f;
     },
+    span: (i: number) => entrySpan(buf, index + 19 * i, 19),
   };
 }
 
