@@ -6,8 +6,8 @@ import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
-import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
+import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import {
@@ -19,6 +19,26 @@ export { EXP_PER_LEVEL, MAX_PLAYER_LEVEL } from './exp.ts';
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
 export const REST_DIVISOR = 5;
+
+/**
+ * 开局多带的道具【新】（负责人 2026-11-12）：第一关 N01 里武龍（0）、王進（1）各带 2 个狗皮膏藥（156），
+ * 原版默认只有 1 个。只对没有延续状态的人物生效；按"补足到 N 个"处理，放进随身物品栏的空位。
+ */
+export const START_ITEMS: Record<string, Record<number, [item: number, count: number][]>> = {
+  n01: { 0: [[156, 2]], 1: [[156, 2]] },
+};
+
+export function addStartItems(stage: string, classId: number, slots: number[]) {
+  for (const [item, count] of START_ITEMS[stage.toLowerCase()]?.[classId] ?? []) {
+    let have = slots.filter((s, k) => k >= EQUIP_SLOTS && s === item).length;
+    for (const k of BAG_SLOTS) {
+      if (have >= count) break;
+      if (slots[k]) continue;
+      slots[k] = item;
+      have++;
+    }
+  }
+}
 
 export type BattleEvent =
   | { type: 'say'; uid: number | null; speaker: string; text: string }
@@ -125,8 +145,10 @@ export class Battle {
       a.items.forEach((id, k) => id && (slots[k] = id));
       // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）。延续的人物取两者较高者，装备沿用
       const kept = a.side === 'player' ? input.party?.get(a.type) : undefined;
-      if (kept) slots.splice(0, slots.length, ...kept.slots);
-      while (slots.length < SLOT_COUNT) slots.push(0); // 旧存档只有 7 格
+      if (kept) {
+        slots.splice(0, slots.length, ...kept.slots);
+        while (slots.length < SLOT_COUNT) slots.push(0); // 旧存档只有 7 格
+      } else if (a.side === 'player') addStartItems(input.name, a.type, slots);
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
       const level = Math.max(1, a.level, kept?.level ?? 0);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
@@ -418,9 +440,11 @@ export class Battle {
 
   private applyRest(u: Unit) {
     const hp0 = u.hp;
+    const mp0 = u.mp;
     u.hp = Math.min(u.stats.maxHp, u.hp + Math.max(1, Math.floor(u.stats.maxHp / REST_DIVISOR)));
     u.mp = Math.min(u.stats.maxMp, u.mp + Math.max(1, Math.floor(u.stats.maxMp / REST_DIVISOR)));
     this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '休息' });
+    this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng));
   }
 
   wait(u: Unit): BattleEvent[] {
