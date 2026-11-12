@@ -1,6 +1,7 @@
 // 规则引擎单元测试：使用手写的小数据，不依赖原版文件。
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
+import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, facingRelation, hitChance, killExp, rollAttack } from '../src/rules/combat.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -347,5 +348,25 @@ describe('关卡串联', () => {
     expect(b.unit(1)!.ai.mode).toBe(0);
     expect(b.unit(2)!.present).toBe(false);
     expect(b.unit(3)!).toMatchObject({ present: false, ai: { mode: 0 } });
+  });
+});
+
+describe('通行判断（EXE 0x40bc30）', () => {
+  const gAtt = new Uint8Array(2048), uAtt = new Uint8Array(2048);
+  gAtt[5] = 0xff;
+  uAtt[7] = 0xff;
+  const L = (tile: number, flags = 0) => ({ tile, flags });
+  it('地表', () => {
+    expect(cellPassable([L(1)], gAtt, uAtt)).toBe(true);
+    expect(cellPassable([L(0)], gAtt, uAtt)).toBe(false); // 地表 0 号 = 空白
+    expect(cellPassable([L(5)], gAtt, uAtt)).toBe(false);
+  });
+  it('第一层地上物：同高看 Upper.att，高出 0x40 以上可通行，低于地表阻挡', () => {
+    expect(cellPassable([L(1), L(7)], gAtt, uAtt)).toBe(false);
+    expect(cellPassable([L(1), L(8)], gAtt, uAtt)).toBe(true);
+    expect(cellPassable([L(1), L(7, 0x40)], gAtt, uAtt)).toBe(true);
+    expect(cellPassable([L(1, 0x40), L(8, 0)], gAtt, uAtt)).toBe(false);
+    // 只看第一层地上物
+    expect(cellPassable([L(1), L(8), L(7)], gAtt, uAtt)).toBe(true);
   });
 });
