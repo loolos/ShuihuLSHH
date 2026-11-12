@@ -1,9 +1,10 @@
 // 背景音乐【新】：原版用光盘 CD 音轨（music.ini，本副本没有），重制版用负责人用 Suno 生成的配乐。
 // 曲子放在仓库 gamedata/bgm/，由 index.json 说明：
-//   { "tracks": { "town": "town.mp3", "battle": "battle.mp3", "tense": "tense.mp3", "story": "story.mp3" },
-//     "stages": { "N-add03": "tense", ... } }
-// 共 4 首（负责人 2026-11-12 定）：town 城镇/整备，battle 常规战斗，tense 紧张/首领战，story 剧情。
-// 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle。缺哪首就不放。过关 / 失败用原版音效 m12 / m05。
+//   { "tracks": { "town": "town.mp3", ... }, "stages": { "n04": "tense", ... } }
+// 曲目（负责人 2026-11-12 提供 13 首，用途见 docs/game-design.md §11）：
+//   town 城镇酒店/整备，shop 其他店铺，battle / battle2 常规战斗（前半 / 后半程），tense 首领战，army 官军围剿，
+//   night 夜里、埋伏、计谋，story 剧情，sad 悲情，eerie 暗流，liangshan 上梁山 / 通关，victory 过关结算，defeat 失败。
+// 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle。缺哪首就用 FALLBACK 里的替身。
 // 播放（负责人 2026-11-12 要求）：
 // - 循环接缝：Suno 的曲子最后约 5 秒是渐弱，不能直接 loop。两个播放器轮流放：快到结尾时另一个从头淡入，前一个淡出。
 // - 换曲时旧曲 1 秒淡出、新曲淡入，不硬切。
@@ -22,6 +23,17 @@ const SWITCH_FADE = 1;
 /** 压低时的音量比例 */
 const DUCK_LEVEL = 0.2;
 const TICK = 50;
+/** 某首还没有时的替身；victory / defeat 没有就接着放战斗曲 */
+const FALLBACK: Record<string, string> = {
+  shop: 'town',
+  battle2: 'battle',
+  army: 'battle',
+  night: 'battle',
+  sad: 'story',
+  eerie: 'story',
+  liangshan: 'town',
+};
+const KEEP = new Set(['victory', 'defeat']);
 
 interface BgmIndex {
   tracks: Record<string, string>;
@@ -170,10 +182,14 @@ class MusicPlayer {
   }
 
   /** 循环播放某首（同一首正在放就不重来）；null = 停 */
-  async play(track: string | null) {
+  async play(track: string | null): Promise<void> {
     this.current = track;
     const idx = await this.loadIndex();
     if (this.current !== track) return; // 等索引期间又换了曲
+    if (track && !idx?.tracks[track]) {
+      if (KEEP.has(track)) return;
+      if (FALLBACK[track]) return this.play(FALLBACK[track]);
+    }
     const file = track ? idx?.tracks[track] : undefined;
     const a = this.decks[this.active];
     if (!file || !this.on) {

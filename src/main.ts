@@ -185,7 +185,6 @@ function startGame(assets: Assets) {
   };
   const town = new TownUI(assets, (cls) => ui.portrait(cls));
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
-    void music.play('town');
     town.show(c, {
       town: t,
       title: t ? `城镇 · ${label(stageOf(c.stage))}之后` : '整备',
@@ -210,10 +209,18 @@ function startGame(assets: Assets) {
     const before = campaign;
     const cur = stageOf(campaign.stage);
     const retry = { label: '重新开始本关', run };
-    if (!won) return ui.result(false, text, [retry]);
+    if (!won) {
+      void music.play('defeat');
+      return ui.result(false, text, [retry]);
+    }
     const after = recordResult(campaign, battle);
     const { town: t, next } = nextOf(cur);
-    if (!next.length) return ui.result(true, text, [retry], '通关');
+    if (!next.length) {
+      void music.play('liangshan');
+      return ui.result(true, text, [retry], '通关');
+    }
+    // 结算画面放胜利曲；剧情关直接接下一关，不换
+    if (!isAct(cur)) void music.play('victory');
     if (t) {
       // 过关进城（存档也记下城镇号，刷新回到城镇）
       const c = { ...after, town: t };
