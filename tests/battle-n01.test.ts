@@ -7,7 +7,8 @@ import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
 import { basicAttack } from '../src/rules/data.ts';
 import { readExeTables } from '../src/formats/exe.ts';
-import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { parsePasHeader } from '../src/formats/pas.ts';
 
 const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
@@ -66,6 +67,18 @@ describe.skipIf(!has)('N01', () => {
       }
     }
     expect(seen.size).toBe(2051);
+  });
+
+  it('训练关：选人后显示回合限制，第 25 回合结束时过关（组合条件"回合 25 或我方全灭"）', () => {
+    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    const ev = b.begin();
+    expect(ev.some((e) => e.type === 'objective')).toBe(true);
+    for (let i = 0; i < 40 && b.status === 'playing'; i++) b.endPlayerPhase();
+    expect(b.status).toBe('won');
+  });
+
+  it('%M 代入主角绰号', () => {
+    expect(data.heroNickname).toBe('关西之虎');
   });
 
   it('繁→简对照来自 .pab/.pas 对齐', () => {
@@ -155,8 +168,9 @@ describe.skipIf(!has)('N01', () => {
     expect(ev3.find((e) => e.type === 'say')).toMatchObject({ uid: 5 }); // 编组 6 = 王進
     expect(add03.active().filter((u) => u.side === 'enemy')).toHaveLength(5);
     expect(add03.active().filter((u) => u.side !== 'enemy')).toHaveLength(0);
-    expect(ev3.at(-1)).toMatchObject({ type: 'ask', options: data.choices![0] });
-    expect(data.choices![0][0]).toBe('好！大家上！');
+    expect(ev3.at(-1)).toMatchObject({ type: 'ask', prompt: data.prompts![0] });
+    expect(data.prompts![0].options).toEqual(['是', '否']);
+    expect(data.prompts![0].replies[0].text).toBe('好！大家上！');
     const sig = add03.signal();
     expect(add03.active().filter((u) => u.side !== 'enemy')).toHaveLength(3);
     expect(sig.some((e) => e.type === 'say' && e.text.includes('有埋伏'))).toBe(true);
@@ -175,11 +189,31 @@ describe.skipIf(!has)('N01', () => {
       if (/^act/i.test(st.mapName)) expect(b.status, st.mapName).toBe('won');
       for (const u of b.units) if (u.side === 'player') u.level += 1; // 假装打赢升了级
       c = recordResult(c, b);
-      const next = nextStages(stages, st.index);
-      if (st.mapName === 'act3-4') expect(next.map((s) => s.mapName)).toEqual(['n-add04a', 'n-add04b']);
-      c = { ...c, stage: next[0].index };
+      const h = nextByHeader(b.header!);
+      if (st.mapName === 'act3-4') expect(h).toEqual({ next: 14, route: { prompt: 1, alt: 15 } });
+      c = { ...c, stage: h.next };
     }
     expect(order.join(' ')).toBe('n01 n-add01 n-add02 act2-2 act2-3 n02 n-add03 act3-1 act3-2 act3-3 n03 act3-4 n-add04a act5-1a');
     expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(5);
+  });
+
+  it('剧本头串起全部关卡，分路两条线汇合', () => {
+    const stages = readExeTables(files.get('ShuiHu.exe')).stages;
+    const header = (i: number) => parsePasHeader(files.get(`Map/${stages[i].mapName}.pab`));
+    const seen: string[] = [];
+    for (let i = 0; i < stages.length && stages[i]?.mapName; ) {
+      seen.push(stages[i].mapName);
+      const h = nextByHeader(header(i));
+      if (h.route) {
+        // 小径那一关结束后回到大道那一关的下一关
+        expect(header(h.route.alt).next).toBe(header(h.next).next);
+        seen.push(stages[h.route.alt].mapName);
+      }
+      i = h.next;
+    }
+    expect(seen.length).toBeGreaterThan(55);
+    expect(seen.at(-1)).toBe('n14');
+    expect(seen).toContain('n-add09b');
+    expect(data.prompts![1].options).toEqual(['大道', '小径']);
   });
 });

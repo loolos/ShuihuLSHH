@@ -1,6 +1,7 @@
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
 import type { ClassRecord, ClassSkill } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
+import type { ExePrompt } from '../formats/exe.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
@@ -30,8 +31,10 @@ export interface GameData {
   charNames: string[];
   /** 主角名（%N）；命名界面做好之前用原版默认名 */
   heroName: string;
-  /** EXE 里二选一对话框的选项文字（0 = 伏兵号令） */
-  choices?: [string, string][];
+  /** 主角绰号（EXE 绰号表第 0 项"關西之虎"，剧本里的 %M） */
+  heroNickname?: string;
+  /** EXE 里的二选一对话框（0 = 伏兵号令，1、2 = 第 3、8 章分路；src/formats/exe.ts VA_PROMPTS） */
+  prompts?: ExePrompt[];
 }
 
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {

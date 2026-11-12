@@ -1,6 +1,7 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock } from '../formats/pas.ts';
+import type { PasBlock, PasCond, PasHeader } from '../formats/pas.ts';
+import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
@@ -28,7 +29,7 @@ export type BattleEvent =
   /** 剧情里退场或埋伏（离开地图，不算战败） */
   | { type: 'leave'; uid: number }
   /** 二选一：伏兵号令（EXE 0x407af3：AI 模式 9 的单位行动时弹出）。选第一项时调用 signal() */
-  | { type: 'ask'; options: [string, string] }
+  | { type: 'ask'; prompt: ExePrompt }
   | { type: 'move'; uid: number; path: Cell[]; facing: number }
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
@@ -61,10 +62,14 @@ export interface StageInput {
   text?: (s: string) => string;
   /** 前面关卡延续下来的我方人物（按角色号） */
   party?: Map<number, Member>;
+  /** .pab 文件头：城镇号、下一关 */
+  header?: PasHeader;
 }
 
 export class Battle {
   readonly name: string;
+  /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
+  readonly header?: PasHeader;
   readonly board: Board;
   readonly data: GameData;
   readonly rng: Rng;
@@ -78,6 +83,10 @@ export class Battle {
   private blocks: PasBlock[];
   private display?: PasBlock[];
   private fired = new Set<number>();
+  /** 剧本指令 27 设置的全局标志（EXE 0x411d38，条件 3 读取）；选人界面未实现，始终为 false */
+  private scriptFlag = false;
+  /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
+  private turnParam = -1;
   private pendingDeaths: number[] = [];
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
@@ -90,6 +99,7 @@ export class Battle {
 
   constructor(input: StageInput) {
     this.name = input.name;
+    this.header = input.header;
     this.board = input.board;
     this.data = input.data;
     this.rng = new Rng(input.seed);
@@ -296,8 +306,8 @@ export class Battle {
       u.ended = u.stunTurns > 0;
     }
     this.emit({ type: 'phase', side, turn: this.turn });
-    const opts = this.data.choices?.[0];
-    if (side === 'player' && this.awaitingSignal && opts) this.emit({ type: 'ask', options: opts });
+    const prompt = this.data.prompts?.[0];
+    if (side === 'player' && this.awaitingSignal && prompt) this.emit({ type: 'ask', prompt });
   }
 
   private flush() {
@@ -442,14 +452,19 @@ export class Battle {
     u.y = last.y;
     u.facing = facingTowards(prev, last, u.facing);
     this.emit({ type: 'move', uid: u.uid, path, facing: u.facing });
-    if (u.side === 'player') this.pickup(u);
+    // 原版只有我方（unit+0x3b = 0）在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），所以路过的宝物也会拾起
+    if (u.side === 'player') for (const c of path.slice(1)) this.pickup(u, c);
   }
 
-  private pickup(u: Unit) {
-    const i = this.items.findIndex((g) => g.x === u.x && g.y === u.y);
-    if (i < 0) return;
-    const slot = u.slots.indexOf(0);
-    if (slot < 0) return this.emit({ type: 'message', text: `${u.name}的道具已滿。` });
+  /**
+   * 拾取（EXE 0x4054e0 / 0x409460）：物品号 ≤ 200 才能拾，放进道具栏 3–6 的第一个空位；
+   * 道具栏满了就留在地上（原版不提示，这里提示一句【新】）。
+   */
+  private pickup(u: Unit, c: Cell) {
+    const i = this.items.findIndex((g) => g.x === c.x && g.y === c.y);
+    if (i < 0 || this.items[i].item > 200) return;
+    const slot = [3, 4, 5, 6].find((k) => !u.slots[k]);
+    if (slot === undefined) return this.emit({ type: 'message', text: `${u.name}的道具已滿。` });
     const g = this.items.splice(i, 1)[0];
     u.slots[slot] = g.item;
     u.turnStart = null; // 拾取后不能撤销移动
@@ -636,11 +651,75 @@ export class Battle {
         this.runBlock(b);
       if (this.status !== 'playing') return;
     }
+    this.runCondBlocks();
+    if (this.status !== 'playing') return;
     if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive)) this.finish('lost', '我方全軍覆沒。');
   }
 
   private runTurnTriggers(param: number) {
+    this.turnParam = param;
     for (const b of this.blocks) if (b.trigger.kind === 'turn' && b.trigger.turn === param) this.runBlock(b);
+    this.runCondBlocks();
+  }
+
+  /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
+  private runCondBlocks() {
+    for (const b of this.blocks) {
+      if (this.status !== 'playing') return;
+      if (b.trigger.kind !== 'cond' || this.fired.has(b.index)) continue;
+      let sel: Unit | undefined;
+      if (this.evalCond(b.cond, (u) => (sel = u), () => sel)) this.runBlock(b);
+    }
+  }
+
+  /**
+   * 条件求值（EXE 0x411220）。0 回合；1 死亡（0x400 = 我方全灭、0xFF = 敌方全灭）；2 某人已现身；3 指令 27 的标志；
+   * 4 选定某人（之后 5–10 比较他的坐标：5 x =、6 y =、7 x ≥、8 y ≥、9 x ≤、10 y ≤）；11 某人活着（0xFF = 我方无人阵亡）。
+   * 角色号 ≥ 1000 时为 角色号 − 1000，且不论是否隐藏；< 1000 时隐藏的人算不在。
+   */
+  private evalCond(c: PasCond, select: (u: Unit | undefined) => void, selected: () => Unit | undefined): boolean {
+    if ('op' in c) {
+      const a = this.evalCond(c.a, select, selected), b = this.evalCond(c.b, select, selected);
+      return c.op === 'and' ? a && b : a || b;
+    }
+    const find = (arg: number) => {
+      const id = arg >= 1000 ? arg - 1000 : arg;
+      return this.units.find((u) => u.classId === id && u.alive && (arg >= 1000 || u.present));
+    };
+    const s = selected();
+    switch (c.type) {
+      case 0:
+        return this.turnParam === c.arg;
+      case 1:
+        if (c.arg === 0x400) return !this.units.some((u) => u.side === 'player' && u.alive);
+        if (c.arg === 0xff) return !this.units.some((u) => u.side === 'enemy' && u.alive && u.present);
+        return !find(c.arg);
+      case 2:
+        return false; // 伏兵号令后由 signal() 执行（推测）
+      case 3:
+        return this.scriptFlag === (c.arg === 1);
+      case 4: {
+        const u = this.unitByChar(c.arg);
+        select(u);
+        return !!u;
+      }
+      case 5:
+        return !!s && s.x === c.arg;
+      case 6:
+        return !!s && s.y === c.arg;
+      case 7:
+        return !!s && s.x >= c.arg;
+      case 8:
+        return !!s && s.y >= c.arg;
+      case 9:
+        return !!s && s.x <= c.arg;
+      case 10:
+        return !!s && s.y <= c.arg;
+      case 11:
+        if (c.arg === 0xff) return !this.units.some((u) => u.side === 'player' && !u.alive);
+        return !!find(c.arg);
+    }
+    return false;
   }
 
   /**
@@ -654,7 +733,8 @@ export class Battle {
     const textOf = (i: number) => {
       const d = shown?.ops[i];
       const t = d && d.op === b.ops[i].op && d.text ? d.text : (b.ops[i].text ?? '');
-      return t.replace(/%[NX]/g, this.data.heroName);
+      // EXE 0x4106b4：%N、%X = 主角名（名字表第 0 项），%M = 主角绰号（绰号表第 0 项）
+      return t.replace(/%[NX]/g, this.data.heroName).replace(/%M/g, this.data.heroNickname ?? '');
     };
     let sel: Unit | undefined;
     let selName = '';
@@ -719,7 +799,11 @@ export class Battle {
           }
           break;
         }
-        // 18/19：EXE 0x411706/0x411710 只是记下数值再调用 0x423970（推测为音效/表情），不影响登场
+        // 18/19：换背景音乐（EXE 0x411710 → 0x423970：曲目号经 0x447cb3 表映射，交给 0x448768 播放器；18 的值一并传入，推测为是否循环）。重制版用自己的配乐，忽略
+        // 27：值为 1 时置全局标志（EXE 0x411d38），出现在 N-add15"請選擇留下的人"和训练关开场的末尾，推测是打开选人界面、
+        // 选完后清掉标志，于是条件 3（参数 0）的下一个区块（回合限制、条件文字）才执行。重制版还没有选人界面，视为立即选完
+        case 27:
+          break;
         case 29:
           this.emit({ type: 'narrate', text: textOf(i) });
           cleared = true;
