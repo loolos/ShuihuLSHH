@@ -70,6 +70,8 @@ export class BattleScene extends Phaser.Scene {
   private down: { x: number; y: number; sx: number; sy: number; moved: boolean } | null = null;
   private pinch: number | null = null;
   private hoverCell: Cell | null = null;
+  /** 触屏施放技能：第一次点只预览范围，记下这一格；再点同一格才施放【新】 */
+  private armed: Cell | null = null;
 
   constructor() {
     super('battle');
@@ -253,12 +255,13 @@ export class BattleScene extends Phaser.Scene {
     if (!c || !this.battle.board.inBounds(c.x, c.y)) return;
     const m = this.mode;
     if (m.kind === 'skill' && !this.busy && this.battle.skillTargets(m.u, m.skill).some((t) => sameCell(t, c)))
-      for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, 0xf09030, 0.45);
+      for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, isSupportSkill(m.skill) ? 0x40b0e0 : 0xf09030, 0.45);
     this.diamond(g, c, 0xffffff, 0.5, true);
   }
 
   private select(m: Mode) {
     this.mode = m;
+    this.armed = null;
     this.redraw();
     this.updatePanel();
   }
@@ -282,8 +285,9 @@ export class BattleScene extends Phaser.Scene {
         const hit = b.affected(u, m.skill, c);
         const t = hit.find((h) => sameCell(h, c)) ?? hit[0];
         const more = hit.length > 1 ? `${name}：范围内 ${hit.length} 人` : name;
-        if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, more);
-        else this.ui.showUnit(t, b.preview(u, t, m.skill), more);
+        const tip = this.armed && sameCell(this.armed, c) ? `${more}　再点一次施放` : more;
+        if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, tip);
+        else this.ui.showUnit(t, b.preview(u, t, m.skill), tip);
       } else this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}）：选择施放位置`);
       return;
     }
@@ -466,7 +470,7 @@ export class BattleScene extends Phaser.Scene {
       }
       if (d && !d.moved && p.button !== 2) {
         const w = cam.getWorldPoint(p.x, p.y);
-        this.click(this.pick(w.x, w.y));
+        this.click(this.pick(w.x, w.y), p.wasTouch);
       }
     });
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
@@ -553,14 +557,22 @@ export class BattleScene extends Phaser.Scene {
     if (!this.busy && !this.ui.inDialog) this.updatePanel();
   }
 
-  private click(c: Cell) {
+  private click(c: Cell, touch = false) {
     if (this.busy || this.ui.inDialog || this.battle.status !== 'playing') return;
     const b = this.battle;
     const at = b.unitAt(c.x, c.y);
     const m = this.mode;
     if (m.kind === 'skill') {
       const { u, skill } = m;
-      if (b.skillTargets(u, skill).some((t) => sameCell(t, c))) return void this.exec(u, () => b.useSkill(u, skill, c));
+      if (b.skillTargets(u, skill).some((t) => sameCell(t, c))) {
+        // 触屏没有悬停：第一次点先显示作用范围，再点同一格才施放
+        if (touch && !(this.armed && sameCell(this.armed, c))) {
+          this.armed = { x: c.x, y: c.y };
+          this.hoverCell = null;
+          return this.hover(c);
+        }
+        return void this.exec(u, () => b.useSkill(u, skill, c));
+      }
       return this.select({ kind: 'selected', u });
     }
     if (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give')) {
