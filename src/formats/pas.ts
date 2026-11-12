@@ -62,6 +62,8 @@ export type PasTrigger =
   | { kind: 'turn'; turn: number } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number }
+  /** w8 = 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——伏兵号令之后执行（推测）；w8 = 3：训练关等（参数 0），未解 */
+  | { kind: 'signal'; type: number; param: number }
   | { kind: 'unknown'; w0: number; type: number };
 
 export interface PasOp {
@@ -99,6 +101,9 @@ export function parsePasBlocks(buf: Buffer, encoding: 'big5' | 'gbk' = 'big5'): 
     if (head[0] === 1 && (head[8] === 0 || head[8] === 1)) {
       const p = buf.readUInt16LE(o + 24);
       trigger = head[8] === 0 ? { kind: 'turn', turn: p } : { kind: 'death', char: p };
+      start = 26;
+    } else if (head[0] === 1 && (head[8] === 2 || head[8] === 3)) {
+      trigger = { kind: 'signal', type: head[8], param: buf.readUInt16LE(o + 24) };
       start = 26;
     } else if (head[0] === 4) {
       trigger = {

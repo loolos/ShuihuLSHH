@@ -7,6 +7,8 @@ import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, grow, type Unit } from '../src/rules/unit.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
+import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
 
@@ -265,5 +267,85 @@ describe('技能', () => {
     const ev = b.endPlayerPhase();
     const atk = ev.find((e) => e.type === 'attack');
     expect(atk && atk.type === 'attack' && atk.skill.name).toBe('石破天驚');
+  });
+});
+
+describe('关卡串联', () => {
+  const blk = (index: number, trigger: PasBlock['trigger'], ops: PasBlock['ops']): PasBlock => ({ index, head: [], trigger, ops });
+  const say = (op: number, text: string) => ({ op, flag: null, value: 0, text });
+
+  it('下一关：跳过空位与过场以外的另一条路线，同名相邻战役是二选一', () => {
+    const st = [
+      { index: 0, mapName: 'n01', title: '第1章 戰役1' },
+      { index: 1, mapName: '', title: '' },
+      { index: 2, mapName: 'act3-4', title: '第3章' },
+      { index: 3, mapName: 'n-add04a', title: '第3章 戰役2' },
+      { index: 4, mapName: 'n-add04b', title: '第3章 戰役2' },
+      { index: 5, mapName: 'act5-1a', title: '第3章' },
+    ];
+    expect(nextStages(st, 0).map((s) => s.index)).toEqual([2]);
+    expect(nextStages(st, 2).map((s) => s.index)).toEqual([3, 4]);
+    expect(nextStages(st, 3).map((s) => s.index)).toEqual([5]);
+    expect(nextStages(st, 4).map((s) => s.index)).toEqual([5]);
+    expect(nextStages(st, 5)).toEqual([]);
+  });
+
+  it('人物延续：等级取较高者、经验与装备沿用，黄金累计', () => {
+    const one = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
+    const p = one.unit(0)!;
+    p.level = 4;
+    p.exp = 37;
+    p.slots = [1, 0, 0, 0, 0, 0, 0];
+    p.gold = 120;
+    const c = recordResult(newCampaign(), one);
+    expect(c.gold).toBe(120);
+    const join = { ...act(1, 1, 'player', 1, 0), level: 6 };
+    const two = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), join], blocks: [], data, seed: 1, party: partyOf(c) });
+    expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, 0, 0, 0, 0, 0, 0] });
+    expect(two.unit(0)!.stats.attack).toBe(computeStats(data.classes[0], 4, [1], data).attack);
+    expect(two.unit(1)!.level).toBe(6);
+  });
+
+  it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {
+    const b = new Battle({ name: 'act', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
+    const ev = b.begin();
+    expect(ev.map((e) => e.type)).toEqual(['narrate', 'end']);
+    expect(b.status).toBe('won');
+    const c = new Battle({ name: 'act', board: new Board(6, 6), units: [act(0, 1, 'enemy', 0, 0)], blocks: [], data });
+    c.begin();
+    c.endPlayerPhase();
+    expect(c.status).toBe('playing');
+  });
+
+  it('角色号 255 的死亡区块在敌方全灭时执行', () => {
+    const b = new Battle({
+      name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 1, 0, 0x800)],
+      blocks: [blk(0, { kind: 'death', char: 255 }, [say(29, '敵軍全滅')])], data, seed: 1,
+    });
+    b.begin();
+    const p = b.unit(0)!;
+    b.unit(1)!.hp = 1;
+    p.stats.hit = 255;
+    for (let i = 0; i < 20 && b.status === 'playing'; i++) {
+      if (b.attackTargets(p).length) b.attack(p, b.unit(1)!);
+      else b.endPlayerPhase();
+      if (b.status === 'playing' && b.phase === 'player' && p.ended) b.endPlayerPhase();
+    }
+    expect(b.status).toBe('won');
+  });
+
+  it('模式 6 埋伏：开局不在场，敌人进入警戒半径时现身并行动；模式 7 开局隐藏', () => {
+    const b = new Battle({
+      name: 't', board: new Board(30, 4),
+      units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 6, 0, 0x600), act(2, 1, 'enemy', 29, 0, 0x600), act(3, 1, 'enemy', 29, 3, 0x700)],
+      blocks: [], data, seed: 1,
+    });
+    b.begin();
+    expect(b.active().map((u) => u.uid)).toEqual([0]);
+    const ev = b.endPlayerPhase();
+    expect(ev.find((e) => e.type === 'appear')).toMatchObject({ uid: 1 });
+    expect(b.unit(1)!.ai.mode).toBe(0);
+    expect(b.unit(2)!.present).toBe(false);
+    expect(b.unit(3)!).toMatchObject({ present: false, ai: { mode: 0 } });
   });
 });

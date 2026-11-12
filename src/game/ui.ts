@@ -47,13 +47,14 @@ export class BattleUI {
         if (this.dialog.hidden) return guard(e);
         e.stopPropagation();
         swallowUntil = performance.now() + 400;
-        this.advance();
+        if ((e.target as Element | null)?.closest?.('#dialog-skip')) this.skip();
+        else this.advance();
       },
       true,
     );
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.dialog.hidden && this.playing) {
-        this.skipping = true; // 对白之间的镜头移动时按 Esc 也算
+        this.skip(); // 对白之间的镜头移动时按 Esc 也算
         return;
       }
       if (this.dialog.hidden) return;
@@ -62,14 +63,20 @@ export class BattleUI {
         this.advance();
       } else if (e.key === 'Escape') {
         e.preventDefault();
-        this.skipping = true;
-        this.advance();
+        this.skip();
       }
     });
   }
 
-  /** Esc 之后，直到这段事件播完都不再显示对白 */
-  private skipping = false;
+  /** Esc 或"跳过"按钮之后，直到这段事件播完都不再显示对白 */
+  skipping = false;
+  /** 开始跳过时通知场景（场景借此加速并停止镜头移动） */
+  onSkip: () => void = () => {};
+  skip() {
+    this.skipping = true;
+    this.onSkip();
+    if (!this.dialog.hidden) this.advance();
+  }
   /** 正在播放一段事件（由场景设置） */
   playing = false;
   endSkip() {
@@ -170,14 +177,28 @@ export class BattleUI {
     return !this.dialog.hidden;
   }
 
-  result(won: boolean, text: string, restart: () => void) {
-    $('result-title').textContent = won ? '胜利' : '失败';
+  /** 胜负面板：每个选项一个按钮，可附一行说明（如路线的胜利条件） */
+  result(won: boolean, text: string, choices: { label: string; note?: string; run: () => void }[], title?: string, compact = false) {
+    $('result').classList.toggle('compact', compact); // compact：不遮地图，面板放在下方
+    $('result-title').textContent = title ?? (won ? '胜利' : '失败');
     $('result-text').textContent = this.tr(text) || (won ? '达成了胜利条件。' : '');
+    const box = $('result-actions');
+    box.replaceChildren();
+    for (const c of choices) {
+      const b = document.createElement('button');
+      b.textContent = c.label;
+      if (c.note) {
+        const n = document.createElement('small');
+        n.textContent = this.tr(c.note);
+        b.append(n);
+      }
+      b.onclick = () => {
+        $('result').hidden = true;
+        c.run();
+      };
+      box.append(b);
+    }
     $('result').hidden = false;
-    $('result-restart').onclick = () => {
-      $('result').hidden = true;
-      restart();
-    };
   }
   hideResult() {
     $('result').hidden = true;

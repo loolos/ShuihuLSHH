@@ -6,6 +6,8 @@ import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
 import { basicAttack } from '../src/rules/data.ts';
+import { readExeTables } from '../src/formats/exe.ts';
+import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 
 const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
@@ -121,5 +123,47 @@ describe.skipIf(!has)('N01', () => {
       expect(b.status).not.toBe('playing');
       expect(b.turn).toBeLessThanOrEqual(51);
     }
+  });
+
+  it('剧本：1000 + 编组号点名、点名即登场、17 = 2 退场', () => {
+    const add01 = new Battle(loadStage(files, data, 'N-add01', { seed: 1, text: tr }));
+    add01.begin();
+    expect(add01.active().filter((u) => u.side === 'enemy')).toHaveLength(7);
+    expect(add01.status).toBe('playing');
+    const add02 = new Battle(loadStage(files, data, 'N-add02', { seed: 1, text: tr }));
+    const ev = add02.begin();
+    expect(ev.filter((e) => e.type === 'leave').map((e) => e.type === 'leave' && add02.unit(e.uid)!.classId).sort()).toEqual([1, 18]);
+    // N-add03：王進与莊客埋伏（17 = 2 / 模式 9），嘍囉登场逃跑；我方阶段开始时询问是否号令
+    const add03 = new Battle(loadStage(files, data, 'N-add03', { seed: 1, text: tr }));
+    const ev3 = add03.begin();
+    expect(ev3.find((e) => e.type === 'say')).toMatchObject({ uid: 5 }); // 编组 6 = 王進
+    expect(add03.active().filter((u) => u.side === 'enemy')).toHaveLength(5);
+    expect(add03.active().filter((u) => u.side !== 'enemy')).toHaveLength(0);
+    expect(ev3.at(-1)).toMatchObject({ type: 'ask', options: data.choices![0] });
+    expect(data.choices![0][0]).toBe('好！大家上！');
+    const sig = add03.signal();
+    expect(add03.active().filter((u) => u.side !== 'enemy')).toHaveLength(3);
+    expect(sig.some((e) => e.type === 'say' && e.text.includes('有埋伏'))).toBe(true);
+    expect(add03.awaitingSignal).toBe(false);
+  });
+
+  it('第 1–3 章：关卡顺序、过场开场即过关、人物延续', () => {
+    const stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName && files.has(`Map/${s.mapName}.act`));
+    const order: string[] = [];
+    let c = newCampaign(0);
+    for (let i = 0; i < 14; i++) {
+      const st = stages.find((s) => s.index === c.stage)!;
+      order.push(st.mapName);
+      const b = new Battle(loadStage(files, data, st.mapName, { seed: 1, text: tr, party: partyOf(c) }));
+      b.begin();
+      if (/^act/i.test(st.mapName)) expect(b.status, st.mapName).toBe('won');
+      for (const u of b.units) if (u.side === 'player') u.level += 1; // 假装打赢升了级
+      c = recordResult(c, b);
+      const next = nextStages(stages, st.index);
+      if (st.mapName === 'act3-4') expect(next.map((s) => s.mapName)).toEqual(['n-add04a', 'n-add04b']);
+      c = { ...c, stage: next[0].index };
+    }
+    expect(order.join(' ')).toBe('n01 n-add01 n-add02 act2-2 act2-3 n02 n-add03 act3-1 act3-2 act3-3 n03 act3-4 n-add04a act5-1a');
+    expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(5);
   });
 });

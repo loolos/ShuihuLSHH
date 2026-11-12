@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { parseMap } from '../formats/map.ts';
 import { Battle, type BattleEvent } from '../rules/battle.ts';
 import type { Cell } from '../rules/board.ts';
+import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { itemOf, type SkillDef } from '../rules/data.ts';
 import { isSupportSkill } from '../rules/skills.ts';
@@ -17,6 +18,10 @@ export interface BattleSceneData {
   stage: string;
   ui: BattleUI;
   seed?: number;
+  /** 前面关卡延续下来的我方人物 */
+  party?: Map<number, Member>;
+  /** 关卡结束（胜负面板由调用方决定） */
+  onEnd?: (battle: Battle, won: boolean, text: string) => void;
 }
 
 type Mode =
@@ -40,6 +45,8 @@ export class BattleScene extends Phaser.Scene {
   private ui!: BattleUI;
   private stageName = 'N01';
   private seed?: number;
+  private party?: Map<number, Member>;
+  private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics }>();
   /**
@@ -68,8 +75,11 @@ export class BattleScene extends Phaser.Scene {
   init(data: BattleSceneData) {
     this.assets = data.assets;
     this.ui = data.ui;
+    this.ui.onSkip = () => this.busy && this.setFast(true);
     this.stageName = data.stage;
     this.seed = data.seed;
+    this.party = data.party;
+    this.onEnd = data.onEnd;
     this.sprites = new Map();
     this.view = new Map();
     this.groundItems = new Map();
@@ -82,7 +92,7 @@ export class BattleScene extends Phaser.Scene {
     const mapFile = findStageFile(files, this.stageName, '.map');
     if (!mapFile) throw new Error(`找不到地图 ${this.stageName}`);
     const map = parseMap(files.get(mapFile), mapFile);
-    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr }));
+    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party }));
 
     for (let y = 0; y < map.height; y++)
       for (let x = 0; x < map.width; x++) {
@@ -471,7 +481,8 @@ export class BattleScene extends Phaser.Scene {
       case 'message':
         this.ui.message(e.text);
         break;
-      case 'die': {
+      case 'die':
+      case 'leave': {
         const s = this.sprites.get(e.uid);
         s?.bar.destroy();
         s?.spr.destroy();
@@ -508,7 +519,12 @@ export class BattleScene extends Phaser.Scene {
     this.ui.setEndTurnEnabled(false);
     try {
       for (const e of events) {
-        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end';
+        // 跳过剧情：对白不显示，也不为它移动镜头；其余事件按快进处理
+        if (this.ui.skipping) {
+          this.setFast(true);
+          if (e.type === 'say' || e.type === 'narrate' || e.type === 'objective') continue;
+        }
+        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask';
         if (this.fast && !story) {
           this.skip(e);
           continue;
@@ -617,6 +633,17 @@ export class BattleScene extends Phaser.Scene {
       case 'narrate':
         await this.ui.say('', e.text);
         break;
+      case 'ask': {
+        // 伏兵号令：原版在友军阶段由模式 9 的单位弹出（EXE 0x407af3），这里放在我方阶段开始时问【新】
+        const yes = await new Promise<boolean>((r) =>
+          this.ui.result(true, '伏兵已经埋伏好了。现在发出号令吗？', [
+            { label: e.options[0], run: () => r(true) },
+            { label: e.options[1], run: () => r(false) },
+          ], '号令', true),
+        );
+        if (yes) for (const x of this.battle.signal()) await this.play(x);
+        break;
+      }
       case 'objective':
         await this.ui.say('', e.lines.join('\n'));
         break;
@@ -740,7 +767,8 @@ export class BattleScene extends Phaser.Scene {
       case 'defend':
         this.pose(b.unit(e.uid)!);
         break;
-      case 'die': {
+      case 'die':
+      case 'leave': {
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();
@@ -760,7 +788,8 @@ export class BattleScene extends Phaser.Scene {
       case 'end':
         this.select({ kind: 'idle' });
         await wait(this, 300);
-        this.ui.result(e.result === 'won', e.text, () => this.scene.restart({ assets: this.assets, ui: this.ui, stage: this.stageName }));
+        if (this.onEnd) this.onEnd(this.battle, e.result === 'won', e.text);
+        else this.ui.result(e.result === 'won', e.text, [{ label: '重新开始', run: () => this.scene.restart({ assets: this.assets, ui: this.ui, stage: this.stageName }) }]);
         break;
     }
   }

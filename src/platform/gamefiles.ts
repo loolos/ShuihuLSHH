@@ -1,5 +1,5 @@
-// "自带原版文件"：从玩家选择的目录、IndexedDB 缓存或开发服务器取得原版文件。
-// 仓库和 GitHub Pages 的构建产物里都没有任何原版素材。
+// 取得原版文件：IndexedDB 缓存 → 开发服务器 → 试玩页面附带 → GitHub 仓库里的 gamedata/shuihu → 玩家选目录。
+// 构建产物里没有原版素材；网页版运行时从仓库下载（负责人 2026-11-12 决定）。
 import manifest from '../data/manifest.json';
 import { idbGetAll, idbPutAll } from './idb.ts';
 
@@ -101,6 +101,33 @@ export async function loadFromDevServer(progress?: Progress): Promise<Map<string
     if (r.ok) out.set(e.path, await r.arrayBuffer());
   }
   return out;
+}
+
+/** 网页版用的原版文件来源：本仓库 main 分支的 gamedata/shuihu（raw.githubusercontent.com 允许跨域） */
+export const REPO_GAMEDATA = 'https://raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/';
+
+/** 从 GitHub 仓库按 manifest 下载全部原版文件（约 65 MB，8 路并发）；任何一个失败就返回 null */
+export async function loadFromRepo(progress?: Progress, base = REPO_GAMEDATA): Promise<Map<string, ArrayBuffer> | null> {
+  if (import.meta.env.DEV) return null;
+  const total = ENTRIES.reduce((n, e) => n + e.size, 0);
+  const out = new Map<string, ArrayBuffer>();
+  let done = 0, next = 0, failed = false;
+  const worker = async () => {
+    while (!failed && next < ENTRIES.length) {
+      const e = ENTRIES[next++];
+      const url = base + e.path.split('/').map(encodeURIComponent).join('/');
+      const r = await fetch(url).catch(() => null);
+      if (!r?.ok) {
+        failed = true;
+        return;
+      }
+      out.set(e.path, await r.arrayBuffer());
+      done += e.size;
+      progress?.(`从 GitHub 下载原版文件 ${Math.round(done / 1048576)} / ${Math.round(total / 1048576)} MB`, done / total);
+    }
+  };
+  await Promise.all(Array.from({ length: 8 }, worker));
+  return failed ? null : out;
 }
 
 /**
