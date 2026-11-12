@@ -14,11 +14,12 @@ const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
 
 /** 命中率（%）。≥ 100 必中；我方攻击保底 90（原版 80，负责人 2026-11-11 改），其它保底 30。 */
 export function hitChance(att: Unit, def: Unit, skill: SkillDef): number {
-  let h = Math.max(0, att.stats.hit - def.stats.agility / 2 + skill.hitMod);
+  const hv = Math.max(1, att.stats.hit);
+  let h = Math.max(0, (100 * hv) / (hv + def.stats.agility / 2) + skill.hitMod);
   h *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
   if (def.defending) h *= 0.7;
   h = Math.floor(h);
-  return Math.min(100, Math.max(att.side === 'player' ? 90 : 30, h));
+  return Math.min(100, h);
 }
 
 export function critChance(att: Unit, skill: SkillDef): number {

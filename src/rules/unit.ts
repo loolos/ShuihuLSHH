@@ -74,18 +74,24 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
   return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
 }
 
-const G = JSON.parse(process.env.GROW ?? '{"hp":[2,2.5],"mp":[2,2],"attack":[1.5,3],"defense":[2,8],"hit":[2,3.5],"agility":[3,8],"crit":[0.4,3.5]}');
-const growU = (s: { base: number }, k: string, L: number) => Math.floor(s.base + L * (G[k][0] + (s.base * G[k][1]) / 100));
+const G = JSON.parse(process.env.GROW ?? '{"hp":[2,2.5],"mp":[2,2],"attack":[1.5,3],"defense":[2,8],"hit":[2,4],"agility":[1,6],"crit":[0.4,3.5]}');
+type StatKey = 'hp' | 'mp' | 'attack' | 'defense' | 'hit' | 'agility' | 'crit';
+const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 80, agility: 22, crit: 6 };
+const OFFICER: Record<StatKey, number> = { hp: 70, mp: 80, attack: 62, defense: 25, hit: 95, agility: 30, crit: 12 };
+const GRUNTS = new Set([19, 20, 21, 22, 23, 32, 33, 34, 36, 37, 40, 41, 44, 45, 67]);
+const OFFICERS = new Set([38, 39, 42, 43, 65, 66]);
+const baseOf = (cls: ClassDef, k: StatKey) => (GRUNTS.has(cls.id) ? GRUNT[k] : OFFICERS.has(cls.id) ? OFFICER[k] : cls[k].base);
+const growU = (cls: ClassDef, k: StatKey, L: number) => { const b = baseOf(cls, k); return Math.floor(b + L * (G[k][0] + (b * G[k][1]) / 100)); };
 
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
-    maxHp: growU(cls.hp, 'hp', level),
-    maxMp: growU(cls.mp, 'mp', level),
-    attack: growU(cls.attack, 'attack', level),
-    defense: growU(cls.defense, 'defense', level),
-    hit: growU(cls.hit, 'hit', level),
-    agility: growU(cls.agility, 'agility', level),
-    crit: growU(cls.crit, 'crit', level),
+    maxHp: growU(cls, 'hp', level),
+    maxMp: growU(cls, 'mp', level),
+    attack: growU(cls, 'attack', level),
+    defense: growU(cls, 'defense', level),
+    hit: growU(cls, 'hit', level),
+    agility: growU(cls, 'agility', level),
+    crit: growU(cls, 'crit', level),
     move: cls.move,
     rangeBonus: 0,
     poison: 0,
