@@ -42,11 +42,27 @@ export function ratioDamage(a: number, d: number): number {
   return a > 0 ? (a * a) / (a + DEFENSE_WEIGHT * Math.max(0, d)) : 0;
 }
 
-/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整） */
+/**
+ * 远程攻击（技能类型 10：弓箭手的普通攻击、白勝 監守自盜、富安 笑裏藏刀）按距离打折【新】（负责人 2026-11-12）：
+ * 距离 1 为 50%，到最远射程线性降到 10%。原版远程与近战同一公式，不打折。
+ */
+export const RANGED_MAX = 0.5;
+export const RANGED_MIN = 0.1;
+
+export function rangedFactor(att: Unit, def: Unit, skill: SkillDef): number {
+  if (skill.type !== 10) return 1;
+  const hi = Math.max(1, skill.rangeMax + att.stats.rangeBonus);
+  if (hi <= 1) return RANGED_MAX;
+  const d = Math.min(hi, Math.max(1, dist(att, def)));
+  return RANGED_MAX - ((RANGED_MAX - RANGED_MIN) * (d - 1)) / (hi - 1);
+}
+
+/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整），已乘远程距离系数 */
 export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
   const a = att.stats.attack + power;
-  return [ratioDamage(a, def.stats.defense), ratioDamage(2 * a, def.stats.defense)];
+  const f = rangedFactor(att, def, skill);
+  return [ratioDamage(a, def.stats.defense) * f, ratioDamage(2 * a, def.stats.defense) * f];
 }
 
 export interface AttackPreview {
