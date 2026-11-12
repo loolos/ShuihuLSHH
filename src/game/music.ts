@@ -3,7 +3,8 @@
 //   { "tracks": { "town": "town.mp3", ... }, "stages": { "n04": "tense", ... } }
 // 曲目（负责人 2026-11-12 提供 13 首，用途见 docs/game-design.md §11）：
 //   town 城镇酒店/整备，shop 其他店铺，battle / battle2 常规战斗（前半 / 后半程），tense 首领战，army 官军围剿，
-//   night 夜里、埋伏、计谋，story 剧情，sad 悲情，eerie 暗流，liangshan 上梁山 / 通关，victory 过关结算，defeat 失败。
+//   night 夜里、埋伏、计谋，story 剧情，sad 悲情，eerie 暗流，liangshan 上梁山 / 通关，victory 过关结算，defeat 失败；
+//   之后又加 inn 酒店、rock 民乐摇滚（普通战斗轮放）、boss 首领战第二首、comic 诙谐剧情。
 // 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle、battle2 轮放。战斗关的 stages 值多是 2–3 首的歌单，
 // 一首放完交叉淡化接下一首（负责人 2026-11-12 要求）。缺哪首就用 FALLBACK 里的替身。
 // 播放（负责人 2026-11-12 要求）：
@@ -27,6 +28,10 @@ const TICK = 50;
 /** 某首还没有时的替身；victory / defeat 没有就接着放战斗曲 */
 const FALLBACK: Record<string, string> = {
   shop: 'town',
+  inn: 'town',
+  rock: 'battle',
+  boss: 'tense',
+  comic: 'story',
   battle2: 'battle',
   army: 'battle',
   night: 'battle',
@@ -127,7 +132,7 @@ class MusicPlayer {
     const named = idx?.stages?.[mapName] ?? idx?.stages?.[mapName.toLowerCase()];
     if (named) return named;
     if (/^act/i.test(mapName)) return 'story';
-    return ['battle', 'battle2'];
+    return ['battle', 'rock', 'battle2'];
   }
   /** 歌单 → 实际文件（缺的用替身，重复的去掉） */
   private resolve(list: string[], idx: BgmIndex | null): string[] {
