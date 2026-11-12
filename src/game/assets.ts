@@ -6,8 +6,9 @@ import { parseAct } from '../formats/act.ts';
 import { parseMap } from '../formats/map.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
 import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
-import type { GameData } from '../rules/data.ts';
+import type { GameData, SkillDef } from '../rules/data.ts';
 import { fxGroups } from './effects.ts';
+import frameAlias from '../data/frame-alias.json' with { type: 'json' };
 
 export interface Assets {
   files: GameFiles;
@@ -46,23 +47,75 @@ export function loadAssets(files: GameFiles): Assets {
   };
 }
 
+type Lib = { span(i: number): [number, number] };
+
+/** frame-alias.json：字节完全相同的帧 → 第一份的帧号（gen:manifest 生成） */
+const ALIAS = new Map(
+  Object.entries(frameAlias as Record<string, { dup: number[]; src: number[] }>).map(([p, { dup, src }]) => {
+    const m = new Map<number, number>();
+    let i = 0;
+    dup.forEach((d, k) => m.set((i += d), src[k]));
+    return [p, m];
+  }),
+);
+
+/** 一批要下载的字节范围。相同内容的帧只下载第一份，下载完再复制到各自的位置。 */
+class Fetch {
+  readonly want = new Map<string, [number, number][]>();
+  private copies: [string, number, number, number][] = [];
+  span(path: string, span: [number, number]) {
+    if (span[1] > span[0]) (this.want.get(path) ?? this.want.set(path, []).get(path)!).push(span);
+  }
+  frame(path: string, lib: Lib, i: number) {
+    const own = lib.span(i);
+    const j = ALIAS.get(path)?.get(i);
+    if (j === undefined) return this.span(path, own);
+    const src = lib.span(j);
+    this.span(path, src);
+    this.copies.push([path, src[0], own[0], own[1] - own[0]]);
+  }
+  /** Man.lib 第 group 个动作组的全部帧 */
+  manGroup(assets: Assets, group: number) {
+    const r = assets.man.actions[group];
+    if (r) for (let i = r.first; i <= r.last; i++) this.frame('Data/Man.lib', assets.man, i);
+  }
+  /** 一个技能：职业的出手动作（4 个朝向）和它的特效 */
+  skill(assets: Assets, cls: number, sk: SkillDef) {
+    const c = assets.man.classes[cls];
+    if (c) for (let d = 0; d < 4; d++) {
+      const g = c.first + (ACTION_FIRST_SKILL + sk.group) * 4 + d;
+      if (g <= c.last) this.manGroup(assets, g);
+    }
+    for (const g of fxGroups(sk)) {
+      const r = assets.effects.actions[g];
+      if (r) for (let i = r.first; i <= r.last; i++) this.frame('Data/Effect.lib', assets.effects, i);
+    }
+  }
+  async run(files: GameFiles, progress?: Progress): Promise<number> {
+    const n = await files.ensure(this.want, progress);
+    for (const [p, from, to, len] of this.copies) files.copy(p, from, to, len);
+    return n;
+  }
+}
+
+/** Man.lib 每个职业的动作：0 走路、1 受击、2 防御，3 起每个技能一组（同 src/game/sprites.ts 的 ACTION） */
+const ACTION_FIRST_SKILL = 3;
+
 /**
- * 进关前下载本关要用的帧（网页版大文件按需下载；整份在本地时什么也不做）：
- * 本关出场职业的人物动画、它们技能的特效，以及地图用到的图块。返回新下载的字节数。
+ * 进关前下载本关一定会用到的帧（网页版大文件按需下载；整份在本地时什么也不做）：
+ * 地图用到的图块，本关出场职业的走路、受击、防御动作和普通攻击（含特效）。
+ * 其它技能的动作和特效开打后在后台下载（prefetchSkills），出招前还没下完就等它下完（ensureSkill）。返回新下载的字节数。
  */
 export async function preloadStage(assets: Assets, stage: string, progress?: Progress): Promise<number> {
   const { files } = assets;
-  const want = new Map<string, [number, number][]>();
-  const add = (path: string, span: [number, number]) => {
-    if (span[1] > span[0]) (want.get(path) ?? want.set(path, []).get(path)!).push(span);
-  };
+  const job = new Fetch();
   const mapFile = findStageFile(files, stage, '.map');
   if (!mapFile) return 0;
   const map = parseMap(files.get(mapFile), mapFile);
   for (const cell of map.cells)
     cell.forEach((l, k) => {
       const lib = k === 0 ? assets.ground : assets.upper;
-      if (l.tile < lib.count && (k > 0 || l.tile > 0)) add(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
+      if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.span(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
     });
   const actFile = mapFile.replace(/\.map$/i, '.act');
   const classes = new Set([0]);
@@ -70,19 +123,48 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {
     const c = assets.man.classes[cls];
-    if (c)
-      for (let g = c.first; g <= c.last; g++) {
-        const r = assets.man.actions[g];
-        if (r) for (let i = r.first; i <= r.last; i++) add('Data/Man.lib', assets.man.span(i));
-      }
-    for (const sk of assets.data.classes[cls]?.skills ?? [])
-      for (const g of fxGroups(sk)) {
-        const r = assets.effects.actions[g];
-        if (r) for (let i = r.first; i <= r.last; i++) add('Data/Effect.lib', assets.effects.span(i));
-      }
+    if (c) for (let g = c.first; g < Math.min(c.last + 1, c.first + ACTION_FIRST_SKILL * 4); g++) job.manGroup(assets, g);
+    const basic = assets.data.classes[cls]?.skills[0];
+    if (basic) job.skill(assets, cls, basic);
   }
-  return files.ensure(want, progress);
+  return job.run(files, progress);
 }
+
+const skillJobs = new WeakMap<Assets, Map<string, Promise<unknown>>>();
+const skillKey = (cls: number, sk: SkillDef) => `${cls}:${sk.group}:${sk.type}:${sk.effect}:${sk.effect2}:${sk.effect3}`;
+
+/** 一次下载若干技能的帧（合并成尽量少的请求）；每个技能只下载一次，失败的下次再试，不卡住战斗 */
+function fetchSkills(assets: Assets, list: { cls: number; sk: SkillDef }[]): Promise<unknown> {
+  const jobs = skillJobs.get(assets) ?? skillJobs.set(assets, new Map()).get(assets)!;
+  const job = new Fetch();
+  const keys: string[] = [];
+  const waits: Promise<unknown>[] = [];
+  for (const { cls, sk } of list) {
+    const k = skillKey(cls, sk);
+    const p = jobs.get(k);
+    if (p) waits.push(p);
+    else if (!keys.includes(k)) {
+      keys.push(k);
+      job.skill(assets, cls, sk);
+    }
+  }
+  if (keys.length) {
+    const p = job.run(assets.files).catch((e) => {
+      for (const k of keys) jobs.delete(k);
+      console.warn('下载技能动画失败', e);
+    });
+    for (const k of keys) jobs.set(k, p);
+    waits.push(p);
+  }
+  return Promise.all(waits);
+}
+
+/** 确保职业 cls 施放 sk 要用的帧已经下载 */
+export const ensureSkill = (assets: Assets, cls: number, sk: SkillDef) => fetchSkills(assets, [{ cls, sk }]);
+
+/** 开打后在后台下载各单位已经学会的技能（升级后新学的技能出招时再下载） */
+export const prefetchSkills = (assets: Assets, units: { classId: number; skills: SkillDef[] }[]) =>
+  fetchSkills(assets, units.flatMap((u) => u.skills.map((sk) => ({ cls: u.classId, sk }))));
 
 /** 把 8 位索引帧转成 RGBA 画布；索引 0 透明。 */
 /** Object.lib（道具图标）用调色板 13 号纯蓝 (0,0,255) 当底色 */
