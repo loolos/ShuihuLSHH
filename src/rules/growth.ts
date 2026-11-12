@@ -20,8 +20,8 @@ export const GROWTH: Record<StatKey, [number, number]> = {
 
 /** 杂兵模板（初始值）。同档同等级的兵属性完全一样，兵种之间只有移动力、武器和技能不同 */
 export const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 0 };
-/** 小头目模板：约为杂兵 +25% */
-export const OFFICER: Record<StatKey, number> = { hp: 70, mp: 80, attack: 62, defense: 25, hit: 70, agility: 30, crit: 12 };
+/** 小头目模板：比杂兵硬一档（负责人 2026-11-12：我方约 3–3.5 下打倒一个） */
+export const OFFICER: Record<StatKey, number> = { hp: 95, mp: 80, attack: 66, defense: 28, hit: 70, agility: 30, crit: 12 };
 /** 模板兵的装备不加属性，改为每档固定加成（各关原版配装的平均值），不随等级成长 */
 export const GRUNT_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 5, attack: 15, defense: 13, agility: 5 };
 export const OFFICER_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 8, attack: 6, defense: 16, agility: 8 };
@@ -39,10 +39,39 @@ export const CLASS_OVERRIDES: Record<number, Partial<Record<StatKey, number>>> =
   1: { attack: 80 }, // 王進：原版 70。改成新成长后前期显弱，负责人 2026-11-12 要求前期打兵伤害约 +15%
 };
 
+/**
+ * 按职业的偏移【新】（负责人 2026-11-12 确认建议）：在模板或原版初始值上调整，成长公式不变，所以偏移会随等级放大。
+ * pct：百分比（+8 表示 ×1.08）；add：直接加点数（必杀这类小数值用）。想调哪个敌人改这张表。
+ */
+export interface Tweak {
+  pct?: Partial<Record<StatKey, number>>;
+  add?: Partial<Record<StatKey, number>>;
+}
+export const CLASS_TWEAKS: Record<number, Tweak> = {
+  // 小头目：都頭 38 是标准，不动
+  39: { pct: { attack: 8, hit: 5 }, add: { crit: 5 } }, // 教頭
+  42: { pct: { hit: 10, mp: 30, defense: -5 } }, // 縣尉
+  43: { pct: { attack: 8, defense: -8, agility: 10 } }, // 騎兵
+  65: { pct: { hp: 15, defense: 5 } }, // 頭領
+  66: { pct: { agility: 25, hp: -15, defense: -10 }, add: { crit: 8 } }, // 刺客
+  // 名将
+  59: { pct: { attack: -30 } }, // 陳達：第 2 章约 2.2 下就能打倒我方（技能威力还在，-15% 不够）
+  49: { pct: { hp: 25 } }, // 李吉
+  63: { pct: { attack: 10 } }, // 富安
+  71: { pct: { hp: 30 } }, // 洪教頭
+  48: { pct: { attack: -18, hp: 10 } }, // 朱仝
+  60: { pct: { attack: -8, hp: 10 } }, // 雷橫
+  52: { pct: { attack: -12 } }, // 阮小七
+  56: { pct: { hp: -15 }, add: { crit: -10 } }, // 高俅
+  68: { pct: { agility: -15 } }, // 王倫
+};
+
 /** 初始值：模板兵用模板，其余（好汉、有名有姓的敌人、平民）用原版职业表（个别有调整） */
 export function baseStat(cls: ClassDef, k: StatKey): number {
   const t = tierOf(cls);
-  return t === 'grunt' ? GRUNT[k] : t === 'officer' ? OFFICER[k] : (CLASS_OVERRIDES[cls.id]?.[k] ?? cls[k].base);
+  const v = t === 'grunt' ? GRUNT[k] : t === 'officer' ? OFFICER[k] : (CLASS_OVERRIDES[cls.id]?.[k] ?? cls[k].base);
+  const tw = CLASS_TWEAKS[cls.id];
+  return tw ? Math.max(0, Math.round(v * (1 + (tw.pct?.[k] ?? 0) / 100) + (tw.add?.[k] ?? 0))) : v;
 }
 
 /** 每级加多少（可以是小数，累计后取整） */
