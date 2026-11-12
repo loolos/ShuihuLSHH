@@ -241,7 +241,7 @@ describe('战斗流程', () => {
     expect(b.playerPhaseDone()).toBe(true);
   });
 
-  it('宝物：路过的格子也拾取，放进道具栏 3–6；敌人不拾', () => {
+  it('宝箱：踩上或路过都拾取，放进随身物品栏；敌人不拾', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 9, 9), act(2, 1, 'object', 2, 0), act(3, 1, 'object', 8, 9)], blocks: [], data, seed: 1 });
     b.begin();
     const p = b.unit(0)!;
@@ -251,6 +251,29 @@ describe('战斗流程', () => {
     expect(p.slots).toEqual([1, 0, 0, 1, 0, 0, 0]);
     expect(b.items).toHaveLength(1);
     b.endPlayerPhase();
+    expect(b.items).toHaveLength(1);
+  });
+
+  it('宝箱：走到相邻格就打开（路过也算），随身物品 10 格，满了宝箱留着', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'object', 2, 1), act(2, 1, 'object', 5, 2)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    expect(p.slots).toHaveLength(13);
+    p.slots = [1, 0, 0, ...Array(9).fill(1), 0];
+    const ev = b.move(p, 3, 0); // 经过 (2,0)，与 (2,1) 的宝箱相邻
+    expect(ev.filter((e) => e.type === 'pickup')).toHaveLength(1);
+    expect(p.slots[12]).toBe(1);
+    expect(b.items).toHaveLength(1);
+  });
+
+  it('宝箱：物品栏满了打不开，宝箱留着', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'object', 1, 1)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.slots = [1, 0, 0, ...Array(10).fill(1)];
+    const ev = b.move(p, 1, 0);
+    expect(ev.some((e) => e.type === 'pickup')).toBe(false);
+    expect(ev.some((e) => e.type === 'message' && e.text.includes('道具已滿'))).toBe(true);
     expect(b.items).toHaveLength(1);
   });
 
@@ -529,7 +552,7 @@ describe('关卡串联', () => {
     expect(c.gold).toBe(120);
     const join = { ...act(1, 1, 'player', 1, 0), level: 6 };
     const two = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), join], blocks: [], data, seed: 1, party: partyOf(c) });
-    expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, 0, 0, 0, 0, 0, 0] });
+    expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, ...Array(12).fill(0)] });
     expect(two.unit(0)!.stats.attack).toBe(computeStats(data.classes[0], 4, [1], data).attack);
     expect(two.unit(1)!.level).toBe(6);
   });

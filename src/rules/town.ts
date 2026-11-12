@@ -1,7 +1,7 @@
 // 城镇与整备：买、典当、打铁、给予、装备、丢弃（docs/game-design.md §7.5）。
 // 全部是对 CampaignState 的纯函数，返回新的状态和一句提示；界面在 src/game/town.ts。
 import type { CampaignState, Member } from './campaign.ts';
-import { canEquip, equipSlotOf, forgeLimit, itemOf, SLOT_COUNT, type GameData } from './data.ts';
+import { canEquip, equipSlotOf, forgeLimit, freeBagSlot, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import type { Item } from '../formats/goo.ts';
 
 /**
@@ -43,7 +43,7 @@ function edit(c: CampaignState, classId: number, f: (m: Required<Member>) => voi
 
 const memberOf = (c: CampaignState, classId: number) => c.members.find((m) => m.classId === classId);
 
-/** 随身物品的空格（第 4–7 格）；装备栏空着且道具能装上时优先放进装备栏 */
+/** 随身物品的空格；装备栏空着且道具能装上时优先放进装备栏 */
 function freeSlot(m: Member, it: Item | undefined, data: GameData): number {
   const k = equipSlotOf(it);
   if (k >= 0 && !m.slots[k] && canEquip(data.classes[m.classId], it, data)) return k;
@@ -108,7 +108,7 @@ export function equip(c: CampaignState, data: GameData, classId: number, slot: n
   if (!m || !it) return fail(c, '');
   const k = equipSlotOf(it);
   if (slot < 3) {
-    const free = m.slots.findIndex((id, i) => i >= 3 && !id);
+    const free = freeBagSlot(m.slots);
     if (free < 0) return fail(c, '道具已滿，無法卸下。');
     return { ok: true, text: `卸下了${it.name}。`, c: edit(c, classId, (n) => swap(n, slot, free)) };
   }

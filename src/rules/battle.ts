@@ -7,7 +7,7 @@ import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { buffName, canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import {
@@ -22,7 +22,7 @@ export const REST_DIVISOR = 5;
 
 /**
  * 开局多带的道具【新】（负责人 2026-11-12）：第一关 N01 里武龍（0）、王進（1）各带 2 个狗皮膏藥（156），
- * 原版默认只有 1 个。只对没有延续状态的人物生效；按"补足到 N 个"处理，放进物品栏（槽 3–6）的空位。
+ * 原版默认只有 1 个。只对没有延续状态的人物生效；按"补足到 N 个"处理，放进随身物品栏的空位。
  */
 export const START_ITEMS: Record<string, Record<number, [item: number, count: number][]>> = {
   n01: { 0: [[156, 2]], 1: [[156, 2]] },
@@ -30,8 +30,9 @@ export const START_ITEMS: Record<string, Record<number, [item: number, count: nu
 
 export function addStartItems(stage: string, classId: number, slots: number[]) {
   for (const [item, count] of START_ITEMS[stage.toLowerCase()]?.[classId] ?? []) {
-    let have = slots.filter((s, k) => k >= 3 && s === item).length;
-    for (let k = 3; k < 7 && have < count; k++) {
+    let have = slots.filter((s, k) => k >= EQUIP_SLOTS && s === item).length;
+    for (const k of BAG_SLOTS) {
+      if (have >= count) break;
       if (slots[k]) continue;
       slots[k] = item;
       have++;
@@ -140,11 +141,14 @@ export class Battle {
       const cls = this.data.classes[a.type];
       if (!cls) continue;
       const slots = cls.defaultItems.slice(0, 7);
+      while (slots.length < SLOT_COUNT) slots.push(0);
       a.items.forEach((id, k) => id && (slots[k] = id));
       // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）。延续的人物取两者较高者，装备沿用
       const kept = a.side === 'player' ? input.party?.get(a.type) : undefined;
-      if (kept) slots.splice(0, slots.length, ...kept.slots);
-      else if (a.side === 'player') addStartItems(input.name, a.type, slots);
+      if (kept) {
+        slots.splice(0, slots.length, ...kept.slots);
+        while (slots.length < SLOT_COUNT) slots.push(0); // 旧存档只有 7 格
+      } else if (a.side === 'player') addStartItems(input.name, a.type, slots);
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
       const level = Math.max(1, a.level, kept?.level ?? 0);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
@@ -485,15 +489,15 @@ export class Battle {
   }
 
   /**
-   * 给予：放进对方道具栏 3–6 的第一个空位（装备也一样，交过去再由对方装上），打铁次数跟着走；
+   * 给予：放进对方随身物品栏的第一个空位（装备也一样，交过去再由对方装上），打铁次数跟着走；
    * 对方道具栏满了就不给（0x409460 返回 0）。不算行动（0x409752 不碰行动结束标志）。
    */
   giveItem(u: Unit, slot: number, target: Unit): BattleEvent[] {
     this.out = [];
     if (!this.giveTargets(u, slot).includes(target)) return [];
     const it = itemOf(this.data, u.slots[slot])!;
-    const k = [3, 4, 5, 6].find((i) => !target.slots[i]);
-    if (k === undefined) {
+    const k = freeBagSlot(target.slots);
+    if (k < 0) {
       this.emit({ type: 'message', text: `${target.name}的道具已滿。` });
       return this.flush();
     }
@@ -525,7 +529,7 @@ export class Battle {
     if (!this.canAct(u) || u.side !== 'player' || !it) return [];
     let to: number;
     if (slot < EQUIP_SLOTS) {
-      to = [3, 4, 5, 6].find((i) => !u.slots[i]) ?? -1;
+      to = freeBagSlot(u.slots);
       if (to < 0) {
         this.emit({ type: 'message', text: '道具已滿，無法卸下。' });
         return this.flush();
@@ -551,7 +555,7 @@ export class Battle {
   canEquipItem(u: Unit, slot: number): boolean {
     const it = itemOf(this.data, u.slots[slot]);
     if (!it || u.side !== 'player' || !this.canAct(u)) return false;
-    if (slot < EQUIP_SLOTS) return [3, 4, 5, 6].some((i) => !u.slots[i]);
+    if (slot < EQUIP_SLOTS) return freeBagSlot(u.slots) >= 0;
     return equipSlotOf(it) >= 0 && canEquip(this.data.classes[u.classId], it, this.data);
   }
 
@@ -615,26 +619,33 @@ export class Battle {
     u.y = last.y;
     u.facing = facingTowards(prev, last, u.facing);
     this.emit({ type: 'move', uid: u.uid, path, facing: u.facing });
-    // 原版只有我方（unit+0x3b = 0）在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），所以路过的宝物也会拾起
-    if (u.side === 'player') for (const c of path.slice(1)) this.pickup(u, c);
+    // 原版只有我方在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），踩上宝箱才拾起。
+    // 重制版【新：负责人 2026-11-12】：只有我方，走到宝箱上或上下左右相邻的格子（路过也算）就自动打开
+    if (u.side !== 'player') return;
+    const full = new Set<GroundItem>();
+    for (const c of path.slice(1))
+      for (const g of this.items.filter((g) => dist(g, c) <= 1)) if (!full.has(g) && !this.pickup(u, g)) full.add(g);
   }
 
   /**
-   * 拾取（EXE 0x4054e0 / 0x409460）：物品号 ≤ 200 才能拾，放进道具栏 3–6 的第一个空位；
-   * 道具栏满了就留在地上（原版不提示，这里提示一句【新】）。
+   * 打开宝箱（原版拾取 EXE 0x4054e0 / 0x409460）：物品号 ≤ 200 才能拾，放进随身物品栏的第一个空位；
+   * 物品栏满了就留着，提示一句（原版不提示）【新】。返回是否拾到。
    */
-  private pickup(u: Unit, c: Cell) {
-    const i = this.items.findIndex((g) => g.x === c.x && g.y === c.y);
-    if (i < 0 || this.items[i].item > 200) return;
-    const slot = [3, 4, 5, 6].find((k) => !u.slots[k]);
-    if (slot === undefined) return this.emit({ type: 'message', text: `${u.name}的道具已滿。` });
-    const g = this.items.splice(i, 1)[0];
+  private pickup(u: Unit, g: GroundItem): boolean {
+    if (g.item > 200 || !this.items.includes(g)) return false;
+    const slot = freeBagSlot(u.slots);
+    if (slot < 0) {
+      this.emit({ type: 'message', text: `${u.name}的道具已滿，打不開寶箱。` });
+      return false;
+    }
+    this.items.splice(this.items.indexOf(g), 1);
     u.slots[slot] = g.item;
     u.forge[slot] = 0;
     u.turnStart = null; // 拾取后不能撤销移动
     refreshStats(u, this.data);
     this.emit({ type: 'pickup', uid: u.uid, x: g.x, y: g.y, item: g.item });
     this.emit({ type: 'message', text: `${u.name}得到了${this.tr(itemOf(this.data, g.item)!.name)}。` });
+    return true;
   }
 
   /**
