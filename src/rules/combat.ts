@@ -25,12 +25,19 @@ export function critChance(att: Unit, skill: SkillDef): number {
   return Math.max(0, Math.floor((att.stats.crit + skill.critMod) / 2));
 }
 
-/** 不含随机部分的伤害：返回 [普通, 必杀]；≤ 0 时原版改为 10–59 的随机值，这里返回 null */
-export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number | null, number | null] {
+/**
+ * 保底伤害比例【新】（负责人 2026-11-12 选）：原版"攻 − 防 ≤ 0 时改为 10–59 随机"。
+ * 防御每级 ×1.10、攻击只有 ×1.04–1.05，后期攻防都到 255 封顶后，普通攻击几乎都落到这个随机数上。
+ * 重制版改为：伤害至少是 (攻 + 威力) 的 35%，必杀至少 70%。前期攻远大于防时不起作用。
+ */
+export const DAMAGE_FLOOR = 0.35;
+
+/** 不含随机部分的伤害：返回 [普通, 必杀] */
+export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
-  const n = att.stats.attack + power - def.stats.defense;
-  const c = 2 * (att.stats.attack + power) - def.stats.defense;
-  return [n > 0 ? n : null, c > 0 ? c : null];
+  const a = att.stats.attack + power;
+  const d = def.stats.defense;
+  return [Math.max(a - d, Math.floor(a * DAMAGE_FLOOR)), Math.max(2 * a - d, Math.floor(2 * a * DAMAGE_FLOOR))];
 }
 
 export interface AttackPreview {
@@ -43,7 +50,7 @@ export interface AttackPreview {
 export function previewAttack(att: Unit, def: Unit, skill: SkillDef): AttackPreview {
   const [n, c] = baseDamage(att, def, skill);
   const k = def.defending ? 0.7 : 1;
-  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor((n ?? 34) * k), critDamage: Math.floor((c ?? 34) * k) };
+  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor(n * k), critDamage: Math.floor(c * k) };
 }
 
 export interface HitResult {
@@ -66,7 +73,7 @@ export function rollAttack(att: Unit, def: Unit, skill: SkillDef, rng: Rng, forc
   if (!hit) return { hit, crit: false, damage: 0, parts: [], poisoned: false, stunned: false, backstab: rel };
   const crit = rng.chance(critChance(att, skill));
   const [n, c] = baseDamage(att, def, skill);
-  let dmg = (crit ? c : n) ?? rng.range(10, 59);
+  let dmg: number = crit ? c : n;
   if (def.defending) dmg *= 0.7;
   dmg *= 0.9 + rng.next() * 0.2; // D-9【新】：±10% 浮动（原版无浮动）
   dmg = Math.max(0, Math.floor(dmg));
