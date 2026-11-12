@@ -39,6 +39,12 @@ export interface GameData {
   effectTriggers?: number[];
 }
 
+/**
+ * 个别职业的移动力调整（职业号 → 加几格），在职业表原值上加【新】。
+ * 0 武龍：原版 5，负责人 2026-11-12 要求 +1。
+ */
+export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -52,7 +58,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       hit,
       agility,
       crit,
-      move: r.move,
+      move: r.move + (CLASS_MOVE_BONUS[r.id] ?? 0),
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
