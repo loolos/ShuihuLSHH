@@ -6,6 +6,7 @@ import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeLimit, itemOf, itemSummary, SL
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
 import { computeStats } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
+import { music } from './music.ts';
 
 const $ = (id: string) => document.getElementById(id)!;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -73,6 +74,8 @@ export class TownUI {
 
   private enter(shop: number) {
     this.shop = shop;
+    // 酒店和整备放城镇曲，其他店铺放商店曲【新】
+    void music.play(shop > 0 ? 'shop' : 'town');
     this.slot = -1;
     this.giving = false;
     if (shop === PREP) {
