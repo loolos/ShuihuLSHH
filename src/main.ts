@@ -13,7 +13,7 @@ import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
-import { jumpTo } from './rules/preset.ts';
+import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { newCampaign, nextByHeader, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
@@ -118,13 +118,36 @@ function startGame(assets: Assets) {
   const stages = assets.exe.stages.filter((s) => s.mapName && assets.files.has(`Map/${s.mapName}.act`));
   const sel = $<HTMLSelectElement>('stage');
   sel.add(new Option('⟲ 新游戏（从第1章开始）', 'new'));
-  for (const s of stages) sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, String(s.index)));
+  /** 过关后进城的关卡：关卡号 → 城镇号与城镇之后的下一关（剧本头 +9 / +11） */
+  const towns = new Map<number, { town: number; next: number }>();
+  for (const s of stages) {
+    const f = findStageFile(assets.files, s.mapName, '.pab');
+    const h = f ? parsePasHeader(assets.files.get(f)) : null;
+    if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
+  }
+  const townValue = (i: number) => `town:${i}`;
+  for (const s of stages) {
+    sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, String(s.index)));
+    // 测试用：每个城镇也能直接进（列在它前面那一关后面）
+    if (towns.has(s.index)) sel.add(new Option(`　└ 城镇（${s.index} 之后）`, townValue(s.index)));
+  }
   const params = new URLSearchParams(location.search);
   let campaign = loadSave() ?? newCampaign(stages[0].index);
+  /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
+  const jump = (value: string, c: CampaignState): CampaignState => {
+    const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
+    if (t) return jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c);
+    return jumpTo(assets.files, assets.data, stages, Number(value), c);
+  };
   const asked = params.get('stage')?.toLowerCase();
-  const fromUrl = asked && stages.find((s) => s.mapName === asked || String(s.index) === asked);
-  // 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）
-  if (fromUrl && fromUrl.index !== campaign.stage) campaign = jumpTo(assets.files, assets.data, stages, fromUrl.index, campaign);
+  if (asked) {
+    const inTown = asked.startsWith('town:');
+    const key = inTown ? asked.slice(5) : asked;
+    const s = stages.find((x) => x.mapName.toLowerCase() === key || String(x.index) === key);
+    if (s && inTown && towns.has(s.index)) {
+      if (campaign.stage !== s.index || !campaign.town) campaign = jump(townValue(s.index), campaign);
+    } else if (s && (s.index !== campaign.stage || campaign.town)) campaign = jump(String(s.index), campaign);
+  }
   if (!stages.some((s) => s.index === campaign.stage)) campaign = newCampaign(stages[0].index);
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
@@ -244,7 +267,10 @@ function startGame(assets: Assets) {
     town.hide();
     if (campaign.town) {
       // 存档停在城镇里
-      sel.value = String(campaign.stage);
+      sel.value = towns.has(campaign.stage) ? townValue(campaign.stage) : String(campaign.stage);
+      const u = new URL(location.href);
+      u.searchParams.set('stage', `town:${stageOf(campaign.stage).mapName}`);
+      history.replaceState(null, '', u);
       return enterTown(campaign);
     }
     sel.value = String(campaign.stage);
@@ -273,7 +299,7 @@ function startGame(assets: Assets) {
   };
   sel.onchange = () => {
     // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空
-    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jumpTo(assets.files, assets.data, stages, Number(sel.value), campaign));
+    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jump(sel.value, campaign));
   };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
   $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);

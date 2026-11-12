@@ -4,7 +4,8 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
 import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
-import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
+import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
@@ -67,6 +68,15 @@ describe('属性', () => {
   it('装备加成按道具编号（从 1 开始）计算', () => {
     expect(computeStats(data.classes[0], 0, [1], data).attack).toBe(67);
     expect(computeStats(data.classes[0], 0, [1], data, true).attack).toBe(33); // 中毒减半
+  });
+});
+
+describe('职业移动力调整', () => {
+  it('武龍基础移动力比职业表多 1，其他人照原值', () => {
+    const rec = (id: number) => ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 5, weaponType: 0, goldCap: 0, defaultItems: [], skills: [] }) as unknown as ClassRecord;
+    const [hero, wangjin] = buildClasses([rec(0), rec(1)], ['武龍', '王進'], []);
+    expect(hero.move).toBe(6);
+    expect(wangjin.move).toBe(5);
   });
 });
 
