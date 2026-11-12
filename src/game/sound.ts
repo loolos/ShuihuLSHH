@@ -1,13 +1,19 @@
 // 音效。原版所有音效都经 EXE 0x423870 播放：拼出 `sound\<名字>.wav`，交给 0x4237e0 的波形播放器。
-// 调用处（静态分析，名字均为 EXE 里的常量字符串）：
-//   - 0x406150 施放技能（含普通攻击）：先播 `s<技能号>`（技能子项 +0），再按技能类型（+2）加一声：
-//     类型 2 迴旋 → S225、5 普通 → S221、6 遠程 → S222、7 連續 → s224（跳转表 0x4062dc）；
-//     221–225 正好是 EXE 技能名表里的类型名（普通攻擊、遠程攻擊、防禦技、連續技、迴旋技）。
-//   - 界面：菜单选中 m03（0x413444 等 8 处）；m01 / m02 / m15 为窗口控件（0x416fba / 0x41701a / 0x4171aa，具体时机待核）；
-//     对话框 m05 / m12（0x411ab4 / 0x411821，待核）；m04 / m07 / m09 / m10 / m13 / m14 / m011 时机待核。
-//   - PAS 指令 20/21：剧本指定的音效（0x411748）。数字名 1–57.wav 推测为人物语音（0x4038f3，待核）。
-// 原版 Sound/ 压成 MP3 放在仓库 gamedata/sound/（负责人 2026-11-12 同意，tools/gen-sound.ts 生成）：
-// 有原版声音的事件（技能、菜单）播原版；原版没有对应声音的事件（命中、倒下、胜负等）用浏览器合成的简单音效【新】。
+// 各调用处对应的事件（静态分析，名字均为 EXE 里的常量字符串，或按编号拼出）：
+//   m09  开始移动：移动指令 0x406000 → 0x405fa0 → 虚表 +0x80 = 0x405f20
+//   s<技能号> + 类型音  施放技能（含普通攻击）0x406150：技能子项 +0；类型 2 迴旋 → S225、5 普通 → S221、6 遠程 → S222、
+//        7 連續 → s224（跳转表 0x4062dc；221–225 正是技能名表里的类型名）。没有对应文件就不出声
+//   <组号+1>  特效段开始 0x403880（数字名 1–57.wav 就是特效音）：技能特效、集气（第 7 组 → 8）、回复（第 17 组 → 18）；
+//        遠程技第一段在 0x4037f0 直接设组号，不出声
+//   46   受到伤害 > 0：0x406850 放第 45 组特效；44 必杀：0x406ea9 放第 43 组特效。落空不出声（0x406950 伤害 0）
+//   m13  人物被击倒（0x404c80，同时显示「戰敗了！」）
+//   m04  升级 0x406990；m07 移动中拾到宝物 0x4054e0（「得到了」）；m10 使用道具 0x408dc0
+//   m12  过关旁白 PAS 29（0x4117d0）；m05 失败结局 PAS 30（0x411a90）；m08 加入队伍 PAS 21（0x411748，剧本给出名字）
+//   m01 / m02  打开 / 关闭窗口（0x416fb0 / 0x417010）；m03 菜单选中（0x413444 等 8 处）
+//   未用：m14（0x404c80 中单位 +0x3b == 2 的分支，待核）、m15（某个 1 秒后自动关闭的窗口 0x4171a0）、
+//        第 48 / 37 组特效（0x4075c0 / 0x4077a0，场合待核）、logo（片头 0x412800）、m06、m11、tt*
+// 原版 Sound/ 压成 MP3 放在仓库 gamedata/sound/（负责人 2026-11-12 同意，tools/gen-sound.ts 生成）。
+// 原版对某个事件没有声音，重制版也不出声；只有原版音效整体取不到时才用浏览器合成的简单音效兜底【新】。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
 
 export type Sfx = 'click' | 'swing' | 'skill' | 'hit' | 'crit' | 'miss' | 'heal' | 'ko' | 'turn' | 'win' | 'lose' | 'status';
@@ -67,7 +73,7 @@ class SoundSystem {
   cycle() {
     this.setLevel(this.level + 1);
     this.unlock();
-    if (this.level) this.play('click');
+    if (this.level) void this.sfx('m03', 'click');
   }
 
   private ready(): AudioContext | null {
@@ -114,25 +120,44 @@ class SoundSystem {
   skillSounds(skills: { skillId: number; type: number }[]): string[] {
     return skills.flatMap((s) => [`s${s.skillId}`, TYPE_SOUND[s.type]].filter(Boolean) as string[]);
   }
-  /** 播原版音效 name；没有这个文件时播合成音 fallback（不给就不出声） */
-  async playWav(name: string, fallback?: Sfx) {
+  /** 同一个声音 80 ms 内只播一次（范围技能每格都会触发同一段特效音） */
+  private recent = new Map<string, number>();
+  /**
+   * 播原版音效 name。原版对这个事件没有声音（索引里没有）就不出声；
+   * 只有原版音效整体取不到（离线、下载失败）时才播合成音 fallback。
+   */
+  async sfx(name: string, fallback?: Sfx) {
     const ctx = this.ready();
     if (!ctx) return;
+    const k = name.toLowerCase();
+    const now = performance.now();
+    if (now - (this.recent.get(k) ?? -1e9) < 80) return;
+    this.recent.set(k, now);
+    const idx = await this.loadIndex();
+    if (!idx) return void (fallback && this.play(fallback));
     const buf = await this.wav(name);
     if (buf && this.ready()) {
       const src = ctx.createBufferSource();
       src.buffer = buf;
       src.connect(this.master!);
       src.start();
-    } else if (fallback) this.play(fallback);
+    }
   }
 
-  /** 施放技能 / 普通攻击：原版是 s<技能号> + 类型音；合成音按普通攻击 / 技能区分 */
+  /** 施放技能 / 普通攻击（EXE 0x406150）：s<技能号> + 类型音 */
   cast(skillId: number, type: number, basic: boolean) {
-    if (!this.ready()) return;
-    void this.playWav(`s${skillId}`, basic ? 'swing' : 'skill');
+    void this.sfx(`s${skillId}`, basic ? 'swing' : 'skill');
     const t = TYPE_SOUND[type];
-    if (t) void this.wav(t).then((b) => b && this.playWav(t));
+    if (t) void this.sfx(t);
+  }
+  /** 特效段开始（EXE 0x403880）：播 <组号 + 1>.wav，组号从 0 数。遠程技的第一段不经过 0x403880，不出声 */
+  effect(group: number) {
+    void this.sfx(String(group + 1));
+  }
+  /** 受到伤害（EXE 0x406850：伤害 > 0 时放第 45 组特效 → 46.wav）；必杀另放第 43 组（0x406ea9 → 44.wav） */
+  hurt(crit: boolean) {
+    if (crit) void this.sfx('44', 'crit');
+    void this.sfx('46', crit ? undefined : 'hit');
   }
 
   // ---- 合成音效 ----
@@ -253,7 +278,7 @@ export function installSound(button: HTMLButtonElement) {
     'click',
     (e) => {
       const b = (e.target as Element | null)?.closest?.('button');
-      if (b && b !== button && !(b as HTMLButtonElement).disabled) void sound.playWav('m03', 'click');
+      if (b && b !== button && !(b as HTMLButtonElement).disabled) void sound.sfx('m03', 'click');
     },
     true,
   );

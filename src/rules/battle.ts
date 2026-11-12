@@ -39,6 +39,8 @@ export type BattleEvent =
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
+  /** 原版音效（Sound/ 里的名字，不含扩展名） */
+  | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
   | { type: 'end'; result: 'won' | 'lost'; text: string };
 
@@ -550,6 +552,7 @@ export class Battle {
     const it = itemOf(this.data, u.slots[slot])!;
     const name = this.tr(it.name);
     this.clearSlot(u, slot);
+    this.emit({ type: 'sound', name: 'm10' }); // 使用道具音（EXE 0x408dc0）
     const hp0 = t.hp, mp0 = t.mp;
     if (it.healHp) t.hp = it.healHp < 0 ? t.stats.maxHp : Math.min(t.stats.maxHp, t.hp + it.healHp);
     if (it.healMp) t.mp = it.healMp < 0 ? t.stats.maxMp : Math.min(t.stats.maxMp, t.mp + it.healMp);
@@ -714,6 +717,7 @@ export class Battle {
       refreshStats(u, this.data);
       u.hp = u.stats.maxHp;
       u.mp = u.stats.maxMp;
+      this.emit({ type: 'sound', name: 'm04' }); // 升级音（EXE 0x406990）
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, text: '升級了！' });
       this.emit({ type: 'message', text: `${u.name}升級了！（Lv${u.level}）` });
       if (up) for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
@@ -968,11 +972,17 @@ export class Battle {
         // 选完后清掉标志，于是条件 3（参数 0）的下一个区块（回合限制、条件文字）才执行。重制版还没有选人界面，视为立即选完
         case 27:
           break;
+        // 21：播放音效，名字在载荷里（全部是 m08"某某加入了"；EXE 0x411748）。20 的载荷是 0x01，推测为播放标志
+        case 21:
+          if (op.text) this.emit({ type: 'sound', name: op.text });
+          break;
         case 29:
+          this.emit({ type: 'sound', name: 'm12' }); // 过关音（EXE 0x4117d0）
           this.emit({ type: 'narrate', text: textOf(i) });
           cleared = true;
           break;
         case 30:
+          this.emit({ type: 'sound', name: 'm05' }); // 失败音（EXE 0x411a90）
           ending = textOf(i);
           break;
         case 31:
