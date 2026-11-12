@@ -47,6 +47,15 @@ describe('属性', () => {
   });
 });
 
+describe('装备移动力', () => {
+  it('装备扣移动不生效，加移动照算', () => {
+    const boots = { ...glove, moveBonus: 1 } as Item, helm = { ...glove, type: 14, moveBonus: -2 } as Item;
+    const d2: GameData = { ...data, items: [boots, helm] };
+    expect(computeStats(d2.classes[0], 0, [1, 0, 2], d2).move).toBe(5);
+    expect(computeStats(d2.classes[0], 0, [0, 0, 2], d2).move).toBe(4);
+  });
+});
+
 describe('命中与伤害', () => {
   const a = unit({ side: 'player', x: 0, y: 1, facing: 0 });
   it('朝向关系', () => {

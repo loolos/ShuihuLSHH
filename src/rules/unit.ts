@@ -1,5 +1,5 @@
 // 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
-import { basicAttack, type Buff, EQUIP_SLOTS, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
+import { basicAttack, type Buff, EQUIP_SLOTS, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
 
@@ -99,7 +99,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.hit += it!.hit;
     st.agility += it!.agility;
     st.crit += it!.crit;
-    st.move += it!.moveBonus;
+    st.move += equipMoveBonus(it!);
     st.rangeBonus += it!.range;
     st.maxHp += it!.maxHp;
     st.maxMp += it!.maxMp;
