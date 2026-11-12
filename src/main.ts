@@ -11,6 +11,7 @@ import { installSound } from './game/sound.ts';
 import { installMusic, music } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
+import { stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
@@ -126,10 +127,21 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
+  // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"
+  let group: HTMLOptGroupElement | null = null;
   for (const s of stages) {
-    sel.add(new Option(`${s.index}. ${assets.tr(s.title) || s.mapName}`, String(s.index)));
+    const l = stageLabel(s.title, s.mapName);
+    if (!group || group.label !== l.chapterLabel) {
+      group = document.createElement('optgroup');
+      group.label = l.chapterLabel || '其它';
+      sel.append(group);
+    }
+    const o = new Option(l.short, String(s.index));
+    o.title = l.full;
+    group.append(o);
     // 测试用：每个城镇也能直接进（列在它前面那一关后面）
-    if (towns.has(s.index)) sel.add(new Option(`　└ 城镇（${s.index} 之后）`, townValue(s.index)));
+    const t = towns.get(s.index);
+    if (t) group.append(new Option(`城镇 ${townName(t.town)}`, townValue(s.index)));
   }
   const params = new URLSearchParams(location.search);
   let campaign = loadSave() ?? newCampaign(stages[0].index);
@@ -170,7 +182,7 @@ function startGame(assets: Assets) {
   // 开发模式下给 Playwright 截图脚本用
   if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game; __ui: BattleUI }).__game = game, ((window as unknown as { __ui: BattleUI }).__ui = ui);
   const stageOf = (i: number) => stages.find((s) => s.index === i)!;
-  const label = (s: (typeof stages)[number]) => assets.tr(s.title) || s.mapName;
+  const label = (s: (typeof stages)[number]) => stageLabel(s.title, s.mapName).full;
   const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName);
   // 没有剧本头的关卡才用关卡表顺序推断下一关（campaign.ts nextStages）
   const speakerOf = (cls: number) => assets.data.classes[cls]?.name ?? '';
@@ -210,7 +222,7 @@ function startGame(assets: Assets) {
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
     town.show(c, {
       town: t,
-      title: t ? `城镇 · ${label(stageOf(c.stage))}之后` : '整备',
+      title: t ? `城镇 · ${townName(t)}` : '整备',
       onChange: (x) => {
         campaign = x;
         if (t) writeSave(x); // 城镇里随时存档（读档回到城镇）；单独整备等进了下一关再存
