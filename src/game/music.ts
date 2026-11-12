@@ -4,7 +4,8 @@
 // 曲目（负责人 2026-11-12 提供 13 首，用途见 docs/game-design.md §11）：
 //   town 城镇酒店/整备，shop 其他店铺，battle / battle2 常规战斗（前半 / 后半程），tense 首领战，army 官军围剿，
 //   night 夜里、埋伏、计谋，story 剧情，sad 悲情，eerie 暗流，liangshan 上梁山 / 通关，victory 过关结算，defeat 失败。
-// 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle。缺哪首就用 FALLBACK 里的替身。
+// 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle、battle2 轮放。战斗关的 stages 值多是 2–3 首的歌单，
+// 一首放完交叉淡化接下一首（负责人 2026-11-12 要求）。缺哪首就用 FALLBACK 里的替身。
 // 播放（负责人 2026-11-12 要求）：
 // - 循环接缝：Suno 的曲子最后约 5 秒是渐弱，不能直接 loop。两个播放器轮流放：快到结尾时另一个从头淡入，前一个淡出。
 // - 换曲时旧曲 1 秒淡出、新曲淡入，不硬切。
@@ -37,8 +38,11 @@ const KEEP = new Set(['victory', 'defeat']);
 
 interface BgmIndex {
   tracks: Record<string, string>;
-  stages?: Record<string, string>;
+  /** 关卡 → 一首，或几首轮流放的歌单 */
+  stages?: Record<string, string | string[]>;
 }
+/** play() 的参数：一首、一个歌单（轮流放）或 null（停） */
+export type Playlist = string | string[] | null;
 
 /** 一个播放器：音量在 level 和 target 之间按 rate（每秒）线性变化，淡到 0 后暂停 */
 class Deck {
@@ -46,7 +50,8 @@ class Deck {
   level = 0;
   target = 0;
   rate = 1;
-  track: string | null = null;
+  /** 正在放的歌单（曲目名用逗号连起来） */
+  key: string | null = null;
   constructor() {
     this.el.preload = 'auto';
   }
@@ -66,7 +71,11 @@ class MusicPlayer {
   /** 当前（或即将）主放的播放器 */
   private active = 0;
   private index: Promise<BgmIndex | null> | null = null;
-  private current: string | null = null;
+  private current: Playlist = null;
+  private currentKey: string | null = null;
+  /** 正在轮放的文件和当前是第几首 */
+  private files: string[] = [];
+  private pos = 0;
   private duck = 1;
   private duckUntil = 0;
   private timer: ReturnType<typeof setInterval> | null = null;
@@ -112,13 +121,25 @@ class MusicPlayer {
     return this.index;
   }
 
-  /** 这一关该放哪首 */
-  async stageTrack(mapName: string): Promise<string> {
+  /** 这一关该放哪首（战斗关一般是 2–3 首轮流放的歌单，负责人 2026-11-12 要求） */
+  async stageTrack(mapName: string): Promise<string | string[]> {
     const idx = await this.loadIndex();
     const named = idx?.stages?.[mapName] ?? idx?.stages?.[mapName.toLowerCase()];
     if (named) return named;
     if (/^act/i.test(mapName)) return 'story';
-    return 'battle';
+    return ['battle', 'battle2'];
+  }
+  /** 歌单 → 实际文件（缺的用替身，重复的去掉） */
+  private resolve(list: string[], idx: BgmIndex | null): string[] {
+    const out: string[] = [];
+    for (const t of list) {
+      const f = idx?.tracks[t] ?? (FALLBACK[t] ? idx?.tracks[FALLBACK[t]] : undefined);
+      if (f && !out.includes(f)) out.push(f);
+    }
+    return out;
+  }
+  private url(file: string) {
+    return new URL(this.base() + file, location.href).href;
   }
 
   private start(d: Deck, from = 0) {
@@ -167,13 +188,15 @@ class MusicPlayer {
       this.timer = null;
     }
   }
-  /** 当前曲子从头再来一遍，和尾部交叉淡化 */
+  /** 接歌单里的下一首（只有一首就从头再来），和尾部交叉淡化 */
   private loopNow(xfade: number) {
     const old = this.decks[this.active];
     const next = this.decks[1 - this.active];
-    if (!old.track) return;
-    if (next.el.src !== old.el.src) next.el.src = old.el.src;
-    next.track = old.track;
+    if (!old.key || !this.files.length) return;
+    this.pos = (this.pos + 1) % this.files.length;
+    const url = this.url(this.files[this.pos]);
+    if (next.el.src !== url) next.el.src = url;
+    next.key = old.key;
     next.level = 0;
     next.fadeTo(1, xfade);
     old.fadeTo(0, xfade);
@@ -181,35 +204,38 @@ class MusicPlayer {
     this.start(next);
   }
 
-  /** 循环播放某首（同一首正在放就不重来）；null = 停 */
-  async play(track: string | null): Promise<void> {
-    this.current = track;
+  /** 循环播放某首或轮放一个歌单（同一个正在放就不重来）；null = 停 */
+  async play(want: Playlist): Promise<void> {
+    const list = want == null ? null : Array.isArray(want) ? want : [want];
+    const key = list?.join(',') ?? null;
+    this.current = want;
+    this.currentKey = key;
     const idx = await this.loadIndex();
-    if (this.current !== track) return; // 等索引期间又换了曲
-    if (track && !idx?.tracks[track]) {
-      if (KEEP.has(track)) return;
-      if (FALLBACK[track]) return this.play(FALLBACK[track]);
-    }
-    const file = track ? idx?.tracks[track] : undefined;
+    if (this.currentKey !== key) return; // 等索引期间又换了曲
+    const files = list ? this.resolve(list, idx) : [];
+    // 胜利 / 失败曲还没有：接着放战斗曲
+    if (list && !files.length && list.every((t) => KEEP.has(t))) return;
     const a = this.decks[this.active];
-    if (!file || !this.on) {
+    if (!files.length || !this.on) {
       for (const d of this.decks) d.fadeTo(0, SWITCH_FADE);
       this.ensureTimer();
       return;
     }
-    if (a.track === track && a.target > 0 && (!a.el.paused || this.blocked)) return;
-    const url = new URL(this.base() + file, location.href).href;
-    if (a.track === track && a.el.src === url) {
-      // 同一首刚淡出或正在淡出（比如关了又开）：接着原来的位置放
+    if (a.key === key && a.target > 0 && (!a.el.paused || this.blocked)) return;
+    if (a.key === key && a.el.src) {
+      // 同一个刚淡出或正在淡出（比如关了又开）：接着原来的位置放
       a.fadeTo(1, SWITCH_FADE);
       if (a.el.paused) this.start(a, a.el.currentTime);
       return;
     }
-    // 换曲：旧的淡出，另一个播放器放新曲淡入
+    // 换曲：旧的淡出，另一个播放器放新歌单的第一首淡入
+    this.files = files;
+    this.pos = 0;
+    const url = this.url(files[0]);
     a.fadeTo(0, SWITCH_FADE);
     this.active = 1 - this.active;
     const d = this.decks[this.active];
-    d.track = track;
+    d.key = key;
     if (d.el.src !== url) d.el.src = url;
     d.level = 0;
     d.fadeTo(1, a.level > 0 ? SWITCH_FADE : 0.5);
@@ -230,7 +256,7 @@ class MusicPlayer {
   resume() {
     if (!this.on || !this.blocked) return;
     const a = this.decks[this.active];
-    if (!a.track || !a.el.src) return;
+    if (!a.key || !a.el.src) return;
     this.resumedAt = performance.now();
     this.blocked = false;
     this.start(a, a.el.currentTime);

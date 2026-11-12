@@ -589,16 +589,22 @@ N01 的原版事件（已全部由 PAS 直接驱动）：开战时王進、王�
 - **音量**：顶栏"♪"按钮在 关 / 小 / 中 / 大 之间切换，记在浏览器里【新】。
 - **背景音乐**【新】：原版用光盘 CD 音轨（`music.ini`，本副本没有）。重制版用负责人用 Suno 生成的配乐（提示词见项目文件 `shuihu-design/bgm-suno-prompts.md`、`bgm-more-prompts.md`），放在仓库 `gamedata/bgm/`（96 kbps 立体声，共 13 首约 15 MB；每关只下载用到的那首）。`index.json` 写曲目文件和关卡指定的曲目，没指定的关 Act 剧情关放 story，其余放 battle。2026-11-12 的分配：
 
-  | 曲目 | 原编号 | 用在哪里 |
+  战斗关（玩的时间长）放 2–3 首轮流的歌单：一首放完，交叉淡化接下一首，循环往复（负责人 2026-11-12 要求）。剧情关和城镇只放一首。
+
+  | 关卡类型 | 歌单（按顺序轮放） | 关卡 |
+  |---|---|---|
+  | 前半程普通战斗 | battle(02) → battle2(06) | 没指定的战斗关，N-add02、N02、N-add06、N-add07、Train1 |
+  | 后半程普通战斗 | battle2(06) → battle(02) | N-add09b、N-add10、N-add12、N-add13、Train2 |
+  | 首领决战 | tense(03) → army(12) → battle2(06) | N-add01、N-add04b、N04–N11、N14、N-add16 |
+  | 官军围剿 | army(12) → battle(02) → tense(03) | N01、N03、N-add04a、N-add08、N-add09a、N-add11、N-add14、N12、N-add15、N13 |
+  | 夜战、埋伏 | night(09) → battle(02) → battle2(06) | N-add03、N-add05 |
+
+  | 单曲 | 原编号 | 用在哪里 |
   |---|---|---|
   | town | 01 | 城镇的酒店分页、整备 |
   | shop | 05 | 城镇的武器店、打铁铺、药铺、当铺 |
-  | battle | 02 | 前半程（第 1–7 章）没指定的战斗、Train1 |
-  | battle2 | 06 | 后半程常规战斗：N-add09b、N-add10、N-add12、N-add13、Train2 |
-  | tense | 03 | 对有名有姓的恶人的决战：N-add01、N-add04b、N04–N11、N14、N-add16 |
-  | army | 12 | 官军围剿：N01、N03、N-add04a、N-add08、N-add09a、N-add11、N-add14、N12、N-add15、N13 |
-  | night | 09 | 夜里、埋伏、计谋：N-add03、N-add05、Act4-2、Act5-1a、Act10-1（智取生辰纲）、Act11-1a |
   | story | 04 | 其余 Act 剧情关 |
+  | night | 09 | 计谋剧情：Act4-2、Act5-1a、Act10-1（智取生辰纲）、Act11-1a |
   | sad | 07 | 林冲蒙冤（Act6-3 白虎节堂）、休妻（Act7-1） |
   | eerie | 16 | 暗流：野猪林伏击前（Act7-1a）、陆谦密谋（Act9-1） |
   | liangshan | 08 | 上梁山（Act14-2）、通关画面 |
