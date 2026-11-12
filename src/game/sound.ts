@@ -82,7 +82,9 @@ class SoundSystem {
   }
   private loadIndex(): Promise<Record<string, string> | null> {
     this.index ??= fetch(this.base() + 'index.json')
-      .then((r) => (r.ok && (r.headers.get('content-type') ?? '').includes('json') ? r.json() : null))
+      // raw.githubusercontent.com 把 JSON 标成 text/plain，所以不看类型，直接解析；开发服务器对不存在的路径回 index.html，解析失败即视为没有
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => (j && typeof j === 'object' && !Array.isArray(j) ? (j as Record<string, string>) : null))
       .catch(() => null);
     return this.index;
   }
