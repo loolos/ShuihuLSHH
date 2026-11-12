@@ -142,6 +142,8 @@ function startGame(assets: Assets) {
     scene: [],
   });
   const scene = () => game.scene.getScene('battle') as BattleScene | null;
+  // 开发模式下给 Playwright 截图脚本用
+  if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game; __ui: BattleUI }).__game = game, ((window as unknown as { __ui: BattleUI }).__ui = ui);
   const stageOf = (i: number) => stages.find((s) => s.index === i)!;
   const label = (s: (typeof stages)[number]) => assets.tr(s.title) || s.mapName;
   const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName);
