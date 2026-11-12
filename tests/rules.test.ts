@@ -373,8 +373,8 @@ describe('关卡串联', () => {
 
 describe('通行判断（EXE 0x40bc30）', () => {
   const gAtt = new Uint8Array(2048), uAtt = new Uint8Array(2048);
-  gAtt[5] = 0xff;
-  uAtt[7] = 0xff;
+  gAtt[4] = 0xff; // 图块 5 用 att[4]（EXE 错一位）
+  uAtt[6] = 0xff; // 图块 7
   const L = (tile: number, flags = 0) => ({ tile, flags });
   it('地表', () => {
     expect(cellPassable([L(1)], gAtt, uAtt)).toBe(true);
