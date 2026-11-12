@@ -2,6 +2,7 @@
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
 import { buffName } from '../rules/data.ts';
+import { sound } from './sound.ts';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
@@ -151,11 +152,15 @@ export class BattleUI {
   /** 显示指令菜单。`float` 为真时菜单跟着人物（位置由 placeCommands 每帧更新），否则放在右下角 */
   setCommands(list: Command[] | null, float = false) {
     const [box, other] = float ? [this.cmdFloat, this.cmd] : [this.cmd, this.cmdFloat];
+    // 原版打开 / 关闭窗口时播 m01 / m02（EXE 0x416fb0 / 0x417010）
+    const was = !this.cmd.hidden || !this.cmdFloat.hidden;
     other.hidden = true;
     if (!list) {
       box.hidden = true;
+      if (was) void sound.sfx('m02');
       return;
     }
+    if (!was) void sound.sfx('m01');
     box.replaceChildren(
       ...list.map((c) => {
         const b = document.createElement('button');

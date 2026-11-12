@@ -501,7 +501,7 @@ describe('关卡串联', () => {
   it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {
     const b = new Battle({ name: 'act', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
     const ev = b.begin();
-    expect(ev.map((e) => e.type)).toEqual(['narrate', 'end']);
+    expect(ev.map((e) => e.type)).toEqual(['sound', 'narrate', 'end']);
     expect(b.status).toBe('won');
     const c = new Battle({ name: 'act', board: new Board(6, 6), units: [act(0, 1, 'enemy', 0, 0)], blocks: [], data });
     c.begin();

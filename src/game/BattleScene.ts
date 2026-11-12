@@ -11,7 +11,7 @@ import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, ICON_KEY, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { dirIndex, fxChain, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
@@ -64,6 +64,8 @@ export class BattleScene extends Phaser.Scene {
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
   private busy = false;
+  /** 本场已经播过过关 / 失败音（剧本指令 29 / 30） */
+  private endSound = false;
   /** 非我方阶段双击后快进：时间、补间、动画都加速，镜头直接跳过去【新】 */
   private fast = false;
   private lastTap = 0;
@@ -103,7 +105,12 @@ export class BattleScene extends Phaser.Scene {
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
-    sound.preload(['m03', ...sound.skillSounds(this.battle.units.flatMap((u) => [attackSkill(u, this.assets.data), ...learnedSkills(u, this.assets.data)]))]);
+    const allSkills = this.battle.units.flatMap((u) => [attackSkill(u, this.assets.data), ...learnedSkills(u, this.assets.data)]);
+    sound.preload([
+      ...['m01', 'm02', 'm03', 'm09', '44', '46', 'm13', 'm04', 'm10', 'm07'],
+      ...sound.skillSounds(allSkills),
+      ...allSkills.flatMap((s) => fxGroups(s).map((g) => String(g + 1))),
+    ]);
 
     for (let y = 0; y < map.height; y++)
       for (let x = 0; x < map.width; x++) {
@@ -636,6 +643,10 @@ export class BattleScene extends Phaser.Scene {
       case 'message':
         this.ui.message(e.text);
         break;
+      case 'sound':
+        if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
+        sound.sfx(e.name);
+        break;
       case 'die':
       case 'leave': {
         const s = this.sprites.get(e.uid);
@@ -813,7 +824,6 @@ export class BattleScene extends Phaser.Scene {
           if (first) await this.focusOn(first, 400);
         }
         if (e.side === 'player' || b.units.some((u) => u.side === e.side && u.present && u.alive)) {
-          if (e.side === 'player') sound.play('turn');
           await this.banner(e.side === 'player' ? `第 ${e.turn} 回合` : `${PHASE_NAME[e.side]}行动`);
         }
         break;
@@ -830,7 +840,10 @@ export class BattleScene extends Phaser.Scene {
       case 'move': {
         const u = b.unit(e.uid)!;
         const v = this.vs(u);
-        if (e.path.length > 1) await this.walkPath(u, e.path);
+        if (e.path.length > 1) {
+          sound.sfx('m09'); // 开始移动（EXE 0x405f20）
+          await this.walkPath(u, e.path);
+        }
         const last = e.path[e.path.length - 1];
         Object.assign(v, { x: last.x, y: last.y, facing: e.facing });
         this.pose(u);
@@ -874,12 +887,15 @@ export class BattleScene extends Phaser.Scene {
         const fxWave = (): Promise<void> => {
           const all: Promise<void>[] = [];
           for (const sp of chains)
-            for (const part of sp.chain.parts) {
+            for (const [pi, part] of sp.chain.parts.entries()) {
               const anim = effectAnim(this, this.assets, part.group);
               if (!anim) continue;
+              // 特效音 <组号+1>（EXE 0x403880）；遠程技的第一段不出声
+              const audible = !(pi === 0 && fx?.directional);
               all.push(
                 new Promise<void>((r) => {
                   this.time.delayedCall((sp.ring + part.startFrame) * EFFECT_FRAME_MS, () => {
+                    if (audible) sound.effect(part.group);
                     const p = cellToWorld(sp.cell.x, sp.cell.y);
                     const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(sp.cell.x, sp.cell.y, 10));
                     s.play(anim);
@@ -909,19 +925,17 @@ export class BattleScene extends Phaser.Scene {
                   if (!res.hit) {
                     // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
                     if (i > 0) return r();
-                    sound.play('miss');
                     this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
                     return void this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                   }
                   const perPart = res.parts.length === frames.length;
                   if (perPart && !res.partHit[i]) {
-                    sound.play('miss');
                     this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
                     return r();
                   }
                   const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
                   const crit = perPart ? res.partCrit[i] : res.crit;
-                  sound.play(crit ? 'crit' : 'hit');
+                  if (dmg !== null && dmg > 0) sound.hurt(crit);
                   if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
                   this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                 });
@@ -943,7 +957,6 @@ export class BattleScene extends Phaser.Scene {
         const v = this.vs(u);
         v.hp = e.hp;
         this.drawBar(u);
-        if (e.delta > 0) sound.play('heal');
         if (e.text) this.float(v.x, v.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
         else if (e.delta > 0) this.float(v.x, v.y, `+${e.delta}`, '#90e070');
         if (e.text) await wait(this, 400);
@@ -951,7 +964,6 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'status': {
         const v = this.vs(b.unit(e.uid)!);
-        sound.play('status');
         this.float(v.x, v.y, tr(e.text), '#c080ff');
         await wait(this, 300);
         break;
@@ -961,7 +973,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'die':
       case 'leave': {
-        if (e.type === 'die') sound.play('ko');
+        if (e.type === 'die') sound.sfx('m13', 'ko'); // 被击倒（EXE 0x404c80「戰敗了！」）
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();
@@ -974,12 +986,18 @@ export class BattleScene extends Phaser.Scene {
       case 'message':
         this.ui.message(e.text);
         break;
+      case 'sound':
+        if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
+        sound.sfx(e.name);
+        break;
       case 'pickup':
+        sound.sfx('m07'); // 拾到宝物（EXE 0x4054e0「得到了」）
         this.groundItems.get(`${e.x},${e.y}`)?.destroy();
         this.groundItems.delete(`${e.x},${e.y}`);
         break;
       case 'end':
-        sound.play(e.result === 'won' ? 'win' : 'lose');
+        // 过关 / 失败音由剧本指令 29 / 30 发出；全灭等没有剧本的结局在这里补上
+        if (!this.endSound) sound.sfx(e.result === 'won' ? 'm12' : 'm05', e.result === 'won' ? 'win' : 'lose');
         this.select({ kind: 'idle' });
         await wait(this, 300);
         if (this.onEnd) this.onEnd(this.battle, e.result === 'won', e.text);
