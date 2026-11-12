@@ -163,6 +163,18 @@ describe('战斗流程', () => {
     expect(p.ended).toBe(true);
   });
 
+  it('跟随型 AI（模式 5）体力不满时移动后休息', () => {
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), blocks: [], data, seed: 1,
+      units: [act(0, 0, 'player', 0, 0), act(1, 1, 'ally', 5, 5, 0x500), act(2, 1, 'enemy', 9, 9, 0x800)],
+    });
+    b.begin();
+    const a = b.unit(1)!;
+    a.hp = 10;
+    b.endPlayerPhase();
+    expect(a.hp).toBe(10 + Math.floor(a.stats.maxHp / 5));
+  });
+
   it('敌方默认 AI 会接近并攻击', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 4, 0)], blocks: [], data, seed: 2 });
     b.begin();

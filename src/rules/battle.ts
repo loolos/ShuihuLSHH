@@ -383,12 +383,16 @@ export class Battle {
   rest(u: Unit): BattleEvent[] {
     this.out = [];
     if (!this.canAct(u) || u.acted) return [];
+    this.applyRest(u);
+    u.ended = true;
+    return this.flush();
+  }
+
+  private applyRest(u: Unit) {
     const hp0 = u.hp;
     u.hp = Math.min(u.stats.maxHp, u.hp + Math.max(1, Math.floor(u.stats.maxHp / REST_DIVISOR)));
     u.mp = Math.min(u.stats.maxMp, u.mp + Math.max(1, Math.floor(u.stats.maxMp / REST_DIVISOR)));
-    u.ended = true;
     this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '休息' });
-    return this.flush();
   }
 
   wait(u: Unit): BattleEvent[] {
@@ -604,6 +608,7 @@ export class Battle {
         const ok = this.skillCells(u, plan.skill).some((c) => c.x === plan.cell!.x && c.y === plan.cell!.y);
         if (ok && this.affected(u, plan.skill, plan.cell).length) this.cast(u, plan.skill, plan.cell, false);
       }
+      if (this.status === 'playing' && plan.rest && u.alive) this.applyRest(u);
     }
     u.ended = true;
     this.afterAction();

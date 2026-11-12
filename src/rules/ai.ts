@@ -14,6 +14,8 @@ export interface AiPlan {
   /** 施放点 */
   cell?: Cell;
   healSlot?: number;
+  /** 移动后休息（跟随型 AI 血不满时）【新】 */
+  rest?: boolean;
 }
 
 interface Option {
@@ -168,8 +170,11 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       }
       return approach(b, u, [u.ai.point], 0);
     }
-    case 5: // 跟随指定单位，不攻击
-      return target ? approach(b, u, [target], 1) : {};
+    case 5: {
+      // 跟随指定单位，不攻击；体力不满时走完顺便休息（负责人 2026-11-12 要求，原版没有）【新】
+      const plan = target ? approach(b, u, [target], 1) : {};
+      return u.hp < u.stats.maxHp ? { ...plan, rest: true } : plan;
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
