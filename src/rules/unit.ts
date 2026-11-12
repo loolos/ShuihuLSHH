@@ -1,5 +1,5 @@
 // 战场单位与属性计算。公式见 docs/game-design.md §3（EXE 0x408540）。
-import { basicAttack, EQUIP_SLOTS, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
+import { basicAttack, type Buff, EQUIP_SLOTS, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
 
@@ -49,6 +49,8 @@ export interface Unit {
   defending: boolean;
   poisonTurns: number;
   stunTurns: number;
+  /** 道具带来的限时效果（增益、抗毒、抗昏） */
+  buffs: Buff[];
   // 本回合行动状态
   movementRemaining: number;
   forcedMarch: boolean;
@@ -72,7 +74,7 @@ export function grow(s: { base: number; growth: number }, level: number, cap = C
   return Math.min(cap, Math.floor(s.base * Math.pow(s.growth / 100, level)));
 }
 
-export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = []): Stats {
+export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
   const st: Stats = {
     maxHp: grow(cls.hp, level, CAP_HPMP),
     maxMp: grow(cls.mp, level, CAP_HPMP),
@@ -97,7 +99,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.hit += it!.hit;
     st.agility += it!.agility;
     st.crit += it!.crit;
-    st.move += it!.moveBonus;
+    st.move += equipMoveBonus(it!);
     st.rangeBonus += it!.range;
     st.maxHp += it!.maxHp;
     st.maxMp += it!.maxMp;
@@ -106,6 +108,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.poison += it!.poison;
     st.stun += it!.stun;
   }
+  for (const b of buffs) if (b.stat in st) st[b.stat as keyof Stats] += b.value;
   st.maxHp = Math.min(CAP_HPMP, st.maxHp);
   st.maxMp = Math.min(CAP_HPMP, st.maxMp);
   for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, Math.min(CAP_STAT, st[k]));
@@ -117,7 +120,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 }
 
 export function refreshStats(u: Unit, data: GameData) {
-  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge);
+  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs);
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);
 }
@@ -147,6 +150,8 @@ export function inAttackRange(a: { x: number; y: number }, t: { x: number; y: nu
   const d = Math.abs(a.x - t.x) + Math.abs(a.y - t.y);
   return d >= lo && d <= hi;
 }
+
+export const resists = (u: Unit, stat: 'resistPoison' | 'resistStun') => u.buffs.some((b) => b.stat === stat);
 
 export const isFoe = (a: Side, b: Side) => (a === 'enemy') !== (b === 'enemy');
 export const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);

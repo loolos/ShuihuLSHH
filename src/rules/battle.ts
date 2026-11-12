@@ -7,11 +7,11 @@ import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { isHealing, itemOf, type GameData, type SkillDef } from './data.ts';
+import { buffName, canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import {
-  attackRange, attackSkill, computeStats, DIRS, facingTowards, inAttackRange, isFoe, refreshStats, type Side, type Unit,
+  attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
 export { EXP_PER_LEVEL, MAX_PLAYER_LEVEL } from './exp.ts';
@@ -138,7 +138,7 @@ export class Battle {
         uid: a.index, classId: a.type, name: this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
-        present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0,
+        present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
       });
     }
@@ -291,6 +291,11 @@ export class Battle {
       if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0 });
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
+      if (u.buffs.length) {
+        for (const b of u.buffs) b.turns--;
+        u.buffs = u.buffs.filter((b) => b.turns > 0);
+        refreshStats(u, this.data);
+      }
     }
     this.startPhase('player');
   }
@@ -414,38 +419,160 @@ export class Battle {
     return [];
   }
 
-  /** 可以使用的道具槽（回复、解毒、解昏） */
+  /** 可以使用的道具槽（回复、解毒解昏、抗毒抗昏、增益；类型 15–22） */
   usableSlots(u: Unit): number[] {
     if (!this.canAct(u)) return [];
-    return u.slots.flatMap((id, k) => {
-      const it = itemOf(this.data, id);
-      return it && (isHealing(it) || it.type === 18 || it.type === 19) ? [k] : [];
-    });
+    return u.slots.flatMap((id, k) => (isUsable(itemOf(this.data, id)) ? [k] : []));
   }
 
-  /** 对自己使用道具：不算行动、不消耗移动力、不限次数（原版 0x409798 → 0x408dc0 → 0x4094e0，不碰行动结束标志） */
-  useItem(u: Unit, slot: number): BattleEvent[] {
-    this.out = [];
+  /**
+   * 道具能用在谁身上：自己和上下左右相邻格的非敌方单位。
+   * 原版"使用"指令（0x409618）调 0x40d5d0(位置, 0, 1)，沿 4 个方向标出距离 0–1 的格子；
+   * 执行时（0x409798）只要光标处的单位不是敌方（unit+0x3b ≠ 2）就交给 0x408dc0。
+   */
+  itemTargets(u: Unit, slot: number): Unit[] {
     if (!this.usableSlots(u).includes(slot)) return [];
-    this.applyItem(u, slot);
+    return this.active().filter((t) => dist(u, t) <= 1 && !isFoe(u.side, t.side));
+  }
+
+  /** 使用道具：不算行动、不消耗移动力、不限次数（原版 0x409798 → 0x408dc0 → 0x4094e0，不碰行动结束标志） */
+  useItem(u: Unit, slot: number, target: Unit = u): BattleEvent[] {
+    this.out = [];
+    if (!this.itemTargets(u, slot).includes(target)) return [];
+    this.applyItem(u, slot, target);
     this.gainExp(u, itemExp(this.rng));
     u.turnStart = null;
     return this.flush();
   }
 
-  private applyItem(u: Unit, slot: number) {
+  /**
+   * 给予的对象：上下左右相邻的我方人物。原版"給予"指令（0x4095ec）调 0x40d5d0(位置, 1, 1)，
+   * 执行时（0x409752）要求对方是我方（unit+0x3b = 0）。
+   */
+  giveTargets(u: Unit, slot: number): Unit[] {
+    if (!this.canAct(u) || u.side !== 'player' || !u.slots[slot] || u.slots[slot] > 200) return [];
+    return this.active().filter((t) => t !== u && t.side === 'player' && dist(u, t) === 1);
+  }
+
+  /**
+   * 给予：放进对方道具栏 3–6 的第一个空位（装备也一样，交过去再由对方装上），打铁次数跟着走；
+   * 对方道具栏满了就不给（0x409460 返回 0）。不算行动（0x409752 不碰行动结束标志）。
+   */
+  giveItem(u: Unit, slot: number, target: Unit): BattleEvent[] {
+    this.out = [];
+    if (!this.giveTargets(u, slot).includes(target)) return [];
     const it = itemOf(this.data, u.slots[slot])!;
+    const k = [3, 4, 5, 6].find((i) => !target.slots[i]);
+    if (k === undefined) {
+      this.emit({ type: 'message', text: `${target.name}的道具已滿。` });
+      return this.flush();
+    }
+    target.slots[k] = u.slots[slot];
+    target.forge[k] = u.forge[slot] ?? 0;
+    this.clearSlot(u, slot);
+    u.turnStart = null;
+    this.emit({ type: 'message', text: `${u.name}把${this.tr(it.name)}交給了${target.name}。` });
+    return this.flush();
+  }
+
+  /** 丢弃【新：原版战斗菜单里的丟棄未核对】 */
+  discardItem(u: Unit, slot: number): BattleEvent[] {
+    this.out = [];
+    const it = itemOf(this.data, u.slots[slot]);
+    if (!this.canAct(u) || u.side !== 'player' || !it) return [];
+    this.clearSlot(u, slot);
+    this.emit({ type: 'message', text: `${u.name}丟棄了${this.tr(it.name)}。` });
+    return this.flush();
+  }
+
+  /**
+   * 装备 / 卸下（原版命令 8"裝備"在菜单里直接完成，不算行动）：
+   * 物品栏里的装备换进对应的装备栏（原来的换到这一格）；装备栏里的则卸到第一个空的物品栏。
+   */
+  equipItem(u: Unit, slot: number): BattleEvent[] {
+    this.out = [];
+    const it = itemOf(this.data, u.slots[slot]);
+    if (!this.canAct(u) || u.side !== 'player' || !it) return [];
+    let to: number;
+    if (slot < EQUIP_SLOTS) {
+      to = [3, 4, 5, 6].find((i) => !u.slots[i]) ?? -1;
+      if (to < 0) {
+        this.emit({ type: 'message', text: '道具已滿，無法卸下。' });
+        return this.flush();
+      }
+    } else {
+      to = equipSlotOf(it);
+      if (to < 0 || !canEquip(this.data.classes[u.classId], it, this.data)) {
+        this.emit({ type: 'message', text: `${u.name}不能裝備${this.tr(it.name)}。` });
+        return this.flush();
+      }
+    }
+    [u.slots[slot], u.slots[to]] = [u.slots[to] ?? 0, u.slots[slot]];
+    [u.forge[slot], u.forge[to]] = [u.forge[to] ?? 0, u.forge[slot] ?? 0];
+    const before = u.stats.move;
+    refreshStats(u, this.data);
+    this.adjustMovement(u, u.stats.move - before);
+    u.turnStart = null;
+    this.emit({ type: 'message', text: `${u.name}${slot < EQUIP_SLOTS ? '卸下' : '裝備'}了${this.tr(it.name)}。` });
+    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+    return this.flush();
+  }
+
+  canEquipItem(u: Unit, slot: number): boolean {
+    const it = itemOf(this.data, u.slots[slot]);
+    if (!it || u.side !== 'player' || !this.canAct(u)) return false;
+    if (slot < EQUIP_SLOTS) return [3, 4, 5, 6].some((i) => !u.slots[i]);
+    return equipSlotOf(it) >= 0 && canEquip(this.data.classes[u.classId], it, this.data);
+  }
+
+  private clearSlot(u: Unit, slot: number) {
     u.slots[slot] = 0;
     u.forge[slot] = 0;
-    const hp0 = u.hp;
-    if (it.healHp) u.hp = it.healHp < 0 ? u.stats.maxHp : Math.min(u.stats.maxHp, u.hp + it.healHp);
-    if (it.healMp) u.mp = it.healMp < 0 ? u.stats.maxMp : Math.min(u.stats.maxMp, u.mp + it.healMp);
-    if (it.type === 18 || it.curePoison) {
-      u.poisonTurns = 0;
+    if (slot < EQUIP_SLOTS) {
+      const before = u.stats.move;
       refreshStats(u, this.data);
+      this.adjustMovement(u, u.stats.move - before);
     }
-    if (it.type === 19 || it.cureStun) u.stunTurns = 0;
-    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: this.tr(it.name) });
+  }
+
+  /** 移动力变了（换装备、增益）时，本回合还没走完的部分跟着变 */
+  private adjustMovement(u: Unit, delta: number) {
+    if (!delta || u.side !== this.phase || u.ended || u.acted) return;
+    u.movementRemaining = Math.max(0, u.movementRemaining + delta);
+  }
+
+  /** 道具效果（EXE 0x408dc0）：回复、解毒解昏、限时效果；战报按原版"甲使用了某某，乙生命力恢復了 N 點。" */
+  private applyItem(u: Unit, slot: number, t: Unit = u) {
+    const it = itemOf(this.data, u.slots[slot])!;
+    const name = this.tr(it.name);
+    this.clearSlot(u, slot);
+    const hp0 = t.hp, mp0 = t.mp;
+    if (it.healHp) t.hp = it.healHp < 0 ? t.stats.maxHp : Math.min(t.stats.maxHp, t.hp + it.healHp);
+    if (it.healMp) t.mp = it.healMp < 0 ? t.stats.maxMp : Math.min(t.stats.maxMp, t.mp + it.healMp);
+    const who = `${u.name}使用了${name}，${t === u ? '' : t.name}`;
+    if (it.healHp) this.emit({ type: 'message', text: it.healHp < 0 ? `${who}生命力全部恢復` : `${who}生命力恢復了${t.hp - hp0}點。` });
+    if (it.healMp) this.emit({ type: 'message', text: it.healMp < 0 ? `${who}氣力全部恢復` : `${who}氣力恢復了${t.mp - mp0}點。` });
+    let cured = false;
+    if ((it.type === 18 || it.curePoison) && t.poisonTurns > 0) (t.poisonTurns = 0), (cured = true);
+    if ((it.type === 19 || it.cureStun) && t.stunTurns > 0) {
+      t.stunTurns = 0;
+      cured = true;
+      // 昏迷时这回合本来不能行动；解昏后照常行动【新】
+      if (t.side === this.phase && !t.acted) t.ended = false;
+    }
+    if (cured) this.emit({ type: 'message', text: `${who}狀態恢復正常了！` });
+    const buffs = itemBuffs(it);
+    const move0 = t.stats.move;
+    for (const b of buffs) {
+      // 同一项效果再用一次：以新的为准（不叠加）【新】
+      t.buffs = t.buffs.filter((x) => x.stat !== b.stat);
+      t.buffs.push({ ...b });
+    }
+    refreshStats(t, this.data);
+    this.adjustMovement(t, t.stats.move - move0);
+    if (buffs.length) this.emit({ type: 'message', text: `${who}${buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''}`).join('、')}，持續 ${Math.max(...buffs.map((b) => b.turns))} 回合。` });
+    if (!it.healHp && !it.healMp && !cured && !buffs.length) this.emit({ type: 'message', text: `${who}沒有效果。` });
+    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
   }
 
   // ───────────── 结算 ─────────────
@@ -532,12 +659,12 @@ export class Battle {
         this.kill(u, t);
         continue;
       }
-      if (r.poisoned && t.poisonTurns === 0) {
+      if (r.poisoned && t.poisonTurns === 0 && !resists(t, 'resistPoison')) {
         t.poisonTurns = this.rng.range(2, 4);
         refreshStats(t, this.data);
         this.emit({ type: 'status', uid: t.uid, text: '中毒了！' });
       }
-      if (r.stunned && t.stunTurns === 0) {
+      if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun')) {
         t.stunTurns = this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }

@@ -6,7 +6,7 @@ import { baseDamage, critChance, facingRelation, hitChance, rollAttack } from '.
 import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { computeStats, facingTowards, grow, type Unit } from '../src/rules/unit.ts';
+import { computeStats, facingTowards, grow, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -31,7 +31,7 @@ function unit(o: Partial<Unit>): Unit {
   return {
     uid: 0, classId: 0, name: 'u', side: 'player', x: 0, y: 0, facing: 0, level: 0, exp: 0, hp: stats.maxHp, mp: stats.maxMp, stats,
     slots: [], forge: [], gold: 0, ai: { mode: 0, target: 0, point: { x: 0, y: 0 } }, present: true, alive: true, defending: false, poisonTurns: 0,
-    stunTurns: 0, movementRemaining: 4, forcedMarch: false, acted: false, ended: false, turnStart: null, ...o,
+    stunTurns: 0, buffs: [], movementRemaining: 4, forcedMarch: false, acted: false, ended: false, turnStart: null, ...o,
   };
 }
 
@@ -45,6 +45,15 @@ describe('属性', () => {
   it('装备加成按道具编号（从 1 开始）计算', () => {
     expect(computeStats(data.classes[0], 0, [1], data).attack).toBe(67);
     expect(computeStats(data.classes[0], 0, [1], data, true).attack).toBe(33); // 中毒减半
+  });
+});
+
+describe('装备移动力', () => {
+  it('装备扣移动不生效，加移动照算', () => {
+    const boots = { ...glove, moveBonus: 1 } as Item, helm = { ...glove, type: 14, moveBonus: -2 } as Item;
+    const d2: GameData = { ...data, items: [boots, helm] };
+    expect(computeStats(d2.classes[0], 0, [1, 0, 2], d2).move).toBe(5);
+    expect(computeStats(d2.classes[0], 0, [0, 0, 2], d2).move).toBe(4);
   });
 });
 
@@ -191,6 +200,50 @@ describe('战斗流程', () => {
     expect(p.hp).toBe(21 + Math.floor(p.stats.maxHp / 5));
     expect(p.mp).toBe(Math.floor(p.stats.maxMp / 5));
     expect(p.ended).toBe(true);
+  });
+
+  it('道具：对自己和上下左右相邻的非敌方单位使用；给予只给相邻我方；装备、卸下、丢弃都不算行动', () => {
+    const potion = { ...glove, type: 15, name: '藥', attack: 0, healHp: 10, healMp: 0, params: [] } as unknown as Item;
+    const wine = { ...glove, type: 22, name: '酒', attack: 5, attackTurns: 3, healHp: 0, healMp: 0, params: [] } as unknown as Item;
+    const d2: GameData = { ...data, items: [glove, potion, wine] };
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), blocks: [], data: d2, seed: 1,
+      units: [act(0, 0, 'player', 2, 2), act(1, 1, 'player', 3, 2), act(2, 1, 'ally', 2, 3), act(3, 1, 'player', 3, 3), act(4, 1, 'enemy', 1, 2, 0x800)],
+    });
+    b.begin();
+    const [p, q, ally, diag] = [b.unit(0)!, b.unit(1)!, b.unit(2)!, b.unit(3)!];
+    p.slots = [1, 0, 0, 2, 3, 0, 0];
+    p.forge = [2, 0, 0, 0, 0, 0, 0];
+    refreshStats(p, d2);
+    expect(b.itemTargets(p, 3).map((t) => t.uid).sort()).toEqual([0, 1, 2]); // 斜角、敌人不行
+    expect(b.itemTargets(p, 0)).toEqual([]); // 武器不能"使用"
+    q.hp = 1;
+    b.useItem(p, 3, q);
+    expect(q.hp).toBe(11);
+    expect(p.slots[3]).toBe(0);
+    expect(b.useItem(p, 4, diag)).toEqual([]);
+    // 增益：攻击 +5，3 回合
+    const atk = ally.stats.attack;
+    b.useItem(p, 4, ally);
+    expect(ally.stats.attack).toBe(atk + 5);
+    // 给予：只能给相邻的我方，装备交出去后自己的攻击回落，打铁次数跟着走
+    expect(b.giveTargets(p, 0).map((t) => t.uid)).toEqual([1]);
+    const pa = p.stats.attack;
+    b.giveItem(p, 0, q);
+    expect(p.stats.attack).toBe(pa - 7);
+    expect(q.slots[3]).toBe(1);
+    expect(q.forge[3]).toBe(2);
+    b.equipItem(q, 3);
+    expect(q.slots[0]).toBe(1);
+    expect(q.slots[3]).toBe(0);
+    b.equipItem(q, 0);
+    expect(q.slots[0]).toBe(0);
+    b.discardItem(q, 3);
+    expect(q.slots.every((x) => !x)).toBe(true);
+    expect([p, q].every((x) => b.canAct(x) && !x.ended)).toBe(true);
+    for (let t = 0; t < 3; t++) b.endPlayerPhase();
+    expect(ally.buffs).toEqual([]);
+    expect(ally.stats.attack).toBe(atk);
   });
 
   it('跟随型 AI（模式 5）体力不满时移动后休息', () => {
