@@ -142,3 +142,32 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
     expect(names(2)).toEqual([]);
   });
 });
+
+describe.skipIf(!has)('测试用跳关', () => {
+  it('按目标关敌人平均等级补等级，换上最后一个城镇能买到的最好装备', async () => {
+    const { loadGameData } = await import('../src/rules/load.ts');
+    const { jumpTo } = await import('../src/rules/preset.ts');
+    const files = {
+      index: new Map<string, string>(),
+      init() {
+        for (const d of ['', 'Data', 'Map']) for (const f of fs.readdirSync(path.join(DATA, d))) this.index.set((d ? `${d}/${f}` : f).toLowerCase(), path.join(DATA, d, f));
+        return this;
+      },
+      get(p: string) { return fs.readFileSync(this.index.get(p.toLowerCase())!); },
+      has(p: string) { return this.index.has(p.toLowerCase()); },
+      list(dir: string, ext: string) { return [...this.index.keys()].filter((k) => k.startsWith(dir.toLowerCase() + '/') && k.endsWith(ext)); },
+    }.init();
+    const data = loadGameData(files);
+    const exe = readExeTables(files.get('ShuiHu.exe'));
+    const stages = exe.stages.filter((s) => s.mapName);
+    const c = jumpTo(files, data, stages, 34, newCampaign(0)); // N06
+    const lin = c.members.find((m) => m.classId === 11)!; // 林沖
+    expect(c.stage).toBe(34);
+    expect(lin.level).toBe(16);
+    expect(c.members.find((m) => m.classId === 0)!.level).toBe(16);
+    // 最后去过的城镇是 4（N-add07 之后）：主角用拳套类，换上城镇 4 武器店里攻击最高的
+    const hero = c.members.find((m) => m.classId === 0)!;
+    expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
+    expect(jumpTo(files, data, stages, 0, newCampaign(0)).members.find((m) => m.classId === 0)!.level).toBe(1);
+  });
+});
