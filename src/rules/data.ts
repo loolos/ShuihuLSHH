@@ -73,9 +73,17 @@ export function itemOf(data: GameData, id: number): Item | undefined {
 
 /** 道具类型码：0–12 武器、13 衣服、14 头饰，可以提供装备加成 */
 export const isEquipment = (it: Item | undefined) => !!it && it.type <= 14;
-/** 装备栏：前 3 格是武器（类型 0–12）、衣服（13）、头饰/饰品（14），只有这 3 格的装备算加成（EXE 0x408803 只循环 3 格）；其余 4 格是随身物品 */
+/**
+ * 装备栏：前 3 格是武器（类型 0–12）、衣服（13）、头饰/饰品（14），只有这 3 格的装备算加成（EXE 0x408803 只循环 3 格）。
+ * 其余是随身物品：原版 4 格，重制版 10 格【新：负责人 2026-11-12】。
+ */
 export const EQUIP_SLOTS = 3;
-export const SLOT_COUNT = 7;
+export const BAG_SIZE = 10;
+export const SLOT_COUNT = EQUIP_SLOTS + BAG_SIZE;
+/** 随身物品栏的格号（第 3 格起） */
+export const BAG_SLOTS: readonly number[] = Array.from({ length: BAG_SIZE }, (_, i) => EQUIP_SLOTS + i);
+/** 第一个空的随身物品格，没有返回 -1 */
+export const freeBagSlot = (slots: readonly number[]) => BAG_SLOTS.find((k) => !slots[k]) ?? -1;
 export function equipSlotOf(it: Item | undefined): number {
   if (!it) return -1;
   return it.type <= 12 ? 0 : it.type === 13 ? 1 : it.type === 14 ? 2 : -1;

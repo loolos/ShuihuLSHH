@@ -28,12 +28,14 @@ const data: GameData = {
   charNames: ['甲', '乙'],
   heroName: '甲',
 };
+/** 补齐到 13 格（3 装备 + 10 随身） */
+const pad = (a: number[]) => [...a, ...Array(13 - a.length).fill(0)];
 const camp = (gold = 1000): CampaignState => ({
   ...newCampaign(0),
   gold,
   members: [
-    { classId: 0, level: 1, exp: 0, slots: [1, 0, 0, 4, 0, 0, 0] },
-    { classId: 1, level: 1, exp: 0, slots: [2, 3, 0, 4, 4, 4, 4] },
+    { classId: 0, level: 1, exp: 0, slots: pad([1, 0, 0, 4]) },
+    { classId: 1, level: 1, exp: 0, slots: [2, 3, 0, ...Array(10).fill(4)] },
   ],
 });
 
@@ -47,9 +49,9 @@ describe('城镇', () => {
   it('买：扣钱，能装上就放进空的装备栏，否则放随身物品；钱不够、道具满都不行', () => {
     let r = buy(camp(), data, 0, 3);
     expect(r).toMatchObject({ ok: true, c: { gold: 900 } });
-    expect(r.c.members[0].slots).toEqual([1, 3, 0, 4, 0, 0, 0]);
+    expect(r.c.members[0].slots).toEqual(pad([1, 3, 0, 4, 0, 0, 0]));
     r = buy(r.c, data, 0, 2); // 棍不是甲的武器类型 → 随身
-    expect(r.c.members[0].slots).toEqual([1, 3, 0, 4, 2, 0, 0]);
+    expect(r.c.members[0].slots).toEqual(pad([1, 3, 0, 4, 2, 0, 0]));
     expect(buy(camp(10), data, 0, 1)).toMatchObject({ ok: false, text: '金錢不夠！' });
     expect(buy(camp(), data, 1, 4)).toMatchObject({ ok: false });
   });
@@ -88,7 +90,7 @@ describe('城镇', () => {
     expect(c.members[1].forge![6]).toBe(1);
     expect(equip(c, data, 1, 6)).toMatchObject({ ok: false });
     c = give(c, data, 1, 0, 0).c; // 棍给甲：甲武器栏空了，但棍不合 → 随身
-    expect(c.members[0].slots).toEqual([0, 0, 0, 4, 2, 0, 0]);
+    expect(c.members[0].slots).toEqual(pad([0, 0, 0, 4, 2, 0, 0]));
     expect(equip(c, data, 0, 4).ok).toBe(false);
     expect(equip(c, data, 1, 1)).toMatchObject({ ok: false, text: '道具已滿，無法卸下。' });
     const d = equip(discard(c, data, 1, 3).c, data, 1, 1); // 卸下衣服
