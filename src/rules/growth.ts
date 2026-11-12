@@ -55,11 +55,11 @@ export const CLASS_TWEAKS: Record<number, Tweak> = {
   65: { pct: { hp: 15, defense: 5 } }, // 頭領
   66: { pct: { agility: 25, hp: -15, defense: -10 }, add: { crit: 8 } }, // 刺客
   // 名将
-  59: { pct: { attack: -30 } }, // 陳達：第 2 章约 2.2 下就能打倒我方（技能威力还在，-15% 不够）
+  59: { pct: { attack: -30 } }, // 陳達：第 2 章约 2.2 下就能打倒我方；普通攻击威力 15，还会放威力 30–60 的气力技，-15% 不够
   49: { pct: { hp: 25 } }, // 李吉
   63: { pct: { attack: 10 } }, // 富安
   71: { pct: { hp: 30 } }, // 洪教頭
-  48: { pct: { attack: -18, hp: 10 } }, // 朱仝
+  48: { pct: { attack: -18, hp: 10 } }, // 朱仝：33 级、基础攻击 75，约 2.6 下就能打倒我方（他只有威力 0 的斬字訣）
   60: { pct: { attack: -8, hp: 10 } }, // 雷橫
   52: { pct: { attack: -12 } }, // 阮小七
   56: { pct: { hp: -15 }, add: { crit: -10 } }, // 高俅
