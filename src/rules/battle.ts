@@ -195,6 +195,10 @@ export class Battle {
   canAct(u: Unit) {
     return this.status === 'playing' && u.side === this.phase && !u.ended && u.alive && u.present;
   }
+  /** 我方回合里已经没有能行动的我方人物（死亡、未登场、昏迷、行动完毕的都不算） */
+  playerPhaseDone() {
+    return this.status === 'playing' && this.phase === 'player' && !this.units.some((u) => u.side === 'player' && this.canAct(u));
+  }
   attackTargets(u: Unit): Unit[] {
     if (!this.canAct(u) || u.acted) return [];
     const r = attackRange(u, this.data);

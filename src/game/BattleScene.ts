@@ -144,7 +144,7 @@ export class BattleScene extends Phaser.Scene {
     this.ui.clearLog();
     this.ui.showUnit(null);
     this.ui.setCommands(null);
-    this.run(this.battle.begin());
+    this.run(this.battle.begin()).then(() => this.autoEndTurn());
   }
 
   // ───────────── 单位精灵 ─────────────
@@ -378,6 +378,16 @@ export class BattleScene extends Phaser.Scene {
     if (this.battle.status !== 'playing') return;
     this.pose(u);
     this.select(this.battle.canAct(u) ? (next ?? { kind: 'selected', u }) : { kind: 'idle' });
+    this.autoEndTurn();
+  }
+
+  /** 我方全员行动完毕就自动结束回合（稍等一下，让玩家看清最后一个动作的结果） */
+  private autoEndTurn() {
+    if (!this.battle.playerPhaseDone()) return;
+    this.time.delayedCall(400, () => {
+      if (this.busy || this.ui.inDialog || !this.battle.playerPhaseDone()) return;
+      this.endTurn();
+    });
   }
 
   // ───────────── 道具 ─────────────
@@ -449,6 +459,8 @@ export class BattleScene extends Phaser.Scene {
     if (this.busy || this.battle.status !== 'playing' || this.battle.phase !== 'player') return;
     this.select({ kind: 'idle' });
     await this.run(this.battle.endPlayerPhase());
+    // 新的我方回合如果没人能动（比如全员昏迷），接着自动结束
+    this.autoEndTurn();
   }
 
   // ───────────── 输入 ─────────────
