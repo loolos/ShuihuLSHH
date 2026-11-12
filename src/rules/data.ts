@@ -92,6 +92,9 @@ export function forgedStats(it: Item, n: number) {
 }
 export const forgeLimit = (it: Item) => Math.max(it.attackSteps, it.defenseSteps);
 
+/** 装备的移动力加成：原版有不少装备扣移动（负值），重制版一律不扣，加移动的照原版【新：负责人 2026-11-12 决定】 */
+export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);
+
 /** 回复类消耗品 */
 export const isHealing = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 17;
 
@@ -147,8 +150,9 @@ export function itemSummary(it: Item, n = 0): string {
     const f = forgedStats(it, n);
     if (f.attack) p.push(`攻${f.attack}`);
     if (f.defense) p.push(`防${f.defense}`);
-    for (const [k, l] of [['hit', '命'], ['agility', '敏'], ['crit', '必'], ['moveBonus', '移'], ['range', '射程'], ['maxHp', '体'], ['maxMp', '气']] as const)
+    for (const [k, l] of [['hit', '命'], ['agility', '敏'], ['crit', '必'], ['range', '射程'], ['maxHp', '体'], ['maxMp', '气']] as const)
       if (it[k]) p.push(`${l}${it[k] > 0 ? '+' : ''}${it[k]}`);
+    if (equipMoveBonus(it)) p.push(`移+${equipMoveBonus(it)}`);
     if (it.regenHp) p.push(`每回合回体${it.regenHp}`);
     if (it.regenMp) p.push(`每回合回气${it.regenMp}`);
     if (it.poison) p.push(`攻击带毒${it.poison}%`);
