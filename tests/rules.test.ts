@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
-import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
+import { killExp, restExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -175,6 +175,10 @@ describe('命中与伤害', () => {
   it('挨打也有经验，防御时更多', () => {
     expect(takenExp(30, false, new Rng(1))).toBeGreaterThanOrEqual(3);
     expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(2);
+    // 休息：按回复的体力 + 气力给少量经验，什么都没回复不给
+    expect(restExp(0, 0, new Rng(1))).toBe(0);
+    expect(restExp(31, 33, new Rng(1))).toBeGreaterThanOrEqual(3);
+    expect(restExp(31, 33, new Rng(1))).toBeLessThanOrEqual(4);
   });
   it('全队经验先补给最落后的人', () => {
     const m = [{ level: 10, exp: 0 }, { level: 8, exp: 50 }, { level: 5, exp: 0 }, { level: 30, exp: 0 }];
