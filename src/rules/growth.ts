@@ -34,10 +34,15 @@ export const OFFICER_CLASSES = new Set([38, 39, 42, 43, 65, 66]);
 export type Tier = 'grunt' | 'officer' | null;
 export const tierOf = (cls: ClassDef): Tier => (GRUNT_CLASSES.has(cls.id) ? 'grunt' : OFFICER_CLASSES.has(cls.id) ? 'officer' : null);
 
-/** 初始值：模板兵用模板，其余（好汉、有名有姓的敌人、平民）用原版职业表 */
+/** 个别职业的初始值调整（职业号 → 属性），覆盖职业表原值 */
+export const CLASS_OVERRIDES: Record<number, Partial<Record<StatKey, number>>> = {
+  1: { attack: 80 }, // 王進：原版 70。改成新成长后前期显弱，负责人 2026-11-12 要求前期打兵伤害约 +15%
+};
+
+/** 初始值：模板兵用模板，其余（好汉、有名有姓的敌人、平民）用原版职业表（个别有调整） */
 export function baseStat(cls: ClassDef, k: StatKey): number {
   const t = tierOf(cls);
-  return t === 'grunt' ? GRUNT[k] : t === 'officer' ? OFFICER[k] : cls[k].base;
+  return t === 'grunt' ? GRUNT[k] : t === 'officer' ? OFFICER[k] : (CLASS_OVERRIDES[cls.id]?.[k] ?? cls[k].base);
 }
 
 /** 每级加多少（可以是小数，累计后取整） */
