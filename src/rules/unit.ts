@@ -80,6 +80,9 @@ const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20
 const OFFICER: Record<StatKey, number> = { hp: 70, mp: 80, attack: 62, defense: 25, hit: 70, agility: 30, crit: 12 };
 const GRUNTS = new Set([19, 20, 21, 22, 23, 32, 33, 34, 36, 37, 40, 41, 44, 45, 67]);
 const OFFICERS = new Set([38, 39, 42, 43, 65, 66]);
+/** 模板兵身上装备的属性加成不生效，改为固定加成（各关原版配装的平均值），不随等级成长 */
+const GRUNT_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 5, attack: 15, defense: 13, agility: 5 };
+const OFFICER_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 8, attack: 6, defense: 16, agility: 8 };
 const baseOf = (cls: ClassDef, k: StatKey) => (GRUNTS.has(cls.id) ? GRUNT[k] : OFFICERS.has(cls.id) ? OFFICER[k] : cls[k].base);
 const growU = (cls: ClassDef, k: StatKey, L: number) => { const b = baseOf(cls, k); return Math.floor(b + L * (G[k][0] + (b * G[k][1]) / 100)); };
 
@@ -99,9 +102,26 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     regenHp: 0,
     regenMp: 0,
   };
+  const tmplGear = GRUNTS.has(cls.id) ? GRUNT_GEAR : OFFICERS.has(cls.id) ? OFFICER_GEAR : null;
+  if (tmplGear) {
+    st.maxHp += tmplGear.hp ?? 0;
+    st.maxMp += tmplGear.mp ?? 0;
+    st.attack += tmplGear.attack ?? 0;
+    st.defense += tmplGear.defense ?? 0;
+    st.agility += tmplGear.agility ?? 0;
+  }
   for (let k = 0; k < EQUIP_SLOTS; k++) {
     const it = itemOf(data, slots[k]);
     if (!isEquipment(it)) continue;
+    // 模板兵：装备只保留射程、中毒、昏迷、回复这些"攻击方式"类效果
+    if (tmplGear) {
+      st.rangeBonus += it!.range;
+      st.regenHp += it!.regenHp;
+      st.regenMp += it!.regenMp;
+      st.poison += it!.poison;
+      st.stun += it!.stun;
+      continue;
+    }
     const f = forgedStats(it!, forge[k] ?? 0);
     st.attack += f.attack;
     st.defense += f.defense;
