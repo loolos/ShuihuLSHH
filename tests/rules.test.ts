@@ -2,7 +2,8 @@
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
-import { baseDamage, critChance, facingRelation, hitChance, killExp, rollAttack } from '../src/rules/combat.ts';
+import { baseDamage, critChance, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
+import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, grow, type Unit } from '../src/rules/unit.ts';
@@ -90,11 +91,27 @@ describe('命中与伤害', () => {
     expect(r.parts).toHaveLength(4);
     expect(r.parts.reduce((s, x) => s + x, 0)).toBe(r.damage);
   });
-  it('击倒经验', () => {
-    const rng = new Rng(5);
-    const e = killExp(unit({ level: 1 }), unit({ level: 4 }), rng);
-    expect(e).toBeGreaterThanOrEqual(37);
-    expect(e).toBeLessThanOrEqual(45);
+  it('击倒经验只看敌人等级', () => {
+    const foe = unit({ level: 10 });
+    for (const lv of [1, 10, 30]) {
+      const e = killExp(unit({ level: lv }), foe, new Rng(5));
+      expect(e).toBeGreaterThanOrEqual(13);
+      expect(e).toBeLessThanOrEqual(17);
+      expect(e).toBe(killExp(unit({ level: 1 }), foe, new Rng(5)));
+    }
+  });
+  it('挨打也有经验，防御时更多', () => {
+    expect(takenExp(30, false, new Rng(1))).toBeGreaterThanOrEqual(3);
+    expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(2);
+  });
+  it('全队经验先补给最落后的人', () => {
+    const m = [{ level: 10, exp: 0 }, { level: 8, exp: 50 }, { level: 5, exp: 0 }, { level: 30, exp: 0 }];
+    expect(splitTeamExp(m, 100)).toEqual([0, 0, 100, 0]);
+    // 300 先把 5 级补到 8 级 50，剩 50 两人平分
+    expect(splitTeamExp(m, 400)).toEqual([0, 25, 375, 0]);
+    const all = splitTeamExp(m, 1000);
+    expect(all.reduce((a, x) => a + x, 0)).toBe(1000);
+    expect(all[3]).toBe(0); // 满级不分
   });
 });
 
@@ -213,6 +230,26 @@ describe('战斗流程', () => {
       }
     }
     expect(counters).toBeGreaterThan(10);
+  });
+});
+
+describe('经验', () => {
+  it('击倒经验一半给击倒者，一半在胜利后分给全队（先补落后的）', () => {
+    const b = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), act(1, 2, 'player', 5, 5), act(2, 1, 'enemy', 1, 0, 0x800)], blocks: [], data, seed: 3 });
+    b.begin();
+    const [p, q, e] = [b.unit(0)!, b.unit(1)!, b.unit(2)!];
+    p.level = 5;
+    e.hp = 1;
+    p.stats.hit = 255;
+    b.attack(p, e);
+    expect(e.alive).toBe(false);
+    expect(p.exp).toBeGreaterThan(0);
+    expect(b.teamExp).toBeGreaterThan(0);
+    expect(q.exp).toBe(0);
+    const pool = b.teamExp;
+    b.settleTeamExp(); // 胜利时由剧本触发；这里直接结算
+    expect(q.exp).toBe(pool); // 没出手、等级最低的同伴拿走全部全队经验
+    expect(b.teamExp).toBe(0);
   });
 });
 

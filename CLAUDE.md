@@ -26,6 +26,7 @@
 | `npm run typecheck` | 只做类型检查 |
 | `npm run gen:docs` | 重新生成 `docs/reference/` |
 | `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256） |
+| `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
 
 Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需要编译。
