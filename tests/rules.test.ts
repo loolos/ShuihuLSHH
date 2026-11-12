@@ -7,7 +7,7 @@ import { killExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
-import { GRUNT, GRUNT_GEAR, perLevel, statAt } from '../src/rules/growth.ts';
+import { CLASS_OVERRIDES, GRUNT, GRUNT_GEAR, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -44,6 +44,9 @@ describe('属性', () => {
     expect(statAt(wulong, 'attack', 10)).toBe(99);
     expect(statAt(wulong, 'attack', 30)).toBe(168);
     expect(statAt(cls(0, { defense: g(300) }), 'defense', 30)).toBe(300 + 30 * (2 + 24)); // 不封顶
+  });
+  it('个别职业的初始值调整（王進攻击 80）', () => {
+    expect(statAt(cls(1, { attack: g(70, 104) }), 'attack', 0)).toBe(CLASS_OVERRIDES[1].attack);
   });
   it('杂兵用模板：同等级属性一样，装备只给固定加成', () => {
     const soldier = cls(32, { attack: g(55, 105) }), fisher = cls(21, { attack: g(50, 104) });
