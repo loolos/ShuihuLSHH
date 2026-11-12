@@ -1,7 +1,7 @@
 import './platform/buffer-shim.ts';
 import Phaser from 'phaser';
 import {
-  GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, saveCache, walkDirectory, type Progress,
+  GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, loadFromRepo, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
 import { idbClear } from './platform/idb.ts';
 import { frameToCanvas, loadAssets, type Assets } from './game/assets.ts';
@@ -32,11 +32,21 @@ async function obtainFiles(): Promise<Map<string, ArrayBuffer>> {
     await saveCache(bundled);
     return bundled;
   }
+  // 网页版：直接用 GitHub 仓库里的原版文件；下载失败才让玩家自己选目录
+  const repo = await loadFromRepo(progress);
+  if (repo) {
+    const { missing, mismatched } = await checkFiles(repo, progress, false);
+    if (!missing.length && !mismatched.length) {
+      progress('写入浏览器缓存…', 1);
+      await saveCache(repo);
+      return repo;
+    }
+  }
   return pickFiles();
 }
 
 function pickFiles(): Promise<Map<string, ArrayBuffer>> {
-  progress('首次使用需要选择原版游戏目录。', 0);
+  progress('没能从 GitHub 下载原版文件，可以改为选择本机的原版游戏目录。', 0);
   $('setup-actions').hidden = false;
   return new Promise((resolve, reject) => {
     const input = $<HTMLInputElement>('pick-input');

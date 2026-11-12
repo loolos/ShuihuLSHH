@@ -22,4 +22,4 @@ npm test
 npm run build
 ```
 
-发布版（GitHub Pages）首次打开时，需要选择你自己的原版游戏目录（含 `ShuiHu.exe`、`Data`、`Map`）。文件只在浏览器本地读取并缓存，不会上传。
+发布版（GitHub Pages）首次打开时，会从本仓库的 `gamedata/shuihu` 下载原版文件（约 65 MB），之后缓存在浏览器里。下载失败时才需要选择本机的原版游戏目录。

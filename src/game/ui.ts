@@ -47,13 +47,14 @@ export class BattleUI {
         if (this.dialog.hidden) return guard(e);
         e.stopPropagation();
         swallowUntil = performance.now() + 400;
-        this.advance();
+        if ((e.target as Element | null)?.closest?.('#dialog-skip')) this.skip();
+        else this.advance();
       },
       true,
     );
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && this.dialog.hidden && this.playing) {
-        this.skipping = true; // 对白之间的镜头移动时按 Esc 也算
+        this.skip(); // 对白之间的镜头移动时按 Esc 也算
         return;
       }
       if (this.dialog.hidden) return;
@@ -62,14 +63,20 @@ export class BattleUI {
         this.advance();
       } else if (e.key === 'Escape') {
         e.preventDefault();
-        this.skipping = true;
-        this.advance();
+        this.skip();
       }
     });
   }
 
-  /** Esc 之后，直到这段事件播完都不再显示对白 */
-  private skipping = false;
+  /** Esc 或"跳过"按钮之后，直到这段事件播完都不再显示对白 */
+  skipping = false;
+  /** 开始跳过时通知场景（场景借此加速并停止镜头移动） */
+  onSkip: () => void = () => {};
+  skip() {
+    this.skipping = true;
+    this.onSkip();
+    if (!this.dialog.hidden) this.advance();
+  }
   /** 正在播放一段事件（由场景设置） */
   playing = false;
   endSkip() {

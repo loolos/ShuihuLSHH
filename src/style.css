@@ -103,6 +103,7 @@ code { color: var(--ink); }
 #dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
 #dialog-who:empty { display: none; }
 #dialog-text { color: #fff; font-size: 17px; line-height: 1.7; white-space: pre-line; }
+#dialog-skip { position: absolute; top: -17px; right: 12px; font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; cursor: pointer; }
 #dialog-hint { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--muted); }
 
 #result { position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 16px; background: rgba(10, 8, 6, 0.7); }

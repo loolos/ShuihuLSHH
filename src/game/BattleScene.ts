@@ -75,6 +75,7 @@ export class BattleScene extends Phaser.Scene {
   init(data: BattleSceneData) {
     this.assets = data.assets;
     this.ui = data.ui;
+    this.ui.onSkip = () => this.busy && this.setFast(true);
     this.stageName = data.stage;
     this.seed = data.seed;
     this.party = data.party;
@@ -518,6 +519,11 @@ export class BattleScene extends Phaser.Scene {
     this.ui.setEndTurnEnabled(false);
     try {
       for (const e of events) {
+        // 跳过剧情：对白不显示，也不为它移动镜头；其余事件按快进处理
+        if (this.ui.skipping) {
+          this.setFast(true);
+          if (e.type === 'say' || e.type === 'narrate' || e.type === 'objective') continue;
+        }
         const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask';
         if (this.fast && !story) {
           this.skip(e);
