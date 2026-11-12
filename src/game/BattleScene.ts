@@ -9,7 +9,7 @@ import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type
 import { isHealSkill, isSupportSkill, learnedSkills } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
-import { ensureSkill, frameToCanvas, ICON_KEY, prefetchSkills, type Assets } from './assets.ts';
+import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { dirIndex, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
@@ -130,13 +130,18 @@ export class BattleScene extends Phaser.Scene {
     this.overlay = this.add.graphics().setDepth(-1);
     this.hoverG = this.add.graphics().setDepth(-0.5);
 
+    // 原版地图上的宝物一律画成宝箱（Grid.grp 第 4 帧：0x40c24f 调 0x4010e0 把帧号设为 4，0x4010d0 从 data\\grid 取帧），
+    // 不显示里面是什么；走到（或路过）就拾起。开局隐藏的宝物不画（原版绘制时检查显示标志 0x2，0x410960）
+    const chest = this.assets.grid.frame(4);
+    const chestKey = textureFor(this, 'grid:4', () => frameToCanvas(chest, this.assets.palette));
     for (const g of this.battle.items) {
-      const item = itemOf(this.assets.data, g.item);
-      if (!item) continue;
-      const fr = this.assets.objects.frame(item.icon);
-      const key = textureFor(this, `obj:${item.icon}`, () => frameToCanvas(fr, this.assets.palette, ICON_KEY));
+      if (g.hidden || !itemOf(this.assets.data, g.item)) continue;
       const p = cellToWorld(g.x, g.y);
-      this.groundItems.set(`${g.x},${g.y}`, this.add.image(p.x, p.y - 8, key).setDepth(depthOf(g.x, g.y, 7)));
+      const img = this.add
+        .image(p.x, p.y, chestKey)
+        .setOrigin(chest.anchorX / Math.max(1, chest.width), chest.anchorY / Math.max(1, chest.height))
+        .setDepth(depthOf(g.x, g.y, 7));
+      this.groundItems.set(`${g.x},${g.y}`, img);
     }
     for (const u of this.battle.units) if (u.present) this.spawn(u);
 

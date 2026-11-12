@@ -48,6 +48,8 @@ export interface GroundItem {
   x: number;
   y: number;
   item: number;
+  /** ACT 里标了"开局隐藏"的宝物：地图上不画，但照样能拾（原版只清掉显示标志 0x2，仍挂在格子上，0x4033e8 → 0x40c240） */
+  hidden: boolean;
 }
 
 export interface StageInput {
@@ -112,7 +114,7 @@ export class Battle {
     this.tr = input.text ?? ((s) => s);
     for (const a of input.units) {
       if (a.side === 'object') {
-        if (a.type > 0 && a.type <= this.data.items.length) this.items.push({ x: a.x, y: a.y, item: a.type });
+        if (a.type > 0 && a.type <= this.data.items.length) this.items.push({ x: a.x, y: a.y, item: a.type, hidden: (a.flags & 0xff) !== 0 });
         continue;
       }
       if (a.side === 'unknown') continue;
