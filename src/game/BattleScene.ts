@@ -102,6 +102,8 @@ export class BattleScene extends Phaser.Scene {
     this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party }));
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
+    // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
+    sound.preload(['m03', ...sound.skillSounds(this.battle.units.flatMap((u) => [attackSkill(u, this.assets.data), ...learnedSkills(u, this.assets.data)]))]);
 
     for (let y = 0; y < map.height; y++)
       for (let x = 0; x < map.width; x++) {

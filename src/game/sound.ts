@@ -6,8 +6,8 @@
 //   - 界面：菜单选中 m03（0x413444 等 8 处）；m01 / m02 / m15 为窗口控件（0x416fba / 0x41701a / 0x4171aa，具体时机待核）；
 //     对话框 m05 / m12（0x411ab4 / 0x411821，待核）；m04 / m07 / m09 / m10 / m13 / m14 / m011 时机待核。
 //   - PAS 指令 20/21：剧本指定的音效（0x411748）。数字名 1–57.wav 推测为人物语音（0x4038f3，待核）。
-// 仓库里没有原版 Sound/（负责人尚未决定是否放入），所以默认用浏览器合成的简单音效【新】；
-// 一旦能取到原版 WAV，有对应原版文件的事件就改播原版声音。
+// 原版 Sound/ 压成 MP3 放在仓库 gamedata/sound/（负责人 2026-11-12 同意，tools/gen-sound.ts 生成）：
+// 有原版声音的事件（技能、菜单）播原版；原版没有对应声音的事件（命中、倒下、胜负等）用浏览器合成的简单音效【新】。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
 
 export type Sfx = 'click' | 'swing' | 'skill' | 'hit' | 'crit' | 'miss' | 'heal' | 'ko' | 'turn' | 'win' | 'lose' | 'status';
@@ -25,8 +25,7 @@ class SoundSystem {
   private master: GainNode | null = null;
   private noiseBuf: AudioBuffer | null = null;
   private wavs = new Map<string, Promise<AudioBuffer | null>>();
-  /** 能不能取到原版 Sound/：未知 / 有 / 没有 */
-  private original: Promise<boolean> | null = null;
+  private index: Promise<Record<string, string> | null> | null = null;
   level: number;
   onChange: (level: number) => void = () => {};
 
@@ -52,6 +51,7 @@ class SoundSystem {
       this.master.connect(this.ctx.destination);
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
+    if (this.pending.length) this.preload(this.pending.splice(0));
   }
 
   setLevel(level: number) {
@@ -75,32 +75,42 @@ class SoundSystem {
     return this.ctx;
   }
 
-  // ---- 原版 WAV ----
-  private soundUrl(name: string) {
-    const base = import.meta.env.DEV ? '/gamedata/shuihu/' : REPO_GAMEDATA;
-    return `${base}Sound/${encodeURIComponent(name)}.wav`;
+  // ---- 原版音效（压缩后的 MP3，见 tools/gen-sound.ts） ----
+  /** gamedata/sound/：仓库里由原版 Sound/*.wav 转出的 MP3 和 名字 → 文件 的索引 */
+  private base() {
+    return import.meta.env.DEV ? '/gamedata/sound/' : REPO_GAMEDATA.replace(/shuihu\/$/, 'sound/');
   }
-  /** 先探一次 m03.wav（菜单音，原版必有）；取不到就整场只用合成音，不再逐个请求 */
-  private hasOriginal(): Promise<boolean> {
-    this.original ??= fetch(this.soundUrl('m03'), { method: 'HEAD' })
-      // 开发服务器对不存在的路径会回 index.html（200），所以还要看类型
-      .then((r) => r.ok && !(r.headers.get('content-type') ?? '').includes('text/html'))
-      .catch(() => false);
-    return this.original;
+  private loadIndex(): Promise<Record<string, string> | null> {
+    this.index ??= fetch(this.base() + 'index.json')
+      .then((r) => (r.ok && (r.headers.get('content-type') ?? '').includes('json') ? r.json() : null))
+      .catch(() => null);
+    return this.index;
   }
   private wav(name: string): Promise<AudioBuffer | null> {
-    const k = name.toLowerCase();
-    let p = this.wavs.get(k);
-    if (!p) {
-      p = this.hasOriginal().then(async (ok) => {
-        if (!ok || !this.ctx) return null;
-        const r = await fetch(this.soundUrl(name)).catch(() => null);
-        if (!r?.ok) return null;
-        return this.ctx.decodeAudioData(await r.arrayBuffer()).catch(() => null);
-      });
-      this.wavs.set(k, p);
-    }
-    return p;
+    return this.loadIndex().then((idx) => {
+      const file = idx?.[name.toLowerCase()];
+      if (!file || !this.ctx) return null;
+      let p = this.wavs.get(file);
+      if (!p) {
+        const ctx = this.ctx;
+        p = fetch(this.base() + file)
+          .then((r) => (r.ok ? r.arrayBuffer() : null))
+          .then((ab) => (ab ? ctx.decodeAudioData(ab) : null))
+          .catch(() => null);
+        this.wavs.set(file, p);
+      }
+      return p;
+    });
+  }
+  /** 预先下载并解码（进关时调用，免得第一次出招时声音迟到） */
+  private pending: string[] = [];
+  preload(names: string[]) {
+    if (!this.ctx) return void this.pending.push(...names);
+    for (const n of new Set(names)) void this.wav(n);
+  }
+  /** 本关用到的技能音效名 */
+  skillSounds(skills: { skillId: number; type: number }[]): string[] {
+    return skills.flatMap((s) => [`s${s.skillId}`, TYPE_SOUND[s.type]].filter(Boolean) as string[]);
   }
   /** 播原版音效 name；没有这个文件时播合成音 fallback（不给就不出声） */
   async playWav(name: string, fallback?: Sfx) {
