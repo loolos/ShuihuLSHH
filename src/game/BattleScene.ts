@@ -52,6 +52,11 @@ export class BattleScene extends Phaser.Scene {
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
   private busy = false;
+  /** 非我方阶段双击后快进：时间、补间、动画都加速，镜头直接跳过去【新】 */
+  private fast = false;
+  private lastTap = 0;
+  /** 正在回放的阶段（引擎已经算到下一回合，不能用 battle.phase） */
+  private playingSide: 'player' | 'ally' | 'enemy' = 'player';
   private down: { x: number; y: number; sx: number; sy: number; moved: boolean } | null = null;
   private pinch: number | null = null;
   private hoverCell: Cell | null = null;
@@ -337,6 +342,12 @@ export class BattleScene extends Phaser.Scene {
       const d = this.down;
       this.down = null;
       this.pinch = null;
+      if (this.busy && this.playingSide !== 'player' && !this.ui.inDialog) {
+        const now = performance.now();
+        if (now - this.lastTap < 400) this.setFast(true);
+        this.lastTap = now;
+        return;
+      }
       if (d && !d.moved && p.button !== 2) {
         const w = cam.getWorldPoint(p.x, p.y);
         this.click(this.pick(w.x, w.y));
@@ -443,14 +454,75 @@ export class BattleScene extends Phaser.Scene {
 
   // ───────────── 事件播放 ─────────────
 
+  private setFast(on: boolean) {
+    if (this.fast === on) return;
+    this.fast = on;
+    const k = on ? 12 : 1;
+    this.time.timeScale = k;
+    this.tweens.timeScale = k;
+    this.anims.globalTimeScale = k;
+    const b = this.battle;
+    if (on) this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
+  }
+
+  /** 快进：不播动画，只做必须的画面变化；对白、结局照常显示 */
+  private skip(e: BattleEvent) {
+    switch (e.type) {
+      case 'message':
+        this.ui.message(e.text);
+        break;
+      case 'die': {
+        const s = this.sprites.get(e.uid);
+        s?.bar.destroy();
+        s?.spr.destroy();
+        this.sprites.delete(e.uid);
+        break;
+      }
+      case 'appear': {
+        const u = this.battle.unit(e.uid)!;
+        Object.assign(this.vs(u), { x: e.x, y: e.y });
+        if (!this.sprites.has(u.uid)) this.spawn(u, { x: e.x, y: e.y });
+        break;
+      }
+      case 'pickup':
+        this.groundItems.get(`${e.x},${e.y}`)?.destroy();
+        this.groundItems.delete(`${e.x},${e.y}`);
+        break;
+      case 'phase': {
+        this.playingSide = e.side;
+        this.ui.setTurn(e.turn, this.battle.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : '　▸▸ 快进中'));
+        // 回到我方阶段：镜头直接对准第一个能行动的人
+        const first = e.side === 'player' && this.battle.active().find((u) => u.side === 'player' && !u.ended);
+        if (first) {
+          const p = cellToWorld(first.x, first.y);
+          this.cameras.main.centerOn(p.x, p.y);
+        }
+        break;
+      }
+    }
+  }
+
   private async run(events: BattleEvent[]) {
     this.busy = true;
     this.ui.playing = true;
     this.ui.setEndTurnEnabled(false);
     try {
-      for (const e of events) await this.play(e);
+      for (const e of events) {
+        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end';
+        if (this.fast && !story) {
+          this.skip(e);
+          continue;
+        }
+        if (this.fast) {
+          // 剧情照常播放：先把画面对齐到引擎的当前状态
+          this.syncView();
+          this.refreshAll();
+        }
+        await this.play(e);
+      }
     } finally {
       this.busy = false;
+      this.setFast(false);
       this.ui.playing = false;
       this.ui.endSkip();
       this.syncView();
@@ -473,6 +545,7 @@ export class BattleScene extends Phaser.Scene {
     const v = cam.worldView;
     const mx = v.width * 0.18, my = v.height * 0.22;
     if (p.x > v.x + mx && p.x < v.right - mx && p.y > v.y + my && p.y < v.bottom - my) return;
+    if (this.fast) return void cam.centerOn(p.x, p.y);
     cam.pan(p.x, p.y, ms, 'Sine.easeInOut');
     await wait(this, ms);
   }
@@ -548,7 +621,8 @@ export class BattleScene extends Phaser.Scene {
         await this.ui.say('', e.lines.join('\n'));
         break;
       case 'phase':
-        this.ui.setTurn(e.turn, b.turnLimit, PHASE_NAME[e.side]);
+        this.playingSide = e.side;
+        this.ui.setTurn(e.turn, b.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : this.fast ? '　▸▸ 快进中' : '　双击地图快进'));
         this.refreshAll();
         if (e.side === 'player') {
           const first = b.active().find((u) => u.side === 'player' && !u.ended);
@@ -625,7 +699,11 @@ export class BattleScene extends Phaser.Scene {
                 const tv = this.vs(t);
                 const res = h.result;
                 if (!res.hit) {
-                  if (i === 0) this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                  // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
+                  if (i === 0) {
+                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                    hurt.push(this.playOnce(t, ACTION.hurt, tv.facing, 400));
+                  }
                   continue;
                 }
                 const parts = res.parts.length === frames.length ? res.parts : null;
