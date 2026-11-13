@@ -56,13 +56,15 @@ describe.skipIf(!has)('N01', () => {
     }
   });
 
-  it('史進 龍爭虎鬥LV1 比普通攻击明显更强（威力 20，原版 10）', () => {
+  it('史進 龍爭虎鬥LV1 比普通攻击明显更强（威力 25，原版 10）', () => {
     const cls = data.classes[3];
     const basic = basicAttack(cls)!;
     const s = cls.skills.find((k) => k.skillId === 33)!;
-    expect(s.power).toBe(20);
+    expect(s.power).toBe(25);
+    expect(cls.skills.find((k) => k.skillId === 34)!.power).toBe(45);
+    expect(cls.skills.find((k) => k.skillId === 35)!.power).toBe(65);
     expect(s.mpCost).toBe(15);
-    // 2 级史進（初始装备）打同级杂兵：期望伤害至少高 20%
+    // 2 级史進（初始装备）打同级杂兵：期望伤害至少高 30%
     const unit = (classId: number, y: number, facing: number) => {
       const c = data.classes[classId];
       const slots = [...c.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
@@ -75,7 +77,7 @@ describe.skipIf(!has)('N01', () => {
       for (let i = 0; i < 4000; i++) sum += rollAttack(a, t, sk, rng).damage;
       return sum / 4000;
     };
-    expect(avg(s)).toBeGreaterThan(avg(basic) * 1.2);
+    expect(avg(s)).toBeGreaterThan(avg(basic) * 1.3);
   });
 
   it('通行：开局起点 (4,4) 能走到的格子数（EXE 规则）', () => {

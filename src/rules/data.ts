@@ -47,11 +47,14 @@ export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
 
 /**
  * 个别技能的数值调整（技能号 → 字段），在职业表原值上覆盖【新】。技能数值不必照原版（负责人 2026-11-12）。
- * 33 龍爭虎鬥LV1（史進 2 级）：原版威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，
- * 比例公式下期望伤害只多约 8%，还要 15 气，玩起来像比普攻还弱（负责人 2026-11-13）。改成 20，约多 20%。
+ * 33–35 龍爭虎鬥LV1–3（史進 2/13/25 级）：负责人 2026-11-13 反映"比普通攻击还弱"，要求改强一点。
+ * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
+ * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
  */
 export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod'>>> = {
-  33: { power: 20 },
+  33: { power: 25, critMod: 15 }, // 原版 10 / 10
+  34: { power: 45, critMod: 20 }, // 原版 30 / 15
+  35: { power: 65, critMod: 25 }, // 原版 50 / 20
 };
 
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
