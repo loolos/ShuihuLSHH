@@ -80,6 +80,21 @@ describe.skipIf(!has)('N01', () => {
     expect(avg(s)).toBeGreaterThan(avg(basic) * 1.3);
   });
 
+  it('武龍 隔山打虎：原版数值，拆成 4 段各 25%，每段单独判定', () => {
+    const s = data.classes[0].skills.find((k) => k.skillId === 8)!;
+    expect([s.power, s.hitMod, s.critMod, s.mpCost]).toEqual([60, 40, 50, 30]);
+    expect(s.hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
+    const c = data.classes[0];
+    const slots = [...c.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
+    const a = { classId: 0, level: 2, x: 0, y: 0, facing: 2, slots, buffs: [], defending: false, stats: computeStats(c, 2, slots, data) } as unknown as Unit;
+    const g = data.classes[32];
+    const gs = [...g.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
+    const t = { classId: 32, level: 2, x: 0, y: 1, facing: 0, slots: gs, buffs: [], defending: false, stats: computeStats(g, 2, gs, data) } as unknown as Unit;
+    const r = rollAttack(a, t, s, new Rng(1));
+    expect(r.parts).toHaveLength(4);
+    expect(r.partCrit).toHaveLength(4);
+  });
+
   it('通行：开局起点 (4,4) 能走到的格子数（EXE 规则）', () => {
     const b = make();
     const seen = new Set(['4,4']);
