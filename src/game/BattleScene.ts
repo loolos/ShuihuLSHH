@@ -11,6 +11,7 @@ import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
+import { Minimap, type MiniMark } from './minimap.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
@@ -61,6 +62,7 @@ export class BattleScene extends Phaser.Scene {
   private view = new Map<number, { x: number; y: number; facing: number; hp: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   private overlay!: Phaser.GameObjects.Graphics;
+  private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
   private busy = false;
@@ -156,6 +158,29 @@ export class BattleScene extends Phaser.Scene {
     const f = cellToWorld(focus.x, focus.y);
     cam.centerOn(f.x, f.y);
     cam.roundPixels = true;
+
+    // 左上角的小地图（原版微缩地图只画地表，见 minimap.ts）
+    const board = this.battle.board;
+    this.minimap = new Minimap({
+      width: map.width,
+      height: map.height,
+      ground: (x, y) => map.cells[y * map.width + x][0]?.tile ?? 0,
+      blocked: (x, y) => !board.passable(x, y),
+      tile: (t) => {
+        const fr = this.assets.ground.frame(t);
+        if (!fr.width || !fr.height) return null;
+        const key = textureFor(this, `ground:${t}`, () => frameToCanvas(fr, this.assets.palette));
+        return { img: this.textures.get(key).getSourceImage() as CanvasImageSource, w: fr.width, h: fr.height, ax: fr.anchorX, ay: fr.anchorY };
+      },
+    });
+    this.minimap.onJump = (wx, wy) => cam.centerOn(wx, wy);
+    const onResize = () => this.minimap?.resize();
+    this.scale.on('resize', onResize);
+    this.events.once('shutdown', () => {
+      this.scale.off('resize', onResize);
+      this.minimap?.destroy();
+      this.minimap = null;
+    });
 
     this.setupInput();
     this.ui.clearLog();
@@ -352,6 +377,26 @@ export class BattleScene extends Phaser.Scene {
 
   update() {
     this.placeFloat();
+    this.drawMinimap();
+  }
+
+  /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */
+  private drawMinimap() {
+    const mm = this.minimap;
+    if (!mm?.open) return;
+    const marks: MiniMark[] = [];
+    for (const k of this.groundItems.keys()) {
+      const [x, y] = k.split(',').map(Number);
+      marks.push({ x, y, color: '#f0c860' });
+    }
+    // 敌方先画，我方压在上面
+    const order = { enemy: 0, ally: 1, player: 2 } as const;
+    const units = this.battle.units.filter((u) => this.sprites.has(u.uid)).sort((a, b) => order[a.side] - order[b.side]);
+    for (const u of units) {
+      const v = this.vs(u);
+      marks.push({ x: v.x, y: v.y, color: `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
+    }
+    mm.draw(marks, this.cameras.main.worldView);
   }
 
   private commands(m: Mode): Command[] | null {
