@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
-import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
+import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
@@ -141,9 +141,9 @@ describe('命中与伤害', () => {
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
   it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
-    const d = unit({ side: 'enemy' });
+    const d = unit({ side: 'enemy', facing: 2 }); // 正面
     expect(baseDamage(a, d, punch)).toEqual([36, 90]); // 60² / 100，120² / 160
-    const tough = unit({ stats: { ...d.stats, defense: 240 } });
+    const tough = unit({ facing: 2, stats: { ...d.stats, defense: 240 } });
     const [n, c] = baseDamage(a, tough, punch);
     expect(n).toBeCloseTo(3600 / 540);
     expect(c).toBe(24); // 120² / 600
@@ -155,6 +155,30 @@ describe('命中与伤害', () => {
     }
     expect(critChance(a, { ...punch, critMod: 10 })).toBe(10);
   });
+  it.each([
+    [2, 1], [1, 1.1], [3, 1.1], [0, 1.25],
+  ])('朝向%s的伤害系数为%s，预览与实际普通/必杀结算一致', (facing, factor) => {
+    for (const defending of [false, true]) {
+      for (const crit of [0, 200]) {
+        const att = unit({ x: 0, y: 1, stats: { ...a.stats, crit } });
+        const def = unit({ side: 'enemy', x: 0, y: 0, facing, defending });
+        const f = defending ? 1 : factor;
+        const defense = defending ? 0.7 : 1;
+        const [normal, critical] = baseDamage(att, def, punch);
+        expect(normal).toBeCloseTo(36 * f);
+        expect(critical).toBeCloseTo(90 * f);
+        const preview = previewAttack(att, def, punch);
+        expect(preview.damage).toBe(Math.floor(normal * defense));
+        expect(preview.critDamage).toBe(Math.floor(critical * defense));
+        const rng = new Rng(17);
+        rng.chance(crit / 2); // forceHit跳过命中随机，只消耗必杀判定
+        const variation = 0.9 + rng.next() * 0.2;
+        const result = rollAttack(att, def, punch, new Rng(17), true);
+        expect(result.damage).toBe(Math.floor((crit ? critical : normal) * (defense * variation)));
+      }
+    }
+  });
+
   it('远程攻击按距离打折：距离 1 为 50%，最远射程为 10%', () => {
     const bow = { ...punch, type: 10, rangeMin: 1, rangeMax: 8 };
     const d = unit({ side: 'enemy', x: 0, y: 0 });
