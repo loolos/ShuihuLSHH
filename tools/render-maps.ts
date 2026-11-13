@@ -1,7 +1,7 @@
 // 把 Map\*.map 渲染成整张等距预览图（extracted/maps/*.png，不入库），并叠加 ACT 单位标记。
 // 渲染假设（待游戏截图验证，见 docs/binary-formats.md §5）：
 //   格子 (x, y) 的屏幕中心 = ((x − y) × 45, (x + y) × 23)；先画全部地表，再按 x+y 从远到近画地上物；
-//   图块按锚点对齐格子中心；flags 暂不处理。
+//   图块按锚点对齐，MAP flags 为像素高度，屏幕 Y 减去高度（EXE 0x40f76a）。
 // 用法：node tools/render-maps.ts [--pass] [原版目录] [地图名...]
 //   --pass：把不可通行的格子涂成半透明红色（规则见 src/rules/passability.ts）
 import fs from 'node:fs';
@@ -10,6 +10,7 @@ import { openGrp, parsePalette, type Frame } from '../src/formats/image.ts';
 import { parseMap } from '../src/formats/map.ts';
 import { parseAct } from '../src/formats/act.ts';
 import { encodePng } from '../src/formats/png.ts';
+import { cellToWorld } from '../src/game/iso.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -60,7 +61,10 @@ for (const f of fs.readdirSync(path.join(DATA, 'Map')).filter((f) => f.toLowerCa
       }
     }
   };
-  const center = (x: number, y: number) => [ox + (x - y) * HW, oy + (x + y) * HH];
+  const center = (x: number, y: number, height = 0) => {
+    const p = cellToWorld(x, y, height);
+    return [ox + p.x, oy + p.y];
+  };
   for (let y = 0; y < m.height; y++)
     for (let x = 0; x < m.width; x++) {
       const [cx, cy] = center(x, y);
@@ -71,7 +75,7 @@ for (const f of fs.readdirSync(path.join(DATA, 'Map')).filter((f) => f.toLowerCa
       const y = d - x;
       if (y < 0 || y >= m.height) continue;
       const [cx, cy] = center(x, y);
-      for (const l of m.cells[y * m.width + x].slice(1)) blit(upper.frame(l.tile), cx, cy);
+      for (const l of m.cells[y * m.width + x].slice(1)) blit(upper.frame(l.tile), cx, cy - l.flags);
     }
   if (showPass)
     for (let y = 0; y < m.height; y++)

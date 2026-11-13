@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import { parseMap } from '../src/formats/map.ts';
 import { describe, expect, it } from 'vitest';
 import { cellToWorld, worldToCell } from '../src/game/iso.ts';
 
@@ -5,6 +7,13 @@ describe('等距坐标', () => {
   it('格子中心公式', () => {
     expect(cellToWorld(0, 0)).toEqual({ x: 0, y: 0 });
     expect(cellToWorld(2, 1)).toEqual({ x: 45, y: 69 });
+  });
+  it('地图高度按像素抬高，城门楼各层不挤在地面', () => {
+    const base = cellToWorld(16, 8);
+    for (const height of [0, 64, 128, 192]) {
+      expect(cellToWorld(16, 8, height)).toEqual({ x: base.x, y: base.y - height });
+    }
+    expect(cellToWorld(16, 8, 192).y).toBe(360);
   });
   it('反算回同一格', () => {
     for (let x = 0; x < 20; x++)
@@ -39,4 +48,12 @@ describe('点击判定按格子菱形', () => {
     expect(worldToCell(front.x, front.y - 46)).toEqual({ x: 4, y: 4 });
     expect(worldToCell(front.x, front.y - 75)).toEqual({ x: 3, y: 3 });
   });
+});
+
+const gateMap = new URL('../gamedata/shuihu/Map/N-add04a.map', import.meta.url);
+it.skipIf(!fs.existsSync(gateMap))('官道遇伏兵的门楼屋顶按原地图抬到192像素高度', () => {
+  const map = parseMap(fs.readFileSync(gateMap));
+  const layers = map.cells[8 * map.width + 16];
+  expect(layers.map((l) => [l.tile, l.flags])).toEqual([[596, 0], [891, 0], [1017, 128], [956, 192]]);
+  expect(layers.map((l) => cellToWorld(16, 8, l.flags).y)).toEqual([552, 552, 424, 360]);
 });
