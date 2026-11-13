@@ -177,6 +177,9 @@ code { color: var(--ink); }
   background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
 }
 #town[hidden] { display: none; }
+/* 说书时对白框和选项面板盖在城镇界面上 */
+body.storytelling #dialog, body.storytelling #result { z-index: 7; }
+#town button.story { border-color: var(--accent); }
 #town button {
   font: inherit; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px;
   padding: 6px 12px; min-height: 34px; cursor: pointer;
