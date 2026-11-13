@@ -18,15 +18,14 @@
 // 原版对某个事件没有声音，重制版也不出声；只有原版音效整体取不到时才用浏览器合成的简单音效兜底【新】。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
 import { music } from './music.ts';
+import { LEVELS, SFX_GAIN as GAIN, wrapLevel } from './volume.ts';
 
 /** 播放时把背景音乐压低的音效：过关 m12、失败 m05【新】 */
 const DUCK = new Set(['m12', 'm05']);
 
 export type Sfx = 'click' | 'swing' | 'skill' | 'hit' | 'crit' | 'miss' | 'heal' | 'ko' | 'turn' | 'win' | 'lose' | 'status';
 
-/** 音量档位：关 / 小 / 中 / 大 */
-export const LEVELS = ['关', '小', '中', '大'] as const;
-const GAIN = [0, 0.25, 0.5, 0.9];
+export { LEVELS };
 const STORE = 'shuihu.sound';
 
 /** 技能类型 → 原版的类型音效（EXE 0x4062dc 跳转表） */
@@ -50,6 +49,7 @@ class SoundSystem {
       /* 隐私模式等：用默认值 */
     }
     this.level = v;
+    music.setLevel(v);
   }
 
   /** 浏览器要求在用户操作里启动音频；第一次点击 / 按键时调用 */
@@ -67,13 +67,15 @@ class SoundSystem {
   }
 
   setLevel(level: number) {
-    this.level = ((level % LEVELS.length) + LEVELS.length) % LEVELS.length;
+    this.level = wrapLevel(level);
     try {
       localStorage.setItem(STORE, String(this.level));
     } catch {
       /* 忽略 */
     }
     if (this.master) this.master.gain.value = GAIN[this.level];
+    // 背景音乐跟着同一个档位走（负责人 2026-11-13）
+    music.setLevel(this.level);
     this.onChange(this.level);
   }
   cycle() {
@@ -269,7 +271,7 @@ export const sound = new SoundSystem();
 export function installSound(button: HTMLButtonElement) {
   const label = () => {
     button.textContent = sound.level ? `♪${LEVELS[sound.level]}` : '♪关';
-    button.title = `音效音量：${LEVELS[sound.level]}（点击切换）`;
+    button.title = `音量（音效和音乐）：${LEVELS[sound.level]}（点击切换）`;
     button.setAttribute('aria-label', button.title);
   };
   label();
