@@ -90,6 +90,23 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   }],
 };
 
+/**
+ * 隐藏技（原版要古武術祕笈，HUM 技能子项 +5 = 1）改为好汉自带技能，随等级领悟【新】（负责人 2026-11-13）：
+ * LV2、LV3 的习得等级照原版；LV1 原版是 1 级，改为 LV2 的习得等级 − 4（不低于 1）。如楊春 靈蛇出洞 LV2 10 级 → LV1 6 级。
+ */
+export const HIDDEN_LV1_OFFSET = 4;
+export function unlockHiddenSkills(skills: SkillDef[]): SkillDef[] {
+  const lv2 = new Map<string, number>();
+  for (const s of skills) if (s.hidden && /LV\s*2$/i.test(s.name)) lv2.set(s.name.replace(/\s*LV\s*\d+$/i, ''), s.learnLevel);
+  return skills.map((s) => {
+    if (!s.hidden) return s;
+    const base = s.name.replace(/\s*LV\s*\d+$/i, '');
+    const two = lv2.get(base);
+    const learnLevel = /LV\s*1$/i.test(s.name) && two !== undefined ? Math.max(1, two - HIDDEN_LV1_OFFSET) : s.learnLevel;
+    return { ...s, hidden: false, learnLevel };
+  });
+}
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -107,7 +124,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
-      skills: [
+      skills: unlockHiddenSkills([
         ...r.skills.map((s, i) => ({
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
@@ -115,7 +132,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         })),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
-      ],
+      ]),
     };
   });
 }

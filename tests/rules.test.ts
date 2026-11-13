@@ -4,7 +4,7 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { buildClasses, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
@@ -118,6 +118,20 @@ describe('好汉普攻调整', () => {
     expect([chen, yang].map((c) => c.skills[0].stun)).toEqual([0, 0]);
     const [zhu2] = buildClasses([{ ...rec(5, 54), skills: [{ ...punch, skillId: 54 }, { ...punch, skillId: 56, stun: 5 }] } as unknown as ClassRecord], [], []);
     expect(zhu2.skills[1].stun).toBe(30); // 詭計多端
+  });
+});
+
+describe('隐藏技改为自带技能', () => {
+  it('不再要祕笈；LV1 习得等级 = LV2 − 4（不低于 1），LV2、LV3 不变', () => {
+    const h = (name: string, learnLevel: number): SkillDef => ({ ...punch, name, learnLevel, hidden: true });
+    const out = unlockHiddenSkills([punch, h('靈蛇出洞LV1', 1), h('靈蛇出洞LV2', 10), h('靈蛇出洞LV3', 20), h('早招LV1', 1), h('早招LV2', 3)]);
+    expect(out.map((s) => [s.learnLevel, s.hidden])).toEqual([[1, false], [6, false], [10, false], [20, false], [1, false], [3, false]]);
+    const yang = { ...cls(0), skills: out } as ClassDef;
+    const at = (level: number) => learnedSkills({ classId: 0, level } as Unit, { classes: [yang] } as unknown as GameData).map((s) => s.name);
+    expect(at(5)).not.toContain('靈蛇出洞LV1');
+    expect(at(6)).toContain('靈蛇出洞LV1');
+    expect(at(12)).toContain('靈蛇出洞LV2');
+    expect(at(12)).not.toContain('靈蛇出洞LV1');
   });
 });
 
