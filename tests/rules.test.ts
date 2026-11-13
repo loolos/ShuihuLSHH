@@ -83,9 +83,9 @@ describe('职业移动力调整', () => {
     expect(hero.move).toBe(6);
     expect(wangjin.move).toBe(5);
   });
-  it('魯智深基础移动力 4 → 5，公孫勝、吳用仍照原值 4', () => {
-    const cls = buildClasses([rec(2, 4), rec(10, 4), rec(16, 4)], [], []);
-    expect(cls.map((c) => c.move)).toEqual([4, 4, 5]);
+  it('公孫勝、吳用、魯智深基础移动力 4 → 5，敌方版公孫勝、吳用照原值 4', () => {
+    const cls = buildClasses([rec(2, 4), rec(10, 4), rec(16, 4), rec(46, 4), rec(53, 4)], [], []);
+    expect(cls.map((c) => c.move)).toEqual([5, 5, 5, 4, 4]);
   });
 });
 
