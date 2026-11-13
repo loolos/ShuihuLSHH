@@ -57,6 +57,21 @@ export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
   ],
 };
 
+/**
+ * 个别技能的数值调整（技能号 → 字段），在职业表原值上覆盖【新】。技能数值不必照原版（负责人 2026-11-12）。
+ * 33–35 龍爭虎鬥LV1–3（史進 2/13/25 级）：负责人 2026-11-13 反映"比普通攻击还弱"，要求改强一点。
+ * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
+ * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
+ */
+export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits'>>> = {
+  33: { power: 25, critMod: 15 }, // 原版 10 / 10
+  34: { power: 45, critMod: 20 }, // 原版 30 / 15
+  35: { power: 65, critMod: 25 }, // 原版 50 / 20
+  // 8 隔山打虎（武龍 2 级）：数值照原版，原版两段 50/50（第 12、15 帧），负责人 2026-11-13 要求改成 4 段，
+  // 取出手动画里出拳、俯冲、空中、落地踢 4 个击打帧，各 25%（每段单独判定命中和必杀）
+  8: { hits: [8, 11, 13, 15].map((frame) => ({ frame, percent: 25, dir: 0 })) },
+};
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -76,6 +91,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       defaultItems: r.defaultItems,
       skills: r.skills.map((s, i) => ({
         ...s,
+        ...SKILL_OVERRIDES[s.skillId],
         name: skillNames[s.skillId] ?? `#${s.skillId}`,
         ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
       })),
