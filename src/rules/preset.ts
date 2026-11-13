@@ -7,6 +7,10 @@ import { ROUTES, type CampaignState, type Member } from './campaign.ts';
 import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
+import entryLevels from '../data/entry-levels.json' with { type: 'json' };
+
+/** 主线模拟得出的每关入场等级：关卡名（小写）→ 角色号 → 等级（tools/gen-entry-levels.ts 生成） */
+const ENTRY_LEVELS: Record<string, Record<string, number>> = entryLevels.levels;
 
 /** 城镇按游戏进度的先后（道具 +146 城镇号表的排列顺序；6 与 12 是两条路线上的同一站） */
 export const TOWN_ORDER = [1, 2, 3, 4, 5, 13, 6, 12, 7, 8, 9, 10, 11];
@@ -25,7 +29,8 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
 /**
  * 跳到第 target 关时的推荐状态：
  * - 我方人物从头配起，之前的等级、经验、装备一概不用；
- * - 等级 = 这一关敌人的平均等级（四舍五入；敌人全是 1 级的过场关看后面第一场真正的战斗），不低于剧本里写的等级；
+ * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线模拟生成，见 tools/gen-entry-levels.ts）；
+ *   表里没有的人（或没有模拟到的关）用这一关敌人的平均等级（foeLevel）；都不低于剧本里写的等级；
  * - 装备 = 剧本里的初始装备；之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰比它好就换上；
  * - 物品栏补 2 个药铺里回复最多的药；
  * - 技能随等级自动领悟。
@@ -38,13 +43,9 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
 
   // 进城镇时人物按城镇之后那一关的难度配等级
   const lpos = opts.levelFrom === undefined ? pos : stages.findIndex((s) => s.index === opts.levelFrom);
-  let level = 1;
-  for (let i = lpos < 0 ? pos : lpos; i < stages.length; i++) {
-    const foes = at(i).units.filter((u) => u.side === 'enemy');
-    if (!foes.some((u) => u.level > 1)) continue; // 过场关的敌人都是 1 级摆设
-    level = Math.round(foes.reduce((a, u) => a + u.level, 0) / foes.length);
-    break;
-  }
+  const lstage = stages[lpos < 0 ? pos : lpos];
+  const table = ENTRY_LEVELS[lstage.mapName.toLowerCase()] ?? {};
+  const level = foeLevel(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units);
   let town = 0;
   for (let i = 0; i < pos; i++) {
     const t = at(i).town;
@@ -80,10 +81,26 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
       let n = slots.filter((id, k) => k >= 3 && id === potion).length;
       for (let k = 3; k < SLOT_COUNT && n < 2; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
     }
-    members.set(u.type, { classId: u.type, level: Math.max(level, u.level), exp: 0, slots, forge });
+    members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
   }
   return { version: 1, stage: target, gold: c.gold, members: [...members.values()] };
 }
+
+/**
+ * 第 pos 关敌人的平均等级（四舍五入）；敌人全是 1 级的过场关看后面第一场真正的战斗；后面都没有战斗时为 1。
+ * units(i) 给出第 i 关的 ACT 单位。
+ */
+export function foeLevel(count: number, pos: number, units: (i: number) => ActUnit[]): number {
+  for (let i = pos; i < count; i++) {
+    const foes = units(i).filter((u) => u.side === 'enemy');
+    if (!foes.some((u) => u.level > 1)) continue; // 过场关的敌人都是 1 级摆设
+    return Math.round(foes.reduce((a, u) => a + u.level, 0) / foes.length);
+  }
+  return 1;
+}
+
+/** 第 i 关的 ACT 单位（生成入场等级表用） */
+export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).units;
 
 /**
  * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
