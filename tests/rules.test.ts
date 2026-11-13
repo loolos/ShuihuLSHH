@@ -146,14 +146,14 @@ describe('命中与伤害', () => {
     expect(hitChance(e, p, punch)).toBe(80);
     expect(hitChance(e, p, { ...punch, hitMod: -10 })).toBe(77); // 70 / (70 + 20)
     expect(hitChance(e, p, { ...punch, hitMod: -100 })).toBe(0);
-    p.facing = 0; // 背后：命中 80 × 1.5 = 120
-    expect(hitChance(e, p, punch)).toBe(85); // 120 / 140
-    p.facing = 1; // 侧面：80 × 1.3 = 104
-    expect(hitChance(e, p, punch)).toBe(83); // 104 / 124
-    p.defending = true; // 104 × 0.7 = 72.8
-    expect(hitChance(e, p, punch)).toBe(78); // 72.8 / 92.8
-    p.facing = 0; p.defending = false; // 技能 +40 再乘背面：(80 + 40) × 1.5 = 180
-    expect(hitChance(e, p, { ...punch, hitMod: 40 })).toBe(90); // 180 / 200
+    p.facing = 0; // 背后：命中 80 × 2.5 = 200
+    expect(hitChance(e, p, punch)).toBe(90); // 200 / 220
+    p.facing = 1; // 侧面：80 × 1.6 = 128
+    expect(hitChance(e, p, punch)).toBe(86); // 128 / 148
+    p.defending = true; // 128 × 0.4 = 51.2
+    expect(hitChance(e, p, punch)).toBe(71); // 51.2 / 71.2
+    p.facing = 0; p.defending = false; // 技能 +40 再乘背面：(80 + 40) × 2.5 = 300
+    expect(hitChance(e, p, { ...punch, hitMod: 40 })).toBe(93); // 300 / 320
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
   it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {

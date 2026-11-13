@@ -10,18 +10,19 @@ export function facingRelation(attackerFacing: number, defenderFacing: number): 
   return 'side';
 }
 
-const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
+const FACING_FACTOR = { back: 2.5, side: 1.6, front: 1 } as const;
+const DEFEND_HIT_FACTOR = 0.4;
 const FACING_DAMAGE_FACTOR = { back: 1.25, side: 1.1, front: 1 } as const;
 
 /**
  * 命中率（%）【新】（负责人 2026-11-13）：所有修正都作用在攻方的"命中"属性上，再代入比例公式：
- * 有效命中 = (命中 + 技能命中修正) × 朝向系数 × 防御系数(0.7)，命中率 = 有效命中 / (有效命中 + 守方敏捷/2) × 100，最高 100。
+ * 有效命中 = (命中 + 技能命中修正) × 朝向系数(背 2.5 / 侧 1.6) × 防御系数(0.4)，命中率 = 有效命中 / (有效命中 + 守方敏捷/2) × 100，最高 100。
  * 敌我同一公式、没有保底。原版是"命中 − 敏捷/2 + 修正"，我方保底 80、其它保底 30（EXE 0x406c60）。
  */
 export function effectiveHit(att: Unit, def: Unit, skill: SkillDef): number {
   let hv = Math.max(0, att.stats.hit + skill.hitMod);
   hv *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
-  if (def.defending) hv *= 0.7;
+  if (def.defending) hv *= DEFEND_HIT_FACTOR;
   return hv;
 }
 
