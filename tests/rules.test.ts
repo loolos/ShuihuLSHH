@@ -11,6 +11,7 @@ import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rul
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
+import { balanceLevels } from '../src/rules/preset.ts';
 import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills } from '../src/rules/skills.ts';
 import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -946,5 +947,22 @@ describe('技能耗气上限', () => {
     capSkillCosts([c]);
     expect(c.skills[1].mpCost).toBe(statAt(c, 'mp', 15));
     expect(c.skills[2].mpCost).toBe(10);
+  });
+});
+
+describe('跳关等级校验', () => {
+  const mk = (classId: number, level: number) => ({ classId, level, exp: 0, slots: [], forge: [] });
+  it('我方比敌人平均高出 2 级以上时全员一起降，低太多时一起升', () => {
+    const hi = [mk(0, 30), mk(1, 26)];
+    balanceLevels(hi, new Map([[0, 1], [1, 1]]), 24);
+    expect(hi.map((m) => m.level)).toEqual([28, 24]);
+    const lo = [mk(0, 10), mk(1, 12)];
+    balanceLevels(lo, new Map(), 16);
+    expect(lo.map((m) => m.level)).toEqual([13, 15]);
+  });
+  it('不低于剧本等级', () => {
+    const ms = [mk(0, 30), mk(1, 20)];
+    balanceLevels(ms, new Map([[0, 30], [1, 1]]), 20);
+    expect(ms.map((m) => m.level)).toEqual([30, 14]);
   });
 });
