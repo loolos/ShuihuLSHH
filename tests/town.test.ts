@@ -156,7 +156,7 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
 });
 
 describe.skipIf(!has)('测试用跳关', () => {
-  it('按主线模拟的入场等级表补等级，换上最后一个城镇能买到的最好装备', async () => {
+  it('按主线估算的入场等级表补等级，换上最后一个城镇能买到的最好装备', async () => {
     const { loadGameData } = await import('../src/rules/load.ts');
     const { jumpTo } = await import('../src/rules/preset.ts');
     const files = {
@@ -175,9 +175,9 @@ describe.skipIf(!has)('测试用跳关', () => {
     const c = jumpTo(files, data, stages, 34, newCampaign(0)); // N06
     const lin = c.members.find((m) => m.classId === 11)!; // 林沖
     expect(c.stage).toBe(34);
-    // 林沖 N05 才按剧本 10 级入伙，比一路打过来的主角低
-    expect(lin.level).toBeGreaterThanOrEqual(10);
-    expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(lin.level);
+    // 每个人都不低于这一关敌人平均（修正后约 14）+ 1，林沖按队伍平均入伙，也一样
+    for (const m of c.members) expect(m.level).toBeGreaterThanOrEqual(15);
+    expect(lin.level).toBeGreaterThanOrEqual(15);
     // 不超过到这一关为止敌人平均等级的最高值 + 3（N06 敌人平均 16）
     expect(Math.max(...c.members.map((m) => m.level))).toBeLessThanOrEqual(19);
     // 第 1 章战役 2（N-add01）：第一关打过不少小兵，两人都不该还是 2 级
