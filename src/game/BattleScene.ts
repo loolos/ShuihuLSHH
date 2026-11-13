@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import { parseMap } from '../formats/map.ts';
 import { Battle, type BattleEvent } from '../rules/battle.ts';
+import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
@@ -43,6 +44,8 @@ const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
+const MP_COLOR = 0xe0c040;
+const EXP_COLOR = 0x4a8ff0;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
 const slotLabel = (slot: number) => SLOT_LABEL[slot] ?? '物品';
 const wait = (scene: Phaser.Scene, ms: number) => new Promise<void>((r) => scene.time.delayedCall(ms, r));
@@ -61,7 +64,7 @@ export class BattleScene extends Phaser.Scene {
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
    * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
    */
-  private view = new Map<number, { x: number; y: number; facing: number; hp: number }>();
+  private view = new Map<number, { x: number; y: number; facing: number; hp: number; mp: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   private overlay!: Phaser.GameObjects.Graphics;
   private minimap: Minimap | null = null;
@@ -203,13 +206,13 @@ export class BattleScene extends Phaser.Scene {
 
   private vs(u: Unit) {
     let v = this.view.get(u.uid);
-    if (!v) this.view.set(u.uid, (v = { x: u.x, y: u.y, facing: u.facing, hp: u.hp }));
+    if (!v) this.view.set(u.uid, (v = { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp }));
     return v;
   }
 
   /** 回放结束后与引擎对齐 */
   private syncView() {
-    for (const u of this.battle.units) if (this.view.has(u.uid)) this.view.set(u.uid, { x: u.x, y: u.y, facing: u.facing, hp: u.hp });
+    for (const u of this.battle.units) if (this.view.has(u.uid)) this.view.set(u.uid, { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp });
   }
 
   private spawn(u: Unit, at?: { x: number; y: number }) {
@@ -242,15 +245,23 @@ export class BattleScene extends Phaser.Scene {
     this.drawBar(u);
   }
 
+  /**
+   * 脚下的状态条【新】（负责人 2026-11-13）：体力（阵营色）、气力（黄）；我方好汉再加一条经验（蓝，满了就升级）。
+   */
   private drawBar(u: Unit) {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
     const p = cellToWorld(v.x, v.y);
-    const w = 30, r = Math.max(0, v.hp / Math.max(1, u.stats.maxHp));
+    const w = 30;
+    const rows: [number, number][] = [
+      [SIDE_COLOR[u.side], v.hp / Math.max(1, u.stats.maxHp)],
+      [MP_COLOR, v.mp / Math.max(1, u.stats.maxMp)],
+    ];
+    if (u.side === 'player') rows.push([EXP_COLOR, u.exp / expToNext(u.level)]);
     s.bar.clear().setDepth(depthOf(v.x, v.y, 9));
-    s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, p.y + 10, w + 2, 5);
-    s.bar.fillStyle(SIDE_COLOR[u.side], 1).fillRect(p.x - w / 2, p.y + 11, Math.round(w * r), 3);
+    s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, p.y + 10, w + 2, rows.length * 3 + 1);
+    rows.forEach(([color, r], i) => s.bar.fillStyle(color, 1).fillRect(p.x - w / 2, p.y + 11 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
   }
 
   private refreshAll() {
@@ -1059,6 +1070,7 @@ export class BattleScene extends Phaser.Scene {
         const u = b.unit(e.uid)!;
         const v = this.vs(u);
         v.hp = e.hp;
+        v.mp = e.mp;
         this.drawBar(u);
         // 回复只弹数字（原版不写道具名、技能名）：回血绿字，回气黄字在上一行；"升級了！"这类没有数字的照旧弹文字
         const nums = recoveryFloats(e.delta, e.mpDelta ?? 0);

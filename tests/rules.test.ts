@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
-import { DEFEND_BONUS, dodgeExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
+import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -238,11 +238,17 @@ describe('命中与伤害', () => {
     expect(restExp(31, 33, new Rng(1))).toBeGreaterThanOrEqual(3);
     expect(restExp(31, 33, new Rng(1))).toBeLessThanOrEqual(4);
   });
+  it('升级所需经验 90 + 10 × 等级', () => {
+    expect([1, 10, 20, 30].map(expToNext)).toEqual([100, 190, 290, 390]);
+    expect(expAtLevel(1)).toBe(0);
+    expect(expAtLevel(2)).toBe(100);
+    for (let l = 1; l < 40; l++) expect(expAtLevel(l + 1) - expAtLevel(l)).toBe(expToNext(l));
+  });
   it('全队经验先补给最落后的人', () => {
     const m = [{ level: 10, exp: 0 }, { level: 8, exp: 50 }, { level: 5, exp: 0 }, { level: 30, exp: 0 }];
     expect(splitTeamExp(m, 100)).toEqual([0, 0, 100, 0]);
-    // 300 先把 5 级补到 8 级 50，剩 50 两人平分
-    expect(splitTeamExp(m, 400)).toEqual([0, 25, 375, 0]);
+    // 累计经验：5 级 460，8 级 50 = 960；先给 5 级 500 补平，剩 100 两人平分
+    expect(splitTeamExp(m, 600)).toEqual([0, 50, 550, 0]);
     const all = splitTeamExp(m, 1000);
     expect(all.reduce((a, x) => a + x, 0)).toBe(1000);
     expect(all[3]).toBe(0); // 满级不分

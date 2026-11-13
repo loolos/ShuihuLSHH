@@ -7,7 +7,7 @@ import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
-import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
+import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
@@ -16,7 +16,7 @@ import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
-export { EXP_PER_LEVEL } from './exp.ts';
+export { expToNext } from './exp.ts';
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
@@ -902,8 +902,8 @@ export class Battle {
     if (u.side !== 'player' || !n) return;
     if (src) this.tallyExp(src, n);
     u.exp += n;
-    while (u.exp >= EXP_PER_LEVEL) {
-      u.exp -= EXP_PER_LEVEL;
+    while (u.exp >= expToNext(u.level)) {
+      u.exp -= expToNext(u.level);
       u.level++;
       refreshStats(u, this.data);
       u.hp = u.stats.maxHp;
