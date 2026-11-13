@@ -5,7 +5,7 @@ import { readExeTables } from '../src/formats/exe.ts';
 import { parsePasHeader } from '../src/formats/pas.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { Battle } from '../src/rules/battle.ts';
-import { newCampaign, nextByHeader, partyOf, recordResult, type CampaignState } from '../src/rules/campaign.ts';
+import { joinLevel, newCampaign, nextByHeader, partyOf, recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
 
 declare module '../src/rules/unit.ts' {
@@ -71,7 +71,7 @@ export function simulate(opts: SimOptions = {}): SimStage[] {
   const stages = readExeTables(files.get('ShuiHu.exe')).stages;
 
   const play = (map: string, c: CampaignState, seed: number) => {
-    const b = new Battle(loadStage(files, data, map, { seed, text: tr, party: partyOf(c), simplified: true }));
+    const b = new Battle(loadStage(files, data, map, { seed, text: tr, party: partyOf(c), joinLevel: joinLevel(c), simplified: true }));
     const entry = new Map(b.units.filter((u) => u.side === 'player').map((u) => [u.classId, u.level]));
     b.begin();
     // AI 打不过人类玩家：把敌方攻击力减半，我方回体力；两种经验规则用同样的设置，只比较相对节奏

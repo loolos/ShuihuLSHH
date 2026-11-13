@@ -6,7 +6,7 @@ import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
-import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
+import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
@@ -14,7 +14,7 @@ import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
-export { EXP_PER_LEVEL, MAX_PLAYER_LEVEL } from './exp.ts';
+export { EXP_PER_LEVEL } from './exp.ts';
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
@@ -86,6 +86,8 @@ export interface StageInput {
   text?: (s: string) => string;
   /** 前面关卡延续下来的我方人物（按角色号） */
   party?: Map<number, Member>;
+  /** 新入伙的我方人物的入队等级（当前队伍的平均等级，见 campaign.ts joinLevel）；不低于剧本等级 */
+  joinLevel?: number;
   /** .pab 文件头：城镇号、下一关 */
   header?: PasHeader;
 }
@@ -152,7 +154,9 @@ export class Battle {
         while (slots.length < SLOT_COUNT) slots.push(0); // 旧存档只有 7 格
       } else if (a.side === 'player') addStartItems(input.name, a.type, slots);
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
-      const level = Math.max(1, a.level, kept?.level ?? 0);
+      // 新入伙的人（之前没出现过）按当前队伍的平均等级入队，不低于剧本等级【新】
+      const join = a.side === 'player' && !kept ? (input.joinLevel ?? 0) : 0;
+      const level = Math.max(1, a.level, kept?.level ?? 0, join);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
       let mode = a.flags >> 8;
@@ -761,15 +765,14 @@ export class Battle {
     u.exp += n;
     while (u.exp >= EXP_PER_LEVEL) {
       u.exp -= EXP_PER_LEVEL;
-      const up = u.level < MAX_PLAYER_LEVEL;
-      if (up) u.level++;
+      u.level++;
       refreshStats(u, this.data);
       u.hp = u.stats.maxHp;
       u.mp = u.stats.maxMp;
       this.emit({ type: 'sound', name: 'm04' }); // 升级音（EXE 0x406990）
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, text: '升級了！' });
       this.emit({ type: 'message', text: `${u.name}升級了！（Lv${u.level}）` });
-      if (up) for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
+      for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
     }
   }
 

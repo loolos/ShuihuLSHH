@@ -9,7 +9,6 @@ import type { Rng } from './rng.ts';
 import type { Unit } from './unit.ts';
 
 export const EXP_PER_LEVEL = 100;
-export const MAX_PLAYER_LEVEL = 30;
 
 export const EXP_RULES = {
   /** 'original' 只给 tools/sim-exp.ts 做对比 */
@@ -80,11 +79,11 @@ export const itemExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.ra
 
 /**
  * 全队经验的分配：注水式，先把总进度（等级 × 100 + 经验）最低的人往上补，补平了再一起往上。
- * 30 级封顶的人不参与。返回与 members 同序的分得经验。
+ * 返回与 members 同序的分得经验。（我方等级不封顶，负责人 2026-11-13）
  */
 export function splitTeamExp(members: { level: number; exp: number }[], pool: number): number[] {
   const out = members.map(() => 0);
-  const idx = members.map((_, i) => i).filter((i) => members[i].level < MAX_PLAYER_LEVEL);
+  const idx = members.map((_, i) => i);
   if (!idx.length || pool <= 0) return out;
   const prog = (i: number) => members[i].level * EXP_PER_LEVEL + members[i].exp;
   idx.sort((a, b) => prog(a) - prog(b));
