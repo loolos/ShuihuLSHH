@@ -23,7 +23,7 @@ export class BattleUI {
   private log = $('log');
   private panel = $('unit-panel');
   private cmd = $('cmd');
-  /** 跟着人物的指令菜单（攻击、技能、防御……）；道具菜单仍在右下角 */
+  /** 跟着人物的指令菜单（攻击、技能、防御、道具……） */
   private cmdFloat = $('cmd-float');
   private dialog = $('dialog');
   private dialogNext: (() => void) | null = null;
@@ -207,13 +207,16 @@ export class BattleUI {
   placeCommands(x: number, y: number, reach: number) {
     const el = this.cmdFloat;
     if (el.hidden) return;
-    const w = el.offsetWidth, h = el.offsetHeight;
     const vw = window.innerWidth, vh = window.innerHeight;
+    const top0 = ($('hud').getBoundingClientRect().bottom || 0) + 4;
+    // 道具栏可能很长：最多占满顶栏以下的高度，再长就在菜单里滚动
+    const maxH = `${Math.max(80, Math.floor(vh - 4 - top0))}px`;
+    if (el.style.maxHeight !== maxH) el.style.maxHeight = maxH;
+    const w = el.offsetWidth, h = el.offsetHeight;
     const gap = reach + 8;
     let left = x + gap;
     if (left + w > vw - 4) left = x - gap - w;
     left = Math.max(4, Math.min(left, vw - w - 4));
-    const top0 = ($('hud').getBoundingClientRect().bottom || 0) + 4;
     const bottomEl = $('bottom').getBoundingClientRect();
     // 底部面板占得不多时避开它，屏幕太矮就允许盖住
     const bottom1 = bottomEl.height && bottomEl.top - top0 > h + 8 ? bottomEl.top - 4 : vh - 4;

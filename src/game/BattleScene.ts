@@ -356,7 +356,7 @@ export class BattleScene extends Phaser.Scene {
       return;
     }
     if (m.kind === 'item' || m.kind === 'itemSlot') {
-      this.ui.setCommands(this.commands(m)); // 道具、装备菜单仍在右下角
+      this.setFloatCommands(m); // 道具菜单也放在人物旁边
       if (m.kind === 'item') return this.ui.showUnit(u, null, this.battle.canAct(u) && u.side === 'player' ? '选择道具：可使用、装备、给予或丢弃' : '');
       const it = itemOf(this.assets.data, u.slots[m.slot]);
       if (!it) return this.ui.showUnit(u);
@@ -379,7 +379,7 @@ export class BattleScene extends Phaser.Scene {
     this.setFloatCommands(m);
   }
 
-  /** 攻击、技能、防御等指令放在人物旁边，跟着镜头移动（位置在 update 里每帧更新） */
+  /** 攻击、技能、防御、道具等指令放在人物旁边，跟着镜头移动（位置在 update 里每帧更新） */
   private setFloatCommands(m: Mode) {
     this.ui.setCommands(this.commands(m), true);
     this.placeFloat();
