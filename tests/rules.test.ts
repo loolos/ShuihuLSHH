@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
-import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
+import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
@@ -118,6 +118,9 @@ describe('好汉普攻调整', () => {
     expect([chen, yang].map((c) => c.skills[0].stun)).toEqual([0, 0]);
     const [zhu2] = buildClasses([{ ...rec(5, 54), skills: [{ ...punch, skillId: 54 }, { ...punch, skillId: 56, stun: 5 }] } as unknown as ClassRecord], [], []);
     expect(zhu2.skills[1].stun).toBe(30); // 詭計多端
+    const dirs = [1, 2, 3, 0].map((dir, i) => ({ frame: [11, 12, 13, 15][i], percent: 100, dir }));
+    const [shi] = buildClasses([{ ...rec(3, 31), skills: [{ ...punch, skillId: 31 }, { ...punch, skillId: 42, hits: dirs }] } as unknown as ClassRecord], [], []);
+    expect(attackParts(shi.skills[1]).map((h) => h.percent)).toEqual([25, 25, 25, 25]); // 狂龍出海 4 段
   });
 });
 
