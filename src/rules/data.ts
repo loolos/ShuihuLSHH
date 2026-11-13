@@ -85,6 +85,31 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   56: { stun: 30 }, // 朱武 詭計多端（7 级连续技），原版 5，负责人 2026-11-13 改 30
 };
 
+/**
+ * 好汉（职业号 < 18）的技能一律不扣命中：负的命中修正改成 0，威力下降等额，最低 1【新】（负责人 2026-11-13）。
+ * 如 魯智深 佛光普照 命中 −20 / 威力 70 → 命中 0 / 威力 50。敌方职业（含敌方版好汉，职业号 46 起）不变。
+ * 白勝 監守自盜LV3（威 15、命 −15）、通殺LV1–3（威 10、命 −15/−15/−10）减完不足 1，按 1 算。
+ */
+export const HERO_CLASS_COUNT = 18;
+export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(classId: number, s: T): T {
+  if (classId >= HERO_CLASS_COUNT || s.hitMod >= 0) return s;
+  return { ...s, power: Math.max(1, s.power + s.hitMod), hitMod: 0 };
+}
+
+/**
+ * 隐藏技改名（技能号 → 名字，繁体，LV 后缀照旧）【新】（负责人 2026-11-13 嫌"古武術"重名太多）。
+ * 原版朱武、阮氏三雄、吳用的隐藏技都叫"古武術LV1–3"；按人物和招式形状各取一个名字，敌方同职业单位一起改。
+ */
+export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
+  ([
+    [60, '奇門遁甲'], // 朱武（神機軍師），扇形
+    [69, '天羅地網'], // 阮小二（立地太歲，打漁），落点菱形
+    [76, '翻江倒海'], // 阮小五（短命二郎），扇形
+    [83, '怒海狂濤'], // 阮小七（活閻羅），直线
+    [91, '星羅棋布'], // 吳用（智多星），落点菱形、两段
+  ] as const).flatMap(([id, name]) => [0, 1, 2].map((i) => [id + i, `${name}LV${i + 1}`])),
+);
+
 /** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/3 气力；group 0 复用本人的回复计出手动作。
@@ -131,10 +156,10 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
       skills: unlockHiddenSkills([
-        ...r.skills.map((s, i) => ({
+        ...r.skills.map((s, i) => noHeroHitPenalty(r.id, {
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
-          name: skillNames[s.skillId] ?? `#${s.skillId}`,
+          name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         })),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
