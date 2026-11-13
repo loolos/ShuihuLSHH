@@ -43,7 +43,8 @@ type Mode =
 const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
-const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
+// 友军墨绿（负责人 2026-11-13：原来的蓝色和经验条太像）
+const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
