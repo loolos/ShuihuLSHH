@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
-import { killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
+import { DEFEND_BONUS, dodgeExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -174,7 +174,15 @@ describe('命中与伤害', () => {
   });
   it('挨打也有经验，防御时更多', () => {
     expect(takenExp(30, false, new Rng(1))).toBeGreaterThanOrEqual(3);
-    expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(2);
+    expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(DEFEND_BONUS);
+    expect(DEFEND_BONUS).toBe(3);
+    // 闪避：3–5，防御中再 +3
+    for (let seed = 1; seed <= 20; seed++) {
+      const plain = dodgeExp(false, new Rng(seed));
+      expect(plain).toBeGreaterThanOrEqual(3);
+      expect(plain).toBeLessThanOrEqual(5);
+      expect(dodgeExp(true, new Rng(seed)) - plain).toBe(DEFEND_BONUS);
+    }
     // 休息：按回复的体力 + 气力给少量经验，什么都没回复不给
     expect(restExp(0, 0, new Rng(1))).toBe(0);
     expect(restExp(31, 33, new Rng(1))).toBeGreaterThanOrEqual(3);
@@ -411,7 +419,7 @@ describe('经验', () => {
     }
   });
 
-  it.each([false, true])('闪避攻击时获得3–5经验（防御状态：%s）', (defending) => {
+  it.each([false, true])('闪避攻击时获得3–5经验，防御中再+3（防御状态：%s）', (defending) => {
     let dodges = 0;
     for (let seed = 1; seed <= 30; seed++) {
       const b = new Battle({ name: 't', board: new Board(4, 4), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 1, 0)], blocks: [], data, seed });
@@ -424,8 +432,10 @@ describe('经验', () => {
       const events = b.endPlayerPhase();
       const attacks = events.filter((e) => e.type === 'attack');
       if (attacks.length !== 1 || attacks[0].hits[0]?.result.hit !== false) continue;
-      expect(p.exp).toBeGreaterThanOrEqual(3);
-      expect(p.exp).toBeLessThanOrEqual(5);
+      const bonus = defending ? DEFEND_BONUS : 0;
+      expect(p.exp).toBeGreaterThanOrEqual(3 + bonus);
+      expect(p.exp).toBeLessThanOrEqual(5 + bonus);
+      expect(b.expBySource.dodge).toEqual({ n: 1, total: p.exp });
       expect(b.teamExp).toBe(0);
       dodges++;
     }
