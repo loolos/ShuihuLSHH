@@ -77,11 +77,15 @@ describe('属性', () => {
 });
 
 describe('职业移动力调整', () => {
+  const rec = (id: number, move = 5) => ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move, weaponType: 0, goldCap: 0, defaultItems: [], skills: [] }) as unknown as ClassRecord;
   it('武龍基础移动力比职业表多 1，其他人照原值', () => {
-    const rec = (id: number) => ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 5, weaponType: 0, goldCap: 0, defaultItems: [], skills: [] }) as unknown as ClassRecord;
     const [hero, wangjin] = buildClasses([rec(0), rec(1)], ['武龍', '王進'], []);
     expect(hero.move).toBe(6);
     expect(wangjin.move).toBe(5);
+  });
+  it('魯智深基础移动力 4 → 5，公孫勝、吳用仍照原值 4', () => {
+    const cls = buildClasses([rec(2, 4), rec(10, 4), rec(16, 4)], [], []);
+    expect(cls.map((c) => c.move)).toEqual([4, 4, 5]);
   });
 });
 
