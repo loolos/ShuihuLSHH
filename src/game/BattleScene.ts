@@ -319,7 +319,8 @@ export class BattleScene extends Phaser.Scene {
     const c = this.hoverCell;
     if (!c || !this.battle.board.inBounds(c.x, c.y)) return;
     const m = this.mode;
-    if (m.kind === 'skill' && !this.busy && this.battle.skillTargets(m.u, m.skill).some((t) => sameCell(t, c)))
+    // 范围里没有目标的格子也画出作用范围，方便查看（不能施放）
+    if (m.kind === 'skill' && !this.busy && this.battle.skillCells(m.u, m.skill).some((t) => sameCell(t, c)))
       for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, isSupportSkill(m.skill) ? 0x40b0e0 : 0xf09030, 0.45);
     this.diamond(g, c, 0xffffff, 0.5, true);
   }
@@ -353,6 +354,8 @@ export class BattleScene extends Phaser.Scene {
         const tip = this.armed && sameCell(this.armed, c) ? `${more}　再点一次施放` : more;
         if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, tip);
         else this.ui.showUnit(t, b.preview(u, t, m.skill), tip);
+      } else if (c && b.skillCells(u, m.skill).some((t) => sameCell(t, c))) {
+        this.ui.showUnit(u, null, `${name}：这里没有可作用的目标`);
       } else {
         const bonus = skillBonusText(m.skill);
         this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}${bonus ? `　${bonus}` : ''}）：选择施放位置`);
@@ -380,7 +383,7 @@ export class BattleScene extends Phaser.Scene {
     const target = hovered && u.side === 'player' && this.battle.attackTargets(u).includes(hovered) ? hovered : undefined;
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
-    else this.ui.showUnit(u, null, m.kind === 'attack' ? '选择攻击目标' : '');
+    else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : '');
     if (this.isTargeting(m)) this.setTargetCommands(m);
     else this.setFloatCommands(m);
   }
@@ -464,9 +467,9 @@ export class BattleScene extends Phaser.Scene {
     if (!b.canAct(u)) return u.slots.some(Boolean) ? [{ label: '道具', run: () => this.select({ kind: 'item', u }) }] : null;
     if (m.kind === 'skills') {
       return [
-        ...b.skillsOf(u).map(({ skill, usable }) => ({
+        ...b.skillsOf(u).map(({ skill, usable, hasTarget }) => ({
           label: `${this.assets.tr(skill.name)} ${skill.mpCost}`,
-          note: skillBonusText(skill),
+          note: [skillBonusText(skill), usable && !hasTarget ? '范围内无目标' : ''].filter(Boolean).join('　'),
           enabled: usable,
           run: () => this.select({ kind: 'skill', u, skill }),
         })),
@@ -475,7 +478,8 @@ export class BattleScene extends Phaser.Scene {
     }
     const skills = b.skillsOf(u);
     return [
-      { label: '攻击', enabled: b.attackTargets(u).length > 0, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
+      // 范围里没有敌人也能点"攻击"查看攻击范围（lolo 2026-11-13）【新】
+      { label: '攻击', enabled: !u.acted, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
       ...(skills.length ? [{ label: '技能', enabled: skills.some((k) => k.usable), run: () => this.select({ kind: 'skills', u }) }] : []),
       { label: '防御', run: () => this.exec(u, () => b.defend(u)) },
       { label: '休息', enabled: !u.acted, run: () => this.exec(u, () => b.rest(u)) },
@@ -703,6 +707,12 @@ export class BattleScene extends Phaser.Scene {
           return this.hover(c);
         }
         return void this.exec(u, () => b.useSkill(u, skill, c));
+      }
+      // 射程内但没有目标：只显示作用范围，不出手、不耗气（lolo 2026-11-13）
+      if (b.skillCells(u, skill).some((t) => sameCell(t, c))) {
+        this.armed = null;
+        this.hoverCell = null;
+        return this.hover(c);
       }
       // 点了范围外：回到技能列表（不必从头再点"技能"）
       return this.select({ kind: 'skills', u });

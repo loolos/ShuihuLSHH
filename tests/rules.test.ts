@@ -746,6 +746,25 @@ describe('技能', () => {
     expect(b.useSkill(p, line, { x: 3, y: 2 })).toEqual([]);
   });
 
+  it('范围里没有敌人也能选技能查看范围，但不能施放；气不够仍不能选', () => {
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), data: sdata, seed: 3, blocks: [],
+      units: [act(0, 0, 'player', 2, 2), act(1, 1, 'enemy', 9, 9, 0x800)],
+    });
+    b.begin();
+    const p = b.unit(0)!;
+    const row = () => b.skillsOf(p).find((k) => k.skill === line)!;
+    expect(row()).toMatchObject({ usable: true, hasTarget: false });
+    expect(b.skillCells(p, line).length).toBeGreaterThan(0);
+    expect(b.skillTargets(p, line)).toEqual([]);
+    const mp0 = p.mp;
+    expect(b.useSkill(p, line, { x: 3, y: 2 })).toEqual([]); // 空放无效：不耗气、不算行动
+    expect(p.mp).toBe(mp0);
+    expect(p.ended).toBe(false);
+    p.mp = line.mpCost - 1;
+    expect(row()).toMatchObject({ usable: false, hasTarget: false });
+  });
+
   it('回复技回复范围内己方体力，集气技回复自己气力', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 2, 2), act(1, 1, 'player', 3, 2)], blocks: [], data: sdata, seed: 1 });
     b.begin();
