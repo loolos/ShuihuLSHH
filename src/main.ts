@@ -326,6 +326,10 @@ function startGame(assets: Assets) {
   };
   setupUpdateButton();
   $('hud').hidden = false;
+  // 顶栏在窄屏上会折行，小地图跟着顶栏的实际高度往下放
+  const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
+  new ResizeObserver(hudH).observe($('hud'));
+  hudH();
   ui.show();
   (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
   run();
