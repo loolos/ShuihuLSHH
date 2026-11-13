@@ -1,5 +1,5 @@
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
-import type { ClassRecord, ClassSkill } from '../formats/hum.ts';
+import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 
@@ -46,6 +46,18 @@ export interface GameData {
 export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
 
 /**
+ * 个别职业普通攻击的分段调整（职业号 → 新的分段）【新】。
+ * 0 武龍「一鳴驚人」：原版第 9 帧一段 100%，负责人 2026-11-13 要求改成两段 50% + 50%，
+ * 在同一帧同时结算（两段各自判定命中和必杀，一起弹出两个数字）。总伤害不变。
+ */
+export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
+  0: [
+    { frame: 9, percent: 50, dir: 0 },
+    { frame: 9, percent: 50, dir: 0 },
+  ],
+};
+
+/**
  * 个别技能的数值调整（技能号 → 字段），在职业表原值上覆盖【新】。技能数值不必照原版（负责人 2026-11-12）。
  * 33–35 龍爭虎鬥LV1–3（史進 2/13/25 级）：负责人 2026-11-13 反映"比普通攻击还弱"，要求改强一点。
  * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
@@ -77,7 +89,12 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
-      skills: r.skills.map((s) => ({ ...s, ...SKILL_OVERRIDES[s.skillId], name: skillNames[s.skillId] ?? `#${s.skillId}` })),
+      skills: r.skills.map((s, i) => ({
+        ...s,
+        ...SKILL_OVERRIDES[s.skillId],
+        name: skillNames[s.skillId] ?? `#${s.skillId}`,
+        ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
+      })),
     };
   });
 }

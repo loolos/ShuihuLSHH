@@ -135,7 +135,7 @@ export class BattleUI {
       </div>
       <div class="grid"><span>攻 ${s.attack}</span><span>防 ${s.defense}</span><span>移 ${s.move}</span><span>命 ${s.hit}</span><span>敏 ${s.agility}</span><span>必 ${s.crit}</span></div>
       ${states ? `<div>${states}</div>` : ''}
-      ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
+      ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}${preview.parts > 1 ? `（${preview.parts} 段）` : ''}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
       ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}
       ${
         item
