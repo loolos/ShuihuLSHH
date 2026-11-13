@@ -99,6 +99,11 @@ export class BattleUI {
     $('turn').textContent = `第 ${turn}${limit ? ` / ${limit}` : ''} 回合 · ${phase}`;
   }
 
+  /** 全队经验池（击倒经验的 35%，胜利后结算）【新】（负责人 2026-11-13） */
+  setTeamExp(n: number) {
+    $('team-exp').textContent = `全队经验 ${n}`;
+  }
+
   setEndTurnEnabled(on: boolean) {
     $<HTMLButtonElement>('end-turn').disabled = !on;
   }

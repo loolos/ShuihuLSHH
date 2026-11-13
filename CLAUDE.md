@@ -29,6 +29,7 @@
 | `npm run gen:enemy-levels` | 用原版经验规则沿主线模拟（8 个种子，约 4 分钟），重新生成每关敌人等级修正 `src/data/enemy-levels.json`（要在 `gen:levels` 之前跑） |
 | `npm run gen:levels` | 沿主线模拟（8 个种子，约 4 分钟），重新生成跳关用的入场等级表 `src/data/entry-levels.json`（改了经验规则后要跑） |
 | `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
+| `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 修正后敌人平均 + 1） |
 | `node tools/gen-sound.ts <原版 Sound 目录>` | 把原版音效压成 MP3（去重）写到 `gamedata/sound/`（需要 ffmpeg；负责人 2026-11-12 同意入库） |
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版每关下载量、重复文件和重复帧 |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |

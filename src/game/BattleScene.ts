@@ -818,6 +818,7 @@ export class BattleScene extends Phaser.Scene {
       this.refreshAll();
       const b = this.battle;
       this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
+      this.ui.setTeamExp(b.teamExp);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       this.ui.setRewind(b.rewindTarget());
       if (this.mode.kind !== 'idle') this.redraw();

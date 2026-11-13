@@ -88,6 +88,7 @@ code { color: var(--ink); }
 
 /* ───────── 战斗界面 ───────── */
 #turn { color: var(--accent); white-space: nowrap; }
+#team-exp { color: var(--muted); white-space: nowrap; }
 #hud button.primary { background: var(--accent); color: #1b1610; border-color: var(--accent); font-weight: bold; }
 #hud button:disabled { opacity: 0.4; cursor: default; }
 
