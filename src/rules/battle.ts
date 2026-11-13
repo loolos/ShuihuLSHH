@@ -94,6 +94,9 @@ export interface StageInput {
   header?: PasHeader;
 }
 
+/** 时光倒流最多能回到几个回合之前（记录最近几个我方回合开始时的状态）【新】 */
+export const REWIND_TURNS = 2;
+
 export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' | 'rest' | 'kill' | 'team';
 
 export class Battle {
@@ -130,6 +133,8 @@ export class Battle {
   private groups = new Map<number, number>();
   /** 埋伏中的单位（EXE 标志 0x40000，AI 模式 6/9）：剧本点名不会让它们登场 */
   private ambushers = new Set<number>();
+  /** 时光倒流：最近 REWIND_TURNS 个我方回合开始时的完整状态（JSON，不含随机数状态），旧的在前【新】 */
+  private history: { turn: number; state: string }[] = [];
 
   constructor(input: StageInput) {
     this.name = input.name;
@@ -299,6 +304,7 @@ export class Battle {
     this.out = [];
     this.runTurnTriggers(0);
     this.startTurn(1);
+    this.record();
     return this.flush();
   }
 
@@ -320,6 +326,71 @@ export class Battle {
       if (this.status !== 'playing') return this.flush();
     }
     this.startTurn(this.turn + 1);
+    this.record();
+    return this.flush();
+  }
+
+  // ───────────── 时光倒流【新】 ─────────────
+
+  /** 会随战斗变化的全部状态（地图、剧本、编组是固定的；随机数单独处理） */
+  private state(): string {
+    return JSON.stringify({
+      units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
+      objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam,
+      pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
+      expBySource: this.expBySource,
+    });
+  }
+
+  /** 我方回合开始时记一份状态，只留最近 REWIND_TURNS 份 */
+  private record() {
+    if (this.status !== 'playing' || this.phase !== 'player') return;
+    this.history.push({ turn: this.turn, state: this.state() });
+    while (this.history.length > REWIND_TURNS) this.history.shift();
+  }
+
+  /** 本回合开始后有没有变化（行动过、或者已经分出胜负） */
+  private changedSinceTurnStart() {
+    const top = this.history.at(-1);
+    return !!top && this.state() !== top.state;
+  }
+
+  /**
+   * 时光倒流会回到第几回合的开始；不能倒流时为 null。
+   * 本回合动过（或打输了）就回到本回合开始，否则回到上一回合开始。
+   */
+  rewindTarget(): number | null {
+    if (this.status === 'won') return null;
+    if (this.changedSinceTurnStart()) return this.history.at(-1)!.turn;
+    return this.history.length >= 2 ? this.history.at(-2)!.turn : null;
+  }
+
+  /** 时光倒流：恢复到 rewindTarget() 那一回合的我方回合开始，换种子重新掷随机数 */
+  rewind(seed?: number): BattleEvent[] {
+    this.out = [];
+    if (this.rewindTarget() === null) return [];
+    if (!this.changedSinceTurnStart()) this.history.pop();
+    const s = JSON.parse(this.history.at(-1)!.state);
+    // 单位按原对象原地恢复（画面和 AI 拿着的引用不失效）
+    s.units.forEach((u: Unit, i: number) => Object.assign(this.units[i], u));
+    this.items.splice(0, this.items.length, ...s.items);
+    this.turn = s.turn;
+    this.phase = s.phase;
+    this.turnLimit = s.turnLimit;
+    this.status = s.status;
+    this.objectives = s.objectives;
+    this.fired = new Set(s.fired);
+    this.scriptFlag = s.scriptFlag;
+    this.turnParam = s.turnParam;
+    this.pendingDeaths = s.pendingDeaths;
+    this.teamExp = s.teamExp;
+    this.clearGold = s.clearGold;
+    this.ambushers = new Set(s.ambushers);
+    this.expBySource = s.expBySource;
+    this.rng.reseed(seed);
+    this.emit({ type: 'phase', side: 'player', turn: this.turn });
+    const prompt = this.data.prompts?.[0];
+    if (this.awaitingSignal && prompt) this.emit({ type: 'ask', prompt });
     return this.flush();
   }
 

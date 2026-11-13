@@ -229,6 +229,53 @@ describe.skipIf(!has)('N01', () => {
     expect(c.status).toBe('lost');
   });
 
+  it('时光倒流：本回合动过就回到本回合开始，否则回到上一回合开始，最多两回合', () => {
+    const b = make();
+    b.begin();
+    expect(b.rewindTarget()).toBeNull(); // 第 1 回合刚开始，没有更早的状态
+    const wj = b.unitByChar(1)!;
+    b.move(wj, 6, 7);
+    expect(b.rewindTarget()).toBe(1);
+    expect(b.rewind(42).at(0)).toMatchObject({ type: 'phase', side: 'player', turn: 1 });
+    expect(b.unitByChar(1)).toBe(wj); // 原对象原地恢复
+    expect([wj.x, wj.y, wj.acted, wj.ended]).toEqual([6, 6, false, false]);
+    expect(b.rng.next()).toBe(new Rng(42).next()); // 换了种子重新掷
+    expect(b.rewindTarget()).toBeNull();
+
+    b.endPlayerPhase(); // → 第 2 回合
+    b.endPlayerPhase(); // → 第 3 回合，武龍登场
+    expect(b.unitByChar(0)).toBeTruthy();
+    expect(b.rewindTarget()).toBe(2); // 没动过：回到上一回合开始
+    b.rewind();
+    expect(b.turn).toBe(2);
+    expect(b.unitByChar(0)).toBeUndefined();
+    expect(b.rewindTarget()).toBeNull(); // 第 1 回合的状态已经不在（只记两回合）
+    b.endPlayerPhase();
+    expect(b.turn).toBe(3);
+    expect(b.unitByChar(0)).toBeTruthy(); // 剧本照常重新触发
+  });
+
+  it('时光倒流：失败后回到本回合开始重试', () => {
+    const b = make();
+    b.begin();
+    const wj = b.unitByChar(1)!;
+    let turn = 0;
+    for (let i = 0; i < 30 && b.status === 'playing'; i++) {
+      wj.hp = 1;
+      wj.stats.agility = 0;
+      turn = b.turn;
+      b.endPlayerPhase();
+    }
+    expect(b.status).toBe('lost');
+    expect(b.rewindTarget()).toBe(turn);
+    b.rewind();
+    expect(b.status).toBe('playing');
+    expect(b.phase).toBe('player');
+    expect(b.turn).toBe(turn);
+    expect(wj.alive).toBe(true);
+    expect(b.units.filter((u) => u.side === 'player').every((u) => !u.ended || u.stunTurns > 0)).toBe(true);
+  });
+
   it('整场模拟：双方都用 AI，不出错，并在 50 回合内结束', () => {
     for (const seed of [1, 2, 3]) {
       const b = make(seed);

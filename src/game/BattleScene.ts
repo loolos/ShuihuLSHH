@@ -140,17 +140,7 @@ export class BattleScene extends Phaser.Scene {
 
     // 原版地图上的宝物一律画成宝箱（Grid.grp 第 4 帧：0x40c24f 调 0x4010e0 把帧号设为 4，0x4010d0 从 data\\grid 取帧），
     // 不显示里面是什么；走到（或路过）就拾起。开局隐藏的宝物不画（原版绘制时检查显示标志 0x2，0x410960）
-    const chest = this.assets.grid.frame(4);
-    const chestKey = textureFor(this, 'grid:4', () => frameToCanvas(chest, this.assets.palette));
-    for (const g of this.battle.items) {
-      if (g.hidden || !itemOf(this.assets.data, g.item)) continue;
-      const p = cellToWorld(g.x, g.y);
-      const img = this.add
-        .image(p.x, p.y, chestKey)
-        .setOrigin(chest.anchorX / Math.max(1, chest.width), chest.anchorY / Math.max(1, chest.height))
-        .setDepth(depthOf(g.x, g.y, 7));
-      this.groundItems.set(`${g.x},${g.y}`, img);
-    }
+    this.drawChests();
     for (const u of this.battle.units) if (u.present) this.spawn(u);
 
     // 相机：可拖动范围覆盖整张地图
@@ -193,6 +183,21 @@ export class BattleScene extends Phaser.Scene {
     this.ui.showUnit(null);
     this.ui.setCommands(null);
     this.run(this.battle.begin()).then(() => this.autoEndTurn());
+  }
+
+  /** 地图上还没被拾起的宝物画成宝箱 */
+  private drawChests() {
+    const chest = this.assets.grid.frame(4);
+    const chestKey = textureFor(this, 'grid:4', () => frameToCanvas(chest, this.assets.palette));
+    for (const g of this.battle.items) {
+      if (g.hidden || !itemOf(this.assets.data, g.item)) continue;
+      const p = cellToWorld(g.x, g.y);
+      const img = this.add
+        .image(p.x, p.y, chestKey)
+        .setOrigin(chest.anchorX / Math.max(1, chest.width), chest.anchorY / Math.max(1, chest.height))
+        .setDepth(depthOf(g.x, g.y, 7));
+      this.groundItems.set(`${g.x},${g.y}`, img);
+    }
   }
 
   // ───────────── 单位精灵 ─────────────
@@ -531,6 +536,35 @@ export class BattleScene extends Phaser.Scene {
     this.autoEndTurn();
   }
 
+  /**
+   * 时光倒流【新】：回到本回合（或上一回合）我方回合开始时的状态，随机数重新掷。
+   * 画面上的人物、宝箱全部按引擎状态重建。返回是否倒流成功。
+   */
+  async rewind(): Promise<boolean> {
+    const b = this.battle;
+    const turn = b.rewindTarget();
+    if (this.busy || turn === null || this.ui.inDialog) return false;
+    this.select({ kind: 'idle' });
+    this.overlay.clear();
+    const events = b.rewind();
+    this.ui.hideResult();
+    for (const s of this.sprites.values()) {
+      s.spr.destroy();
+      s.bar.destroy();
+    }
+    this.sprites.clear();
+    this.view.clear();
+    for (const img of this.groundItems.values()) img.destroy();
+    this.groundItems.clear();
+    this.drawChests();
+    for (const u of b.units) if (u.present && u.alive) this.spawn(u);
+    this.endSound = false;
+    this.ui.message(`时光倒流：回到第 ${turn} 回合开始。`);
+    await this.run(events);
+    this.autoEndTurn();
+    return true;
+  }
+
   // ───────────── 输入 ─────────────
 
   private setupInput() {
@@ -739,6 +773,7 @@ export class BattleScene extends Phaser.Scene {
     this.busy = true;
     this.ui.playing = true;
     this.ui.setEndTurnEnabled(false);
+    this.ui.setRewind(null);
     try {
       for (const e of events) {
         // 跳过剧情：对白不显示，也不为它移动镜头；其余事件按快进处理
@@ -768,6 +803,7 @@ export class BattleScene extends Phaser.Scene {
       const b = this.battle;
       this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
+      this.ui.setRewind(b.rewindTarget());
       if (this.mode.kind !== 'idle') this.redraw();
     }
   }
