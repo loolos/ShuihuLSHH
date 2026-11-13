@@ -31,6 +31,25 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 #info { flex: 1 1 160px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #sound { margin-left: auto; }
 
+/* 左上角的小地图：顶栏下面，可收起；半透明，鼠标移上去变清楚 */
+#minimap {
+  position: fixed; left: max(6px, env(safe-area-inset-left)); top: calc(var(--hud-h, 46px) + 6px); z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 4px; pointer-events: none;
+}
+#minimap[hidden], #minimap [hidden] { display: none !important; }
+#minimap > * { pointer-events: auto; }
+#minimap-toggle {
+  font: inherit; font-size: 13px; color: var(--ink); background: rgba(42, 34, 25, 0.85);
+  border: 1px solid #5a4832; border-radius: 4px; padding: 2px 8px; min-height: 28px; cursor: pointer;
+}
+#minimap .mm-wrap {
+  position: relative; padding: 4px; border: 1px solid #5a4832; border-radius: 6px;
+  background: rgba(10, 8, 6, 0.45); opacity: 0.82; transition: opacity 0.15s;
+}
+#minimap .mm-wrap:hover { opacity: 1; }
+#minimap canvas { display: block; touch-action: none; }
+#minimap .mm-top { position: absolute; left: 4px; top: 4px; cursor: crosshair; }
+
 /* 检查更新的提示条 */
 #toast {
   position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 6;
@@ -158,6 +177,9 @@ code { color: var(--ink); }
   background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
 }
 #town[hidden] { display: none; }
+/* 说书时对白框和选项面板盖在城镇界面上 */
+body.storytelling #dialog, body.storytelling #result { z-index: 7; }
+#town button.story { border-color: var(--accent); }
 #town button {
   font: inherit; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px;
   padding: 6px 12px; min-height: 34px; cursor: pointer;
@@ -184,6 +206,8 @@ code { color: var(--ink); }
 #town .nm.empty { color: #6a5a44; }
 #town .eff { flex: 1 1 auto; color: var(--muted); font-size: 12px; }
 #town .price { flex: 0 0 auto; color: #f0c860; font-size: 13px; }
+#town .forge-gain { flex: 0 0 auto; color: #7fd06a; font-size: 13px; text-align: right; }
+#town .forge-gain small { display: block; color: #f0c860; font-size: 12px; }
 #town .lab { flex: 0 0 2.4em; color: var(--muted); font-size: 12px; }
 #town .plus { color: #7fd06a; font-weight: normal; margin-left: 2px; }
 #town .warn { color: var(--danger); margin-left: 4px; }

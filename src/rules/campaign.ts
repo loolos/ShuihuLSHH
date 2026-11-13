@@ -21,6 +21,8 @@ export interface CampaignState {
   town?: number;
   /** 上一关出场的我方角色号（整备、买东西只列这些人；旧存档没有时列全部） */
   active?: number[];
+  /** 已领过礼物的说书（src/rules/storyteller.ts 的故事 id）【新】 */
+  tales?: string[];
 }
 
 export interface StageEntry {
@@ -72,10 +74,20 @@ export function nextByHeader(header: { town: number; next: number }): { next: nu
 /** 关卡开始时套用的我方状态 */
 export const partyOf = (c: CampaignState) => new Map(c.members.map((m) => [m.classId, m]));
 
-/** 关卡结束：记下我方人物（含战败的）的等级、经验、装备，加上本关得到的黄金 */
+/**
+ * 新入伙的人的入队等级【新】（负责人 2026-11-13）：当前队伍（上一关出场的人；旧存档没有记录时用全部人物）的平均等级，四舍五入。
+ * 还没有队伍时为 0（照剧本等级）。Battle 里再和剧本等级取较高者。
+ */
+export function joinLevel(c: CampaignState): number {
+  const active = c.active ? c.members.filter((m) => c.active!.includes(m.classId)) : c.members;
+  const list = active.length ? active : c.members;
+  return list.length ? Math.round(list.reduce((a, m) => a + m.level, 0) / list.length) : 0;
+}
+
+/** 关卡结束：记下我方人物（含战败的）的等级、经验、装备，加上本关得到的黄金（击倒掉落 + 过关奖励） */
 export function recordResult(c: CampaignState, battle: Battle): CampaignState {
   const members = new Map(c.members.map((m) => [m.classId, m]));
-  let gold = c.gold;
+  let gold = c.gold + (battle.status === 'won' ? battle.clearGold : 0);
   const active: number[] = [];
   for (const u of battle.units) {
     if (u.side !== 'player') continue;

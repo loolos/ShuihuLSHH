@@ -5,7 +5,10 @@ import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
-import { basicAttack } from '../src/rules/data.ts';
+import { basicAttack, type SkillDef } from '../src/rules/data.ts';
+import { rollAttack } from '../src/rules/combat.ts';
+import { Rng } from '../src/rules/rng.ts';
+import { computeStats, type Unit } from '../src/rules/unit.ts';
 import { readExeTables } from '../src/formats/exe.ts';
 import { newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { parsePasHeader } from '../src/formats/pas.ts';
@@ -51,6 +54,45 @@ describe.skipIf(!has)('N01', () => {
       expect(s.learnLevel).toBeLessThanOrEqual(1);
       expect(s.mpCost).toBe(0);
     }
+  });
+
+  it('史進 龍爭虎鬥LV1 比普通攻击明显更强（威力 25，原版 10）', () => {
+    const cls = data.classes[3];
+    const basic = basicAttack(cls)!;
+    const s = cls.skills.find((k) => k.skillId === 33)!;
+    expect(s.power).toBe(25);
+    expect(cls.skills.find((k) => k.skillId === 34)!.power).toBe(45);
+    expect(cls.skills.find((k) => k.skillId === 35)!.power).toBe(65);
+    expect(s.mpCost).toBe(15);
+    // 2 级史進（初始装备）打同级杂兵：期望伤害至少高 30%
+    const unit = (classId: number, y: number, facing: number) => {
+      const c = data.classes[classId];
+      const slots = [...c.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
+      return { classId, level: 2, x: 0, y, facing, slots, buffs: [], defending: false, stats: computeStats(c, 2, slots, data) } as unknown as Unit;
+    };
+    const a = unit(3, 0, 2), t = unit(32, 1, 0);
+    const avg = (sk: SkillDef) => {
+      const rng = new Rng(7);
+      let sum = 0;
+      for (let i = 0; i < 4000; i++) sum += rollAttack(a, t, sk, rng).damage;
+      return sum / 4000;
+    };
+    expect(avg(s)).toBeGreaterThan(avg(basic) * 1.3);
+  });
+
+  it('武龍 隔山打虎：原版数值，拆成 4 段各 25%，每段单独判定', () => {
+    const s = data.classes[0].skills.find((k) => k.skillId === 8)!;
+    expect([s.power, s.hitMod, s.critMod, s.mpCost]).toEqual([60, 40, 50, 30]);
+    expect(s.hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
+    const c = data.classes[0];
+    const slots = [...c.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
+    const a = { classId: 0, level: 2, x: 0, y: 0, facing: 2, slots, buffs: [], defending: false, stats: computeStats(c, 2, slots, data) } as unknown as Unit;
+    const g = data.classes[32];
+    const gs = [...g.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);
+    const t = { classId: 32, level: 2, x: 0, y: 1, facing: 0, slots: gs, buffs: [], defending: false, stats: computeStats(g, 2, gs, data) } as unknown as Unit;
+    const r = rollAttack(a, t, s, new Rng(1));
+    expect(r.parts).toHaveLength(4);
+    expect(r.partCrit).toHaveLength(4);
   });
 
   it('通行：开局起点 (4,4) 能走到的格子数（EXE 规则）', () => {

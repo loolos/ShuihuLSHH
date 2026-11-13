@@ -5,8 +5,9 @@ import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
-import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
-import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
+import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { killGold, stageClearGold } from './gold.ts';
+import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
@@ -14,7 +15,7 @@ import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
-export { EXP_PER_LEVEL, MAX_PLAYER_LEVEL } from './exp.ts';
+export { EXP_PER_LEVEL } from './exp.ts';
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
@@ -54,7 +55,7 @@ export type BattleEvent =
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
   | { type: 'attack'; uid: number; skill: SkillDef; cell: Cell; area: Cell[]; facing: number; hits: { uid: number; result: HitResult }[]; counter: boolean }
-  | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; text?: string }
+  | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; /** 气的变化（回复时弹黄字） */ mpDelta?: number; text?: string }
   | { type: 'status'; uid: number; text: string }
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
@@ -86,9 +87,13 @@ export interface StageInput {
   text?: (s: string) => string;
   /** 前面关卡延续下来的我方人物（按角色号） */
   party?: Map<number, Member>;
+  /** 新入伙的我方人物的入队等级（当前队伍的平均等级，见 campaign.ts joinLevel）；不低于剧本等级 */
+  joinLevel?: number;
   /** .pab 文件头：城镇号、下一关 */
   header?: PasHeader;
 }
+
+export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' | 'rest' | 'kill' | 'team';
 
 export class Battle {
   readonly name: string;
@@ -112,8 +117,10 @@ export class Battle {
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
   private pendingDeaths: number[] = [];
-  /** 本关累计的全队经验（击倒经验的一半），胜利后结算 */
+  /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
+  /** 过关奖励的黄金（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
+  clearGold = 0;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
   /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
@@ -150,7 +157,9 @@ export class Battle {
         while (slots.length < SLOT_COUNT) slots.push(0); // 旧存档只有 7 格
       } else if (a.side === 'player') addStartItems(input.name, a.type, slots);
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
-      const level = Math.max(1, a.level, kept?.level ?? 0);
+      // 新入伙的人（之前没出现过）按当前队伍的平均等级入队，不低于剧本等级【新】
+      const join = a.side === 'player' && !kept ? (input.joinLevel ?? 0) : 0;
+      const level = Math.max(1, a.level, kept?.level ?? 0, join);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
       let mode = a.flags >> 8;
@@ -320,7 +329,7 @@ export class Battle {
         u.hp = Math.max(1, u.hp - loss); // 毒不致死【待核】
         this.emit({ type: 'message', text: `${u.name}毒發，生命力損失 ${loss} 點。` });
       }
-      if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0 });
+      if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0 });
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
       if (u.buffs.length) {
@@ -443,8 +452,8 @@ export class Battle {
     const mp0 = u.mp;
     u.hp = Math.min(u.stats.maxHp, u.hp + Math.max(1, Math.floor(u.stats.maxHp / REST_DIVISOR)));
     u.mp = Math.min(u.stats.maxMp, u.mp + Math.max(1, Math.floor(u.stats.maxMp / REST_DIVISOR)));
-    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '休息' });
-    this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng));
+    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0, text: '休息' });
+    this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng), 'rest');
   }
 
   wait(u: Unit): BattleEvent[] {
@@ -474,7 +483,7 @@ export class Battle {
     this.out = [];
     if (!this.itemTargets(u, slot).includes(target)) return [];
     this.applyItem(u, slot, target);
-    this.gainExp(u, itemExp(this.rng));
+    this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
     return this.flush();
   }
@@ -607,7 +616,7 @@ export class Battle {
     this.adjustMovement(t, t.stats.move - move0);
     if (buffs.length) this.emit({ type: 'message', text: `${who}${buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''}`).join('、')}，持續 ${Math.max(...buffs.map((b) => b.turns))} 回合。` });
     if (!it.healHp && !it.healMp && !cured && !buffs.length) this.emit({ type: 'message', text: `${who}沒有效果。` });
-    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
+    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
   }
 
   // ───────────── 结算 ─────────────
@@ -664,14 +673,14 @@ export class Battle {
       const name = this.tr(skill.name);
       let healed = 0;
       for (const t of targets) {
-        const hp0 = t.hp;
+        const hp0 = t.hp, mp0 = t.mp;
         const div = Math.max(1, skill.power);
         if (isChargeSkill(skill)) t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / div));
         else t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / div));
         healed += t.hp - hp0;
-        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
+        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
       }
-      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng));
+      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
       return;
     }
     const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
@@ -687,7 +696,7 @@ export class Battle {
         if (hits.length === 1) this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
         // 防御中闪避相邻攻击：50% 反击，必定命中
         if (!counter && !counterBy && canCounter(u, t) && this.rng.chance(50)) counterBy = t;
-        if (t.side === 'player' && t.defending) this.gainExp(t, dodgeExp(this.rng));
+        if (t.side === 'player') this.gainExp(t, dodgeExp(t.defending, this.rng), 'dodge');
         continue;
       }
       const hp0 = t.hp;
@@ -715,10 +724,10 @@ export class Battle {
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
       exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
-      if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng));
+      if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng), 'taken');
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
-    if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp);
+    if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
@@ -729,7 +738,7 @@ export class Battle {
     this.emit({ type: 'message', text: `${t.name}戰敗了。` });
     this.pendingDeaths.push(t.classId);
     if (u.side === 'player' && t.side === 'enemy') {
-      const gold = killGold(t, this.data, this.rng);
+      const gold = killGold(t.classId, this.data, this.rng);
       if (gold) {
         u.gold += gold;
         this.emit({ type: 'message', text: `擊退了敵人，得到黃金 ${gold} 兩！` });
@@ -737,25 +746,36 @@ export class Battle {
     }
     if (u.side !== 'enemy' && t.side === 'enemy') {
       const total = killExp(u, t, this.rng);
-      this.gainExp(u, killerShare(total, u.side === 'player'));
+      this.gainExp(u, killerShare(total, u.side === 'player'), 'kill');
       this.teamExp += teamShare(total);
+      this.tallyExp('team', teamShare(total));
     }
   }
 
-  private gainExp(u: Unit, n: number) {
+  /** 按来源累计本关我方获得的经验（tools/sim-exp.ts 统计用；全队经验按入池时计） */
+  expBySource: Partial<Record<ExpSource, { n: number; total: number }>> = {};
+  private tallyExp(src: ExpSource, n: number) {
+    if (!n) return;
+    const e = (this.expBySource[src] ??= { n: 0, total: 0 });
+    e.n++;
+    e.total += n;
+  }
+
+  /** src 为 null 表示调用方已经自己统计过 */
+  private gainExp(u: Unit, n: number, src: ExpSource | null) {
     if (u.side !== 'player' || !n) return;
+    if (src) this.tallyExp(src, n);
     u.exp += n;
     while (u.exp >= EXP_PER_LEVEL) {
       u.exp -= EXP_PER_LEVEL;
-      const up = u.level < MAX_PLAYER_LEVEL;
-      if (up) u.level++;
+      u.level++;
       refreshStats(u, this.data);
       u.hp = u.stats.maxHp;
       u.mp = u.stats.maxMp;
       this.emit({ type: 'sound', name: 'm04' }); // 升级音（EXE 0x406990）
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, text: '升級了！' });
       this.emit({ type: 'message', text: `${u.name}升級了！（Lv${u.level}）` });
-      if (up) for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
+      for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
     }
   }
 
@@ -774,7 +794,7 @@ export class Battle {
     splitTeamExp(team, pool).forEach((n, i) => {
       if (!n) return;
       this.emit({ type: 'message', text: `${team[i].name}得到經驗 ${n}。` });
-      this.gainExp(team[i], n);
+      this.gainExp(team[i], n, null);
     });
   }
 
@@ -1056,7 +1076,11 @@ export class Battle {
 
   private finish(result: 'won' | 'lost', text: string) {
     if (this.status !== 'playing') return;
-    if (result === 'won') this.settleTeamExp();
+    if (result === 'won') {
+      this.settleTeamExp();
+      this.clearGold = this.hadPlayers ? stageClearGold(this.name) : 0;
+      if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到黃金 ${this.clearGold} 兩！` });
+    }
     this.status = result;
     this.emit({ type: 'end', result, text });
   }

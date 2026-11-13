@@ -6,6 +6,7 @@ import { parseHuman } from '../formats/hum.ts';
 import { parseMap } from '../formats/map.ts';
 import { parsePasBlocks, parsePasHeader } from '../formats/pas.ts';
 import { Board } from './board.ts';
+import { adjustEnemies } from './enemy-level.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, type GameData } from './data.ts';
 
@@ -60,7 +61,7 @@ export function findStageFile(files: FileSource, stage: string, ext: string): st
   return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
 
-export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party'] } = {}): StageInput {
+export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party']; joinLevel?: number } = {}): StageInput {
   const mapFile = findStageFile(files, stage, '.map');
   if (!mapFile) throw new Error(`找不到地图 ${stage}`);
   const map = parseMap(files.get(mapFile), mapFile);
@@ -72,7 +73,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
   return {
     name: stage,
     board,
-    units: files.has(actFile) ? parseAct(files.get(actFile), actFile) : [],
+    units: files.has(actFile) ? adjustEnemies(stage, parseAct(files.get(actFile), actFile)) : [],
     blocks: pabFile ? parsePasBlocks(files.get(pabFile), 'big5') : [],
     header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
     displayBlocks: opts.simplified && pasFile ? parsePasBlocks(files.get(pasFile), 'gbk') : undefined,
@@ -80,6 +81,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     seed: opts.seed,
     text: opts.text,
     party: opts.party,
+    joinLevel: opts.joinLevel,
   };
 }
 

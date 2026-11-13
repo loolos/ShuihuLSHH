@@ -1,5 +1,5 @@
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
-import type { ClassRecord, ClassSkill } from '../formats/hum.ts';
+import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 
@@ -45,6 +45,33 @@ export interface GameData {
  */
 export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
 
+/**
+ * 个别职业普通攻击的分段调整（职业号 → 新的分段）【新】。
+ * 0 武龍「一鳴驚人」：原版第 9 帧一段 100%，负责人 2026-11-13 要求改成两段 50% + 50%，
+ * 在同一帧同时结算（两段各自判定命中和必杀，一起弹出两个数字）。总伤害不变。
+ */
+export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
+  0: [
+    { frame: 9, percent: 50, dir: 0 },
+    { frame: 9, percent: 50, dir: 0 },
+  ],
+};
+
+/**
+ * 个别技能的数值调整（技能号 → 字段），在职业表原值上覆盖【新】。技能数值不必照原版（负责人 2026-11-12）。
+ * 33–35 龍爭虎鬥LV1–3（史進 2/13/25 级）：负责人 2026-11-13 反映"比普通攻击还弱"，要求改强一点。
+ * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
+ * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
+ */
+export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits'>>> = {
+  33: { power: 25, critMod: 15 }, // 原版 10 / 10
+  34: { power: 45, critMod: 20 }, // 原版 30 / 15
+  35: { power: 65, critMod: 25 }, // 原版 50 / 20
+  // 8 隔山打虎（武龍 2 级）：数值照原版，原版两段 50/50（第 12、15 帧），负责人 2026-11-13 要求改成 4 段，
+  // 取出手动画里出拳、俯冲、空中、落地踢 4 个击打帧，各 25%（每段单独判定命中和必杀）
+  8: { hits: [8, 11, 13, 15].map((frame) => ({ frame, percent: 25, dir: 0 })) },
+};
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -62,7 +89,12 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
-      skills: r.skills.map((s) => ({ ...s, name: skillNames[s.skillId] ?? `#${s.skillId}` })),
+      skills: r.skills.map((s, i) => ({
+        ...s,
+        ...SKILL_OVERRIDES[s.skillId],
+        name: skillNames[s.skillId] ?? `#${s.skillId}`,
+        ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
+      })),
     };
   });
 }
@@ -107,6 +139,19 @@ export function forgedStats(it: Item, n: number) {
   };
 }
 export const forgeLimit = (it: Item) => Math.max(it.attackSteps, it.defenseSteps);
+/** 已打铁 n 次时，再打一次各加多少，以及之后还能打几次（打到头的那一项加 0） */
+export function forgeGain(it: Item, n: number) {
+  return {
+    attack: n < it.attackSteps ? it.attackStep : 0,
+    defense: n < it.defenseSteps ? it.defenseStep : 0,
+    left: Math.max(0, forgeLimit(it) - n),
+  };
+}
+/** 打铁增加量的短文字，如「攻+3 防+2」 */
+export function forgeGainText(it: Item, n: number) {
+  const g = forgeGain(it, n);
+  return [g.attack ? `攻+${g.attack}` : '', g.defense ? `防+${g.defense}` : ''].filter(Boolean).join(' ');
+}
 
 /** 装备的移动力加成：原版有不少装备扣移动（负值），重制版一律不扣，加移动的照原版【新：负责人 2026-11-12 决定】 */
 export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);

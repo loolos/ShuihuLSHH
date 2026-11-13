@@ -1,15 +1,14 @@
 // 经验值【新】（docs/game-design.md §5.1，负责人 2026-11-12 选方案二并补充）。
 // 原版只有击倒、命中、回复技给经验（EXE 0x406f43 / 0x406f9d / 0x406bd0），强角色独占击倒，弱角色长期停在初始等级。
 // 新规则：
-// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、防御中闪开、休息。
-// - 击倒经验只看敌人等级：一半当场给击倒者，另一半进"全队经验"；友军击倒的也把这一半放进全队经验。
+// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、闪开、休息。
+// - 击倒经验只看敌人等级：65% 当场给击倒者，35% 进"全队经验"；友军击倒的也把 35% 放进全队经验。
 // - 全队经验在战斗胜利后统一结算，先补给最落后的人（注水式：从等级最低的往上补齐）。
 // 数值用 tools/sim-exp.ts（双方 AI 跑整条主线）校准，让各关全队平均等级与原版规则相近。
 import type { Rng } from './rng.ts';
 import type { Unit } from './unit.ts';
 
 export const EXP_PER_LEVEL = 100;
-export const MAX_PLAYER_LEVEL = 30;
 
 export const EXP_RULES = {
   /** 'original' 只给 tools/sim-exp.ts 做对比 */
@@ -28,12 +27,12 @@ export function killExp(killer: Unit, foe: Unit, rng: Rng): number {
 /** 击倒经验里当场给击倒者的部分（其余进全队经验）；友军击倒时为 0 */
 export function killerShare(total: number, byPlayer: boolean): number {
   if (EXP_RULES.mode === 'original') return byPlayer ? total : 0;
-  return byPlayer ? Math.ceil(total / 2) : 0;
+  return byPlayer ? total - teamShare(total) : 0;
 }
 
-/** 击倒经验里进全队经验的部分 */
+/** 击倒经验的 35% 进全队经验，向下取整；余数归击倒者 */
 export function teamShare(total: number): number {
-  return EXP_RULES.mode === 'original' ? 0 : Math.floor(total / 2);
+  return EXP_RULES.mode === 'original' ? 0 : Math.floor(total * 35 / 100);
 }
 
 /** 命中未击倒：伤害 / 10 + 1–2（与原版相同） */
@@ -44,14 +43,24 @@ export function hitExp(damage: number, rng: Rng): number {
 /** 反击命中的额外经验 */
 export const counterExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
 
-/** 挨打（没被击倒）：受到伤害 / 15 + 1–3，防御中再 +2 */
+/**
+ * 防御奖励【新】（负责人 2026-11-13）：处于防御状态时，每挨一次攻击（闪开或被打中）都额外 +3。
+ * 只在真的被攻击时给，单纯按"防御"不给，免得每回合原地防御刷经验。
+ */
+export const DEFEND_BONUS = 3;
+const defendBonus = (defending: boolean) => (defending ? DEFEND_BONUS : 0);
+
+/** 挨打（没被击倒）：受到伤害 / 15 + 1–3，防御中再 +3 */
 export function takenExp(damage: number, defending: boolean, rng: Rng): number {
   if (EXP_RULES.mode === 'original') return 0;
-  return Math.floor(damage / 15) + rng.range(1, 3) + (defending ? 2 : 0);
+  return Math.floor(damage / 15) + rng.range(1, 3) + defendBonus(defending);
 }
 
-/** 防御中闪开攻击 */
-export const dodgeExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
+/** 闪开攻击：3–5（不要求防御状态，负责人 2026-11-13），防御中再 +3 */
+export function dodgeExp(defending: boolean, rng: Rng): number {
+  if (EXP_RULES.mode === 'original') return 0;
+  return rng.range(3, 5) + defendBonus(defending);
+}
 
 /** 回复技：原版 1–10；新规则按回复量 / 10 + 1–5 */
 export function healExp(amount: number, rng: Rng): number {
@@ -70,11 +79,11 @@ export const itemExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.ra
 
 /**
  * 全队经验的分配：注水式，先把总进度（等级 × 100 + 经验）最低的人往上补，补平了再一起往上。
- * 30 级封顶的人不参与。返回与 members 同序的分得经验。
+ * 返回与 members 同序的分得经验。（我方等级不封顶，负责人 2026-11-13）
  */
 export function splitTeamExp(members: { level: number; exp: number }[], pool: number): number[] {
   const out = members.map(() => 0);
-  const idx = members.map((_, i) => i).filter((i) => members[i].level < MAX_PLAYER_LEVEL);
+  const idx = members.map((_, i) => i);
   if (!idx.length || pool <= 0) return out;
   const prog = (i: number) => members[i].level * EXP_PER_LEVEL + members[i].exp;
   idx.sort((a, b) => prog(a) - prog(b));

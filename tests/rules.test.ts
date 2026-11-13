@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
-import { killExp, restExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
+import { DEFEND_BONUS, dodgeExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -11,10 +11,13 @@ import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rul
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
-import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { adjustEnemies, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
+import { FLOAT_COLOR, recoveryFloats } from '../src/game/float-text.ts';
 
 const g = (base: number, growth = 100) => ({ base, growth });
 const punch: SkillDef = {
@@ -77,6 +80,29 @@ describe('职业移动力调整', () => {
     const [hero, wangjin] = buildClasses([rec(0), rec(1)], ['武龍', '王進'], []);
     expect(hero.move).toBe(6);
     expect(wangjin.move).toBe(5);
+  });
+});
+
+describe('武龍普攻两段', () => {
+  it('一鳴驚人改成同一帧的两段 50% + 50%，其他职业照原值', () => {
+    const one = [{ frame: 9, percent: 100, dir: 0 }];
+    const rec = (id: number) =>
+      ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 5, weaponType: 0, goldCap: 0, defaultItems: [], skills: [{ ...punch, hits: one }, { ...punch, hits: one }] }) as unknown as ClassRecord;
+    const [hero, wangjin] = buildClasses([rec(0), rec(1)], ['武龍', '王進'], []);
+    expect(hero.skills[0].hits).toEqual([{ frame: 9, percent: 50, dir: 0 }, { frame: 9, percent: 50, dir: 0 }]);
+    expect(hero.skills[1].hits).toEqual(one);
+    expect(wangjin.skills[0].hits).toEqual(one);
+    // 两段全中时总伤害和单段一样（不计浮动），两段各占一半
+    const att = unit({ side: 'player', x: 0, y: 1, facing: 0 });
+    att.stats = { ...att.stats, crit: 0 };
+    const foe = unit({ side: 'enemy', x: 0, y: 0, facing: 2 });
+    const [n] = baseDamage(att, foe, punch);
+    const r2 = rollAttack(att, foe, hero.skills[0], new Rng(5), true);
+    expect(r2.parts).toHaveLength(2);
+    expect(r2.parts[0] + r2.parts[1]).toBe(r2.damage);
+    expect(r2.damage).toBeGreaterThanOrEqual(Math.floor(n * 0.9));
+    expect(r2.damage).toBeLessThanOrEqual(Math.ceil(n * 1.1));
+    expect(Math.abs(r2.parts[0] - r2.parts[1])).toBeLessThanOrEqual(1);
   });
 });
 
@@ -198,7 +224,15 @@ describe('命中与伤害', () => {
   });
   it('挨打也有经验，防御时更多', () => {
     expect(takenExp(30, false, new Rng(1))).toBeGreaterThanOrEqual(3);
-    expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(2);
+    expect(takenExp(30, true, new Rng(1)) - takenExp(30, false, new Rng(1))).toBe(DEFEND_BONUS);
+    expect(DEFEND_BONUS).toBe(3);
+    // 闪避：3–5，防御中再 +3
+    for (let seed = 1; seed <= 20; seed++) {
+      const plain = dodgeExp(false, new Rng(seed));
+      expect(plain).toBeGreaterThanOrEqual(3);
+      expect(plain).toBeLessThanOrEqual(5);
+      expect(dodgeExp(true, new Rng(seed)) - plain).toBe(DEFEND_BONUS);
+    }
     // 休息：按回复的体力 + 气力给少量经验，什么都没回复不给
     expect(restExp(0, 0, new Rng(1))).toBe(0);
     expect(restExp(31, 33, new Rng(1))).toBeGreaterThanOrEqual(3);
@@ -341,6 +375,17 @@ describe('战斗流程', () => {
     expect(p.ended).toBe(true);
   });
 
+  it('回复事件带上气的变化，用来弹黄字（扣气不弹）', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.hp = 1;
+    p.mp = 0;
+    const ev = b.rest(p).find((e) => e.type === 'hp');
+    expect(ev).toMatchObject({ delta: p.hp - 1, mpDelta: p.mp });
+    expect(recoveryFloats(ev!.type === 'hp' ? ev!.delta : 0, ev!.type === 'hp' ? ev!.mpDelta ?? 0 : 0).map((f) => f.color)).toEqual([FLOAT_COLOR.hp, FLOAT_COLOR.mp]);
+  });
+
   it('道具：对自己和上下左右相邻的非敌方单位使用；给予只给相邻我方；装备、卸下、丢弃都不算行动', () => {
     const potion = { ...glove, type: 15, name: '藥', attack: 0, healHp: 10, healMp: 0, params: [] } as unknown as Item;
     const wine = { ...glove, type: 22, name: '酒', attack: 5, attackTurns: 3, healHp: 0, healMp: 0, params: [] } as unknown as Item;
@@ -426,7 +471,39 @@ describe('战斗流程', () => {
 });
 
 describe('经验', () => {
-  it('击倒经验一半给击倒者，一半在胜利后分给全队（先补落后的）', () => {
+  it('击倒经验按65%/35%分配，整数余数归击倒者；友军只贡献池子部分', () => {
+    expect([killerShare(20, true), teamShare(20)]).toEqual([13, 7]);
+    expect([killerShare(15, true), teamShare(15)]).toEqual([10, 5]);
+    expect(killerShare(20, false)).toBe(0);
+    for (let total = 1; total <= 100; total++) {
+      expect(killerShare(total, true) + teamShare(total)).toBe(total);
+    }
+  });
+
+  it.each([false, true])('闪避攻击时获得3–5经验，防御中再+3（防御状态：%s）', (defending) => {
+    let dodges = 0;
+    for (let seed = 1; seed <= 30; seed++) {
+      const b = new Battle({ name: 't', board: new Board(4, 4), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 1, 0)], blocks: [], data, seed });
+      b.begin();
+      const p = b.unit(0)!;
+      p.stats.agility = 255;
+      p.defending = defending;
+      // 只验证闪避本身的奖励，避免反击贡献额外经验。
+      b.unit(1)!.mp = 0;
+      const events = b.endPlayerPhase();
+      const attacks = events.filter((e) => e.type === 'attack');
+      if (attacks.length !== 1 || attacks[0].hits[0]?.result.hit !== false) continue;
+      const bonus = defending ? DEFEND_BONUS : 0;
+      expect(p.exp).toBeGreaterThanOrEqual(3 + bonus);
+      expect(p.exp).toBeLessThanOrEqual(5 + bonus);
+      expect(b.expBySource.dodge).toEqual({ n: 1, total: p.exp });
+      expect(b.teamExp).toBe(0);
+      dodges++;
+    }
+    expect(dodges).toBeGreaterThan(0);
+  });
+
+  it('击倒经验65%给击倒者，35%在胜利后分给全队（先补落后的）', () => {
     const b = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), act(1, 2, 'player', 5, 5), act(2, 1, 'enemy', 1, 0, 0x800)], blocks: [], data, seed: 3 });
     b.begin();
     const [p, q, e] = [b.unit(0)!, b.unit(1)!, b.unit(2)!];
@@ -437,6 +514,9 @@ describe('经验', () => {
     expect(e.alive).toBe(false);
     expect(p.exp).toBeGreaterThan(0);
     expect(b.teamExp).toBeGreaterThan(0);
+    const total = p.exp + b.teamExp;
+    expect(b.teamExp).toBe(Math.floor(total * 35 / 100));
+    expect(p.exp).toBe(total - b.teamExp);
     expect(q.exp).toBe(0);
     const pool = b.teamExp;
     b.settleTeamExp(); // 胜利时由剧本触发；这里直接结算
@@ -579,6 +659,57 @@ describe('关卡串联', () => {
     expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, ...Array(12).fill(0)] });
     expect(two.unit(0)!.stats.attack).toBe(computeStats(data.classes[0], 4, [1], data).attack);
     expect(two.unit(1)!.level).toBe(6);
+  });
+
+  it('新入伙的人按当前队伍平均等级入队，不低于剧本等级；等级不封顶', () => {
+    const c = { ...newCampaign(), members: [{ classId: 0, level: 20, exp: 0, slots: [] }, { classId: 2, level: 25, exp: 0, slots: [] }, { classId: 3, level: 6, exp: 0, slots: [] }], active: [0, 2] };
+    expect(joinLevel(c)).toBe(23); // 只算上一关出场的人
+    expect(joinLevel(newCampaign())).toBe(0);
+    const units = [act(0, 0, 'player', 0, 0), act(1, 1, 'player', 1, 0), { ...act(2, 2, 'player', 5, 0), level: 30 }];
+    const b = new Battle({ name: 't', board: new Board(6, 6), units, blocks: [], data, seed: 1, party: partyOf(c), joinLevel: joinLevel(c) });
+    expect(b.unit(0)!.level).toBe(20); // 老成员照旧
+    expect(b.unit(1)!.level).toBe(23); // 新人 = 平均
+    expect(b.unit(2)!.level).toBe(30); // 剧本等级更高时用剧本等级
+    expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
+  });
+
+  it('敌人等级修正：整关平移、只降不升、1 级摆设不动、最低 2 级', () => {
+    expect(enemyShift('N14')).toBeLessThan(0);
+    expect(enemyShift('n14')).toBe(enemyShift('N14'));
+    expect(enemyShift('Train1')).toBe(0);
+    const d = enemyShift('N14');
+    expect(enemyLevel('N14', 42)).toBe(42 + d);
+    expect(enemyLevel('N14', 1)).toBe(1);
+    expect(enemyLevel('N14', 3)).toBe(Math.max(2, 3 + d));
+    const units = adjustEnemies('N14', [{ ...act(0, 0, 'enemy', 20, 0), level: 30 }, { ...act(1, 1, 'player', 0, 0), level: 30 }]);
+    expect(units.map((u) => u.level)).toEqual([30 + d, 30]);
+  });
+
+  it('击倒掉落：职业上限的一半 ±15%，上限为 0 的不掉', () => {
+    expect(goldBase(data, 0)).toBe(25);
+    expect(goldRange(25)).toEqual([21, 29]);
+    expect(goldRange(250)).toEqual([212, 288]);
+    const rng = new Rng(7);
+    const got = Array.from({ length: 2000 }, () => killGold(0, data, rng));
+    expect(Math.min(...got)).toBe(21);
+    expect(Math.max(...got)).toBe(29);
+    expect(Math.abs(got.reduce((a, x) => a + x, 0) / got.length - 25)).toBeLessThan(0.3);
+    expect(killGold(2, data, rng)).toBe(0);
+  });
+
+  it('过关奖励：战役打赢给固定黄金并提示，过场不给', () => {
+    expect(stageClearGold('N01')).toBe(100);
+    expect(stageClearGold('Act3-1')).toBe(0);
+    for (const v of Object.values(STAGE_CLEAR_GOLD)) expect(v % 50).toBe(0);
+    const win = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
+    const ev = win.begin();
+    expect(win.status).toBe('won');
+    expect(ev.some((e) => e.type === 'message' && e.text === '過關獎勵：得到黃金 100 兩！')).toBe(true);
+    win.unit(0)!.gold = 30;
+    expect(recordResult(newCampaign(), win).gold).toBe(130);
+    const cut = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
+    cut.begin();
+    expect(cut.clearGold).toBe(0);
   });
 
   it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {

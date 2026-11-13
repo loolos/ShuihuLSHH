@@ -16,7 +16,7 @@ import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
-import { newCampaign, nextByHeader, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
+import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -218,7 +218,16 @@ function startGame(assets: Assets) {
     const k = route ? await ask(route.prompt) : 0;
     goTo({ ...c, town: undefined, stage: k === 1 && route ? route.alt : next[0].index });
   };
-  const town = new TownUI(assets, (cls) => ui.portrait(cls));
+  // 酒店说书借用战斗的对白框和选项面板（src/rules/storyteller.ts）
+  const town = new TownUI(assets, (cls) => ui.portrait(cls), {
+    say: (who, text, cls) => ui.say(who, text, cls),
+    choose: (title, text, options) =>
+      new Promise<number>((r) => ui.result(true, text, options.map((o, i) => ({ ...o, run: () => r(i) })), title)),
+    done: () => {
+      ui.hideResult();
+      ui.endSkip();
+    },
+  });
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
     town.show(c, {
       town: t,
@@ -302,7 +311,7 @@ function startGame(assets: Assets) {
     if (ticket !== loading) return; // 下载期间又换了关
     setupEl.hidden = true;
     void music.stageTrack(stage).then((t) => music.play(t));
-    const data = { assets, stage, ui, seed, party: partyOf(campaign), onEnd };
+    const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
     const u = new URL(location.href);
@@ -326,6 +335,10 @@ function startGame(assets: Assets) {
   };
   setupUpdateButton();
   $('hud').hidden = false;
+  // 顶栏在窄屏上会折行，小地图跟着顶栏的实际高度往下放
+  const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
+  new ResizeObserver(hudH).observe($('hud'));
+  hudH();
   ui.show();
   (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
   run();

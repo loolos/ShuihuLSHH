@@ -1,5 +1,5 @@
 // 战斗结算（docs/game-design.md §4、§5；原版 EXE 0x406c60）。
-import type { GameData, SkillDef } from './data.ts';
+import type { SkillDef } from './data.ts';
 import type { Rng } from './rng.ts';
 import { dist, facingTowards, type Unit } from './unit.ts';
 
@@ -72,12 +72,17 @@ export interface AttackPreview {
   crit: number;
   damage: number; // 普通命中时的期望伤害（不计浮动）
   critDamage: number;
+  /** 分几段结算（多段时命中、必杀每段单独判定，伤害为各段全中时的总和） */
+  parts: number;
 }
+
+/** 参与结算的分段（和 rollAttack 一致：只取第一段方向的分段） */
+export const attackParts = (skill: SkillDef) => (skill.hits.length ? skill.hits.filter((h) => h.dir === skill.hits[0].dir) : [{ frame: 0, percent: 100, dir: 0 }]);
 
 export function previewAttack(att: Unit, def: Unit, skill: SkillDef): AttackPreview {
   const [n, c] = baseDamage(att, def, skill);
   const k = def.defending ? 0.7 : 1;
-  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor(n * k), critDamage: Math.floor(c * k) };
+  return { hit: hitChance(att, def, skill), crit: critChance(att, skill), damage: Math.floor(n * k), critDamage: Math.floor(c * k), parts: attackParts(skill).length };
 }
 
 export interface HitResult {
@@ -99,7 +104,7 @@ export interface HitResult {
  */
 export function rollAttack(att: Unit, def: Unit, skill: SkillDef, rng: Rng, forceHit = false): HitResult {
   const rel = facingRelation(facingTowards(att, def, att.facing), def.facing);
-  const hits = skill.hits.length ? skill.hits.filter((h) => h.dir === skill.hits[0].dir) : [{ percent: 100 }];
+  const hits = attackParts(skill);
   const total = hits.reduce((s, h) => s + h.percent, 0) || 100;
   const hitRate = hitChance(att, def, skill);
   const critRate = critChance(att, skill);
@@ -143,8 +148,3 @@ export function canCounter(att: Unit, def: Unit): boolean {
   return def.defending && def.alive && dist(att, def) === 1;
 }
 
-/** 击倒敌人掉落的黄金：1 + rand % 上限（上限为 0 时不掉） */
-export function killGold(def: Unit, data: GameData, rng: Rng): number {
-  const cap = data.classes[def.classId].goldCap;
-  return cap > 0 ? 1 + rng.int(cap) : 0;
-}

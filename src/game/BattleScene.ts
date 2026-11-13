@@ -11,8 +11,10 @@ import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { dirIndex, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
+import { Minimap, type MiniMark } from './minimap.ts';
+import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -22,6 +24,8 @@ export interface BattleSceneData {
   seed?: number;
   /** 前面关卡延续下来的我方人物 */
   party?: Map<number, Member>;
+  /** 新入伙的人的入队等级（campaign.ts joinLevel） */
+  joinLevel?: number;
   /** 关卡结束（胜负面板由调用方决定） */
   onEnd?: (battle: Battle, won: boolean, text: string) => void;
 }
@@ -51,6 +55,7 @@ export class BattleScene extends Phaser.Scene {
   private stageName = 'N01';
   private seed?: number;
   private party?: Map<number, Member>;
+  private joinLevel?: number;
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics }>();
@@ -61,6 +66,7 @@ export class BattleScene extends Phaser.Scene {
   private view = new Map<number, { x: number; y: number; facing: number; hp: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   private overlay!: Phaser.GameObjects.Graphics;
+  private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
   private busy = false;
@@ -88,6 +94,7 @@ export class BattleScene extends Phaser.Scene {
     this.stageName = data.stage;
     this.seed = data.seed;
     this.party = data.party;
+    this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
     this.sprites = new Map();
     this.view = new Map();
@@ -101,7 +108,7 @@ export class BattleScene extends Phaser.Scene {
     const mapFile = findStageFile(files, this.stageName, '.map');
     if (!mapFile) throw new Error(`找不到地图 ${this.stageName}`);
     const map = parseMap(files.get(mapFile), mapFile);
-    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party }));
+    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
@@ -109,7 +116,7 @@ export class BattleScene extends Phaser.Scene {
     sound.preload([
       ...['m01', 'm02', 'm03', 'm09', '44', '46', 'm13', 'm14', 'm04', 'm10', 'm07'],
       ...sound.skillSounds(allSkills),
-      ...allSkills.flatMap((s) => fxGroups(s).map((g) => String(g + 1))),
+      ...[...allSkills.flatMap((s) => fxGroups(s)), ...FIXED_FX].map((g) => String(g + 1)),
     ]);
 
     for (let y = 0; y < map.height; y++)
@@ -157,6 +164,29 @@ export class BattleScene extends Phaser.Scene {
     cam.centerOn(f.x, f.y);
     cam.roundPixels = true;
 
+    // 左上角的小地图（原版微缩地图只画地表，见 minimap.ts）
+    const board = this.battle.board;
+    this.minimap = new Minimap({
+      width: map.width,
+      height: map.height,
+      ground: (x, y) => map.cells[y * map.width + x][0]?.tile ?? 0,
+      blocked: (x, y) => !board.passable(x, y),
+      tile: (t) => {
+        const fr = this.assets.ground.frame(t);
+        if (!fr.width || !fr.height) return null;
+        const key = textureFor(this, `ground:${t}`, () => frameToCanvas(fr, this.assets.palette));
+        return { img: this.textures.get(key).getSourceImage() as CanvasImageSource, w: fr.width, h: fr.height, ax: fr.anchorX, ay: fr.anchorY };
+      },
+    });
+    this.minimap.onJump = (wx, wy) => cam.centerOn(wx, wy);
+    const onResize = () => this.minimap?.resize();
+    this.scale.on('resize', onResize);
+    this.events.once('shutdown', () => {
+      this.scale.off('resize', onResize);
+      this.minimap?.destroy();
+      this.minimap = null;
+    });
+
     this.setupInput();
     this.ui.clearLog();
     this.ui.showUnit(null);
@@ -188,12 +218,12 @@ export class BattleScene extends Phaser.Scene {
     return spr;
   }
 
-  /** 站立姿势：走路第 1 帧；防御中显示防御帧 */
+  /** 待机姿势：出手动作第 1 帧（摆好架势，见 idleAction）；防御中显示防御帧 */
   private pose(u: Unit) {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
-    const action = u.defending ? ACTION.defend : ACTION.walk;
+    const action = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
     const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
     if (key) {
       s.spr.play(key);
@@ -352,6 +382,26 @@ export class BattleScene extends Phaser.Scene {
 
   update() {
     this.placeFloat();
+    this.drawMinimap();
+  }
+
+  /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */
+  private drawMinimap() {
+    const mm = this.minimap;
+    if (!mm?.open) return;
+    const marks: MiniMark[] = [];
+    for (const k of this.groundItems.keys()) {
+      const [x, y] = k.split(',').map(Number);
+      marks.push({ x, y, color: '#f0c860' });
+    }
+    // 敌方先画，我方压在上面
+    const order = { enemy: 0, ally: 1, player: 2 } as const;
+    const units = this.battle.units.filter((u) => this.sprites.has(u.uid)).sort((a, b) => order[a.side] - order[b.side]);
+    for (const u of units) {
+      const v = this.vs(u);
+      marks.push({ x: v.x, y: v.y, color: `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
+    }
+    mm.draw(marks, this.cameras.main.worldView);
   }
 
   private commands(m: Mode): Command[] | null {
@@ -737,12 +787,14 @@ export class BattleScene extends Phaser.Scene {
     await wait(this, ms);
   }
 
-  /** 地图上的飘字：黑底白字，停留一会儿再淡出，保证看得清 */
-  private float(x: number, y: number, text: string, _color?: string) {
+  /** 地图上的飘字：照原版用调色板色（伤害红、回血绿、回气黄，见 float-text.ts），加黑描边保证在地图上看得清【新】。
+   *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
+  private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
     const p = cellToWorld(x, y);
+    p.y -= lift * 26;
     const t = this.add
-      .text(p.x, p.y - 72, text, { fontFamily: 'serif', fontSize: '20px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#000000', padding: { x: 6, y: 2 } })
-      .setOrigin(0.5)
+      .text(p.x + side * 4, p.y - 72, text, { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
+      .setOrigin(side < 0 ? 1 : side > 0 ? 0 : 0.5, 0.5)
       .setDepth(100000);
     this.tweens.add({ targets: t, y: p.y - 92, duration: 350, ease: 'Cubic.easeOut' });
     this.tweens.add({ targets: t, alpha: 0, delay: 900, duration: 300, onComplete: () => t.destroy() });
@@ -776,6 +828,24 @@ export class BattleScene extends Phaser.Scene {
       s.bar.clear();
       await new Promise<void>((r) => this.tweens.add({ targets: s.spr, x: p.x, y: p.y, duration: fast ? 110 : 150, onComplete: () => r() }));
     }
+  }
+
+  /** 在格子上放一组固定特效（EXE 0x403860：直接指定组号），同时播特效音 <组号+1>（0x403880）；放完才返回 */
+  private fixedFx(cell: Cell, group: number): Promise<void> {
+    const anim = effectAnim(this, this.assets, group);
+    sound.effect(group);
+    if (!anim) return Promise.resolve();
+    const p = cellToWorld(cell.x, cell.y);
+    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 10));
+    s.play(anim);
+    return new Promise<void>((r) => {
+      const done = () => {
+        if (s.active) s.destroy();
+        r();
+      };
+      s.once('animationcomplete', done);
+      this.time.delayedCall(3000, done); // 保险：动画事件没来也不卡住
+    });
   }
 
   private async playOnce(u: Unit, action: number, facing: number, maxMs = 800) {
@@ -864,6 +934,8 @@ export class BattleScene extends Phaser.Scene {
         uv.facing = e.facing;
         const skill = e.skill;
         const basic = skill === attackSkill(u, this.assets.data);
+        // 反击：先在反击者脚下放第 37 组特效（声音 38），放完再出手（EXE 0x4077a0 → 0x407850）
+        if (e.counter) await this.fixedFx(uv, FX_COUNTER);
         await Promise.all([this.focus(e.cell.x, e.cell.y), ensureSkill(this.assets, u.classId, skill)]);
         let area: Phaser.GameObjects.Graphics | null = null;
         if (!basic) {
@@ -918,7 +990,9 @@ export class BattleScene extends Phaser.Scene {
         };
         const segStart = (f: number) => (f - 1) * ACTION_FRAME_MS;
         const waves: Promise<void>[] = [];
-        if (fx && !fx.atEnd) for (const f of frames) waves.push(new Promise<void>((r) => this.time.delayedCall(segStart(f), () => fxWave().then(r))));
+        if (fx && !fx.atEnd) for (const f of new Set(frames)) waves.push(new Promise<void>((r) => this.time.delayedCall(segStart(f), () => fxWave().then(r))));
+        // 同一帧的几段同时结算（如武龍的两段普攻）：数字左右错开一起弹出，受击动作和声音只做一次
+        const sameFrame = frames.map((f, i) => ({ k: frames.slice(0, i).filter((g) => g === f).length, n: frames.filter((g) => g === f).length }));
         const impacts = frames.flatMap((f, i) =>
           e.hits.map(
             (h) =>
@@ -927,21 +1001,30 @@ export class BattleScene extends Phaser.Scene {
                 const tv = this.vs(t);
                 this.time.delayedCall(segStart(f) + (fx && !fx.atEnd ? fxDelay(tv) : 0), () => {
                   const res = h.result;
+                  const { k, n } = sameFrame[i];
+                  const side = n > 1 ? Math.sign(k - (n - 1) / 2) : 0; // 两段：左边那个右对齐、右边那个左对齐，中间留一点缝
+                  const lift = [...new Set(frames)].indexOf(f); // 不同帧的段依次往上错开
                   if (!res.hit) {
                     // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
                     if (i > 0) return r();
-                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                    this.float(tv.x, tv.y, MISS_FLOAT.text, MISS_FLOAT.color);
                     return void this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                   }
                   const perPart = res.parts.length === frames.length;
                   if (perPart && !res.partHit[i]) {
-                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0'); // 多段攻击中落空的一段
+                    this.float(tv.x, tv.y, MISS_FLOAT.text, MISS_FLOAT.color, side, lift); // 多段攻击中落空的一段
                     return r();
                   }
                   const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
                   const crit = perPart ? res.partCrit[i] : res.crit;
-                  if (dmg !== null && dmg > 0) sound.hurt(crit);
-                  if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff');
+                  // 同一帧里第一段命中的负责受击动作和受击声（另一段必杀时再补一声必杀音）
+                  const lead = frames.findIndex((g, j) => g === f && (!perPart || res.partHit[j])) === i;
+                  if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
+                  if (dmg !== null) {
+                    const df = damageFloat(dmg, crit);
+                    this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
+                  }
+                  if (!lead) return r();
                   this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                 });
               }),
@@ -962,8 +1045,10 @@ export class BattleScene extends Phaser.Scene {
         const v = this.vs(u);
         v.hp = e.hp;
         this.drawBar(u);
-        if (e.text) this.float(v.x, v.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
-        else if (e.delta > 0) this.float(v.x, v.y, `+${e.delta}`, '#90e070');
+        // 回复只弹数字（原版不写道具名、技能名）：回血绿字，回气黄字在上一行；"升級了！"这类没有数字的照旧弹文字
+        const nums = recoveryFloats(e.delta, e.mpDelta ?? 0);
+        for (const f of nums) this.float(v.x, v.y, f.text, f.color, 0, f.lift);
+        if (e.text && !nums.length && e.delta === 0 && !e.mpDelta) this.float(v.x, v.y, tr(e.text));
         if (e.text) await wait(this, 400);
         break;
       }
@@ -973,9 +1058,13 @@ export class BattleScene extends Phaser.Scene {
         await wait(this, 300);
         break;
       }
-      case 'defend':
-        this.pose(b.unit(e.uid)!);
+      case 'defend': {
+        const u = b.unit(e.uid)!;
+        this.pose(u);
+        // 原版只给我方（阵营 0）放防御特效第 48 组和声音 49（EXE 0x4075c0 → 0x40765f）；敌方、友军防御没有
+        if (e.on && u.side === 'player') await this.fixedFx(this.vs(u), FX_DEFEND);
         break;
+      }
       case 'die':
       case 'leave': {
         if (e.type === 'die') {
