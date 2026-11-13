@@ -117,6 +117,23 @@ describe.skipIf(!has)('N01', () => {
     expect(avg(s)).toBeGreaterThan(avg(basic) * 1.3);
   });
 
+  it('好汉技能不扣命中，威力下降等额（最低 1）；敌方职业不变', () => {
+    for (const c of data.classes.slice(0, 18)) for (const k of c.skills) expect(k.hitMod).toBeGreaterThanOrEqual(0);
+    const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
+    expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([50, 0]); // 魯智深 佛光普照 70 / −20
+    expect([by(16, 133).power, by(16, 133).hitMod]).toEqual([10, 0]); // 魯智深 普攻 三世因果 20 / −10
+    expect([by(4, 50).power, by(4, 51).power]).toEqual([1, 1]); // 白勝 監守自盜LV3 15 / −15、通殺LV1 10 / −15
+    expect([by(46, 21).power, by(46, 21).hitMod]).toEqual([50, -10]); // 敌方公孫勝 天雷滅敵正法 不变
+    expect(data.classes[20].skills[1].hitMod).toBe(-10); // 莊客 遠程攻擊
+  });
+
+  it('朱武、阮氏三雄、吳用的隐藏技不再都叫古武術', () => {
+    const names = data.classes.flatMap((c) => c?.skills.map((k) => k.name) ?? []);
+    expect(names.some((n) => n.includes('古武術'))).toBe(false);
+    expect(data.classes[10].skills.find((k) => k.skillId === 91)!.name).toBe('星羅棋布LV1');
+    expect(data.classes[53].skills.find((k) => k.skillId === 93)!.name).toBe('星羅棋布LV3');
+  });
+
   it('武龍 隔山打虎：原版数值，拆成 4 段各 25%，每段单独判定', () => {
     const s = data.classes[0].skills.find((k) => k.skillId === 8)!;
     expect([s.power, s.hitMod, s.critMod, s.mpCost]).toEqual([60, 40, 50, 30]);
