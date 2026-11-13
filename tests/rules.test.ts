@@ -190,7 +190,20 @@ describe('命中与伤害', () => {
       expect(r.damage).toBeGreaterThanOrEqual(r.crit ? 21 : 6);
       expect(r.damage).toBeLessThanOrEqual(r.crit ? 26 : 7);
     }
-    expect(critChance(a, { ...punch, critMod: 10 })).toBe(10);
+    expect(critChance(a, { ...punch, critMod: 10 })).toBe(7); // x = 20：400 / 5300
+  });
+  it('必杀率 = x² / (x² + 70²)，越高越接近 100% 但不到', () => {
+    const a = unit({ side: 'player', x: 0, y: 0, facing: 0 });
+    const at = (crit: number, critMod = 0) => critChance({ ...a, stats: { ...a.stats, crit } } as typeof a, { ...punch, critMod });
+    expect(at(0)).toBe(0);
+    expect(at(70)).toBe(50);
+    expect(at(50, 20)).toBe(50);
+    expect(at(100)).toBe(67);
+    expect(at(200)).toBe(89);
+    expect(at(10, -30)).toBe(0);
+    expect(at(10000)).toBe(99);
+    let prev = -1;
+    for (let c = 0; c <= 500; c += 5) { expect(at(c)).toBeGreaterThanOrEqual(prev); prev = at(c); }
   });
   it.each([
     [2, 1], [1, 1.1], [3, 1.1], [0, 1.25],
