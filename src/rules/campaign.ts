@@ -95,7 +95,8 @@ export function recordResult(c: CampaignState, battle: Battle): CampaignState {
     if (u.present || !u.alive) active.push(u.classId); // 没登场或中途退场（如王進）的不算
     members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots: [...u.slots], forge: [...u.forge] });
   }
-  return { ...c, members: [...members.values()], gold, active };
+  // 没有我方出场的过场（如 Act13-1 只有官军）沿用上一关的出场名单，免得城镇里一个人都不列
+  return { ...c, members: [...members.values()], gold, active: active.length ? active : c.active };
 }
 
 /** 读取存档（坏档返回 null） */

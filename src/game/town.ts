@@ -132,7 +132,7 @@ export class TownUI {
       const after = afterTale(this.c, tale);
       for (const l of after.lines) await say(l);
       let line = this.storyLine(tale, after.present);
-      if (after.present) {
+      if (after.present && tale.choice) {
         const k = await st.choose(tale.choice.title, tale.choice.text, tale.choice.options);
         const r = chooseTale(this.c, d, tale, k);
         for (const l of r.lines) await say(l);
