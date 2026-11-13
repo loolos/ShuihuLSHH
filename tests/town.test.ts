@@ -146,7 +146,7 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
 });
 
 describe.skipIf(!has)('测试用跳关', () => {
-  it('按目标关敌人平均等级补等级，换上最后一个城镇能买到的最好装备', async () => {
+  it('按主线模拟的入场等级表补等级，换上最后一个城镇能买到的最好装备', async () => {
     const { loadGameData } = await import('../src/rules/load.ts');
     const { jumpTo } = await import('../src/rules/preset.ts');
     const files = {
@@ -165,8 +165,24 @@ describe.skipIf(!has)('测试用跳关', () => {
     const c = jumpTo(files, data, stages, 34, newCampaign(0)); // N06
     const lin = c.members.find((m) => m.classId === 11)!; // 林沖
     expect(c.stage).toBe(34);
-    expect(lin.level).toBe(16);
-    expect(c.members.find((m) => m.classId === 0)!.level).toBe(16);
+    // 林沖 N05 才按剧本 10 级入伙，比一路打过来的主角低
+    expect(lin.level).toBeGreaterThanOrEqual(10);
+    expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(lin.level);
+    // 不超过到这一关为止敌人平均等级的最高值 + 3（N06 敌人平均 16）
+    expect(Math.max(...c.members.map((m) => m.level))).toBeLessThanOrEqual(19);
+    // 第 1 章战役 2（N-add01）：第一关打过不少小兵，两人都不该还是 2 级
+    const at1 = jumpTo(files, data, stages, 1, newCampaign(0)).members;
+    expect(at1.find((m) => m.classId === 0)!.level).toBeGreaterThanOrEqual(3); // 武龍
+    expect(at1.find((m) => m.classId === 1)!.level).toBeGreaterThanOrEqual(4); // 王進
+    // 每一关的等级都不比前一关低（同一个人沿主线只升不降）
+    const mainPath = ['n01', 'n-add01', 'n-add02', 'n02', 'n03', 'n-add04a', 'n-add05', 'n04', 'n-add06', 'n-add07', 'n05', 'n-add08', 'n06'];
+    let seen = new Map<number, number>();
+    for (const name of mainPath) {
+      const s = stages.find((x) => x.mapName.toLowerCase() === name)!;
+      const now = new Map(jumpTo(files, data, stages, s.index, newCampaign(0)).members.map((m) => [m.classId, m.level]));
+      for (const [id, lv] of now) if (seen.has(id)) expect(lv, `${name} ${id}`).toBeGreaterThanOrEqual(seen.get(id)!);
+      seen = new Map([...seen, ...now]);
+    }
     // 最后去过的城镇是 4（N-add07 之后）：主角用拳套类，换上城镇 4 武器店里攻击最高的
     const hero = c.members.find((m) => m.classId === 0)!;
     expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
