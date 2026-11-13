@@ -12,6 +12,7 @@ import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, pe
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
@@ -598,6 +599,34 @@ describe('关卡串联', () => {
     expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, ...Array(12).fill(0)] });
     expect(two.unit(0)!.stats.attack).toBe(computeStats(data.classes[0], 4, [1], data).attack);
     expect(two.unit(1)!.level).toBe(6);
+  });
+
+  it('击倒掉落：职业上限的一半 ±15%，上限为 0 的不掉', () => {
+    expect(goldBase(data, 0)).toBe(25);
+    expect(goldRange(25)).toEqual([21, 29]);
+    expect(goldRange(250)).toEqual([212, 288]);
+    const rng = new Rng(7);
+    const got = Array.from({ length: 2000 }, () => killGold(0, data, rng));
+    expect(Math.min(...got)).toBe(21);
+    expect(Math.max(...got)).toBe(29);
+    expect(Math.abs(got.reduce((a, x) => a + x, 0) / got.length - 25)).toBeLessThan(0.3);
+    expect(killGold(2, data, rng)).toBe(0);
+  });
+
+  it('过关奖励：战役打赢给固定黄金并提示，过场和输了不给', () => {
+    expect(stageClearGold('N01')).toBe(100);
+    expect(stageClearGold('Act3-1')).toBe(0);
+    for (const v of Object.values(STAGE_CLEAR_GOLD)) expect(v % 50).toBe(0);
+    const win = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
+    const ev = win.begin();
+    expect(win.status).toBe('won');
+    expect(ev.some((e) => e.type === 'message' && e.text === '過關獎勵：得到黃金 100 兩！')).toBe(true);
+    win.unit(0)!.gold = 30;
+    expect(recordResult(newCampaign(), win).gold).toBe(130);
+    // 没有我方人物的过场（即使用了战役的地图名）不给
+    const cut = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
+    cut.begin();
+    expect(cut.clearGold).toBe(0);
   });
 
   it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {

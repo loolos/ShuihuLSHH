@@ -5,7 +5,8 @@ import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
-import { canCounter, killGold, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, MAX_PLAYER_LEVEL, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
@@ -116,6 +117,8 @@ export class Battle {
   private pendingDeaths: number[] = [];
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
+  /** 过关奖励的黄金（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
+  clearGold = 0;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
   /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
@@ -731,7 +734,7 @@ export class Battle {
     this.emit({ type: 'message', text: `${t.name}戰敗了。` });
     this.pendingDeaths.push(t.classId);
     if (u.side === 'player' && t.side === 'enemy') {
-      const gold = killGold(t, this.data, this.rng);
+      const gold = killGold(t.classId, this.data, this.rng);
       if (gold) {
         u.gold += gold;
         this.emit({ type: 'message', text: `擊退了敵人，得到黃金 ${gold} 兩！` });
@@ -1070,7 +1073,11 @@ export class Battle {
 
   private finish(result: 'won' | 'lost', text: string) {
     if (this.status !== 'playing') return;
-    if (result === 'won') this.settleTeamExp();
+    if (result === 'won') {
+      this.settleTeamExp();
+      this.clearGold = this.hadPlayers ? stageClearGold(this.name) : 0;
+      if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到黃金 ${this.clearGold} 兩！` });
+    }
     this.status = result;
     this.emit({ type: 'end', result, text });
   }
