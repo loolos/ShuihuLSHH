@@ -55,7 +55,7 @@ export type BattleEvent =
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
   | { type: 'attack'; uid: number; skill: SkillDef; cell: Cell; area: Cell[]; facing: number; hits: { uid: number; result: HitResult }[]; counter: boolean }
-  | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; text?: string }
+  | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; /** 气的变化（回复时弹黄字） */ mpDelta?: number; text?: string }
   | { type: 'status'; uid: number; text: string }
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
@@ -329,7 +329,7 @@ export class Battle {
         u.hp = Math.max(1, u.hp - loss); // 毒不致死【待核】
         this.emit({ type: 'message', text: `${u.name}毒發，生命力損失 ${loss} 點。` });
       }
-      if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0 });
+      if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0 });
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
       if (u.buffs.length) {
@@ -452,7 +452,7 @@ export class Battle {
     const mp0 = u.mp;
     u.hp = Math.min(u.stats.maxHp, u.hp + Math.max(1, Math.floor(u.stats.maxHp / REST_DIVISOR)));
     u.mp = Math.min(u.stats.maxMp, u.mp + Math.max(1, Math.floor(u.stats.maxMp / REST_DIVISOR)));
-    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '休息' });
+    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0, text: '休息' });
     this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng), 'rest');
   }
 
@@ -616,7 +616,7 @@ export class Battle {
     this.adjustMovement(t, t.stats.move - move0);
     if (buffs.length) this.emit({ type: 'message', text: `${who}${buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''}`).join('、')}，持續 ${Math.max(...buffs.map((b) => b.turns))} 回合。` });
     if (!it.healHp && !it.healMp && !cured && !buffs.length) this.emit({ type: 'message', text: `${who}沒有效果。` });
-    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
+    this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
   }
 
   // ───────────── 结算 ─────────────
@@ -673,12 +673,12 @@ export class Battle {
       const name = this.tr(skill.name);
       let healed = 0;
       for (const t of targets) {
-        const hp0 = t.hp;
+        const hp0 = t.hp, mp0 = t.mp;
         const div = Math.max(1, skill.power);
         if (isChargeSkill(skill)) t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / div));
         else t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / div));
         healed += t.hp - hp0;
-        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
+        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
       }
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
       return;
