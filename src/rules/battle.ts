@@ -222,8 +222,17 @@ export class Battle {
   occupied(except?: Unit) {
     return new Set(this.active().filter((u) => u !== except).map((u) => key(u.x, u.y)));
   }
+  /**
+   * 移动范围。【新：负责人 2026-11-13】我方和友军互不阻挡：可以穿过对方所在的格子，但不能停在上面；
+   * 敌人照旧挡住所有人，敌人之间也互相阻挡。
+   */
   reachOf(u: Unit, budget: number) {
-    return this.board.reach(u, budget, this.occupied(u));
+    const blocked = new Set<string>(), pass = new Set<string>();
+    for (const t of this.active()) {
+      if (t === u) continue;
+      (u.side !== 'enemy' && t.side !== 'enemy' ? pass : blocked).add(key(t.x, t.y));
+    }
+    return this.board.reach(u, budget, blocked, pass);
   }
   pathOf(reach: ReturnType<Board['reach']>, c: Cell) {
     return pathTo(reach, c.x, c.y);
