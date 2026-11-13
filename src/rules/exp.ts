@@ -40,6 +40,14 @@ export function hitExp(damage: number, rng: Rng): number {
   return Math.floor(damage / 10) + rng.range(1, 2);
 }
 
+/** 击倒那一下溢出的伤害最多按目标最大生命的这个比例算经验（负责人 2026-11-13） */
+export const OVERKILL_CAP = 0.2;
+
+/** 击倒那一下计经验的伤害：剩余生命 + 溢出部分，溢出最多算最大生命的 20% */
+export function killDamage(damage: number, hpLeft: number, maxHp: number): number {
+  return Math.min(damage, hpLeft + Math.floor(maxHp * OVERKILL_CAP));
+}
+
 /** 反击命中的额外经验 */
 export const counterExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
 

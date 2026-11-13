@@ -6,7 +6,7 @@
 // - 用 loadStage + new Battle 构造这一关（我方带着上一关估出来的等级，敌人用修正后的等级和保底），不 begin、不跑 AI。
 // - 只算 2 级以上的敌人（1 级是过场摆设），假定全部由我方击倒。
 // - 我方对某个敌人的一次攻击：期望伤害 = 命中率 × (普通 × (1 − 必杀率) + 必杀 × 必杀率)，按我方所有人取平均（正面、普通攻击）。
-//   打倒它的出手次数 N = 生命 / 期望伤害；伤害经验总量 ≈ 生命 / 10 + 1.5 × 命中次数（击倒那一下也算，PR #93）。
+//   打倒它的出手次数 N = 生命 / 期望伤害；伤害经验总量 ≈ (生命 + 击倒溢出) / 10 + 1.5 × 命中次数（击倒那一下也算，溢出最多算 20% 生命）。
 //   击倒经验 = killBase + killPerLevel × 等级 + 2（0–4 的平均）。
 // - 敌人对我方：每个敌人一生出手 ENEMY_ATTACKS × N / 我方人数 次（至少 1 次，围攻的人越多它活得越短），
 //   命中给挨打经验（伤害 / 15 + 2），落空给闪避经验 4。
@@ -18,7 +18,7 @@ import { Battle } from '../src/rules/battle.ts';
 import { previewAttack } from '../src/rules/combat.ts';
 import { joinLevel, newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { ENEMY_LEVEL } from '../src/rules/enemy-level.ts';
-import { EXP_PER_LEVEL, EXP_RULES } from '../src/rules/exp.ts';
+import { EXP_PER_LEVEL, EXP_RULES, OVERKILL_CAP } from '../src/rules/exp.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { attackSkill, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
@@ -70,7 +70,9 @@ export function estimate(limit = 99): EstRow[] {
         const hitRate = avg(out.map((o) => o.hit));
         const N = e.stats.maxHp / Math.max(1, per);
         kill += EXP_RULES.killBase + EXP_RULES.killPerLevel * e.level + 2;
-        dmg += e.stats.maxHp / 10 + 1.5 * N * hitRate;
+        // 击倒那一下的溢出：平均约半次命中的伤害，最多算最大生命的 20%（OVERKILL_CAP）
+        const over = Math.min(per / Math.max(0.01, hitRate) / 2, e.stats.maxHp * OVERKILL_CAP);
+        dmg += (e.stats.maxHp + over) / 10 + 1.5 * N * hitRate;
         const attacks = Math.max(1, (ENEMY_ATTACKS * N) / mine.length);
         const back = mine.map((p) => expected(e, p));
         const eh = avg(back.map((o) => o.hit));
