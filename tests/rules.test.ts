@@ -614,6 +614,29 @@ describe('经验', () => {
     expect(q.exp).toBe(pool); // 没出手、等级最低的同伴拿走全部全队经验
     expect(b.teamExp).toBe(0);
   });
+
+  it('击倒那一下的伤害经验（按实际打掉的体力）并入击倒经验，一起按65/35分', () => {
+    let kills = 0;
+    for (let seed = 1; seed <= 10; seed++) {
+      const b = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 1, 0, 0x800)], blocks: [], data, seed });
+      b.begin();
+      const [p, e] = [b.unit(0)!, b.unit(1)!];
+      p.stats.hit = 255;
+      p.stats.attack = 999;
+      e.hp = 45;
+      b.attack(p, e);
+      if (e.alive) continue;
+      const total = p.exp + b.teamExp;
+      const lvKill = Math.round(8 + e.level / 2);
+      // 击倒经验 lvKill + 0–4，伤害经验 floor(45/10) + 1–2（不按溢出的伤害算）
+      expect(total).toBeGreaterThanOrEqual(lvKill + 4 + 1);
+      expect(total).toBeLessThanOrEqual(lvKill + 4 + 4 + 2);
+      expect(b.teamExp).toBe(Math.floor(total * 35 / 100));
+      expect(b.expBySource.hit).toBeUndefined();
+      kills++;
+    }
+    expect(kills).toBeGreaterThan(0);
+  });
 });
 
 describe('技能', () => {
