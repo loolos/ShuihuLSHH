@@ -125,6 +125,7 @@ describe('好汉普攻调整', () => {
     const dirs = [1, 2, 3, 0].map((dir, i) => ({ frame: [11, 12, 13, 15][i], percent: 100, dir }));
     const [shi] = buildClasses([{ ...rec(3, 31), skills: [{ ...punch, skillId: 31 }, { ...punch, skillId: 42, hits: dirs }] } as unknown as ClassRecord], [], []);
     expect(attackParts(shi.skills[1]).map((h) => h.percent)).toEqual([25, 25, 25, 25]); // 狂龍出海 4 段
+    expect(shi.skills[1].power).toBe(60);
   });
 });
 
