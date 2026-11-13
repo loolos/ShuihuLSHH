@@ -11,11 +11,12 @@
 // - 循环接缝：Suno 的曲子最后约 5 秒是渐弱，不能直接 loop。两个播放器轮流放：快到结尾时另一个从头淡入，前一个淡出。
 // - 换曲时旧曲 1 秒淡出、新曲淡入，不硬切。
 // - 过关 / 失败音效播放期间把音乐压低（duck），播完再恢复。
-// 只有开关，没有音量档（负责人定）。
+// - 音量跟顶栏「♪」档位（关 / 小 / 中 / 大）走，切档立即生效；「关」档同时静音音乐（负责人 2026-11-13 要求）。
+//   「音乐开 / 关」按钮仍然单独控制要不要放音乐。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
+import { musicVolume } from './volume.ts';
 
 const STORE = 'shuihu.music';
-const VOLUME = 0.45;
 /** 离结尾还剩多少秒时开始接下一遍（曲子尾部的渐弱大约从这里开始） */
 const LOOP_TAIL = 5;
 /** 循环接缝的交叉淡化时长（秒） */
@@ -90,6 +91,8 @@ class MusicPlayer {
   /** 最近一次用户操作补放成功的时间：同一次点击落在音乐按钮上时不再当作「关」 */
   resumedAt = -1e9;
   on: boolean;
+  /** 音量档位 0–3（由音效系统 sound.setLevel 同步过来） */
+  level = 2;
   onChange: () => void = () => {};
   /** 仓库里有没有配乐（index.json 读到之前为 null） */
   available: boolean | null = null;
@@ -186,7 +189,7 @@ class MusicPlayer {
     if (a.target > 0 && !a.el.paused && a.el.duration > LOOP_TAIL * 3 && a.el.currentTime >= a.el.duration - LOOP_TAIL) this.loopNow(LOOP_XFADE);
     for (const d of this.decks) {
       d.step(dt);
-      d.el.volume = Math.max(0, Math.min(1, VOLUME * this.duck * d.level));
+      d.el.volume = musicVolume(this.level, this.duck, d.level);
     }
     if (this.decks.every((d) => d.el.paused) && this.duck === 1) {
       clearInterval(this.timer!);
@@ -221,7 +224,7 @@ class MusicPlayer {
     // 胜利 / 失败曲还没有：接着放战斗曲
     if (list && !files.length && list.every((t) => KEEP.has(t))) return;
     const a = this.decks[this.active];
-    if (!files.length || !this.on) {
+    if (!files.length || !this.audible) {
       for (const d of this.decks) d.fadeTo(0, SWITCH_FADE);
       this.ensureTimer();
       return;
@@ -246,6 +249,19 @@ class MusicPlayer {
     d.fadeTo(1, a.level > 0 ? SWITCH_FADE : 0.5);
     this.start(d);
   }
+  /** 开着且不在「关」档 */
+  get audible() {
+    return this.on && this.level > 0;
+  }
+  /** 换音量档：正在放的曲子马上变音量；切到「关」淡出暂停，从「关」切回来接着放 */
+  setLevel(level: number) {
+    const was = this.audible;
+    this.level = level;
+    if (this.audible && !was) void this.play(this.current);
+    else if (!this.audible && was) for (const d of this.decks) d.fadeTo(0, 0.3), this.ensureTimer();
+    else if (this.timer) this.tick();
+    if (was !== this.audible) this.onChange();
+  }
   toggle() {
     this.on = !this.on;
     try {
@@ -253,13 +269,13 @@ class MusicPlayer {
     } catch {
       /* 忽略 */
     }
-    if (this.on) void this.play(this.current);
+    if (this.audible) void this.play(this.current);
     else for (const d of this.decks) d.fadeTo(0, 0.3), this.ensureTimer();
     this.onChange();
   }
   /** 第一次用户操作时补放（浏览器的自动播放限制） */
   resume() {
-    if (!this.on || !this.blocked) return;
+    if (!this.audible || !this.blocked) return;
     const a = this.decks[this.active];
     if (!a.key || !a.el.src) return;
     this.resumedAt = performance.now();
@@ -282,7 +298,8 @@ export function installMusic(button: HTMLButtonElement) {
     const none = music.available === false;
     button.textContent = music.on && !none ? '音乐开' : '音乐关';
     button.disabled = none;
-    button.title = none ? '还没有配乐' : `背景音乐：${music.on ? '开' : '关'}（点击切换）`;
+    const muted = music.on && music.level === 0 ? '，音量在「♪关」档，暂时静音' : '';
+    button.title = none ? '还没有配乐' : `背景音乐：${music.on ? '开' : '关'}${muted}（点击切换；音量跟「♪」档位走）`;
     button.setAttribute('aria-label', button.title);
   };
   music.onChange = label;
