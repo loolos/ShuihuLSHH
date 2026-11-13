@@ -90,6 +90,8 @@ export interface StageInput {
   header?: PasHeader;
 }
 
+export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' | 'rest' | 'kill' | 'team';
+
 export class Battle {
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
@@ -444,7 +446,7 @@ export class Battle {
     u.hp = Math.min(u.stats.maxHp, u.hp + Math.max(1, Math.floor(u.stats.maxHp / REST_DIVISOR)));
     u.mp = Math.min(u.stats.maxMp, u.mp + Math.max(1, Math.floor(u.stats.maxMp / REST_DIVISOR)));
     this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '休息' });
-    this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng));
+    this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng), 'rest');
   }
 
   wait(u: Unit): BattleEvent[] {
@@ -474,7 +476,7 @@ export class Battle {
     this.out = [];
     if (!this.itemTargets(u, slot).includes(target)) return [];
     this.applyItem(u, slot, target);
-    this.gainExp(u, itemExp(this.rng));
+    this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
     return this.flush();
   }
@@ -671,7 +673,7 @@ export class Battle {
         healed += t.hp - hp0;
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, text: name });
       }
-      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng));
+      if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
       return;
     }
     const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
@@ -687,7 +689,7 @@ export class Battle {
         if (hits.length === 1) this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
         // 防御中闪避相邻攻击：50% 反击，必定命中
         if (!counter && !counterBy && canCounter(u, t) && this.rng.chance(50)) counterBy = t;
-        if (t.side === 'player') this.gainExp(t, dodgeExp(this.rng));
+        if (t.side === 'player') this.gainExp(t, dodgeExp(t.defending, this.rng), 'dodge');
         continue;
       }
       const hp0 = t.hp;
@@ -715,10 +717,10 @@ export class Battle {
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
       exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
-      if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng));
+      if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng), 'taken');
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
-    if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp);
+    if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
@@ -737,13 +739,25 @@ export class Battle {
     }
     if (u.side !== 'enemy' && t.side === 'enemy') {
       const total = killExp(u, t, this.rng);
-      this.gainExp(u, killerShare(total, u.side === 'player'));
+      this.gainExp(u, killerShare(total, u.side === 'player'), 'kill');
       this.teamExp += teamShare(total);
+      this.tallyExp('team', teamShare(total));
     }
   }
 
-  private gainExp(u: Unit, n: number) {
+  /** 按来源累计本关我方获得的经验（tools/sim-exp.ts 统计用；全队经验按入池时计） */
+  expBySource: Partial<Record<ExpSource, { n: number; total: number }>> = {};
+  private tallyExp(src: ExpSource, n: number) {
+    if (!n) return;
+    const e = (this.expBySource[src] ??= { n: 0, total: 0 });
+    e.n++;
+    e.total += n;
+  }
+
+  /** src 为 null 表示调用方已经自己统计过 */
+  private gainExp(u: Unit, n: number, src: ExpSource | null) {
     if (u.side !== 'player' || !n) return;
+    if (src) this.tallyExp(src, n);
     u.exp += n;
     while (u.exp >= EXP_PER_LEVEL) {
       u.exp -= EXP_PER_LEVEL;
@@ -774,7 +788,7 @@ export class Battle {
     splitTeamExp(team, pool).forEach((n, i) => {
       if (!n) return;
       this.emit({ type: 'message', text: `${team[i].name}得到經驗 ${n}。` });
-      this.gainExp(team[i], n);
+      this.gainExp(team[i], n, null);
     });
   }
 

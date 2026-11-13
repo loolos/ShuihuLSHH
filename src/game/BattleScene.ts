@@ -11,7 +11,7 @@ import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { dirIndex, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
@@ -109,7 +109,7 @@ export class BattleScene extends Phaser.Scene {
     sound.preload([
       ...['m01', 'm02', 'm03', 'm09', '44', '46', 'm13', 'm14', 'm04', 'm10', 'm07'],
       ...sound.skillSounds(allSkills),
-      ...allSkills.flatMap((s) => fxGroups(s).map((g) => String(g + 1))),
+      ...[...allSkills.flatMap((s) => fxGroups(s)), ...FIXED_FX].map((g) => String(g + 1)),
     ]);
 
     for (let y = 0; y < map.height; y++)
@@ -778,6 +778,24 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /** 在格子上放一组固定特效（EXE 0x403860：直接指定组号），同时播特效音 <组号+1>（0x403880）；放完才返回 */
+  private fixedFx(cell: Cell, group: number): Promise<void> {
+    const anim = effectAnim(this, this.assets, group);
+    sound.effect(group);
+    if (!anim) return Promise.resolve();
+    const p = cellToWorld(cell.x, cell.y);
+    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 10));
+    s.play(anim);
+    return new Promise<void>((r) => {
+      const done = () => {
+        if (s.active) s.destroy();
+        r();
+      };
+      s.once('animationcomplete', done);
+      this.time.delayedCall(3000, done); // 保险：动画事件没来也不卡住
+    });
+  }
+
   private async playOnce(u: Unit, action: number, facing: number, maxMs = 800) {
     const s = this.sprites.get(u.uid);
     const key = s && animFor(this, this.assets, u.classId, action, facing, 0);
@@ -864,6 +882,8 @@ export class BattleScene extends Phaser.Scene {
         uv.facing = e.facing;
         const skill = e.skill;
         const basic = skill === attackSkill(u, this.assets.data);
+        // 反击：先在反击者脚下放第 37 组特效（声音 38），放完再出手（EXE 0x4077a0 → 0x407850）
+        if (e.counter) await this.fixedFx(uv, FX_COUNTER);
         await Promise.all([this.focus(e.cell.x, e.cell.y), ensureSkill(this.assets, u.classId, skill)]);
         let area: Phaser.GameObjects.Graphics | null = null;
         if (!basic) {
@@ -973,9 +993,13 @@ export class BattleScene extends Phaser.Scene {
         await wait(this, 300);
         break;
       }
-      case 'defend':
-        this.pose(b.unit(e.uid)!);
+      case 'defend': {
+        const u = b.unit(e.uid)!;
+        this.pose(u);
+        // 原版只给我方（阵营 0）放防御特效第 48 组和声音 49（EXE 0x4075c0 → 0x40765f）；敌方、友军防御没有
+        if (e.on && u.side === 'player') await this.fixedFx(this.vs(u), FX_DEFEND);
         break;
+      }
       case 'die':
       case 'leave': {
         if (e.type === 'die') {

@@ -44,14 +44,24 @@ export function hitExp(damage: number, rng: Rng): number {
 /** 反击命中的额外经验 */
 export const counterExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
 
-/** 挨打（没被击倒）：受到伤害 / 15 + 1–3，防御中再 +2 */
+/**
+ * 防御奖励【新】（负责人 2026-11-13）：处于防御状态时，每挨一次攻击（闪开或被打中）都额外 +3。
+ * 只在真的被攻击时给，单纯按"防御"不给，免得每回合原地防御刷经验。
+ */
+export const DEFEND_BONUS = 3;
+const defendBonus = (defending: boolean) => (defending ? DEFEND_BONUS : 0);
+
+/** 挨打（没被击倒）：受到伤害 / 15 + 1–3，防御中再 +3 */
 export function takenExp(damage: number, defending: boolean, rng: Rng): number {
   if (EXP_RULES.mode === 'original') return 0;
-  return Math.floor(damage / 15) + rng.range(1, 3) + (defending ? 2 : 0);
+  return Math.floor(damage / 15) + rng.range(1, 3) + defendBonus(defending);
 }
 
-/** 闪开攻击（不要求防御状态） */
-export const dodgeExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
+/** 闪开攻击：3–5（不要求防御状态，负责人 2026-11-13），防御中再 +3 */
+export function dodgeExp(defending: boolean, rng: Rng): number {
+  if (EXP_RULES.mode === 'original') return 0;
+  return rng.range(3, 5) + defendBonus(defending);
+}
 
 /** 回复技：原版 1–10；新规则按回复量 / 10 + 1–5 */
 export function healExp(amount: number, rng: Rng): number {
