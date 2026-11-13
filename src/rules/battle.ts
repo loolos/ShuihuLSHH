@@ -11,6 +11,7 @@ import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerSh
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
+import { enemyFloor } from './enemy-level.ts';
 import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
@@ -139,6 +140,13 @@ export class Battle {
     this.blocks = input.blocks;
     this.display = input.displayBlocks?.length === input.blocks.length ? input.displayBlocks : undefined;
     this.tr = input.text ?? ((s) => s);
+    // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
+    const playerLevel = (a: ActUnit) => {
+      const kept = input.party?.get(a.type);
+      return Math.max(1, a.level, kept?.level ?? 0, kept ? 0 : (input.joinLevel ?? 0));
+    };
+    const mine = input.units.filter((a) => a.side === 'player' && this.data.classes[a.type]).map(playerLevel);
+    const floor = enemyFloor(mine);
     for (const a of input.units) {
       if (a.side === 'object') {
         if (a.type > 0 && a.type <= this.data.items.length) this.items.push({ x: a.x, y: a.y, item: a.type, hidden: (a.flags & 0xff) !== 0 });
@@ -159,7 +167,8 @@ export class Battle {
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
       // 新入伙的人（之前没出现过）按当前队伍的平均等级入队，不低于剧本等级【新】
       const join = a.side === 'player' && !kept ? (input.joinLevel ?? 0) : 0;
-      const level = Math.max(1, a.level, kept?.level ?? 0, join);
+      // 敌人等级保底【新】：2 级以上的敌人不低于我方平均等级 − 5（1 级的过场摆设不动）
+      const level = a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1, a.level, kept?.level ?? 0, join);
       const exp = kept && kept.level >= a.level ? kept.exp : 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
       let mode = a.flags >> 8;

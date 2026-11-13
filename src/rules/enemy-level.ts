@@ -22,3 +22,16 @@ export function enemyLevel(stage: string, level: number): number {
 /** 修正一关的 ACT 单位（不改原数组） */
 export const adjustEnemies = (stage: string, units: ActUnit[]): ActUnit[] =>
   enemyShift(stage) ? units.map((u) => (u.side === 'enemy' ? { ...u, level: enemyLevel(stage, u.level) } : u)) : units;
+
+/** 敌人等级保底比我方平均等级低几级（负责人 2026-11-13） */
+export const FLOOR_GAP = 5;
+
+/**
+ * 敌人等级保底【新】（负责人 2026-11-13）：每关开场时看我方（这一关出场的人）的平均等级，
+ * 2 级以上的敌人不低于「平均 − FLOOR_GAP」，免得我方练得高时敌人太弱。没有我方人物时为 0。
+ * 生成工具关掉修正时也不保底。
+ */
+export function enemyFloor(playerLevels: number[]): number {
+  if (!ENEMY_LEVEL.enabled || !playerLevels.length) return 0;
+  return Math.round(playerLevels.reduce((a, b) => a + b, 0) / playerLevels.length) - FLOOR_GAP;
+}

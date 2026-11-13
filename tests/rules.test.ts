@@ -11,7 +11,7 @@ import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rul
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
-import { adjustEnemies, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
@@ -710,6 +710,17 @@ describe('关卡串联', () => {
     const cut = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
     cut.begin();
     expect(cut.clearGold).toBe(0);
+  });
+
+  it('敌人等级保底：2 级以上的敌人不低于我方平均 − 5，1 级摆设不动', () => {
+    expect(enemyFloor([20, 30])).toBe(20);
+    expect(enemyFloor([])).toBe(0);
+    const c = { ...newCampaign(), members: [{ classId: 0, level: 30, exp: 0, slots: [] }] };
+    const units = [act(0, 0, 'player', 0, 0), { ...act(1, 1, 'enemy', 1, 0), level: 10 }, { ...act(2, 1, 'enemy', 2, 0), level: 28 }, act(3, 1, 'enemy', 3, 0)];
+    const b = new Battle({ name: 't', board: new Board(6, 6), units, blocks: [], data, seed: 1, party: partyOf(c) });
+    expect(b.unit(1)!.level).toBe(25);
+    expect(b.unit(2)!.level).toBe(28);
+    expect(b.unit(3)!.level).toBe(1);
   });
 
   it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {
