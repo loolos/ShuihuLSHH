@@ -342,7 +342,7 @@ export class BattleScene extends Phaser.Scene {
     const u = m.u;
     const hovered = this.hoverCell ? this.battle.unitAt(this.hoverCell.x, this.hoverCell.y) : undefined;
     if (m.kind === 'skill') {
-      this.setFloatCommands(m);
+      this.setTargetCommands(m);
       const c = this.hoverCell;
       const b = this.battle;
       const name = this.assets.tr(m.skill.name);
@@ -357,7 +357,8 @@ export class BattleScene extends Phaser.Scene {
       return;
     }
     if (m.kind === 'item' || m.kind === 'itemSlot') {
-      this.setFloatCommands(m); // 道具菜单也放在人物旁边
+      if (this.isTargeting(m)) this.setTargetCommands(m);
+      else this.setFloatCommands(m); // 道具菜单也放在人物旁边
       if (m.kind === 'item') return this.ui.showUnit(u, null, this.battle.canAct(u) && u.side === 'player' ? '选择道具：可使用、装备、给予或丢弃' : '');
       const it = itemOf(this.assets.data, u.slots[m.slot]);
       if (!it) return this.ui.showUnit(u);
@@ -377,7 +378,35 @@ export class BattleScene extends Phaser.Scene {
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
     else this.ui.showUnit(u, null, m.kind === 'attack' ? '选择攻击目标' : '');
-    this.setFloatCommands(m);
+    if (this.isTargeting(m)) this.setTargetCommands(m);
+    else this.setFloatCommands(m);
+  }
+
+  /** 在地图上选目标的模式：攻击、技能施放位置、道具使用 / 给予的对象 */
+  private isTargeting(m: Mode): boolean {
+    if (m.kind === 'idle' || m.u.side !== 'player' || !this.battle.canAct(m.u)) return false;
+    return m.kind === 'attack' || m.kind === 'skill' || (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give'));
+  }
+
+  /**
+   * 选目标时人物旁边的菜单收起来，不挡地图格子（lolo 2026-11-13）【新】；
+   * 只在底部面板右边留一个"取消"，和右键、Esc 一样回到上一层菜单。说明和预计伤害在单位面板里。
+   */
+  private setTargetCommands(m: Mode) {
+    if (this.busy) return this.ui.setCommands(null);
+    const touch = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+    this.ui.setCommands([{ label: '取消', note: touch ? '' : '右键 / Esc', run: () => this.back() }]);
+  }
+
+  /** 回到上一层：选目标 → 原来的菜单，子菜单 → 主菜单，主菜单 → 取消选中 */
+  private back() {
+    const m = this.mode;
+    if (this.busy || this.ui.inDialog || m.kind === 'idle') return;
+    const u = m.u;
+    if (m.kind === 'skill') return this.select({ kind: 'skills', u });
+    if (m.kind === 'itemSlot') return this.select(m.op ? { ...m, op: undefined } : { kind: 'item', u });
+    if (m.kind === 'selected') return this.select({ kind: 'idle' });
+    this.select({ kind: 'selected', u });
   }
 
   /** 攻击、技能、防御、道具等指令放在人物旁边，跟着镜头移动（位置在 update 里每帧更新） */
@@ -430,12 +459,11 @@ export class BattleScene extends Phaser.Scene {
     if (m.kind === 'itemSlot') return this.itemOps(m);
     // 不能行动的我方人物（已行动、敌方回合）也能查看道具
     if (!b.canAct(u)) return u.slots.some(Boolean) ? [{ label: '道具', run: () => this.select({ kind: 'item', u }) }] : null;
-    if (m.kind === 'skills' || m.kind === 'skill') {
+    if (m.kind === 'skills') {
       return [
         ...b.skillsOf(u).map(({ skill, usable }) => ({
           label: `${this.assets.tr(skill.name)} ${skill.mpCost}`,
           enabled: usable,
-          on: m.kind === 'skill' && m.skill === skill,
           run: () => this.select({ kind: 'skill', u, skill }),
         })),
         { label: '返回', run: () => this.select({ kind: 'selected', u }) },
@@ -509,20 +537,7 @@ export class BattleScene extends Phaser.Scene {
     const back = { label: '返回', run: () => this.select({ kind: 'item', u }) };
     if (!it || !b.canAct(u)) return [back];
     const list: Mode = { kind: 'item', u };
-    if (m.op === 'use') {
-      const self = b.itemTargets(u, slot).includes(u);
-      return [
-        ...(self ? [{ label: '对自己使用', run: () => this.exec(u, () => b.useItem(u, slot, u), list) }] : []),
-        ...b.itemTargets(u, slot).filter((t) => t !== u).map((t) => ({ label: `给${t.name}使用`, run: () => this.exec(u, () => b.useItem(u, slot, t), list) })),
-        { label: '返回', run: () => this.select({ ...m, op: undefined }) },
-      ];
-    }
-    if (m.op === 'give') {
-      return [
-        ...b.giveTargets(u, slot).map((t) => ({ label: `交给${t.name}`, run: () => this.exec(u, () => b.giveItem(u, slot, t), list) })),
-        { label: '返回', run: () => this.select({ ...m, op: undefined }) },
-      ];
-    }
+    // 使用 / 给予：菜单收起，在地图上点对象（setTargetCommands）
     if (m.op === 'discard') {
       return [
         { label: '确认丢弃', run: () => this.exec(u, () => b.discardItem(u, slot), list) },
@@ -636,8 +651,10 @@ export class BattleScene extends Phaser.Scene {
     this.input.on('wheel', (_p: unknown, _o: unknown, _dx: number, dy: number) => this.zoomBy(dy > 0 ? 1 / 1.2 : 1.2));
     this.input.mouse?.disableContextMenu();
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
-      if (p.rightButtonDown() && !this.busy) this.select({ kind: 'idle' });
+      if (p.rightButtonDown() && !this.busy) this.back();
     });
+    // Esc 回到上一层菜单（对白和回放期间由 BattleUI 处理跳过）
+    this.input.keyboard?.on('keydown-ESC', () => this.back());
   }
 
   zoomBy(f: number) {
@@ -677,7 +694,8 @@ export class BattleScene extends Phaser.Scene {
         }
         return void this.exec(u, () => b.useSkill(u, skill, c));
       }
-      return this.select({ kind: 'selected', u });
+      // 点了范围外：回到技能列表（不必从头再点"技能"）
+      return this.select({ kind: 'skills', u });
     }
     if (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give')) {
       const { u, slot } = m;
@@ -698,7 +716,9 @@ export class BattleScene extends Phaser.Scene {
         const { green, yellow } = b.moveRange(u);
         if ([...green, ...yellow].some((g) => g.x === c.x && g.y === c.y)) return void this.exec(u, () => b.move(u, c.x, c.y));
       }
-      if (at === u) return this.select({ kind: 'idle' });
+      if (at === u) return this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'idle' });
+      // 攻击模式点了空地：回到主菜单
+      if (m.kind === 'attack' && !at) return this.select({ kind: 'selected', u });
     }
     this.select(at ? { kind: 'selected', u: at } : { kind: 'idle' });
   }
