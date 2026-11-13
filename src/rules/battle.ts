@@ -76,6 +76,9 @@ export interface GroundItem {
   hidden: boolean;
 }
 
+/** 胜利条件只看回合数、原版文字又容易误解的关卡，胜利条件后面补一句回合提示（见 objectiveHint）【新】 */
+export const TURN_HINT_STAGES = ['N13'] as const;
+
 export interface StageInput {
   name: string;
   board: Board;
@@ -1153,6 +1156,19 @@ export class Battle {
   }
 
   /**
+   * 胜利条件后面的提示【新】：原版文字没说清楚怎么达成、实际只看回合数的关卡，补一句第几回合。
+   * N13「引诱何涛深入蓼儿洼」：区块 2 只有条件「回合 = 10」（没有坐标判断），第 11 回合开始时伏兵登场、胜利条件换成打败所有敌人。
+   */
+  private objectiveHint(b: PasBlock): string {
+    if (!(TURN_HINT_STAGES as readonly string[]).includes(this.name.toUpperCase())) return '';
+    const next = this.blocks.find(
+      (x) => x.index > b.index && x.trigger.kind === 'turn' && x.trigger.turn > 0 && x.ops.some((o) => o.op === 32),
+    );
+    if (!next || next.trigger.kind !== 'turn') return '';
+    return this.tr(`（堅持到第 ${next.trigger.turn + 1} 回合，伏兵出現）`);
+  }
+
+  /**
    * 执行一个 PAS 区块（指令 12–21 由 EXE 0x411690 分派）：12 选人（隐藏的随之登场）、13 说话、14/15 坐标、16 AI 模式、
    * 17 动作（见下）、29 过关旁白（区块结束后判胜）、30 失败结局、31–33 条件、35 回合限制。28 = 区块结束（0x411cf9）。
    */
@@ -1249,9 +1265,11 @@ export class Battle {
           ending = textOf(i);
           break;
         case 31:
-        case 32:
         case 33:
           objective.push(textOf(i));
+          break;
+        case 32:
+          objective.push(textOf(i) + this.objectiveHint(b));
           break;
         case 35:
           this.turnLimit = op.value & 0xffff;
