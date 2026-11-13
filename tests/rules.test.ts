@@ -153,8 +153,10 @@ describe('命中与伤害', () => {
     expect(hitChance(e, p, punch)).toBe(86); // 128 / 148
     p.defending = true; // 128 × 0.4 = 51.2
     expect(hitChance(e, p, punch)).toBe(71); // 51.2 / 71.2
-    p.facing = 0; p.defending = false; // 技能 +40 再乘背面：(80 + 40) × 2.5 = 300
-    expect(hitChance(e, p, { ...punch, hitMod: 40 })).toBe(93); // 300 / 320
+    p.facing = 0; p.defending = false; // 技能 +40 → 命中 ×3，再乘背面：80 × 3 × 2.5 = 600
+    expect(hitChance(e, p, { ...punch, hitMod: 40 })).toBe(96); // 600 / 620
+    p.facing = 2; // 正面，技能 +10 → 命中 ×1.5 = 120
+    expect(hitChance(e, p, { ...punch, hitMod: 10 })).toBe(85); // 120 / 140
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
   it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
