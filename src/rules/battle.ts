@@ -545,6 +545,50 @@ export class Battle {
     this.gainExp(u, restExp(u.hp - hp0, u.mp - mp0, this.rng), 'rest');
   }
 
+  /**
+   * 回合终了时还没行动的我方人物的默认行动【新】（负责人 2026-11-13）：
+   * 体力不满 → 休息；只有气力不满 → 身上有回气剂（只回气、不回血的道具）就先对自己用，再防御，没有就休息；
+   * 都满 → 防御。用道具本身不算行动，所以用完回气剂接着防御（此时体力是满的，按第 3 条）。
+   */
+  autoAct(u: Unit): BattleEvent[] {
+    if (u.side !== 'player' || !this.canAct(u)) return [];
+    const note = (text: string): BattleEvent => ({ type: 'message', text });
+    const rest = () => [note(`${u.name}自動休息。`), ...this.rest(u)];
+    const defend = () => [note(`${u.name}自動防禦。`), ...this.defend(u)];
+    if (!u.acted && u.hp < u.stats.maxHp) return rest();
+    if (u.mp < u.stats.maxMp) {
+      const slot = this.mpPotionSlot(u);
+      if (slot >= 0) return [...this.useItem(u, slot, u), ...defend()];
+      if (!u.acted) return rest();
+    }
+    return defend();
+  }
+
+  /** 我方还没行动、回合终了时会自动行动的人物 */
+  autoActUnits(): Unit[] {
+    return this.phase === 'player' ? this.units.filter((u) => u.side === 'player' && this.canAct(u)) : [];
+  }
+
+  /**
+   * 身上最合适的回气剂：只回气、不回血的道具里，挑能补满缺口的最小的一瓶；都补不满就挑回得最多的。
+   * "气力全满"（healMp < 0）当作无穷大。没有返回 -1。
+   */
+  mpPotionSlot(u: Unit): number {
+    const lack = u.stats.maxMp - u.mp;
+    const amount = (k: number) => {
+      const v = itemOf(this.data, u.slots[k])!.healMp;
+      return v < 0 ? Infinity : v;
+    };
+    const slots = this.usableSlots(u).filter((k) => {
+      const it = itemOf(this.data, u.slots[k])!;
+      return it.healMp !== 0 && !it.healHp;
+    });
+    if (!slots.length) return -1;
+    const enough = slots.filter((k) => amount(k) >= lack).sort((a, b) => amount(a) - amount(b));
+    if (enough.length) return enough[0];
+    return slots.sort((a, b) => amount(b) - amount(a))[0];
+  }
+
   wait(u: Unit): BattleEvent[] {
     if (!this.canAct(u)) return [];
     u.ended = true;
