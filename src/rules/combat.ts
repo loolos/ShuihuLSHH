@@ -14,16 +14,21 @@ const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
 const FACING_DAMAGE_FACTOR = { back: 1.25, side: 1.1, front: 1 } as const;
 
 /**
- * 命中率（%）【新】（负责人 2026-11-12）：命中 / (命中 + 守方敏捷/2) × 100 + 技能修正，再乘朝向和防御系数，最高 100。
- * 敌我同一公式、没有保底。原版是"命中 − 敏捷/2"，我方保底 80、其它保底 30（EXE 0x406c60）。
+ * 命中率（%）【新】（负责人 2026-11-13）：所有修正都作用在攻方的"命中"属性上，再代入比例公式：
+ * 有效命中 = (命中 + 技能命中修正) × 朝向系数 × 防御系数(0.7)，命中率 = 有效命中 / (有效命中 + 守方敏捷/2) × 100，最高 100。
+ * 敌我同一公式、没有保底。原版是"命中 − 敏捷/2 + 修正"，我方保底 80、其它保底 30（EXE 0x406c60）。
  */
+export function effectiveHit(att: Unit, def: Unit, skill: SkillDef): number {
+  let hv = Math.max(0, att.stats.hit + skill.hitMod);
+  hv *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
+  if (def.defending) hv *= 0.7;
+  return hv;
+}
+
 export function hitChance(att: Unit, def: Unit, skill: SkillDef): number {
-  const hv = Math.max(1, att.stats.hit);
-  let h = Math.max(0, (100 * hv) / (hv + def.stats.agility / 2) + skill.hitMod);
-  h *= FACING_FACTOR[facingRelation(facingTowards(att, def, att.facing), def.facing)];
-  if (def.defending) h *= 0.7;
-  h = Math.floor(h);
-  return Math.min(100, h);
+  const hv = effectiveHit(att, def, skill);
+  if (hv <= 0) return 0;
+  return Math.min(100, Math.floor((100 * hv) / (hv + Math.max(0, def.stats.agility) / 2)));
 }
 
 export function critChance(att: Unit, skill: SkillDef): number {
