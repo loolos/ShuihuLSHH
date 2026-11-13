@@ -7,7 +7,7 @@ import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
-import { isHealSkill, isSupportSkill, learnedSkills } from '../rules/skills.ts';
+import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
@@ -967,8 +967,8 @@ export class BattleScene extends Phaser.Scene {
         if (!basic) {
           area = this.add.graphics().setDepth(-0.4);
           for (const c of e.area) this.diamond(area, c, isSupportSkill(skill) ? 0x40b0e0 : 0xf09030, 0.45);
-          this.float(uv.x, uv.y, this.assets.tr(skill.name));
         }
+        if (announcesSkill(u, skill, this.assets.data)) this.float(uv.x, uv.y, this.assets.tr(skill.name));
         // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发；范围内的人同时受击
         const segs = skill.hits.filter((h) => h.frame > 0 && h.dir === skill.hits[0].dir);
         const frames = segs.length ? segs.map((h) => h.frame) : [1];

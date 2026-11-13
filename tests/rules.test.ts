@@ -10,7 +10,7 @@ import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
-import { areaCells, learnedSkills } from '../src/rules/skills.ts';
+import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills } from '../src/rules/skills.ts';
 import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
@@ -647,6 +647,17 @@ describe('经验', () => {
 });
 
 describe('技能', () => {
+  it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
+    const skill = { ...punch, name: '技能', mpCost: 10 };
+    const d: GameData = { ...data, classes: [...data.classes] };
+    d.classes[HERO_CLASSES] = cls(HERO_CLASSES);
+    const hero = unit({ classId: 1 });
+    const grunt = { ...unit({ classId: 1 }), classId: HERO_CLASSES };
+    expect(announcesSkill(hero, punch, d)).toBe(true);
+    expect(announcesSkill(grunt, punch, d)).toBe(false);
+    expect(announcesSkill(grunt, skill, d)).toBe(true);
+  });
+
   const sk = (o: Partial<SkillDef>): SkillDef => ({ ...punch, hits: [{ frame: 5, percent: 100, dir: 0 }], ...o });
   const line = sk({ name: '石破天驚', type: 0, power: 20, area: 3, mpCost: 20, learnLevel: 1 });
   const cone = sk({ name: '氣蓋山河', type: 1, power: 20, area: 5, mpCost: 30, learnLevel: 1 });
