@@ -82,6 +82,29 @@ describe('职业移动力调整', () => {
   });
 });
 
+describe('武龍普攻两段', () => {
+  it('一鳴驚人改成同一帧的两段 50% + 50%，其他职业照原值', () => {
+    const one = [{ frame: 9, percent: 100, dir: 0 }];
+    const rec = (id: number) =>
+      ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 5, weaponType: 0, goldCap: 0, defaultItems: [], skills: [{ ...punch, hits: one }, { ...punch, hits: one }] }) as unknown as ClassRecord;
+    const [hero, wangjin] = buildClasses([rec(0), rec(1)], ['武龍', '王進'], []);
+    expect(hero.skills[0].hits).toEqual([{ frame: 9, percent: 50, dir: 0 }, { frame: 9, percent: 50, dir: 0 }]);
+    expect(hero.skills[1].hits).toEqual(one);
+    expect(wangjin.skills[0].hits).toEqual(one);
+    // 两段全中时总伤害和单段一样（不计浮动），两段各占一半
+    const att = unit({ side: 'player', x: 0, y: 1, facing: 0 });
+    att.stats = { ...att.stats, crit: 0 };
+    const foe = unit({ side: 'enemy', x: 0, y: 0, facing: 2 });
+    const [n] = baseDamage(att, foe, punch);
+    const r2 = rollAttack(att, foe, hero.skills[0], new Rng(5), true);
+    expect(r2.parts).toHaveLength(2);
+    expect(r2.parts[0] + r2.parts[1]).toBe(r2.damage);
+    expect(r2.damage).toBeGreaterThanOrEqual(Math.floor(n * 0.9));
+    expect(r2.damage).toBeLessThanOrEqual(Math.ceil(n * 1.1));
+    expect(Math.abs(r2.parts[0] - r2.parts[1])).toBeLessThanOrEqual(1);
+  });
+});
+
 describe('装备移动力', () => {
   it('装备扣移动不生效，加移动照算', () => {
     const boots = { ...glove, moveBonus: 1 } as Item, helm = { ...glove, type: 14, moveBonus: -2 } as Item;
