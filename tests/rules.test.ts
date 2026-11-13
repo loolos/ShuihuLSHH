@@ -114,6 +114,8 @@ describe('好汉普攻调整', () => {
     expect([zhu, wu].map((c) => c.skills[0].stun)).toEqual([10, 10]);
     expect([chen, yang].map((c) => [c.skills[0].rangeMin, c.skills[0].rangeMax])).toEqual([[1, 2], [1, 2]]);
     expect([chen, yang].map((c) => c.skills[0].stun)).toEqual([0, 0]);
+    const [zhu2] = buildClasses([{ ...rec(5, 54), skills: [{ ...punch, skillId: 54 }, { ...punch, skillId: 56, stun: 5 }] } as unknown as ClassRecord], [], []);
+    expect(zhu2.skills[1].stun).toBe(30); // 詭計多端
   });
 });
 

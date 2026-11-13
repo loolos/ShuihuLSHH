@@ -76,6 +76,7 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   54: { stun: 10 }, // 朱武 神機妙算，原版 0
   128: { rangeMax: 2 }, // 楊春 撥草尋蛇
   113: { rangeMax: 2 }, // 陳達 餓虎出柵
+  56: { stun: 30 }, // 朱武 詭計多端（7 级连续技），原版 5，负责人 2026-11-13 改 30
 };
 
 /** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
