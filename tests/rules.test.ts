@@ -106,6 +106,17 @@ describe('武龍普攻两段', () => {
   });
 });
 
+describe('好汉普攻调整', () => {
+  it('吳用、朱武普攻带昏迷 10，楊春、陳達普攻射程 1–2', () => {
+    const rec = (id: number, skillId: number) =>
+      ({ id, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 5, weaponType: 0, goldCap: 0, defaultItems: [], skills: [{ ...punch, skillId }] }) as unknown as ClassRecord;
+    const [zhu, wu, chen, yang] = buildClasses([rec(5, 54), rec(10, 86), rec(13, 113), rec(15, 128)], [], []);
+    expect([zhu, wu].map((c) => c.skills[0].stun)).toEqual([10, 10]);
+    expect([chen, yang].map((c) => [c.skills[0].rangeMin, c.skills[0].rangeMax])).toEqual([[1, 2], [1, 2]]);
+    expect([chen, yang].map((c) => c.skills[0].stun)).toEqual([0, 0]);
+  });
+});
+
 describe('装备移动力', () => {
   it('装备扣移动不生效，加移动照算', () => {
     const boots = { ...glove, moveBonus: 1 } as Item, helm = { ...glove, type: 14, moveBonus: -2 } as Item;
