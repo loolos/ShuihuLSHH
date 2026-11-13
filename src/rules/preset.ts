@@ -33,6 +33,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 我方人物从头配起，之前的等级、经验、装备一概不用；
  * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线期望值估算生成，见 tools/gen-entry-levels.ts）；
  *   表里没有的人（或没有模拟到的关）用这一关敌人的平均等级（foeLevel）；都不低于剧本里写的等级；
+ * - 再校验：我方平均等级和这一关敌人平均等级相差不超过 JUMP_LEVEL_GAP（balanceLevels），超过就全员一起升 / 降；
  * - 装备 = 剧本里的初始装备；之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰比它好就换上；
  * - 物品栏补 2 个药铺里回复最多的药；
  * - 技能随等级自动领悟。
@@ -59,6 +60,7 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
 
   const members = new Map<number, Member>();
+  const script = new Map<number, number>();
   // 没有我方出场的过场（如 Act13-1 之后进城镇 9）用城镇之后那一关的人
   const hasParty = (i: number) => at(i).units.some((u) => u.side === 'player');
   const from = hasParty(pos) || lpos < 0 ? pos : lpos;
@@ -87,7 +89,9 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
       for (let k = 3; k < SLOT_COUNT && n < 2; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
     }
     members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
+    script.set(u.type, u.level);
   }
+  balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
   return { version: 1, stage: target, gold: c.gold, members: [...members.values()] };
 }
 
@@ -102,6 +106,40 @@ export function foeLevel(count: number, pos: number, units: (i: number) => ActUn
     return Math.round(foes.reduce((a, u) => a + u.level, 0) / foes.length);
   }
   return 1;
+}
+
+/** 跳关时我方平均等级和敌人平均等级最多差几级（负责人 2026-11-13） */
+export const JUMP_LEVEL_GAP = 2;
+
+/**
+ * 第 pos 关 2 级以上敌人（修正后）的平均等级，不取整；全是 1 级摆设的过场关看后面第一场真正的战斗；后面都没有战斗时为 0。
+ */
+export function foeAverage(count: number, pos: number, units: (i: number) => ActUnit[]): number {
+  for (let i = pos; i < count; i++) {
+    const foes = units(i).filter((u) => u.side === 'enemy' && u.level > 1);
+    if (foes.length) return foes.reduce((a, u) => a + u.level, 0) / foes.length;
+  }
+  return 0;
+}
+
+/**
+ * 跳关等级校验【新】（负责人 2026-11-13）：我方平均等级和敌人平均等级 foe 相差超过 JUMP_LEVEL_GAP 时，
+ * 全员一起升 / 降，直到差距不超过 JUMP_LEVEL_GAP；每人不低于剧本等级 script（剧本等级卡住时可能仍差得多）。
+ */
+export function balanceLevels(members: Member[], script: Map<number, number>, foe: number): void {
+  if (!foe || !members.length) return;
+  const avg = () => members.reduce((a, m) => a + m.level, 0) / members.length;
+  for (let guard = 0; guard < 100; guard++) {
+    const d = avg() - foe;
+    if (Math.abs(d) <= JUMP_LEVEL_GAP + 1e-9) return;
+    const step = d > 0 ? -1 : 1;
+    let moved = false;
+    for (const m of members) {
+      const lv = Math.max(script.get(m.classId) ?? 1, 1, m.level + step);
+      if (lv !== m.level) (m.level = lv), (moved = true);
+    }
+    if (!moved) return;
+  }
 }
 
 /** 第 i 关的 ACT 单位（生成入场等级表用） */

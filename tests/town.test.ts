@@ -193,6 +193,16 @@ describe.skipIf(!has)('测试用跳关', () => {
       for (const [id, lv] of now) if (seen.has(id)) expect(lv, `${name} ${id}`).toBeGreaterThanOrEqual(seen.get(id)!);
       seen = new Map([...seen, ...now]);
     }
+    // 每场战役：我方平均等级和敌人平均等级（2 级以上，修正后）相差不超过 2（负责人 2026-11-13）
+    const { foeAverage, JUMP_LEVEL_GAP, stageUnits } = await import('../src/rules/preset.ts');
+    for (const [pos, s] of stages.entries()) {
+      if (/^(act|train)/i.test(s.mapName) || !files.has(`Map/${s.mapName}.act`)) continue;
+      const foe = foeAverage(pos + 1, pos, () => stageUnits(files, s));
+      const ms = jumpTo(files, data, stages, s.index, newCampaign(0)).members;
+      if (!foe || !ms.length) continue;
+      const avg = ms.reduce((a, m) => a + m.level, 0) / ms.length;
+      expect(Math.abs(avg - foe), `${s.mapName} 我方 ${avg.toFixed(1)} 敌人 ${foe.toFixed(1)}`).toBeLessThanOrEqual(JUMP_LEVEL_GAP);
+    }
     // 最后去过的城镇是 4（N-add07 之后）：主角用拳套类，换上城镇 4 武器店里攻击最高的
     const hero = c.members.find((m) => m.classId === 0)!;
     expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
