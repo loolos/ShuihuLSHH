@@ -11,6 +11,7 @@ export function facingRelation(attackerFacing: number, defenderFacing: number): 
 }
 
 const FACING_FACTOR = { back: 1.5, side: 1.3, front: 1 } as const;
+const FACING_DAMAGE_FACTOR = { back: 1.25, side: 1.1, front: 1 } as const;
 
 /**
  * 命中率（%）【新】（负责人 2026-11-12）：命中 / (命中 + 守方敏捷/2) × 100 + 技能修正，再乘朝向和防御系数，最高 100。
@@ -57,11 +58,12 @@ export function rangedFactor(att: Unit, def: Unit, skill: SkillDef): number {
   return RANGED_MAX - ((RANGED_MAX - RANGED_MIN) * (d - 1)) / (hi - 1);
 }
 
-/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整），已乘远程距离系数 */
+/** 不含随机部分的伤害：返回 [普通, 必杀]（未取整），已乘远程距离系数和侧背攻击加成（守方防御时无侧背加成） */
 export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, number] {
   const power = skill.type === 8 || skill.type === 9 || skill.type === 11 ? 0 : skill.power;
   const a = att.stats.attack + power;
-  const f = rangedFactor(att, def, skill);
+  const relation = facingRelation(facingTowards(att, def, att.facing), def.facing);
+  const f = rangedFactor(att, def, skill) * (def.defending ? 1 : FACING_DAMAGE_FACTOR[relation]);
   return [ratioDamage(a, def.stats.defense) * f, ratioDamage(2 * a, def.stats.defense) * f];
 }
 
