@@ -17,6 +17,7 @@ import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from 
 import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
+import { FLOAT_COLOR, recoveryFloats } from '../src/game/float-text.ts';
 
 const g = (base: number, growth = 100) => ({ base, growth });
 const punch: SkillDef = {
@@ -348,6 +349,17 @@ describe('战斗流程', () => {
     expect(p.hp).toBe(21 + Math.floor(p.stats.maxHp / 5));
     expect(p.mp).toBe(Math.floor(p.stats.maxMp / 5));
     expect(p.ended).toBe(true);
+  });
+
+  it('回复事件带上气的变化，用来弹黄字（扣气不弹）', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.hp = 1;
+    p.mp = 0;
+    const ev = b.rest(p).find((e) => e.type === 'hp');
+    expect(ev).toMatchObject({ delta: p.hp - 1, mpDelta: p.mp });
+    expect(recoveryFloats(ev!.type === 'hp' ? ev!.delta : 0, ev!.type === 'hp' ? ev!.mpDelta ?? 0 : 0).map((f) => f.color)).toEqual([FLOAT_COLOR.hp, FLOAT_COLOR.mp]);
   });
 
   it('道具：对自己和上下左右相邻的非敌方单位使用；给予只给相邻我方；装备、卸下、丢弃都不算行动', () => {

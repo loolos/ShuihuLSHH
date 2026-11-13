@@ -13,6 +13,7 @@ import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './asset
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark } from './minimap.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
@@ -786,13 +787,13 @@ export class BattleScene extends Phaser.Scene {
     await wait(this, ms);
   }
 
-  /** 地图上的飘字：黑底白字，停留一会儿再淡出，保证看得清。side：同时弹出的几个字放在中线左边（−1）或右边（1）；
-   *  lift：多段攻击不同帧的第几段，再往上抬几行，段间隔很短时飘字不重叠 */
-  private float(x: number, y: number, text: string, _color?: string, side = 0, lift = 0) {
+  /** 地图上的飘字：照原版用调色板色（伤害红、回血绿、回气黄，见 float-text.ts），加黑描边保证在地图上看得清【新】。
+   *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
+  private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
     const p = cellToWorld(x, y);
     p.y -= lift * 26;
     const t = this.add
-      .text(p.x + side * 4, p.y - 72, text, { fontFamily: 'serif', fontSize: '20px', fontStyle: 'bold', color: '#ffffff', backgroundColor: '#000000', padding: { x: 6, y: 2 } })
+      .text(p.x + side * 4, p.y - 72, text, { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
       .setOrigin(side < 0 ? 1 : side > 0 ? 0 : 0.5, 0.5)
       .setDepth(100000);
     this.tweens.add({ targets: t, y: p.y - 92, duration: 350, ease: 'Cubic.easeOut' });
@@ -1006,12 +1007,12 @@ export class BattleScene extends Phaser.Scene {
                   if (!res.hit) {
                     // 落空也做受击动作，只是显示 MISS、不掉血（负责人对原版的记忆）
                     if (i > 0) return r();
-                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0');
+                    this.float(tv.x, tv.y, MISS_FLOAT.text, MISS_FLOAT.color);
                     return void this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                   }
                   const perPart = res.parts.length === frames.length;
                   if (perPart && !res.partHit[i]) {
-                    this.float(tv.x, tv.y, 'MISS', '#9ab0c0', side, lift); // 多段攻击中落空的一段
+                    this.float(tv.x, tv.y, MISS_FLOAT.text, MISS_FLOAT.color, side, lift); // 多段攻击中落空的一段
                     return r();
                   }
                   const dmg = perPart ? res.parts[i] : i === frames.length - 1 ? res.damage : null;
@@ -1019,7 +1020,10 @@ export class BattleScene extends Phaser.Scene {
                   // 同一帧里第一段命中的负责受击动作和受击声（另一段必杀时再补一声必杀音）
                   const lead = frames.findIndex((g, j) => g === f && (!perPart || res.partHit[j])) === i;
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
-                  if (dmg !== null) this.float(tv.x, tv.y, (crit ? '必杀 ' : '') + dmg, crit ? '#ffd040' : '#ffffff', side, perPart ? lift : 0);
+                  if (dmg !== null) {
+                    const df = damageFloat(dmg, crit);
+                    this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
+                  }
                   if (!lead) return r();
                   this.playOnce(t, ACTION.hurt, tv.facing, 400).then(r);
                 });
@@ -1041,8 +1045,10 @@ export class BattleScene extends Phaser.Scene {
         const v = this.vs(u);
         v.hp = e.hp;
         this.drawBar(u);
-        if (e.text) this.float(v.x, v.y, tr(e.text) + (e.delta > 0 ? ` +${e.delta}` : ''), '#90e070');
-        else if (e.delta > 0) this.float(v.x, v.y, `+${e.delta}`, '#90e070');
+        // 回复只弹数字（原版不写道具名、技能名）：回血绿字，回气黄字在上一行；"升級了！"这类没有数字的照旧弹文字
+        const nums = recoveryFloats(e.delta, e.mpDelta ?? 0);
+        for (const f of nums) this.float(v.x, v.y, f.text, f.color, 0, f.lift);
+        if (e.text && !nums.length && e.delta === 0 && !e.mpDelta) this.float(v.x, v.y, tr(e.text));
         if (e.text) await wait(this, 400);
         break;
       }
