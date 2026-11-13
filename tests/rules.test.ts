@@ -138,20 +138,23 @@ describe('命中与伤害', () => {
     expect(facingTowards({ x: 0, y: 1 }, { x: 0, y: 0 })).toBe(0);
     expect(facingTowards({ x: 0, y: 0 }, { x: 3, y: 1 })).toBe(3);
   });
-  it('命中 = 命中 / (命中 + 敏捷/2)，按朝向放大，敌我同一公式、没有保底', () => {
+  it('命中 = 有效命中 / (有效命中 + 敏捷/2)，技能修正、朝向、防御都作用在命中属性上，敌我同一公式、没有保底', () => {
     // 守方面向 +y（朝向 2），攻方从 +y 方向往 −y 打（朝向 0）：正面
     const d = unit({ side: 'enemy', x: 0, y: 0, facing: 2, classId: 1 });
     expect(hitChance(a, d, punch)).toBe(80); // 80 / (80 + 20)
     const e = unit({ side: 'enemy', x: 0, y: 1, facing: 0 });
     const p = unit({ side: 'player', x: 0, y: 0, facing: 2 });
     expect(hitChance(e, p, punch)).toBe(80);
-    expect(hitChance(e, p, { ...punch, hitMod: -10 })).toBe(70);
-    p.facing = 0; // 背后
-    expect(hitChance(e, p, punch)).toBe(100);
-    p.facing = 1; // 侧面
-    expect(hitChance(e, p, punch)).toBe(100);
-    p.defending = true;
-    expect(hitChance(e, p, punch)).toBe(72);
+    expect(hitChance(e, p, { ...punch, hitMod: -10 })).toBe(77); // 70 / (70 + 20)
+    expect(hitChance(e, p, { ...punch, hitMod: -100 })).toBe(0);
+    p.facing = 0; // 背后：命中 80 × 2.5 = 200
+    expect(hitChance(e, p, punch)).toBe(90); // 200 / 220
+    p.facing = 1; // 侧面：80 × 1.6 = 128
+    expect(hitChance(e, p, punch)).toBe(86); // 128 / 148
+    p.defending = true; // 128 × 0.4 = 51.2
+    expect(hitChance(e, p, punch)).toBe(71); // 51.2 / 71.2
+    p.facing = 0; p.defending = false; // 技能 +40 再乘背面：(80 + 40) × 2.5 = 300
+    expect(hitChance(e, p, { ...punch, hitMod: 40 })).toBe(93); // 300 / 320
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
   it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
