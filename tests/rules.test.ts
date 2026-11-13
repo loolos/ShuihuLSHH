@@ -12,7 +12,7 @@ import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, pe
 import { Battle } from '../src/rules/battle.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
 import { balanceLevels } from '../src/rules/preset.ts';
-import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills } from '../src/rules/skills.ts';
+import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills, skillBonusText } from '../src/rules/skills.ts';
 import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
@@ -978,5 +978,24 @@ describe('跳关等级校验', () => {
     const ms = [mk(0, 30), mk(1, 20)];
     balanceLevels(ms, new Map([[0, 30], [1, 1]]), 20);
     expect(ms.map((m) => m.level)).toEqual([30, 14]);
+  });
+});
+
+describe('技能菜单的简略加成', () => {
+  const sk = (o: Partial<SkillDef>): SkillDef => ({
+    name: 'x', skillId: 1, type: 5, group: 0, hidden: false, effect: 0, effect2: 0, effect3: 0, power: 0, poison: 0, stun: 0,
+    rangeMin: 1, rangeMax: 1, area: 0, learnLevel: 1, mpCost: 0, hitMod: 0, critMod: 0, hits: [], raw: '', ...o,
+  });
+  it('只列非 0 的项，命中显示原值', () => {
+    expect(skillBonusText(sk({ power: 60, hitMod: 40, critMod: 50 }))).toBe('威+60 命+40 必+50');
+    expect(skillBonusText(sk({ critMod: 10, hitMod: 20 }))).toBe('命+20 必+10');
+    expect(skillBonusText(sk({}))).toBe('');
+  });
+  it('减益显示负数，中毒 / 昏迷显示几率', () => {
+    expect(skillBonusText(sk({ power: 20, hitMod: -10, poison: 20, stun: 10 }))).toBe('威+20 命-10 毒20% 昏10%');
+  });
+  it('回复技 / 集气技显示回复比例', () => {
+    expect(skillBonusText(sk({ type: 9, power: 4 }))).toBe('回体1/4');
+    expect(skillBonusText(sk({ type: 8, power: 3 }))).toBe('回气1/3');
   });
 });
