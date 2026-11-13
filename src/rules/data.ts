@@ -45,6 +45,15 @@ export interface GameData {
  */
 export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
 
+/**
+ * 个别技能的数值调整（技能号 → 字段），在职业表原值上覆盖【新】。技能数值不必照原版（负责人 2026-11-12）。
+ * 33 龍爭虎鬥LV1（史進 2 级）：原版威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，
+ * 比例公式下期望伤害只多约 8%，还要 15 气，玩起来像比普攻还弱（负责人 2026-11-13）。改成 20，约多 20%。
+ */
+export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod'>>> = {
+  33: { power: 20 },
+};
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -62,7 +71,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
-      skills: r.skills.map((s) => ({ ...s, name: skillNames[s.skillId] ?? `#${s.skillId}` })),
+      skills: r.skills.map((s) => ({ ...s, ...SKILL_OVERRIDES[s.skillId], name: skillNames[s.skillId] ?? `#${s.skillId}` })),
     };
   });
 }
