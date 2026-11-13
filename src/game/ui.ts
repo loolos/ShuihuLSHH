@@ -1,4 +1,5 @@
 // 战斗界面的 HTML 部分：顶栏、战报、单位面板、指令菜单、对白框、结算画面。
+import { expToNext } from '../rules/exp.ts';
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
 import { buffName } from '../rules/data.ts';
@@ -140,10 +141,11 @@ export class BattleUI {
     this.panel.innerHTML = `
       ${face ? `<img class="face" alt="" src="${face}">` : ''}
       <div class="info">
-      <div class="name side-${u.side}">${esc(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}${u.side === 'player' ? `　经验 ${u.exp}` : ''}</small></div>
+      <div class="name side-${u.side}">${esc(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}</small></div>
       <div class="bars">
         <div>体力 <span class="bar2"><i style="width:${pct(u.hp, s.maxHp)}"></i></span> ${u.hp}/${s.maxHp}</div>
         <div>气力 <span class="bar2 mp"><i style="width:${pct(u.mp, s.maxMp)}"></i></span> ${u.mp}/${s.maxMp}</div>
+        ${u.side === 'player' ? `<div>经验 <span class="bar2 exp"><i style="width:${pct(u.exp, expToNext(u.level))}"></i></span> ${u.exp}/${expToNext(u.level)}</div>` : ''}
       </div>
       <div class="grid"><span>攻 ${s.attack}</span><span>防 ${s.defense}</span><span>移 ${s.move}</span><span>命 ${s.hit}</span><span>敏 ${s.agility}</span><span>必 ${s.crit}</span></div>
       ${states ? `<div>${states}</div>` : ''}

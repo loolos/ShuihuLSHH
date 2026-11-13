@@ -8,7 +8,15 @@
 import type { Rng } from './rng.ts';
 import type { Unit } from './unit.ts';
 
-export const EXP_PER_LEVEL = 100;
+/**
+ * 升级所需经验【新】（负责人 2026-11-13）：从 L 级升到 L + 1 级要 90 + 10 × L（1 级 100、10 级 190、20 级 290）。
+ * 原版每级固定 100（EXE 0x404812）；新规则下每个敌人给的经验随等级上涨，固定 100 会让后期等级远超各章敌人。
+ * 用 tools/est-exp.ts 估算：各关我方平均等级比设计等级（原版节奏）高约 1 级，终章持平。
+ */
+export const expToNext = (level: number) => 90 + 10 * level;
+
+/** 从 1 级到 level 级累计需要的经验 */
+export const expAtLevel = (level: number) => 90 * (level - 1) + 5 * level * (level - 1);
 
 export const EXP_RULES = {
   /** 'original' 只给 tools/sim-exp.ts 做对比 */
@@ -86,14 +94,14 @@ export function restExp(hp: number, mp: number, rng: Rng): number {
 export const itemExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(1, 3));
 
 /**
- * 全队经验的分配：注水式，先把总进度（等级 × 100 + 经验）最低的人往上补，补平了再一起往上。
+ * 全队经验的分配：注水式，先把总进度（累计经验）最低的人往上补，补平了再一起往上。
  * 返回与 members 同序的分得经验。（我方等级不封顶，负责人 2026-11-13）
  */
 export function splitTeamExp(members: { level: number; exp: number }[], pool: number): number[] {
   const out = members.map(() => 0);
   const idx = members.map((_, i) => i);
   if (!idx.length || pool <= 0) return out;
-  const prog = (i: number) => members[i].level * EXP_PER_LEVEL + members[i].exp;
+  const prog = (i: number) => expAtLevel(members[i].level) + members[i].exp;
   idx.sort((a, b) => prog(a) - prog(b));
   // 找水位 T：Σ max(0, T − p_i) = pool
   let left = pool;

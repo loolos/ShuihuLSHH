@@ -111,7 +111,8 @@ code { color: var(--ink); }
 #unit-panel .bars div { display: flex; gap: 6px; align-items: center; }
 #unit-panel .bar2 { flex: 1; height: 6px; background: #1b1610; border-radius: 3px; overflow: hidden; min-width: 80px; }
 #unit-panel .bar2 i { display: block; height: 100%; background: #6fbf5a; }
-#unit-panel .bar2.mp i { background: #5a8fd0; }
+#unit-panel .bar2.mp i { background: #e0c040; }
+#unit-panel .bar2.exp i { background: #4a8ff0; }
 #unit-panel .grid { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; color: var(--muted); }
 #unit-panel .preview { margin-top: 4px; color: var(--ink); }
 #cmd { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
