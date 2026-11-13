@@ -250,7 +250,7 @@ export class TownUI {
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
-        <span class="gold">黄金 <b>${this.c.gold}</b> 两</span>
+        <span class="gold">银子 <b>${this.c.gold}</b> 两</span>
         <button class="leave" data-do="leave">${town ? '离开城镇 ▸' : '完成 ▸'}</button>
       </div>
       ${shops ? `<nav class="town-shops">${shops}</nav>` : ''}
