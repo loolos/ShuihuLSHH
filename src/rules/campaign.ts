@@ -21,6 +21,8 @@ export interface CampaignState {
   town?: number;
   /** 上一关出场的我方角色号（整备、买东西只列这些人；旧存档没有时列全部） */
   active?: number[];
+  /** 已领过礼物的说书（src/rules/storyteller.ts 的故事 id）【新】 */
+  tales?: string[];
 }
 
 export interface StageEntry {

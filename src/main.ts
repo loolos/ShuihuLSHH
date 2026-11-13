@@ -218,7 +218,16 @@ function startGame(assets: Assets) {
     const k = route ? await ask(route.prompt) : 0;
     goTo({ ...c, town: undefined, stage: k === 1 && route ? route.alt : next[0].index });
   };
-  const town = new TownUI(assets, (cls) => ui.portrait(cls));
+  // 酒店说书借用战斗的对白框和选项面板（src/rules/storyteller.ts）
+  const town = new TownUI(assets, (cls) => ui.portrait(cls), {
+    say: (who, text, cls) => ui.say(who, text, cls),
+    choose: (title, text, options) =>
+      new Promise<number>((r) => ui.result(true, text, options.map((o, i) => ({ ...o, run: () => r(i) })), title)),
+    done: () => {
+      ui.hideResult();
+      ui.endSkip();
+    },
+  });
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
     town.show(c, {
       town: t,

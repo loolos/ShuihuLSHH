@@ -4,6 +4,7 @@ import type { Item } from '../formats/goo.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
 import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
+import { afterTale, chooseTale, taleOf, TELLER, type Tale, type TaleLine } from '../rules/storyteller.ts';
 import { computeStats } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
 import { music } from './music.ts';
@@ -25,6 +26,14 @@ export interface TownOptions {
   onLeave: (c: CampaignState) => void;
 }
 
+/** 说书用的对白框和二选一面板（和战斗共用 #dialog、#result） */
+export interface TownStage {
+  say(speaker: string, text: string, classId: number | null): Promise<void>;
+  choose(title: string, text: string, options: { label: string; note?: string }[]): Promise<number>;
+  /** 说完（含按 Esc 跳过）后恢复对白框的状态 */
+  done(): void;
+}
+
 export class TownUI {
   private root = $('town');
   private c!: CampaignState;
@@ -37,10 +46,12 @@ export class TownUI {
   private line = '';
   private rumor = new Map<number, number>();
   private icons = new Map<number, string>();
+  private telling = false;
 
   constructor(
     private assets: Assets,
     private portrait: (classId: number) => string | null,
+    private stage?: TownStage,
   ) {
     this.root.addEventListener('click', (e) => {
       const el = (e.target as Element).closest<HTMLElement>('[data-do]');
@@ -101,6 +112,50 @@ export class TownUI {
     this.rumor.set(this.o.town, k + 1);
   }
 
+  /** 说书【新】：说书先生一页一页说，故事里的好汉在队里时接着互动、二选一（src/rules/storyteller.ts） */
+  private async tell() {
+    const tale = taleOf(this.o.town), st = this.stage;
+    if (!tale || !st || this.telling) return;
+    this.telling = true;
+    st.done(); // 清掉战斗里可能残留的"跳过"状态
+    document.body.classList.add('storytelling');
+    this.line = `说书先生醒木一拍，开讲「${tale.title}」。`;
+    this.render();
+    const d = this.data;
+    const say = (l: TaleLine) => {
+      if (typeof l.who === 'string') return st.say(l.who, l.text, null);
+      const name = l.who === 0 ? d.heroName : this.tr(d.charNames[l.who] ?? '');
+      return st.say(name, l.text, l.who);
+    };
+    try {
+      for (const p of tale.pages) await st.say(TELLER, p, null);
+      const after = afterTale(this.c, tale);
+      for (const l of after.lines) await say(l);
+      let line = this.storyLine(tale, after.present);
+      if (after.present) {
+        const k = await st.choose(tale.choice.title, tale.choice.text, tale.choice.options);
+        const r = chooseTale(this.c, d, tale, k);
+        for (const l of r.lines) await say(l);
+        if (r.c !== this.c) {
+          this.c = r.c;
+          this.o.onChange(this.c);
+        }
+        if (r.got) line = `${this.tr(d.charNames[tale.hero])}得到了${this.tr(d.items[r.got - 1].name)}。`;
+      }
+      this.line = line;
+    } finally {
+      st.done();
+      document.body.classList.remove('storytelling');
+      this.telling = false;
+    }
+    this.render();
+  }
+
+  private storyLine(tale: Tale, present: boolean) {
+    const who = this.tr(this.data.charNames[tale.hero] ?? '');
+    return present ? `说书先生今天说的是「${tale.title}」，说的正是${who}。满堂酒客还在议论。` : `说书先生今天说的是「${tale.title}」。`;
+  }
+
   private apply(r: Outcome) {
     if (r.text) this.line = r.text;
     if (!r.ok) return;
@@ -147,6 +202,9 @@ export class TownUI {
       case 'give-to':
         this.apply(give(this.c, d, this.member, this.slot, v));
         break;
+      case 'story':
+        void this.tell();
+        return;
       case 'leave':
         this.hide();
         return this.o.onLeave(this.c);
@@ -188,7 +246,7 @@ export class TownUI {
         ? ''
         : SHOPS[this.shop].actions
             .map((a) => `<button data-do="action" data-v="${['talk', 'buy', 'items', 'forge', 'pawn'].indexOf(a)}" class="${this.action === a ? 'on' : ''}">${this.tr(ACTION_LABEL[a])}</button>`)
-            .join('');
+            .join('') + (this.shop === 0 && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
