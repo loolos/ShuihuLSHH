@@ -625,7 +625,10 @@ export class BattleScene extends Phaser.Scene {
       }
       if (d && !d.moved && p.button !== 2) {
         const w = cam.getWorldPoint(p.x, p.y);
-        this.click(this.pick(w.x, w.y), p.wasTouch);
+        const c = this.pick(w.x, w.y);
+        // 触屏没有悬停：点到哪格，下方面板就看哪格（不然会一直停在上次"悬停"的人身上）
+        if (p.wasTouch) this.hoverCell = c;
+        this.click(c, p.wasTouch);
       }
     });
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
@@ -645,6 +648,9 @@ export class BattleScene extends Phaser.Scene {
         }
         return;
       }
+      // 只有鼠标才有悬停。触屏双指缩放时先抬起一根手指，另一根手指的移动会落到这里，
+      // 以前会把悬停格设成手指下的人，之后下方面板一直显示他（lolo 2026-11-13 手机上卡在一个士兵）
+      if (p.wasTouch) return;
       const w = cam.getWorldPoint(p.x, p.y);
       this.hover(this.pick(w.x, w.y));
     });
