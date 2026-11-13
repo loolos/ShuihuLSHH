@@ -1,7 +1,7 @@
 // 生成 src/data/enemy-levels.json：每场战役敌人等级的修正值（src/rules/enemy-level.ts）。
 // 用法：node --experimental-transform-types tools/gen-enemy-levels.ts（约 4 分钟）；之后要再跑 npm run gen:levels。
 // 做法：关掉修正，用原版经验规则（EXP_RULES.mode = 'original'，整体节奏按原版，§5.1）沿主线模拟 SEEDS 个种子，
-// 每关取我方进关、出关平均等级的中点（各种子平均）作为「主角团等级」T；敌人（2 级以上）平均等级 F 高于 T 时修正值 = round(T − F)，否则 0。
+// 每关取我方进关、出关平均等级的中点（各种子平均）作为「主角团等级」T；敌人（2 级以上）平均等级 F 高于 T − MARGIN 时修正值 = floor(T − MARGIN − F)（向下取整，保证敌人平均不超过 T − MARGIN），否则 0。
 // 训练关（陪练王進）、过场关不改。小径的关照抄同一标题的大道关。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -13,6 +13,8 @@ import { stageUnits } from '../src/rules/preset.ts';
 import { DATA, NodeFiles, simulate } from './sim-lib.ts';
 
 const SEEDS = 8;
+/** 敌人平均比主角团低几级（负责人 2026-11-13：再调低一点） */
+const MARGIN = 1;
 ENEMY_LEVEL.enabled = false;
 EXP_RULES.mode = 'original';
 
@@ -42,7 +44,7 @@ for (const s of stages) {
   if (!foes.length || !t) continue;
   const T = avg(t);
   const F = avg(foes);
-  const d = Math.min(0, Math.round(T - F));
+  const d = Math.min(0, Math.floor(T - MARGIN - F));
   if (d) shift[key] = d;
   rows.push(`${s.mapName.padEnd(10)} 主角团 ${T.toFixed(1).padStart(4)}  敌均 ${F.toFixed(1).padStart(4)}  修正 ${d}`);
 }
