@@ -22,6 +22,8 @@ export interface BattleSceneData {
   seed?: number;
   /** 前面关卡延续下来的我方人物 */
   party?: Map<number, Member>;
+  /** 新入伙的人的入队等级（campaign.ts joinLevel） */
+  joinLevel?: number;
   /** 关卡结束（胜负面板由调用方决定） */
   onEnd?: (battle: Battle, won: boolean, text: string) => void;
 }
@@ -51,6 +53,7 @@ export class BattleScene extends Phaser.Scene {
   private stageName = 'N01';
   private seed?: number;
   private party?: Map<number, Member>;
+  private joinLevel?: number;
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics }>();
@@ -88,6 +91,7 @@ export class BattleScene extends Phaser.Scene {
     this.stageName = data.stage;
     this.seed = data.seed;
     this.party = data.party;
+    this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
     this.sprites = new Map();
     this.view = new Map();
@@ -101,7 +105,7 @@ export class BattleScene extends Phaser.Scene {
     const mapFile = findStageFile(files, this.stageName, '.map');
     if (!mapFile) throw new Error(`找不到地图 ${this.stageName}`);
     const map = parseMap(files.get(mapFile), mapFile);
-    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party }));
+    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好

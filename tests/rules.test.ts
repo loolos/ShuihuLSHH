@@ -11,7 +11,8 @@ import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rul
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
-import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { adjustEnemies, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import type { Item } from '../src/formats/goo.ts';
@@ -598,6 +599,30 @@ describe('关卡串联', () => {
     expect(two.unit(0)).toMatchObject({ level: 4, exp: 37, slots: [1, ...Array(12).fill(0)] });
     expect(two.unit(0)!.stats.attack).toBe(computeStats(data.classes[0], 4, [1], data).attack);
     expect(two.unit(1)!.level).toBe(6);
+  });
+
+  it('新入伙的人按当前队伍平均等级入队，不低于剧本等级；等级不封顶', () => {
+    const c = { ...newCampaign(), members: [{ classId: 0, level: 20, exp: 0, slots: [] }, { classId: 2, level: 25, exp: 0, slots: [] }, { classId: 3, level: 6, exp: 0, slots: [] }], active: [0, 2] };
+    expect(joinLevel(c)).toBe(23); // 只算上一关出场的人
+    expect(joinLevel(newCampaign())).toBe(0);
+    const units = [act(0, 0, 'player', 0, 0), act(1, 1, 'player', 1, 0), { ...act(2, 2, 'player', 5, 0), level: 30 }];
+    const b = new Battle({ name: 't', board: new Board(6, 6), units, blocks: [], data, seed: 1, party: partyOf(c), joinLevel: joinLevel(c) });
+    expect(b.unit(0)!.level).toBe(20); // 老成员照旧
+    expect(b.unit(1)!.level).toBe(23); // 新人 = 平均
+    expect(b.unit(2)!.level).toBe(30); // 剧本等级更高时用剧本等级
+    expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
+  });
+
+  it('敌人等级修正：整关平移、只降不升、1 级摆设不动、最低 2 级', () => {
+    expect(enemyShift('N14')).toBeLessThan(0);
+    expect(enemyShift('n14')).toBe(enemyShift('N14'));
+    expect(enemyShift('Train1')).toBe(0);
+    const d = enemyShift('N14');
+    expect(enemyLevel('N14', 42)).toBe(42 + d);
+    expect(enemyLevel('N14', 1)).toBe(1);
+    expect(enemyLevel('N14', 3)).toBe(Math.max(2, 3 + d));
+    const units = adjustEnemies('N14', [{ ...act(0, 0, 'enemy', 20, 0), level: 30 }, { ...act(1, 1, 'player', 0, 0), level: 30 }]);
+    expect(units.map((u) => u.level)).toEqual([30 + d, 30]);
   });
 
   it('指令 29 的区块执行完即过关；没有我方人物的过场不判全军覆没', () => {

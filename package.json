@@ -15,6 +15,7 @@
     "gen:docs": "node tools/gen-design-docs.ts",
     "render:maps": "node tools/render-maps.ts",
     "gen:manifest": "node tools/gen-manifest.ts",
+    "gen:enemy-levels": "node --experimental-transform-types tools/gen-enemy-levels.ts",
     "gen:levels": "node --experimental-transform-types tools/gen-entry-levels.ts"
   },
   "devDependencies": {

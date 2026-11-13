@@ -3,6 +3,7 @@
 // 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留黄金。
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
+import { adjustEnemies } from './enemy-level.ts';
 import { ROUTES, type CampaignState, type Member } from './campaign.ts';
 import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
@@ -23,7 +24,7 @@ interface Stage {
 function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: number } {
   const act = findStageFile(files, s.mapName, '.act');
   const pab = findStageFile(files, s.mapName, '.pab');
-  return { units: act ? parseAct(files.get(act), act) : [], town: pab ? parsePasHeader(files.get(pab)).town : 0 };
+  return { units: act ? adjustEnemies(s.mapName, parseAct(files.get(act), act)) : [], town: pab ? parsePasHeader(files.get(pab)).town : 0 };
 }
 
 /**

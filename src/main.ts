@@ -16,7 +16,7 @@ import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
-import { newCampaign, nextByHeader, nextStages, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
+import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -302,7 +302,7 @@ function startGame(assets: Assets) {
     if (ticket !== loading) return; // 下载期间又换了关
     setupEl.hidden = true;
     void music.stageTrack(stage).then((t) => music.play(t));
-    const data = { assets, stage, ui, seed, party: partyOf(campaign), onEnd };
+    const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
     const u = new URL(location.href);
