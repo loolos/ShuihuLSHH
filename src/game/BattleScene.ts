@@ -101,6 +101,10 @@ export class BattleScene extends Phaser.Scene {
     this.view = new Map();
     this.groundItems = new Map();
     this.mode = { kind: 'idle' };
+    this.hoverCell = null;
+    this.armed = null;
+    this.down = null;
+    this.pinch = null;
     this.busy = false;
   }
 
@@ -640,6 +644,9 @@ export class BattleScene extends Phaser.Scene {
 
   private click(c: Cell, touch = false) {
     if (this.busy || this.ui.inDialog || this.battle.status !== 'playing') return;
+    // 触屏点击、拖动镜头后的点击不一定先触发 hover，面板必须使用本次落点。
+    this.hoverCell = { x: c.x, y: c.y };
+    this.drawHover();
     const b = this.battle;
     const at = b.unitAt(c.x, c.y);
     const m = this.mode;
@@ -769,6 +776,11 @@ export class BattleScene extends Phaser.Scene {
       this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       if (this.mode.kind !== 'idle') this.redraw();
+      // 回放期间 hover 只记落点，不更新面板；结束后补刷，避免同一格不再触发刷新。
+      if (b.status === 'playing') {
+        this.drawHover();
+        this.updatePanel();
+      }
     }
   }
 
