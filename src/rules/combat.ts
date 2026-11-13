@@ -36,8 +36,17 @@ export function hitChance(att: Unit, def: Unit, skill: SkillDef): number {
   return Math.min(100, Math.floor((100 * hv) / (hv + Math.max(0, def.stats.agility) / 2)));
 }
 
+/** 必杀率曲线的半值点：必杀（含技能修正）到 70 时必杀率 50%【新】（负责人 2026-11-13） */
+export const CRIT_HALF = 70;
+
+/**
+ * 必杀率（%）【新】（负责人 2026-11-13）：x = 必杀 + 技能必杀修正（修正直接加减），必杀率 = x² / (x² + 70²) × 100。
+ * S 形曲线：x 小时涨得慢，中段涨得快，越高越接近 100% 但永远不到；必杀属性随等级不封顶成长。
+ * 原版是 (必杀 + 修正) / 2，直线，到 200 就是 100%（EXE 0x406c60）。
+ */
 export function critChance(att: Unit, skill: SkillDef): number {
-  return Math.max(0, Math.floor((att.stats.crit + skill.critMod) / 2));
+  const x = Math.max(0, att.stats.crit + skill.critMod);
+  return Math.floor((100 * x * x) / (x * x + CRIT_HALF * CRIT_HALF));
 }
 
 /**
