@@ -11,7 +11,7 @@ import { stock } from './town.ts';
 import { goldBase, stageClearGold } from './gold.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
-/** 主线模拟得出的每关入场等级：关卡名（小写）→ 角色号 → 等级（tools/gen-entry-levels.ts 生成） */
+/** 主线估算得出的每关入场等级：关卡名（小写）→ 角色号 → 等级（tools/gen-entry-levels.ts 生成） */
 const ENTRY_LEVELS: Record<string, Record<string, number>> = entryLevels.levels;
 
 /** 城镇按游戏进度的先后（道具 +146 城镇号表的排列顺序；6 与 12 是两条路线上的同一站） */
@@ -31,7 +31,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
 /**
  * 跳到第 target 关时的推荐状态：
  * - 我方人物从头配起，之前的等级、经验、装备一概不用；
- * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线模拟生成，见 tools/gen-entry-levels.ts）；
+ * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线期望值估算生成，见 tools/gen-entry-levels.ts）；
  *   表里没有的人（或没有模拟到的关）用这一关敌人的平均等级（foeLevel）；都不低于剧本里写的等级；
  * - 装备 = 剧本里的初始装备；之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰比它好就换上；
  * - 物品栏补 2 个药铺里回复最多的药；
