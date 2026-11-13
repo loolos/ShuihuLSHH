@@ -10,6 +10,14 @@ export const isHealSkill = (s: SkillDef) => s.type === 9 || s.type === 11;
 /** 不造成伤害的技能 */
 export const isSupportSkill = (s: SkillDef) => isChargeSkill(s) || isHealSkill(s);
 
+/** 可控好汉的职业号 0–17（docs/reference/data-tables.md §1） */
+export const HERO_CLASSES = 18;
+
+/**
+ * 出手时是否在出手者身上弹出技能名：技能都弹；普通攻击只有好汉弹（如林沖「一寸丹心」），杂兵的普攻不弹【新】（负责人 2026-11-13）。
+ */
+export const announcesSkill = (u: Unit, skill: SkillDef, data: GameData) => skill !== attackSkill(u, data) || u.classId < HERO_CLASSES;
+
 /** "千軍萬馬LV2" → "千軍萬馬" */
 export const skillBaseName = (name: string) => name.replace(/\s*LV\s*\d+$/i, '');
 
