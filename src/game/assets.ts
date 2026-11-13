@@ -106,7 +106,7 @@ const ACTION_FIRST_SKILL = 3;
 
 /**
  * 进关前下载本关一定会用到的帧（网页版大文件按需下载；整份在本地时什么也不做）：
- * 地图用到的图块，本关出场职业的走路、受击、防御动作和普通攻击（含特效）。
+ * 地图用到的图块，本关出场职业的走路、受击、防御动作、动作 3（待机架势取它的第 1 帧，见 sprites.ts idleAction）和普通攻击（含特效）。
  * 其它技能的动作和特效开打后在后台下载（prefetchSkills），出招前还没下完就等它下完（ensureSkill）。返回新下载的字节数。
  */
 export async function preloadStage(assets: Assets, stage: string, progress?: Progress): Promise<number> {
@@ -126,7 +126,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {
     const c = assets.man.classes[cls];
-    if (c) for (let g = c.first; g < Math.min(c.last + 1, c.first + ACTION_FIRST_SKILL * 4); g++) job.manGroup(assets, g);
+    if (c) for (let g = c.first; g < Math.min(c.last + 1, c.first + (ACTION_FIRST_SKILL + 1) * 4); g++) job.manGroup(assets, g);
     const basic = assets.data.classes[cls]?.skills[0];
     if (basic) job.skill(assets, cls, basic);
   }

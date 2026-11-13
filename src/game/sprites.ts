@@ -2,7 +2,8 @@
 // 动作组的 param 就是动作类型（负责人看图确认，2026-11-11）：
 //   1 = 走路（动作 0），2 = 受击（动作 1），3 = 防御（动作 2，1 帧），
 //   0 = 攻击 / 技能（动作 3 起，每个技能一组；士兵的动作 3 是普通攻击）。
-// 原版没有单独的站立动作；站立时显示走路的第 1 帧。
+// 原版没有单独的站立动作；待机时显示"第一个出手动作（param 0，通常是动作 3 普通攻击）的第 1 帧"，
+// 即摆好架势的姿势；没有出手动作的职业（平民等）用走路第 1 帧。见 idleAction。
 import Phaser from 'phaser';
 import { frameToCanvas, type Assets } from './assets.ts';
 
@@ -14,6 +15,18 @@ export const ACTION_FRAME_MS = 45;
 export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCanvasElement): string {
   if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
   return key;
+}
+
+/**
+ * 待机姿势用的动作号。原版 0x4058d0（行动结束、解除防御时调用）：防御中显示防御帧；否则
+ * 0x41bf80 在职业的动作组里按 4 个一组找第一个 param = 0 的组（出手动作），取当前朝向的第 1 帧；
+ * 找不到就退回职业的第一组（走路）。全部 72 个职业里找到的都是动作 3，平民等 9 个职业没有出手动作。
+ */
+export function idleAction(assets: Assets, cls: number): number {
+  const c = assets.man.classes[cls];
+  if (!c) return ACTION.walk;
+  for (let g = c.first; g <= c.last; g += 4) if (assets.man.actions[g]?.param === 0) return (g - c.first) / 4;
+  return ACTION.walk;
 }
 
 /** 职业 cls 的动作 action、朝向 facing 对应的动画键；不存在时返回 null */

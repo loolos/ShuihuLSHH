@@ -12,7 +12,7 @@ import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { dirIndex, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, textureFor } from './sprites.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -188,12 +188,12 @@ export class BattleScene extends Phaser.Scene {
     return spr;
   }
 
-  /** 站立姿势：走路第 1 帧；防御中显示防御帧 */
+  /** 待机姿势：出手动作第 1 帧（摆好架势，见 idleAction）；防御中显示防御帧 */
   private pose(u: Unit) {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
-    const action = u.defending ? ACTION.defend : ACTION.walk;
+    const action = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
     const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
     if (key) {
       s.spr.play(key);
