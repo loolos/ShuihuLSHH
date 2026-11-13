@@ -150,7 +150,8 @@ describe.skipIf(!has)('N01', () => {
 
   it('训练关：选人后显示回合限制，第 25 回合结束时过关（组合条件"回合 25 或我方全灭"）', () => {
     const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
-    const ev = b.begin();
+    expect(b.begin().some((e) => e.type === 'objective')).toBe(false);
+    const ev = b.choose(b.pendingPick!.recommended);
     expect(ev.some((e) => e.type === 'objective')).toBe(true);
     for (let i = 0; i < 40 && b.status === 'playing'; i++) b.endPlayerPhase();
     expect(b.status).toBe('won');
@@ -340,6 +341,66 @@ describe.skipIf(!has)('N01', () => {
     }
     expect(order.join(' ')).toBe('n01 n-add01 n-add02 act2-2 act2-3 n02 n-add03 act3-1 act3-2 act3-3 n03 act3-4 n-add04a act5-1a');
     expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(5);
+  });
+
+  it('选人关：只有 Train1、Train2、N-add15 用指令 27，都选 1 人', () => {
+    const uses = files.list('Map', '.pab').filter((f) => loadStage(files, data, path.basename(f, '.pab')).blocks.some((b) => b.ops.some((o) => o.op === 27)));
+    expect(uses.map((f) => path.basename(f, '.pab')).sort()).toEqual(['n-add15', 'train1', 'train2']);
+  });
+
+  it('Train1：选 1 人与王進过招，其余人退场，选完才进第 1 回合；只有出场的人分全队经验', () => {
+    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    const ev = b.begin();
+    const pick = ev.find((e) => e.type === 'pick');
+    expect(pick?.type === 'pick' && pick.pick.prompt).toBe('請選擇與王進過招的人');
+    expect(b.turn).toBe(0); // 还没进第 1 回合
+    expect(b.objectives).toEqual([]); // 条件 3 的区块（回合限制）等选完
+    const p = b.pendingPick!;
+    const mine = b.units.filter((u) => u.side === 'player' && u.present);
+    expect(p.candidates.sort()).toEqual(mine.map((u) => u.uid).sort());
+    expect(p.required).toEqual([]);
+    expect(() => b.choose([])).toThrow();
+    const shi = b.units.find((u) => u.classId === 3 && u.side === 'player')!;
+    const after = b.choose([shi.uid]);
+    expect(b.pendingPick).toBeNull();
+    expect(b.turn).toBe(1);
+    expect(b.turnLimit).toBe(25);
+    expect(b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.uid)).toEqual([shi.uid]);
+    expect(after.filter((e) => e.type === 'leave').length).toBe(mine.length - 1);
+    expect(b.benchedUids.length).toBe(mine.length - 1);
+    // 全队经验只给出场的人；没上场的人仍算在队里（城镇名单）
+    b.teamExp = 50;
+    b.settleTeamExp();
+    for (const u of b.units) if (u.side === 'player' && u.uid !== shi.uid) expect(u.exp).toBe(0);
+    expect(shi.exp).toBeGreaterThan(0);
+    (b as { status: string }).status = 'won';
+    const c = recordResult(newCampaign(0), b);
+    expect(c.active!.sort()).toEqual(mine.map((u) => u.classId).sort());
+  });
+
+  it('N-add15：主角先退场，选 1 人和主角一起断后；时光倒流回不到选人之前', () => {
+    const b = new Battle(loadStage(files, data, 'N-add15', { simplified: true, seed: 1, text: tr }));
+    b.begin();
+    const p = b.pendingPick!;
+    expect(p.prompt).toBe('请选择留下的人');
+    const hero = b.units.find((u) => u.classId === 0 && u.side === 'player')!;
+    expect(p.required).toEqual([hero.uid]);
+    expect(p.candidates).not.toContain(hero.uid);
+    const best = Math.max(...p.candidates.map((id) => b.unit(id)!.level));
+    expect(b.unit(p.recommended[0])!.level).toBe(best);
+    const pal = p.candidates[3];
+    b.choose([pal]);
+    const onMap = b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.uid).sort();
+    expect(onMap).toEqual([hero.uid, pal].sort());
+    expect(hero.ended).toBe(false); // 主角回到场上，第 1 回合能行动
+    expect(b.turnLimit).toBe(50);
+    b.move(hero, hero.x, hero.y + 1);
+    b.wait(hero);
+    expect(b.rewindTarget()).toBe(1);
+    b.rewind(2);
+    expect(b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.uid).sort()).toEqual(onMap);
+    expect(b.pendingPick).toBeNull();
+    expect(b.benchedUids.length).toBe(p.candidates.length - 1);
   });
 
   it('剧本头串起全部关卡，分路两条线汇合', () => {

@@ -796,7 +796,7 @@ export class BattleScene extends Phaser.Scene {
           this.setFast(true);
           if (e.type === 'say' || e.type === 'narrate' || e.type === 'objective') continue;
         }
-        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask';
+        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask' || e.type === 'pick';
         if (this.fast && !story) {
           this.skip(e);
           continue;
@@ -938,6 +938,15 @@ export class BattleScene extends Phaser.Scene {
         this.ui.hideResult();
         await this.ui.say(name(p.replies[k].speaker), p.replies[k].text, p.replies[k].speaker);
         if (k === 0) for (const x of this.battle.signal()) await this.play(x);
+        break;
+      }
+      case 'pick': {
+        // 选人（剧本指令 27）：原版在地图上点一个人，这里弹出名单【新】
+        const p = e.pick;
+        const units = p.candidates.map((id) => b.unit(id)!).filter(Boolean);
+        const req = p.required.map((id) => b.unit(id)!).filter(Boolean);
+        const chosen = await this.ui.pick(p.prompt, units, req, p.count, p.recommended);
+        for (const x of this.battle.choose(chosen)) await this.play(x);
         break;
       }
       case 'objective':
