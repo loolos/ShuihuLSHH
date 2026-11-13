@@ -1,6 +1,6 @@
 // 经验快速估算（不跑战斗，几秒出结果）：沿主线逐关按"期望值"算我方能拿到多少经验、打完是几级。
 // 用法：node --experimental-transform-types tools/est-exp.ts [关数上限]
-// 环境变量：KB/KP（击倒经验参数），SCALE=整体经验乘数（试调用），ATT=每个敌人平均出手几次的系数（默认见 ENEMY_ATTACKS）
+// 环境变量：NA/NB（升级所需经验 = 100 + NA×(等级−1) + NB×(等级−1)²，试公式用）、KB/KP（击倒经验参数），SCALE=整体经验乘数（试调用），ATT=每个敌人平均出手几次的系数（默认见 ENEMY_ATTACKS）
 //
 // 模型（每关）：
 // - 用 loadStage + new Battle 构造这一关（我方带着上一关估出来的等级，敌人用修正后的等级和保底），不 begin、不跑 AI。
@@ -29,6 +29,8 @@ if (process.env.NOFLOOR === '1') ENEMY_LEVEL.floor = false;
 const SCALE = Number(process.env.SCALE ?? 1);
 const ENEMY_ATTACKS = Number(process.env.ATT ?? 1.5);
 const OTHER = 0.05;
+const NA = Number(process.env.NA ?? 0), NB = Number(process.env.NB ?? 0);
+const need = (lv: number) => EXP_PER_LEVEL + NA * (lv - 1) + NB * (lv - 1) ** 2;
 
 const files = new NodeFiles(DATA);
 const tr = buildT2S(files);
@@ -84,9 +86,9 @@ export function estimate(limit = 99): EstRow[] {
     const total = (kill + dmg + taken) * (1 + OTHER) * SCALE;
     // 平均分给本关的我方人物
     for (const u of mine) {
-      const prog = u.level * EXP_PER_LEVEL + u.exp + total / mine.length;
-      u.level = Math.floor(prog / EXP_PER_LEVEL);
-      u.exp = Math.round(prog - u.level * EXP_PER_LEVEL);
+      let e = u.exp + total / mine.length;
+      while (e >= need(u.level)) e -= need(u.level++);
+      u.exp = Math.round(e);
       refreshStats(u, data);
     }
     rows.push({ map, design: battle ? design : 0, foes: foes.length, foeAvg: avg(foes.map((u) => u.level)), enter, exit: avg(mine.map((u) => u.level)), kill, dmg, taken, total, n: mine.length });
