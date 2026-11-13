@@ -9,7 +9,7 @@ import table from '../data/enemy-levels.json' with { type: 'json' };
 const SHIFT: Record<string, number> = table.shift;
 
 /** 生成工具关掉修正，好用 ACT 原值做模拟 */
-export const ENEMY_LEVEL = { enabled: true };
+export const ENEMY_LEVEL = { enabled: true, /** 估算工具（tools/est-exp.ts）可关掉保底做对比 */ floor: true };
 
 export const enemyShift = (stage: string): number => (ENEMY_LEVEL.enabled ? (SHIFT[stage.toLowerCase()] ?? 0) : 0);
 
@@ -32,6 +32,6 @@ export const FLOOR_GAP = 5;
  * 生成工具关掉修正时也不保底。
  */
 export function enemyFloor(playerLevels: number[]): number {
-  if (!ENEMY_LEVEL.enabled || !playerLevels.length) return 0;
+  if (!ENEMY_LEVEL.enabled || !ENEMY_LEVEL.floor || !playerLevels.length) return 0;
   return Math.round(playerLevels.reduce((a, b) => a + b, 0) / playerLevels.length) - FLOOR_GAP;
 }
