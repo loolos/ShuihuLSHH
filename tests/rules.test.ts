@@ -346,6 +346,31 @@ describe('战斗流程', () => {
     expect(b.items).toHaveLength(0);
   });
 
+  it('我方与友军可以互相穿过但不能同格；敌人挡路，敌人之间也互相阻挡', () => {
+    // 一条 10×1 的走廊：我方 0，友军 1，我方 2，敌人 6、7
+    const b = new Battle({
+      name: 't', board: new Board(10, 1),
+      units: [act(0, 0, 'player', 0, 0), act(1, 0, 'ally', 1, 0), act(2, 0, 'player', 2, 0), act(3, 1, 'enemy', 6, 0, 0x800), act(4, 1, 'enemy', 7, 0, 0x800)],
+      blocks: [], data, seed: 1,
+    });
+    b.begin();
+    const p = b.unit(0)!;
+    const cells = (r: { green: { x: number }[]; yellow: { x: number }[] }) => [...r.green, ...r.yellow].map((c) => c.x).sort();
+    expect(cells(b.moveRange(p))).toEqual([3, 4, 5]); // 1、2 有自己人不能停；6 是敌人，过不去
+    const ev = b.move(p, 3, 0);
+    const mv = ev.find((e) => e.type === 'move') as { path: { x: number }[] } | undefined;
+    expect(mv?.path.map((c) => c.x)).toEqual([0, 1, 2, 3]);
+    expect(p.x).toBe(3);
+    // 敌人不能穿过我方，也不能穿过另一个敌人
+    const e2 = b.unit(4)!;
+    expect([...b.reachOf(e2, 6).values()].map((n) => n.x)).toEqual([7, 8, 9]);
+    const e1 = b.unit(3)!;
+    expect([...b.reachOf(e1, 6).values()].map((n) => n.x).sort()).toEqual([4, 5, 6]);
+    // 友军也能穿过我方
+    const a = b.unit(1)!;
+    expect([...b.reachOf(a, 6).values()].map((n) => n.x).sort()).toEqual([0, 1, 4, 5]); // 2、3 有我方，穿过但不停留
+  });
+
   it('强行军：走进黄色范围后本回合结束', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
     b.begin();

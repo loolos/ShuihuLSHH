@@ -42,21 +42,36 @@ export class Board {
   }
 
   /**
-   * 从 start 出发、预算 budget 内能到达的格子（BFS）。occupied 中的格子不能进入也不能穿越。
-   * 返回 key → {cost, prev}，含起点。
+   * 从 start 出发、预算 budget 内能到达的格子（BFS）。blocked 中的格子不能进入也不能穿越；
+   * passThrough 中的格子（同阵营的我方/友军）可以穿越但不能停留，所以不出现在结果里，
+   * 只记在下一个落脚格的 via 里（pathTo 会把它们放回路径）。返回 key → {cost, prev, via}，含起点。
    */
-  reach(start: Cell, budget: number, occupied: Set<string>): Map<string, { x: number; y: number; cost: number; prev: string | null }> {
-    const out = new Map<string, { x: number; y: number; cost: number; prev: string | null }>();
-    out.set(key(start.x, start.y), { ...start, cost: 0, prev: null });
+  reach(start: Cell, budget: number, blocked: Set<string>, passThrough: Set<string> = new Set()): Map<string, ReachNode> {
+    const out = new Map<string, ReachNode>();
+    // 所有走到过的格子（含只能穿越的），用来还原路径
+    const seen = new Map<string, { x: number; y: number; prev: string | null }>();
+    const startKey = key(start.x, start.y);
+    out.set(startKey, { x: start.x, y: start.y, cost: 0, prev: null });
+    seen.set(startKey, { x: start.x, y: start.y, prev: null });
     let frontier: Cell[] = [start];
     for (let c = 1; c <= budget && frontier.length; c++) {
       const next: Cell[] = [];
       for (const f of frontier)
         for (const d of DIRS) {
           const x = f.x + d.x, y = f.y + d.y, k = key(x, y);
-          if (out.has(k) || !this.passable(x, y) || occupied.has(k)) continue;
-          out.set(k, { x, y, cost: c, prev: key(f.x, f.y) });
+          if (seen.has(k) || !this.passable(x, y) || blocked.has(k)) continue;
+          seen.set(k, { x, y, prev: key(f.x, f.y) });
           next.push({ x, y });
+          if (passThrough.has(k)) continue;
+          // 往回找到最近的落脚格，中间穿过的格子记进 via
+          const via: Cell[] = [];
+          let pk = key(f.x, f.y);
+          while (!out.has(pk)) {
+            const n = seen.get(pk)!;
+            via.unshift({ x: n.x, y: n.y });
+            pk = n.prev!;
+          }
+          out.set(k, via.length ? { x, y, cost: c, prev: pk, via } : { x, y, cost: c, prev: pk });
         }
       frontier = next;
     }
@@ -97,13 +112,24 @@ export class Board {
   }
 }
 
-export function pathTo(reach: Map<string, { x: number; y: number; prev: string | null }>, x: number, y: number): Cell[] {
+export interface ReachNode {
+  x: number;
+  y: number;
+  cost: number;
+  /** 上一个落脚格 */
+  prev: string | null;
+  /** 从上一个落脚格到这里中间穿过的格子（同阵营单位占着的） */
+  via?: Cell[];
+}
+
+export function pathTo(reach: Map<string, { x: number; y: number; prev: string | null; via?: Cell[] }>, x: number, y: number): Cell[] {
   const path: Cell[] = [];
   let k: string | null = key(x, y);
   while (k) {
     const n = reach.get(k);
     if (!n) return [];
     path.unshift({ x: n.x, y: n.y });
+    if (n.via) path.unshift(...n.via);
     k = n.prev;
   }
   return path;
