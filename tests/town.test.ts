@@ -7,7 +7,7 @@ import { parsePasHeader } from '../src/formats/pas.ts';
 import { readExeTables } from '../src/formats/exe.ts';
 import { parseGoods } from '../src/formats/goo.ts';
 import { newCampaign, nextStages, type CampaignState } from '../src/rules/campaign.ts';
-import type { ClassDef, GameData } from '../src/rules/data.ts';
+import { forgeGain, forgeGainText, type ClassDef, type GameData } from '../src/rules/data.ts';
 import { buy, canForge, discard, equip, forge, give, partyMembers, pawn, stock } from '../src/rules/town.ts';
 import { computeStats } from '../src/rules/unit.ts';
 
@@ -73,6 +73,16 @@ describe('城镇', () => {
     const st = computeStats(data.classes[0], 0, c.members[0].slots, data, false, c.members[0].forge);
     expect(st.attack).toBe(10 + 9 + 8);
     expect(forge(camp(), data, 1, 1, 2).text).toBe('防御力提升了3點！');
+  });
+
+  it('打铁前显示每次加多少：打到头的那项不再加，剩余次数递减', () => {
+    const both = item({ attack: 5, attackStep: 2, attackSteps: 3, defense: 4, defenseStep: 1, defenseSteps: 1 });
+    expect(forgeGain(both, 0)).toEqual({ attack: 2, defense: 1, left: 3 });
+    expect(forgeGainText(both, 0)).toBe('攻+2 防+1');
+    expect(forgeGain(both, 1)).toEqual({ attack: 2, defense: 0, left: 2 });
+    expect(forgeGainText(both, 1)).toBe('攻+2');
+    expect(forgeGain(both, 3)).toEqual({ attack: 0, defense: 0, left: 0 });
+    expect(forgeGainText(data.items[2], 0)).toBe('防+3');
   });
 
   it('只有前 3 格的装备算加成', () => {
