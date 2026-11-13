@@ -59,7 +59,10 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
 
   const members = new Map<number, Member>();
-  for (const u of at(pos).units) {
+  // 没有我方出场的过场（如 Act13-1 之后进城镇 9）用城镇之后那一关的人
+  const hasParty = (i: number) => at(i).units.some((u) => u.side === 'player');
+  const from = hasParty(pos) || lpos < 0 ? pos : lpos;
+  for (const u of at(from).units) {
     if (u.side !== 'player' || !data.classes[u.type]) continue;
     const cls = data.classes[u.type];
     const slots = cls.defaultItems.slice(0, SLOT_COUNT);
