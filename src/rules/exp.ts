@@ -1,8 +1,8 @@
 // 经验值【新】（docs/game-design.md §5.1，负责人 2026-11-12 选方案二并补充）。
 // 原版只有击倒、命中、回复技给经验（EXE 0x406f43 / 0x406f9d / 0x406bd0），强角色独占击倒，弱角色长期停在初始等级。
 // 新规则：
-// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、防御中闪开、休息。
-// - 击倒经验只看敌人等级：一半当场给击倒者，另一半进"全队经验"；友军击倒的也把这一半放进全队经验。
+// - 各种行动当场给出手者经验：命中、反击、回复技、用药、挨打、闪开、休息。
+// - 击倒经验只看敌人等级：65% 当场给击倒者，35% 进"全队经验"；友军击倒的也把 35% 放进全队经验。
 // - 全队经验在战斗胜利后统一结算，先补给最落后的人（注水式：从等级最低的往上补齐）。
 // 数值用 tools/sim-exp.ts（双方 AI 跑整条主线）校准，让各关全队平均等级与原版规则相近。
 import type { Rng } from './rng.ts';
@@ -28,12 +28,12 @@ export function killExp(killer: Unit, foe: Unit, rng: Rng): number {
 /** 击倒经验里当场给击倒者的部分（其余进全队经验）；友军击倒时为 0 */
 export function killerShare(total: number, byPlayer: boolean): number {
   if (EXP_RULES.mode === 'original') return byPlayer ? total : 0;
-  return byPlayer ? Math.ceil(total / 2) : 0;
+  return byPlayer ? total - teamShare(total) : 0;
 }
 
-/** 击倒经验里进全队经验的部分 */
+/** 击倒经验的 35% 进全队经验，向下取整；余数归击倒者 */
 export function teamShare(total: number): number {
-  return EXP_RULES.mode === 'original' ? 0 : Math.floor(total / 2);
+  return EXP_RULES.mode === 'original' ? 0 : Math.floor(total * 35 / 100);
 }
 
 /** 命中未击倒：伤害 / 10 + 1–2（与原版相同） */
@@ -50,7 +50,7 @@ export function takenExp(damage: number, defending: boolean, rng: Rng): number {
   return Math.floor(damage / 15) + rng.range(1, 3) + (defending ? 2 : 0);
 }
 
-/** 防御中闪开攻击 */
+/** 闪开攻击（不要求防御状态） */
 export const dodgeExp = (rng: Rng) => (EXP_RULES.mode === 'original' ? 0 : rng.range(3, 5));
 
 /** 回复技：原版 1–10；新规则按回复量 / 10 + 1–5 */

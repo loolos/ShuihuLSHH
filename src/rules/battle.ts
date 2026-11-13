@@ -112,7 +112,7 @@ export class Battle {
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
   private pendingDeaths: number[] = [];
-  /** 本关累计的全队经验（击倒经验的一半），胜利后结算 */
+  /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
@@ -687,7 +687,7 @@ export class Battle {
         if (hits.length === 1) this.emit({ type: 'message', text: `${u.name}的攻擊落空了。` });
         // 防御中闪避相邻攻击：50% 反击，必定命中
         if (!counter && !counterBy && canCounter(u, t) && this.rng.chance(50)) counterBy = t;
-        if (t.side === 'player' && t.defending) this.gainExp(t, dodgeExp(this.rng));
+        if (t.side === 'player') this.gainExp(t, dodgeExp(this.rng));
         continue;
       }
       const hp0 = t.hp;
