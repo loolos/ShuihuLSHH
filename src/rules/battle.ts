@@ -152,6 +152,8 @@ export class Battle {
   private out: BattleEvent[] = [];
   /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
   private hadPlayers: boolean;
+  /** 开局站在地面以外的场外占位单位（见构造函数） */
+  private readonly offstage = new Set<number>();
   /** ACT 的编组号 → 单位（剧本用 1000 + 编组号指定单位） */
   private groups = new Map<number, number>();
   /** 埋伏中的单位（EXE 标志 0x40000，AI 模式 6/9）：剧本点名不会让它们登场 */
@@ -205,6 +207,14 @@ export class Battle {
         mode = 0;
         hidden = true;
       }
+      // 起始格在地面以外（越界或地表图块号为 0）的单位当作场外占位，开局不登场【新】：
+      // 原版 Act9-1 的 ACT 里有两条主角记录摆在 (0,0)，那一格没有地面，剧本也没有点名，重制版原样摆出来就悬在地图外的黑底上。
+      // 仍保留单位本身，剧本点名时由 appear() 挪到最近的可通行空格
+      const offstage = !this.board.onGround(a.x, a.y);
+      if (offstage) {
+        hidden = true;
+        this.offstage.add(a.index);
+      }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
       const stats = computeStats(cls, level, slots, this.data, false, forge);
@@ -216,7 +226,7 @@ export class Battle {
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
       });
     }
-    this.hadPlayers = this.units.some((u) => u.side === 'player');
+    this.hadPlayers = this.units.some((u) => u.side === 'player' && !this.offstage.has(u.uid));
   }
 
   // ───────────── 查询 ─────────────

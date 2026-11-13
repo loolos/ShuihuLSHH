@@ -11,12 +11,16 @@ export const key = (x: number, y: number) => `${x},${y}`;
 
 export class Board {
   readonly blocked: Uint8Array;
+  /** 1 = 地表图块号为 0（没有地面，画出来是黑底）。不传时视为全部有地面 */
+  readonly voidCells: Uint8Array;
   constructor(
     readonly width: number,
     readonly height: number,
     blocked?: Uint8Array,
+    voidCells?: Uint8Array,
   ) {
     this.blocked = blocked ?? new Uint8Array(width * height);
+    this.voidCells = voidCells ?? new Uint8Array(width * height);
   }
 
   /**
@@ -30,6 +34,7 @@ export class Board {
     const b = new Board(map.width, map.height);
     map.cells.forEach((layers, i) => {
       if (!cellPassable(layers, groundAtt, upperAtt)) b.blocked[i] = 1;
+      if (layers[0].tile === 0) b.voidCells[i] = 1;
     });
     return b;
   }
@@ -37,8 +42,12 @@ export class Board {
   inBounds(x: number, y: number) {
     return x >= 0 && y >= 0 && x < this.width && y < this.height;
   }
+  /** 格子在地图里且有地面（地表图块号不为 0）。站在地面以外的单位会画在地图菱形之外的黑底上 */
+  onGround(x: number, y: number) {
+    return this.inBounds(x, y) && !this.voidCells[y * this.width + x];
+  }
   passable(x: number, y: number) {
-    return this.inBounds(x, y) && !this.blocked[y * this.width + x];
+    return this.onGround(x, y) && !this.blocked[y * this.width + x];
   }
 
   /**

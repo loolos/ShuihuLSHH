@@ -403,6 +403,24 @@ describe('战斗流程', () => {
     expect(b.items).toHaveLength(1);
   });
 
+  it('开局站在没有地面的格子上的单位当作场外占位：不登场、不占格、不算我方全灭；点名时挪到最近的可通行格', () => {
+    const voidCells = new Uint8Array(100);
+    voidCells[0] = 1; // (0,0) 没有地面
+    const board = new Board(10, 10, undefined, voidCells);
+    expect(board.onGround(0, 0)).toBe(false);
+    expect(board.onGround(-1, 3)).toBe(false);
+    expect(board.onGround(1, 0)).toBe(true);
+    const b = new Battle({ name: 't', board, units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 5, 5, 0x800)], blocks: [], data, seed: 1 });
+    b.begin();
+    const ghost = b.unit(0)!;
+    expect(ghost.present).toBe(false);
+    expect(b.active().map((u) => u.uid)).toEqual([1]);
+    expect(b.status).toBe('playing');
+    (b as unknown as { appear(u: unknown): void }).appear(ghost);
+    expect(ghost.present).toBe(true);
+    expect(board.onGround(ghost.x, ghost.y)).toBe(true);
+  });
+
   it('隐藏的宝物：地图上不画，路过照样拾到', () => {
     const hid = act(1, 1, 'object', 2, 0, 1);
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), hid], blocks: [], data, seed: 1 });
