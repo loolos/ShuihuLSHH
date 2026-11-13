@@ -46,7 +46,8 @@ const BODY_HALF_W = 24;
 const BODY_H = 82;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
-const SLOT_LABEL = ['武器', '衣服', '头饰', '物品', '物品', '物品', '物品'];
+const SLOT_LABEL = ['武器', '衣服', '头饰'];
+const slotLabel = (slot: number) => SLOT_LABEL[slot] ?? '物品';
 const wait = (scene: Phaser.Scene, ms: number) => new Promise<void>((r) => scene.time.delayedCall(ms, r));
 
 export class BattleScene extends Phaser.Scene {
@@ -351,7 +352,7 @@ export class BattleScene extends Phaser.Scene {
       }
       const n = u.forge[m.slot] ?? 0;
       return this.ui.showUnit(u, null, '', {
-        title: `${SLOT_LABEL[m.slot]} · ${name}${n ? ` +${n}` : ''}`,
+        title: `${slotLabel(m.slot)} · ${name}${n ? ` +${n}` : ''}`,
         lines: [itemSummary(it, n), this.assets.tr(it.description)],
         warn: m.op === 'discard' ? `确定丢弃${name}？丢掉就找不回来了。` : m.slot >= EQUIP_SLOTS && equipSlotOf(it) >= 0 ? (canEquip(this.assets.data.classes[u.classId], it, this.assets.data) ? '放在物品栏里不算加成，装备后才生效' : `${u.name}不能装备这件`) : '',
       });
@@ -468,7 +469,7 @@ export class BattleScene extends Phaser.Scene {
       if (!it && k >= EQUIP_SLOTS) continue;
       const n = u.forge[k] ?? 0;
       rows.push({
-        label: `${SLOT_LABEL[k]}｜${it ? this.assets.tr(it.name) + (n ? ` +${n}` : '') : '—'}`,
+        label: `${slotLabel(k)}｜${it ? this.assets.tr(it.name) + (n ? ` +${n}` : '') : '—'}`,
         note: it ? itemSummary(it, n) : '',
         enabled: !!it,
         run: () => this.select({ kind: 'itemSlot', u, slot: k }),
