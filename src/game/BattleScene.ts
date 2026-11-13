@@ -41,9 +41,6 @@ type Mode =
   | { kind: 'skill'; u: Unit; skill: SkillDef };
 const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
-/** 人物身体的点击范围（相对格子中心，世界坐标） */
-const BODY_HALF_W = 24;
-const BODY_H = 82;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x5aa0d8, enemy: 0xd0603e } as const;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
@@ -637,48 +634,12 @@ export class BattleScene extends Phaser.Scene {
   }
 
   /**
-   * 指针落点 → 格子。人物身体画在格子上方，玩家自然会点在身体上，
-   * 而身体覆盖的是后面一格；所以点到人物身体时按人物所在格处理：
-   * 攻击目标优先，其次是空格且不是可移动格时选中该人物。
+   * 指针落点 → 格子：只看点击位置落在哪个格子的菱形里，不看人物精灵。
+   * 人物身体画在格子上方、会盖住身后的格子，按精灵判定会点不到后面的格子（lolo 2026-11-13）。
+   * 要选中或攻击人物，就点他脚下那一格。
    */
   private pick(wx: number, wy: number): Cell {
-    const c = worldToCell(wx, wy);
-    const b = this.battle;
-    const hits = b
-      .active()
-      .filter((u) => {
-        const p = cellToWorld(u.x, u.y);
-        return Math.abs(wx - p.x) <= BODY_HALF_W && wy >= p.y - BODY_H && wy <= p.y + HALF_H;
-      })
-      .sort((a, z) => z.x + z.y - (a.x + a.y)); // 靠前（深度大）的优先
-    if (!hits.length) return c;
-    const m = this.mode;
-    if (m.kind === 'skill') {
-      const cells = b.skillTargets(m.u, m.skill);
-      if (cells.some((t) => sameCell(t, c))) return c;
-      const t = hits.find((h) => cells.some((k) => sameCell(k, h)));
-      if (t) return { x: t.x, y: t.y };
-    }
-    if (m.kind === 'itemSlot' && m.op) {
-      const targets = this.itemOpTargets(m);
-      const at = b.unitAt(c.x, c.y);
-      if (at && targets.includes(at)) return c;
-      const t = hits.find((h) => targets.includes(h));
-      if (t) return { x: t.x, y: t.y };
-    }
-    if (m.kind === 'selected' || m.kind === 'attack') {
-      const targets = b.attackTargets(m.u);
-      const at = b.unitAt(c.x, c.y);
-      if (at && targets.includes(at)) return c;
-      const t = hits.find((h) => targets.includes(h));
-      if (t) return { x: t.x, y: t.y };
-      if (m.kind === 'selected' && !at && m.u.side === 'player') {
-        const { green, yellow } = b.moveRange(m.u);
-        if ([...green, ...yellow].some((g) => g.x === c.x && g.y === c.y)) return c;
-      }
-    }
-    if (b.unitAt(c.x, c.y)) return c;
-    return { x: hits[0].x, y: hits[0].y };
+    return worldToCell(wx, wy);
   }
 
   private hover(c: Cell) {
