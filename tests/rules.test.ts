@@ -205,6 +205,13 @@ describe('命中与伤害', () => {
     let prev = -1;
     for (let c = 0; c <= 500; c += 5) { expect(at(c)).toBeGreaterThanOrEqual(prev); prev = at(c); }
   });
+  it('敌方名将必杀 × 0.8，杂兵、小头目不打折', () => {
+    const mk = (side: 'player' | 'enemy', classId: number) => ({ ...unit({ side, x: 0, y: 0, facing: 0 }), classId, stats: { ...unit({ side, x: 0, y: 0, facing: 0 }).stats, crit: 70 } });
+    expect(critChance(mk('player', 3), punch)).toBe(50);
+    expect(critChance(mk('enemy', 68), punch)).toBe(39); // x = 56：3136 / 8036
+    expect(critChance(mk('enemy', 19), punch)).toBe(50);
+    expect(critChance(mk('enemy', 38), punch)).toBe(50);
+  });
   it.each([
     [2, 1], [1, 1.1], [3, 1.1], [0, 1.25],
   ])('朝向%s的伤害系数为%s，预览与实际普通/必杀结算一致', (facing, factor) => {
