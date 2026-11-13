@@ -8,7 +8,8 @@ import { parsePasBlocks, parsePasHeader } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import type { StageInput } from './battle.ts';
-import { buildClasses, type GameData } from './data.ts';
+import { buildClasses, type ClassDef, type GameData } from './data.ts';
+import { statAt, tierGear } from './growth.ts';
 
 export interface FileSource {
   get(path: string): Buffer;
@@ -53,8 +54,24 @@ export function buildT2S(files: FileSource): (s: string) => string {
 
 export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
   const exe = readExeTables(files.get('ShuiHu.exe'));
-  const classes = buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames);
+  const classes = capSkillCosts(buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames));
   return { classes, items: parseGoods(files.get('Data/Goods.dab')), charNames: exe.characterNames, effectTriggers: exe.effectTriggers, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
+}
+
+/**
+ * 技能耗气不超过习得那一级的最大气（不算装备）【新】（负责人 2026-11-13）。
+ * 气力改成线性成长（growth.ts）后，有几招刚学会时气力上限不够放：武龍 千軍萬馬LV3 200（15 级气 160）、
+ * 史進 天龍出雲LV3 160（18 级 144）、龍騰九天 210（22 级 159），敌方版白勝、吳用的几招也是。只压这几招，别的不动。
+ */
+export function capSkillCosts(classes: ClassDef[]): ClassDef[] {
+  for (const cls of classes) {
+    if (!cls) continue;
+    for (const s of cls.skills.slice(1)) {
+      const mp = statAt(cls, 'mp', s.learnLevel) + (tierGear(cls)?.mp ?? 0);
+      if (s.mpCost > mp) s.mpCost = mp;
+    }
+  }
+  return classes;
 }
 
 export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {

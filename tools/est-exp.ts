@@ -44,7 +44,7 @@ const expected = (att: Unit, def: Unit) => {
   return { hit: h, dmg: Math.max(1, p.damage * (1 - c) + p.critDamage * c) };
 };
 
-export interface EstRow { map: string; design: number; foes: number; foeAvg: number; enter: number; exit: number; kill: number; dmg: number; taken: number; total: number; n: number }
+export interface EstRow { map: string; /** 进这一关时我方每个人的等级：角色号 → 等级 */ entry: Map<number, number>; design: number; foes: number; foeAvg: number; enter: number; exit: number; kill: number; dmg: number; taken: number; total: number; n: number }
 
 export function estimate(limit = 99): EstRow[] {
   let c = newCampaign(0);
@@ -61,6 +61,7 @@ export function estimate(limit = 99): EstRow[] {
     const lv = input.units.filter((a) => a.side === 'enemy' && data.classes[a.type]).map((a) => a.level);
     const design = avg(lv.some((x) => x > 1) ? lv.filter((x) => x > 1) : lv) + 1;
     const enter = avg(mine.map((u) => u.level));
+    const entry = new Map(mine.map((u) => [u.classId, u.level]));
     let kill = 0, dmg = 0, taken = 0;
     if (mine.length) {
       const RB = Number(process.env.RB ?? 0);
@@ -91,7 +92,7 @@ export function estimate(limit = 99): EstRow[] {
       u.exp = Math.round(e);
       refreshStats(u, data);
     }
-    rows.push({ map, design: battle ? design : 0, foes: foes.length, foeAvg: avg(foes.map((u) => u.level)), enter, exit: avg(mine.map((u) => u.level)), kill, dmg, taken, total, n: mine.length });
+    rows.push({ map, entry, design: battle ? design : 0, foes: foes.length, foeAvg: avg(foes.map((u) => u.level)), enter, exit: avg(mine.map((u) => u.level)), kill, dmg, taken, total, n: mine.length });
     (b as { status: string }).status = 'won';
     c = recordResult(c, b);
     i = nextByHeader(parsePasHeader(files.get(`Map/${map}.pab`))).next;

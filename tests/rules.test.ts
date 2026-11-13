@@ -10,6 +10,7 @@ import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
+import { capSkillCosts } from '../src/rules/load.ts';
 import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills } from '../src/rules/skills.ts';
 import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
@@ -929,5 +930,16 @@ describe('通行判断（EXE 0x40bc30）', () => {
     expect(cellPassable([L(1, 0x40), L(8, 0)], gAtt, uAtt)).toBe(false);
     // 只看第一层地上物
     expect(cellPassable([L(1), L(8), L(7)], gAtt, uAtt)).toBe(true);
+  });
+});
+
+describe('技能耗气上限', () => {
+  it('耗气不超过习得那一级的最大气，够用的不动', () => {
+    const big: SkillDef = { ...punch, name: '大招', skillId: 1, learnLevel: 15, mpCost: 999 };
+    const small: SkillDef = { ...punch, name: '小招', skillId: 2, learnLevel: 2, mpCost: 10 };
+    const c = cls(0, { skills: [punch, big, small] });
+    capSkillCosts([c]);
+    expect(c.skills[1].mpCost).toBe(statAt(c, 'mp', 15));
+    expect(c.skills[2].mpCost).toBe(10);
   });
 });
