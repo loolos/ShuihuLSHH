@@ -175,6 +175,37 @@ code { color: var(--ink); }
 #result-actions { display: flex; flex-direction: column; gap: 8px; }
 #result-actions button small { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); white-space: pre-line; text-align: left; }
 
+/* ───────── 选人（训练关、断后） ───────── */
+#unit-pick { position: fixed; inset: 0; z-index: 5; display: grid; place-items: center; padding: 16px; background: rgba(10, 8, 6, 0.7); }
+#unit-pick[hidden] { display: none; }
+#unit-pick .panel { width: min(640px, 100%); max-height: calc(100dvh - 32px); display: flex; flex-direction: column; gap: 10px; padding: 18px; }
+#unit-pick h2 { margin: 0; color: var(--accent); font-size: 24px; letter-spacing: 0.15em; }
+#unit-pick-hint { margin: 0; color: var(--muted); font-size: 14px; }
+#unit-pick-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; overflow: auto; min-height: 0; }
+#unit-pick-list button {
+  display: flex; align-items: center; gap: 8px; text-align: left; font: inherit; font-size: 14px; color: var(--ink);
+  background: #1f1912; border: 1px solid #5a4832; border-radius: 6px; padding: 6px 8px; cursor: pointer; line-height: 1.4;
+}
+#unit-pick-list button:hover:not(:disabled) { border-color: var(--accent); }
+#unit-pick-list button.on { border-color: var(--accent); background: #4a3720; box-shadow: inset 0 0 0 1px var(--accent); }
+#unit-pick-list button:disabled { cursor: default; opacity: 0.85; border-style: dashed; }
+#unit-pick-list img { height: 52px; width: auto; flex-shrink: 0; }
+#unit-pick-list b { color: var(--accent); font-size: 16px; }
+#unit-pick-list small { display: block; color: var(--muted); font-size: 12px; }
+#unit-pick-list small i { font-style: normal; white-space: nowrap; margin-right: 0.6em; }
+#unit-pick-list .tag { float: right; font-size: 12px; color: #1b1610; background: var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; }
+#unit-pick-ok { align-self: center; min-width: 140px; }
+#unit-pick-ok:disabled { opacity: 0.45; cursor: default; }
+@media (max-width: 640px) {
+  #unit-pick { padding: 8px; }
+  #unit-pick .panel { padding: 12px; gap: 8px; max-height: calc(100dvh - 16px); }
+  #unit-pick h2 { font-size: 19px; }
+  #unit-pick-list { grid-template-columns: 1fr 1fr; gap: 6px; }
+  #unit-pick-list button { font-size: 12px; padding: 4px 6px; gap: 6px; }
+  #unit-pick-list img { height: 40px; }
+  #unit-pick-list b { font-size: 14px; }
+}
+
 /* ───────── 城镇与整备 ───────── */
 #town {
   position: fixed; inset: 0; z-index: 6; overflow: auto; display: flex; flex-direction: column; gap: 10px;

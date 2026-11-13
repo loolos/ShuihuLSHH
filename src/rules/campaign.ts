@@ -89,10 +89,12 @@ export function recordResult(c: CampaignState, battle: Battle): CampaignState {
   const members = new Map(c.members.map((m) => [m.classId, m]));
   let gold = c.gold + (battle.status === 'won' ? battle.clearGold : 0);
   const active: number[] = [];
+  const benched = new Set(battle.benchedUids);
   for (const u of battle.units) {
     if (u.side !== 'player') continue;
     gold += u.gold;
-    if (u.present || !u.alive) active.push(u.classId); // 没登场或中途退场（如王進）的不算
+    // 没登场或中途退场（如王進）的不算；选人关没被选上的人只是这一关不出战，仍在队里
+    if (u.present || !u.alive || benched.has(u.uid)) active.push(u.classId);
     members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots: [...u.slots], forge: [...u.forge] });
   }
   // 没有我方出场的过场（如 Act13-1 只有官军）沿用上一关的出场名单，免得城镇里一个人都不列

@@ -52,6 +52,8 @@ export type BattleEvent =
   | { type: 'leave'; uid: number }
   /** 二选一：伏兵号令（EXE 0x407af3：AI 模式 9 的单位行动时弹出）。选第一项时调用 signal() */
   | { type: 'ask'; prompt: ExePrompt }
+  /** 选人（剧本指令 27，见 PickRequest）：选好后调用 choose() */
+  | { type: 'pick'; pick: PickRequest }
   | { type: 'move'; uid: number; path: Cell[]; facing: number }
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
@@ -94,6 +96,23 @@ export interface StageInput {
   header?: PasHeader;
 }
 
+/**
+ * 选人（剧本指令 27，EXE 0x411d38 置标志 0x100 → 玩家在地图上点一个我方人物 0x405d10 → 0x40de90 让其余我方、友军全部退场）。
+ * 原版只出现在三关：Train1/Train2 选一人与王進过招，N-add15 主角先退场、选一人和主角一起断后（主角随后被剧本点名回到场上）。
+ */
+export interface PickRequest {
+  /** 面板标题（原版旁白"請選擇留下的人"；训练关原版没有提示，用重制版的文字） */
+  prompt: string;
+  /** 可以选的人（在场、活着的我方人物） */
+  candidates: number[];
+  /** 不用选也一定出战的人（N-add15 的主角），只用来显示 */
+  required: number[];
+  /** 要选几个人（原版点一个人就定了，所以是 1） */
+  count: number;
+  /** 默认选中的人：等级最高的 */
+  recommended: number[];
+}
+
 /** 时光倒流最多能回到几个回合之前（记录最近几个我方回合开始时的状态）【新】 */
 export const REWIND_TURNS = 2;
 
@@ -116,8 +135,12 @@ export class Battle {
   private blocks: PasBlock[];
   private display?: PasBlock[];
   private fired = new Set<number>();
-  /** 剧本指令 27 设置的全局标志（EXE 0x411d38，条件 3 读取）；选人界面未实现，始终为 false */
+  /** 剧本指令 27 设置的全局标志（EXE 0x411d38，条件 3 读取）：选人期间为 true，选完清掉 */
   private scriptFlag = false;
+  /** 等待玩家选人（指令 27）；选完为 null */
+  pendingPick: PickRequest | null = null;
+  /** 因为没被选上而退场的人（不出战，不分全队经验，下一关照常归队） */
+  private benched = new Set<number>();
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
   private pendingDeaths: number[] = [];
@@ -312,8 +335,40 @@ export class Battle {
   begin(): BattleEvent[] {
     this.out = [];
     this.runTurnTriggers(0);
+    // 开场剧本要求选人：等 choose() 选完再进第 1 回合（这样时光倒流不会回到选人之前）
+    if (this.pendingPick) return this.flush();
     this.startTurn(1);
     this.record();
+    return this.flush();
+  }
+
+  /** 本关因为没被选上而退场的我方人物 */
+  get benchedUids(): number[] {
+    return [...this.benched];
+  }
+
+  /**
+   * 选人完成（EXE 0x405d10 → 0x40de90）：没被选上的我方、友军全部退场，清掉剧本标志，
+   * 于是条件 3（参数 0）的区块接着执行（回合限制、条件文字；N-add15 主角被点名回到场上）。
+   */
+  choose(uids: number[]): BattleEvent[] {
+    this.out = [];
+    const p = this.pendingPick;
+    if (!p) return [];
+    const picked = [...new Set(uids)].filter((id) => p.candidates.includes(id));
+    if (picked.length !== Math.min(p.count, p.candidates.length)) throw new Error(`要选 ${p.count} 人`);
+    for (const u of this.units) {
+      if (u.side === 'enemy' || !u.alive || !u.present || picked.includes(u.uid)) continue;
+      this.hide(u, false);
+      if (u.side === 'player') this.benched.add(u.uid);
+    }
+    this.pendingPick = null;
+    this.scriptFlag = false;
+    this.runCondBlocks();
+    if (this.turn === 0 && this.status === 'playing') {
+      this.startTurn(1);
+      this.record();
+    } else this.afterAction();
     return this.flush();
   }
 
@@ -347,7 +402,7 @@ export class Battle {
       units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam,
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
-      expBySource: this.expBySource,
+      expBySource: this.expBySource, benched: [...this.benched],
     });
   }
 
@@ -396,6 +451,7 @@ export class Battle {
     this.clearGold = s.clearGold;
     this.ambushers = new Set(s.ambushers);
     this.expBySource = s.expBySource;
+    this.benched = new Set(s.benched ?? []);
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
     const prompt = this.data.prompts?.[0];
@@ -1164,6 +1220,7 @@ export class Battle {
         // 27：值为 1 时置全局标志（EXE 0x411d38），出现在 N-add15"請選擇留下的人"和训练关开场的末尾，推测是打开选人界面、
         // 选完后清掉标志，于是条件 3（参数 0）的下一个区块（回合限制、条件文字）才执行。重制版还没有选人界面，视为立即选完
         case 27:
+          if (op.value === 1) this.openPick(b, i, textOf);
           break;
         // 21：播放音效，名字在载荷里（全部是 m08"某某加入了"；EXE 0x411748）。20 的载荷是 0x01，推测为播放标志
         case 21:
@@ -1191,6 +1248,29 @@ export class Battle {
     flushObjective();
     if (ending !== null) return this.finish('lost', ending);
     if (cleared) this.finish('won', '');
+  }
+
+  /** 指令 27：打开选人（提示取同一区块里指令 27 之前最后一句旁白，没有就用重制版的文字） */
+  private openPick(b: PasBlock, at: number, textOf: (i: number) => string) {
+    this.scriptFlag = true;
+    let prompt = '';
+    for (let i = at - 1; i >= 0 && !prompt; i--) {
+      if (b.ops[i].op !== 13) continue;
+      const who = b.ops.slice(0, i).filter((o) => o.op === 12).pop();
+      if (who && who.value === 0xffffffff) prompt = textOf(i);
+      break;
+    }
+    const mine = this.units.filter((u) => u.side === 'player' && u.alive);
+    const candidates = mine.filter((u) => u.present);
+    const best = candidates.reduce<Unit | undefined>((a, u) => (!a || u.level > a.level ? u : a), undefined);
+    this.pendingPick = {
+      prompt: prompt || (/^train/i.test(this.name) ? '請選擇與王進過招的人' : '請選擇出戰的人'),
+      candidates: candidates.map((u) => u.uid),
+      required: mine.filter((u) => !u.present && u.classId === 0).map((u) => u.uid),
+      count: 1,
+      recommended: best ? [best.uid] : [],
+    };
+    this.emit({ type: 'pick', pick: this.pendingPick });
   }
 
   private appear(u: Unit) {

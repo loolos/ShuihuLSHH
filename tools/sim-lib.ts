@@ -74,6 +74,8 @@ export function simulate(opts: SimOptions = {}): SimStage[] {
     const b = new Battle(loadStage(files, data, map, { seed, text: tr, party: partyOf(c), joinLevel: joinLevel(c), simplified: true }));
     const entry = new Map(b.units.filter((u) => u.side === 'player').map((u) => [u.classId, u.level]));
     b.begin();
+    // 选人关（Train、N-add15）：选默认推荐的人
+    if (b.pendingPick) b.choose(b.pendingPick.recommended);
     // AI 打不过人类玩家：把敌方攻击力减半，我方回体力；两种经验规则用同样的设置，只比较相对节奏
     const weaken = () => b.units.forEach((u) => u.side === 'enemy' && !u.weakened && ((u.stats.attack = Math.floor(u.stats.attack * weak)), (u.weakened = true)));
     weaken();

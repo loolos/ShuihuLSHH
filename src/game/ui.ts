@@ -273,4 +273,56 @@ export class BattleUI {
   hideResult() {
     $('result').hidden = true;
   }
+
+  /**
+   * 选人面板（训练关、断后）：点人物卡选中（要选 count 人；只选 1 人时点别人就换人），"确定"后返回选中的人。
+   * required 是不用选也一定出战的人，显示成灰框。
+   */
+  pick(title: string, units: Unit[], required: Unit[], count: number, preset: number[]): Promise<number[]> {
+    const chosen = new Set(preset.slice(0, count));
+    const list = $('unit-pick-list');
+    const ok = $<HTMLButtonElement>('unit-pick-ok');
+    const need = Math.min(count, units.length);
+    $('unit-pick-title').textContent = this.tr(title);
+    const card = (u: Unit, fixed: boolean) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      const face = this.portrait(u.classId);
+      const s = u.stats;
+      b.innerHTML = `${face ? `<img alt="" src="${face}">` : ''}<span>${fixed ? '<span class="tag">必定出战</span>' : ''}<b>${esc(this.tr(u.name))}</b> Lv${u.level}
+        <small><i>体 ${u.hp}/${s.maxHp}</i> <i>气 ${u.mp}/${s.maxMp}</i></small><small><i>攻 ${s.attack}</i> <i>防 ${s.defense}</i> <i>移 ${s.move}</i></small></span>`;
+      b.disabled = fixed;
+      b.dataset.uid = String(u.uid);
+      return b;
+    };
+    const refresh = () => {
+      for (const b of list.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')) b.classList.toggle('on', chosen.has(Number(b.dataset.uid)));
+      ok.disabled = chosen.size !== need;
+      $('unit-pick-hint').textContent = `已选 ${chosen.size} / ${need} 人${required.length ? `（另有${required.map((u) => this.tr(u.name)).join('、')}一定出战）` : ''}　没选上的人这一关留在后方，下一关归队`;
+    };
+    list.replaceChildren(...required.map((u) => card(u, true)), ...units.map((u) => card(u, false)));
+    for (const b of list.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')) {
+      b.onclick = (e) => {
+        e.stopPropagation();
+        const id = Number(b.dataset.uid);
+        if (chosen.has(id)) chosen.delete(id);
+        else {
+          if (need === 1) chosen.clear();
+          if (chosen.size < need) chosen.add(id);
+        }
+        void sound.sfx('m01');
+        refresh();
+      };
+    }
+    refresh();
+    $('unit-pick').hidden = false;
+    return new Promise((r) => {
+      ok.onclick = (e) => {
+        e.stopPropagation();
+        if (chosen.size !== need) return;
+        $('unit-pick').hidden = true;
+        r([...chosen]);
+      };
+    });
+  }
 }
