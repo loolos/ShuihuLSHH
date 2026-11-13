@@ -71,6 +71,8 @@ export class BattleScene extends Phaser.Scene {
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
   private busy = false;
+  /** 正在执行回合终了（自动行动 + 友军敌方回合），防止重复点击 */
+  private ending = false;
   /** 本场已经播过过关 / 失败音（剧本指令 29 / 30） */
   private endSound = false;
   /** 非我方阶段双击后快进：时间、补间、动画都加速，镜头直接跳过去【新】 */
@@ -529,9 +531,23 @@ export class BattleScene extends Phaser.Scene {
   }
 
   async endTurn() {
-    if (this.busy || this.battle.status !== 'playing' || this.battle.phase !== 'player') return;
-    this.select({ kind: 'idle' });
-    await this.run(this.battle.endPlayerPhase());
+    if (this.busy || this.ending || this.battle.status !== 'playing' || this.battle.phase !== 'player') return;
+    this.ending = true;
+    try {
+      this.select({ kind: 'idle' });
+      // 还没行动的我方人物按默认规则自动休息 / 用回气剂 / 防御（§2.5），逐个移镜头播放
+      for (const u of this.battle.autoActUnits()) {
+        if (this.battle.status !== 'playing') return;
+        this.busy = true; // 移镜头时也挡住点击
+        if (!this.fast) await this.focusOn(u);
+        await this.run(this.battle.autoAct(u));
+        this.pose(u);
+      }
+      if (this.battle.status !== 'playing' || this.battle.phase !== 'player') return;
+      await this.run(this.battle.endPlayerPhase());
+    } finally {
+      this.ending = false;
+    }
     // 新的我方回合如果没人能动（比如全员昏迷），接着自动结束
     this.autoEndTurn();
   }
@@ -543,7 +559,7 @@ export class BattleScene extends Phaser.Scene {
   async rewind(): Promise<boolean> {
     const b = this.battle;
     const turn = b.rewindTarget();
-    if (this.busy || turn === null || this.ui.inDialog) return false;
+    if (this.busy || this.ending || turn === null || this.ui.inDialog) return false;
     this.select({ kind: 'idle' });
     this.overlay.clear();
     const events = b.rewind();
