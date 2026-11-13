@@ -7,7 +7,7 @@ import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
-import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
+import { counterExp, dodgeExp, EXP_PER_LEVEL, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
@@ -844,8 +844,8 @@ export class Battle {
         this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。${seg}` : '未造成敵方傷害。' });
       }
       if (t.hp === 0) {
-        // 击倒的这一下也给伤害经验（按实际打掉的体力算），与击倒经验合在一起按 65/35 分【新】（负责人 2026-11-13）
-        this.kill(u, t, u.side === 'player' ? hitExp(hp0, this.rng) : 0);
+        // 击倒的这一下也给伤害经验，与击倒经验合在一起按 65/35 分；溢出的伤害最多算目标最大生命的 20%【新】（负责人 2026-11-13）
+        this.kill(u, t, u.side === 'player' ? hitExp(killDamage(r.damage, hp0, t.stats.maxHp), this.rng) : 0);
         if (counter && u.side === 'player') exp += counterExp(this.rng);
         continue;
       }
