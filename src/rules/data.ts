@@ -72,6 +72,17 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   8: { hits: [8, 11, 13, 15].map((frame) => ({ frame, percent: 25, dir: 0 })) },
 };
 
+/** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
+export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
+  // 朱武：沿用集气技的零耗气、自身回复 1/3 气力；group 0 复用本人的回复计出手动作。
+  5: [{
+    name: '气定神闲', skillId: 1000, type: 8, group: 0, hidden: false,
+    learnLevel: 6, mpCost: 0, power: 3, rangeMin: 0, rangeMax: 0, area: 0,
+    effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
+    hits: [], raw: '',
+  }],
+};
+
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
@@ -89,12 +100,15 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       weaponType: r.weaponType,
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
-      skills: r.skills.map((s, i) => ({
-        ...s,
-        ...SKILL_OVERRIDES[s.skillId],
-        name: skillNames[s.skillId] ?? `#${s.skillId}`,
-        ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
-      })),
+      skills: [
+        ...r.skills.map((s, i) => ({
+          ...s,
+          ...SKILL_OVERRIDES[s.skillId],
+          name: skillNames[s.skillId] ?? `#${s.skillId}`,
+          ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
+        })),
+        ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
+      ],
     };
   });
 }

@@ -3,6 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
+import { Board } from '../src/rules/board.ts';
+import { isChargeSkill, learnedSkills, skillsLearnedAt } from '../src/rules/skills.ts';
+import { skillFx, FX_CHARGE } from '../src/game/effects.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
 import { basicAttack, type SkillDef } from '../src/rules/data.ts';
@@ -47,6 +50,39 @@ describe.skipIf(!has)('N01', () => {
   const tr = has ? buildT2S(files) : (s: string) => s;
   const data = has ? loadGameData(files, tr) : (null as never);
   const make = (seed = 1) => new Battle(loadStage(files, data, 'N01', { simplified: true, seed, text: tr }));
+
+  it('朱武6级学会气定神闲，零气力也能施放，只回自身气力且不给经验', () => {
+    const b = new Battle({ name: 'test', board: new Board(4, 4), blocks: [], data, units: [] });
+    const stats = computeStats(data.classes[5], 5, [], data);
+    const u: Unit = { uid: 0, classId: 5, name: '朱武', side: 'player', x: 1, y: 1, facing: 0,
+      level: 5, exp: 0, hp: stats.maxHp - 10, mp: 0, stats, slots: [], forge: [], gold: 0,
+      alive: true, present: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
+      movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
+      ai: { mode: 0, target: 0, point: { x: 0, y: 0 } },
+    };
+    b.units.push(u);
+    const skill = data.classes[5].skills.find((s) => s.name === '气定神闲')!;
+    expect(isChargeSkill(skill)).toBe(true);
+    expect(learnedSkills(u, data)).not.toContain(skill);
+    u.level = 6;
+    expect(learnedSkills(u, data)).toContain(skill);
+    expect(skillsLearnedAt(u, data, 6)).toContain(skill);
+    expect(skillFx(skill)).toMatchObject({ first: FX_CHARGE, atEnd: true });
+    expect(b.affected(u, skill, u)).toEqual([u]);
+    const hp = u.hp;
+    expect(b.useSkill(u, skill, u).some((e) => e.type === 'attack' && e.skill === skill)).toBe(true);
+    expect(u.mp).toBe(Math.floor(stats.maxMp / 3));
+    expect(u.hp).toBe(hp);
+    expect(u.exp).toBe(0);
+    expect(u.ended).toBe(true);
+    u.acted = u.ended = false;
+    u.mp = stats.maxMp - 1;
+    b.useSkill(u, skill, u);
+    expect(u.mp).toBe(stats.maxMp);
+    u.level = 12; // 已有的高等级存档同样可用
+    expect(learnedSkills(u, data)).toContain(skill);
+    expect(data.classes[0].skills.some((s) => s.skillId === skill.skillId)).toBe(false);
+  });
 
   it('全部职业的第一个技能是 1 级、零消耗的普通/远程攻击', () => {
     for (const c of data.classes) {
