@@ -8,6 +8,12 @@ import { DIRS } from '../rules/unit.ts';
 export const FX_CHARGE = 7;
 /** 回复技一律播第 17 组（EXE 0x4037db：类型 9、11 → push 0x11），不看技能子项 +6 */
 export const FX_HEAL = 17;
+/** 防御：我方单位进入防御状态时在脚下播第 48 组（蓝色护盾圈，EXE 0x4075c0 → 0x40765f；只限阵营 0 且已登场），声音 49.wav */
+export const FX_DEFEND = 48;
+/** 反击：防御中闪开相邻攻击、触发反击时，在反击者脚下先播第 37 组（聚气爆光，EXE 0x4077a0 → 0x40782b），声音 38.wav，再出手 */
+export const FX_COUNTER = 37;
+/** 进关就下载的固定特效组 */
+export const FIXED_FX = [FX_DEFEND, FX_COUNTER];
 
 export interface SkillFx {
   /** 第一段的组号；directional 时还要加上方向 0–3 */
