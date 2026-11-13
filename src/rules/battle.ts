@@ -844,7 +844,9 @@ export class Battle {
         this.emit({ type: 'message', text: r.damage > 0 ? `${r.crit ? '必殺！' : ''}${r.damage} 點傷害。${seg}` : '未造成敵方傷害。' });
       }
       if (t.hp === 0) {
-        this.kill(u, t);
+        // 击倒的这一下也给伤害经验（按实际打掉的体力算），与击倒经验合在一起按 65/35 分【新】（负责人 2026-11-13）
+        this.kill(u, t, u.side === 'player' ? hitExp(hp0, this.rng) : 0);
+        if (counter && u.side === 'player') exp += counterExp(this.rng);
         continue;
       }
       if (r.poisoned && t.poisonTurns === 0 && !resists(t, 'resistPoison')) {
@@ -864,7 +866,8 @@ export class Battle {
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
-  private kill(u: Unit, t: Unit) {
+  /** dmgExp：击倒那一下的伤害经验，并入击倒经验一起按 65/35 分 */
+  private kill(u: Unit, t: Unit, dmgExp = 0) {
     t.alive = false;
     t.defending = false;
     this.emit({ type: 'die', uid: t.uid });
@@ -878,7 +881,7 @@ export class Battle {
       }
     }
     if (u.side !== 'enemy' && t.side === 'enemy') {
-      const total = killExp(u, t, this.rng);
+      const total = killExp(u, t, this.rng) + dmgExp;
       this.gainExp(u, killerShare(total, u.side === 'player'), 'kill');
       this.teamExp += teamShare(total);
       this.tallyExp('team', teamShare(total));
