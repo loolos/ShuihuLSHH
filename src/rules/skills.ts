@@ -102,3 +102,21 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
   }
   return out;
 }
+
+/**
+ * 技能菜单里每个技能下面的简略加成【新】（负责人 2026-11-13）：威力、命中修正、必杀修正、中毒率、昏迷率，
+ * 如"威+25 命+40 必+50 毒20% 昏10%"；为 0 的项不显示，减益显示负数（"命-10"）。
+ * 命中修正显示技能数据里的原值，不换算成实际的命中倍数。回复技 / 集气技的威力是回复除数，显示成"回体1/4""回气1/3"。
+ */
+export function skillBonusText(s: SkillDef): string {
+  const sign = (n: number) => (n > 0 ? `+${n}` : `${n}`);
+  const parts: string[] = [];
+  if (isSupportSkill(s)) {
+    if (s.power > 0) parts.push(`${isChargeSkill(s) ? '回气' : '回体'}1/${s.power}`);
+  } else if (s.power) parts.push(`威${sign(s.power)}`);
+  if (s.hitMod) parts.push(`命${sign(s.hitMod)}`);
+  if (s.critMod) parts.push(`必${sign(s.critMod)}`);
+  if (s.poison) parts.push(`毒${s.poison}%`);
+  if (s.stun) parts.push(`昏${s.stun}%`);
+  return parts.join(' ');
+}

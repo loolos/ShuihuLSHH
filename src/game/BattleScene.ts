@@ -7,7 +7,7 @@ import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { findStageFile, loadStage } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
-import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills } from '../rules/skills.ts';
+import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
@@ -353,7 +353,10 @@ export class BattleScene extends Phaser.Scene {
         const tip = this.armed && sameCell(this.armed, c) ? `${more}　再点一次施放` : more;
         if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, tip);
         else this.ui.showUnit(t, b.preview(u, t, m.skill), tip);
-      } else this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}）：选择施放位置`);
+      } else {
+        const bonus = skillBonusText(m.skill);
+        this.ui.showUnit(u, null, `${name}（气力 ${m.skill.mpCost}${bonus ? `　${bonus}` : ''}）：选择施放位置`);
+      }
       return;
     }
     if (m.kind === 'item' || m.kind === 'itemSlot') {
@@ -463,6 +466,7 @@ export class BattleScene extends Phaser.Scene {
       return [
         ...b.skillsOf(u).map(({ skill, usable }) => ({
           label: `${this.assets.tr(skill.name)} ${skill.mpCost}`,
+          note: skillBonusText(skill),
           enabled: usable,
           run: () => this.select({ kind: 'skill', u, skill }),
         })),
