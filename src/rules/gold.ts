@@ -6,7 +6,7 @@ import type { Rng } from './rng.ts';
 export const GOLD_SPREAD = 0.15;
 
 /**
- * 某职业被击倒时掉落黄金的基数：职业金钱上限的一半（上限为 0 的不掉）。
+ * 某职业被击倒时掉落银子的基数：职业金钱上限的一半（上限为 0 的不掉）。
  * 原版是 1..上限的随机数（期望 (上限+1)/2，EXE 0x406f43 附近），重制版改为基数 ±15%，期望几乎不变。
  */
 export function goldBase(data: GameData, classId: number): number {
@@ -20,7 +20,7 @@ export function goldRange(base: number): [number, number] {
   return [base - d, base + d];
 }
 
-/** 击倒一个敌人掉落的黄金：基数 ±15% 内均匀取整 */
+/** 击倒一个敌人掉落的银子：基数 ±15% 内均匀取整 */
 export function killGold(classId: number, data: GameData, rng: Rng): number {
   const base = goldBase(data, classId);
   if (!base) return 0;
@@ -29,7 +29,7 @@ export function killGold(classId: number, data: GameData, rng: Rng): number {
 }
 
 /**
- * 过关奖励【新：负责人 2026-11-13】：打赢一场战役（地图名 N*、训练关 Train*）给一笔固定的黄金。
+ * 过关奖励【新：负责人 2026-11-13】：打赢一场战役（地图名 N*、训练关 Train*）给一笔固定的银子。
  * 数额按该关敌人平均等级定：100 + 20 × 平均等级，取整到 50；过场（Act*）不给。
  * 改数额直接改这张表。分路的两关（N-add04a/b、N-add09a/b）各自有数。
  */

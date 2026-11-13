@@ -11,6 +11,7 @@ import { Rng } from '../src/rules/rng.ts';
 import { computeStats, type Unit } from '../src/rules/unit.ts';
 import { readExeTables } from '../src/formats/exe.ts';
 import { newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { goldBase, goldRange, stageClearGold } from '../src/rules/gold.ts';
 import { parsePasHeader } from '../src/formats/pas.ts';
 
 const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
@@ -121,6 +122,23 @@ describe.skipIf(!has)('N01', () => {
 
   it('%M 代入主角绰号', () => {
     expect(data.heroNickname).toBe('关西之虎');
+  });
+
+  it('新游戏前两场战斗的掉落及奖励期望1075两，最多1205两', () => {
+    let expected = 0, maximum = 0;
+    for (const name of ['N01', 'N-add01']) {
+      const input = loadStage(files, data, name);
+      expected += stageClearGold(name);
+      maximum += stageClearGold(name);
+      for (const u of input.units.filter((u) => u.side === 'enemy')) {
+        const base = goldBase(data, u.type);
+        expected += base;
+        maximum += goldRange(base)[1];
+      }
+    }
+    expect(expected).toBe(1075);
+    expect(maximum).toBe(1205);
+    expect(newCampaign().gold).toBe(0);
   });
 
   it('繁→简对照来自 .pab/.pas 对齐', () => {

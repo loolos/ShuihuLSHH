@@ -119,7 +119,7 @@ export class Battle {
   private pendingDeaths: number[] = [];
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
-  /** 过关奖励的黄金（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
+  /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
   clearGold = 0;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
@@ -741,7 +741,7 @@ export class Battle {
       const gold = killGold(t.classId, this.data, this.rng);
       if (gold) {
         u.gold += gold;
-        this.emit({ type: 'message', text: `擊退了敵人，得到黃金 ${gold} 兩！` });
+        this.emit({ type: 'message', text: `擊退了敵人，得到銀子 ${gold} 兩！` });
       }
     }
     if (u.side !== 'enemy' && t.side === 'enemy') {
@@ -1079,7 +1079,7 @@ export class Battle {
     if (result === 'won') {
       this.settleTeamExp();
       this.clearGold = this.hadPlayers ? stageClearGold(this.name) : 0;
-      if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到黃金 ${this.clearGold} 兩！` });
+      if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到銀子 ${this.clearGold} 兩！` });
     }
     this.status = result;
     this.emit({ type: 'end', result, text });

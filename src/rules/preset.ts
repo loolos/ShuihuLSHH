@@ -1,6 +1,6 @@
 // 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
-// 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留黄金。
+// 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留银子。
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
@@ -108,8 +108,8 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
  * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
  * - 人物和装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
- * - 黄金 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
- *   手上的黄金更多就保留。
+ * - 银子 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
+ *   手上的银子更多就保留。
  */
 export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
   const pos = stages.findIndex((s) => s.index === stage);

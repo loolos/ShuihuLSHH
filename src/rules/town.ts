@@ -70,7 +70,7 @@ export function pawn(c: CampaignState, data: GameData, classId: number, slot: nu
   if (!m || !it) return fail(c, '');
   return {
     ok: true,
-    text: `典當了${it.name}，得到黃金 ${it.sellPrice} 兩。`,
+    text: `典當了${it.name}，得到銀子 ${it.sellPrice} 兩。`,
     c: { ...edit(c, classId, (n) => ((n.slots[slot] = 0), (n.forge[slot] = 0))), gold: c.gold + it.sellPrice },
   };
 }

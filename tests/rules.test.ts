@@ -621,7 +621,7 @@ describe('关卡串联', () => {
     expect(nextStages(st, 5)).toEqual([]);
   });
 
-  it('人物延续：等级取较高者、经验与装备沿用，黄金累计', () => {
+  it('人物延续：等级取较高者、经验与装备沿用，银子累计', () => {
     const one = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
     const p = one.unit(0)!;
     p.level = 4;
@@ -673,14 +673,14 @@ describe('关卡串联', () => {
     expect(killGold(2, data, rng)).toBe(0);
   });
 
-  it('过关奖励：战役打赢给固定黄金并提示，过场不给', () => {
+  it('过关奖励：战役打赢给固定银子并提示，过场不给', () => {
     expect(stageClearGold('N01')).toBe(100);
     expect(stageClearGold('Act3-1')).toBe(0);
     for (const v of Object.values(STAGE_CLEAR_GOLD)) expect(v % 50).toBe(0);
     const win = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
     const ev = win.begin();
     expect(win.status).toBe('won');
-    expect(ev.some((e) => e.type === 'message' && e.text === '過關獎勵：得到黃金 100 兩！')).toBe(true);
+    expect(ev.some((e) => e.type === 'message' && e.text === '過關獎勵：得到銀子 100 兩！')).toBe(true);
     win.unit(0)!.gold = 30;
     expect(recordResult(newCampaign(), win).gold).toBe(130);
     const cut = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });

@@ -197,7 +197,7 @@ describe.skipIf(!has)('测试用跳关', () => {
     const hero = c.members.find((m) => m.classId === 0)!;
     expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
     expect(jumpTo(files, data, stages, 0, newCampaign(0)).members.find((m) => m.classId === 0)!.level).toBe(1);
-    // 先跳到后期再跳回前面：不沿用后期的等级和装备，和直接跳过去一样（只保留黄金）
+    // 先跳到后期再跳回前面：不沿用后期的等级和装备，和直接跳过去一样（只保留银子）
     const early = stages.find((s) => s.mapName.toLowerCase() === 'n01')!.index;
     const back = jumpTo(files, data, stages, early, { ...c, gold: 500 });
     expect(back.members).toEqual(jumpTo(files, data, stages, early, newCampaign(0)).members);
