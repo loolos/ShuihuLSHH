@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { baseDamage, critChance, rangedFactor, facingRelation, hitChance, rollAttack } from '../src/rules/combat.ts';
-import { killExp, restExp, splitTeamExp, takenExp } from '../src/rules/exp.ts';
+import { killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
 import { buildClasses, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -402,7 +402,37 @@ describe('战斗流程', () => {
 });
 
 describe('经验', () => {
-  it('击倒经验一半给击倒者，一半在胜利后分给全队（先补落后的）', () => {
+  it('击倒经验按65%/35%分配，整数余数归击倒者；友军只贡献池子部分', () => {
+    expect([killerShare(20, true), teamShare(20)]).toEqual([13, 7]);
+    expect([killerShare(15, true), teamShare(15)]).toEqual([10, 5]);
+    expect(killerShare(20, false)).toBe(0);
+    for (let total = 1; total <= 100; total++) {
+      expect(killerShare(total, true) + teamShare(total)).toBe(total);
+    }
+  });
+
+  it.each([false, true])('闪避攻击时获得3–5经验（防御状态：%s）', (defending) => {
+    let dodges = 0;
+    for (let seed = 1; seed <= 30; seed++) {
+      const b = new Battle({ name: 't', board: new Board(4, 4), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 1, 0)], blocks: [], data, seed });
+      b.begin();
+      const p = b.unit(0)!;
+      p.stats.agility = 255;
+      p.defending = defending;
+      // 只验证闪避本身的奖励，避免反击贡献额外经验。
+      b.unit(1)!.mp = 0;
+      const events = b.endPlayerPhase();
+      const attacks = events.filter((e) => e.type === 'attack');
+      if (attacks.length !== 1 || attacks[0].hits[0]?.result.hit !== false) continue;
+      expect(p.exp).toBeGreaterThanOrEqual(3);
+      expect(p.exp).toBeLessThanOrEqual(5);
+      expect(b.teamExp).toBe(0);
+      dodges++;
+    }
+    expect(dodges).toBeGreaterThan(0);
+  });
+
+  it('击倒经验65%给击倒者，35%在胜利后分给全队（先补落后的）', () => {
     const b = new Battle({ name: 't', board: new Board(6, 6), units: [act(0, 0, 'player', 0, 0), act(1, 2, 'player', 5, 5), act(2, 1, 'enemy', 1, 0, 0x800)], blocks: [], data, seed: 3 });
     b.begin();
     const [p, q, e] = [b.unit(0)!, b.unit(1)!, b.unit(2)!];
@@ -413,6 +443,9 @@ describe('经验', () => {
     expect(e.alive).toBe(false);
     expect(p.exp).toBeGreaterThan(0);
     expect(b.teamExp).toBeGreaterThan(0);
+    const total = p.exp + b.teamExp;
+    expect(b.teamExp).toBe(Math.floor(total * 35 / 100));
+    expect(p.exp).toBe(total - b.teamExp);
     expect(q.exp).toBe(0);
     const pool = b.teamExp;
     b.settleTeamExp(); // 胜利时由剧本触发；这里直接结算
