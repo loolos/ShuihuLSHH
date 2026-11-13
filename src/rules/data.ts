@@ -42,8 +42,9 @@ export interface GameData {
 /**
  * 个别职业的移动力调整（职业号 → 加几格），在职业表原值上加【新】。
  * 0 武龍：原版 5，负责人 2026-11-12 要求 +1。
+ * 16 魯智深：原版 4，负责人 2026-11-13 要求改为 5（和其他好汉一样）。
  */
-export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1 };
+export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1, 16: 1 };
 
 /**
  * 个别职业普通攻击的分段调整（职业号 → 新的分段）【新】。
