@@ -103,6 +103,13 @@ export class BattleUI {
     $<HTMLButtonElement>('end-turn').disabled = !on;
   }
 
+  /** 时光倒流按钮：turn = 会回到第几回合开始，null = 没有可用的记录（置灰）【新】 */
+  setRewind(turn: number | null) {
+    const b = $<HTMLButtonElement>('rewind');
+    b.disabled = turn === null;
+    b.title = turn === null ? '时光倒流：暂时没有可以回到的回合' : `时光倒流：回到第 ${turn} 回合开始时的状态`;
+  }
+
   message(text: string) {
     const d = document.createElement('div');
     d.textContent = this.tr(text);

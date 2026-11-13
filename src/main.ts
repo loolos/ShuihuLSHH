@@ -255,7 +255,9 @@ function startGame(assets: Assets) {
     const retry = { label: '重新开始本关', run };
     if (!won) {
       void music.play('defeat');
-      return ui.result(false, text, [retry]);
+      // 失败后也能时光倒流重试【新】
+      const t = battle.rewindTarget();
+      return ui.result(false, text, t === null ? [retry] : [{ label: `时光倒流（回到第 ${t} 回合）`, run: rewind }, retry]);
     }
     const after = recordResult(campaign, battle);
     const { town: t, next } = nextOf(cur);
@@ -281,6 +283,13 @@ function startGame(assets: Assets) {
     // 过场关卡直接接下一关
     if (isAct(cur)) return go(after);
     proceed(after, text);
+  };
+  /** 时光倒流；从失败画面倒流时把失败曲换回本关的曲子 */
+  const rewind = async () => {
+    const sc = scene();
+    if (!sc || sc.battle.rewindTarget() === null) return;
+    if (sc.battle.status === 'lost') void music.stageTrack(stageOf(campaign.stage).mapName).then((t) => music.play(t));
+    await sc.rewind();
   };
   let loading = 0;
   const run = async () => {
@@ -325,6 +334,7 @@ function startGame(assets: Assets) {
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
   $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);
   $('end-turn').onclick = () => scene()?.endTurn();
+  $('rewind').onclick = () => void rewind();
   $('objective-btn').onclick = () => {
     const b = scene()?.battle;
     if (b && !ui.inDialog) ui.say('', b.objectives.join('\n') || '（本关没有写明的胜负条件）');

@@ -4,6 +4,10 @@ export class Rng {
   constructor(seed = Date.now()) {
     this.s = seed >>> 0;
   }
+  /** 换一个种子重新开始（时光倒流后重新掷随机数，与读档一致） */
+  reseed(seed = Date.now() ^ Math.floor(Math.random() * 0x100000000)) {
+    this.s = seed >>> 0;
+  }
   /** [0, 1) */
   next(): number {
     let t = (this.s = (this.s + 0x6d2b79f5) >>> 0);
