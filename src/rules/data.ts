@@ -107,6 +107,19 @@ export function forgedStats(it: Item, n: number) {
   };
 }
 export const forgeLimit = (it: Item) => Math.max(it.attackSteps, it.defenseSteps);
+/** 已打铁 n 次时，再打一次各加多少，以及之后还能打几次（打到头的那一项加 0） */
+export function forgeGain(it: Item, n: number) {
+  return {
+    attack: n < it.attackSteps ? it.attackStep : 0,
+    defense: n < it.defenseSteps ? it.defenseStep : 0,
+    left: Math.max(0, forgeLimit(it) - n),
+  };
+}
+/** 打铁增加量的短文字，如「攻+3 防+2」 */
+export function forgeGainText(it: Item, n: number) {
+  const g = forgeGain(it, n);
+  return [g.attack ? `攻+${g.attack}` : '', g.defense ? `防+${g.defense}` : ''].filter(Boolean).join(' ');
+}
 
 /** 装备的移动力加成：原版有不少装备扣移动（负值），重制版一律不扣，加移动的照原版【新：负责人 2026-11-12 决定】 */
 export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);

@@ -11,7 +11,8 @@ import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rul
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
-import { newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
+import { adjustEnemies, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
 import type { ActUnit } from '../src/formats/act.ts';
@@ -601,6 +602,30 @@ describe('关卡串联', () => {
     expect(two.unit(1)!.level).toBe(6);
   });
 
+  it('新入伙的人按当前队伍平均等级入队，不低于剧本等级；等级不封顶', () => {
+    const c = { ...newCampaign(), members: [{ classId: 0, level: 20, exp: 0, slots: [] }, { classId: 2, level: 25, exp: 0, slots: [] }, { classId: 3, level: 6, exp: 0, slots: [] }], active: [0, 2] };
+    expect(joinLevel(c)).toBe(23); // 只算上一关出场的人
+    expect(joinLevel(newCampaign())).toBe(0);
+    const units = [act(0, 0, 'player', 0, 0), act(1, 1, 'player', 1, 0), { ...act(2, 2, 'player', 5, 0), level: 30 }];
+    const b = new Battle({ name: 't', board: new Board(6, 6), units, blocks: [], data, seed: 1, party: partyOf(c), joinLevel: joinLevel(c) });
+    expect(b.unit(0)!.level).toBe(20); // 老成员照旧
+    expect(b.unit(1)!.level).toBe(23); // 新人 = 平均
+    expect(b.unit(2)!.level).toBe(30); // 剧本等级更高时用剧本等级
+    expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
+  });
+
+  it('敌人等级修正：整关平移、只降不升、1 级摆设不动、最低 2 级', () => {
+    expect(enemyShift('N14')).toBeLessThan(0);
+    expect(enemyShift('n14')).toBe(enemyShift('N14'));
+    expect(enemyShift('Train1')).toBe(0);
+    const d = enemyShift('N14');
+    expect(enemyLevel('N14', 42)).toBe(42 + d);
+    expect(enemyLevel('N14', 1)).toBe(1);
+    expect(enemyLevel('N14', 3)).toBe(Math.max(2, 3 + d));
+    const units = adjustEnemies('N14', [{ ...act(0, 0, 'enemy', 20, 0), level: 30 }, { ...act(1, 1, 'player', 0, 0), level: 30 }]);
+    expect(units.map((u) => u.level)).toEqual([30 + d, 30]);
+  });
+
   it('击倒掉落：职业上限的一半 ±15%，上限为 0 的不掉', () => {
     expect(goldBase(data, 0)).toBe(25);
     expect(goldRange(25)).toEqual([21, 29]);
@@ -613,7 +638,7 @@ describe('关卡串联', () => {
     expect(killGold(2, data, rng)).toBe(0);
   });
 
-  it('过关奖励：战役打赢给固定黄金并提示，过场和输了不给', () => {
+  it('过关奖励：战役打赢给固定黄金并提示，过场不给', () => {
     expect(stageClearGold('N01')).toBe(100);
     expect(stageClearGold('Act3-1')).toBe(0);
     for (const v of Object.values(STAGE_CLEAR_GOLD)) expect(v % 50).toBe(0);
@@ -623,7 +648,6 @@ describe('关卡串联', () => {
     expect(ev.some((e) => e.type === 'message' && e.text === '過關獎勵：得到黃金 100 兩！')).toBe(true);
     win.unit(0)!.gold = 30;
     expect(recordResult(newCampaign(), win).gold).toBe(130);
-    // 没有我方人物的过场（即使用了战役的地图名）不给
     const cut = new Battle({ name: 'N01', board: new Board(6, 6), units: [act(0, 1, 'ally', 0, 0)], blocks: [blk(0, { kind: 'turn', turn: 0 }, [say(29, '旁白')])], data });
     cut.begin();
     expect(cut.clearGold).toBe(0);

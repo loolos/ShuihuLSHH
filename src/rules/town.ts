@@ -1,7 +1,7 @@
 // 城镇与整备：买、典当、打铁、给予、装备、丢弃（docs/game-design.md §7.5）。
 // 全部是对 CampaignState 的纯函数，返回新的状态和一句提示；界面在 src/game/town.ts。
 import type { CampaignState, Member } from './campaign.ts';
-import { canEquip, equipSlotOf, forgeLimit, freeBagSlot, itemOf, SLOT_COUNT, type GameData } from './data.ts';
+import { canEquip, equipSlotOf, forgeGain, forgeLimit, freeBagSlot, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import type { Item } from '../formats/goo.ts';
 
 /**
@@ -86,8 +86,9 @@ export function forge(c: CampaignState, data: GameData, classId: number, slot: n
   const cost = forgeCost(it);
   if (c.gold < cost) return fail(c, '金錢不夠，無法提升！');
   const lines = [];
-  if (n < it.attackSteps && it.attackStep) lines.push(`攻擊力提升了${it.attackStep}點！`);
-  if (n < it.defenseSteps && it.defenseStep) lines.push(`防御力提升了${it.defenseStep}點！`);
+  const g = forgeGain(it, n);
+  if (g.attack) lines.push(`攻擊力提升了${g.attack}點！`);
+  if (g.defense) lines.push(`防御力提升了${g.defense}點！`);
   return { ok: true, text: lines.join('') || '鍛造完成。', c: { ...edit(c, classId, (x) => x.forge[slot]++), gold: c.gold - cost } };
 }
 

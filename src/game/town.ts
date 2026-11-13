@@ -2,7 +2,7 @@
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
 import type { Item } from '../formats/goo.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
-import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
+import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
 import { computeStats } from '../rules/unit.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
@@ -226,7 +226,7 @@ export class TownUI {
         .join('')}</ul>`;
     }
     if (this.action === 'pawn') return '<p class="hint">点选右边队员的道具典当，按道具的卖价收钱。</p>';
-    if (this.action === 'forge') return '<p class="hint">点选右边队员的装备打铁：每次收买价的一半，攻击、防御还有剩余次数的一起提升。标「可打铁」的才能在这里打铁。</p>';
+    if (this.action === 'forge') return '<p class="hint">点选右边队员的装备打铁：点一下就打一次，每次收买价的一半。装备上会标出这次打铁加多少攻、防，还能再打几次；没标的不能在这里打铁。</p>';
     if (this.action === 'talk') return '';
     return '<p class="hint">点选道具：装备、卸下、交给别人或丢弃。前三格是装备栏，只有装在这里的才有加成。</p>';
   }
@@ -253,7 +253,9 @@ export class TownUI {
       let tag = '';
       if (it && this.action === 'pawn') tag = `<span class="price">${it.sellPrice} 两</span>`;
       if (it && this.action === 'forge')
-        tag = canForge(it, n, this.o.town) ? `<span class="price">可打铁 ${forgeCost(it)} 两</span>` : n && n >= forgeLimit(it) ? '<small>已打到头</small>' : '';
+        tag = canForge(it, n, this.o.town)
+          ? `<span class="forge-gain">打一次 <b>${forgeGainText(it, n)}</b><small>${forgeCost(it)} 两 · 还能打 ${forgeGain(it, n).left} 次</small></span>`
+          : n && n >= forgeLimit(it) ? '<small>已打到头</small>' : '';
       return `<li class="${this.slot === k ? 'sel' : ''}"><button data-do="slot" data-v="${k}" ${it ? '' : 'disabled'}>
         <small class="lab">${label}</small>${it ? `${this.icon(it)}<span class="nm">${this.itemName(it, n)}</span><span class="eff">${esc(this.summary(it, n))}</span>${tag}` : '<span class="nm empty">—</span>'}
         </button></li>`;
