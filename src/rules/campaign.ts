@@ -82,10 +82,10 @@ export function joinLevel(c: CampaignState): number {
   return list.length ? Math.round(list.reduce((a, m) => a + m.level, 0) / list.length) : 0;
 }
 
-/** 关卡结束：记下我方人物（含战败的）的等级、经验、装备，加上本关得到的黄金 */
+/** 关卡结束：记下我方人物（含战败的）的等级、经验、装备，加上本关得到的黄金（击倒掉落 + 过关奖励） */
 export function recordResult(c: CampaignState, battle: Battle): CampaignState {
   const members = new Map(c.members.map((m) => [m.classId, m]));
-  let gold = c.gold;
+  let gold = c.gold + (battle.status === 'won' ? battle.clearGold : 0);
   const active: number[] = [];
   for (const u of battle.units) {
     if (u.side !== 'player') continue;

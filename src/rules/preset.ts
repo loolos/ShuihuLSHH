@@ -8,6 +8,7 @@ import { ROUTES, type CampaignState, type Member } from './campaign.ts';
 import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
+import { goldBase, stageClearGold } from './gold.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
 /** 主线模拟得出的每关入场等级：关卡名（小写）→ 角色号 → 等级（tools/gen-entry-levels.ts 生成） */
@@ -107,7 +108,7 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
  * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
  * - 人物和装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
- * - 黄金 = 从第一关打到第 stage 关、每个敌人掉钱的期望值之和（每个敌人掉 1..上限，期望 (上限+1)/2），
+ * - 黄金 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
  *   手上的黄金更多就保留。
  */
 export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
@@ -117,17 +118,16 @@ export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], s
   return { ...base, town, gold: Math.max(c.gold, expectedGold(files, data, stages, pos)) };
 }
 
-/** 打到第 pos 关（含）为止，敌人掉钱的期望总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
+/** 打到第 pos 关（含）为止，敌人掉钱的期望加过关奖励的总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
 export function expectedGold(files: FileSource, data: GameData, stages: Stage[], pos: number): number {
   const target = stages[pos].index;
   const skip = new Set(Object.values(ROUTES).map((r) => (target === r.alt ? r.alt - 1 : r.alt)));
   let sum = 0;
   for (let i = 0; i <= pos; i++) {
     if (skip.has(stages[i].index)) continue;
-    for (const u of readStage(files, stages[i]).units) {
-      const cap = u.side === 'enemy' ? (data.classes[u.type]?.goldCap ?? 0) : 0;
-      if (cap > 0) sum += (cap + 1) / 2;
-    }
+    const units = readStage(files, stages[i]).units;
+    for (const u of units) if (u.side === 'enemy') sum += goldBase(data, u.type);
+    if (units.some((u) => u.side === 'player')) sum += stageClearGold(stages[i].mapName);
   }
   return Math.round(sum);
 }

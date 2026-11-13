@@ -1,5 +1,5 @@
 // 战斗结算（docs/game-design.md §4、§5；原版 EXE 0x406c60）。
-import type { GameData, SkillDef } from './data.ts';
+import type { SkillDef } from './data.ts';
 import type { Rng } from './rng.ts';
 import { dist, facingTowards, type Unit } from './unit.ts';
 
@@ -141,8 +141,3 @@ export function canCounter(att: Unit, def: Unit): boolean {
   return def.defending && def.alive && dist(att, def) === 1;
 }
 
-/** 击倒敌人掉落的黄金：1 + rand % 上限（上限为 0 时不掉） */
-export function killGold(def: Unit, data: GameData, rng: Rng): number {
-  const cap = data.classes[def.classId].goldCap;
-  return cap > 0 ? 1 + rng.int(cap) : 0;
-}
