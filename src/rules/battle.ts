@@ -299,12 +299,15 @@ export class Battle {
     return previewAttack(u, t, skill);
   }
 
-  /** 技能菜单：已习得的技能及当前能否使用（气力足够、有可施放的位置） */
-  skillsOf(u: Unit): { skill: SkillDef; usable: boolean }[] {
-    return learnedSkills(u, this.data).map((skill) => ({
-      skill,
-      usable: this.canAct(u) && !u.acted && u.mp >= skill.mpCost && this.skillTargets(u, skill).length > 0,
-    }));
+  /**
+   * 技能菜单：已习得的技能。usable = 现在能选（能行动、没出过手、气力足够），
+   * 范围里没有目标也能选来查看射程和作用范围（lolo 2026-11-13）【新】；hasTarget = 有可施放的位置。
+   */
+  skillsOf(u: Unit): { skill: SkillDef; usable: boolean; hasTarget: boolean }[] {
+    return learnedSkills(u, this.data).map((skill) => {
+      const usable = this.canAct(u) && !u.acted && u.mp >= skill.mpCost;
+      return { skill, usable, hasTarget: usable && this.skillTargets(u, skill).length > 0 };
+    });
   }
   /** 施放距离内的全部格子（显示用）；at 为假设的站位 */
   skillCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
