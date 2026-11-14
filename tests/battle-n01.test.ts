@@ -492,6 +492,80 @@ describe.skipIf(!has)('N01', () => {
     expect(b.benchedUids.length).toBe(p.candidates.length - 1);
   });
 
+  it('所有战役和训练关开场后都还在进行，不会一开场就判胜负', () => {
+    for (const f of files.list('Map', '.pab')) {
+      const name = path.basename(f, '.pab');
+      if (name.startsWith('act')) continue;
+      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      b.begin();
+      if (b.pendingPick) b.choose(b.pendingPick.recommended);
+      expect([name, b.status]).toEqual([name, 'playing']);
+    }
+  });
+
+  // 不经过回合，直接跑一次"行动之后"的判定（区域、组合条件、全灭）
+  const settle = (b: Battle) => {
+    const x = b as unknown as { out: BattleEvent[]; afterAction: () => void; flush: () => BattleEvent[] };
+    x.out = [];
+    x.afterAction();
+    return x.flush();
+  };
+
+  it('N12 东溪村突围：埋伏的朱仝不算"已死"；晁蓋到达安全地带或打倒朱仝才过关', () => {
+    const start = () => {
+      const b = new Battle(loadStage(files, data, 'N12', { simplified: true, seed: 1, text: tr }));
+      b.begin();
+      return b;
+    };
+    let b = start();
+    expect(b.status).toBe('playing');
+    const zhu = b.units.filter((u) => u.classId === 48);
+    expect(zhu.length).toBe(2);
+    expect(zhu.every((u) => !u.present && (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
+    // 晁蓋走到 (0–1, 27–29)
+    const chao = b.units.find((u) => u.classId === 12)!;
+    chao.x = 1;
+    chao.y = 28;
+    const ev = settle(b);
+    expect(b.status).toBe('won');
+    expect(ev.some((e) => e.type === 'say' && /朱仝在这里等你很久了/.test(e.text))).toBe(true);
+    // 打倒朱仝（两个都倒下）也过关
+    b = start();
+    const [z1, z2] = b.units.filter((u) => u.classId === 48);
+    z1.alive = false;
+    settle(b);
+    expect(b.status).toBe('playing');
+    z2.alive = false;
+    settle(b);
+    expect(b.status).toBe('won');
+  });
+
+  it('N02："所有嘍囉死亡"要连埋伏中的嘍囉一起算', () => {
+    const b = new Battle(loadStage(files, data, 'N02', { simplified: true, seed: 1, text: tr }));
+    b.begin();
+    const minions = b.units.filter((u) => u.classId === 44 || u.classId === 45);
+    expect(minions.some((u) => (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
+    for (const u of minions) if (u.present) u.alive = false;
+    settle(b);
+    expect(b.status).toBe('playing');
+    for (const u of minions) u.alive = false;
+    settle(b);
+    expect(b.status).toBe('won');
+  });
+
+  it('N-add03：任何一个嘍囉逃到地图出口都判负（不只是单位表里第一个）', () => {
+    const b = new Battle(loadStage(files, data, 'N-add03', { simplified: true, seed: 1, text: tr }));
+    b.begin();
+    expect(b.status).toBe('playing');
+    // 剧本让第 3 个单位（第二个 45 号嘍囉）往 (10, 0) 逃
+    const runner = b.units.filter((u) => u.classId === 45)[1];
+    runner.x = 10;
+    runner.y = 0;
+    const ev = settle(b);
+    expect(b.status).toBe('lost');
+    expect(ev.some((e) => e.type === 'end' && /逃回山寨/.test(e.text))).toBe(true);
+  });
+
   it('剧本头串起全部关卡，分路两条线汇合', () => {
     const stages = readExeTables(files.get('ShuiHu.exe')).stages;
     const header = (i: number) => parsePasHeader(files.get(`Map/${stages[i].mapName}.pab`));
