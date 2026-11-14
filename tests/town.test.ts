@@ -158,7 +158,7 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
 describe.skipIf(!has)('测试用跳关', () => {
   it('按主线估算的入场等级表补等级，换上最后一个城镇能买到的最好装备', async () => {
     const { loadGameData } = await import('../src/rules/load.ts');
-    const { jumpTo } = await import('../src/rules/preset.ts');
+    const { jumpTo, expectedGold } = await import('../src/rules/preset.ts');
     const files = {
       index: new Map<string, string>(),
       init() {
@@ -207,15 +207,34 @@ describe.skipIf(!has)('测试用跳关', () => {
     const hero = c.members.find((m) => m.classId === 0)!;
     expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
     expect(jumpTo(files, data, stages, 0, newCampaign(0)).members.find((m) => m.classId === 0)!.level).toBe(1);
-    // 先跳到后期再跳回前面：不沿用后期的等级和装备，和直接跳过去一样（只保留银子）
+    // 衣服、头饰按阶梯配（负责人 2026-11-14）
+    const gear = (map: string, cls: number) => {
+      const s = stages.find((x) => x.mapName.toLowerCase() === map)!;
+      const m = jumpTo(files, data, stages, s.index, newCampaign(0)).members.find((x) => x.classId === cls)!;
+      return [m.slots[1], m.slots[2]].map((id) => data.items[id - 1]?.name);
+    };
+    expect(gear('n-add01', 0)).toEqual(['布衣', '一字巾']); // 还没到过城镇：照剧本
+    expect(gear('n02', 0)).toEqual(['戰袍', '遮日黑箬笠']); // 城镇 1
+    expect(gear('n-add04a', 0)).toEqual(['虎皮戰袍', '紅纓氈笠']); // 城镇 2
+    expect(gear('n-add06', 0)).toEqual(['金繡綠羅袍', '紅纓氈笠']); // 城镇 3
+    expect(gear('n05', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 城镇 4 起
+    expect(gear('n14', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 后面的店有更硬的甲也不换
+    expect(gear('n-add04a', 5)[0]).toBe('鑲銀生鐵甲'); // 朱武：剧本衣服防御更高，留着
+    expect(gear('n14', 2)).toEqual(['七星道袍', '紅纓氈笠']); // 公孫勝：七星道袍买不到，留着
+    expect(gear('n14', 12)[1]).toBe('萬字巾'); // 晁蓋：萬字巾买不到，留着
+    // 先跳到后期再跳回前面：不沿用后期的等级、装备和银子，和直接跳过去一样
     const early = stages.find((s) => s.mapName.toLowerCase() === 'n01')!.index;
     const back = jumpTo(files, data, stages, early, { ...c, gold: 500 });
     expect(back.members).toEqual(jumpTo(files, data, stages, early, newCampaign(0)).members);
     expect(back.members.find((m) => m.classId === 0)!.level).toBeLessThan(5);
-    expect(back.gold).toBe(500);
+    expect(back.gold).toBe(0); // 第一关之前没有收入
+    // 银子固定为打到上一关为止的期望收入
+    const p34 = stages.findIndex((s) => s.index === 34);
+    expect(c.gold).toBe(expectedGold(files, data, stages, p34 - 1));
+    expect(jumpTo(files, data, stages, 34, { ...newCampaign(0), gold: 999999 }).gold).toBe(c.gold);
 
     // 直接进城镇：N-add07（25）之后是城镇 4，下一关 26
-    const { jumpToTown, expectedGold } = await import('../src/rules/preset.ts');
+    const { jumpToTown } = await import('../src/rules/preset.ts');
     const t = jumpToTown(files, data, stages, 25, 4, 26, newCampaign(0));
     const pos25 = stages.findIndex((s) => s.index === 25);
     expect(t.stage).toBe(25);
@@ -226,8 +245,8 @@ describe.skipIf(!has)('测试用跳关', () => {
     expect(data.items[t.members.find((m) => m.classId === 0)!.slots[0] - 1].name).not.toBe('鐵拳');
     expect(t.gold).toBe(expectedGold(files, data, stages, pos25));
     expect(t.gold).toBeGreaterThan(1000);
-    // 手上钱更多就保留
-    expect(jumpToTown(files, data, stages, 25, 4, 26, { ...newCampaign(0), gold: 999999 }).gold).toBe(999999);
+    // 不沿用手上的钱
+    expect(jumpToTown(files, data, stages, 25, 4, 26, { ...newCampaign(0), gold: 999999 }).gold).toBe(t.gold);
     // 分路：小径（42）只算小径，不把大道（41）也算进去
     const p41 = stages.findIndex((s) => s.index === 41);
     const p42 = stages.findIndex((s) => s.index === 42);
