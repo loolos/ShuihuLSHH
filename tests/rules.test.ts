@@ -1114,3 +1114,13 @@ describe('道具表改动', () => {
     expect(it.seqA).toContain(7);
   });
 });
+
+describe('拿不到的装备上架', () => {
+  it('打狗棒从城镇 10 起在武器店卖', async () => {
+    const { withItemOverrides } = await import('../src/rules/data.ts');
+    const base = { id: 21, name: '打狗棒', category: 0, buyPrice: 0, sellPrice: 3000, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
+    const [it] = withItemOverrides([base]);
+    expect(it).toMatchObject({ category: 2, buyPrice: 6000, sellPrice: 3000 });
+    expect(it.seqA.slice(0, 2)).toEqual([10, 11]);
+  });
+});
