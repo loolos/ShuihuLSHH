@@ -288,3 +288,71 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
   #unit-panel .face { height: 60px; }
   #unit-panel .info { min-width: 0; }
 }
+
+/* ───────── 标题画面【新】 ───────── */
+#title {
+  position: fixed; inset: 0; z-index: 8; overflow: auto;
+  display: flex; flex-direction: column; align-items: center; gap: clamp(12px, 3vh, 28px);
+  padding: max(16px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom));
+  background:
+    radial-gradient(ellipse at 50% 18%, rgba(200, 150, 62, 0.22), transparent 55%),
+    radial-gradient(circle at 50% 120%, #3a1f14, transparent 60%),
+    linear-gradient(#1d1711, var(--bg));
+}
+#title[hidden] { display: none; }
+.title-head { text-align: center; margin-top: clamp(8px, 6vh, 64px); }
+.title-logo {
+  margin: 0; font-size: clamp(56px, 14vw, 112px); line-height: 1.05; letter-spacing: 0.18em; text-indent: 0.18em;
+  font-family: "STKaiti", "KaiTi", "Kaiti SC", "楷体", serif; font-weight: normal; color: #e9c77f;
+  text-shadow: 0 2px 0 #5a2d17, 0 0 24px rgba(200, 150, 62, 0.35);
+}
+.title-sub {
+  margin: 6px 0 0; font-size: clamp(18px, 4.5vw, 26px); letter-spacing: 0.6em; text-indent: 0.6em; color: var(--muted);
+  font-family: "STKaiti", "KaiTi", "Kaiti SC", "楷体", serif;
+}
+.title-faces { display: flex; justify-content: center; gap: clamp(4px, 1.5vw, 12px); margin-top: clamp(12px, 3vh, 24px); }
+.title-faces img {
+  width: clamp(40px, 11vw, 72px); image-rendering: pixelated; border: 1px solid #5a4832; border-radius: 4px;
+  background: #0c0a08; opacity: 0.9;
+}
+.title-body { width: min(420px, 100%); flex: 1 0 auto; display: flex; flex-direction: column; }
+#title[data-view="stages"] .title-body { width: min(860px, 100%); flex: 1 1 auto; min-height: 0; }
+#title[data-view="stages"] .title-head { margin-top: 0; }
+#title[data-view="stages"] .title-logo { font-size: clamp(32px, 7vw, 48px); }
+#title[data-view="stages"] .title-sub, #title[data-view="stages"] .title-faces { display: none; }
+.title-nav { display: flex; flex-direction: column; gap: 10px; }
+.title-nav button, .title-stages-top button {
+  font: inherit; font-size: 19px; letter-spacing: 0.15em; padding: 10px 18px; min-height: 52px; cursor: pointer;
+  color: var(--ink); background: rgba(42, 34, 25, 0.9); border: 1px solid #5a4832; border-radius: 6px;
+}
+.title-nav button small { display: block; margin-top: 3px; white-space: pre-line; line-height: 1.5; font-size: 12px; letter-spacing: 0; color: var(--muted); }
+.title-nav button.primary { border-color: var(--accent); box-shadow: inset 0 0 0 1px rgba(200, 150, 62, 0.4); }
+.title-nav button:hover:not(:disabled), .title-nav button:focus-visible { border-color: var(--accent); background: #3a2e20; outline: none; }
+.title-nav button:disabled { opacity: 0.45; cursor: default; }
+.title-confirm { text-align: center; }
+.title-confirm p { margin: 0 0 8px; }
+.title-save { color: var(--accent); white-space: pre-line; line-height: 1.6; margin-bottom: 16px !important; }
+.title-stages { display: flex; flex-direction: column; gap: 10px; min-height: 0; flex: 1 1 auto; }
+.title-stages-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.title-stages-top button { font-size: 15px; min-height: 36px; padding: 4px 14px; letter-spacing: 0; }
+.title-stages-top button:hover, .title-stages-top button:focus-visible { border-color: var(--accent); outline: none; }
+.title-stages-top .hint { margin: 0; }
+.title-stage-list {
+  flex: 1 1 auto; min-height: 200px; overflow: auto; padding: 4px 10px 12px;
+  border: 1px solid #4a3b29; border-radius: 6px; background: rgba(20, 17, 13, 0.75);
+}
+.title-stage-list h3 { margin: 12px 0 6px; font-size: 15px; font-weight: normal; color: var(--accent); }
+.title-stage-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; }
+.title-stage-grid button {
+  font: inherit; font-size: 14px; text-align: left; padding: 6px 10px; min-height: 36px; cursor: pointer;
+  color: var(--ink); background: var(--panel); border: 1px solid #4a3b29; border-radius: 4px;
+}
+.title-stage-grid button.story { color: var(--muted); }
+.title-stage-grid button.town { color: #9fc48a; }
+.title-stage-grid button:hover, .title-stage-grid button:focus-visible { border-color: var(--accent); outline: none; }
+.title-foot { width: min(860px, 100%); display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.title-tools { display: flex; gap: 6px; }
+.title-tools button {
+  font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); cursor: pointer;
+  border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; min-height: 30px;
+}
