@@ -471,7 +471,7 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(here('刘唐')).toBeUndefined();
     expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
     advance(b, 3, log);
-    for (const n of ['刘唐', '杜迁', '宋万']) expect(here(n)?.side, n).toBe('player');
+    for (const n of ['刘唐', '摸着天杜迁', '云里金刚宋万']) expect(here(n)?.side, n).toBe('player');
     expect(here('锦毛虎燕顺')?.side).toBe('ally');
     expect(here('旱地忽律朱贵')).toBeUndefined();
     advance(b, 4, log);
