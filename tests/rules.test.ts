@@ -466,72 +466,6 @@ describe('战斗流程', () => {
     expect(b.moveRange(p).green).toHaveLength(0);
   });
 
-  it('回合终了的默认行动：缺血休息；只缺气先用回气剂再防御，没有就休息；都满防御', () => {
-    const potion = { ...glove, type: 15, name: '藥', attack: 0, healHp: 10, healMp: 0 } as unknown as Item;
-    const small = { ...glove, type: 15, name: '小氣', attack: 0, healHp: 0, healMp: 5 } as unknown as Item;
-    const big = { ...glove, type: 15, name: '大氣', attack: 0, healHp: 0, healMp: 50 } as unknown as Item;
-    const full = { ...glove, type: 15, name: '滿氣', attack: 0, healHp: 0, healMp: -1 } as unknown as Item;
-    const d2: GameData = { ...data, items: [glove, potion, small, big, full] };
-    const units = [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 2), act(2, 0, 'player', 0, 4), act(3, 0, 'player', 0, 6), act(4, 1, 'enemy', 9, 9)];
-    const b = new Battle({ name: 't', board: new Board(10, 10), units, blocks: [], data: d2, seed: 1 });
-    b.begin();
-    const [hurt, tired, noPotion, fine] = [0, 1, 2, 3].map((k) => b.unit(k)!);
-    for (const u of [hurt, tired, noPotion, fine]) (u.hp = u.stats.maxHp), (u.mp = u.stats.maxMp);
-    // 缺血：休息（身上有回血药也不用）
-    hurt.hp -= 1;
-    hurt.mp = 0;
-    hurt.slots = [0, 0, 0, 2, 3];
-    // 只缺气：挑能补满缺口的最小一瓶（缺 10 → 大氣，不用小氣和滿氣），用完防御
-    tired.mp -= 10;
-    tired.slots = [0, 0, 0, 3, 5, 4];
-    // 只缺气但没有回气剂（回血药不算）：休息
-    noPotion.mp -= 1;
-    noPotion.slots = [0, 0, 0, 2];
-    expect(b.autoActUnits()).toEqual([hurt, tired, noPotion, fine]);
-
-    const ev0 = b.autoAct(hurt);
-    expect(ev0.some((e) => e.type === 'hp' && e.text === '休息')).toBe(true);
-    expect(hurt.hp).toBe(hurt.stats.maxHp);
-    expect(hurt.slots).toEqual([0, 0, 0, 2, 3]);
-
-    expect(b.mpPotionSlot(tired)).toBe(5);
-    const ev1 = b.autoAct(tired);
-    expect(tired.mp).toBe(tired.stats.maxMp);
-    expect(tired.slots[5]).toBe(0);
-    expect(tired.slots[3] + tired.slots[4]).toBe(3 + 5);
-    expect(tired.defending).toBe(true);
-    expect(ev1.some((e) => e.type === 'defend')).toBe(true);
-
-    b.autoAct(noPotion);
-    expect(noPotion.mp).toBe(noPotion.stats.maxMp);
-    expect(noPotion.defending).toBe(false);
-    expect(noPotion.slots[3]).toBe(2);
-
-    b.autoAct(fine);
-    expect(fine.defending).toBe(true);
-    for (const u of [hurt, tired, noPotion, fine]) expect(u.ended).toBe(true);
-    expect(b.autoActUnits()).toEqual([]);
-    expect(b.playerPhaseDone()).toBe(true);
-  });
-
-  it('回合终了：缺口比所有回气剂都大时用回得最多的；已经攻击过的人不再休息', () => {
-    const small = { ...glove, type: 15, name: '小氣', attack: 0, healHp: 0, healMp: 5 } as unknown as Item;
-    const mid = { ...glove, type: 15, name: '中氣', attack: 0, healHp: 0, healMp: 8 } as unknown as Item;
-    const d2: GameData = { ...data, items: [glove, small, mid] };
-    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data: d2, seed: 1 });
-    b.begin();
-    const p = b.unit(0)!;
-    p.hp = p.stats.maxHp;
-    p.mp = 0;
-    p.slots = [0, 0, 0, 2, 3];
-    expect(b.mpPotionSlot(p)).toBe(4);
-    p.slots = [0, 0, 0];
-    p.acted = true; // 假设已经出过手但还没结束（理论上不会出现），只能防御
-    b.autoAct(p);
-    expect(p.mp).toBe(0);
-    expect(p.defending).toBe(true);
-  });
-
   it('休息恢复上限的 1/5；道具不算行动、可连用', () => {
     const potion = { ...glove, type: 15, name: '藥', attack: 0, healHp: 10, healMp: 0 } as unknown as Item;
     const d2: GameData = { ...data, items: [glove, potion] };
@@ -753,6 +687,77 @@ describe('技能', () => {
   };
   const board = new Board(12, 12);
   const keys = (cs: { x: number; y: number }[]) => cs.map((c) => `${c.x},${c.y}`).sort();
+
+  it('回合终了的默认行动：缺血休息；只缺气用集气技，没有就休息；都满防御；不自动用道具', () => {
+    const mpPot = { ...glove, type: 15, name: '氣', attack: 0, healHp: 0, healMp: 50 } as unknown as Item;
+    const d2: GameData = { ...sdata, items: [glove, mpPot], classes: [sdata.classes[0], cls(1, { skills: [punch] }), cls(2)] };
+    const units = [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 2), act(2, 1, 'player', 0, 4), act(3, 0, 'player', 0, 6), act(4, 2, 'enemy', 9, 9)];
+    const b = new Battle({ name: 't', board: new Board(10, 10), units, blocks: [], data: d2, seed: 1 });
+    b.begin();
+    const [hurt, tired, noSkill, fine] = [0, 1, 2, 3].map((k) => b.unit(k)!);
+    for (const u of [hurt, tired, noSkill, fine]) (u.hp = u.stats.maxHp), (u.mp = u.stats.maxMp);
+    hurt.hp -= 1;
+    hurt.mp = 0;
+    tired.mp = 0;
+    tired.slots = [0, 0, 0, 2];
+    noSkill.mp -= 1;
+    noSkill.slots = [0, 0, 0, 2];
+    expect(b.autoActUnits()).toEqual([hurt, tired, noSkill, fine]);
+
+    // 缺血：休息，不用集气技
+    const ev0 = b.autoAct(hurt);
+    expect(ev0.some((e) => e.type === 'hp' && e.text === '休息')).toBe(true);
+    expect(hurt.hp).toBe(hurt.stats.maxHp);
+
+    // 只缺气：用集气技（回 1/3），道具里的回气剂不动
+    expect(b.mpSkill(tired)?.name).toBe('集氣技');
+    const ev1 = b.autoAct(tired);
+    expect(ev1.some((e) => e.type === 'message' && e.text.includes('自動使用集氣技'))).toBe(true);
+    expect(ev1.some((e) => e.type === 'attack')).toBe(true);
+    expect(tired.mp).toBe(Math.floor(tired.stats.maxMp / 3));
+    expect(tired.slots[3]).toBe(2);
+    expect(tired.defending).toBe(false);
+
+    // 只缺气、没有集气技（身上有回气剂也不用）：休息
+    b.autoAct(noSkill);
+    expect(noSkill.mp).toBe(noSkill.stats.maxMp);
+    expect(noSkill.slots[3]).toBe(2);
+    expect(noSkill.defending).toBe(false);
+
+    b.autoAct(fine);
+    expect(fine.defending).toBe(true);
+    for (const u of [hurt, tired, noSkill, fine]) expect(u.ended).toBe(true);
+    expect(b.autoActUnits()).toEqual([]);
+    expect(b.playerPhaseDone()).toBe(true);
+  });
+
+  it('回合终了的回气技能：挑用完气最多的，一样多挑耗气少的；付不起或没有净增就不用', () => {
+    const cheap = sk({ name: '小集氣', type: 8, power: 4, rangeMin: 0, rangeMax: 0, area: 0, mpCost: 0, learnLevel: 1, hits: [] });
+    const big = sk({ name: '大集氣', type: 8, power: 2, rangeMin: 0, rangeMax: 0, area: 0, mpCost: 10, learnLevel: 1, hits: [] });
+    const d2: GameData = { ...sdata, classes: [cls(0, { skills: [punch, cheap, big] }), cls(1), cls(2)] };
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data: d2, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    const max = p.stats.maxMp;
+    p.hp = p.stats.maxHp;
+    // 缺得多：大集氣净回 max/2 − 10，比小集氣的 max/4 多
+    p.mp = 10;
+    expect(Math.floor(max / 2) - 10).toBeGreaterThan(Math.floor(max / 4));
+    expect(b.mpSkill(p)?.name).toBe('大集氣');
+    // 只缺 1：两个都能补满，挑不耗气的
+    p.mp = max - 1;
+    expect(b.mpSkill(p)?.name).toBe('小集氣');
+    // 气不够付大集氣：只能用小集氣
+    p.mp = 5;
+    expect(b.mpSkill(p)?.name).toBe('小集氣');
+    // 已经出过手：不用技能也不休息，防御
+    p.mp = 0;
+    p.acted = true;
+    expect(b.mpSkill(p)).toBeUndefined();
+    b.autoAct(p);
+    expect(p.mp).toBe(0);
+    expect(p.defending).toBe(true);
+  });
 
   it('范围形状：直线、扇形、菱形、迴旋', () => {
     const from = { x: 5, y: 5 };
