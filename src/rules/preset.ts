@@ -1,6 +1,6 @@
 // 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
-// 跳关不沿用之前的人物状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备），只保留银子。
+// 跳关不沿用之前的任何状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备）；银子也按关卡固定。
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
@@ -34,9 +34,11 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线期望值估算生成，见 tools/gen-entry-levels.ts）；
  *   表里没有的人（或没有模拟到的关）用这一关敌人的平均等级（foeLevel）；都不低于剧本里写的等级；
  * - 再校验：我方平均等级和这一关敌人平均等级相差不超过 JUMP_LEVEL_GAP（balanceLevels），超过就全员一起升 / 降；
- * - 装备 = 剧本里的初始装备；之前去过的最后一个城镇的武器店里，本职业能用的攻击最高的武器、防御最高的衣服和头饰比它好就换上；
+ * - 装备 = 剧本里的初始装备；武器：之前去过的最后一个城镇的武器店里本职业能用的攻击最高的，比它好就换上；
+ *   衣服、头饰按 ARMOR_LINE / HEAD_LINE 阶梯取那家店有卖的最后一件（gearFromLine）；
  * - 物品栏补 2 个药铺里回复最多的药；
- * - 技能随等级自动领悟。
+ * - 技能随等级自动领悟；
+ * - 银子 = 打到上一关为止的期望收入 expectedGold（掉钱基数 + 过关奖励，不扣沿途花销），不沿用手上的钱。
  */
 export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number } = {}): CampaignState {
   const pos = stages.findIndex((s) => s.index === target);
@@ -55,7 +57,8 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     if (t && TOWN_ORDER.indexOf(t) > TOWN_ORDER.indexOf(town)) town = t;
   }
 
-  const shop = town ? stock(data, 1, town).map((id) => itemOf(data, id)!) : [];
+  const shopIds = town ? stock(data, 1, town) : [];
+  const shop = shopIds.map((id) => itemOf(data, id)!);
   const drugs = town ? stock(data, 3, town) : [];
   const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
 
@@ -71,19 +74,15 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     u.items.forEach((id, k) => id && (slots[k] = id));
     while (slots.length < SLOT_COUNT) slots.push(0);
     const forge = slots.map(() => 0);
-    for (let k = 0; k < 3; k++) {
-      const score = (id: number) => {
-        const it = itemOf(data, id);
-        return it ? (k === 0 ? it.attack : it.defense) : -1;
-      };
-      const best = shop.filter((it) => equipSlotOf(it) === k && canEquip(cls, it, data)).sort((a, b) => (k === 0 ? b.attack - a.attack : b.defense - a.defense))[0];
-      if (!best) continue;
-      const id = data.items.indexOf(best) + 1;
-      if (score(id) > score(slots[k])) {
-        slots[k] = id;
-        forge[k] = 0;
-      }
+    // 衣服、头饰按固定的阶梯配（负责人 2026-11-14），武器仍取武器店里最好的
+    for (let k = 1; k < 3; k++) {
+      const id = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k]);
+      if (id !== slots[k]) (slots[k] = id), (forge[k] = 0);
     }
+    const atk = (id: number) => itemOf(data, id)?.attack ?? -1;
+    const weapon = shop.filter((it) => equipSlotOf(it) === 0 && canEquip(cls, it, data)).sort((a, b) => b.attack - a.attack)[0];
+    const wid = weapon ? data.items.indexOf(weapon) + 1 : 0;
+    if (wid && atk(wid) > atk(slots[0])) (slots[0] = wid), (forge[0] = 0);
     if (potion) {
       let n = slots.filter((id, k) => k >= 3 && id === potion).length;
       for (let k = 3; k < SLOT_COUNT && n < 2; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
@@ -92,7 +91,29 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     script.set(u.type, u.level);
   }
   balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
-  return { version: 1, stage: target, gold: c.gold, members: [...members.values()] };
+  // 银子固定为打到上一关为止的期望收入（负责人 2026-11-14），不沿用手上的钱
+  return { version: 1, stage: target, gold: pos > 0 ? expectedGold(files, data, stages, pos - 1) : 0, members: [...members.values()] };
+}
+
+/** 跳关配的衣服阶梯（负责人 2026-11-14）：戰袍 → 虎皮戰袍 → 金繡綠羅袍 → 綠羅花戰袍（城镇 1 / 2 / 3 / 4 的武器店开始有卖） */
+export const ARMOR_LINE = ['戰袍', '虎皮戰袍', '金繡綠羅袍', '綠羅花戰袍'];
+/** 跳关配的头饰阶梯（负责人 2026-11-14）：前期遮日黑箬笠（城镇 1 起，移动 +1），后期紅纓氈笠（城镇 2 起，移动 +2） */
+export const HEAD_LINE = ['遮日黑箬笠', '紅纓氈笠'];
+
+/**
+ * 从阶梯 line 里取武器店 shop 有卖的最后一件，换掉剧本装备 current：
+ * - 剧本装备是店里买不到的（买价 0，如公孫勝的七星道袍、晁蓋的萬字巾）就留着；
+ * - 剧本装备防御更高的留着（衣服；如朱武的鑲銀生鐵甲要到綠羅花戰袍才换）；头饰不比防御，一律换成斗笠；
+ * - 店里一件都没有（还没到过城镇）就不换。
+ */
+export function gearFromLine(data: GameData, line: string[], shop: number[], current: number): number {
+  const ids = line.map((name) => data.items.findIndex((it) => it.name === name) + 1).filter((id) => id > 0 && shop.includes(id));
+  const pick = ids.at(-1);
+  if (!pick) return current;
+  const cur = itemOf(data, current);
+  if (cur && !cur.buyPrice) return current;
+  if (cur && equipSlotOf(cur) === 1 && cur.defense > itemOf(data, pick)!.defense) return current;
+  return pick;
 }
 
 /**
@@ -150,13 +171,13 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
  * - 人物和装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
  * - 银子 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
- *   手上的银子更多就保留。
+ *   固定这个数，不沿用手上的钱（负责人 2026-11-14）。
  */
 export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
   const pos = stages.findIndex((s) => s.index === stage);
   if (pos < 0) return c;
   const base = jumpTo(files, data, stages, stage, c, { levelFrom: next });
-  return { ...base, town, gold: Math.max(c.gold, expectedGold(files, data, stages, pos)) };
+  return { ...base, town, gold: expectedGold(files, data, stages, pos) };
 }
 
 /** 打到第 pos 关（含）为止，敌人掉钱的期望加过关奖励的总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
