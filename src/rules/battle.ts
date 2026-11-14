@@ -83,6 +83,8 @@ export const TURN_HINT_STAGES = ['N13'] as const;
 
 export interface StageInput {
   name: string;
+  /** 过关奖励银子；不写时按关卡名查 STAGE_CLEAR_GOLD（扩展包关卡用 rewards.gold） */
+  clearGold?: number;
   board: Board;
   units: ActUnit[];
   /** .pab（Big5）：用于逻辑 */
@@ -160,6 +162,7 @@ export class Battle {
   teamExp = 0;
   /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
   clearGold = 0;
+  private clearGoldOverride?: number;
   private tr: (s: string) => string;
   private out: BattleEvent[] = [];
   /** 开场时有我方人物（纯过场的 Act 关卡没有，不做全军覆没判定） */
@@ -179,6 +182,7 @@ export class Battle {
 
   constructor(input: StageInput) {
     this.name = input.name;
+    this.clearGoldOverride = input.clearGold;
     this.header = input.header;
     this.board = input.board;
     this.data = input.data;
@@ -1393,7 +1397,7 @@ export class Battle {
     if (this.status !== 'playing') return;
     if (result === 'won') {
       this.settleTeamExp();
-      this.clearGold = this.hadPlayers ? stageClearGold(this.name) : 0;
+      this.clearGold = this.hadPlayers ? (this.clearGoldOverride ?? stageClearGold(this.name)) : 0;
       if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到銀子 ${this.clearGold} 兩！` });
     }
     this.status = result;

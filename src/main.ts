@@ -20,7 +20,7 @@ import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
-import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
+import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -134,6 +134,11 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
+  /** 主线插关（docs/game-design.md §15.8）：entry = mainline 的包里每个关卡插在 before 那一关前面 */
+  const inserts: (InsertEntry & { pov: boolean; title: string })[] = listPacks()
+    .filter((e) => e.pack.entry === 'mainline')
+    .flatMap((e) => e.stages.filter((s) => s.before).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before!, pov: !!s.pov, title: s.title })));
+  const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
   for (const s of stages) {
@@ -141,6 +146,9 @@ function startGame(assets: Assets) {
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
     const items = chapters.at(-1)!.items;
+    // 插在这一关前面的主线插关（类型叫「遭遇战」，不占原版的战役编号）
+    for (const e of inserts.filter((x) => x.before.toLowerCase() === s.mapName.toLowerCase()))
+      items.push({ label: `遭遇战 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 遭遇战 · ${e.title}${e.pov ? '（视角关）' : ''}` });
     items.push({ label: l.short, value: String(s.index), title: l.full });
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
@@ -160,12 +168,23 @@ function startGame(assets: Assets) {
   let campaign = loadSave() ?? newCampaign(stages[0].index);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
+    // 主线插关：人物按它前面那一关（before）配，再把插关排在最前
+    if (value.startsWith('ins:')) {
+      const e = inserts.find((x) => x.ref === value.slice(4));
+      const s = e && stages.find((x) => x.mapName.toLowerCase() === e.before.toLowerCase());
+      if (e && s) {
+        const done = (c.inserts ?? []).filter((r) => r !== e.ref);
+        return { ...jumpTo(assets.files, assets.data, stages, s.index, c), insert: e.ref, inserts: done };
+      }
+    }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
     if (t) return jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c);
     return jumpTo(assets.files, assets.data, stages, Number(value), c);
   };
   const asked = params.get('stage')?.toLowerCase();
-  if (asked) {
+  if (asked?.startsWith('ins:')) {
+    if (campaign.insert !== asked.slice(4)) campaign = jump(asked, campaign);
+  } else if (asked) {
     const inTown = asked.startsWith('town:');
     const key = inTown ? asked.slice(5) : asked;
     const s = stages.find((x) => x.mapName.toLowerCase() === key || String(x.index) === key);
@@ -238,7 +257,9 @@ function startGame(assets: Assets) {
     const { next, route } = nextOf(stageOf(c.stage));
     // 城镇 2、5：离开时问走大道还是小径，小径进写死的另一关
     const k = route ? await ask(route.prompt) : 0;
-    goTo({ ...c, town: undefined, stage: k === 1 && route ? route.alt : next[0].index });
+    const stage = k === 1 && route ? route.alt : next[0].index;
+    // 下一关前面有还没打过的主线插关：先打插关
+    goTo({ ...c, town: undefined, stage, insert: pendingInsert(c, inserts, stageOf(stage).mapName) });
   };
   // 酒店说书借用战斗的对白框和选项面板（src/rules/storyteller.ts）
   const town = new TownUI(assets, (cls) => ui.portrait(cls), {
@@ -369,11 +390,74 @@ function startGame(assets: Assets) {
     const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
     ui.result(true, text + credits, [{ label: '再打一次', run: () => void runPack(value) }, { label: '回到标题', run: () => (location.href = location.pathname) }], '外传通关');
   };
+  /** 主线插关（docs/game-design.md §15.8）：打完回到主线，接着进 campaign.stage 那一关 */
+  const runInsert = async (ref: string) => {
+    const [packId, stageId] = ref.split('/');
+    const e = inserts.find((x) => x.ref === ref);
+    ui.hideResult();
+    town.hide();
+    sel.hidden = false;
+    sel.value = insValue(ref);
+    const ticket = ++loading;
+    try {
+      setupEl.hidden = false;
+      progress('载入关卡…', 0);
+      if (pack?.rt.id !== packId) pack = await openPack(assets, packId);
+      const rt = pack.rt;
+      const stage = rt.stages.find((s) => s.id === stageId);
+      if (!stage || !e) throw new Error(`没有插关 ${ref}`);
+      const pa: Assets = { ...assets, data: rt.data, pack };
+      await preloadStage(pa, stage.map.base, progress, stageClasses(rt, stage));
+      if (ticket !== loading) return;
+      setupEl.hidden = true;
+      packBgm = stage.bgm ?? 'battle';
+      void music.play(packBgm);
+      // 主线人物关：我方按职业号套用主线进度；视角关用关卡里写的固定等级
+      const party = e.pov ? undefined : partyOf(campaign);
+      const join = e.pov ? undefined : joinLevel(campaign);
+      const data = {
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr }), party, joinLevel: join }),
+        onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
+      };
+      if (scene()) scene()!.scene.restart(data);
+      else game.scene.add('battle', BattleScene, true, data);
+      const u = new URL(location.href);
+      u.searchParams.set('stage', insValue(ref));
+      history.replaceState(null, '', u);
+    } catch (err) {
+      setupEl.hidden = false;
+      progress(`载入关卡失败：${(err as Error).message}`, 0);
+    }
+  };
+  const onInsertEnd = (ref: string, pov: boolean, battle: Battle, won: boolean, text: string) => {
+    const before = campaign;
+    if (!won) {
+      void music.play('defeat');
+      const t = battle.rewindTarget();
+      const retry = { label: '重新开始本关', run };
+      return ui.result(false, text, t === null ? [retry] : [{ label: `时光倒流（回到第 ${t} 回合）`, run: rewind }, retry]);
+    }
+    void music.play('victory');
+    // 视角关打完不写回人物和银子；主线人物关照常记下，出场名单并进上一关的名单
+    const after = pov ? campaign : recordResult(campaign, battle, { keepActive: true });
+    const c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
+    campaign = c;
+    writeSave(c);
+    const replay = () => {
+      campaign = before;
+      writeSave(before);
+      run();
+    };
+    const cont = { label: `继续：${label(stageOf(c.stage))}`, run: () => goTo(c) };
+    ui.result(true, text, [cont, { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => goTo(x)) }, { label: '再打一次本关', run: replay }]);
+  };
   const run = async () => {
     packBgm = null;
     sel.hidden = false;
     ui.hideResult();
     town.hide();
+    if (campaign.insert) return runInsert(campaign.insert);
     if (campaign.town) {
       // 存档停在城镇里
       sel.value = towns.has(campaign.stage) ? townValue(campaign.stage) : String(campaign.stage);
@@ -451,9 +535,10 @@ function startGame(assets: Assets) {
   };
   // 网址带 ?stage=（刷新、测试脚本）时直接进关，不经过标题画面
   if (asked && isPackValue(asked)) return beginPack(asked);
+  // asked 以 ins: 开头时 campaign 已经排好了插关
   if (asked) return begin(campaign);
   // 选关最后一组：外传（扩展包，已通关的打勾）
-  const side = listPacks().flatMap(({ pack: p, stages: ss }) =>
+  const side = listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
     ss.map((s) => ({ label: `${p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
   );
   const save = loadSave();
@@ -473,7 +558,8 @@ function startGame(assets: Assets) {
   function saveSummary(c: CampaignState) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : l.full;
+    const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} 遭遇战 · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))

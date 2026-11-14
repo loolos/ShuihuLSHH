@@ -1109,6 +1109,17 @@ describe('装备命中', () => {
   });
 });
 
+describe('主线插关的排队（campaign.ts pendingInsert）', () => {
+  it('进 before 那一关时先排插关；打过的不再排；同名不分大小写', async () => {
+    const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');
+    const list = [{ ref: 'mainline/wawasi', before: 'N-add06' }, { ref: 'mainline/sanruan', before: 'Act10-1' }];
+    const c = newCampaign(23);
+    expect(pendingInsert(c, list, 'n-add06')).toBe('mainline/wawasi');
+    expect(pendingInsert(c, list, 'N-add07')).toBeUndefined();
+    expect(pendingInsert({ ...c, inserts: ['mainline/wawasi'] }, list, 'N-add06')).toBeUndefined();
+  });
+});
+
 describe('道具表改动', () => {
   it('青箬笠改名碧雲箬笠上架', async () => {
     const { withItemOverrides } = await import('../src/rules/data.ts');

@@ -1,0 +1,11 @@
+{
+ "id": "mainline",
+ "name": "主线插关",
+ "description": "插进主线的小遭遇战：只出场三四个好汉，呼应《水浒传》原著情节（docs/game-design.md §15.8）。",
+ "entry": "mainline",
+ "classes": [],
+ "stages": [
+  "stages/wawasi.json",
+  "stages/sanruan.json"
+ ]
+}
