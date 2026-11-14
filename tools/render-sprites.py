@@ -47,6 +47,8 @@ def parse_args():
                    help='按什么量尺寸：bones = 待机姿势的骨骼（Sketchfab 老虎这类网格单位不可靠的模型），mesh = 静止网格（UAL 假人这类骨骼带缩放的模型）')
     p.add_argument('--sun', type=float, default=2.5, help='主光强度')
     p.add_argument('--ambient', type=float, default=0.9, help='环境光强度（小一点明暗对比更强）')
+    p.add_argument('--toon', type=int, default=0, help='平涂明暗档数（如 3）；0 = 照常的连续明暗。需要 --outfit')
+    p.add_argument('--outline', action='store_true', help='外轮廓和衣物分界画深色描边')
     p.add_argument('--outfit', help='上色方案 JSON：按骨骼给通用假人模型的各部位上色（见 apply_outfit）')
     return p.parse_args(argv)
 
@@ -67,6 +69,9 @@ def apply_outfit(path):
         每个顶点按顺序找第一条匹配的规则。bones 匹配权重最大的骨骼；when 是 Python 表达式，
         可用 x y z（世界坐标）、ax（|x|）、b（骨骼名）。inflate 沿法线把顶点往外推；folds（0–1）是布料褶皱强度。
       "shading": {"ao": 缝隙变暗 0–1, "edge": 轮廓变暗 0–1, "fold_scale": 褶皱疏密, "fold_strength": 褶皱深浅, "fold_distortion": 褶皱扭曲}（可省）
+      "layers": [{"name": 名字, "bones": [...], "when": "表达式", "offset": 米或表达式（往外推多少）, "thickness": 米,
+                  "color": [r,g,b], "colors": [{"when": "表达式", "color": [r,g,b]}, ...]（包边等，先匹配先用）, "folds": 0–1}, ...]
+        分层衣物：从身体复制出选中部位的外壳，往外推再加厚，权重照抄。里层 offset 小、外层大，就能一层压一层。
       "props": [{"bone": "Head", "shape": "sphere", "radius": 米, "at": [x,y,z], "scale": [sx,sy,sz], "color": [r,g,b]}, ...]
     颜色 0–255。"""
     import re
@@ -110,10 +115,69 @@ def apply_outfit(path):
         bump = N.new('ShaderNodeBump'); bump.inputs['Strength'].default_value = sh['fold_strength']
         bump.inputs['Distance'].default_value = 0.02
         L(hm.outputs['Value'], bump.inputs['Height']); L(bump.outputs['Normal'], bsdf.inputs['Normal'])
+        # 平涂明暗（--toon）要第二遍只渲固有色：ToonFlat = 1 时输出纯顶点色（自发光）
+        em = N.new('ShaderNodeEmission'); L(ca.outputs['Color'], em.inputs['Color'])
+        tf = N.new('ShaderNodeValue'); tf.name = 'ToonFlat'; tf.outputs[0].default_value = 0
+        mix = N.new('ShaderNodeMixShader')
+        L(tf.outputs[0], mix.inputs['Fac']); L(bsdf.outputs['BSDF'], mix.inputs[1]); L(em.outputs['Emission'], mix.inputs[2])
+        L(mix.outputs['Shader'], N['Material Output'].inputs['Surface'])
         return mat
 
     lin = lambda col: [(c / 255) ** 2.2 for c in col] + [1]
-    for ob in [o for o in bpy.context.scene.objects if o.type == 'MESH']:
+    bodies = [o for o in bpy.context.scene.objects if o.type == 'MESH']
+
+    def vertex_env(ob, v, names):
+        bone = names.get(max(v.groups, key=lambda g: g.weight).group, '') if v.groups else ''
+        p = ob.matrix_world @ v.co
+        return bone, {'x': p.x, 'y': p.y, 'z': p.z, 'ax': abs(p.x), 'b': bone}
+
+    # 分层衣物：从身体网格复制出一块外壳（只留选中的部位），沿法线往外推，加厚度，蒙皮权重照抄，所以跟着骨骼动
+    for lay in cfg.get('layers', []):
+        rx = re.compile('|'.join(lay['bones'])) if lay.get('bones') else None
+        cond = compile(lay['when'], 'when', 'eval') if lay.get('when') else None
+        off = compile(str(lay.get('offset', 0.02)), 'offset', 'eval')
+        cols = [(compile(c['when'], 'when', 'eval'), c['color']) for c in lay.get('colors', [])]
+        for body in bodies:
+            ob = body.copy(); ob.data = body.data.copy(); ob.name = lay.get('name', 'Layer')
+            for col in body.users_collection:
+                col.objects.link(ob)
+            me = ob.data
+            names = {g.index: g.name for g in ob.vertex_groups}
+            keep, disp, vcol = set(), {}, {}
+            for v in me.vertices:
+                bone, env = vertex_env(ob, v, names)
+                if rx and not rx.fullmatch(bone):
+                    continue
+                if cond and not eval(cond, {}, env):
+                    continue
+                keep.add(v.index)
+                disp[v.index] = v.normal.copy() * eval(off, {}, env)
+                vcol[v.index] = next((c for w, c in cols if eval(w, {}, env)), lay['color'])
+            import bmesh
+            bm = bmesh.new(); bm.from_mesh(me)
+            bm.verts.ensure_lookup_table()
+            for v in bm.verts:
+                if v.index in keep:
+                    v.co += disp[v.index]
+            # 颜色先按原编号写进属性，再删点
+            ca = bm.verts.layers.float_color.new('Outfit')
+            fl = bm.verts.layers.float.new('Folds')
+            for v in bm.verts:
+                if v.index in keep:
+                    v[ca] = lin(vcol[v.index]); v[fl] = lay.get('folds', 0)
+            bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.index not in keep], context='VERTS')
+            bm.to_mesh(me); bm.free()
+            if not len(me.vertices):
+                bpy.data.objects.remove(ob)
+                continue
+            me.materials.clear()
+            me.materials.append(outfit_material('Layer'))
+            if lay.get('thickness'):
+                sol = ob.modifiers.new('Thick', 'SOLIDIFY')
+                sol.thickness = lay['thickness']; sol.offset = -1; sol.use_rim = True
+                ob.modifiers.move(len(ob.modifiers) - 1, 0)
+
+    for ob in bodies:
         me = ob.data
         names = {g.index: g.name for g in ob.vertex_groups}
         attr = me.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
@@ -121,9 +185,7 @@ def apply_outfit(path):
         moves = []
         for v in me.vertices:
             col, inflate, folds = cfg.get('default', [200, 160, 120]), 0, 0
-            bone = names.get(max(v.groups, key=lambda g: g.weight).group, '') if v.groups else ''
-            p = ob.matrix_world @ v.co
-            env = {'x': p.x, 'y': p.y, 'z': p.z, 'ax': abs(p.x), 'b': bone}
+            bone, env = vertex_env(ob, v, names)
             for rx, cond, r in rules:
                 if rx and not rx.fullmatch(bone):
                     continue
@@ -340,6 +402,56 @@ def render_frame(scene, tmp):
     return px.reshape(CH, 2, CW, 2, 4).mean(axis=(1, 3))
 
 
+def set_flat(on):
+    for m in bpy.data.materials:
+        if m.node_tree and 'ToonFlat' in m.node_tree.nodes:
+            m.node_tree.nodes['ToonFlat'].outputs[0].default_value = 1 if on else 0
+
+
+def render_flat(scene, tmp):
+    """只渲固有色（自发光、无光照），给平涂明暗算亮度比用。"""
+    set_flat(True)
+    s = scene.cycles.samples
+    scene.cycles.samples = 4
+    img = render_frame(scene, tmp)
+    scene.cycles.samples = s
+    set_flat(False)
+    return img
+
+
+def lum(rgb):
+    return rgb[..., 0] * 0.299 + rgb[..., 1] * 0.587 + rgb[..., 2] * 0.114
+
+
+def toon(lit, flat, bands, do_outline):
+    """亮度比（光照 / 固有色）分成几档：最暗 0.55，最亮 1.05，中间均分；颜色 = 固有色 × 档位。"""
+    out = lit.copy()
+    body = lit[..., 3] > 0.5
+    ratio = lum(lit[..., :3]) / np.maximum(lum(flat[..., :3]), 1e-3)
+    cuts = np.linspace(0.35, 0.95, bands)[1:]          # 分界
+    levels = np.linspace(0.55, 1.05, bands)
+    lv = levels[np.searchsorted(cuts, ratio)]
+    out[..., :3] = np.where(body[..., None], np.clip(flat[..., :3] * lv[..., None], 0, 1), lit[..., :3])
+    return outline(out, flat) if do_outline else out
+
+
+def outline(img, flat):
+    """外轮廓：身体像素挨着非身体 → 压暗到 35%。衣物分界：固有色和右边 / 下边相差大 → 压暗到 60%。"""
+    out = img.copy()
+    body = img[..., 3] > 0.5
+    pad = np.pad(body, 1)
+    edge = body & ~(pad[:-2, 1:-1] & pad[2:, 1:-1] & pad[1:-1, :-2] & pad[1:-1, 2:])
+    if flat is not None:
+        f = flat[..., :3]
+        dx = np.zeros(body.shape, bool); dy = np.zeros(body.shape, bool)
+        dx[:, :-1] = (np.abs(f[:, :-1] - f[:, 1:]).sum(-1) > 0.25) & body[:, 1:]
+        dy[:-1] = (np.abs(f[:-1] - f[1:]).sum(-1) > 0.25) & body[1:]
+        inner = body & (dx | dy) & ~edge
+        out[inner, :3] *= 0.6
+    out[edge, :3] *= 0.35
+    return out
+
+
 def main():
     args = parse_args()
     os.makedirs(args.out, exist_ok=True)
@@ -376,7 +488,12 @@ def main():
                     lo, hi = evaluated_bounds(scene)
                     o = world_to_camera_view(scene, cam, Vector((0, 0, 0)))
                     print('DEBUG', name, dir_name, k, 'lo', tuple(round(v, 2) for v in lo), 'origin px', round(o.x * CW, 1), round((1 - o.y) * CH, 1))
-                idx = quantize(render_frame(scene, tmp), pal, usable)
+                img = render_frame(scene, tmp)
+                if args.toon:
+                    img = toon(img, render_flat(scene, tmp), args.toon, args.outline)
+                elif args.outline:
+                    img = outline(img, None)
+                idx = quantize(img, pal, usable)
                 strip[:, k * CW:(k + 1) * CW] = to_rgba(idx, pal)
             file = f'{name}-{dir_name}-{n}f.png'
             Image.fromarray(strip, 'RGBA').save(os.path.join(args.out, file))
