@@ -164,7 +164,10 @@ export type PackTrigger =
   | 'enemiesDefeated'
   | { turn: number }
   | { dead: string }
-  | { enter: string; area: [number, number, number, number] }
+  /** 进入区域；写数组时这几个人都到了区域里才触发 */
+  | { enter: string | string[]; area: [number, number, number, number] }
+  /** 任一在场的我方单位走到这个人身边（相邻一格） */
+  | { near: string }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number };
 
@@ -172,7 +175,8 @@ export type PackTrigger =
  * 指令（数组，第一项是名字）：
  * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
- * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]；["flag", 名字] 设剧本标志（配合区块的 if / unless）
+ * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]；["flag", 名字] 设剧本标志（配合区块的 if / unless）；
+ * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  */
 export type PackOpJson = [string, ...unknown[]];
 

@@ -335,8 +335,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
-    trigger = { kind: 'area', char: r.charOf(on.enter), x1, y1, x2, y2 };
-  } else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
+    const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
+    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
+  } else if ('near' in on) trigger = { kind: 'near', char: r.charOf(on.near) };
+  else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
   const select = (id: unknown) => op(12, 1000 + r.unitRef(id).act.group);
@@ -389,6 +391,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'setEquip':
         select(a[0]);
         ops.push({ op: 100, flag: Number(a[1]), value: Number(a[2]) ? r.itemRef(a[2]) : 0 });
+        break;
+      case 'bind':
+        select(a[0]);
+        op(105);
+        break;
+      case 'cleanse':
+        select(a[0]);
+        op(106);
         break;
       case 'buff': {
         select(a[0]);

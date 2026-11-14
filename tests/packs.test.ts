@@ -297,6 +297,55 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(new Set(sk[2].hits.map((h) => h.dir)).size).toBe(4);
   });
 
+  it('绑住、走到身边松绑、几人都到区域才触发、纯剧情关', () => {
+    const stage = {
+      id: 't',
+      title: '测试',
+      map: { base: 'N-add02' },
+      units: [
+        { id: 'sj', class: 'songjiang', side: 'player' as const, x: 4, y: 7, level: 20 },
+        { id: 'dz', class: 'daizong', side: 'player' as const, x: 8, y: 7, level: 20 },
+        { id: 'lk', class: 'likui', side: 'player' as const, x: 4, y: 10, level: 20 },
+        { id: 'e', class: 32, side: 'enemy' as const, x: 14, y: 14, level: 10 },
+      ],
+      script: [
+        { on: 'start' as const, do: [['bind', 'sj'], ['bind', 'dz']] as [string, ...unknown[]][] },
+        { on: { near: 'sj' }, do: [['narrate', '割断绳索'], ['cleanse', 'sj']] as [string, ...unknown[]][] },
+        { on: { enter: ['sj', 'dz'], area: [0, 0, 6, 6] as [number, number, number, number] }, do: [['victory', '逃出']] as [string, ...unknown[]][] },
+      ],
+    };
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    b.begin();
+    const by = (n: string) => b.units.find((u) => u.name === n)!;
+    const sj = by('宋江'), dz = by('戴宗'), lk = by('李逵');
+    expect(sj.stunTurns).toBeGreaterThan(100);
+    expect(b.canAct(sj)).toBe(false);
+    b.move(lk, 4, 8);
+    expect(sj.stunTurns).toBe(0);
+    expect(b.canAct(sj)).toBe(true);
+    expect(dz.stunTurns).toBeGreaterThan(100);
+    // 只有宋江到了区域不算，两人都到才过关
+    sj.x = 3, sj.y = 3;
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(b.status).toBe('playing');
+    dz.x = 2, dz.y = 2;
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(b.status).toBe('won');
+
+    // 纯剧情关：没有敌人，开场演完就过关
+    const story = {
+      id: 's',
+      title: '过场',
+      map: { base: 'N-add02' },
+      units: [{ id: 'sj', class: 'songjiang', side: 'player' as const, x: 4, y: 7, level: 20 }],
+      script: [{ on: 'start' as const, do: [['say', 'sj', '题诗'], ['victory', '']] as [string, ...unknown[]][] }],
+    };
+    const c = new Battle(compileStage(rt, story, files, { seed: 1, text: tr }));
+    const ev = c.begin();
+    expect(ev.some((e) => (e as { text?: string }).text === '题诗')).toBe(true);
+    expect(c.status).toBe('won');
+  });
+
   it('试手关：敌人全部倒下即过关', () => {
     const b = new Battle(compileStage(rt, rt.stages[0], files, { seed: 1, text: tr }));
     b.begin();

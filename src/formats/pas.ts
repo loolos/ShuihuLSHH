@@ -79,7 +79,8 @@ export function parsePasHeader(buf: Buffer): PasHeader {
 export type PasTrigger =
   | { kind: 'turn'; turn: number } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
-  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number }
+  /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
+  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[] }
   /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
   /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
@@ -88,7 +89,9 @@ export type PasTrigger =
    * 扩展包【新】：角色号 char 的单位出手之后——用过 skills 里全部技能（技能号），或累计出手 count 次（含普通攻击、反击）。
    * 原版剧本没有这种触发，只由扩展包关卡（src/packs/）生成。
    */
-  | { kind: 'used'; char: number; skills?: number[]; count?: number };
+  | { kind: 'used'; char: number; skills?: number[]; count?: number }
+  /** 扩展包【新】：任一在场的我方单位走到角色号 char 的单位身边（相邻一格）。劫法场"走过去松绑"用 */
+  | { kind: 'near'; char: number };
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
