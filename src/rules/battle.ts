@@ -633,9 +633,9 @@ export class Battle {
   }
 
   /**
-   * 回合终了时还没行动的我方人物的默认行动【新】（负责人 2026-11-13）：
-   * 体力不满 → 休息；只有气力不满 → 身上有回气剂（只回气、不回血的道具）就先对自己用，再防御，没有就休息；
-   * 都满 → 防御。用道具本身不算行动，所以用完回气剂接着防御（此时体力是满的，按第 3 条）。
+   * 回合终了时还没行动的我方人物的默认行动【新】（负责人 2026-11-13，第 2 条 2026-11-14 改为用回气技能）：
+   * 体力不满 → 休息；只有气力不满 → 有能用的集气技（回气的技能）就对自己用，没有就休息；都满 → 防御。
+   * 道具不会被自动使用。
    */
   autoAct(u: Unit): BattleEvent[] {
     if (u.side !== 'player' || !this.canAct(u)) return [];
@@ -644,8 +644,8 @@ export class Battle {
     const defend = () => [note(`${u.name}自動防禦。`), ...this.defend(u)];
     if (!u.acted && u.hp < u.stats.maxHp) return rest();
     if (u.mp < u.stats.maxMp) {
-      const slot = this.mpPotionSlot(u);
-      if (slot >= 0) return [...this.useItem(u, slot, u), ...defend()];
+      const skill = this.mpSkill(u);
+      if (skill) return [note(`${u.name}自動使用${this.tr(skill.name)}。`), ...this.useSkill(u, skill, u)];
       if (!u.acted) return rest();
     }
     return defend();
@@ -657,23 +657,16 @@ export class Battle {
   }
 
   /**
-   * 身上最合适的回气剂：只回气、不回血的道具里，挑能补满缺口的最小的一瓶；都补不满就挑回得最多的。
-   * "气力全满"（healMp < 0）当作无穷大。没有返回 -1。
+   * 回合终了自动用的回气技能：已习得、气力付得起、能对自己施放、用完气力净增的集气技里，
+   * 挑用完后气力最多的；一样多就挑耗气少的。没有返回 undefined。
    */
-  mpPotionSlot(u: Unit): number {
-    const lack = u.stats.maxMp - u.mp;
-    const amount = (k: number) => {
-      const v = itemOf(this.data, u.slots[k])!.healMp;
-      return v < 0 ? Infinity : v;
-    };
-    const slots = this.usableSlots(u).filter((k) => {
-      const it = itemOf(this.data, u.slots[k])!;
-      return it.healMp !== 0 && !it.healHp;
-    });
-    if (!slots.length) return -1;
-    const enough = slots.filter((k) => amount(k) >= lack).sort((a, b) => amount(a) - amount(b));
-    if (enough.length) return enough[0];
-    return slots.sort((a, b) => amount(b) - amount(a))[0];
+  mpSkill(u: Unit): SkillDef | undefined {
+    if (!this.canAct(u) || u.acted) return undefined;
+    const after = (s: SkillDef) => Math.min(u.stats.maxMp, u.mp - s.mpCost + Math.floor(u.stats.maxMp / Math.max(1, s.power)));
+    return learnedSkills(u, this.data)
+      .filter((s) => isChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
+      .filter((s) => this.skillTargets(u, s).some((c) => c.x === u.x && c.y === u.y))
+      .sort((a, b) => after(b) - after(a) || a.mpCost - b.mpCost)[0];
   }
 
   wait(u: Unit): BattleEvent[] {

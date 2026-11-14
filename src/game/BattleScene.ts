@@ -589,7 +589,7 @@ export class BattleScene extends Phaser.Scene {
     this.ending = true;
     try {
       this.select({ kind: 'idle' });
-      // 还没行动的我方人物按默认规则自动休息 / 用回气剂 / 防御（§2.5），逐个移镜头播放
+      // 还没行动的我方人物按默认规则自动休息 / 用回气技能 / 防御（§2.5），逐个移镜头播放
       for (const u of this.battle.autoActUnits()) {
         if (this.battle.status !== 'playing') return;
         this.busy = true; // 移镜头时也挡住点击
