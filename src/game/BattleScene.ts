@@ -65,6 +65,13 @@ const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
+/** 行动完的状态条颜色：去掉大半饱和度再压暗 */
+function dimColor(c: number) {
+  const r = (c >> 16) & 255, g = (c >> 8) & 255, b = c & 255;
+  const l = 0.3 * r + 0.59 * g + 0.11 * b;
+  const f = (x: number) => Math.round((x * 0.35 + l * 0.65) * 0.55);
+  return (f(r) << 16) | (f(g) << 8) | f(b);
+}
 /** 状态条最高处离脚下的高度（头顶往上空 3 像素，再按 3 条算），飘字从这上面弹出 */
 const barTop = (head: number) => head + 3 + 3 * 3 + 1;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
@@ -312,10 +319,11 @@ export class BattleScene extends Phaser.Scene {
     if (u.side === 'player') rows.push([EXP_COLOR, u.exp / expToNext(u.level)]);
     const top = p.y - s.head - 3 - (rows.length * 3 + 1); // 底边贴着头顶上方 3 像素
     s.bar.clear().setDepth(depthOf(v.x, v.y, 9));
-    // 行动完的我方单位外面再套一圈灰框（负责人 2026-11-14），下个我方回合开始时消失
-    if (this.actedDone(u)) s.bar.lineStyle(1, ACTED_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
+    const done = this.actedDone(u);
+    // 行动完的我方单位外面再套一圈灰框、三条颜色也调暗（负责人 2026-11-14），下个我方回合开始时消失
+    if (done) s.bar.lineStyle(1, ACTED_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
     s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, top, w + 2, rows.length * 3 + 1);
-    rows.forEach(([color, r], i) => s.bar.fillStyle(color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
+    rows.forEach(([color, r], i) => s.bar.fillStyle(done ? dimColor(color) : color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
   }
 
   /** 站在这一格的人物的头顶高度（飘字从状态条上面弹出） */
