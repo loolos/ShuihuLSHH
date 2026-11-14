@@ -472,6 +472,8 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
     advance(b, 3, log);
     for (const n of ['刘唐', '摸着天杜迁', '云里金刚宋万']) expect(here(n)?.side, n).toBe('player');
+    expect(by('云里金刚宋万').classId).toBe(70);
+    expect(b.data.classes[70].skills.map((s) => s.name)).toEqual(['金剛拳', '金剛連環', '金剛轉輪', '雲裡雷音', '金剛入定', '雲開見日']);
     expect(here('锦毛虎燕顺')?.side).toBe('ally');
     expect(here('旱地忽律朱贵')).toBeUndefined();
     advance(b, 4, log);
