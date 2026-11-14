@@ -607,9 +607,9 @@
    "id": "w3_1",
    "class": 43,
    "side": "enemy",
-   "x": 42,
-   "y": 2,
-   "facing": 2,
+   "x": 49,
+   "y": 21,
+   "facing": 1,
    "level": 24,
    "hidden": true,
    "name": "骑兵"
@@ -618,9 +618,9 @@
    "id": "w3_2",
    "class": 43,
    "side": "enemy",
-   "x": 43,
-   "y": 2,
-   "facing": 2,
+   "x": 47,
+   "y": 23,
+   "facing": 1,
    "level": 24,
    "hidden": true,
    "name": "骑兵"
@@ -629,9 +629,9 @@
    "id": "w3_3",
    "class": 32,
    "side": "enemy",
-   "x": 42,
-   "y": 3,
-   "facing": 2,
+   "x": 50,
+   "y": 23,
+   "facing": 1,
    "level": 22,
    "hidden": true,
    "name": "土兵"
@@ -640,9 +640,9 @@
    "id": "w3_4",
    "class": 32,
    "side": "enemy",
-   "x": 44,
-   "y": 2,
-   "facing": 2,
+   "x": 48,
+   "y": 25,
+   "facing": 1,
    "level": 22,
    "hidden": true,
    "name": "土兵"
@@ -737,9 +737,9 @@
    "id": "x2_1",
    "class": 36,
    "side": "enemy",
-   "x": 45,
-   "y": 2,
-   "facing": 2,
+   "x": 50,
+   "y": 27,
+   "facing": 1,
    "level": 23,
    "hidden": true,
    "name": "官吏"
@@ -748,9 +748,9 @@
    "id": "x2_2",
    "class": 36,
    "side": "enemy",
-   "x": 46,
-   "y": 2,
-   "facing": 2,
+   "x": 48,
+   "y": 29,
+   "facing": 1,
    "level": 23,
    "hidden": true,
    "name": "官吏"
@@ -759,9 +759,9 @@
    "id": "x2_3",
    "class": 32,
    "side": "enemy",
-   "x": 43,
-   "y": 4,
-   "facing": 2,
+   "x": 50,
+   "y": 31,
+   "facing": 1,
    "level": 23,
    "hidden": true,
    "name": "土兵"
@@ -770,9 +770,9 @@
    "id": "x3_1",
    "class": 36,
    "side": "enemy",
-   "x": 43,
-   "y": 1,
-   "facing": 2,
+   "x": 48,
+   "y": 33,
+   "facing": 1,
    "level": 24,
    "hidden": true,
    "name": "官吏"
@@ -781,9 +781,9 @@
    "id": "x3_2",
    "class": 34,
    "side": "enemy",
-   "x": 45,
-   "y": 1,
-   "facing": 2,
+   "x": 50,
+   "y": 35,
+   "facing": 1,
    "level": 22,
    "hidden": true
   },
@@ -1390,7 +1390,7 @@
     ],
     [
      "narrate",
-     "州衙里的官吏带着公人赶来拿人！"
+     "东南街口，官吏带着公人赶来拿人！"
     ],
     [
      "appear",
@@ -1449,7 +1449,7 @@
     ],
     [
      "narrate",
-     "州衙方向，一队官兵骑马飞奔而来！"
+     "东南方向，一队官兵骑马飞奔而来！"
     ],
     [
      "appear",
