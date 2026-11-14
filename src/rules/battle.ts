@@ -82,6 +82,41 @@ export interface GroundItem {
 /** 胜利条件只看回合数、原版文字又容易误解的关卡，胜利条件后面补一句回合提示（见 objectiveHint）【新】 */
 export const TURN_HINT_STAGES = ['N13'] as const;
 
+/**
+ * 胜负条件里的区域（格子坐标，含两端）【新：画在小地图和地图上】。
+ * goal = 某人进入就过关（指令 29，如 N01 王母、N12 晁蓋、N-add16 主角的撤退出口）；
+ * danger = 某人进入就判负（指令 30，如 N13 何濤、N-add03 嘍囉逃走的出口）。
+ * chars 是要进去的角色号（劫法场这类要几个人都到的，列出全部）。
+ */
+export interface ObjectiveZone {
+  kind: 'goal' | 'danger';
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  chars: number[];
+}
+
+/** 条件树里"选定某人（4）且坐标在范围内（5–10）"的部分 → 矩形；"或"的两边各算一个 */
+export function condZones(c: PasCond): { char: number; x1: number; y1: number; x2: number; y2: number }[] {
+  if ('op' in c && c.op === 'or') return [...condZones(c.a), ...condZones(c.b)];
+  const leaves: { type: number; arg: number }[] = [];
+  const walk = (n: PasCond): boolean => ('op' in n ? n.op === 'and' && walk(n.a) && walk(n.b) : (leaves.push(n), true));
+  if (!walk(c)) return 'op' in c ? [...condZones(c.a), ...condZones(c.b)] : [];
+  const sel = leaves.find((l) => l.type === 4);
+  if (!sel) return [];
+  const r = { char: sel.arg, x1: 0, y1: 0, x2: 0xffff, y2: 0xffff };
+  for (const l of leaves) {
+    if (l.type === 5) r.x1 = r.x2 = l.arg;
+    else if (l.type === 6) r.y1 = r.y2 = l.arg;
+    else if (l.type === 7) r.x1 = l.arg;
+    else if (l.type === 8) r.y1 = l.arg;
+    else if (l.type === 9) r.x2 = l.arg;
+    else if (l.type === 10) r.y2 = l.arg;
+  }
+  return [r];
+}
+
 export interface StageInput {
   name: string;
   /** 过关奖励银子；不写时按关卡名查 STAGE_CLEAR_GOLD（扩展包关卡用 rewards.gold） */
@@ -384,6 +419,46 @@ export class Battle {
     this.startTurn(1);
     this.record();
     return this.flush();
+  }
+
+  /**
+   * 现在还有效的区域胜负条件（见 ObjectiveZone）：区块没执行过、要进去的人还活着（在不在场都算，可能还没登场）。
+   * 区域由地图尺寸截断（条件只写了一边时另一边到地图边缘）。
+   */
+  objectiveZones(): ObjectiveZone[] {
+    if (this.status !== 'playing') return [];
+    const out: ObjectiveZone[] = [];
+    const W = this.board.width, H = this.board.height;
+    for (const b of this.blocks) {
+      if (this.fired.has(b.index)) continue;
+      const kind = b.ops.some((o) => o.op === 29) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      if (!kind) continue;
+      const t = b.trigger;
+      const rects =
+        t.kind === 'area'
+          ? [{ chars: t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2 }]
+          : t.kind === 'cond'
+            ? condZones(b.cond).map((r) => ({ ...r, chars: [r.char >= 1000 ? r.char - 1000 : r.char] }))
+            : [];
+      for (const r of rects) {
+        const chars = r.chars.map((c) => (c === 1000 ? 0 : c));
+        if (!chars.every((c) => this.units.some((u) => u.classId === c && u.alive))) continue;
+        const z: ObjectiveZone = {
+          kind,
+          x1: Math.max(0, Math.min(r.x1, r.x2)),
+          y1: Math.max(0, Math.min(r.y1, r.y2)),
+          x2: Math.min(W - 1, Math.max(r.x1, r.x2)),
+          y2: Math.min(H - 1, Math.max(r.y1, r.y2)),
+          chars,
+        };
+        if (z.x1 > z.x2 || z.y1 > z.y2) continue;
+        // N-add03：两种嘍囉各有一个区块指向同一个出口，合成一个
+        const same = out.find((o) => o.kind === z.kind && o.x1 === z.x1 && o.y1 === z.y1 && o.x2 === z.x2 && o.y2 === z.y2);
+        if (same) same.chars.push(...chars.filter((c) => !same.chars.includes(c)));
+        else out.push(z);
+      }
+    }
+    return out;
   }
 
   /** 本关因为没被选上而退场的我方人物 */
