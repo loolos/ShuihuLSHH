@@ -795,7 +795,7 @@ describe('技能', () => {
     // 周身技（12）：周围 8 格；横扫技（13）：面前一排横向三格
     expect(keys(areaCells(board, from, sk({ type: 12 }), from))).toEqual(['4,4', '4,5', '4,6', '5,4', '5,6', '6,4', '6,5', '6,6']);
     expect(keys(areaCells(board, from, sk({ type: 13 }), { x: 6, y: 5 }))).toEqual(['6,4', '6,5', '6,6']);
-    expect(keys(areaCells(board, from, sk({ type: 13 }), { x: 5, y: 4 }))).toEqual(['6,4', '5,4', '4,4']);
+    expect(keys(areaCells(board, from, sk({ type: 13 }), { x: 5, y: 4 }))).toEqual(['4,4', '5,4', '6,4']);
   });
 
   it('习得：按等级、不含隐藏技，高级取代低级', () => {
