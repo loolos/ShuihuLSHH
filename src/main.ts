@@ -194,6 +194,8 @@ function startGame(assets: Assets) {
     parent: 'game',
     backgroundColor: '#14110d',
     pixelArt: true,
+    // 不用 Phaser 的声音系统（音效 / 音乐在 sound.ts / music.ts）：免得它再开一个 AudioContext，失焦时去挂起它
+    audio: { noAudio: true },
     scale: { mode: Phaser.Scale.RESIZE, width: window.innerWidth, height: window.innerHeight },
     scene: [],
   });

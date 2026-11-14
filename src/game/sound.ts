@@ -17,6 +17,7 @@
 // 原版 Sound/ 压成 MP3 放在仓库 gamedata/sound/（负责人 2026-11-12 同意，tools/gen-sound.ts 生成）。
 // 原版对某个事件没有声音，重制版也不出声；只有原版音效整体取不到时才用浏览器合成的简单音效兜底【新】。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
+import { AudioGuard } from './audio-guard.ts';
 import { music } from './music.ts';
 import { LEVELS, SFX_GAIN as GAIN, wrapLevel } from './volume.ts';
 
@@ -33,6 +34,8 @@ const TYPE_SOUND: Record<number, string> = { 2: 'S225', 5: 'S221', 6: 'S222', 7:
 
 class SoundSystem {
   private ctx: AudioContext | null = null;
+  /** 手机上上下文被打断 / 挂起 / 时钟停住后把它救回来（见 audio-guard.ts） */
+  private guard = new AudioGuard();
   private master: GainNode | null = null;
   private noiseBuf: AudioBuffer | null = null;
   private wavs = new Map<string, Promise<AudioBuffer | null>>();
@@ -52,20 +55,40 @@ class SoundSystem {
     music.setLevel(v);
   }
 
-  /** 浏览器要求在用户操作里启动音频；第一次点击 / 按键时调用 */
+  /** 建（或在被关掉后重建）AudioContext。解码好的 AudioBuffer 不属于某个上下文，重建后照样能用 */
+  private create(): AudioContext | null {
+    const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AC) return null;
+    const ctx = new AC();
+    this.ctx = ctx;
+    this.master = ctx.createGain();
+    this.master.gain.value = GAIN[this.level];
+    this.master.connect(ctx.destination);
+    // 被系统打断（iOS 'interrupted'）或挂起时，页面在前台就马上试着接回来；不行就等下一次点击
+    ctx.onstatechange = () => {
+      if (this.ctx === ctx && document.visibilityState === 'visible') setTimeout(() => this.ctx === ctx && this.guard.check(ctx), 300);
+    };
+    // iOS 上音乐的音量要靠 Web Audio 调（见 music.ts 文件头）；只接第一个上下文
+    music.attach(ctx);
+    return ctx;
+  }
+  /** 浏览器要求在用户操作里启动音频：每次点击 / 按键都调用，顺便把被打断的上下文接回来 */
   unlock() {
-    if (!this.ctx) {
-      const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!AC) return;
-      this.ctx = new AC();
-      this.master = this.ctx.createGain();
-      this.master.gain.value = GAIN[this.level];
-      this.master.connect(this.ctx.destination);
-      // iOS 上音乐的音量要靠 Web Audio 调（见 music.ts 文件头）
-      music.attach(this.ctx);
+    if (!this.ctx || this.ctx.state === 'closed') {
+      if (!this.create()) return;
     }
-    if (this.ctx.state === 'suspended') void this.ctx.resume();
+    this.guard.check(this.ctx!);
     if (this.pending.length) this.preload(this.pending.splice(0));
+  }
+  /** 页面回到前台（切回浏览器、解锁屏幕）：iOS 上这时上下文常常 running 却不出声，踢一下（suspend + resume） */
+  wake() {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    // 稍等一下再踢，太早 iOS 会出杂音（Phaser 的做法）
+    setTimeout(() => {
+      if (this.ctx !== ctx) return;
+      if (this.guard.check(ctx, true) === 'closed') this.create();
+    }, 100);
   }
 
   setLevel(level: number) {
@@ -87,8 +110,10 @@ class SoundSystem {
   }
 
   private ready(): AudioContext | null {
-    if (!this.level || !this.ctx || this.ctx.state !== 'running') return null;
-    return this.ctx;
+    if (!this.level || !this.ctx) return null;
+    // 播之前也看一眼：挂起 / 被打断就试着 resume，时钟停了就踢一下（这一声可能赶不上，下一声就好了）
+    if (this.guard.check(this.ctx) === 'closed') this.create();
+    return this.ctx?.state === 'running' ? this.ctx : null;
   }
 
   // ---- 原版音效（压缩后的 MP3，见 tools/gen-sound.ts） ----
@@ -102,7 +127,12 @@ class SoundSystem {
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => (j && typeof j === 'object' && !Array.isArray(j) ? (j as Record<string, string>) : null))
       .catch(() => null);
-    return this.index;
+    const p = this.index;
+    // 没取到（离线、网络断了一下）：这次先用合成音，过一会儿允许再取
+    void p.then((j) => {
+      if (!j) setTimeout(() => this.index === p && (this.index = null), 10_000);
+    });
+    return p;
   }
   private wav(name: string): Promise<AudioBuffer | null> {
     return this.loadIndex().then((idx) => {
@@ -114,7 +144,12 @@ class SoundSystem {
         p = fetch(this.base() + file)
           .then((r) => (r.ok ? r.arrayBuffer() : null))
           .then((ab) => (ab ? ctx.decodeAudioData(ab) : null))
-          .catch(() => null);
+          .catch(() => null)
+          .then((b) => {
+            // 失败（手机切后台时下载被打断等）不要记住，下次再取；否则这个声音就永远不响了
+            if (!b) this.wavs.delete(file);
+            return b;
+          });
         this.wavs.set(file, p);
       }
       return p;
@@ -146,7 +181,7 @@ class SoundSystem {
     const idx = await this.loadIndex();
     if (!idx) return void (fallback && this.play(fallback));
     const buf = await this.wav(name);
-    if (buf && this.ready()) {
+    if (buf && this.ctx === ctx && ctx.state === 'running' && this.level) {
       const src = ctx.createBufferSource();
       src.buffer = buf;
       src.connect(this.master!);
@@ -279,8 +314,14 @@ export function installSound(button: HTMLButtonElement) {
   label();
   sound.onChange = label;
   const unlock = () => sound.unlock();
-  window.addEventListener('pointerdown', unlock, true);
-  window.addEventListener('keydown', unlock, true);
+  // 手机上 pointerdown 不算「用户激活」，resume 要在 touchend / pointerup / click 里发才算数（iOS 尤其如此）
+  for (const ev of ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']) window.addEventListener(ev, unlock, true);
+  const wake = () => {
+    if (document.visibilityState === 'visible') sound.wake();
+  };
+  document.addEventListener('visibilitychange', wake);
+  window.addEventListener('pageshow', wake);
+  window.addEventListener('focus', wake);
   button.addEventListener('click', (e) => {
     e.stopPropagation();
     sound.cycle();
