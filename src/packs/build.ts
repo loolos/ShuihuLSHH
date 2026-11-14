@@ -30,7 +30,8 @@ export interface PackClassLook {
   idle: string;
   head?: number;
   /** 对话头像借 Head.lib 第几张；null = 没有 */
-  face: number | null;
+  /** 原版 Head.lib 的序号，或包里头像图的路径（相对包目录）；null = 没有头像 */
+  face: number | string | null;
 }
 
 export interface PackRuntime {
@@ -96,7 +97,7 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
       actions: [c.sprite.walk, c.sprite.hurt, c.sprite.defend, ...anims],
       idle: c.sprite.idle,
       head: c.sprite.head,
-      face: c.face === undefined || c.face === null ? null : c.face.fromHead,
+      face: !c.face ? null : 'file' in c.face ? c.face.file : c.face.fromHead,
     });
   }
   return {

@@ -18,7 +18,7 @@ import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { compileStage } from './packs/build.ts';
-import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
+import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -185,7 +185,7 @@ function startGame(assets: Assets) {
   let pack: PackAssets | null = null;
   ui.portrait = (cls) => {
     const look = pack?.rt.looks.get(cls);
-    if (look) return look.face === null ? null : headUrl(look.face);
+    if (look) return look.face === null ? null : typeof look.face === 'string' ? (packFaceUrl(pack!.rt.id, look.face) ?? null) : headUrl(look.face);
     return headUrl(cls);
   };
 
