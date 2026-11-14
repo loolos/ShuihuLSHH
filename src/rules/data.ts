@@ -74,7 +74,8 @@ export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
  * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
  * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
  */
-export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax'>>> = {
+type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area'>>;
+export const SKILL_OVERRIDES: Record<number, SkillOverride> = {
   33: { power: 25, critMod: 15 }, // 原版 10 / 10
   34: { power: 45, critMod: 20 }, // 原版 30 / 15
   35: { power: 65, critMod: 25 }, // 原版 50 / 20
@@ -95,6 +96,48 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   // 137 佛法無邊（魯智深 17 级，以自身为中心的范围技）：原版第 13 帧一段 100%，负责人 2026-11-14 要求改成三段：
   // 禅杖顿地（第 13 帧，原版命中帧）之后蹲身按杖的第 16、19 帧再各震一下，30% / 30% / 40%；每段放一轮特效
   137: { hits: [{ frame: 13, percent: 30, dir: 0 }, { frame: 16, percent: 30, dir: 0 }, { frame: 19, percent: 40, dir: 0 }] },
+};
+
+const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) => ({ frame, percent: percents[i], dir: 0 }));
+
+/**
+ * 耗气审阅后的调整（技能号 → 字段），只用于好汉职业（职业号 < 18）；敌方版好汉照原版【新】（负责人 2026-11-14）。
+ * 在 SKILL_OVERRIDES 之后、noHeroHitPenalty 之前合并；改了威力的技能同时把命中修正写 0，威力就是实际值。
+ * 依据：按期望伤害折成"几次普通攻击"，回气一回合回半条气，单体技原来要 50–100% 气条却只有 1.5–2.2 次普攻。
+ */
+export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
+  // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
+  26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
+  27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
+  // 白勝 監守自盜LV1–3：原版威力 15、命中 −5/−10/−15（换算后 10/5/1，加上远程衰减只有普攻一半）
+  48: { mpCost: 5, power: 30, hitMod: 0 },
+  49: { mpCost: 5, power: 40, hitMod: 0 },
+  50: { mpCost: 5, power: 50, hitMod: 0 },
+  47: { mpCost: 15 }, // 白勝 窮鼠噬貓 50 → 15（原版已是三段 20/20/60%）
+  // 陳達 黑虎偷心：威力 +20（原版 30、命中 −10 → 实际 20 → 40），耗气 20 不变；
+  // 两段：跃起挥枪（第 12 帧）40% + 落地突刺（第 23 帧，原版命中帧）60%
+  115: { power: 40, hitMod: 0, hits: hitsAt([12, 23], [40, 60]) },
+  116: { mpCost: 15 }, // 陳達 虎嘯山林LV1（单格）60 → 15
+  91: { stun: 40 }, // 吳用 星羅棋布LV1：加昏迷 40%，耗气不变
+  40: { mpCost: 65 }, // 史進 龍騰九天 210（压到 159）→ 65
+  // 史進 龍爭虎鬥LV2 / LV3：耗气 60 → 35、130 → 55；出手动作是翻身飞踢（第 18 帧落地）
+  34: { mpCost: 35, hits: hitsAt([12, 18], [40, 60]) }, // 两段：空中翻身 + 落地
+  35: { mpCost: 55, hits: hitsAt([9, 13, 18], [30, 30, 40]) }, // 三段：扑出、空中翻身、落地
+  138: { mpCost: 50 }, // 魯智深 佛光普照 170 → 50
+  136: { mpCost: 40 }, // 魯智深 殺身成佛 60 → 40
+  123: { mpCost: 65 }, // 楊志 千刀萬剮 150 → 65
+  122: { mpCost: 45 }, // 楊志 快刀斬亂麻 100 → 45
+  99: { mpCost: 70 }, // 林沖 策馬入林 140 → 70
+  98: { mpCost: 35 }, // 林沖 義憤填膺 80 → 35
+  66: { mpCost: 35 }, // 阮小二 沖太歲LV2 70 → 35
+  67: { mpCost: 40 }, // 阮小二 沖太歲LV3 110 → 40
+  69: { mpCost: 30 }, // 阮小二 天羅地網LV1（单格）70 → 30
+  74: { mpCost: 55 }, // 阮小五 絕地逢生 80 → 55
+  146: { mpCost: 60 }, // 劉唐 百鬼夜行 100 → 60
+  // 朱武 奇門遁甲LV1–3（扇形 8 / 13 / 18 格）范围大、耗气少：40 / 55 / 70 → 90 / 105 / 135
+  60: { mpCost: 90 },
+  61: { mpCost: 105 },
+  62: { mpCost: 135 },
 };
 
 /**
@@ -178,6 +221,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
+          ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
           name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         }))),
