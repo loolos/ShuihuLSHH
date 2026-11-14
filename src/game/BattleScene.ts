@@ -65,11 +65,11 @@ const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
-/** 行动完的状态条颜色：去掉大半饱和度再压暗 */
+/** 行动完的状态条颜色：稍微去点饱和度再压暗到七成 */
 function dimColor(c: number) {
   const r = (c >> 16) & 255, g = (c >> 8) & 255, b = c & 255;
   const l = 0.3 * r + 0.59 * g + 0.11 * b;
-  const f = (x: number) => Math.round((x * 0.35 + l * 0.65) * 0.55);
+  const f = (x: number) => Math.round((x * 0.7 + l * 0.3) * 0.7);
   return (f(r) << 16) | (f(g) << 8) | f(b);
 }
 /** 状态条最高处离脚下的高度（头顶往上空 3 像素，再按 3 条算），飘字从这上面弹出 */
