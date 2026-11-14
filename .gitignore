@@ -29,3 +29,6 @@
 
 node_modules/
 dist/
+
+# 渲染精灵用的 Blender（bpy）虚拟环境
+/venv/

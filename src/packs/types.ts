@@ -1,6 +1,8 @@
 // 扩展包的 JSON 格式（docs/game-design.md §15.2）。包放在仓库 packs/<包名>/，内容用字符串 id，
 // 载入时（src/packs/build.ts）接到原版编号后面。原版素材一律按编号引用，不复制。
 
+import type { RecolorGroup } from './recolor.ts';
+
 export type StatBlock = { hp: number; mp: number; attack: number; defense: number; hit: number; agility: number; crit: number };
 
 export interface PackJson {
@@ -29,19 +31,32 @@ export interface PackClassJson {
   items?: (number | string)[];
   /** 第一项是普通攻击 */
   skills: PackSkillJson[];
-  /** 精灵图条目录（相对包目录，含 sprites.json），和动作对应 */
-  sprite: {
-    sheet: string;
-    /** 待机、走路、受击、防御用哪个动作（sprites.json 里的名字） */
-    idle: string;
-    walk: string;
-    hurt: string;
-    defend: string;
-    /** 头顶状态条的高度（像素，脚下往上），不填用普通身材 */
-    head?: number;
-  };
+  /** 形象：包里的精灵图条（SheetSprite），或者借原版职业的动画并换色（BorrowSprite） */
+  sprite: SheetSprite | BorrowSprite;
   /** 对话头像：借原版 Head.lib 第几张，或者包里自己的图（相对包目录，宽 140、透明底，tools/make-portrait.py 生成）；null = 不显示 */
   face?: { fromHead: number } | { file: string } | null;
+}
+
+/** 精灵图条目录（相对包目录，含 sprites.json），和动作对应 */
+export interface SheetSprite {
+  sheet: string;
+  /** 待机、走路、受击、防御用哪个动作（sprites.json 里的名字） */
+  idle: string;
+  walk: string;
+  hurt: string;
+  defend: string;
+  /** 头顶状态条的高度（像素，脚下往上），不填用普通身材 */
+  head?: number;
+}
+
+/**
+ * 借原版职业（Man.lib）的全部动作，按调色板换色（src/packs/recolor.ts）。
+ * 技能的 anim 写原版职业第几个出手动作（0 = 动作 3，通常是普通攻击），命中帧沿用 from 技能的原版数据。
+ */
+export interface BorrowSprite {
+  fromClass: number;
+  recolor?: RecolorGroup[];
+  head?: number;
 }
 
 export interface PackSkillJson {
@@ -50,9 +65,9 @@ export interface PackSkillJson {
   name: string;
   /** 借哪个原版技能（技能号）的类型、范围、特效和声音；下面的字段覆盖它 */
   from: number;
-  /** 出手动画（sprites.json 里的名字） */
-  anim: string;
-  /** 在出手动画的什么位置命中（0–1，一段一个数） */
+  /** 出手动画：sprites.json 里的名字；借原版动画的职业写原版第几个出手动作（0 起） */
+  anim: string | number;
+  /** 在出手动画的什么位置命中（0–1，一段一个数）；借原版动画的职业不用写 */
   hitAt?: number[];
   power?: number;
   mpCost?: number;
@@ -113,6 +128,8 @@ export interface PackUnitJson {
 
 export type PackTrigger =
   | 'start'
+  /** 在场的敌人全部倒下（还没登场的隐藏单位不算，要等他们登场后也倒下） */
+  | 'enemiesDefeated'
   | { turn: number }
   | { dead: string }
   | { enter: string; area: [number, number, number, number] }

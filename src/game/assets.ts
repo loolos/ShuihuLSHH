@@ -87,7 +87,7 @@ class Fetch {
   }
   /** 一个技能：职业的出手动作（4 个朝向）和它的特效 */
   skill(assets: Assets, cls: number, sk: SkillDef) {
-    const c = assets.man.classes[cls];
+    const c = assets.man.classes[manClassOf(assets, cls)];
     if (c) for (let d = 0; d < 4; d++) {
       const g = c.first + (ACTION_FIRST_SKILL + sk.group) * 4 + d;
       if (g <= c.last) this.manGroup(assets, g);
@@ -104,6 +104,11 @@ class Fetch {
     for (const [p, from, to, len] of this.copies) files.copy(p, from, to, len);
     return n;
   }
+}
+
+/** 职业 cls 用 Man.lib 里哪个职业的动画：扩展包借原版动画的职业（sprite.fromClass）换成被借的职业 */
+export function manClassOf(assets: Assets, cls: number): number {
+  return assets.pack?.rt.looks.get(cls)?.from ?? cls;
 }
 
 /** Man.lib 每个职业的动作：0 走路、1 受击、2 防御，3 起每个技能一组（同 src/game/sprites.ts 的 ACTION） */
@@ -130,7 +135,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
   if (!classesOverride && files.has(actFile))
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {
-    const c = assets.man.classes[cls];
+    const c = assets.man.classes[manClassOf(assets, cls)];
     if (c) for (let g = c.first; g < Math.min(c.last + 1, c.first + (ACTION_FIRST_SKILL + 1) * 4); g++) job.manGroup(assets, g);
     const basic = assets.data.classes[cls]?.skills[0];
     if (basic) job.skill(assets, cls, basic);
