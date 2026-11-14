@@ -95,6 +95,8 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   // 137 佛法無邊（魯智深 17 级，以自身为中心的范围技）：原版第 13 帧一段 100%，负责人 2026-11-14 要求改成三段：
   // 禅杖顿地（第 13 帧，原版命中帧）之后蹲身按杖的第 16、19 帧再各震一下，30% / 30% / 40%；每段放一轮特效
   137: { hits: [{ frame: 13, percent: 30, dir: 0 }, { frame: 16, percent: 30, dir: 0 }, { frame: 19, percent: 40, dir: 0 }] },
+  // 96 懷璧其罪（林沖 9 级）：负责人 2026-11-14 要求射程 1–2、分三级（LV2、LV3 见 CLASS_EXTRA_SKILLS）、两段同一帧同时结算（各 50%，各自判定命中和必杀）
+  96: { rangeMax: 2, hits: [{ frame: 11, percent: 50, dir: 0 }, { frame: 11, percent: 50, dir: 0 }] },
 };
 
 /**
@@ -119,7 +121,7 @@ export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(c
  * 隐藏技改名（技能号 → 名字，繁体，LV 后缀照旧）【新】（负责人 2026-11-13 嫌"古武術"重名太多）。
  * 原版朱武、阮氏三雄、吳用的隐藏技都叫"古武術LV1–3"；按人物和招式形状各取一个名字，敌方同职业单位一起改。
  */
-export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
+export const SKILL_NAME_OVERRIDES: Record<number, string> = { 96: '懷璧其罪LV1', ...Object.fromEntries(
   ([
     [60, '奇門遁甲'], // 朱武（神機軍師），扇形
     [69, '天羅地網'], // 阮小二（立地太歲，打漁），落点菱形
@@ -127,9 +129,20 @@ export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
     [83, '怒海狂濤'], // 阮小七（活閻羅），直线
     [91, '星羅棋布'], // 吳用（智多星），落点菱形、两段
   ] as const).flatMap(([id, name]) => [0, 1, 2].map((i) => [id + i, `${name}LV${i + 1}`])),
-);
+) };
 
-/** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
+/** 新增技能的公共字段；每个技能只写不同的部分 */
+const extraSkill = (s: Partial<SkillDef> & Pick<SkillDef, 'name' | 'skillId' | 'type' | 'group' | 'learnLevel' | 'mpCost' | 'power'>): SkillDef => ({
+  hidden: false, rangeMin: 1, rangeMax: 1, area: 1, effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
+  hits: [{ frame: 1, percent: 100, dir: 0 }], raw: '', ...s,
+});
+const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100 / frames.length, dir: 0 }));
+
+/**
+ * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
+ * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
+ * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）。
+ */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
   5: [{
@@ -138,6 +151,20 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
     hits: [], raw: '',
   }],
+  11: [
+    extraSkill({ name: '懷璧其罪LV2', skillId: 1001, type: 6, group: 1, learnLevel: 18, mpCost: 40, power: 40, rangeMax: 2, hitMod: 5, critMod: 20, soundId: 96, hits: split([11, 11]) }),
+    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 6, group: 1, learnLevel: 24, mpCost: 50, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
+    // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
+    extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
+  ],
+  // 陳達：借黑虎偷心的动作（第 1 组）、第 19 组弧形扫击特效（原版没有技能用）
+  13: [
+    extraSkill({ name: '虎尾橫掃', skillId: 1005, type: 13, group: 1, learnLevel: 18, mpCost: 45, power: 35, area: 3, hitMod: 10, critMod: 10, effect: 20, soundId: 115, hits: [{ frame: 23, percent: 100, dir: 0 }] }),
+  ],
+  // 楊春：借本人普通攻击的动作（第 1 组与第 0 组帧完全相同）、飞刀特效（第 56–59 组，同白勝 監守自盜）
+  15: [
+    extraSkill({ name: '靈蛇吐信', skillId: 1004, type: 10, group: 1, learnLevel: 8, mpCost: 25, power: 20, rangeMax: 8, critMod: 10, poison: 30, effect: 57, soundId: 48, hits: [{ frame: 13, percent: 100, dir: 0 }] }),
+  ],
 };
 
 /**
