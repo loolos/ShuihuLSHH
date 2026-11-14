@@ -57,37 +57,23 @@ def load_palette(path):
 
 
 def apply_outfit(path):
-    """给没有衣服的通用人形模型（如 Quaternius UAL 假人）按部位上色。
-    JSON：{"default": [r,g,b], "rules": [{"bones": ["正则", ...], "color": [r,g,b], "zmin": 米, "ymin": 米}, ...]}
-    每个顶点取权重最大的骨骼，按顺序找第一条匹配的规则；zmin / ymin 是相对该骨骼头部（静止姿势）的高度 / 向后距离（模型正面朝 -Y），
-    用来在同一块骨骼上再分区（如头顶的头发）。颜色 0–255。"""
+    """给没有衣服的通用人形模型（如 Quaternius UAL 假人）"穿衣服"：按部位上色、把衣服部位往外鼓（宽袖、宽裤、衣摆），
+    再挂上小部件（发髻等）。全部在静止姿势下按世界坐标（米，模型正面朝 -Y）判断，蒙皮权重不变，所以动作照常。
+    JSON：
+      "default": [r,g,b]
+      "rules": [{"bones": ["正则",...]（可省）, "when": "表达式"（可省）, "color": [r,g,b], "inflate": 米（可省）}, ...]
+        每个顶点按顺序找第一条匹配的规则。bones 匹配权重最大的骨骼；when 是 Python 表达式，
+        可用 x y z（世界坐标）、ax（|x|）、b（骨骼名）。inflate 沿法线把顶点往外推。
+      "props": [{"bone": "Head", "shape": "sphere", "radius": 米, "at": [x,y,z], "scale": [sx,sy,sz], "color": [r,g,b]}, ...]
+    颜色 0–255。"""
     import re
     cfg = json.load(open(path, encoding='utf-8'))
     arm = next(o for o in bpy.context.scene.objects if o.type == 'ARMATURE')
-    rules = [(re.compile('|'.join(r['bones'])), r) for r in cfg['rules']]
-    for ob in [o for o in bpy.context.scene.objects if o.type == 'MESH']:
-        me = ob.data
-        names = {g.index: g.name for g in ob.vertex_groups}
-        attr = me.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
-        for v in me.vertices:
-            col = cfg.get('default', [200, 160, 120])
-            if v.groups:
-                g = max(v.groups, key=lambda g: g.weight)
-                bone = names.get(g.group, '')
-                b = arm.data.bones.get(bone)
-                p = ob.matrix_world @ v.co
-                rel = p - (arm.matrix_world @ b.head_local) if b else p
-                for rx, r in rules:
-                    if not rx.fullmatch(bone):
-                        continue
-                    if 'zmin' in r and rel.z < r['zmin']:
-                        continue
-                    if 'ymin' in r and rel.y < r['ymin']:
-                        continue
-                    col = r['color']
-                    break
-            attr.data[v.index].color = [(c / 255) ** 2.2 for c in col] + [1]
-        mat = bpy.data.materials.new('Outfit')
+    rules = [(re.compile('|'.join(r['bones'])) if r.get('bones') else None,
+              compile(r['when'], 'when', 'eval') if r.get('when') else None, r) for r in cfg['rules']]
+
+    def outfit_material(name):
+        mat = bpy.data.materials.new(name)
         mat.use_nodes = True
         nt = mat.node_tree
         bsdf = nt.nodes['Principled BSDF']
@@ -95,8 +81,49 @@ def apply_outfit(path):
         ca = nt.nodes.new('ShaderNodeVertexColor')
         ca.layer_name = 'Outfit'
         nt.links.new(ca.outputs['Color'], bsdf.inputs['Base Color'])
+        return mat
+
+    lin = lambda col: [(c / 255) ** 2.2 for c in col] + [1]
+    for ob in [o for o in bpy.context.scene.objects if o.type == 'MESH']:
+        me = ob.data
+        names = {g.index: g.name for g in ob.vertex_groups}
+        attr = me.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
+        moves = []
+        for v in me.vertices:
+            col, inflate = cfg.get('default', [200, 160, 120]), 0
+            bone = names.get(max(v.groups, key=lambda g: g.weight).group, '') if v.groups else ''
+            p = ob.matrix_world @ v.co
+            env = {'x': p.x, 'y': p.y, 'z': p.z, 'ax': abs(p.x), 'b': bone}
+            for rx, cond, r in rules:
+                if rx and not rx.fullmatch(bone):
+                    continue
+                if cond and not eval(cond, {}, env):
+                    continue
+                col, inflate = r['color'], r.get('inflate', 0)
+                break
+            attr.data[v.index].color = lin(col)
+            if inflate:
+                moves.append((v.index, v.normal.copy() * inflate))
+        for i, d in moves:
+            me.vertices[i].co += d
         me.materials.clear()
-        me.materials.append(mat)
+        me.materials.append(outfit_material('Outfit'))
+
+    for pr in cfg.get('props', []):
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=pr.get('radius', 0.05), segments=16, ring_count=8, location=pr['at'])
+        ob = bpy.context.active_object
+        ob.scale = pr.get('scale', [1, 1, 1])
+        bpy.ops.object.shade_smooth()
+        attr = ob.data.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
+        for d in attr.data:
+            d.color = lin(pr['color'])
+        ob.data.materials.append(outfit_material('Prop'))
+        mw = ob.matrix_world.copy()
+        ob.parent = arm
+        ob.parent_type = 'BONE'
+        ob.parent_bone = pr['bone']
+        bpy.context.view_layer.update()
+        ob.matrix_world = mw
 
 
 def set_action(arm, act):
