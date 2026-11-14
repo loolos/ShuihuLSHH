@@ -4,7 +4,7 @@
  "map": {
   "base": "N13"
  },
- "bgm": "battle2",
+ "bgm": ["escape", "army", "battle2"],
  "units": [
   {
    "id": "likui",

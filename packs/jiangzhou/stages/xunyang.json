@@ -5,7 +5,7 @@
  "map": {
   "base": "Act5-2"
  },
- "bgm": "inn",
+ "bgm": ["inn", "jiangzhou"],
  "units": [
   {
    "id": "songjiang",
