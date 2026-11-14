@@ -91,7 +91,8 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   54: { stun: 10 }, // 朱武 神機妙算，原版 0
   128: { rangeMax: 2 }, // 楊春 撥草尋蛇
   113: { rangeMax: 2 }, // 陳達 餓虎出柵
-  56: { stun: 30 }, // 朱武 詭計多端（7 级连续技），原版 5，负责人 2026-11-13 改 30
+  // 朱武 詭計多端（7 级连续技）：昏迷原版 5，负责人 2026-11-13 改 30；2026-11-14 威力 20 → 60，原版三段 60/20/20 改成 4 段各 25%（第 10、14、18、21 帧）
+  56: { stun: 30, power: 60, hits: [10, 14, 18, 21].map((frame) => ({ frame, percent: 25, dir: 0 })) },
   // 137 佛法無邊（魯智深 17 级，以自身为中心的范围技）：原版第 13 帧一段 100%，负责人 2026-11-14 要求改成三段：
   // 禅杖顿地（第 13 帧，原版命中帧）之后蹲身按杖的第 16、19 帧再各震一下，30% / 30% / 40%；每段放一轮特效
   137: { hits: [{ frame: 13, percent: 30, dir: 0 }, { frame: 16, percent: 30, dir: 0 }, { frame: 19, percent: 40, dir: 0 }] },
@@ -141,7 +142,7 @@ const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100
 /**
  * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
  * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
- * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）。
+ * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）。
  */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
@@ -156,6 +157,11 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 6, group: 1, learnLevel: 24, mpCost: 50, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
     // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
     extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
+  ],
+  // 吳用（24 级入队）：回气借本人那组一帧的姿势（第 1 组，其它好汉的集气技也是一帧）；单体昏迷借普攻动作（第 0 组），第 28 组蓝色光环特效（原版没有技能用）
+  10: [
+    extraSkill({ name: '運籌帷幄', skillId: 1006, type: 8, group: 1, learnLevel: 24, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0, hits: [] }),
+    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
   ],
   // 陳達：借黑虎偷心的动作（第 1 组）、第 19 组弧形扫击特效（原版没有技能用）
   13: [
