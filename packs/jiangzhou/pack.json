@@ -1,7 +1,7 @@
 {
  "id": "jiangzhou",
  "name": "江州好汉（试做）",
- "description": "外传「江州劫法场」「沂岭杀四虎」要用的新人物：神行太保戴宗、黑旋风李逵。先做人物，关卡还没做；这里是试手的小关。",
+ "description": "外传「江州劫法场」「沂岭杀四虎」要用的新人物：神行太保戴宗、黑旋风李逵，以及能上阵的宋江。关卡还没做；这里是试手的小关。",
  "entry": "standalone",
  "classes": [
   {
@@ -169,6 +169,214 @@
    },
    "face": {
     "file": "faces/likui.png"
+   }
+  },
+  {
+   "id": "songjiang",
+   "name": "宋江",
+   "base": {
+    "hp": 90,
+    "mp": 90,
+    "attack": 60,
+    "defense": 25,
+    "hit": 85,
+    "agility": 30,
+    "crit": 10
+   },
+   "move": 5,
+   "weaponType": 7,
+   "items": [
+    63,
+    89,
+    119,
+    155,
+    155
+   ],
+   "skills": [
+    {
+     "id": "sj-jian",
+     "name": "剑击",
+     "from": 194,
+     "anim": 0
+    },
+    {
+     "id": "sj-yuezhan",
+     "name": "跃斩",
+     "from": 196,
+     "anim": 1,
+     "learnLevel": 1
+    },
+    {
+     "id": "sj-jianwu",
+     "name": "剑舞",
+     "from": 198,
+     "anim": 2,
+     "learnLevel": 1
+    },
+    {
+     "id": "sj-xuanzhan",
+     "name": "旋斩",
+     "from": 22,
+     "anim": 3,
+     "learnLevel": 1
+    },
+    {
+     "id": "sj-jishiyu",
+     "name": "及时雨",
+     "from": 200,
+     "anim": 4,
+     "learnLevel": 1
+    },
+    {
+     "id": "sj-yunqi",
+     "name": "运气",
+     "from": 199,
+     "anim": 5
+    }
+   ],
+   "sprite": {
+    "fromClass": 6,
+    "idle": "walk",
+    "recolors": {
+     "wanglun": [
+      {
+       "src": [
+        [
+         16,
+         31
+        ],
+        [
+         1,
+         7
+        ],
+        [
+         11,
+         11
+        ],
+        [
+         224,
+         239
+        ],
+        [
+         48,
+         63
+        ],
+        [
+         96,
+         111
+        ],
+        [
+         144,
+         156
+        ]
+       ],
+       "dst": [
+        144,
+        156
+       ],
+       "k": 0.72
+      }
+     ],
+     "gongsun": [
+      {
+       "src": [
+        [
+         240,
+         255
+        ],
+        [
+         144,
+         156
+        ],
+        [
+         16,
+         31
+        ],
+        [
+         1,
+         7
+        ],
+        [
+         11,
+         11
+        ],
+        [
+         224,
+         239
+        ],
+        [
+         96,
+         111
+        ]
+       ],
+       "dst": [
+        144,
+        156
+       ],
+       "k": 0.85
+      }
+     ]
+    },
+    "shoes": {
+     "dst": [
+      36,
+      46
+     ],
+     "k": 1.0
+    },
+    "parts": {
+     "hurt": {
+      "fromClass": 68,
+      "action": 1,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "defend": {
+      "fromClass": 68,
+      "action": 2,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "0": {
+      "fromClass": 68,
+      "action": 3,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "1": {
+      "fromClass": 68,
+      "action": 4,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "2": {
+      "fromClass": 68,
+      "action": 6,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "3": {
+      "fromClass": 2,
+      "action": 6,
+      "recolor": "gongsun",
+      "shoes": true
+     },
+     "4": {
+      "fromClass": 68,
+      "action": 8,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "5": {
+      "fromClass": 68,
+      "action": 7,
+      "recolor": "wanglun",
+      "shoes": true
+     }
+    }
+   },
+   "face": {
+    "fromHead": 6
    }
   }
  ],

@@ -60,6 +60,26 @@ export interface BorrowSprite {
   fromClass: number;
   recolor?: RecolorGroup[];
   head?: number;
+  /**
+   * 个别动作改借别的原版职业（混搭）：键是 walk / hurt / defend，或技能 anim 的数字（0 = 第一个出手动作）。
+   * 宋江原版只有走路：走路用自己的，受击、防御、出手借王伦、公孙胜（docs/game-design.md §15.2）。
+   */
+  parts?: Record<string, BorrowPart>;
+  /** parts 用的换色方案，按名字引用 */
+  recolors?: Record<string, RecolorGroup[]>;
+  /** walk = 待机姿势用走路第 1 帧（出手动作是别人的身体时，站着仍是自己的样子） */
+  idle?: 'walk';
+  /** parts 里写了 shoes 的动作，把脚染成这个色阶（如红鞋 36–46），按形状找脚，见 recolor.ts paintShoes */
+  shoes?: { dst: [number, number]; k?: number };
+}
+
+export interface BorrowPart {
+  fromClass: number;
+  /** 被借职业的 Man.lib 动作号：0 走路、1 受击、2 防御，3 起出手 */
+  action: number;
+  /** 换色：recolors 里的名字，或直接写换色组 */
+  recolor?: string | RecolorGroup[];
+  shoes?: boolean;
 }
 
 export interface PackSkillJson {

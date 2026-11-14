@@ -34,3 +34,58 @@ export function recolorLut(pal: Uint8Array, groups: RecolorGroup[]): Uint8Array 
   }
   return lut;
 }
+
+/** 原版人物影子用的调色板号（Man.lib 各帧脚下的影子都是 157–159，逐帧导出像素看到的），换色、染鞋都不碰 */
+export const SHADOW_COLORS: ReadonlySet<number> = new Set([157, 158, 159]);
+/** 脸、手的肤色色阶（192–223），染鞋时不碰（兵器握把也在这里） */
+const isSkin = (v: number) => v >= 192 && v <= 223;
+
+/**
+ * 按形状找脚染色（宋江的红鞋，负责人 2026-11-14）：鞋和衣服常用同一个色阶，只能按位置找。
+ * 在身体最低的 18 行里找横向不超过 10 像素宽的连续像素（腿、脚是窄条，袍摆是宽条），连成块；
+ * 块的最低点离身体最低点不超过 11 行（贴着地面）的，把块最下面 3 行按 lut 换色。
+ * 长袍盖住脚的帧（站直、袍摆拖地）找不到窄条，就不染。pixels 原地修改。
+ */
+export function paintShoes(pixels: Uint8Array, width: number, height: number, lut: Uint8Array): void {
+  const body = (k: number) => pixels[k] !== 0 && !SHADOW_COLORS.has(pixels[k]);
+  let bottom = -1;
+  for (let k = 0; k < pixels.length; k++) if (body(k)) bottom = Math.floor(k / width);
+  if (bottom < 0) return;
+  const cand = new Uint8Array(width * height);
+  for (let y = Math.max(0, bottom - 18); y <= bottom; y++)
+    for (let x = 0; x < width; ) {
+      if (!body(y * width + x)) {
+        x++;
+        continue;
+      }
+      let e = x;
+      while (e < width && body(y * width + e)) e++;
+      if (e - x <= 10) cand.fill(1, y * width + x, y * width + e);
+      x = e;
+    }
+  const seen = new Uint8Array(width * height);
+  for (let k0 = 0; k0 < cand.length; k0++) {
+    if (!cand[k0] || seen[k0]) continue;
+    const comp: number[] = [];
+    const stack = [k0];
+    seen[k0] = 1;
+    while (stack.length) {
+      const k = stack.pop()!;
+      comp.push(k);
+      const cx = k % width;
+      const cy = (k - cx) / width;
+      for (let dy = -1; dy <= 1; dy++)
+        for (let dx = -1; dx <= 1; dx++) {
+          const nx = cx + dx;
+          const ny = cy + dy;
+          if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+          const n = ny * width + nx;
+          if (cand[n] && !seen[n]) (seen[n] = 1), stack.push(n);
+        }
+    }
+    let low = 0;
+    for (const k of comp) low = Math.max(low, Math.floor(k / width));
+    if (comp.length < 4 || low < bottom - 11) continue;
+    for (const k of comp) if (Math.floor(k / width) >= low - 2 && !isSkin(pixels[k])) pixels[k] = lut[pixels[k]];
+  }
+}

@@ -80,6 +80,15 @@ class Fetch {
     this.span(path, src);
     this.copies.push([path, src[0], own[0], own[1] - own[0]]);
   }
+  /** 职业 cls 第 action 个动作的 4 个朝向（混搭的职业按 manSource 找出处） */
+  manAction(assets: Assets, cls: number, action: number) {
+    const src = manSource(assets, cls, action);
+    const c = assets.man.classes[src.cls];
+    if (c) for (let d = 0; d < 4; d++) {
+      const g = c.first + src.action * 4 + d;
+      if (g <= c.last) this.manGroup(assets, g);
+    }
+  }
   /** Man.lib 第 group 个动作组的全部帧 */
   manGroup(assets: Assets, group: number) {
     const r = assets.man.actions[group];
@@ -87,11 +96,7 @@ class Fetch {
   }
   /** 一个技能：职业的出手动作（4 个朝向）和它的特效 */
   skill(assets: Assets, cls: number, sk: SkillDef) {
-    const c = assets.man.classes[manClassOf(assets, cls)];
-    if (c) for (let d = 0; d < 4; d++) {
-      const g = c.first + (ACTION_FIRST_SKILL + sk.group) * 4 + d;
-      if (g <= c.last) this.manGroup(assets, g);
-    }
+    this.manAction(assets, cls, ACTION_FIRST_SKILL + sk.group);
     for (const g of fxGroups(sk)) this.effectGroup(assets, g);
   }
   /** Effect.lib 第 group 组的全部帧 */
@@ -109,6 +114,15 @@ class Fetch {
 /** 职业 cls 用 Man.lib 里哪个职业的动画：扩展包借原版动画的职业（sprite.fromClass）换成被借的职业 */
 export function manClassOf(assets: Assets, cls: number): number {
   return assets.pack?.rt.looks.get(cls)?.from ?? cls;
+}
+
+/**
+ * 职业 cls 的第 action 个动作实际用 Man.lib 哪个职业的哪个动作：一般是 manClassOf 的同一个动作；
+ * 扩展包混搭的职业（sprite.parts，如宋江借王伦的出手）换成那个职业的那个动作。
+ */
+export function manSource(assets: Assets, cls: number, action: number): { cls: number; action: number } {
+  const p = assets.pack?.rt.looks.get(cls)?.parts?.get(action);
+  return p ? { cls: p.from, action: p.action } : { cls: manClassOf(assets, cls), action };
 }
 
 /** Man.lib 每个职业的动作：0 走路、1 受击、2 防御，3 起每个技能一组（同 src/game/sprites.ts 的 ACTION） */
@@ -135,8 +149,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
   if (!classesOverride && files.has(actFile))
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {
-    const c = assets.man.classes[manClassOf(assets, cls)];
-    if (c) for (let g = c.first; g < Math.min(c.last + 1, c.first + (ACTION_FIRST_SKILL + 1) * 4); g++) job.manGroup(assets, g);
+    for (let a = 0; a <= ACTION_FIRST_SKILL; a++) job.manAction(assets, cls, a);
     const basic = assets.data.classes[cls]?.skills[0];
     if (basic) job.skill(assets, cls, basic);
   }
