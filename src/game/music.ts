@@ -13,6 +13,8 @@
 // - 过关 / 失败音效播放期间把音乐压低（duck），播完再恢复。
 // - 音量跟顶栏「♪」档位（关 / 小 / 中 / 大）走，切档立即生效；「关」档同时静音音乐（负责人 2026-11-13 要求）。
 //   「音乐开 / 关」按钮仍然单独控制要不要放音乐。
+// - iPhone / iPad 的 Safari 不许网页改 <audio> 的 volume（写了也还是 1），所以那里把两个播放器接进 Web Audio，
+//   用增益节点调音量；其他浏览器照旧直接设 volume（负责人 2026-11-14 反映音乐不跟档位变）。
 import { REPO_GAMEDATA } from '../platform/gamefiles.ts';
 import { musicVolume } from './volume.ts';
 
@@ -51,6 +53,17 @@ interface BgmIndex {
 export type Playlist = string | string[] | null;
 
 /** 一个播放器：音量在 level 和 target 之间按 rate（每秒）线性变化，淡到 0 后暂停 */
+/** 这个浏览器能不能直接改 <audio> 的音量（iOS 上 volume 只读，读回来总是 1） */
+function volumeWritable(): boolean {
+  try {
+    const a = new Audio();
+    a.volume = 0.5;
+    return Math.abs(a.volume - 0.5) < 0.01;
+  } catch {
+    return false;
+  }
+}
+
 class Deck {
   el = new Audio();
   level = 0;
@@ -58,8 +71,16 @@ class Deck {
   rate = 1;
   /** 正在放的歌单（曲目名用逗号连起来） */
   key: string | null = null;
-  constructor() {
+  /** 接进 Web Audio 后的增益节点：有它就用它调音量，el.volume 保持 1 */
+  gain: GainNode | null = null;
+  constructor(viaWebAudio: boolean) {
     this.el.preload = 'auto';
+    // 要接进 Web Audio，跨域的曲子必须按 CORS 取（raw.githubusercontent.com 允许），否则只会输出静音
+    if (viaWebAudio) this.el.crossOrigin = 'anonymous';
+  }
+  setVolume(v: number) {
+    if (this.gain) this.gain.gain.value = v;
+    else this.el.volume = v;
   }
   fadeTo(target: number, secs: number) {
     this.target = target;
@@ -73,7 +94,11 @@ class Deck {
 }
 
 class MusicPlayer {
-  private decks = [new Deck(), new Deck()];
+  /** 用 Web Audio 增益节点调音量（volume 改不了的浏览器，见文件头） */
+  // 开发模式下 ?musicwebaudio 强制走这条路，方便在桌面浏览器里测试
+  readonly viaWebAudio = !volumeWritable() || (import.meta.env.DEV && new URLSearchParams(location.search).has('musicwebaudio'));
+  private decks = [new Deck(this.viaWebAudio), new Deck(this.viaWebAudio)];
+  private ctx: AudioContext | null = null;
   /** 当前（或即将）主放的播放器 */
   private active = 0;
   private index: Promise<BgmIndex | null> | null = null;
@@ -189,7 +214,7 @@ class MusicPlayer {
     if (a.target > 0 && !a.el.paused && a.el.duration > LOOP_TAIL * 3 && a.el.currentTime >= a.el.duration - LOOP_TAIL) this.loopNow(LOOP_XFADE);
     for (const d of this.decks) {
       d.step(dt);
-      d.el.volume = musicVolume(this.level, this.duck, d.level);
+      d.setVolume(musicVolume(this.level, this.duck, d.level));
     }
     if (this.decks.every((d) => d.el.paused) && this.duck === 1) {
       clearInterval(this.timer!);
@@ -272,6 +297,23 @@ class MusicPlayer {
     if (this.audible) void this.play(this.current);
     else for (const d of this.decks) d.fadeTo(0, 0.3), this.ensureTimer();
     this.onChange();
+  }
+  /** 音效系统建好 AudioContext 后交过来（第一次用户操作时）：需要的话把播放器接进去 */
+  attach(ctx: AudioContext) {
+    if (!this.viaWebAudio || this.ctx) return;
+    this.ctx = ctx;
+    for (const d of this.decks) {
+      try {
+        const src = ctx.createMediaElementSource(d.el);
+        const g = ctx.createGain();
+        src.connect(g).connect(ctx.destination);
+        d.gain = g;
+        d.el.volume = 1;
+        d.setVolume(musicVolume(this.level, this.duck, d.level));
+      } catch {
+        /* 接不上就保持原样（音量跟不了档位，但还能放） */
+      }
+    }
   }
   /** 第一次用户操作时补放（浏览器的自动播放限制） */
   resume() {

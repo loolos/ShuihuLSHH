@@ -61,6 +61,8 @@ class SoundSystem {
       this.master = this.ctx.createGain();
       this.master.gain.value = GAIN[this.level];
       this.master.connect(this.ctx.destination);
+      // iOS 上音乐的音量要靠 Web Audio 调（见 music.ts 文件头）
+      music.attach(this.ctx);
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
     if (this.pending.length) this.preload(this.pending.splice(0));
