@@ -1,4 +1,4 @@
-"""把带动画的 3D 模型渲染成原版风格的精灵图条（扩展包用，docs/game-design.md §15.4）。
+"""把带动画的 3D 模型渲染成原版风格的精灵图条（扩展包用，docs/game-design.md §15.6）。
 
 用法（需要 Blender 的 Python 模块 bpy，可 `pip install bpy`，要求 Python 版本与 bpy 轮子一致）：
   python tools/render-sprites.py 模型.glb|.fbx 输出目录 [--height 1.75 | --length 2.2] [--ppm 50] [--frames 12] [--scale-by bones|mesh] [--outfit 上色.json]
