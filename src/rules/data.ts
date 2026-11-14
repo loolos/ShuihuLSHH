@@ -330,8 +330,39 @@ export const equipHitBonus = (it: Item) => EQUIP_HIT_OVERRIDES[it.id] ?? (it.hit
  * 改名「碧雲箬笠」上架武器店，作为紅纓氈笠的上一级：防 10（打铁 +3 一次，原版）、移动 +3（原版）、命中 +16，
  * 城镇 7–11（黄泥冈前起）有卖，4500 两（原版卖价 2250 的两倍）。图标仍用原版这一格。
  */
+/** 城镇的先后顺序（同 preset.ts 的 TOWN_ORDER） */
+const TOWNS_IN_ORDER = [1, 2, 3, 4, 5, 13, 6, 12, 7, 8, 9, 10, 11];
+/** 从城镇 town 起（按先后顺序）都有卖的城镇号表（道具 +146） */
+const soldFrom = (town: number) => {
+  const t = TOWNS_IN_ORDER.slice(TOWNS_IN_ORDER.indexOf(town));
+  return [...t, ...Array(13 - t.length).fill(0)];
+};
+/** 上架：武器店（大类 2）或当铺（大类 5），从城镇 town 起有卖，卖价 = 买价 / 2 */
+const shopItem = (price: number, town: number, category = 2): Partial<Item> => ({ category, buyPrice: price, sellPrice: price / 2, seqA: soldFrom(town) });
 export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   127: { name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500, sellPrice: 2250, seqA: [7, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0] },
+  /*
+   * 原版库里有、但没有任何关卡、宝箱、我方配装或商店给的装备（敌人身上的打倒后不掉），一律放进后期商店【新：负责人 2026-11-14】。
+   * 价格按同类商店货的属性比较定；城镇 7（N09 之后）→ 8 → 9 → 10（N-add16 前）越往后越好。属性照原版不改。108魔星草人没有属性，不放。
+   */
+  11: shopItem(2600, 7), // 烏金鐵拳：攻 18 偏低，附加多（鐵甲拳 攻 30 / 2900）
+  21: shopItem(6000, 10), // 打狗棒：攻 30 + 射程、移动、昏 20%（羅漢棍 攻 36 / 3300）
+  28: shopItem(4000, 9), // 風雷刀：攻 22 + 移动、每回合回气 20（冰火刀 攻 34 / 3400）
+  36: shopItem(5500, 10), // 青龍偃月刀：攻 35 + 射程、敏 15、必 20（金龍大刀 攻 38 / 3640）
+  47: shopItem(5000, 9), // 火尖槍：攻 28 + 射程、命 10、必 20（透甲槍 攻 38 / 5500）
+  53: shopItem(8000, 10), // 金剛鏟：攻 36 + 每回合回体回气 30（巨靈鏟 攻 39 / 7000）
+  66: shopItem(1800, 7), // 玄鐵劍：攻 15 偏低（闊劍 攻 29 / 1600）
+  70: shopItem(1800, 7), // 將邪劍：攻 22（兩儀劍 攻 28 / 2300）
+  75: shopItem(5000, 9), // 虎鯊叉：攻 38、必 20（飛魚叉 攻 34 / 4200）
+  79: shopItem(3000, 8), // 巨鯨槳：攻 30、昏 15%（鐵槳 攻 35 / 3000）
+  94: shopItem(3500, 8), // 綠蓑衣：防 17、敏 13、移动 +2（皂色繡襖 防 18 / 2000）
+  110: shopItem(7000, 9), // 梅花榆葉甲：防 45（鐵葉攢鎧 防 40 / 5200）
+  111: shopItem(9000, 10), // 雁翎圈金甲：防 50
+  124: shopItem(6000, 9), // 烏紗帽：防 10、每回合回体回气 20（猛虎紋玉 回 15 / 6000）
+  132: shopItem(3000, 7), // 耀日鑌鐵盔：防 20、必 10（熟鋼獅子盔 防 18 / 2400）
+  138: shopItem(5000, 9), // 麒麟護符：防 20、命 10、敏 10
+  143: shopItem(5000, 9, 5), // 菊花金飾：体气 +50（水蓮鐵飾 +20 / 2000），当铺
+  154: shopItem(8000, 10, 5), // 孔明兵法：攻防命敏 +5，当铺
 };
 export const withItemOverrides = (items: Item[]): Item[] => items.map((it) => (ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it));
 /** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */
