@@ -1,0 +1,1249 @@
+{
+ "id": "fachang",
+ "title": "江州劫法场",
+ "next": "bailongmiao",
+ "map": {
+  "base": "N05"
+ },
+ "bgm": "army",
+ "units": [
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 42,
+   "y": 11,
+   "facing": 2,
+   "level": 27,
+   "hidden": true
+  },
+  {
+   "id": "songjiang",
+   "class": "songjiang",
+   "side": "player",
+   "x": 41,
+   "y": 13,
+   "facing": 2,
+   "level": 25
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 43,
+   "y": 13,
+   "facing": 2,
+   "level": 26
+  },
+  {
+   "id": "chaogai",
+   "class": 35,
+   "side": "player",
+   "x": 43,
+   "y": 3,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "name": "推车客商"
+  },
+  {
+   "id": "huarong",
+   "class": 35,
+   "side": "ally",
+   "x": 44,
+   "y": 4,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "推车客商"
+  },
+  {
+   "id": "huangxin",
+   "class": 35,
+   "side": "ally",
+   "x": 45,
+   "y": 4,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "推车客商"
+  },
+  {
+   "id": "lufang",
+   "class": 35,
+   "side": "ally",
+   "x": 44,
+   "y": 5,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "推车客商"
+  },
+  {
+   "id": "guosheng",
+   "class": 35,
+   "side": "ally",
+   "x": 43,
+   "y": 5,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "推车客商"
+  },
+  {
+   "id": "ruanxiaoer",
+   "class": 21,
+   "side": "player",
+   "x": 52,
+   "y": 12,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "弄蛇丐者",
+   "items": [
+    73,
+    84,
+    114
+   ]
+  },
+  {
+   "id": "ruanxiaowu",
+   "class": 21,
+   "side": "player",
+   "x": 52,
+   "y": 13,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "弄蛇丐者",
+   "items": [
+    31,
+    84,
+    114
+   ]
+  },
+  {
+   "id": "ruanxiaoqi",
+   "class": 21,
+   "side": "player",
+   "x": 52,
+   "y": 14,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "弄蛇丐者",
+   "items": [
+    77,
+    86,
+    126
+   ]
+  },
+  {
+   "id": "baisheng",
+   "class": 21,
+   "side": "player",
+   "x": 53,
+   "y": 13,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "弄蛇丐者",
+   "items": [
+    56,
+    89,
+    114
+   ]
+  },
+  {
+   "id": "liutang",
+   "class": 40,
+   "side": "player",
+   "x": 30,
+   "y": 12,
+   "facing": 3,
+   "level": 28,
+   "hidden": true,
+   "name": "使枪棒卖药的",
+   "items": [
+    57,
+    84,
+    113
+   ]
+  },
+  {
+   "id": "duqian",
+   "class": 40,
+   "side": "player",
+   "x": 30,
+   "y": 13,
+   "facing": 3,
+   "level": 26,
+   "hidden": true,
+   "name": "使枪棒卖药的"
+  },
+  {
+   "id": "songwan",
+   "class": 40,
+   "side": "player",
+   "x": 30,
+   "y": 14,
+   "facing": 3,
+   "level": 26,
+   "hidden": true,
+   "name": "使枪棒卖药的"
+  },
+  {
+   "id": "yanshun",
+   "class": 40,
+   "side": "ally",
+   "x": 29,
+   "y": 13,
+   "facing": 3,
+   "level": 27,
+   "hidden": true,
+   "name": "使枪棒卖药的"
+  },
+  {
+   "id": "zhugui",
+   "class": 19,
+   "side": "ally",
+   "x": 42,
+   "y": 24,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "挑担脚夫"
+  },
+  {
+   "id": "wangying",
+   "class": 19,
+   "side": "ally",
+   "x": 41,
+   "y": 25,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "挑担脚夫"
+  },
+  {
+   "id": "zhengtianshou",
+   "class": 19,
+   "side": "ally",
+   "x": 43,
+   "y": 25,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "挑担脚夫",
+   "items": [
+    18
+   ]
+  },
+  {
+   "id": "shiyong",
+   "class": 19,
+   "side": "ally",
+   "x": 42,
+   "y": 26,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "挑担脚夫"
+  },
+  {
+   "id": "caijiu",
+   "class": "caijiu",
+   "side": "enemy",
+   "x": 42,
+   "y": 9,
+   "facing": 2,
+   "level": 28
+  },
+  {
+   "id": "ex1",
+   "class": 66,
+   "side": "enemy",
+   "x": 41,
+   "y": 14,
+   "facing": 1,
+   "level": 26,
+   "ai": 8,
+   "name": "刽子手"
+  },
+  {
+   "id": "ex2",
+   "class": 66,
+   "side": "enemy",
+   "x": 43,
+   "y": 14,
+   "facing": 1,
+   "level": 26,
+   "ai": 8,
+   "name": "刽子手"
+  },
+  {
+   "id": "g1",
+   "class": 32,
+   "side": "enemy",
+   "x": 39,
+   "y": 11,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g2",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 11,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g3",
+   "class": 32,
+   "side": "enemy",
+   "x": 39,
+   "y": 16,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g4",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 16,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g5",
+   "class": 32,
+   "side": "enemy",
+   "x": 42,
+   "y": 16,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g6",
+   "class": 33,
+   "side": "enemy",
+   "x": 38,
+   "y": 13,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g7",
+   "class": 33,
+   "side": "enemy",
+   "x": 46,
+   "y": 13,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g8",
+   "class": 33,
+   "side": "enemy",
+   "x": 40,
+   "y": 9,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g9",
+   "class": 33,
+   "side": "enemy",
+   "x": 44,
+   "y": 9,
+   "level": 24,
+   "name": "土兵"
+  },
+  {
+   "id": "g10",
+   "class": 34,
+   "side": "enemy",
+   "x": 37,
+   "y": 11,
+   "level": 23
+  },
+  {
+   "id": "g11",
+   "class": 34,
+   "side": "enemy",
+   "x": 47,
+   "y": 11,
+   "level": 23
+  },
+  {
+   "id": "g12",
+   "class": 34,
+   "side": "enemy",
+   "x": 37,
+   "y": 15,
+   "level": 23
+  },
+  {
+   "id": "g13",
+   "class": 34,
+   "side": "enemy",
+   "x": 47,
+   "y": 15,
+   "level": 23
+  },
+  {
+   "id": "w3_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 42,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w3_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 43,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w3_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 42,
+   "y": 3,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w3_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 44,
+   "y": 2,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w6_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 8,
+   "y": 13,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w6_2",
+   "class": 32,
+   "side": "enemy",
+   "x": 8,
+   "y": 12,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w6_3",
+   "class": 33,
+   "side": "enemy",
+   "x": 8,
+   "y": 14,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w6_4",
+   "class": 34,
+   "side": "enemy",
+   "x": 7,
+   "y": 13,
+   "facing": 2,
+   "level": 24,
+   "hidden": true
+  },
+  {
+   "id": "w9_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 36,
+   "y": 48,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w9_2",
+   "class": 32,
+   "side": "enemy",
+   "x": 34,
+   "y": 49,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w9_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 38,
+   "y": 49,
+   "facing": 2,
+   "level": 24,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "w9_4",
+   "class": 34,
+   "side": "enemy",
+   "x": 36,
+   "y": 50,
+   "facing": 2,
+   "level": 24,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "objective",
+     "胜利：宋江、戴宗都逃到地图最下方的出口（往江边去）\n失败：宋江、戴宗或李逵倒下；超过 20 回合"
+    ],
+    [
+     "turnLimit",
+     20
+    ],
+    [
+     "bind",
+     "songjiang"
+    ],
+    [
+     "bind",
+     "daizong"
+    ],
+    [
+     "setEquip",
+     "songjiang",
+     0,
+     0
+    ],
+    [
+     "narrate",
+     "江州十字路口，法场已经扎起。土兵和刀棒刽子手把宋江、戴宗押到法场中间，团团枪棒围住。"
+    ],
+    [
+     "narrate",
+     "宋江面南背北，戴宗面北背南，两个纳坐下，只等午时三刻监斩官到来开刀。"
+    ],
+    [
+     "say",
+     "caijiu",
+     "今日斩了这两个反贼！看江州还有谁敢题反诗、通梁山泊！"
+    ],
+    [
+     "narrate",
+     "只见法场东边，一伙弄蛇的丐者，强要挨入法场里看。"
+    ],
+    [
+     "say",
+     "ruanxiaoer",
+     "我们弄蛇的走江湖，看一看又何妨！"
+    ],
+    [
+     "appear",
+     "ruanxiaowu"
+    ],
+    [
+     "appear",
+     "ruanxiaoqi"
+    ],
+    [
+     "appear",
+     "baisheng"
+    ],
+    [
+     "move",
+     "ruanxiaoer",
+     49,
+     12
+    ],
+    [
+     "move",
+     "ruanxiaowu",
+     49,
+     13
+    ],
+    [
+     "move",
+     "ruanxiaoqi",
+     49,
+     14
+    ],
+    [
+     "move",
+     "baisheng",
+     50,
+     13
+    ],
+    [
+     "say",
+     "g7",
+     "你这伙人好不晓事！这是什么去处，强挨入来要看！"
+    ],
+    [
+     "leave",
+     "ruanxiaoer"
+    ],
+    [
+     "leave",
+     "ruanxiaowu"
+    ],
+    [
+     "leave",
+     "ruanxiaoqi"
+    ],
+    [
+     "leave",
+     "baisheng"
+    ],
+    [
+     "narrate",
+     "西边一伙使枪棒卖药的，也强挨将入来。"
+    ],
+    [
+     "say",
+     "liutang",
+     "我们冲州撞府，哪里不曾去？便是京师天子杀人，也放人看。你这小去处砍得两个人，我们便挨入来看一看，打什么紧！"
+    ],
+    [
+     "appear",
+     "duqian"
+    ],
+    [
+     "appear",
+     "songwan"
+    ],
+    [
+     "appear",
+     "yanshun"
+    ],
+    [
+     "move",
+     "liutang",
+     34,
+     12
+    ],
+    [
+     "move",
+     "duqian",
+     34,
+     14
+    ],
+    [
+     "move",
+     "songwan",
+     35,
+     14
+    ],
+    [
+     "move",
+     "yanshun",
+     33,
+     13
+    ],
+    [
+     "leave",
+     "liutang"
+    ],
+    [
+     "leave",
+     "duqian"
+    ],
+    [
+     "leave",
+     "songwan"
+    ],
+    [
+     "leave",
+     "yanshun"
+    ],
+    [
+     "narrate",
+     "南边一伙挑担的脚夫，又要挨将入来。"
+    ],
+    [
+     "say",
+     "g5",
+     "这里要杀人，你挑到哪里去？"
+    ],
+    [
+     "say",
+     "zhugui",
+     "我们挑东西送知府相公去的，你们如何敢阻挡？"
+    ],
+    [
+     "appear",
+     "wangying"
+    ],
+    [
+     "appear",
+     "zhengtianshou"
+    ],
+    [
+     "appear",
+     "shiyong"
+    ],
+    [
+     "move",
+     "zhugui",
+     41,
+     19
+    ],
+    [
+     "move",
+     "wangying",
+     43,
+     19
+    ],
+    [
+     "move",
+     "zhengtianshou",
+     42,
+     20
+    ],
+    [
+     "move",
+     "shiyong",
+     44,
+     20
+    ],
+    [
+     "leave",
+     "zhugui"
+    ],
+    [
+     "leave",
+     "wangying"
+    ],
+    [
+     "leave",
+     "zhengtianshou"
+    ],
+    [
+     "leave",
+     "shiyong"
+    ],
+    [
+     "narrate",
+     "北边一伙客商，推两辆车子过来，定要挨入法场上来。"
+    ],
+    [
+     "say",
+     "g8",
+     "你那伙人哪里去？这里出人，要赶路从别路过去！"
+    ],
+    [
+     "say",
+     "chaogai",
+     "我们是京师来的人，不认得你这里的路，只从这大路走。"
+    ],
+    [
+     "appear",
+     "huarong"
+    ],
+    [
+     "appear",
+     "huangxin"
+    ],
+    [
+     "appear",
+     "lufang"
+    ],
+    [
+     "appear",
+     "guosheng"
+    ],
+    [
+     "move",
+     "chaogai",
+     41,
+     7
+    ],
+    [
+     "move",
+     "huarong",
+     43,
+     7
+    ],
+    [
+     "move",
+     "huangxin",
+     44,
+     7
+    ],
+    [
+     "move",
+     "lufang",
+     43,
+     6
+    ],
+    [
+     "move",
+     "guosheng",
+     44,
+     6
+    ],
+    [
+     "narrate",
+     "土兵哪里肯放。那伙客商齐齐地挨定了不动，盘在车子上立定了看。四下里吵闹不住，蔡九知府也禁治不得。"
+    ],
+    [
+     "leave",
+     "chaogai"
+    ],
+    [
+     "leave",
+     "huarong"
+    ],
+    [
+     "leave",
+     "huangxin"
+    ],
+    [
+     "leave",
+     "lufang"
+    ],
+    [
+     "leave",
+     "guosheng"
+    ],
+    [
+     "narrate",
+     "没多时，法场中间人分开处，一个报道一声：「午时三刻！」"
+    ],
+    [
+     "say",
+     "caijiu",
+     "斩讫报来！"
+    ],
+    [
+     "narrate",
+     "两边刽子手便去开枷，行刑之人执定法刀在手。"
+    ],
+    [
+     "narrate",
+     "说时迟，那时快——十字路口茶坊楼上，一个虎形黑大汉，脱得赤条条的，两只手握两把板斧，大吼一声，却似半天起个霹雳，从半空中跳将下来！"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "buff",
+     "likui",
+     "defense",
+     {
+      "pct": 60,
+      "turns": 2
+     }
+    ],
+    [
+     "leave",
+     "ex1"
+    ],
+    [
+     "leave",
+     "ex2"
+    ],
+    [
+     "narrate",
+     "手起斧落，早砍翻了两个刽子手，便望监斩官马前砍将来。"
+    ],
+    [
+     "say",
+     "caijiu",
+     "反了！反了！快拿下这黑厮！"
+    ],
+    [
+     "narrate",
+     "（我方好汉走到宋江或戴宗身边，就能割断绳索。）"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "车子上的客商听得「斩」字，怀中取出一面小锣，立在车子上当当地敲了两三声。四下里一齐动手！"
+    ],
+    [
+     "transform",
+     "chaogai",
+     12,
+     "晁盖"
+    ],
+    [
+     "transform",
+     "huarong",
+     34,
+     "花荣"
+    ],
+    [
+     "transform",
+     "huangxin",
+     38,
+     "黄信"
+    ],
+    [
+     "transform",
+     "lufang",
+     39,
+     "吕方"
+    ],
+    [
+     "transform",
+     "guosheng",
+     39,
+     "郭盛"
+    ],
+    [
+     "say",
+     "chaogai",
+     "众兄弟，动手！先救宋江哥哥和戴院长！"
+    ],
+    [
+     "narrate",
+     "东边那伙弄蛇的丐者，身边都掣出尖刀，看着土兵便杀。"
+    ],
+    [
+     "transform",
+     "ruanxiaoer",
+     7,
+     "阮小二"
+    ],
+    [
+     "transform",
+     "ruanxiaowu",
+     8,
+     "阮小五"
+    ],
+    [
+     "transform",
+     "ruanxiaoqi",
+     9,
+     "阮小七"
+    ],
+    [
+     "transform",
+     "baisheng",
+     4,
+     "白胜"
+    ],
+    [
+     "narrate",
+     "众土兵急簇拥蔡九知府逃命。"
+    ],
+    [
+     "move",
+     "caijiu",
+     43,
+     1
+    ],
+    [
+     "leave",
+     "caijiu"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "西边那伙使枪棒的，大发喊声，只顾乱杀将来。"
+    ],
+    [
+     "transform",
+     "liutang",
+     17,
+     "刘唐"
+    ],
+    [
+     "transform",
+     "duqian",
+     69,
+     "杜迁"
+    ],
+    [
+     "transform",
+     "songwan",
+     70,
+     "宋万"
+    ],
+    [
+     "transform",
+     "yanshun",
+     65,
+     "燕顺"
+    ],
+    [
+     "narrate",
+     "州衙方向，一队官兵骑马飞奔而来！"
+    ],
+    [
+     "appear",
+     "w3_1"
+    ],
+    [
+     "appear",
+     "w3_2"
+    ],
+    [
+     "appear",
+     "w3_3"
+    ],
+    [
+     "appear",
+     "w3_4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "南边那伙挑担的脚夫，抡起扁担，横七竖八，都打翻了土兵。"
+    ],
+    [
+     "transform",
+     "zhugui",
+     65,
+     "朱贵"
+    ],
+    [
+     "transform",
+     "wangying",
+     44,
+     "王矮虎"
+    ],
+    [
+     "transform",
+     "zhengtianshou",
+     67,
+     "郑天寿"
+    ],
+    [
+     "transform",
+     "shiyong",
+     66,
+     "石勇"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "say",
+     "chaogai",
+     "不干百姓事，休只管伤人！"
+    ],
+    [
+     "narrate",
+     "那黑大汉哪里来听叫，火杂杂地抡着大斧，只顾砍人。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "do": [
+    [
+     "narrate",
+     "西边街口又有官兵追来！"
+    ],
+    [
+     "appear",
+     "w6_1"
+    ],
+    [
+     "appear",
+     "w6_2"
+    ],
+    [
+     "appear",
+     "w6_3"
+    ],
+    [
+     "appear",
+     "w6_4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "do": [
+    [
+     "narrate",
+     "往江边的路上也有官兵拦截！"
+    ],
+    [
+     "appear",
+     "w9_1"
+    ],
+    [
+     "appear",
+     "w9_2"
+    ],
+    [
+     "appear",
+     "w9_3"
+    ],
+    [
+     "appear",
+     "w9_4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "songjiang"
+   },
+   "do": [
+    [
+     "narrate",
+     "好汉割断绳索，扶起宋江，递过一口剑。"
+    ],
+    [
+     "cleanse",
+     "songjiang"
+    ],
+    [
+     "setEquip",
+     "songjiang",
+     0,
+     63
+    ],
+    [
+     "say",
+     "songjiang",
+     "众位兄弟舍命来救，宋江死里得生！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "daizong"
+   },
+   "do": [
+    [
+     "narrate",
+     "好汉割断戴宗身上的绳索。"
+    ],
+    [
+     "cleanse",
+     "daizong"
+    ],
+    [
+     "say",
+     "daizong",
+     "多谢众位好汉！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "songjiang",
+     "daizong"
+    ],
+    "area": [
+     30,
+     52,
+     41,
+     53
+    ]
+   },
+   "do": [
+    [
+     "narrate",
+     "众好汉跟着李逵，一路杀出城来，直到江边。"
+    ],
+    [
+     "victory",
+     "救出了宋江、戴宗！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江被杀，劫法场失败。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "戴宗被杀，劫法场失败。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "李逵倒下了。"
+    ]
+   ]
+  }
+ ]
+}

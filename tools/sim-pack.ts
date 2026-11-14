@@ -20,6 +20,14 @@ export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(D
   return buildPack(base, pack, stages, sheets);
 }
 
+const dist = (a: { x: number; y: number }, c: { x: number; y: number }) => Math.abs(a.x - c.x) + Math.abs(a.y - c.y);
+/** 走到离 (x, y) 最近的能到的格子；走不动就原地防御 */
+function walkTo(b: Battle, u: Battle['units'][number], x: number, y: number, ev: unknown[]) {
+  const c = b.moveRange(u).green.reduce((a, g) => (dist(g, { x, y }) < dist(a, { x, y }) ? g : a), { x: u.x, y: u.y });
+  if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
+  if (b.canAct(u)) ev.push(...b.defend(u));
+}
+
 if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
   const [id = 'wusong', stageId, n = '20'] = process.argv.slice(2);
   const files = new NodeFiles(DATA);
@@ -28,12 +36,28 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
   const stage = rt.stages.find((s) => !stageId || s.id === stageId)!;
   let wins = 0;
   for (let seed = 1; seed <= Number(n); seed++) {
-    const b = new Battle(compileStage(rt, stage, files, { seed, text: tr }));
+    const input = compileStage(rt, stage, files, { seed, text: tr });
+    const b = new Battle(input);
+    const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
+    const goal = goalBlock?.trigger.kind === 'area' ? { who: goalBlock.trigger.chars ?? [goalBlock.trigger.char], x: (goalBlock.trigger.x1 + goalBlock.trigger.x2) >> 1, y: (goalBlock.trigger.y1 + goalBlock.trigger.y2) >> 1 } : null;
     const ev = [...b.begin()];
     let guard = 0;
     while (b.status === 'playing' && guard++ < 40) {
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;
+        if (!b.canAct(u)) continue;
+        // 关卡要求某几个人走到区域（劫法场逃到出口）：这几个人一律往区域走
+        if (goal && goal.who.includes(u.classId)) {
+          walkTo(b, u, goal.x, goal.y, ev);
+          continue;
+        }
+        // 有被绑的自己人：最近的一个人先过去松绑
+        const bound = b.active().find((x) => x.side === 'player' && x.stunTurns >= 1000);
+        if (bound && b.active().filter((x) => x.side === 'player' && x.stunTurns < 1000).sort((p, q) => dist(p, bound) - dist(q, bound))[0] === u) {
+          walkTo(b, u, bound.x, bound.y, ev);
+          if (b.canAct(u)) ev.push(...b.defend(u));
+          continue;
+        }
         // 我方也按敌方 AI 走：打得到就打（含技能），血少于一半先吃药，否则朝老虎走
         const heal = u.hp < u.stats.maxHp * 0.45 ? b.usableSlots(u)[0] : undefined;
         if (heal !== undefined) ev.push(...b.useItem(u, heal, u));

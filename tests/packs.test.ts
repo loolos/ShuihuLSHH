@@ -347,10 +347,129 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
   });
 
   it('试手关：敌人全部倒下即过关', () => {
-    const b = new Battle(compileStage(rt, rt.stages[0], files, { seed: 1, text: tr }));
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'shishou')!, files, { seed: 1, text: tr }));
     b.begin();
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.hp = 0, (u.alive = false), (u.present = false);
     (b as unknown as { afterAction: () => void }).afterAction();
+    expect(b.status).toBe('won');
+  });
+});
+
+describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
+  const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
+  const tr = has ? buildT2S(files) : (s: string) => s;
+  const rt = has ? loadPackFromDisk('jiangzhou', loadGameData(files, tr)) : (null as never);
+  const open = (id: string) => {
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === id)!, files, { seed: 1, text: tr }));
+    const said: string[] = [];
+    const log = (ev: BattleEvent[]) => (ev.forEach((e) => (e.type === 'say' || e.type === 'narrate') && said.push(e.text)), ev);
+    log(b.begin());
+    return { b, said, log, by: (n: string) => b.units.find((u) => u.name === n)! };
+  };
+  /** at 只剩 1 点血、不闪避，挨 u 一下就倒 */
+  const kill = (b: Battle, u: Unit, at: Unit) => {
+    const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+    at.hp = 1;
+    at.stats.agility = 0;
+    u.x = at.x, (u.y = at.y + 1);
+    for (let i = 0; i < 20 && at.alive; i++) {
+      x.out = [];
+      x.cast(u, attackSkill(u, b.data), { x: at.x, y: at.y }, false);
+      x.afterAction();
+      x.flush();
+    }
+  };
+  const advance = (b: Battle, to: number, log: (ev: BattleEvent[]) => BattleEvent[]) => {
+    while (b.status === 'playing' && b.turn < to) {
+      for (const u of b.units) if (u.side === 'player') u.hp = 99999;
+      log(b.endPlayerPhase());
+    }
+  };
+
+  it('三关连成一串（下一关），所有单位都站在可通行格上；蔡九借何涛（54）的动画，用自己的头像', () => {
+    expect(rt.stages.map((s) => [s.id, s.next])).toEqual([['xunyang', 'fachang'], ['fachang', 'bailongmiao'], ['bailongmiao', undefined], ['shishou', undefined]]);
+    for (const s of rt.stages.filter((x) => x.id !== 'shishou')) {
+      const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
+      for (const u of b.units) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
+    }
+    const cj = rt.classIds.get('caijiu')!;
+    expect(rt.looks.get(cj)).toMatchObject({ from: 54, face: 'faces/caijiu.png' });
+  });
+
+  it('浔阳楼：纯剧情关，题完反诗、黄文炳告发，演完就过关', () => {
+    const { b, said } = open('xunyang');
+    expect(said.some((t) => t.includes('敢笑黄巢不丈夫'))).toBe(true);
+    expect(said.some((t) => t.includes('耗国因家木'))).toBe(true);
+    expect(b.status).toBe('won');
+  });
+
+  it('法场：开场宋江、戴宗被绑，乔装的四伙人吵完退进人群，李逵跳下砍翻刽子手', () => {
+    const { b, said, by } = open('fachang');
+    expect(b.status).toBe('playing');
+    expect(by('宋江').stunTurns).toBeGreaterThan(100);
+    expect(by('戴宗').stunTurns).toBeGreaterThan(100);
+    expect(by('宋江').slots[0]).toBe(0);
+    expect(by('李逵').present).toBe(true);
+    expect(b.units.filter((u) => u.name === '刽子手' && u.present)).toEqual([]);
+    for (const n of ['弄蛇丐者', '使枪棒卖药的', '挑担脚夫', '推车客商']) {
+      expect(said.length).toBeGreaterThan(0);
+      expect(b.units.filter((u) => u.name === n).every((u) => !u.present)).toBe(true);
+    }
+    expect(said.some((t) => t.includes('午时三刻'))).toBe(true);
+    // 第 1 回合我方能动的只有李逵
+    expect(b.units.filter((u) => u.side === 'player' && b.canAct(u)).map((u) => u.name)).toEqual(['李逵']);
+  });
+
+  it('法场：锣响后按回合加入——第 2 回合北客商（晁盖）、东丐者（三阮、白胜），第 3 回合西使枪棒，第 4 回合南脚夫；没原版形象的是友军', () => {
+    const { b, said, log, by } = open('fachang');
+    const here = (n: string) => b.units.find((u) => u.name === n && u.present);
+    advance(b, 2, log);
+    expect(said.some((t) => t.includes('小锣'))).toBe(true);
+    for (const n of ['晁盖', '阮小二', '阮小五', '阮小七', '白胜']) expect(here(n)?.side, n).toBe('player');
+    for (const n of ['花荣', '黄信', '吕方', '郭盛']) expect(here(n)?.side, n).toBe('ally');
+    expect(by('晁盖').classId).toBe(12);
+    expect(here('刘唐')).toBeUndefined();
+    expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
+    advance(b, 3, log);
+    for (const n of ['刘唐', '杜迁', '宋万']) expect(here(n)?.side, n).toBe('player');
+    expect(here('燕顺')?.side).toBe('ally');
+    expect(here('朱贵')).toBeUndefined();
+    advance(b, 4, log);
+    for (const n of ['朱贵', '王矮虎', '郑天寿', '石勇']) expect(here(n)?.side, n).toBe('ally');
+    // 换回真身后兵器也是自己的
+    expect(by('阮小二').slots[0]).toBe(73);
+    expect(by('白胜').slots[0]).toBe(56);
+  });
+
+  it('法场：走到宋江身边松绑、还他剑；两人都到出口过关；宋江倒下判负', () => {
+    const { b, by } = open('fachang');
+    const sj = by('宋江'), dz = by('戴宗'), lk = by('李逵');
+    const x = b as unknown as { afterAction: () => void };
+    lk.x = sj.x, lk.y = sj.y - 1;
+    x.afterAction();
+    expect(sj.stunTurns).toBe(0);
+    expect(sj.slots[0]).toBe(63);
+    expect(dz.stunTurns).toBeGreaterThan(100);
+    sj.x = 35, sj.y = 53;
+    x.afterAction();
+    expect(b.status).toBe('playing');
+    dz.x = 36, dz.y = 53;
+    x.afterAction();
+    expect(b.status).toBe('won');
+
+    const c = open('fachang');
+    kill(c.b, c.b.units.find((u) => u.side === 'enemy' && u.present)!, c.by('宋江'));
+    expect(c.b.status).toBe('lost');
+  });
+
+  it('白龙庙：第 4 回合水军九人坐船赶到当友军；打倒兵马都监过关', () => {
+    const { b, said, log, by } = open('bailongmiao');
+    const boats = ['张顺', '张横', '李俊', '李立', '穆弘', '穆春', '童威', '童猛', '薛永'];
+    expect(boats.every((n) => !by(n).present)).toBe(true);
+    advance(b, 4, log);
+    for (const n of boats) expect(by(n).present && by(n).side, n).toBe('ally');
+    expect(said.some((t) => t.includes('三只大船'))).toBe(true);
+    kill(b, by('晁盖'), by('江州兵马都监'));
     expect(b.status).toBe('won');
   });
 });

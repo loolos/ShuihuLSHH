@@ -406,7 +406,10 @@ function startGame(assets: Assets) {
     markPackCleared(ref.pack, ref.stage);
     void music.play('victory');
     const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
-    ui.result(true, text + credits, [{ label: '再打一次', run: () => void runPack(value) }, { label: '回到标题', run: () => (location.href = location.pathname) }], '外传通关');
+    const next = pack?.rt.stages.find((s) => s.id === ref.stage)?.next;
+    const buttons = [{ label: '再打一次', run: () => void runPack(value) }, { label: '回到标题', run: () => (location.href = location.pathname) }];
+    if (next) buttons.unshift({ label: '下一关', run: () => void runPack(packStageName(ref.pack, next)) });
+    ui.result(true, text + credits, buttons, '外传通关');
   };
   /** 主线插关（docs/game-design.md §15.8）：打完回到主线，接着进 campaign.stage 那一关 */
   const runInsert = async (ref: string) => {

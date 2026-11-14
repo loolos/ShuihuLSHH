@@ -1,7 +1,7 @@
 {
  "id": "jiangzhou",
- "name": "江州好汉（试做）",
- "description": "外传「江州劫法场」「沂岭杀四虎」要用的新人物：神行太保戴宗、黑旋风李逵，以及能上阵的宋江。关卡还没做；这里是试手的小关。",
+ "name": "江州劫法场",
+ "description": "外传「江州劫法场」（原著第 39–40 回）：浔阳楼题反诗、法场劫人、白龙庙聚义。另有试手小关。",
  "entry": "standalone",
  "classes": [
   {
@@ -378,12 +378,68 @@
    "face": {
     "fromHead": 6
    }
+  },
+  {
+   "id": "caijiu",
+   "name": "蔡九知府",
+   "base": {
+    "hp": 110,
+    "mp": 100,
+    "attack": 50,
+    "defense": 22,
+    "hit": 65,
+    "agility": 30,
+    "crit": 5
+   },
+   "move": 7,
+   "weaponType": 4,
+   "items": [
+    45,
+    108,
+    131
+   ],
+   "skills": [
+    {
+     "id": "cj-ling",
+     "name": "仗势凌人",
+     "from": 155,
+     "anim": 0
+    },
+    {
+     "id": "cj-bi",
+     "name": "官逼民反",
+     "from": 157,
+     "anim": 1
+    },
+    {
+     "id": "cj-min",
+     "name": "民不聊生",
+     "from": 158,
+     "anim": 2
+    },
+    {
+     "id": "cj-li",
+     "name": "名利双收",
+     "from": 159,
+     "anim": 3
+    }
+   ],
+   "sprite": {
+    "fromClass": 54
+   },
+   "face": {
+    "file": "faces/caijiu.png"
+   }
   }
  ],
  "stages": [
+  "stages/xunyang.json",
+  "stages/fachang.json",
+  "stages/bailongmiao.json",
   "stages/shishou.json"
  ],
  "credits": [
-  "李逵模型：Quaternius「Universal Animation Library」，CC0"
+  "李逵模型：Quaternius「Universal Animation Library」，CC0",
+  "蔡九知府头像：AI 生成"
  ]
 }
