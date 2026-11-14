@@ -8,6 +8,7 @@ import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/upd
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
+import { installTouchGuards } from './game/touch.ts';
 import { installMusic, music } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
@@ -539,6 +540,7 @@ function setupUpdateButton() {
   };
 }
 
+installTouchGuards();
 installSound($<HTMLButtonElement>('sound'));
 installMusic($<HTMLButtonElement>('music'));
 

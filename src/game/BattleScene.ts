@@ -13,6 +13,7 @@ import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark } from './minimap.ts';
+import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
@@ -714,7 +715,12 @@ export class BattleScene extends Phaser.Scene {
   private setupInput() {
     const cam = this.cameras.main;
     this.input.addPointer(1);
+    // 先把已经抬起、但因事件被拦而仍算「按下」的触摸指针复位，否则下一根手指会被当成双指缩放（见 touch.ts）
+    const sweep = () => {
+      if (releaseStalePointers(this.input)) this.pinch = null;
+    };
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
+      sweep();
       this.down = { x: p.x, y: p.y, sx: cam.scrollX, sy: cam.scrollY, moved: false };
     });
     this.input.on('pointerup', (p: Phaser.Input.Pointer) => {
@@ -736,8 +742,9 @@ export class BattleScene extends Phaser.Scene {
       }
     });
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
+      sweep();
       const p1 = this.input.pointer1, p2 = this.input.pointer2;
-      if (p1.isDown && p2.isDown) {
+      if (p1.isDown && p2.isDown && multiTouch()) {
         const d = Phaser.Math.Distance.Between(p1.x, p1.y, p2.x, p2.y);
         if (this.pinch) this.zoomBy(d / this.pinch);
         this.pinch = d;

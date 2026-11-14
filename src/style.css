@@ -10,6 +10,8 @@
   background: var(--bg);
 }
 * { box-sizing: border-box; }
+/* 手机上不让浏览器缩放页面（双指、双击）：只允许滚动。地图自己的双指缩放在画布上（touch-action: none） */
+*, *::before, *::after { touch-action: pan-x pan-y; }
 html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); }
 #game { position: fixed; inset: 0; }
 #game canvas { display: block; touch-action: none; }
