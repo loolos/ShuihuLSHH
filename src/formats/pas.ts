@@ -83,7 +83,12 @@ export type PasTrigger =
   /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
   /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
-  | { kind: 'cond' };
+  | { kind: 'cond' }
+  /**
+   * 扩展包【新】：角色号 char 的单位出手之后——用过 skills 里全部技能（技能号），或累计出手 count 次（含普通攻击、反击）。
+   * 原版剧本没有这种触发，只由扩展包关卡（src/packs/）生成。
+   */
+  | { kind: 'used'; char: number; skills?: number[]; count?: number };
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
@@ -99,6 +104,8 @@ export interface PasOp {
   value: number;
   /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容 */
   text?: string;
+  /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
+  args?: { stat?: string; pct?: number; add?: number; turns?: number };
 }
 
 export interface PasBlock {

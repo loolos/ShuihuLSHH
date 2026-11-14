@@ -8,7 +8,7 @@ import { Board, key, pathTo, type Cell } from './board.ts';
 import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { BAG_SLOTS, buffName, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { enemyFloor } from './enemy-level.ts';
@@ -97,6 +97,11 @@ export interface StageInput {
   joinLevel?: number;
   /** .pab 文件头：城镇号、下一关 */
   header?: PasHeader;
+  /**
+   * 扩展包【新】：AI 优先用还没用过的这些技能（角色号 → 技能号）。如老虎的一扑、一掀、一剪要轮着用，
+   * 三招都用过才触发"气势减半"（docs/game-design.md §15.3）。
+   */
+  aiPrefer?: Record<number, number[]>;
 }
 
 /**
@@ -163,6 +168,10 @@ export class Battle {
   private ambushers = new Set<number>();
   /** 时光倒流：最近 REWIND_TURNS 个我方回合开始时的完整状态（JSON，不含随机数状态），旧的在前【新】 */
   private history: { turn: number; state: string }[] = [];
+  /** 每个单位出手用过的技能号（按顺序，含普通攻击和反击），扩展包的 used 触发用 */
+  private used: Record<number, number[]> = {};
+  /** 扩展包：AI 优先用的技能（StageInput.aiPrefer） */
+  private readonly aiPrefer: Record<number, number[]>;
 
   constructor(input: StageInput) {
     this.name = input.name;
@@ -173,6 +182,7 @@ export class Battle {
     this.blocks = input.blocks;
     this.display = input.displayBlocks?.length === input.blocks.length ? input.displayBlocks : undefined;
     this.tr = input.text ?? ((s) => s);
+    this.aiPrefer = input.aiPrefer ?? {};
     // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
     const playerLevel = (a: ActUnit) => {
       const kept = input.party?.get(a.type);
@@ -248,6 +258,10 @@ export class Battle {
   }
   active() {
     return this.units.filter((u) => u.alive && u.present);
+  }
+  /** 扩展包：AI 是否该优先用这个技能（列在 aiPrefer 里、本关还没用过） */
+  prefers(u: Unit, skill: SkillDef): boolean {
+    return !!this.aiPrefer[u.classId]?.includes(skill.skillId) && !this.used[u.uid]?.includes(skill.skillId);
   }
   unitAt(x: number, y: number) {
     return this.active().find((u) => u.x === x && u.y === y);
@@ -418,7 +432,7 @@ export class Battle {
       units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam,
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
-      expBySource: this.expBySource, benched: [...this.benched],
+      expBySource: this.expBySource, benched: [...this.benched], used: this.used,
     });
   }
 
@@ -468,6 +482,7 @@ export class Battle {
     this.ambushers = new Set(s.ambushers);
     this.expBySource = s.expBySource;
     this.benched = new Set(s.benched ?? []);
+    this.used = s.used ?? {};
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
     const prompt = this.data.prompts?.[0];
@@ -871,6 +886,7 @@ export class Battle {
     const area = this.skillArea(u, skill, cell);
     if (cell.x !== u.x || cell.y !== u.y) u.facing = facingTowards(u, cell, u.facing);
     u.mp -= skill.mpCost;
+    (this.used[u.uid] ??= []).push(skill.skillId);
     const basic = skill === attackSkill(u, this.data);
     if (isSupportSkill(skill)) {
       this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter });
@@ -1076,6 +1092,15 @@ export class Battle {
     if (!this.units.some((u) => u.side === 'enemy' && u.alive && u.present))
       for (const b of this.blocks) if (b.trigger.kind === 'death' && b.trigger.char === 255) this.runBlock(b);
     if (this.status !== 'playing') return;
+    // 扩展包：出手之后的触发（用过某几招 / 出手满几次）
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'used' || this.fired.has(b.index)) continue;
+      const u = this.units.find((x) => x.classId === t.char && x.alive);
+      const list = u ? (this.used[u.uid] ?? []) : [];
+      if (u && (t.skills ? t.skills.every((s) => list.includes(s)) : list.length >= (t.count ?? 1))) this.runBlock(b);
+      if (this.status !== 'playing') return;
+    }
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'area' || this.fired.has(b.index)) continue;
@@ -1274,6 +1299,26 @@ export class Battle {
         case 35:
           this.turnLimit = op.value & 0xffff;
           break;
+        // 100 起：扩展包的新指令【新】（src/packs/script.ts）
+        // 100 换装备：flag = 格号（0 武器、1 衣服、2 头饰），value = 道具号，0 = 卸掉（武松的哨棒折断）
+        case 100:
+          if (!sel) break;
+          sel.slots[op.flag ?? 0] = op.value;
+          sel.forge[op.flag ?? 0] = 0;
+          refreshStats(sel, this.data);
+          this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
+          break;
+        // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）
+        case 101: {
+          if (!sel || !op.args?.stat) break;
+          const stat = op.args.stat as BuffStat;
+          const cur = (sel.stats as unknown as Record<string, number>)[stat] ?? 0;
+          const value = op.args.pct ? Math.round((cur * op.args.pct) / 100) : (op.args.add ?? 0);
+          sel.buffs.push({ stat, value, turns: op.args.turns || 999 });
+          refreshStats(sel, this.data);
+          this.emit({ type: 'status', uid: sel.uid, text: `${buffName(stat)}${value > 0 ? '+' : ''}${value}` });
+          break;
+        }
       }
     });
     flushObjective();

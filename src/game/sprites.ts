@@ -6,6 +6,7 @@
 // 即摆好架势的姿势；没有出手动作的职业（平民等）用走路第 1 帧。见 idleAction。
 import Phaser from 'phaser';
 import { frameToCanvas, type Assets } from './assets.ts';
+import type { PackAssets } from './packs.ts';
 
 export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
 export const FRAME_MS = 120;
@@ -23,6 +24,7 @@ export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCan
  * 找不到就退回职业的第一组（走路）。全部 72 个职业里找到的都是动作 3，平民等 9 个职业没有出手动作。
  */
 export function idleAction(assets: Assets, cls: number): number {
+  if (assets.pack?.rt.looks.has(cls)) return PACK_IDLE;
   const c = assets.man.classes[cls];
   if (!c) return ACTION.walk;
   for (let g = c.first; g <= c.last; g += 4) if (assets.man.actions[g]?.param === 0) return (g - c.first) / 4;
@@ -31,6 +33,7 @@ export function idleAction(assets: Assets, cls: number): number {
 
 /** 职业 cls 的动作 action、朝向 facing 对应的动画键；不存在时返回 null */
 export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action: number, facing: number, repeat = -1): string | null {
+  if (assets.pack?.rt.looks.has(cls)) return packAnim(scene, assets.pack, cls, action, facing, repeat);
   const c = assets.man.classes[cls];
   if (!c) return null;
   const group = c.first + action * 4 + (facing & 3);
@@ -94,6 +97,8 @@ export const HEAD_STD = 62;
  * 普通身材（不超过 70）一律按 HEAD_STD，只有骑马、巨汉这类明显高大的职业（42、43、48、54 等）按实际高度。
  */
 export function classHead(assets: Assets, cls: number): number {
+  const look = assets.pack?.rt.looks.get(cls);
+  if (look) return look.head ?? HEAD_STD;
   let h = headCache.get(cls);
   if (h !== undefined) return h;
   const c = assets.man.classes[cls];
@@ -116,3 +121,49 @@ const rowOpaque = (px: ArrayLike<number>, w: number, y: number) => {
   for (let x = 0; x < w; x++) if (px[y * w + x]) return true;
   return false;
 };
+
+/** 扩展包职业的待机动作号（不是 Man.lib 的动作组，animFor 里换成包里的 idle 动作） */
+export const PACK_IDLE = 1000;
+
+/**
+ * 扩展包职业的动画（图条见 packs/<包>/sprites/，tools/render-sprites.py 渲染）。图条只有 front / back 两个方向：
+ * 渲染相机和原版正好左右相反（front 面向右下 = 朝向 3、back 面向左上 = 朝向 1），朝向 2、0 用水平翻转。
+ */
+function packAnim(scene: Phaser.Scene, pack: PackAssets, cls: number, action: number, facing: number, repeat: number): string | null {
+  const look = pack.rt.looks.get(cls)!;
+  const name = action === PACK_IDLE ? look.idle : look.actions[action];
+  const sheet = pack.rt.sheets[look.sheet];
+  const act = name ? sheet?.actions[name] : undefined;
+  if (!act) return null;
+  const front = (facing & 3) >= 2;
+  const flip = (facing & 3) === 2 || (facing & 3) === 0;
+  const strip = front ? act.front : act.back;
+  const key = `pack:${look.sheet}:${name}:${facing & 3}:${repeat}`;
+  if (!scene.anims.exists(key)) {
+    const img = pack.images.get(`${look.sheet}/${strip.file}`);
+    if (!img) return null;
+    const [fw, fh] = sheet.frame;
+    const frames: Phaser.Types.Animations.AnimationFrame[] = [];
+    for (let k = 0; k < strip.frames; k++) {
+      const tk = textureFor(scene, `pack:${look.sheet}/${strip.file}:${k}:${flip ? 'f' : ''}`, () => {
+        const c = document.createElement('canvas');
+        c.width = fw;
+        c.height = fh;
+        const ctx = c.getContext('2d')!;
+        if (flip) {
+          ctx.translate(fw, 0);
+          ctx.scale(-1, 1);
+        }
+        ctx.drawImage(img, k * fw, 0, fw, fh, 0, 0, fw, fh);
+        return c;
+      });
+      const f = scene.textures.get(tk).get();
+      f.customPivot = true;
+      f.pivotX = (flip ? fw - sheet.anchor[0] : sheet.anchor[0]) / fw;
+      f.pivotY = sheet.anchor[1] / fh;
+      frames.push({ key: tk });
+    }
+    scene.anims.create({ key, frames, frameRate: 1000 / strip.ms, repeat });
+  }
+  return key;
+}

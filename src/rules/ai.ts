@@ -25,6 +25,8 @@ interface Option {
   at: Cell;
   target: Unit;
   primary: boolean;
+  /** 扩展包：优先用的技能（Battle.prefers） */
+  pref: boolean;
   kills: number;
   expected: number;
 }
@@ -60,7 +62,7 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
         }
         if (skill !== basic) expected -= skill.mpCost / 2;
         const target = b.unitAt(cell.x, cell.y) && hit.includes(b.unitAt(cell.x, cell.y)!) ? b.unitAt(cell.x, cell.y)! : hit[0];
-        const o: Option = { cell, cost: n.cost, skill, at, target, primary: !!main && hit.includes(main), kills, expected };
+        const o: Option = { cell, cost: n.cost, skill, at, target, primary: !!main && hit.includes(main), pref: b.prefers(u, skill), kills, expected };
         if (!best || better(o, best)) best = o;
       }
   }
@@ -70,6 +72,7 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
 function better(a: Option, b: Option) {
   if (a.primary !== b.primary) return a.primary;
   if (a.kills !== b.kills) return a.kills > b.kills;
+  if (a.pref !== b.pref) return a.pref;
   if (a.cost !== b.cost) return a.cost < b.cost;
   return a.expected > b.expected;
 }

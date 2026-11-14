@@ -9,6 +9,7 @@ import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
 import type { GameData, SkillDef } from '../rules/data.ts';
 import { FIXED_FX, fxGroups } from './effects.ts';
 import frameAlias from '../data/frame-alias.json' with { type: 'json' };
+import type { PackAssets } from './packs.ts';
 
 export interface Assets {
   files: GameFiles;
@@ -29,6 +30,8 @@ export interface Assets {
   data: GameData;
   /** 繁→简（由 .pab/.pas 对齐得到） */
   tr: (s: string) => string;
+  /** 正在玩的扩展包（src/game/packs.ts）：职业画面、头像从这里取；data 已并入包的内容 */
+  pack?: PackAssets;
 }
 
 export function loadAssets(files: GameFiles): Assets {
@@ -111,7 +114,7 @@ const ACTION_FIRST_SKILL = 3;
  * 地图用到的图块，本关出场职业的走路、受击、防御动作、动作 3（待机架势取它的第 1 帧，见 sprites.ts idleAction）和普通攻击（含特效），以及防御、反击的固定特效。
  * 其它技能的动作和特效开打后在后台下载（prefetchSkills），出招前还没下完就等它下完（ensureSkill）。返回新下载的字节数。
  */
-export async function preloadStage(assets: Assets, stage: string, progress?: Progress): Promise<number> {
+export async function preloadStage(assets: Assets, stage: string, progress?: Progress, classesOverride?: number[]): Promise<number> {
   const { files } = assets;
   const job = new Fetch();
   const mapFile = findStageFile(files, stage, '.map');
@@ -123,8 +126,8 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
       if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.span(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
     });
   const actFile = mapFile.replace(/\.map$/i, '.act');
-  const classes = new Set([0]);
-  if (files.has(actFile))
+  const classes = new Set(classesOverride ?? [0]);
+  if (!classesOverride && files.has(actFile))
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {
     const c = assets.man.classes[cls];

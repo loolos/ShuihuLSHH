@@ -125,8 +125,8 @@ class SoundSystem {
     for (const n of new Set(names)) void this.wav(n);
   }
   /** 本关用到的技能音效名 */
-  skillSounds(skills: { skillId: number; type: number }[]): string[] {
-    return skills.flatMap((s) => [`s${s.skillId}`, TYPE_SOUND[s.type]].filter(Boolean) as string[]);
+  skillSounds(skills: { skillId: number; soundId?: number; type: number }[]): string[] {
+    return skills.flatMap((s) => [`s${s.soundId ?? s.skillId}`, TYPE_SOUND[s.type]].filter(Boolean) as string[]);
   }
   /** 同一个声音 80 ms 内只播一次（范围技能每格都会触发同一段特效音） */
   private recent = new Map<string, number>();
