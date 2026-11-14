@@ -13,7 +13,7 @@ import { music } from './music.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { Minimap, type MiniMark } from './minimap.ts';
+import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
@@ -60,8 +60,11 @@ const APPEAR_SPREAD_MS = 400;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 // 友军墨绿（负责人 2026-11-13：原来的蓝色和经验条太像）
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
+/** 胜负条件区域的颜色【新】：撤退出口青色、敌人逃跑出口品红，和阵营色、宝箱黄都分得开 */
+const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' } } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
+const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
 /** 状态条最高处离脚下的高度（头顶往上空 3 像素，再按 3 条算），飘字从这上面弹出 */
 const barTop = (head: number) => head + 3 + 3 * 3 + 1;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
@@ -93,6 +96,10 @@ export class BattleScene extends Phaser.Scene {
   private occluders = new OccluderIndex();
   private ghosts = new Map<number, { img: Phaser.GameObjects.Image; key: string; cover: number | null }>();
   private overlay!: Phaser.GameObjects.Graphics;
+  /** 地图上的撤退出口等区域（Battle.objectiveZones），变了才重画 */
+  private zoneG!: Phaser.GameObjects.Graphics;
+  private zoneSig = '';
+  private zones: MiniZone[] = [];
   private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
@@ -174,6 +181,8 @@ export class BattleScene extends Phaser.Scene {
           this.occluders.add(p.x - fr.anchorX, p.y - fr.anchorY, fr.width, fr.height, depth, mask);
         });
       }
+    this.zoneG = this.add.graphics().setDepth(-1.5);
+    this.zoneSig = '';
     this.overlay = this.add.graphics().setDepth(-1);
     this.hoverG = this.add.graphics().setDepth(-0.5);
 
@@ -276,10 +285,14 @@ export class BattleScene extends Phaser.Scene {
     }
     const p = cellToWorld(v.x, v.y);
     s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
-    const dim = u.side === 'player' && u.ended && this.battle.phase === 'player';
-    if (dim) s.spr.setTint(0x808080);
+    if (this.actedDone(u)) s.spr.setTint(0x808080);
     else s.spr.clearTint();
     this.drawBar(u);
+  }
+
+  /** 我方本回合已经行动完（待机的不算：待机不结束行动，见 §2.5） */
+  private actedDone(u: Unit) {
+    return u.side === 'player' && u.ended && this.battle.phase === 'player';
   }
 
   /**
@@ -299,6 +312,8 @@ export class BattleScene extends Phaser.Scene {
     if (u.side === 'player') rows.push([EXP_COLOR, u.exp / expToNext(u.level)]);
     const top = p.y - s.head - 3 - (rows.length * 3 + 1); // 底边贴着头顶上方 3 像素
     s.bar.clear().setDepth(depthOf(v.x, v.y, 9));
+    // 行动完的我方单位外面再套一圈灰框（负责人 2026-11-14），下个我方回合开始时消失
+    if (this.actedDone(u)) s.bar.lineStyle(1, ACTED_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
     s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, top, w + 2, rows.length * 3 + 1);
     rows.forEach(([color, r], i) => s.bar.fillStyle(color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
   }
@@ -486,6 +501,7 @@ export class BattleScene extends Phaser.Scene {
 
   update() {
     this.placeFloat();
+    this.drawZones();
     this.drawMinimap();
     this.syncGhosts();
   }
@@ -539,6 +555,25 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * 胜负条件里的区域【新】（负责人 2026-11-14：要到达撤退区域的关卡，小地图标出撤退到哪）：
+   * 地表上画半透明格子和外框，小地图上另外画（drawMinimap）。区块执行过（已过关 / 条件已失效）或要进去的人倒下了就不画。
+   */
+  private drawZones() {
+    const zs = this.battle.objectiveZones();
+    const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|');
+    if (sig === this.zoneSig) return;
+    this.zoneSig = sig;
+    this.zones = zs.map((z) => ({ ...z, color: `#${ZONE_STYLE[z.kind].color.toString(16).padStart(6, '0')}`, label: ZONE_STYLE[z.kind].label }));
+    const g = this.zoneG.clear();
+    for (const z of zs) {
+      const color = ZONE_STYLE[z.kind].color;
+      for (let y = z.y1; y <= z.y2; y++) for (let x = z.x1; x <= z.x2; x++) this.diamond(g, { x, y }, color, 0.22);
+      const pts = zoneCorners(z).map((p) => new Phaser.Math.Vector2(p.x, p.y));
+      g.lineStyle(3, color, 0.9).strokePoints(pts, true);
+    }
+  }
+
   /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */
   private drawMinimap() {
     const mm = this.minimap;
@@ -555,7 +590,7 @@ export class BattleScene extends Phaser.Scene {
       const v = this.vs(u);
       marks.push({ x: v.x, y: v.y, color: `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
     }
-    mm.draw(marks, this.cameras.main.worldView);
+    mm.draw(marks, this.cameras.main.worldView, this.zones);
   }
 
   private commands(m: Mode): Command[] | null {

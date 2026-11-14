@@ -42,9 +42,9 @@ export const STAGE_TUNE: Record<string, StageTune> = {
       { turn: 11, at: [29, 2], units: [{ like: CAVALRY, n: 4 }] },
     ],
   },
-  // 诱敌蓼儿洼：前 10 回合诱敌不动，第 11 回合伏兵出现之后，第 15 回合北面再来一队官兵
+  // 诱敌蓼儿洼：诱敌阶段不动；第 7 回合伏兵出现（STAGE_TURN_TRIGGERS），之后第 11 回合北面再来一队官兵
   n13: {
-    add: [{ turn: 15, at: [36, 7], units: [{ like: CAPTAIN, n: 1 }, { like: CAVALRY, n: 4 }, { like: SOLDIER_B, n: 3 }, { like: ARCHER, n: 2 }] }],
+    add: [{ turn: 11, at: [36, 7], units: [{ like: CAPTAIN, n: 1 }, { like: CAVALRY, n: 4 }, { like: SOLDIER_B, n: 3 }, { like: ARCHER, n: 2 }] }],
   },
   // 梁山泊前：出口前多一队守兵；第 5 回合身后追兵赶到（"且战且走"）
   'n-add16': {

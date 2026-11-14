@@ -4,7 +4,7 @@ import { readExeTables } from '../formats/exe.ts';
 import { parseGoods } from '../formats/goo.ts';
 import { parseHuman } from '../formats/hum.ts';
 import { parseMap } from '../formats/map.ts';
-import { parsePasBlocks, parsePasHeader } from '../formats/pas.ts';
+import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import { tuneBlocks, tuneUnits } from './stage-tune.ts';
@@ -75,6 +75,18 @@ export function capSkillCosts(classes: ClassDef[]): ClassDef[] {
   return classes;
 }
 
+/**
+ * 主线关卡剧本的重制版改动【新】（只改触发条件，不改原版文件）。
+ * N13 诱敌蓼儿洼：伏兵区块原版条件「回合 = 10」（第 11 回合开始登场），负责人 2026-11-14 嫌太晚，改成「回合 = 6」（第 7 回合开始）。
+ */
+export const STAGE_TURN_TRIGGERS: Record<string, Record<number, number>> = { N13: { 10: 6 } };
+
+export function adjustBlocks(stage: string, blocks: PasBlock[]): PasBlock[] {
+  const map = STAGE_TURN_TRIGGERS[stage.toUpperCase()];
+  if (!map) return blocks;
+  return blocks.map((b) => (b.trigger.kind === 'turn' && map[b.trigger.turn] !== undefined ? { ...b, trigger: { ...b.trigger, turn: map[b.trigger.turn] } } : b));
+}
+
 export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {
   return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
@@ -94,7 +106,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     name: stage,
     board,
     units,
-    blocks: pabFile ? tuneBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5'), units, 'big5') : [],
+    blocks: pabFile ? tuneBlocks(stage, adjustBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5')), units, 'big5') : [],
     header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
     displayBlocks: opts.simplified && pasFile ? tuneBlocks(stage, parsePasBlocks(files.get(pasFile), 'gbk'), units, 'gbk') : undefined,
     data,
