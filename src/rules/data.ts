@@ -165,7 +165,7 @@ export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(c
 }
 
 /**
- * 隐藏技改名（技能号 → 名字，繁体，LV 后缀照旧）【新】（负责人 2026-11-13 嫌"古武術"重名太多）。
+ * 技能改名（技能号 → 名字，繁体，LV 后缀照旧）【新】：隐藏技（负责人 2026-11-13 嫌"古武術"重名太多）。
  * 原版朱武、阮氏三雄、吳用的隐藏技都叫"古武術LV1–3"；按人物和招式形状各取一个名字，敌方同职业单位一起改。
  */
 export const SKILL_NAME_OVERRIDES: Record<number, string> = { 96: '懷璧其罪LV1', ...Object.fromEntries(
@@ -176,7 +176,11 @@ export const SKILL_NAME_OVERRIDES: Record<number, string> = { 96: '懷璧其罪L
     [83, '怒海狂濤'], // 阮小七（活閻羅），直线
     [91, '星羅棋布'], // 吳用（智多星），落点菱形、两段
   ] as const).flatMap(([id, name]) => [0, 1, 2].map((i) => [id + i, `${name}LV${i + 1}`])),
-) };
+  ),
+  // 杜遷（摸着天）、宋萬（雲裡金剛）的招式改得文雅些（负责人 2026-11-14；原名無法無天、駕鶴歸天、金剛 擊/崩/破…），主线、外传一起改
+  201: '摩天掌', 203: '擎天連環', 204: '天柱迴旋', 205: '摘星攬月', 206: '凌雲吐納', 207: '天恩回春',
+  208: '金剛拳', 210: '金剛連環', 211: '金剛轉輪', 212: '雲裡雷音', 213: '金剛入定', 214: '雲開見日',
+};
 
 /** 新增技能的公共字段；每个技能只写不同的部分 */
 const extraSkill = (s: Partial<SkillDef> & Pick<SkillDef, 'name' | 'skillId' | 'type' | 'group' | 'learnLevel' | 'mpCost' | 'power'>): SkillDef => ({
