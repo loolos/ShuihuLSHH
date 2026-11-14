@@ -7,6 +7,7 @@ import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
 import { findStageFile, type FileSource } from '../rules/load.ts';
+import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
 /** 精灵图条的说明文件（tools/render-sprites.py 输出的 sprites.json） */
@@ -23,13 +24,16 @@ export interface SpriteStrip {
 
 /** 一个扩展包职业在画面上的样子 */
 export interface PackClassLook {
-  /** 图条目录（相对包目录） */
+  /** 图条目录（相对包目录）；借原版动画的职业为空串 */
   sheet: string;
+  /** 借原版哪个职业的动画（Man.lib）；有它时 sheet / actions / idle 不用 */
+  from?: number;
+  /** 借原版动画时的换色（src/packs/recolor.ts） */
+  recolor?: RecolorGroup[];
   /** 动作号 → sprites.json 里的动作名：0 走路、1 受击、2 防御，3 起是各技能组的出手动作（同 Man.lib） */
   actions: string[];
   idle: string;
   head?: number;
-  /** 对话头像借 Head.lib 第几张；null = 没有 */
   /** 原版 Head.lib 的序号，或包里头像图的路径（相对包目录）；null = 没有头像 */
   face: number | string | null;
 }
@@ -80,24 +84,44 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
   for (const c of pack.classes) {
     const id = classes.length;
     classIds.set(c.id, id);
-    const sheet = sheets[c.sprite.sheet] ?? fail(`${pack.id}: 职业 ${c.id} 的图条 ${c.sprite.sheet} 没有 sprites.json`);
+    const face = !c.face ? null : 'file' in c.face ? c.face.file : c.face.fromHead;
+    if ('fromClass' in c.sprite) {
+      // 借原版职业的动画：出手动作 = 原版第几个出手动作，命中帧沿用 from 技能
+      const from = c.sprite.fromClass;
+      if (!base.classes[from]) fail(`${pack.id}: 职业 ${c.id} 借的原版职业 ${from} 不存在`);
+      // 同一技能号（如 221 普通攻擊）在各职业里命中帧不同：先找被借职业自己的那一份
+      const own = new Map(templates);
+      for (const t of base.classes[from].skills) own.set(t.skillId, t);
+      const skills = c.skills.map((s) => {
+        const sid = nextSkill++;
+        skillIds.set(s.id, sid);
+        return packSkill(s, sid, null, own, null, pack.id);
+      });
+      classes.push(packClass(c, id, skills, itemRef));
+      charNames[id] = c.name;
+      looks.set(id, { sheet: '', actions: [], idle: '', from, recolor: c.sprite.recolor, head: c.sprite.head, face });
+      continue;
+    }
+    const sp = c.sprite;
+    const sheet = sheets[sp.sheet] ?? fail(`${pack.id}: 职业 ${c.id} 的图条 ${sp.sheet} 没有 sprites.json`);
     const anims: string[] = [];
     const skills = c.skills.map((s) => {
       const sid = nextSkill++;
       skillIds.set(s.id, sid);
-      if (!anims.includes(s.anim)) anims.push(s.anim);
-      return packSkill(s, sid, anims.indexOf(s.anim), templates, sheet, pack.id);
+      const anim = String(s.anim);
+      if (!anims.includes(anim)) anims.push(anim);
+      return packSkill(s, sid, anims.indexOf(anim), templates, sheet, pack.id);
     });
-    for (const a of [c.sprite.idle, c.sprite.walk, c.sprite.hurt, c.sprite.defend, ...anims])
-      if (!sheet.actions[a]) fail(`${pack.id}: 职业 ${c.id} 用到的动作 ${a} 不在 ${c.sprite.sheet}/sprites.json 里`);
+    for (const a of [sp.idle, sp.walk, sp.hurt, sp.defend, ...anims])
+      if (!sheet.actions[a]) fail(`${pack.id}: 职业 ${c.id} 用到的动作 ${a} 不在 ${sp.sheet}/sprites.json 里`);
     classes.push(packClass(c, id, skills, itemRef));
     charNames[id] = c.name;
     looks.set(id, {
-      sheet: c.sprite.sheet,
-      actions: [c.sprite.walk, c.sprite.hurt, c.sprite.defend, ...anims],
-      idle: c.sprite.idle,
-      head: c.sprite.head,
-      face: !c.face ? null : 'file' in c.face ? c.face.file : c.face.fromHead,
+      sheet: sp.sheet,
+      actions: [sp.walk, sp.hurt, sp.defend, ...anims],
+      idle: sp.idle,
+      head: sp.head,
+      face,
     });
   }
   return {
@@ -145,21 +169,24 @@ function hitFrame(at: number, strip: SpriteStrip) {
   return Math.max(1, Math.round((at * strip.frames * strip.ms) / ORIGINAL_FRAME_MS) + 1);
 }
 
-function packSkill(s: PackSkillJson, skillId: number, group: number, templates: Map<number, SkillDef>, sheet: SpriteSheetJson, pack: string): SkillDef {
+function packSkill(s: PackSkillJson, skillId: number, group: number | null, templates: Map<number, SkillDef>, sheet: SpriteSheetJson | null, pack: string): SkillDef {
   const t = templates.get(s.from) ?? fail(`${pack}: 技能 ${s.id} 借的原版技能 ${s.from} 不存在`);
-  const strip = sheet.actions[s.anim]?.front ?? fail(`${pack}: 技能 ${s.id} 的动作 ${s.anim} 不存在`);
-  // 原版分方向的命中段（迴旋技 0–3 四个方向）保留方向结构，每个方向都按 hitAt 分段
-  const dirs = [...new Set(t.hits.map((h) => h.dir))];
-  const at = s.hitAt ?? [0.5];
-  const hits = t.hits.length
-    ? dirs.flatMap((dir) => at.map((f, i) => ({ frame: hitFrame(f, strip), percent: i < at.length - 1 ? Math.floor(100 / at.length) : 100 - Math.floor(100 / at.length) * (at.length - 1), dir })))
-    : [];
+  let hits = t.hits;
+  if (sheet) {
+    const strip = sheet.actions[String(s.anim)]?.front ?? fail(`${pack}: 技能 ${s.id} 的动作 ${s.anim} 不存在`);
+    // 原版分方向的命中段（迴旋技 0–3 四个方向）保留方向结构，每个方向都按 hitAt 分段
+    const dirs = [...new Set(t.hits.map((h) => h.dir))];
+    const at = s.hitAt ?? [0.5];
+    hits = t.hits.length
+      ? dirs.flatMap((dir) => at.map((f, i) => ({ frame: hitFrame(f, strip), percent: i < at.length - 1 ? Math.floor(100 / at.length) : 100 - Math.floor(100 / at.length) * (at.length - 1), dir })))
+      : [];
+  } else group = typeof s.anim === 'number' ? s.anim : t.group; // 借原版动画：原版第几个出手动作
   return {
     ...t,
     skillId,
     soundId: t.soundId ?? t.skillId,
     name: s.name,
-    group,
+    group: group ?? 0,
     hidden: false,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
@@ -245,7 +272,12 @@ const NARRATOR = 0xffffffff;
 function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   const on = b.on;
   let trigger: PasTrigger;
+  let cond: PasBlock['cond'] = { type: 0, arg: 0 };
   if (on === 'start') trigger = { kind: 'turn', turn: 0 };
+  else if (on === 'enemiesDefeated') {
+    trigger = { kind: 'cond' };
+    cond = { type: 1, arg: 0xff }; // 原版条件 1、参数 0xFF：敌方全灭
+  }
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
@@ -307,5 +339,5 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
     }
   }
-  return { index, head: [], trigger, cond: { type: 0, arg: 0 }, ops };
+  return { index, head: [], trigger, cond, ops };
 }

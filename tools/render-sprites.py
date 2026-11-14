@@ -73,6 +73,8 @@ def apply_outfit(path):
                   "color": [r,g,b], "colors": [{"when": "表达式", "color": [r,g,b]}, ...]（包边等，先匹配先用）, "folds": 0–1}, ...]
         分层衣物：从身体复制出选中部位的外壳，往外推再加厚，权重照抄。里层 offset 小、外层大，就能一层压一层。
       "props": [{"bone": "Head", "shape": "sphere", "radius": 米, "at": [x,y,z], "scale": [sx,sy,sz], "color": [r,g,b]}, ...]
+        shape 还可以是 "box"（边长 1 米的方块，用 scale 定长宽高）、"cylinder"（radius、depth）；"rot": [x,y,z] 度数旋转。
+        兵器（如李逵的板斧）用 cylinder 做柄、box 做刃，挂在 hand_r / hand_l 上。
     颜色 0–255。"""
     import re
     cfg = json.load(open(path, encoding='utf-8'))
@@ -203,10 +205,21 @@ def apply_outfit(path):
         me.materials.append(outfit_material('Outfit'))
 
     for pr in cfg.get('props', []):
-        bpy.ops.mesh.primitive_uv_sphere_add(radius=pr.get('radius', 0.05), segments=16, ring_count=8, location=pr['at'])
+        shape = pr.get('shape', 'sphere')
+        rot = [math.radians(a) for a in pr.get('rot', [0, 0, 0])]
+        if shape == 'box':
+            bpy.ops.mesh.primitive_cube_add(size=1, location=pr['at'], rotation=rot)
+        elif shape == 'cylinder':
+            bpy.ops.mesh.primitive_cylinder_add(radius=pr.get('radius', 0.02), depth=pr.get('depth', 0.5), vertices=12,
+                                                location=pr['at'], rotation=rot)
+        else:
+            bpy.ops.mesh.primitive_uv_sphere_add(radius=pr.get('radius', 0.05), segments=16, ring_count=8, location=pr['at'],
+                                                 rotation=rot)
         ob = bpy.context.active_object
         ob.scale = pr.get('scale', [1, 1, 1])
-        bpy.ops.object.shade_smooth()
+        bpy.context.view_layer.update()  # 让 matrix_world 带上缩放，挂到骨骼上时才不会丢
+        if shape != 'box':
+            bpy.ops.object.shade_smooth()
         attr = ob.data.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
         for d in attr.data:
             d.color = lin(pr['color'])

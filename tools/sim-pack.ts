@@ -16,7 +16,7 @@ export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(D
   const pack = read('pack.json') as PackJson;
   const stages = pack.stages.map((s) => read(s) as PackStageJson);
   const sheets: Record<string, SpriteSheetJson> = {};
-  for (const c of pack.classes) sheets[c.sprite.sheet] = read(`${c.sprite.sheet}/sprites.json`);
+  for (const c of pack.classes) if ('sheet' in c.sprite) sheets[c.sprite.sheet] = read(`${c.sprite.sheet}/sprites.json`);
   return buildPack(base, pack, stages, sheets);
 }
 

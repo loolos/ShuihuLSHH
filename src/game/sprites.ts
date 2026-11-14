@@ -5,7 +5,8 @@
 // 原版没有单独的站立动作；待机时显示"第一个出手动作（param 0，通常是动作 3 普通攻击）的第 1 帧"，
 // 即摆好架势的姿势；没有出手动作的职业（平民等）用走路第 1 帧。见 idleAction。
 import Phaser from 'phaser';
-import { frameToCanvas, type Assets } from './assets.ts';
+import { frameToCanvas, manClassOf, type Assets } from './assets.ts';
+import { recolorLut } from '../packs/recolor.ts';
 import type { PackAssets } from './packs.ts';
 
 export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
@@ -24,8 +25,8 @@ export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCan
  * 找不到就退回职业的第一组（走路）。全部 72 个职业里找到的都是动作 3，平民等 9 个职业没有出手动作。
  */
 export function idleAction(assets: Assets, cls: number): number {
-  if (assets.pack?.rt.looks.has(cls)) return PACK_IDLE;
-  const c = assets.man.classes[cls];
+  if (sheetLook(assets, cls)) return PACK_IDLE;
+  const c = assets.man.classes[manClassOf(assets, cls)];
   if (!c) return ACTION.walk;
   for (let g = c.first; g <= c.last; g += 4) if (assets.man.actions[g]?.param === 0) return (g - c.first) / 4;
   return ACTION.walk;
@@ -33,19 +34,22 @@ export function idleAction(assets: Assets, cls: number): number {
 
 /** 职业 cls 的动作 action、朝向 facing 对应的动画键；不存在时返回 null */
 export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action: number, facing: number, repeat = -1): string | null {
-  if (assets.pack?.rt.looks.has(cls)) return packAnim(scene, assets.pack, cls, action, facing, repeat);
-  const c = assets.man.classes[cls];
+  if (sheetLook(assets, cls)) return packAnim(scene, assets.pack!, cls, action, facing, repeat);
+  const lut = recolorOf(assets, cls);
+  const c = assets.man.classes[manClassOf(assets, cls)];
   if (!c) return null;
   const group = c.first + action * 4 + (facing & 3);
   if (group > c.last) return null;
   const range = assets.man.actions[group];
   if (!range) return null;
-  const key = `man:${group}:${repeat}`;
+  // 换色的职业用自己的纹理（键里带职业号），不和被借的原版职业共用
+  const tag = lut ? `:c${cls}` : '';
+  const key = `man:${group}:${repeat}${tag}`;
   if (!scene.anims.exists(key)) {
     const frames: Phaser.Types.Animations.AnimationFrame[] = [];
     for (let i = range.first; i <= range.last; i++) {
       const fr = assets.man.frame(i);
-      const tk = textureFor(scene, `man:${i}`, () => frameToCanvas(fr, assets.palette));
+      const tk = textureFor(scene, `man:${i}${tag}`, () => frameToCanvas(lut ? { ...fr, pixels: fr.pixels.map((p) => lut[p]) } : fr, assets.palette));
       // 每帧锚点不同：用帧的自定义原点
       const f = scene.textures.get(tk).get();
       f.customPivot = true;
@@ -98,7 +102,9 @@ export const HEAD_STD = 62;
  */
 export function classHead(assets: Assets, cls: number): number {
   const look = assets.pack?.rt.looks.get(cls);
-  if (look) return look.head ?? HEAD_STD;
+  if (look?.head !== undefined) return look.head;
+  if (look && look.from === undefined) return HEAD_STD;
+  cls = manClassOf(assets, cls);
   let h = headCache.get(cls);
   if (h !== undefined) return h;
   const c = assets.man.classes[cls];
@@ -121,6 +127,22 @@ const rowOpaque = (px: ArrayLike<number>, w: number, y: number) => {
   for (let x = 0; x < w; x++) if (px[y * w + x]) return true;
   return false;
 };
+
+/** 扩展包里用自己图条的职业（不是借原版动画的） */
+const sheetLook = (assets: Assets, cls: number) => {
+  const look = assets.pack?.rt.looks.get(cls);
+  return !!look && look.from === undefined;
+};
+
+/** 借原版动画的扩展包职业的换色表（按职业缓存）；不换色时为 null */
+const luts = new WeakMap<object, Map<number, Uint8Array | null>>();
+function recolorOf(assets: Assets, cls: number): Uint8Array | null {
+  const look = assets.pack?.rt.looks.get(cls);
+  if (!look?.recolor?.length) return null;
+  const m = luts.get(assets.pack!) ?? luts.set(assets.pack!, new Map()).get(assets.pack!)!;
+  if (!m.has(cls)) m.set(cls, recolorLut(assets.palette, look.recolor));
+  return m.get(cls)!;
+}
 
 /** 扩展包职业的待机动作号（不是 Man.lib 的动作组，animFor 里换成包里的 idle 动作） */
 export const PACK_IDLE = 1000;

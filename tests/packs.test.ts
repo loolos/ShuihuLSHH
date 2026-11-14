@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
+import { recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
@@ -217,5 +218,54 @@ describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
     for (let i = 0; i < 20 && lost.b.status === 'playing'; i++) ev = strike(lost.b, lost.lh, lost.lt);
     expect(lost.b.status).toBe('lost');
     expect(ev.some((e) => e.type === 'end' && /押回郓城县/.test(e.text))).toBe(true);
+  });
+});
+
+describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、李逵新画）', () => {
+  const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
+  const tr = has ? buildT2S(files) : (s: string) => s;
+  const rt = has ? loadPackFromDisk('jiangzhou', loadGameData(files, tr)) : (null as never);
+
+  it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
+    const id = rt.classIds.get('daizong')!;
+    const look = rt.looks.get(id)!;
+    expect(look.from).toBe(38);
+    expect(look.recolor?.length).toBeGreaterThan(0);
+    const mine = rt.data.classes[id].skills;
+    const src = rt.data.classes[38].skills;
+    expect(mine.map((s) => s.group)).toEqual([0, 1, 2]);
+    expect(mine[0].hits).toEqual(src[0].hits);
+    expect(mine[1].name).toBe('旋风腿');
+    expect(rt.data.classes[id].move).toBe(8);
+    expect(look.face).toBe('faces/daizong.png');
+    expect(rt.looks.get(rt.classIds.get('likui')!)!.face).toBe('faces/likui.png');
+  });
+
+  it('换色表：只换指定色阶，透明色不动，结果落在目标色阶里', () => {
+    const pal = new Uint8Array(files.get('Data/Default.pal').subarray(0, 768));
+    const look = rt.looks.get(rt.classIds.get('daizong')!)!;
+    const lut = recolorLut(pal, look.recolor!);
+    expect(lut[0]).toBe(0);
+    for (let i = 16; i <= 31; i++) expect(lut[i] >= 160 && lut[i] <= 175).toBe(true);
+    expect(lut[100]).toBe(100);
+  });
+
+  it('李逵用自己的 3D 精灵图条，四个技能，黑旋风沿用迴旋技的四方向命中段', () => {
+    const id = rt.classIds.get('likui')!;
+    const look = rt.looks.get(id)!;
+    expect(look.from).toBeUndefined();
+    expect(look.sheet).toBe('sprites/likui');
+    const sk = rt.data.classes[id].skills;
+    expect(sk.map((s) => s.name)).toEqual(['板斧砍', '双斧连劈', '黑旋风', '运气']);
+    expect(sk[1].hits.length).toBe(2);
+    expect(new Set(sk[2].hits.map((h) => h.dir)).size).toBe(4);
+  });
+
+  it('试手关：敌人全部倒下即过关', () => {
+    const b = new Battle(compileStage(rt, rt.stages[0], files, { seed: 1, text: tr }));
+    b.begin();
+    for (const u of b.units.filter((x) => x.side === 'enemy')) u.hp = 0, (u.alive = false), (u.present = false);
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(b.status).toBe('won');
   });
 });
