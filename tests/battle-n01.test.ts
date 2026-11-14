@@ -139,6 +139,9 @@ describe.skipIf(!has)('N01', () => {
     expect([by(4, 50).mpCost, by(4, 50).power, by(4, 50).hitMod]).toEqual([5, 50, 0]); // 監守自盜LV3
     expect([by(13, 115).power, by(13, 115).mpCost, by(13, 115).hits.length]).toEqual([40, 20, 2]); // 黑虎偷心
     expect([by(3, 34).hits.length, by(3, 35).hits.length]).toEqual([2, 3]); // 龍爭虎鬥LV2 / LV3
+    expect(by(9, 81).hits.map((h) => [h.frame, h.percent])).toEqual([[18, 30], [25, 30], [28, 40]]); // 生不如死 三段
+    expect([by(9, 81).power, by(9, 81).mpCost]).toEqual([40, 20]);
+    expect(by(52, 81).hits.length).toBe(1); // 敌方阮小七 生不如死 照原版一段
     expect([by(2, 26).area, by(2, 26).power, by(2, 27).area, by(2, 27).power]).toEqual([3, 2, 4, 1]); // 回心咒范围回复
     expect(by(10, 91).stun).toBe(40); // 星羅棋布LV1
     expect([by(47, 50).power, by(47, 50).hitMod]).toEqual([15, -15]); // 敌方白勝 監守自盜LV3 不变
