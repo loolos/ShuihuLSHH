@@ -890,7 +890,7 @@ N01 的原版事件（已全部由 PAS 直接驱动）：开战时王進、王�
 
   每处循环的音乐至少两首轮放（负责人 2026-11-14）：上表的单曲在 `index.json` 里都配了第二首——story→brothers、sad→story、eerie→night、comic→inn、night→eerie、brothers→story、reeds→story、liangshan→brothers；城镇整备 town→march、酒店 inn→rock、店铺 shop→comic；标题 title→liangshan；没写 `bgm` 的外传 battle→rock。只有过关 / 失败画面仍是单曲。
 
-  外传和主线插关在关卡 JSON 的 `bgm` 里写（可以是歌单）：武松打虎 tiger(22) → tense；赤发鬼夜战插翅虎 nightduel(23) → night → tense；江州牢城·试手 jiangzhou(24) → battle；火烧瓦罐寺 fire(26) → tense；吴用说三阮 reeds(27) → naval(13)。宋江主题（20）还没做。
+  外传和主线插关在关卡 JSON 的 `bgm` 里写（可以是歌单）：武松打虎 tiger(22) → tense；赤发鬼夜战插翅虎 nightduel(23) → night → tense；江州牢城·试手 jiangzhou(24) → battle；浔阳楼题反诗 inn → jiangzhou；江州劫法场 rescue(25) → boss → tense；白龙庙聚义 escape(29) → army → battle2；火烧瓦罐寺 fire(26) → tense；吴用说三阮 reeds(27) → naval(13)。宋江主题（20）还没做。
 
   插播短曲（2026-11-14，`music.sting()`，放一遍不循环，期间背景音乐压到 20%，4 秒内不重复）：ambush(30) 埋伏的人现身或开打后敌人新冒出来；join(31) 打完一关队里多了新人；chapter(32) 进入新一章的第一关、开始一个外传（重打同一章不再放）。
   | victory | 14 | 过关结算画面（剧情关直接接下一关，不放） |
