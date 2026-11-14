@@ -1077,8 +1077,12 @@ export class Battle {
     if (this.status !== 'playing') return;
     while (this.pendingDeaths.length) {
       const c = this.pendingDeaths.shift()!;
-      for (const b of this.blocks)
-        if (b.trigger.kind === 'death' && (b.trigger.char === c || (b.trigger.char === 1000 && c === 0))) this.runBlock(b);
+      // 每倒下一次只执行一个还没执行过的区块：Train1/2 有 25 个"王進死亡"区块，每次被打倒说一句、换下一个分身上场
+      // （原版 0x412000 每次只执行一个条件成立的区块，执行后分身已登场，下一个区块的条件就不成立了）
+      const b = this.blocks.find(
+        (x) => x.trigger.kind === 'death' && !this.fired.has(x.index) && (x.trigger.char === c || (x.trigger.char === 1000 && c === 0)),
+      );
+      if (b) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     // 角色号 255：敌方全灭（推测：只在全灭时出现，如 N-add01 的胜利区块）
@@ -1104,7 +1108,9 @@ export class Battle {
     }
     this.runCondBlocks();
     if (this.status !== 'playing') return;
-    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive)) this.finish('lost', '我方全軍覆沒。');
+    // 选人关没被选上的人这一关不再登场，不算
+    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
+      this.finish('lost', '我方全軍覆沒。');
   }
 
   private runTurnTriggers(param: number) {
@@ -1142,7 +1148,9 @@ export class Battle {
       case 0:
         return this.turnParam === c.arg;
       case 1:
-        if (c.arg === 0x400) return !this.units.some((u) => u.side === 'player' && u.alive);
+        // 我方全灭（EXE 0x4111d0 → 0x408380）：只数在场的我方，退场（0x20000）、埋伏（0x40000）的不算。
+        // 训练关选人后其余人退场，所以出场的人被打倒就是"全灭"，触发"回合 25 或我方全灭"的过关区块
+        if (c.arg === 0x400) return !this.units.some((u) => u.side === 'player' && u.alive && u.present);
         if (c.arg === 0xff) return !this.units.some((u) => u.side === 'enemy' && u.alive && u.present);
         return !find(c.arg);
       case 2:

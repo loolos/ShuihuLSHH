@@ -108,6 +108,17 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
     expect(ev.some((e) => e.type === 'end' && e.result === 'won')).toBe(true);
   });
 
+  it('武松倒下：判负，播放失败文字', () => {
+    const { b, ws, tiger } = start();
+    besides(ws, tiger);
+    ws.hp = 1;
+    ws.stats.agility = 0;
+    let ev: BattleEvent[] = [];
+    for (let i = 0; i < 20 && b.status === 'playing'; i++) ev = strike(b, tiger, undefined, ws);
+    expect(b.status).toBe('lost');
+    expect(ev.some((e) => e.type === 'end' && e.result === 'lost' && /武松力尽/.test(e.text))).toBe(true);
+  });
+
   it('AI 会轮着用老虎的三招', () => {
     const { b, ws, tiger } = start();
     besides(ws, tiger);
