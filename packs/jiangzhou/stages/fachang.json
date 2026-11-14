@@ -5,7 +5,11 @@
  "map": {
   "base": "N05"
  },
- "bgm": ["rescue", "boss", "tense"],
+ "bgm": [
+  "rescue",
+  "boss",
+  "tense"
+ ],
  "units": [
   {
    "id": "likui",
@@ -36,18 +40,30 @@
    "level": 26
   },
   {
-   "id": "chaogai",
+   "id": "chaogai_d",
    "class": 35,
-   "side": "player",
+   "side": "ally",
    "x": 43,
    "y": 3,
    "facing": 2,
    "level": 30,
    "hidden": true,
-   "name": "推车客商"
+   "name": "推车客商",
+   "ai": 8
   },
   {
-   "id": "huarong",
+   "id": "chaogai",
+   "class": 12,
+   "side": "player",
+   "x": 41,
+   "y": 7,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "name": "晁盖"
+  },
+  {
+   "id": "huarong_d",
    "class": 35,
    "side": "ally",
    "x": 44,
@@ -55,10 +71,22 @@
    "facing": 2,
    "level": 27,
    "hidden": true,
-   "name": "推车客商"
+   "name": "推车客商",
+   "ai": 8
   },
   {
-   "id": "huangxin",
+   "id": "huarong",
+   "class": 34,
+   "side": "ally",
+   "x": 43,
+   "y": 7,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "花荣"
+  },
+  {
+   "id": "huangxin_d",
    "class": 35,
    "side": "ally",
    "x": 45,
@@ -66,10 +94,22 @@
    "facing": 2,
    "level": 27,
    "hidden": true,
-   "name": "推车客商"
+   "name": "推车客商",
+   "ai": 8
   },
   {
-   "id": "lufang",
+   "id": "huangxin",
+   "class": 38,
+   "side": "ally",
+   "x": 44,
+   "y": 7,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "黄信"
+  },
+  {
+   "id": "lufang_d",
    "class": 35,
    "side": "ally",
    "x": 44,
@@ -77,10 +117,22 @@
    "facing": 2,
    "level": 26,
    "hidden": true,
-   "name": "推车客商"
+   "name": "推车客商",
+   "ai": 8
   },
   {
-   "id": "guosheng",
+   "id": "lufang",
+   "class": 39,
+   "side": "ally",
+   "x": 43,
+   "y": 6,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "吕方"
+  },
+  {
+   "id": "guosheng_d",
    "class": 35,
    "side": "ally",
    "x": 43,
@@ -88,18 +140,42 @@
    "facing": 2,
    "level": 26,
    "hidden": true,
-   "name": "推车客商"
+   "name": "推车客商",
+   "ai": 8
   },
   {
-   "id": "ruanxiaoer",
+   "id": "guosheng",
+   "class": 39,
+   "side": "ally",
+   "x": 44,
+   "y": 6,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "郭盛"
+  },
+  {
+   "id": "ruanxiaoer_d",
    "class": 21,
-   "side": "player",
+   "side": "ally",
    "x": 52,
    "y": 12,
    "facing": 1,
    "level": 27,
    "hidden": true,
    "name": "弄蛇丐者",
+   "ai": 8
+  },
+  {
+   "id": "ruanxiaoer",
+   "class": 7,
+   "side": "player",
+   "x": 49,
+   "y": 12,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "阮小二",
    "items": [
     73,
     84,
@@ -107,15 +183,27 @@
    ]
   },
   {
-   "id": "ruanxiaowu",
+   "id": "ruanxiaowu_d",
    "class": 21,
-   "side": "player",
+   "side": "ally",
    "x": 52,
    "y": 13,
    "facing": 1,
    "level": 27,
    "hidden": true,
    "name": "弄蛇丐者",
+   "ai": 8
+  },
+  {
+   "id": "ruanxiaowu",
+   "class": 8,
+   "side": "player",
+   "x": 49,
+   "y": 13,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "阮小五",
    "items": [
     31,
     84,
@@ -123,15 +211,27 @@
    ]
   },
   {
-   "id": "ruanxiaoqi",
+   "id": "ruanxiaoqi_d",
    "class": 21,
-   "side": "player",
+   "side": "ally",
    "x": 52,
    "y": 14,
    "facing": 1,
    "level": 27,
    "hidden": true,
    "name": "弄蛇丐者",
+   "ai": 8
+  },
+  {
+   "id": "ruanxiaoqi",
+   "class": 9,
+   "side": "player",
+   "x": 49,
+   "y": 14,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "阮小七",
    "items": [
     77,
     86,
@@ -139,15 +239,27 @@
    ]
   },
   {
-   "id": "baisheng",
+   "id": "baisheng_d",
    "class": 21,
-   "side": "player",
+   "side": "ally",
    "x": 53,
    "y": 13,
    "facing": 1,
    "level": 26,
    "hidden": true,
    "name": "弄蛇丐者",
+   "ai": 8
+  },
+  {
+   "id": "baisheng",
+   "class": 4,
+   "side": "player",
+   "x": 50,
+   "y": 13,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "白胜",
    "items": [
     56,
     89,
@@ -155,15 +267,27 @@
    ]
   },
   {
-   "id": "liutang",
+   "id": "liutang_d",
    "class": 40,
-   "side": "player",
+   "side": "ally",
    "x": 30,
    "y": 12,
    "facing": 3,
    "level": 28,
    "hidden": true,
    "name": "使枪棒卖药的",
+   "ai": 8
+  },
+  {
+   "id": "liutang",
+   "class": 17,
+   "side": "player",
+   "x": 34,
+   "y": 12,
+   "facing": 3,
+   "level": 28,
+   "hidden": true,
+   "name": "刘唐",
    "items": [
     57,
     84,
@@ -171,29 +295,53 @@
    ]
   },
   {
-   "id": "duqian",
+   "id": "duqian_d",
    "class": 40,
-   "side": "player",
+   "side": "ally",
    "x": 30,
    "y": 13,
    "facing": 3,
    "level": 26,
    "hidden": true,
-   "name": "使枪棒卖药的"
+   "name": "使枪棒卖药的",
+   "ai": 8
   },
   {
-   "id": "songwan",
-   "class": 40,
+   "id": "duqian",
+   "class": 69,
    "side": "player",
+   "x": 34,
+   "y": 14,
+   "facing": 3,
+   "level": 26,
+   "hidden": true,
+   "name": "杜迁"
+  },
+  {
+   "id": "songwan_d",
+   "class": 40,
+   "side": "ally",
    "x": 30,
    "y": 14,
    "facing": 3,
    "level": 26,
    "hidden": true,
-   "name": "使枪棒卖药的"
+   "name": "使枪棒卖药的",
+   "ai": 8
   },
   {
-   "id": "yanshun",
+   "id": "songwan",
+   "class": 70,
+   "side": "player",
+   "x": 35,
+   "y": 14,
+   "facing": 3,
+   "level": 26,
+   "hidden": true,
+   "name": "宋万"
+  },
+  {
+   "id": "yanshun_d",
    "class": 40,
    "side": "ally",
    "x": 29,
@@ -201,10 +349,22 @@
    "facing": 3,
    "level": 27,
    "hidden": true,
-   "name": "使枪棒卖药的"
+   "name": "使枪棒卖药的",
+   "ai": 8
   },
   {
-   "id": "zhugui",
+   "id": "yanshun",
+   "class": 65,
+   "side": "ally",
+   "x": 33,
+   "y": 13,
+   "facing": 3,
+   "level": 27,
+   "hidden": true,
+   "name": "燕顺"
+  },
+  {
+   "id": "zhugui_d",
    "class": 19,
    "side": "ally",
    "x": 42,
@@ -212,10 +372,22 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "挑担脚夫"
+   "name": "挑担脚夫",
+   "ai": 8
   },
   {
-   "id": "wangying",
+   "id": "zhugui",
+   "class": 65,
+   "side": "ally",
+   "x": 41,
+   "y": 19,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "朱贵"
+  },
+  {
+   "id": "wangying_d",
    "class": 19,
    "side": "ally",
    "x": 41,
@@ -223,10 +395,22 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "挑担脚夫"
+   "name": "挑担脚夫",
+   "ai": 8
   },
   {
-   "id": "zhengtianshou",
+   "id": "wangying",
+   "class": 44,
+   "side": "ally",
+   "x": 43,
+   "y": 19,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "王矮虎"
+  },
+  {
+   "id": "zhengtianshou_d",
    "class": 19,
    "side": "ally",
    "x": 43,
@@ -235,12 +419,24 @@
    "level": 26,
    "hidden": true,
    "name": "挑担脚夫",
+   "ai": 8
+  },
+  {
+   "id": "zhengtianshou",
+   "class": 67,
+   "side": "ally",
+   "x": 42,
+   "y": 20,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "郑天寿",
    "items": [
     18
    ]
   },
   {
-   "id": "shiyong",
+   "id": "shiyong_d",
    "class": 19,
    "side": "ally",
    "x": 42,
@@ -248,7 +444,19 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "挑担脚夫"
+   "name": "挑担脚夫",
+   "ai": 8
+  },
+  {
+   "id": "shiyong",
+   "class": 66,
+   "side": "ally",
+   "x": 44,
+   "y": 20,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "石勇"
   },
   {
    "id": "caijiu",
@@ -257,7 +465,8 @@
    "x": 42,
    "y": 9,
    "facing": 2,
-   "level": 28
+   "level": 28,
+   "ai": 8
   },
   {
    "id": "ex1",
@@ -570,42 +779,42 @@
     ],
     [
      "say",
-     "ruanxiaoer",
+     "ruanxiaoer_d",
      "我们弄蛇的走江湖，看一看又何妨！"
     ],
     [
      "appear",
-     "ruanxiaowu"
+     "ruanxiaowu_d"
     ],
     [
      "appear",
-     "ruanxiaoqi"
+     "ruanxiaoqi_d"
     ],
     [
      "appear",
-     "baisheng"
+     "baisheng_d"
     ],
     [
      "move",
-     "ruanxiaoer",
+     "ruanxiaoer_d",
      49,
      12
     ],
     [
      "move",
-     "ruanxiaowu",
+     "ruanxiaowu_d",
      49,
      13
     ],
     [
      "move",
-     "ruanxiaoqi",
+     "ruanxiaoqi_d",
      49,
      14
     ],
     [
      "move",
-     "baisheng",
+     "baisheng_d",
      50,
      13
     ],
@@ -615,81 +824,49 @@
      "你这伙人好不晓事！这是什么去处，强挨入来要看！"
     ],
     [
-     "leave",
-     "ruanxiaoer"
-    ],
-    [
-     "leave",
-     "ruanxiaowu"
-    ],
-    [
-     "leave",
-     "ruanxiaoqi"
-    ],
-    [
-     "leave",
-     "baisheng"
-    ],
-    [
      "narrate",
      "西边一伙使枪棒卖药的，也强挨将入来。"
     ],
     [
      "say",
-     "liutang",
+     "liutang_d",
      "我们冲州撞府，哪里不曾去？便是京师天子杀人，也放人看。你这小去处砍得两个人，我们便挨入来看一看，打什么紧！"
     ],
     [
      "appear",
-     "duqian"
+     "duqian_d"
     ],
     [
      "appear",
-     "songwan"
+     "songwan_d"
     ],
     [
      "appear",
-     "yanshun"
+     "yanshun_d"
     ],
     [
      "move",
-     "liutang",
+     "liutang_d",
      34,
      12
     ],
     [
      "move",
-     "duqian",
+     "duqian_d",
      34,
      14
     ],
     [
      "move",
-     "songwan",
+     "songwan_d",
      35,
      14
     ],
     [
      "move",
-     "yanshun",
+     "yanshun_d",
      33,
      13
-    ],
-    [
-     "leave",
-     "liutang"
-    ],
-    [
-     "leave",
-     "duqian"
-    ],
-    [
-     "leave",
-     "songwan"
-    ],
-    [
-     "leave",
-     "yanshun"
     ],
     [
      "narrate",
@@ -702,60 +879,44 @@
     ],
     [
      "say",
-     "zhugui",
+     "zhugui_d",
      "我们挑东西送知府相公去的，你们如何敢阻挡？"
     ],
     [
      "appear",
-     "wangying"
+     "wangying_d"
     ],
     [
      "appear",
-     "zhengtianshou"
+     "zhengtianshou_d"
     ],
     [
      "appear",
-     "shiyong"
+     "shiyong_d"
     ],
     [
      "move",
-     "zhugui",
+     "zhugui_d",
      41,
      19
     ],
     [
      "move",
-     "wangying",
+     "wangying_d",
      43,
      19
     ],
     [
      "move",
-     "zhengtianshou",
+     "zhengtianshou_d",
      42,
      20
     ],
     [
      "move",
-     "shiyong",
+     "shiyong_d",
      44,
      20
-    ],
-    [
-     "leave",
-     "zhugui"
-    ],
-    [
-     "leave",
-     "wangying"
-    ],
-    [
-     "leave",
-     "zhengtianshou"
-    ],
-    [
-     "leave",
-     "shiyong"
     ],
     [
      "narrate",
@@ -768,78 +929,58 @@
     ],
     [
      "say",
-     "chaogai",
+     "chaogai_d",
      "我们是京师来的人，不认得你这里的路，只从这大路走。"
     ],
     [
      "appear",
-     "huarong"
+     "huarong_d"
     ],
     [
      "appear",
-     "huangxin"
+     "huangxin_d"
     ],
     [
      "appear",
-     "lufang"
+     "lufang_d"
     ],
     [
      "appear",
-     "guosheng"
+     "guosheng_d"
     ],
     [
      "move",
-     "chaogai",
+     "chaogai_d",
      41,
      7
     ],
     [
      "move",
-     "huarong",
+     "huarong_d",
      43,
      7
     ],
     [
      "move",
-     "huangxin",
+     "huangxin_d",
      44,
      7
     ],
     [
      "move",
-     "lufang",
+     "lufang_d",
      43,
      6
     ],
     [
      "move",
-     "guosheng",
+     "guosheng_d",
      44,
      6
     ],
     [
      "narrate",
-     "土兵哪里肯放。那伙客商齐齐地挨定了不动，盘在车子上立定了看。四下里吵闹不住，蔡九知府也禁治不得。"
-    ],
-    [
-     "leave",
-     "chaogai"
-    ],
-    [
-     "leave",
-     "huarong"
-    ],
-    [
-     "leave",
-     "huangxin"
-    ],
-    [
-     "leave",
-     "lufang"
-    ],
-    [
-     "leave",
-     "guosheng"
+     "土兵哪里肯放。那伙客商齐齐地挨定了不动，盘在车子上立定了看。四伙人把法场四面围住，吵闹不住，蔡九知府也禁治不得。"
     ],
     [
      "narrate",
@@ -867,7 +1008,7 @@
      "likui",
      "defense",
      {
-      "pct": 60,
+      "pct": 100,
       "turns": 2
      }
     ],
@@ -904,34 +1045,44 @@
      "车子上的客商听得「斩」字，怀中取出一面小锣，立在车子上当当地敲了两三声。四下里一齐动手！"
     ],
     [
-     "transform",
-     "chaogai",
-     12,
-     "晁盖"
+     "leave",
+     "chaogai_d"
     ],
     [
-     "transform",
-     "huarong",
-     34,
-     "花荣"
+     "appear",
+     "chaogai"
     ],
     [
-     "transform",
-     "huangxin",
-     38,
-     "黄信"
+     "leave",
+     "huarong_d"
     ],
     [
-     "transform",
-     "lufang",
-     39,
-     "吕方"
+     "appear",
+     "huarong"
     ],
     [
-     "transform",
-     "guosheng",
-     39,
-     "郭盛"
+     "leave",
+     "huangxin_d"
+    ],
+    [
+     "appear",
+     "huangxin"
+    ],
+    [
+     "leave",
+     "lufang_d"
+    ],
+    [
+     "appear",
+     "lufang"
+    ],
+    [
+     "leave",
+     "guosheng_d"
+    ],
+    [
+     "appear",
+     "guosheng"
     ],
     [
      "say",
@@ -943,28 +1094,36 @@
      "东边那伙弄蛇的丐者，身边都掣出尖刀，看着土兵便杀。"
     ],
     [
-     "transform",
-     "ruanxiaoer",
-     7,
-     "阮小二"
+     "leave",
+     "ruanxiaoer_d"
     ],
     [
-     "transform",
-     "ruanxiaowu",
-     8,
-     "阮小五"
+     "appear",
+     "ruanxiaoer"
     ],
     [
-     "transform",
-     "ruanxiaoqi",
-     9,
-     "阮小七"
+     "leave",
+     "ruanxiaowu_d"
     ],
     [
-     "transform",
-     "baisheng",
-     4,
-     "白胜"
+     "appear",
+     "ruanxiaowu"
+    ],
+    [
+     "leave",
+     "ruanxiaoqi_d"
+    ],
+    [
+     "appear",
+     "ruanxiaoqi"
+    ],
+    [
+     "leave",
+     "baisheng_d"
+    ],
+    [
+     "appear",
+     "baisheng"
     ],
     [
      "narrate",
@@ -992,28 +1151,36 @@
      "西边那伙使枪棒的，大发喊声，只顾乱杀将来。"
     ],
     [
-     "transform",
-     "liutang",
-     17,
-     "刘唐"
+     "leave",
+     "liutang_d"
     ],
     [
-     "transform",
-     "duqian",
-     69,
-     "杜迁"
+     "appear",
+     "liutang"
     ],
     [
-     "transform",
-     "songwan",
-     70,
-     "宋万"
+     "leave",
+     "duqian_d"
     ],
     [
-     "transform",
-     "yanshun",
-     65,
-     "燕顺"
+     "appear",
+     "duqian"
+    ],
+    [
+     "leave",
+     "songwan_d"
+    ],
+    [
+     "appear",
+     "songwan"
+    ],
+    [
+     "leave",
+     "yanshun_d"
+    ],
+    [
+     "appear",
+     "yanshun"
     ],
     [
      "narrate",
@@ -1047,28 +1214,36 @@
      "南边那伙挑担的脚夫，抡起扁担，横七竖八，都打翻了土兵。"
     ],
     [
-     "transform",
-     "zhugui",
-     65,
-     "朱贵"
+     "leave",
+     "zhugui_d"
     ],
     [
-     "transform",
-     "wangying",
-     44,
-     "王矮虎"
+     "appear",
+     "zhugui"
     ],
     [
-     "transform",
-     "zhengtianshou",
-     67,
-     "郑天寿"
+     "leave",
+     "wangying_d"
     ],
     [
-     "transform",
-     "shiyong",
-     66,
-     "石勇"
+     "appear",
+     "wangying"
+    ],
+    [
+     "leave",
+     "zhengtianshou_d"
+    ],
+    [
+     "appear",
+     "zhengtianshou"
+    ],
+    [
+     "leave",
+     "shiyong_d"
+    ],
+    [
+     "appear",
+     "shiyong"
     ]
    ]
   },
