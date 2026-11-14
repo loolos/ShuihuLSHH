@@ -74,7 +74,8 @@ export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
  * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
  * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
  */
-export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax'>>> = {
+type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area'>>;
+export const SKILL_OVERRIDES: Record<number, SkillOverride> = {
   33: { power: 25, critMod: 15 }, // 原版 10 / 10
   34: { power: 45, critMod: 20 }, // 原版 30 / 15
   35: { power: 65, critMod: 25 }, // 原版 50 / 20
@@ -91,10 +92,55 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   54: { stun: 10 }, // 朱武 神機妙算，原版 0
   128: { rangeMax: 2 }, // 楊春 撥草尋蛇
   113: { rangeMax: 2 }, // 陳達 餓虎出柵
-  56: { stun: 30 }, // 朱武 詭計多端（7 级连续技），原版 5，负责人 2026-11-13 改 30
+  // 朱武 詭計多端（7 级连续技）：昏迷原版 5，负责人 2026-11-13 改 30；2026-11-14 威力 20 → 60，原版三段 60/20/20 改成 4 段各 25%（第 10、14、18、21 帧）
+  56: { stun: 30, power: 60, hits: [10, 14, 18, 21].map((frame) => ({ frame, percent: 25, dir: 0 })) },
   // 137 佛法無邊（魯智深 17 级，以自身为中心的范围技）：原版第 13 帧一段 100%，负责人 2026-11-14 要求改成三段：
   // 禅杖顿地（第 13 帧，原版命中帧）之后蹲身按杖的第 16、19 帧再各震一下，30% / 30% / 40%；每段放一轮特效
   137: { hits: [{ frame: 13, percent: 30, dir: 0 }, { frame: 16, percent: 30, dir: 0 }, { frame: 19, percent: 40, dir: 0 }] },
+  // 96 懷璧其罪（林沖 9 级）：负责人 2026-11-14 要求射程 1–2、分三级（LV2、LV3 见 CLASS_EXTRA_SKILLS）、两段同一帧同时结算（各 50%，各自判定命中和必杀）
+  96: { rangeMax: 2, hits: [{ frame: 11, percent: 50, dir: 0 }, { frame: 11, percent: 50, dir: 0 }] },
+};
+
+const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) => ({ frame, percent: percents[i], dir: 0 }));
+
+/**
+ * 耗气审阅后的调整（技能号 → 字段），只用于好汉职业（职业号 < 18）；敌方版好汉照原版【新】（负责人 2026-11-14）。
+ * 在 SKILL_OVERRIDES 之后、noHeroHitPenalty 之前合并；改了威力的技能同时把命中修正写 0，威力就是实际值。
+ * 依据：按期望伤害折成"几次普通攻击"，回气一回合回半条气，单体技原来要 50–100% 气条却只有 1.5–2.2 次普攻。
+ */
+export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
+  // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
+  26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
+  27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
+  // 白勝 監守自盜LV1–3：原版威力 15、命中 −5/−10/−15（换算后 10/5/1，加上远程衰减只有普攻一半）
+  48: { mpCost: 5, power: 30, hitMod: 0 },
+  49: { mpCost: 5, power: 40, hitMod: 0 },
+  50: { mpCost: 5, power: 50, hitMod: 0 },
+  47: { mpCost: 15 }, // 白勝 窮鼠噬貓 50 → 15（原版已是三段 20/20/60%）
+  // 陳達 黑虎偷心：威力 +20（原版 30、命中 −10 → 实际 20 → 40），耗气 20 不变；
+  // 两段：跃起挥枪（第 12 帧）40% + 落地突刺（第 23 帧，原版命中帧）60%
+  115: { power: 40, hitMod: 0, hits: hitsAt([12, 23], [40, 60]) },
+  116: { mpCost: 15 }, // 陳達 虎嘯山林LV1（单格）60 → 15
+  91: { stun: 40 }, // 吳用 星羅棋布LV1：加昏迷 40%，耗气不变
+  40: { mpCost: 65 }, // 史進 龍騰九天 210（压到 159）→ 65
+  // 史進 龍爭虎鬥LV2 / LV3：耗气 60 → 35、130 → 55；出手动作是翻身飞踢（第 18 帧落地）
+  34: { mpCost: 35, hits: hitsAt([12, 18], [40, 60]) }, // 两段：空中翻身 + 落地
+  35: { mpCost: 55, hits: hitsAt([9, 13, 18], [30, 30, 40]) }, // 三段：扑出、空中翻身、落地
+  138: { mpCost: 50 }, // 魯智深 佛光普照 170 → 50
+  136: { mpCost: 40 }, // 魯智深 殺身成佛 60 → 40
+  123: { mpCost: 65 }, // 楊志 千刀萬剮 150 → 65
+  122: { mpCost: 45 }, // 楊志 快刀斬亂麻 100 → 45
+  99: { mpCost: 70 }, // 林沖 策馬入林 140 → 70
+  98: { mpCost: 35 }, // 林沖 義憤填膺 80 → 35
+  66: { mpCost: 35 }, // 阮小二 沖太歲LV2 70 → 35
+  67: { mpCost: 40 }, // 阮小二 沖太歲LV3 110 → 40
+  69: { mpCost: 30 }, // 阮小二 天羅地網LV1（单格）70 → 30
+  74: { mpCost: 55 }, // 阮小五 絕地逢生 80 → 55
+  146: { mpCost: 60 }, // 劉唐 百鬼夜行 100 → 60
+  // 朱武 奇門遁甲LV1–3（扇形 8 / 13 / 18 格）范围大、耗气少：40 / 55 / 70 → 90 / 105 / 135
+  60: { mpCost: 90 },
+  61: { mpCost: 105 },
+  62: { mpCost: 135 },
 };
 
 /**
@@ -119,7 +165,7 @@ export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(c
  * 隐藏技改名（技能号 → 名字，繁体，LV 后缀照旧）【新】（负责人 2026-11-13 嫌"古武術"重名太多）。
  * 原版朱武、阮氏三雄、吳用的隐藏技都叫"古武術LV1–3"；按人物和招式形状各取一个名字，敌方同职业单位一起改。
  */
-export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
+export const SKILL_NAME_OVERRIDES: Record<number, string> = { 96: '懷璧其罪LV1', ...Object.fromEntries(
   ([
     [60, '奇門遁甲'], // 朱武（神機軍師），扇形
     [69, '天羅地網'], // 阮小二（立地太歲，打漁），落点菱形
@@ -127,9 +173,20 @@ export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
     [83, '怒海狂濤'], // 阮小七（活閻羅），直线
     [91, '星羅棋布'], // 吳用（智多星），落点菱形、两段
   ] as const).flatMap(([id, name]) => [0, 1, 2].map((i) => [id + i, `${name}LV${i + 1}`])),
-);
+) };
 
-/** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
+/** 新增技能的公共字段；每个技能只写不同的部分 */
+const extraSkill = (s: Partial<SkillDef> & Pick<SkillDef, 'name' | 'skillId' | 'type' | 'group' | 'learnLevel' | 'mpCost' | 'power'>): SkillDef => ({
+  hidden: false, rangeMin: 1, rangeMax: 1, area: 1, effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
+  hits: [{ frame: 1, percent: 100, dir: 0 }], raw: '', ...s,
+});
+const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100 / frames.length, dir: 0 }));
+
+/**
+ * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
+ * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
+ * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）。
+ */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
   5: [{
@@ -138,6 +195,25 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
     hits: [], raw: '',
   }],
+  11: [
+    extraSkill({ name: '懷璧其罪LV2', skillId: 1001, type: 6, group: 1, learnLevel: 18, mpCost: 40, power: 40, rangeMax: 2, hitMod: 5, critMod: 20, soundId: 96, hits: split([11, 11]) }),
+    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 6, group: 1, learnLevel: 24, mpCost: 50, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
+    // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
+    extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
+  ],
+  // 吳用（24 级入队）：回气借本人那组一帧的姿势（第 1 组，其它好汉的集气技也是一帧）；单体昏迷借普攻动作（第 0 组），第 28 组蓝色光环特效（原版没有技能用）
+  10: [
+    extraSkill({ name: '運籌帷幄', skillId: 1006, type: 8, group: 1, learnLevel: 24, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0, hits: [] }),
+    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
+  ],
+  // 陳達：借黑虎偷心的动作（第 1 组）、第 19 组弧形扫击特效（原版没有技能用）
+  13: [
+    extraSkill({ name: '虎尾橫掃', skillId: 1005, type: 13, group: 1, learnLevel: 18, mpCost: 45, power: 35, area: 3, hitMod: 10, critMod: 10, effect: 20, soundId: 115, hits: [{ frame: 23, percent: 100, dir: 0 }] }),
+  ],
+  // 楊春：借本人普通攻击的动作（第 1 组与第 0 组帧完全相同）、飞刀特效（第 56–59 组，同白勝 監守自盜）
+  15: [
+    extraSkill({ name: '靈蛇吐信', skillId: 1004, type: 10, group: 1, learnLevel: 8, mpCost: 25, power: 20, rangeMax: 8, critMod: 10, poison: 30, effect: 57, soundId: 48, hits: [{ frame: 13, percent: 100, dir: 0 }] }),
+  ],
 };
 
 /**
@@ -178,6 +254,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
+          ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
           name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         }))),
@@ -248,6 +325,46 @@ export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);
  * 原扣除不到 4 点的直接当 0；加命中的照原版【新：负责人 2026-11-14 决定】。如 −5 → −1，−12 → −3，−18 → −4。
  */
 export const equipHitBonus = (it: Item) => EQUIP_HIT_OVERRIDES[it.id] ?? (it.hit >= 0 ? it.hit : it.hit > -4 ? 0 : -Math.floor(-it.hit / 4));
+/**
+ * 道具表改动【新：负责人 2026-11-14】：原版的青箬笠（道具 128，0 起算 127）没有任何关卡、宝箱或商店给，
+ * 改名「碧雲箬笠」上架武器店，作为紅纓氈笠的上一级：防 10（打铁 +3 一次，原版）、移动 +3（原版）、命中 +16，
+ * 城镇 7–11（黄泥冈前起）有卖，4500 两（原版卖价 2250 的两倍）。图标仍用原版这一格。
+ */
+/** 城镇的先后顺序（同 preset.ts 的 TOWN_ORDER） */
+const TOWNS_IN_ORDER = [1, 2, 3, 4, 5, 13, 6, 12, 7, 8, 9, 10, 11];
+/** 从城镇 town 起（按先后顺序）都有卖的城镇号表（道具 +146） */
+const soldFrom = (town: number) => {
+  const t = TOWNS_IN_ORDER.slice(TOWNS_IN_ORDER.indexOf(town));
+  return [...t, ...Array(13 - t.length).fill(0)];
+};
+/** 上架：武器店（大类 2）或当铺（大类 5），从城镇 town 起有卖，卖价 = 买价 / 2 */
+const shopItem = (price: number, town: number, category = 2): Partial<Item> => ({ category, buyPrice: price, sellPrice: price / 2, seqA: soldFrom(town) });
+export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
+  127: { name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500, sellPrice: 2250, seqA: [7, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0] },
+  /*
+   * 原版库里有、但没有任何关卡、宝箱、我方配装或商店给的装备（敌人身上的打倒后不掉），一律放进后期商店【新：负责人 2026-11-14】。
+   * 价格按同类商店货的属性比较定；城镇 7（N09 之后）→ 8 → 9 → 10（N-add16 前）越往后越好。属性照原版不改。108魔星草人没有属性，不放。
+   */
+  11: shopItem(2600, 7), // 烏金鐵拳：攻 18 偏低，附加多（鐵甲拳 攻 30 / 2900）
+  21: shopItem(6000, 10), // 打狗棒：攻 30 + 射程、移动、昏 20%（羅漢棍 攻 36 / 3300）
+  28: shopItem(4000, 9), // 風雷刀：攻 22 + 移动、每回合回气 20（冰火刀 攻 34 / 3400）
+  36: shopItem(5500, 10), // 青龍偃月刀：攻 35 + 射程、敏 15、必 20（金龍大刀 攻 38 / 3640）
+  47: shopItem(5000, 9), // 火尖槍：攻 28 + 射程、命 10、必 20（透甲槍 攻 38 / 5500）
+  53: shopItem(8000, 10), // 金剛鏟：攻 36 + 每回合回体回气 30（巨靈鏟 攻 39 / 7000）
+  66: shopItem(1800, 7), // 玄鐵劍：攻 15 偏低（闊劍 攻 29 / 1600）
+  70: shopItem(1800, 7), // 將邪劍：攻 22（兩儀劍 攻 28 / 2300）
+  75: shopItem(5000, 9), // 虎鯊叉：攻 38、必 20（飛魚叉 攻 34 / 4200）
+  79: shopItem(3000, 8), // 巨鯨槳：攻 30、昏 15%（鐵槳 攻 35 / 3000）
+  94: shopItem(3500, 8), // 綠蓑衣：防 17、敏 13、移动 +2（皂色繡襖 防 18 / 2000）
+  110: shopItem(7000, 9), // 梅花榆葉甲：防 45（鐵葉攢鎧 防 40 / 5200）
+  111: shopItem(9000, 10), // 雁翎圈金甲：防 50
+  124: shopItem(6000, 9), // 烏紗帽：防 10、每回合回体回气 20（猛虎紋玉 回 15 / 6000）
+  132: shopItem(3000, 7), // 耀日鑌鐵盔：防 20、必 10（熟鋼獅子盔 防 18 / 2400）
+  138: shopItem(5000, 9), // 麒麟護符：防 20、命 10、敏 10
+  143: shopItem(5000, 9, 5), // 菊花金飾：体气 +50（水蓮鐵飾 +20 / 2000），当铺
+  154: shopItem(8000, 10, 5), // 孔明兵法：攻防命敏 +5，当铺
+};
+export const withItemOverrides = (items: Item[]): Item[] => items.map((it) => (ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it));
 /** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */
 export const EQUIP_HIT_OVERRIDES: Record<number, number> = { 125: 8, 126: 12 };
 

@@ -792,6 +792,10 @@ describe('技能', () => {
     expect(keys(areaCells(board, from, diamond, from))).toEqual(['4,5', '5,4', '5,5', '5,6', '6,5']);
     expect(areaCells(board, from, charge, from)).toEqual([from]);
     expect(keys(areaCells(board, from, sk({ type: 2 }), { x: 5, y: 4 }))).toEqual(['4,5', '5,4', '5,6', '6,5']);
+    // 周身技（12）：周围 8 格；横扫技（13）：面前一排横向三格
+    expect(keys(areaCells(board, from, sk({ type: 12 }), from))).toEqual(['4,4', '4,5', '4,6', '5,4', '5,6', '6,4', '6,5', '6,6']);
+    expect(keys(areaCells(board, from, sk({ type: 13 }), { x: 6, y: 5 }))).toEqual(['6,4', '6,5', '6,6']);
+    expect(keys(areaCells(board, from, sk({ type: 13 }), { x: 5, y: 4 }))).toEqual(['4,4', '5,4', '6,4']);
   });
 
   it('习得：按等级、不含隐藏技，高级取代低级', () => {
@@ -1113,5 +1117,25 @@ describe('主线插关的排队（campaign.ts pendingInsert）', () => {
     expect(pendingInsert(c, list, 'n-add06')).toBe('mainline/wawasi');
     expect(pendingInsert(c, list, 'N-add07')).toBeUndefined();
     expect(pendingInsert({ ...c, inserts: ['mainline/wawasi'] }, list, 'N-add06')).toBeUndefined();
+  });
+});
+
+describe('道具表改动', () => {
+  it('青箬笠改名碧雲箬笠上架', async () => {
+    const { withItemOverrides } = await import('../src/rules/data.ts');
+    const base = { id: 127, name: '青箬笠', category: 0, hit: 0, buyPrice: 0, sellPrice: 2250, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
+    const [it] = withItemOverrides([base]);
+    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500 });
+    expect(it.seqA).toContain(7);
+  });
+});
+
+describe('拿不到的装备上架', () => {
+  it('打狗棒从城镇 10 起在武器店卖', async () => {
+    const { withItemOverrides } = await import('../src/rules/data.ts');
+    const base = { id: 21, name: '打狗棒', category: 0, buyPrice: 0, sellPrice: 3000, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
+    const [it] = withItemOverrides([base]);
+    expect(it).toMatchObject({ category: 2, buyPrice: 6000, sellPrice: 3000 });
+    expect(it.seqA.slice(0, 2)).toEqual([10, 11]);
   });
 });

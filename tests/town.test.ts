@@ -219,9 +219,11 @@ describe.skipIf(!has)('测试用跳关', () => {
     expect(gear('n-add06', 0)).toEqual(['金繡綠羅袍', '遮日黑箬笠']); // 城镇 3
     expect(gear('n05', 0)).toEqual(['綠羅花戰袍', '遮日黑箬笠']); // 城镇 4 起；第五章还是遮日黑箬笠
     expect(gear('n-add08', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 第六章起紅纓氈笠
-    expect(gear('n14', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 后面的店有更硬的甲也不换
+    expect(gear('act9-1', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']);
+    expect(gear('n-add11', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 到过城镇 7 起碧雲箬笠
+    expect(gear('n14', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 后面的店有更硬的甲也不换
     expect(gear('n-add04a', 5)[0]).toBe('鑲銀生鐵甲'); // 朱武：剧本衣服防御更高，留着
-    expect(gear('n14', 2)).toEqual(['七星道袍', '紅纓氈笠']); // 公孫勝：七星道袍买不到，留着
+    expect(gear('n14', 2)).toEqual(['七星道袍', '碧雲箬笠']); // 公孫勝：七星道袍买不到，留着
     expect(gear('n14', 12)[1]).toBe('萬字巾'); // 晁蓋：萬字巾买不到，留着
     // 先跳到后期再跳回前面：不沿用后期的等级、装备和银子，和直接跳过去一样
     const early = stages.find((s) => s.mapName.toLowerCase() === 'n01')!.index;

@@ -128,9 +128,21 @@ describe.skipIf(!has)('N01', () => {
     const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
     expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([50, 0]); // 魯智深 佛光普照 70 / −20
     expect([by(16, 133).power, by(16, 133).hitMod]).toEqual([10, 0]); // 魯智深 普攻 三世因果 20 / −10
-    expect([by(4, 50).power, by(4, 51).power]).toEqual([1, 1]); // 白勝 監守自盜LV3 15 / −15、通殺LV1 10 / −15
+    expect(by(4, 51).power).toBe(1); // 白勝 通殺LV1 10 / −15
     expect([by(46, 21).power, by(46, 21).hitMod]).toEqual([50, -10]); // 敌方公孫勝 天雷滅敵正法 不变
     expect(data.classes[20].skills[1].hitMod).toBe(-10); // 莊客 遠程攻擊
+  });
+
+  it('耗气审阅调整只改好汉，敌方版好汉照原版', () => {
+    const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
+    expect([by(3, 40).mpCost, by(16, 138).mpCost, by(5, 62).mpCost]).toEqual([65, 50, 135]); // 龍騰九天、佛光普照、奇門遁甲LV3
+    expect([by(4, 50).mpCost, by(4, 50).power, by(4, 50).hitMod]).toEqual([5, 50, 0]); // 監守自盜LV3
+    expect([by(13, 115).power, by(13, 115).mpCost, by(13, 115).hits.length]).toEqual([40, 20, 2]); // 黑虎偷心
+    expect([by(3, 34).hits.length, by(3, 35).hits.length]).toEqual([2, 3]); // 龍爭虎鬥LV2 / LV3
+    expect([by(2, 26).area, by(2, 26).power, by(2, 27).area, by(2, 27).power]).toEqual([3, 2, 4, 1]); // 回心咒范围回复
+    expect(by(10, 91).stun).toBe(40); // 星羅棋布LV1
+    expect([by(47, 50).power, by(47, 50).hitMod]).toEqual([15, -15]); // 敌方白勝 監守自盜LV3 不变
+    expect(by(46, 26).area).toBe(0); // 敌方公孫勝 回心咒LV1 不变
   });
 
   it('朱武、阮氏三雄、吳用的隐藏技不再都叫古武術', () => {
