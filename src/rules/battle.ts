@@ -132,6 +132,9 @@ export const REWIND_TURNS = 2;
 
 export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' | 'rest' | 'kill' | 'team';
 
+/** 被绑（指令 103）的昏迷回合数：足够大，等剧本 104 解开 */
+const BOUND_TURNS = 9999;
+
 export class Battle {
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
@@ -1115,7 +1118,18 @@ export class Battle {
       const id = t.char === 1000 ? 0 : t.char;
       const inside = (u: Unit) =>
         u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
-      if (this.units.some((u) => u.classId === id && u.alive && u.present && inside(u))) this.runBlock(b);
+      const hit = t.chars
+        ? t.chars.every((c) => this.units.some((u) => u.classId === c && u.alive && u.present && inside(u)))
+        : this.units.some((u) => u.classId === id && u.alive && u.present && inside(u));
+      if (hit) this.runBlock(b);
+      if (this.status !== 'playing') return;
+    }
+    // 扩展包：任一我方单位走到某人身边（劫法场走过去松绑）
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'near' || this.fired.has(b.index)) continue;
+      const who = this.units.find((u) => u.classId === t.char && u.alive && u.present);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && u.alive && u.present && dist(u, who) === 1)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     this.runCondBlocks();
@@ -1323,6 +1337,27 @@ export class Battle {
           refreshStats(sel, this.data);
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
           break;
+        // 103 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；104 解开
+        case 103:
+          if (!sel) break;
+          sel.stunTurns = BOUND_TURNS;
+          if (sel.side === this.phase) sel.ended = true;
+          this.emit({ type: 'status', uid: sel.uid, text: '被綁' });
+          break;
+        // 104 解开：清掉绑缚、昏迷、中毒和减益；是这一方的回合就马上能行动
+        case 104: {
+          if (!sel) break;
+          sel.stunTurns = 0;
+          sel.poisonTurns = 0;
+          sel.buffs = sel.buffs.filter((x) => x.value > 0);
+          refreshStats(sel, this.data);
+          if (sel.side === this.phase && !sel.acted) {
+            sel.ended = false;
+            sel.movementRemaining = sel.stats.move;
+          }
+          this.emit({ type: 'status', uid: sel.uid, text: '解開' });
+          break;
+        }
         // 102 换职业（扩展包【新】，如披虎皮的猎户现出原形）：样子、属性、头像都换，血气回满；text 是新名字
         case 102:
           if (!sel || !this.data.classes[op.value]) break;

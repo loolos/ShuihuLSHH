@@ -134,7 +134,7 @@ export class BattleUI {
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
     const buffs = u.buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''} ${b.turns}`);
-    const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && `昏迷 ${u.stunTurns}`, u.ended && u.side === 'player' && '已行动']
+    const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), u.ended && u.side === 'player' && '已行动']
       .filter(Boolean)
       .join('　');
     const face = this.portrait(u.classId);
