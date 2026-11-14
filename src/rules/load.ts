@@ -77,9 +77,9 @@ export function capSkillCosts(classes: ClassDef[]): ClassDef[] {
 
 /**
  * 主线关卡剧本的重制版改动【新】（只改触发条件，不改原版文件）。
- * N13 诱敌蓼儿洼：伏兵区块原版条件「回合 = 10」（第 11 回合开始登场），负责人 2026-11-14 嫌太晚，改成「回合 = 6」（第 7 回合开始）。
+ * N13 诱敌蓼儿洼：伏兵区块原版条件「回合 = 10」（第 11 回合开始登场），负责人 2026-11-14 嫌太晚，改成「回合 = 7」（第 8 回合开始；先定第 7 回合，负责人嫌少又改第 8）。
  */
-export const STAGE_TURN_TRIGGERS: Record<string, Record<number, number>> = { N13: { 10: 6 } };
+export const STAGE_TURN_TRIGGERS: Record<string, Record<number, number>> = { N13: { 10: 7 } };
 
 export function adjustBlocks(stage: string, blocks: PasBlock[]): PasBlock[] {
   const map = STAGE_TURN_TRIGGERS[stage.toUpperCase()];
