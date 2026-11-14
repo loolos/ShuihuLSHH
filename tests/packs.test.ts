@@ -419,25 +419,43 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(ev.some((e) => e.type === 'say' && /再占不得佛门/.test(e.text))).toBe(true);
   });
 
-  it('三阮：每两回合一段对话，第 4、8 回合两批增援，打倒小头目过关；吴用倒下判负', () => {
+  // 把场上的敌人一个个打倒（体力 1、敏捷 0、挪到 hitter 旁边）
+  const wipe = (b: Battle, hitter: Unit) => {
+    let ev: BattleEvent[] = [];
+    // 只打开始时在场的这一批（打光后补上来的不算）
+    for (const foe of b.units.filter((u) => u.side === 'enemy' && u.alive && u.present)) {
+      if (b.status !== 'playing') break;
+      foe.hp = 1;
+      foe.stats.agility = 0;
+      foe.x = hitter.x;
+      foe.y = hitter.y + 1;
+      for (let k = 0; k < 20 && foe.alive && b.status === 'playing'; k++) ev = strike(b, hitter, foe);
+    }
+    return ev;
+  };
+
+  it('三阮：每两回合一段对话；对话说完前敌人打光就补 3 个喽啰，第 12 回合以后打光才过关', () => {
     const b = new Battle(compileStage(rt, stageOf('sanruan'), files, { seed: 1, text: tr }));
     const said: string[] = [];
     const log = (ev: BattleEvent[]) => ev.forEach((e) => (e.type === 'say' || e.type === 'narrate') && said.push(e.text));
     log(b.begin());
     expect(said.some((t) => /生辰纲/.test(t))).toBe(true);
+    const xq = b.units.find((u) => u.classId === 9)!;
+    const present = () => b.units.filter((u) => u.side === 'enemy' && u.alive && u.present).length;
+    wipe(b, xq);
+    expect(b.status).toBe('playing');
+    expect(present()).toBe(3); // 补了 3 个
     const boss = b.units.find((u) => u.classId === 65)!;
     expect(boss.present).toBe(false);
     for (let t = 2; t <= 8; t++) log(advance(b, t));
     expect(boss.present).toBe(true);
     expect(said.some((t) => /立地太岁/.test(t)) && said.some((t) => /石榴花/.test(t)) && said.some((t) => /草生一秋/.test(t)) && said.some((t) => /白衣秀士/.test(t))).toBe(true);
-    const wy = b.units.find((u) => u.classId === 10)!;
-    const xq = b.units.find((u) => u.classId === 9)!;
-    boss.hp = 1;
-    boss.stats.agility = 0;
-    boss.x = xq.x;
-    boss.y = xq.y + 1;
-    let ev: BattleEvent[] = [];
-    for (let i = 0; i < 20 && b.status === 'playing'; i++) ev = strike(b, xq, boss);
+    wipe(b, xq);
+    expect(b.status).toBe('playing'); // 打倒小头目、敌人打光也还没过关：对话没说完，又补人
+    expect(present()).toBe(3);
+    log(advance(b, 12));
+    expect(said.some((t) => /水里水里去/.test(t))).toBe(true);
+    const ev = wipe(b, xq);
     expect(b.status).toBe('won');
     expect(ev.some((e) => e.type === 'say' && /卖与识货的/.test(e.text))).toBe(true);
     expect(b.clearGold).toBe(0); // 视角关不给银子
@@ -452,6 +470,5 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     foe.y = w2.y - 1;
     for (let i = 0; i < 20 && lost.status === 'playing'; i++) strike(lost, foe, w2);
     expect(lost.status).toBe('lost');
-    void wy;
   });
 });
