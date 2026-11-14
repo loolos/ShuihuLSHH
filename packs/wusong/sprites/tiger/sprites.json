@@ -1,0 +1,91 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "attack": {
+   "source": "Attack",
+   "front": {
+    "file": "attack-front.png",
+    "frames": 8,
+    "ms": 161
+   },
+   "back": {
+    "file": "attack-back.png",
+    "frames": 8,
+    "ms": 161
+   }
+  },
+  "attack-paw": {
+   "source": "Attack Paw",
+   "front": {
+    "file": "attack-paw-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "attack-paw-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "go-to-sleep": {
+   "source": "Go To Sleep",
+   "front": {
+    "file": "go-to-sleep-front.png",
+    "frames": 8,
+    "ms": 99
+   },
+   "back": {
+    "file": "go-to-sleep-back.png",
+    "frames": 8,
+    "ms": 99
+   }
+  },
+  "hit-back": {
+   "source": "Hit Back",
+   "front": {
+    "file": "hit-back-front.png",
+    "frames": 8,
+    "ms": 73
+   },
+   "back": {
+    "file": "hit-back-back.png",
+    "frames": 8,
+    "ms": 73
+   }
+  },
+  "idle": {
+   "source": "Idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 208
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 208
+   }
+  },
+  "walk": {
+   "source": "Walk",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 151
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 151
+   }
+  }
+ }
+}
