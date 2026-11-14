@@ -275,7 +275,9 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   };
   const skillRef = (id: unknown) => rt.skillIds.get(String(id)) ?? fail(`${stage.id}: 没有技能 ${String(id)}`);
   const classRef = (v: unknown) => (typeof v === 'number' ? v : (rt.classIds.get(String(v)) ?? fail(`${stage.id}: 没有职业 ${String(v)}`)));
-  const blocks = stage.script.map((b, i) => compileBlock(b, i, { charOf, classRef, unitRef, skillRef, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const flagIds = new Map<string, number>();
+  const flagRef = (v: unknown) => flagIds.get(String(v)) ?? flagIds.set(String(v), flagIds.size + 1).get(String(v))!;
+  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
@@ -306,6 +308,7 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
 }
 
 interface Refs {
+  flagRef: (name: unknown) => number;
   charOf: (id: string) => number;
   classRef: (v: unknown) => number;
   unitRef: (id: unknown) => { json: PackUnitJson; act: ActUnit };
@@ -323,7 +326,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   else if (on === 'enemiesDefeated') {
     trigger = { kind: 'cond' };
     cond = { type: 1, arg: 0xff }; // 原版条件 1、参数 0xFF：敌方全灭
+    // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
+    if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
+    if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
+  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
@@ -375,6 +382,9 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       case 'sound':
         op(21, 0, { text: String(a[0]) });
+        break;
+      case 'flag':
+        op(103, r.flagRef(a[0]));
         break;
       case 'setEquip':
         select(a[0]);
