@@ -127,7 +127,7 @@ export const PACK_IDLE = 1000;
 
 /**
  * 扩展包职业的动画（图条见 packs/<包>/sprites/，tools/render-sprites.py 渲染）。图条只有 front / back 两个方向：
- * 渲染相机和原版正好左右相反（front 面向右下 = 朝向 3、back 面向左上 = 朝向 1），朝向 2、0 用水平翻转。
+ * 和原版一样，front 面向左下 = 朝向 2（+y）、back 面向右上 = 朝向 0（−y）；朝向 3、1 用水平翻转（屏幕方向见 iso.ts）。
  */
 function packAnim(scene: Phaser.Scene, pack: PackAssets, cls: number, action: number, facing: number, repeat: number): string | null {
   const look = pack.rt.looks.get(cls)!;
@@ -136,7 +136,7 @@ function packAnim(scene: Phaser.Scene, pack: PackAssets, cls: number, action: nu
   const act = name ? sheet?.actions[name] : undefined;
   if (!act) return null;
   const front = (facing & 3) >= 2;
-  const flip = (facing & 3) === 2 || (facing & 3) === 0;
+  const flip = (facing & 3) === 3 || (facing & 3) === 1;
   const strip = front ? act.front : act.back;
   const key = `pack:${look.sheet}:${name}:${facing & 3}:${repeat}`;
   if (!scene.anims.exists(key)) {
