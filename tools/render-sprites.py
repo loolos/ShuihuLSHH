@@ -45,6 +45,8 @@ def parse_args():
     p.add_argument('--ms', type=int, default=0, help='每帧时长（毫秒），0 = 按动作原长平均分')
     p.add_argument('--scale-by', choices=['bones', 'mesh'], default='bones',
                    help='按什么量尺寸：bones = 待机姿势的骨骼（Sketchfab 老虎这类网格单位不可靠的模型），mesh = 静止网格（UAL 假人这类骨骼带缩放的模型）')
+    p.add_argument('--sun', type=float, default=2.5, help='主光强度')
+    p.add_argument('--ambient', type=float, default=0.9, help='环境光强度（小一点明暗对比更强）')
     p.add_argument('--outfit', help='上色方案 JSON：按骨骼给通用假人模型的各部位上色（见 apply_outfit）')
     return p.parse_args(argv)
 
@@ -63,7 +65,8 @@ def apply_outfit(path):
       "default": [r,g,b]
       "rules": [{"bones": ["正则",...]（可省）, "when": "表达式"（可省）, "color": [r,g,b], "inflate": 米（可省）}, ...]
         每个顶点按顺序找第一条匹配的规则。bones 匹配权重最大的骨骼；when 是 Python 表达式，
-        可用 x y z（世界坐标）、ax（|x|）、b（骨骼名）。inflate 沿法线把顶点往外推。
+        可用 x y z（世界坐标）、ax（|x|）、b（骨骼名）。inflate 沿法线把顶点往外推；folds（0–1）是布料褶皱强度。
+      "shading": {"ao": 缝隙变暗 0–1, "edge": 轮廓变暗 0–1, "fold_scale": 褶皱疏密, "fold_strength": 褶皱深浅, "fold_distortion": 褶皱扭曲}（可省）
       "props": [{"bone": "Head", "shape": "sphere", "radius": 米, "at": [x,y,z], "scale": [sx,sy,sz], "color": [r,g,b]}, ...]
     颜色 0–255。"""
     import re
@@ -72,15 +75,41 @@ def apply_outfit(path):
     rules = [(re.compile('|'.join(r['bones'])) if r.get('bones') else None,
               compile(r['when'], 'when', 'eval') if r.get('when') else None, r) for r in cfg['rules']]
 
+    sh = {'ao': 0.55, 'edge': 0.35, 'fold_scale': 9.0, 'fold_strength': 0.8, 'fold_distortion': 6.0, **cfg.get('shading', {})}
+
     def outfit_material(name):
+        """颜色 = 顶点色 × 缝隙变暗（AO）× 轮廓变暗（侧面朝外的地方暗一些，显得更立体）；
+        衣服部位（规则里 folds > 0）再加凹凸褶皱。褶皱纹理用 Generated 坐标（静止姿势），动起来不会滑动。"""
         mat = bpy.data.materials.new(name)
         mat.use_nodes = True
         nt = mat.node_tree
-        bsdf = nt.nodes['Principled BSDF']
+        N, L = nt.nodes, nt.links.new
+        bsdf = N['Principled BSDF']
         bsdf.inputs['Roughness'].default_value = 0.85
-        ca = nt.nodes.new('ShaderNodeVertexColor')
-        ca.layer_name = 'Outfit'
-        nt.links.new(ca.outputs['Color'], bsdf.inputs['Base Color'])
+        ca = N.new('ShaderNodeVertexColor'); ca.layer_name = 'Outfit'
+        ao = N.new('ShaderNodeAmbientOcclusion'); ao.inputs['Distance'].default_value = 0.06
+        aof = N.new('ShaderNodeMapRange'); aof.inputs['To Min'].default_value = 1 - sh['ao']
+        L(ao.outputs['AO'], aof.inputs['Value'])
+        lw = N.new('ShaderNodeLayerWeight'); lw.inputs['Blend'].default_value = 0.35
+        edf = N.new('ShaderNodeMapRange'); edf.inputs['To Min'].default_value = 1; edf.inputs['To Max'].default_value = 1 - sh['edge']
+        L(lw.outputs['Facing'], edf.inputs['Value'])
+        m1 = N.new('ShaderNodeMix'); m1.data_type = 'RGBA'; m1.blend_type = 'MULTIPLY'; m1.inputs['Factor'].default_value = 1
+        L(ca.outputs['Color'], m1.inputs['A']); L(aof.outputs['Result'], m1.inputs['B'])
+        m2 = N.new('ShaderNodeMix'); m2.data_type = 'RGBA'; m2.blend_type = 'MULTIPLY'; m2.inputs['Factor'].default_value = 1
+        L(m1.outputs['Result'], m2.inputs['A']); L(edf.outputs['Result'], m2.inputs['B'])
+        L(m2.outputs['Result'], bsdf.inputs['Base Color'])
+        # 褶皱：竖向为主的扭曲波纹，强度由顶点属性 Folds 控制
+        tc = N.new('ShaderNodeTexCoord')
+        wv = N.new('ShaderNodeTexWave'); wv.wave_type = 'BANDS'; wv.bands_direction = 'X'
+        wv.inputs['Scale'].default_value = sh['fold_scale']; wv.inputs['Distortion'].default_value = sh['fold_distortion']
+        wv.inputs['Detail'].default_value = 2
+        L(tc.outputs['Generated'], wv.inputs['Vector'])
+        fa = N.new('ShaderNodeAttribute'); fa.attribute_name = 'Folds'
+        hm = N.new('ShaderNodeMath'); hm.operation = 'MULTIPLY'
+        L(wv.outputs['Fac'], hm.inputs[0]); L(fa.outputs['Fac'], hm.inputs[1])
+        bump = N.new('ShaderNodeBump'); bump.inputs['Strength'].default_value = sh['fold_strength']
+        bump.inputs['Distance'].default_value = 0.02
+        L(hm.outputs['Value'], bump.inputs['Height']); L(bump.outputs['Normal'], bsdf.inputs['Normal'])
         return mat
 
     lin = lambda col: [(c / 255) ** 2.2 for c in col] + [1]
@@ -88,9 +117,10 @@ def apply_outfit(path):
         me = ob.data
         names = {g.index: g.name for g in ob.vertex_groups}
         attr = me.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
+        fold = me.attributes.new('Folds', 'FLOAT', 'POINT')
         moves = []
         for v in me.vertices:
-            col, inflate = cfg.get('default', [200, 160, 120]), 0
+            col, inflate, folds = cfg.get('default', [200, 160, 120]), 0, 0
             bone = names.get(max(v.groups, key=lambda g: g.weight).group, '') if v.groups else ''
             p = ob.matrix_world @ v.co
             env = {'x': p.x, 'y': p.y, 'z': p.z, 'ax': abs(p.x), 'b': bone}
@@ -99,9 +129,10 @@ def apply_outfit(path):
                     continue
                 if cond and not eval(cond, {}, env):
                     continue
-                col, inflate = r['color'], r.get('inflate', 0)
+                col, inflate, folds = r['color'], r.get('inflate', 0), r.get('folds', 0)
                 break
             attr.data[v.index].color = lin(col)
+            fold.data[v.index].value = folds
             if inflate:
                 moves.append((v.index, v.normal.copy() * inflate))
         for i, d in moves:
@@ -227,12 +258,12 @@ def setup_scene(args):
 
     # 灯光：主光从左上方打（原版人物亮面在左上），加一点环境光
     sun = bpy.data.objects.new('Sun', bpy.data.lights.new('Sun', 'SUN'))
-    sun.data.energy = 2.5
+    sun.data.energy = args.sun
     sun.data.angle = math.radians(2)
     scene.collection.objects.link(sun)
     world = bpy.data.worlds.new('W')
     world.use_nodes = True
-    world.node_tree.nodes['Background'].inputs[1].default_value = 0.9
+    world.node_tree.nodes['Background'].inputs[1].default_value = args.ambient
     scene.world = world
 
     # 正交相机：俯角 ELEV，脚底原点落在 (AX, AY)
