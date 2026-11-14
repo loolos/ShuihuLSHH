@@ -559,9 +559,9 @@ function startGame(assets: Assets) {
   if (asked && isPackValue(asked)) return beginPack(asked);
   // asked 以 ins: 开头时 campaign 已经排好了插关
   if (asked) return begin(campaign);
-  // 选关最后一组：外传（扩展包，已通关的打勾）
+  // 选关最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）
   const side = listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
-    ss.map((s) => ({ label: `${p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
+    ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
   );
   const save = loadSave();
   void music.play(['title', 'liangshan']);

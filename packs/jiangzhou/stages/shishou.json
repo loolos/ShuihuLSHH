@@ -1,10 +1,13 @@
 {
  "id": "shishou",
- "title": "江州牢城·试手",
+ "title": "牢城试手",
  "map": {
   "base": "N-add02"
  },
- "bgm": ["jiangzhou", "battle"],
+ "bgm": [
+  "jiangzhou",
+  "battle"
+ ],
  "units": [
   {
    "id": "daizong",
