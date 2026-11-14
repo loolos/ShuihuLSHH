@@ -424,6 +424,11 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     }
     const cj = rt.classIds.get('caijiu')!;
     expect(rt.looks.get(cj)).toMatchObject({ from: 54, face: 'faces/caijiu.png' });
+    // 友军花荣、黄信换色，不和敌方的弓箭手、都头撞样子；敌方不用都头
+    expect(rt.looks.get(rt.classIds.get('huarong')!)).toMatchObject({ from: 34 });
+    expect(rt.looks.get(rt.classIds.get('huarong')!)?.recolor?.length).toBeGreaterThan(0);
+    expect(rt.looks.get(rt.classIds.get('huangxin')!)).toMatchObject({ from: 38 });
+    for (const s of rt.stages) expect(s.units.filter((u) => u.side === 'enemy' && (u.class === 34 || u.class === 38)).every((u) => u.class !== 38), s.id).toBe(true);
   });
 
   it('浔阳楼：纯剧情关，题完反诗、黄文炳告发，演完就过关', () => {
@@ -459,7 +464,7 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     advance(b, 2, log);
     expect(said.some((t) => t.includes('小锣'))).toBe(true);
     for (const n of ['晁盖', '阮小二', '阮小五', '阮小七', '白胜']) expect(here(n)?.side, n).toBe('player');
-    for (const n of ['花荣', '黄信', '吕方', '郭盛']) expect(here(n)?.side, n).toBe('ally');
+    for (const n of ['小李广花荣', '镇三山黄信', '小温侯吕方', '赛仁贵郭盛']) expect(here(n)?.side, n).toBe('ally');
     expect(by('晁盖').classId).toBe(12);
     expect(b.units.filter((u) => (u.name === '推车客商' || u.name === '弄蛇丐者') && u.present)).toEqual([]);
     expect(b.units.filter((u) => u.name === '使枪棒卖药的' && u.present).length).toBe(4);
@@ -467,10 +472,10 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
     advance(b, 3, log);
     for (const n of ['刘唐', '杜迁', '宋万']) expect(here(n)?.side, n).toBe('player');
-    expect(here('燕顺')?.side).toBe('ally');
-    expect(here('朱贵')).toBeUndefined();
+    expect(here('锦毛虎燕顺')?.side).toBe('ally');
+    expect(here('旱地忽律朱贵')).toBeUndefined();
     advance(b, 4, log);
-    for (const n of ['朱贵', '王矮虎', '郑天寿', '石勇']) expect(here(n)?.side, n).toBe('ally');
+    for (const n of ['旱地忽律朱贵', '矮脚虎王英', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
     // 换回真身后兵器也是自己的
     expect(by('阮小二').slots[0]).toBe(73);
     expect(by('白胜').slots[0]).toBe(56);
@@ -499,7 +504,7 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
 
   it('白龙庙：第 4 回合水军九人坐船赶到当友军；打倒兵马都监过关', () => {
     const { b, said, log, by } = open('bailongmiao');
-    const boats = ['张顺', '张横', '李俊', '李立', '穆弘', '穆春', '童威', '童猛', '薛永'];
+    const boats = ['浪里白条张顺', '船火儿张横', '混江龙李俊', '催命判官李立', '没遮拦穆弘', '小遮拦穆春', '出洞蛟童威', '翻江蜃童猛', '病大虫薛永'];
     expect(boats.every((n) => !by(n).present)).toBe(true);
     advance(b, 4, log);
     for (const n of boats) expect(by(n).present && by(n).side, n).toBe('ally');

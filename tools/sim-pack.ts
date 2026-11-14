@@ -47,8 +47,10 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         if (b.status !== 'playing') break;
         if (!b.canAct(u)) continue;
         // 关卡要求某几个人走到区域（劫法场逃到出口）：这几个人一律往区域走
+        // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
         if (goal && goal.who.includes(u.classId)) {
-          walkTo(b, u, goal.x, goal.y, ev);
+          if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
+          else walkTo(b, u, goal.x, goal.y, ev);
           continue;
         }
         // 有被绑的自己人：最近的一个人先过去松绑

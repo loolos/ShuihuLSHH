@@ -76,14 +76,14 @@
   },
   {
    "id": "huarong",
-   "class": 34,
+   "class": "huarong",
    "side": "ally",
    "x": 43,
    "y": 7,
    "facing": 2,
    "level": 27,
    "hidden": true,
-   "name": "花荣"
+   "name": "小李广花荣"
   },
   {
    "id": "huangxin_d",
@@ -99,14 +99,14 @@
   },
   {
    "id": "huangxin",
-   "class": 38,
+   "class": "huangxin",
    "side": "ally",
    "x": 44,
    "y": 7,
    "facing": 2,
    "level": 27,
    "hidden": true,
-   "name": "黄信"
+   "name": "镇三山黄信"
   },
   {
    "id": "lufang_d",
@@ -129,7 +129,7 @@
    "facing": 2,
    "level": 26,
    "hidden": true,
-   "name": "吕方"
+   "name": "小温侯吕方"
   },
   {
    "id": "guosheng_d",
@@ -152,7 +152,7 @@
    "facing": 2,
    "level": 26,
    "hidden": true,
-   "name": "郭盛"
+   "name": "赛仁贵郭盛"
   },
   {
    "id": "ruanxiaoer_d",
@@ -361,7 +361,7 @@
    "facing": 3,
    "level": 27,
    "hidden": true,
-   "name": "燕顺"
+   "name": "锦毛虎燕顺"
   },
   {
    "id": "zhugui_d",
@@ -384,7 +384,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "朱贵"
+   "name": "旱地忽律朱贵"
   },
   {
    "id": "wangying_d",
@@ -407,7 +407,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "王矮虎"
+   "name": "矮脚虎王英"
   },
   {
    "id": "zhengtianshou_d",
@@ -430,7 +430,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "郑天寿",
+   "name": "白面郎君郑天寿",
    "items": [
     18
    ]
@@ -456,7 +456,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "石勇"
+   "name": "石将军石勇"
   },
   {
    "id": "caijiu",
@@ -610,7 +610,7 @@
    "x": 42,
    "y": 2,
    "facing": 2,
-   "level": 26,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -621,7 +621,7 @@
    "x": 43,
    "y": 2,
    "facing": 2,
-   "level": 26,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -632,7 +632,7 @@
    "x": 42,
    "y": 3,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -643,7 +643,7 @@
    "x": 44,
    "y": 2,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -651,10 +651,10 @@
    "id": "w6_1",
    "class": 43,
    "side": "enemy",
-   "x": 8,
-   "y": 13,
-   "facing": 2,
-   "level": 26,
+   "x": 39,
+   "y": 43,
+   "facing": 0,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -662,10 +662,10 @@
    "id": "w6_2",
    "class": 32,
    "side": "enemy",
-   "x": 8,
-   "y": 12,
-   "facing": 2,
-   "level": 24,
+   "x": 40,
+   "y": 44,
+   "facing": 0,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -673,10 +673,10 @@
    "id": "w6_3",
    "class": 33,
    "side": "enemy",
-   "x": 8,
-   "y": 14,
-   "facing": 2,
-   "level": 24,
+   "x": 41,
+   "y": 44,
+   "facing": 0,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -684,10 +684,10 @@
    "id": "w6_4",
    "class": 34,
    "side": "enemy",
-   "x": 7,
-   "y": 13,
-   "facing": 2,
-   "level": 24,
+   "x": 39,
+   "y": 45,
+   "facing": 0,
+   "level": 22,
    "hidden": true
   },
   {
@@ -697,7 +697,7 @@
    "x": 36,
    "y": 48,
    "facing": 2,
-   "level": 26,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -708,7 +708,7 @@
    "x": 34,
    "y": 49,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -719,7 +719,7 @@
    "x": 38,
    "y": 49,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true,
    "name": "土兵"
   },
@@ -730,7 +730,7 @@
    "x": 36,
    "y": 50,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true
   },
   {
@@ -740,7 +740,7 @@
    "x": 45,
    "y": 2,
    "facing": 2,
-   "level": 25,
+   "level": 23,
    "hidden": true,
    "name": "官吏"
   },
@@ -751,7 +751,7 @@
    "x": 46,
    "y": 2,
    "facing": 2,
-   "level": 25,
+   "level": 23,
    "hidden": true,
    "name": "官吏"
   },
@@ -762,20 +762,20 @@
    "x": 43,
    "y": 4,
    "facing": 2,
-   "level": 25,
+   "level": 23,
    "hidden": true,
    "name": "土兵"
   },
   {
    "id": "x3_1",
-   "class": 38,
+   "class": 36,
    "side": "enemy",
    "x": 43,
    "y": 1,
    "facing": 2,
-   "level": 26,
+   "level": 24,
    "hidden": true,
-   "name": "都头"
+   "name": "官吏"
   },
   {
    "id": "x3_2",
@@ -784,17 +784,17 @@
    "x": 45,
    "y": 1,
    "facing": 2,
-   "level": 24,
+   "level": 22,
    "hidden": true
   },
   {
    "id": "x5_1",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 12,
-   "facing": 2,
-   "level": 26,
+   "x": 43,
+   "y": 36,
+   "facing": 0,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -802,10 +802,10 @@
    "id": "x5_2",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 14,
-   "facing": 2,
-   "level": 26,
+   "x": 44,
+   "y": 36,
+   "facing": 0,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -813,10 +813,10 @@
    "id": "x5_3",
    "class": 36,
    "side": "enemy",
-   "x": 52,
-   "y": 11,
-   "facing": 2,
-   "level": 25,
+   "x": 45,
+   "y": 36,
+   "facing": 0,
+   "level": 23,
    "hidden": true,
    "name": "官吏"
   },
@@ -824,53 +824,31 @@
    "id": "x5_4",
    "class": 34,
    "side": "enemy",
-   "x": 51,
-   "y": 13,
-   "facing": 2,
-   "level": 24,
+   "x": 43,
+   "y": 37,
+   "facing": 0,
+   "level": 22,
    "hidden": true
   },
   {
    "id": "x5_5",
    "class": 33,
    "side": "enemy",
-   "x": 52,
-   "y": 15,
-   "facing": 2,
-   "level": 25,
+   "x": 44,
+   "y": 37,
+   "facing": 0,
+   "level": 23,
    "hidden": true,
    "name": "土兵"
-  },
-  {
-   "id": "x6_1",
-   "class": 38,
-   "side": "enemy",
-   "x": 7,
-   "y": 12,
-   "facing": 2,
-   "level": 26,
-   "hidden": true,
-   "name": "都头"
-  },
-  {
-   "id": "x6_2",
-   "class": 36,
-   "side": "enemy",
-   "x": 7,
-   "y": 14,
-   "facing": 2,
-   "level": 25,
-   "hidden": true,
-   "name": "官吏"
   },
   {
    "id": "x8_1",
    "class": 42,
    "side": "enemy",
-   "x": 41,
-   "y": 3,
-   "facing": 2,
-   "level": 28,
+   "x": 44,
+   "y": 40,
+   "facing": 0,
+   "level": 26,
    "hidden": true,
    "name": "江州团练"
   },
@@ -878,10 +856,10 @@
    "id": "x8_2",
    "class": 43,
    "side": "enemy",
-   "x": 41,
-   "y": 4,
-   "facing": 2,
-   "level": 26,
+   "x": 45,
+   "y": 40,
+   "facing": 0,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -889,10 +867,10 @@
    "id": "x8_3",
    "class": 43,
    "side": "enemy",
-   "x": 47,
-   "y": 2,
-   "facing": 2,
-   "level": 26,
+   "x": 46,
+   "y": 40,
+   "facing": 0,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -900,10 +878,10 @@
    "id": "x8_4",
    "class": 34,
    "side": "enemy",
-   "x": 39,
-   "y": 0,
-   "facing": 2,
-   "level": 24,
+   "x": 44,
+   "y": 41,
+   "facing": 0,
+   "level": 22,
    "hidden": true
   },
   {
@@ -913,7 +891,7 @@
    "x": 37,
    "y": 49,
    "facing": 2,
-   "level": 26,
+   "level": 24,
    "hidden": true,
    "name": "骑兵"
   },
@@ -924,9 +902,85 @@
    "x": 35,
    "y": 50,
    "facing": 2,
-   "level": 25,
+   "level": 23,
    "hidden": true,
    "name": "官吏"
+  },
+  {
+   "id": "s4_1",
+   "class": 33,
+   "side": "enemy",
+   "x": 43,
+   "y": 32,
+   "facing": 0,
+   "level": 23,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "s4_2",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 33,
+   "facing": 0,
+   "level": 23,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "s4_3",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 34,
+   "facing": 0,
+   "level": 22,
+   "hidden": true
+  },
+  {
+   "id": "s7_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 40,
+   "y": 40,
+   "facing": 0,
+   "level": 24,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "s7_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 42,
+   "y": 40,
+   "facing": 0,
+   "level": 24,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "s7_3",
+   "class": 36,
+   "side": "enemy",
+   "x": 41,
+   "y": 41,
+   "facing": 0,
+   "level": 23,
+   "hidden": true,
+   "name": "官吏"
+  },
+  {
+   "id": "s7_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 40,
+   "y": 42,
+   "facing": 0,
+   "level": 23,
+   "hidden": true,
+   "name": "土兵"
   }
  ],
  "script": [
@@ -1463,6 +1517,22 @@
     [
      "appear",
      "shiyong"
+    ],
+    [
+     "narrate",
+     "往江边去的街上，也有一队土兵堵了过来！"
+    ],
+    [
+     "appear",
+     "s4_1"
+    ],
+    [
+     "appear",
+     "s4_2"
+    ],
+    [
+     "appear",
+     "s4_3"
     ]
    ]
   },
@@ -1482,7 +1552,7 @@
     ],
     [
      "narrate",
-     "东门方向，骑兵和弓手杀来！"
+     "往江边去的路上，一队骑兵和弓手拦了过来！"
     ],
     [
      "appear",
@@ -1513,7 +1583,7 @@
    "do": [
     [
      "narrate",
-     "西边街口又有官兵追来！"
+     "江边方向又有官兵杀来！"
     ],
     [
      "appear",
@@ -1530,14 +1600,33 @@
     [
      "appear",
      "w6_4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "do": [
+    [
+     "narrate",
+     "江边方向又来了马军！"
     ],
     [
      "appear",
-     "x6_1"
+     "s7_1"
     ],
     [
      "appear",
-     "x6_2"
+     "s7_2"
+    ],
+    [
+     "appear",
+     "s7_3"
+    ],
+    [
+     "appear",
+     "s7_4"
     ]
    ]
   },
@@ -1548,7 +1637,7 @@
    "do": [
     [
      "narrate",
-     "江州团练亲自领着马军赶到！"
+     "江州团练亲自领着马军，抄到江边路上拦截！"
     ],
     [
      "appear",
@@ -1600,6 +1689,17 @@
     [
      "appear",
      "x9_2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "do": [
+    [
+     "narrate",
+     "城门口的官兵也赶来拦截！"
     ]
    ]
   },
