@@ -139,6 +139,9 @@ describe.skipIf(!has)('N01', () => {
     expect([by(4, 50).mpCost, by(4, 50).power, by(4, 50).hitMod]).toEqual([5, 50, 0]); // 監守自盜LV3
     expect([by(13, 115).power, by(13, 115).mpCost, by(13, 115).hits.length]).toEqual([40, 20, 2]); // 黑虎偷心
     expect([by(3, 34).hits.length, by(3, 35).hits.length]).toEqual([2, 3]); // 龍爭虎鬥LV2 / LV3
+    expect(by(9, 81).hits.map((h) => [h.frame, h.percent])).toEqual([[18, 30], [25, 30], [28, 40]]); // 生不如死 三段
+    expect([by(9, 81).power, by(9, 81).mpCost]).toEqual([40, 20]);
+    expect(by(52, 81).hits.length).toBe(1); // 敌方阮小七 生不如死 照原版一段
     expect([by(2, 26).area, by(2, 26).power, by(2, 27).area, by(2, 27).power]).toEqual([3, 2, 4, 1]); // 回心咒范围回复
     expect(by(10, 91).stun).toBe(40); // 星羅棋布LV1
     expect([by(47, 50).power, by(47, 50).hitMod]).toEqual([15, -15]); // 敌方白勝 監守自盜LV3 不变
@@ -582,6 +585,31 @@ describe.skipIf(!has)('N01', () => {
     const ev = settle(b);
     expect(b.status).toBe('lost');
     expect(ev.some((e) => e.type === 'end' && /逃回山寨/.test(e.text))).toBe(true);
+  });
+
+  it('小地图标出的胜负区域：撤退出口（N01 / N12 / N-add16）、敌人逃跑出口（N13 / N-add03）', () => {
+    const zones = (name: string) => {
+      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      b.begin();
+      return { b, z: b.objectiveZones().map(({ kind, x1, y1, x2, y2, chars }) => ({ kind, x1, y1, x2, y2, chars })) };
+    };
+    expect(zones('N01').z).toEqual([{ kind: 'goal', x1: 23, y1: 52, x2: 25, y2: 53, chars: [18] }]);
+    expect(zones('N-add16').z).toEqual([{ kind: 'goal', x1: 5, y1: 0, x2: 8, y2: 1, chars: [0] }]);
+    // N12 的出口写在组合条件里（选晁蓋，x 0–1、y 27–29）
+    const n12 = zones('N12');
+    expect(n12.z).toEqual([{ kind: 'goal', x1: 0, y1: 27, x2: 1, y2: 29, chars: [12] }]);
+    expect(zones('N13').z).toEqual([{ kind: 'danger', x1: 52, y1: 31, x2: 53, y2: 33, chars: [54] }]);
+    expect(zones('N-add03').z).toEqual([
+      { kind: 'danger', x1: 8, y1: 0, x2: 11, y2: 1, chars: [44, 45] },
+      { kind: 'danger', x1: 18, y1: 34, x2: 21, y2: 35, chars: [44, 45] },
+    ]);
+    for (const s of ['N02', 'N-add01', 'N05']) expect(zones(s).z).toEqual([]);
+    // 过关后不再显示
+    const chao = n12.b.units.find((u) => u.classId === 12)!;
+    chao.x = 1;
+    chao.y = 28;
+    settle(n12.b);
+    expect(n12.b.objectiveZones()).toEqual([]);
   });
 
   it('剧本头串起全部关卡，分路两条线汇合', () => {

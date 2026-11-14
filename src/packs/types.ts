@@ -132,8 +132,8 @@ export interface PackStageJson {
   rewards?: { gold?: number };
   /** 地图：借原版地图（地表、地上物、通行都照原版） */
   map: { base: string };
-  /** 背景音乐（music.ts 的曲目名） */
-  bgm?: string;
+  /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
+  bgm?: string | string[];
   units: PackUnitJson[];
   script: PackBlockJson[];
   /** AI 优先轮着用的技能：单位 id → 技能 id（老虎的三招） */

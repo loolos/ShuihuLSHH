@@ -5,6 +5,9 @@
 //   town 城镇酒店/整备，shop 其他店铺，battle / battle2 常规战斗（前半 / 后半程），tense 首领战，army 官军围剿，
 //   night 夜里、埋伏、计谋，story 剧情，sad 悲情，eerie 暗流，liangshan 上梁山 / 通关，victory 过关结算，defeat 失败；
 //   之后又加 inn 酒店、rock 民乐摇滚（普通战斗轮放）、boss 首领战第二首、comic 诙谐剧情。
+//   2026-11-14 第三批：title 标题画面，ending 片尾（通关先放一遍再接 liangshan），naval 水战，march 行军（普通战斗轮放），
+//   escape 突围 / 断后，fire 火攻，rescue 救人，reeds 水乡剧情，brothers 结义剧情；外传专用 tiger / nightduel / jiangzhou；
+//   插播短曲 ambush 伏兵登场、join 新人入伙、chapter 新一章 / 外传开场（sting()，不循环）。
 // 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle、battle2 轮放。战斗关的 stages 值多是 2–3 首的歌单，
 // 一首放完交叉淡化接下一首（负责人 2026-11-12 要求）。缺哪首就用 FALLBACK 里的替身。
 // 播放（负责人 2026-11-12 要求）：
@@ -41,7 +44,23 @@ const FALLBACK: Record<string, string> = {
   sad: 'story',
   eerie: 'story',
   liangshan: 'town',
+  title: 'liangshan',
+  ending: 'liangshan',
+  naval: 'battle',
+  march: 'battle',
+  tiger: 'tense',
+  nightduel: 'night',
+  jiangzhou: 'battle',
+  rescue: 'boss',
+  fire: 'tense',
+  reeds: 'story',
+  brothers: 'story',
+  escape: 'army',
 };
+/** 插播短曲：放一遍不循环，期间把背景音乐压低；没有这首就不放（负责人 2026-11-14 提供） */
+const STINGS = new Set(['ambush', 'join', 'chapter']);
+/** 两次插播至少隔多少毫秒（一回合里一次冒出好几个伏兵时只放一次） */
+const STING_GAP = 4000;
 const KEEP = new Set(['victory', 'defeat']);
 
 interface BgmIndex {
@@ -99,6 +118,10 @@ class MusicPlayer {
   readonly viaWebAudio = !volumeWritable() || (import.meta.env.DEV && new URLSearchParams(location.search).has('musicwebaudio'));
   private decks = [new Deck(this.viaWebAudio), new Deck(this.viaWebAudio)];
   private ctx: AudioContext | null = null;
+  /** 插播短曲的播放器 */
+  private stingEl = new Audio();
+  private stingGain: GainNode | null = null;
+  private stingAt = -1e9;
   /** 当前（或即将）主放的播放器 */
   private active = 0;
   private index: Promise<BgmIndex | null> | null = null;
@@ -123,6 +146,7 @@ class MusicPlayer {
   available: boolean | null = null;
 
   constructor() {
+    if (this.viaWebAudio) this.stingEl.crossOrigin = 'anonymous';
     let v = true;
     try {
       v = localStorage.getItem(STORE) !== '0';
@@ -314,6 +338,34 @@ class MusicPlayer {
         /* 接不上就保持原样（音量跟不了档位，但还能放） */
       }
     }
+    try {
+      const g = ctx.createGain();
+      ctx.createMediaElementSource(this.stingEl).connect(g).connect(ctx.destination);
+      this.stingGain = g;
+    } catch {
+      /* 同上 */
+    }
+  }
+  /** 插播一首短曲（伏兵、入伙、开章）：放一遍，期间背景音乐压低；没开音乐、在等第一次点击或刚插播过就不放 */
+  async sting(name: string): Promise<void> {
+    if (!STINGS.has(name) || !this.audible || this.blocked) return;
+    const now = performance.now();
+    if (now - this.stingAt < STING_GAP) return;
+    this.stingAt = now;
+    const file = (await this.loadIndex())?.tracks[name];
+    if (!file) return;
+    const el = this.stingEl;
+    const v = musicVolume(this.level, 1, 1);
+    if (this.stingGain) {
+      this.stingGain.gain.value = v;
+      el.volume = 1;
+    } else el.volume = v;
+    el.src = this.url(file);
+    el.addEventListener('loadedmetadata', () => this.duckFor((el.duration || 2) + 0.3), { once: true });
+    this.duckFor(2); // 先压低，读到时长后延长到放完
+    el.play().catch(() => {
+      /* 自动播放被拦：不补放 */
+    });
   }
   /** 第一次用户操作时补放（浏览器的自动播放限制） */
   resume() {
