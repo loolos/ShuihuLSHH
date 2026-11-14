@@ -9,8 +9,11 @@ export interface PackJson {
   id: string;
   name: string;
   description?: string;
-  /** 在游戏流程里的位置：standalone = 外传，从标题「选关」单独进入，等级固定，不碰主线存档 */
-  entry: 'standalone';
+  /**
+   * 在游戏流程里的位置：standalone = 外传，从标题「选关」单独进入，等级固定，不碰主线存档；
+   * mainline = 主线插关（docs/game-design.md §15.8），每个关卡用 before 写插在哪一关前面
+   */
+  entry: 'standalone' | 'mainline';
   /** 素材来源与署名（CC-BY 的必须写） */
   credits?: string[];
   classes: PackClassJson[];
@@ -96,6 +99,15 @@ export interface PackItemJson {
 export interface PackStageJson {
   id: string;
   title: string;
+  /** 主线插关：要进这一关（原版地图名，如 N-add06）时先打本关（只用于 entry = mainline 的包） */
+  before?: string;
+  /**
+   * 主线插关的视角关：切到还没入伙的人，等级用关卡里写的固定值，打完不写回主线人物和银子。
+   * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
+   */
+  pov?: boolean;
+  /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
+  rewards?: { gold?: number };
   /** 地图：借原版地图（地表、地上物、通行都照原版） */
   map: { base: string };
   /** 背景音乐（music.ts 的曲目名） */
@@ -138,7 +150,7 @@ export type PackTrigger =
 
 /**
  * 指令（数组，第一项是名字）：
- * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["move", 单位, x, y] 走过去；
+ * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
  * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]
  */

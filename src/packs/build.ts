@@ -235,7 +235,8 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names };
+  const clearGold = stage.pov ? 0 : stage.rewards?.gold;
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold };
 }
 
 function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
@@ -299,6 +300,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       case 'appear':
         select(a[0]);
+        break;
+      case 'leave':
+        // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
+        select(a[0]);
+        op(17, 2);
         break;
       case 'move':
         select(a[0]);

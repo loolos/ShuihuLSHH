@@ -269,3 +269,104 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(b.status).toBe('won');
   });
 });
+
+describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8）', () => {
+  const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
+  const tr = has ? buildT2S(files) : (s: string) => s;
+  const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
+  const stageOf = (id: string) => rt.stages.find((s) => s.id === id)!;
+  const strike = (b: Battle, u: Unit, at: Unit) => {
+    const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+    x.out = [];
+    x.cast(u, attackSkill(u, b.data), { x: at.x, y: at.y }, false);
+    x.afterAction();
+    return x.flush();
+  };
+  // 只看回合推进：我方体力拉满，不让谁先倒下（增减益到期会把体力截到上限，所以每回合重设）
+  const advance = (b: Battle, to: number) => {
+    let ev: BattleEvent[] = [];
+    while (b.status === 'playing' && b.turn < to) {
+      for (const u of b.units) if (u.side === 'player') u.hp = 99999;
+      ev = b.endPlayerPhase();
+    }
+    return ev;
+  };
+
+  it('两关都插在主线某关前面，开场后都在进行，在场单位都站在可通行格上', () => {
+    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([['wawasi', 'N-add06', false], ['sanruan', 'Act10-1', true]]);
+    for (const s of rt.stages) {
+      const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
+      b.begin();
+      expect(b.status).toBe('playing');
+      for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
+    }
+  });
+
+  it('瓦罐寺：我方按职业号套用主线进度；过关奖励用关卡里写的银子', () => {
+    const party = new Map([[16, { classId: 16, level: 14, exp: 5, slots: [0, 0, 0, 0, 0, 0, 0] }]]);
+    const input = { ...compileStage(rt, stageOf('wawasi'), files, { seed: 1, text: tr }), party };
+    expect(input.clearGold).toBe(300);
+    const b = new Battle(input);
+    expect(b.units.find((u) => u.classId === 16)!.level).toBe(14);
+  });
+
+  it('瓦罐寺：鲁智深开局饿着，崔道成说完话退回殿后；第 3 回合史进、陈达赶到，第 4 回合崔道成带人杀出；打倒崔道成过关', () => {
+    const b = new Battle(compileStage(rt, stageOf('wawasi'), files, { seed: 1, text: tr }));
+    b.begin();
+    const of = (cls: number) => b.units.find((u) => u.classId === cls)!;
+    const [lz, sj, cd, cui] = [of(16), of(3), of(13), of(65)];
+    expect(lz.buffs.some((x) => x.stat === 'attack' && x.value < 0)).toBe(true);
+    expect(cui.present).toBe(false);
+    expect(sj.present || cd.present).toBe(false);
+    advance(b, 3);
+    expect(sj.present && cd.present).toBe(true);
+    expect(lz.buffs.some((x) => x.stat === 'attack' && x.value > 0)).toBe(true);
+    expect(cui.present).toBe(false);
+    advance(b, 4);
+    expect(cui.present).toBe(true);
+    cui.hp = 1;
+    cui.stats.agility = 0;
+    cui.x = lz.x;
+    cui.y = lz.y + 1;
+    let ev: BattleEvent[] = [];
+    for (let i = 0; i < 20 && b.status === 'playing'; i++) ev = strike(b, lz, cui);
+    expect(b.status).toBe('won');
+    expect(ev.some((e) => e.type === 'say' && /再占不得佛门/.test(e.text))).toBe(true);
+  });
+
+  it('三阮：每两回合一段对话，第 4、8 回合两批增援，打倒小头目过关；吴用倒下判负', () => {
+    const b = new Battle(compileStage(rt, stageOf('sanruan'), files, { seed: 1, text: tr }));
+    const said: string[] = [];
+    const log = (ev: BattleEvent[]) => ev.forEach((e) => (e.type === 'say' || e.type === 'narrate') && said.push(e.text));
+    log(b.begin());
+    expect(said.some((t) => /生辰纲/.test(t))).toBe(true);
+    const boss = b.units.find((u) => u.classId === 65)!;
+    expect(boss.present).toBe(false);
+    for (let t = 2; t <= 8; t++) log(advance(b, t));
+    expect(boss.present).toBe(true);
+    expect(said.some((t) => /立地太岁/.test(t)) && said.some((t) => /石榴花/.test(t)) && said.some((t) => /草生一秋/.test(t)) && said.some((t) => /白衣秀士/.test(t))).toBe(true);
+    const wy = b.units.find((u) => u.classId === 10)!;
+    const xq = b.units.find((u) => u.classId === 9)!;
+    boss.hp = 1;
+    boss.stats.agility = 0;
+    boss.x = xq.x;
+    boss.y = xq.y + 1;
+    let ev: BattleEvent[] = [];
+    for (let i = 0; i < 20 && b.status === 'playing'; i++) ev = strike(b, xq, boss);
+    expect(b.status).toBe('won');
+    expect(ev.some((e) => e.type === 'say' && /卖与识货的/.test(e.text))).toBe(true);
+    expect(b.clearGold).toBe(0); // 视角关不给银子
+
+    const lost = new Battle(compileStage(rt, stageOf('sanruan'), files, { seed: 1, text: tr }));
+    lost.begin();
+    const w2 = lost.units.find((u) => u.classId === 10)!;
+    const foe = lost.units.find((u) => u.side === 'enemy' && u.present)!;
+    w2.hp = 1;
+    w2.stats.agility = 0;
+    foe.x = w2.x;
+    foe.y = w2.y - 1;
+    for (let i = 0; i < 20 && lost.status === 'playing'; i++) strike(lost, foe, w2);
+    expect(lost.status).toBe('lost');
+    void wy;
+  });
+});

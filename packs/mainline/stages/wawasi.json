@@ -1,0 +1,389 @@
+{
+ "id": "wawasi",
+ "title": "火烧瓦罐寺",
+ "before": "N-add06",
+ "rewards": {
+  "gold": 300
+ },
+ "map": {
+  "base": "Act5-3"
+ },
+ "bgm": "tense",
+ "units": [
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 6,
+   "y": 13,
+   "facing": 0,
+   "level": 11
+  },
+  {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "player",
+   "x": 7,
+   "y": 14,
+   "facing": 0,
+   "level": 10
+  },
+  {
+   "id": "shijin",
+   "class": 3,
+   "side": "player",
+   "x": 12,
+   "y": 15,
+   "facing": 0,
+   "level": 11,
+   "hidden": true
+  },
+  {
+   "id": "chenda",
+   "class": 13,
+   "side": "player",
+   "x": 13,
+   "y": 14,
+   "facing": 0,
+   "level": 9,
+   "hidden": true
+  },
+  {
+   "id": "cui",
+   "class": 65,
+   "side": "enemy",
+   "x": 12,
+   "y": 8,
+   "facing": 2,
+   "level": 12,
+   "name": "崔道成"
+  },
+  {
+   "id": "qiu",
+   "class": 66,
+   "side": "enemy",
+   "x": 13,
+   "y": 9,
+   "facing": 2,
+   "level": 11,
+   "name": "丘小乙"
+  },
+  {
+   "id": "r1",
+   "class": 44,
+   "side": "enemy",
+   "x": 10,
+   "y": 10,
+   "facing": 2,
+   "level": 8,
+   "name": "强人"
+  },
+  {
+   "id": "r2",
+   "class": 45,
+   "side": "enemy",
+   "x": 14,
+   "y": 10,
+   "facing": 2,
+   "level": 8,
+   "name": "强人"
+  },
+  {
+   "id": "r3",
+   "class": 44,
+   "side": "enemy",
+   "x": 11,
+   "y": 11,
+   "facing": 2,
+   "level": 8,
+   "name": "强人"
+  },
+  {
+   "id": "r4",
+   "class": 45,
+   "side": "enemy",
+   "x": 15,
+   "y": 11,
+   "facing": 2,
+   "level": 8,
+   "name": "强人"
+  },
+  {
+   "id": "w1",
+   "class": 44,
+   "side": "enemy",
+   "x": 12,
+   "y": 5,
+   "facing": 2,
+   "level": 8,
+   "name": "强人",
+   "hidden": true
+  },
+  {
+   "id": "w2",
+   "class": 45,
+   "side": "enemy",
+   "x": 13,
+   "y": 6,
+   "facing": 2,
+   "level": 8,
+   "name": "强人",
+   "hidden": true
+  },
+  {
+   "id": "w3",
+   "class": 44,
+   "side": "enemy",
+   "x": 10,
+   "y": 7,
+   "facing": 2,
+   "level": 8,
+   "name": "强人",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "narrate",
+     "离了桃花村，众人取路往延安府。行了半日，鲁智深肚里饥饿，远远望见一座古寺，便同%N先去化些斋饭；史进、陈达往林子里寻些吃食，朱武、杨春看守行李。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "好大一座寺，怎地这般败落？山门也倒了，佛殿上都是蛛网。"
+    ],
+    [
+     "narrate",
+     "廊下坐着几个老和尚，面黄肌瘦。问时，说寺里来了一个和尚、一个道人，把常住的东西都卖了，赶走了众僧，只剩他们几个老的走不动，已饿了三日。"
+    ],
+    [
+     "say",
+     "hero",
+     "鲁兄，那殿前吃酒的两个，想必就是了。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "你这两个，如何把寺来废了！"
+    ],
+    [
+     "say",
+     "cui",
+     "师兄请坐，听小僧说……"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "说个鸟！吃洒家一禅杖！"
+    ],
+    [
+     "say",
+     "qiu",
+     "哥哥，这秃驴吃饱了撑的来管闲事，一发结果了他！"
+    ],
+    [
+     "say",
+     "cui",
+     "小乙，你先打发了这秃驴，洒家吃完这碗酒再来。"
+    ],
+    [
+     "leave",
+     "cui"
+    ],
+    [
+     "narrate",
+     "智深一路未曾吃饭，又走了许多路，气力不加。"
+    ],
+    [
+     "buff",
+     "luzhishen",
+     "attack",
+     {
+      "pct": -30,
+      "turns": 2
+     }
+    ],
+    [
+     "buff",
+     "luzhishen",
+     "agility",
+     {
+      "pct": -20,
+      "turns": 2
+     }
+    ],
+    [
+     "objective",
+     "限制回合数 --- 18"
+    ],
+    [
+     "objective",
+     "胜利条件   --- 打倒崔道成"
+    ],
+    [
+     "objective",
+     "失败条件一 --- %N死亡"
+    ],
+    [
+     "objective",
+     "失败条件二 --- 鲁智深死亡"
+    ],
+    [
+     "turnLimit",
+     18
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "林子那头有人赶来！"
+    ],
+    [
+     "say",
+     "shijin",
+     "鲁大哥！林子里买了些干肉烧饼，先吃了再打！"
+    ],
+    [
+     "appear",
+     "chenda"
+    ],
+    [
+     "say",
+     "chenda",
+     "这两个鸟人，便是霸占寺院的？交给俺！"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "来得好！洒家肚饥，正斗他两个不过！……好饼！这回看洒家的！"
+    ],
+    [
+     "buff",
+     "luzhishen",
+     "attack",
+     {
+      "pct": 20,
+      "turns": 3
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "appear",
+     "w1"
+    ],
+    [
+     "appear",
+     "w2"
+    ],
+    [
+     "appear",
+     "w3"
+    ],
+    [
+     "narrate",
+     "崔道成提着朴刀，引着几个强人从殿后杀出来！"
+    ],
+    [
+     "say",
+     "cui",
+     "小的们，都出来！莫教这秃驴走了！"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "吃饱了正好！生铁佛，洒家等你多时了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "qiu"
+   },
+   "do": [
+    [
+     "narrate",
+     "飞天夜叉丘小乙倒在殿前，再也飞不起来了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "cui"
+   },
+   "do": [
+    [
+     "say",
+     "luzhishen",
+     "生铁佛？这回教你做个烂铁佛！"
+    ],
+    [
+     "narrate",
+     "剩下的强人见崔道成倒了，发一声喊，四散逃走。"
+    ],
+    [
+     "narrate",
+     "众人寻到寺后，搜出崔道成藏下的米粮、金银。智深把米粮分与那几个老和尚，叫他们自寻生路去。"
+    ],
+    [
+     "say",
+     "shijin",
+     "鲁大哥，这寺留着，日后又招强人来住。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "说得是！"
+    ],
+    [
+     "narrate",
+     "当夜一把火，烧了瓦罐寺。众人望着火光，取路往延安府去了。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家这一把火，教这伙鸟人再占不得佛门！"
+    ],
+    [
+     "victory",
+     "火烧瓦罐寺！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "%N死于乱刀之下，鲁智深饿得手脚无力，也被崔道成、丘小乙所害，瓦罐寺从此成了强人的窝……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "luzhishen"
+   },
+   "do": [
+    [
+     "defeat",
+     "鲁智深饿着肚子力战不支，倒在佛殿前。众人无心再往延安府，各自散去……"
+    ]
+   ]
+  }
+ ]
+}
