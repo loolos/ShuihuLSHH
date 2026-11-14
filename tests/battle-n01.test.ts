@@ -71,7 +71,7 @@ describe.skipIf(!has)('N01', () => {
     expect(b.affected(u, skill, u)).toEqual([u]);
     const hp = u.hp;
     expect(b.useSkill(u, skill, u).some((e) => e.type === 'attack' && e.skill === skill)).toBe(true);
-    expect(u.mp).toBe(Math.floor(stats.maxMp / 3));
+    expect(u.mp).toBe(Math.floor(stats.maxMp / 2));
     expect(u.hp).toBe(hp);
     expect(u.exp).toBe(0);
     expect(u.ended).toBe(true);
@@ -82,6 +82,12 @@ describe.skipIf(!has)('N01', () => {
     u.level = 12; // 已有的高等级存档同样可用
     expect(learnedSkills(u, data)).toContain(skill);
     expect(data.classes[0].skills.some((s) => s.skillId === skill.skillId)).toBe(false);
+  });
+
+  it('所有集气技（含敌方职业）都回复最大气力的一半', () => {
+    const charges = data.classes.flatMap((c) => c.skills.filter(isChargeSkill));
+    expect(charges.length).toBeGreaterThan(20);
+    for (const s of charges) expect(s.power).toBe(2);
   });
 
   it('全部职业的第一个技能是 1 级、零消耗的普通/远程攻击', () => {

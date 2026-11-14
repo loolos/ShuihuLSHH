@@ -678,7 +678,7 @@ describe('技能', () => {
   const diamond = sk({ name: '聚氣LV1', type: 3, power: 10, rangeMin: 0, rangeMax: 0, area: 2, mpCost: 10, learnLevel: 1 });
   const diamond2 = sk({ name: '聚氣LV2', type: 3, power: 20, rangeMin: 0, rangeMax: 0, area: 3, mpCost: 20, learnLevel: 3 });
   const heal = sk({ name: '回復計', type: 11, power: 4, rangeMin: 0, rangeMax: 0, area: 2, mpCost: 10, learnLevel: 1, hits: [] });
-  const charge = sk({ name: '集氣技', type: 8, power: 3, rangeMin: 0, rangeMax: 0, area: 0, mpCost: 0, learnLevel: 1, hits: [] });
+  const charge = sk({ name: '集氣技', type: 8, power: 2, rangeMin: 0, rangeMax: 0, area: 0, mpCost: 0, learnLevel: 1, hits: [] });
   const hidden = sk({ name: '祕技', type: 0, hidden: true, learnLevel: 1 });
   const later = sk({ name: '絕招', type: 0, learnLevel: 2 });
   const sdata: GameData = {
@@ -709,12 +709,12 @@ describe('技能', () => {
     expect(ev0.some((e) => e.type === 'hp' && e.text === '休息')).toBe(true);
     expect(hurt.hp).toBe(hurt.stats.maxHp);
 
-    // 只缺气：用集气技（回 1/3），道具里的回气剂不动
+    // 只缺气：用集气技（回 1/2），道具里的回气剂不动
     expect(b.mpSkill(tired)?.name).toBe('集氣技');
     const ev1 = b.autoAct(tired);
     expect(ev1.some((e) => e.type === 'message' && e.text.includes('自動使用集氣技'))).toBe(true);
     expect(ev1.some((e) => e.type === 'attack')).toBe(true);
-    expect(tired.mp).toBe(Math.floor(tired.stats.maxMp / 3));
+    expect(tired.mp).toBe(Math.floor(tired.stats.maxMp / 2));
     expect(tired.slots[3]).toBe(2);
     expect(tired.defending).toBe(false);
 
@@ -835,7 +835,7 @@ describe('技能', () => {
     const p = b.unit(0)!;
     p.mp = 0;
     b.useSkill(p, charge, p);
-    expect(p.mp).toBe(Math.floor(p.stats.maxMp / 3));
+    expect(p.mp).toBe(Math.floor(p.stats.maxMp / 2));
   });
 
   it('升级时提示领悟新技能', () => {

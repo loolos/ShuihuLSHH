@@ -88,6 +88,13 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
 };
 
 /**
+ * 集气技（类型 8）一律回复最大气力的 1/2【新】（负责人 2026-11-14）。威力字段是回复除数，
+ * 原版所有集气技都是 3（回 1/3），包括敌方职业；不改原版数据，载入时覆盖。
+ */
+export const CHARGE_DIVISOR = 2;
+const withChargeDivisor = <T extends Pick<SkillDef, 'type' | 'power'>>(s: T): T => (s.type === 8 ? { ...s, power: CHARGE_DIVISOR } : s);
+
+/**
  * 好汉（职业号 < 18）的技能一律不扣命中：负的命中修正改成 0，威力下降等额，最低 1【新】（负责人 2026-11-13）。
  * 如 魯智深 佛光普照 命中 −20 / 威力 70 → 命中 0 / 威力 50。敌方职业（含敌方版好汉，职业号 46 起）不变。
  * 白勝 監守自盜LV3（威 15、命 −15）、通殺LV1–3（威 10、命 −15/−15/−10）减完不足 1，按 1 算。
@@ -114,10 +121,10 @@ export const SKILL_NAME_OVERRIDES: Record<number, string> = Object.fromEntries(
 
 /** 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号。 */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
-  // 朱武：沿用集气技的零耗气、自身回复 1/3 气力；group 0 复用本人的回复计出手动作。
+  // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
   5: [{
     name: '气定神闲', skillId: 1000, type: 8, group: 0, hidden: false,
-    learnLevel: 6, mpCost: 0, power: 3, rangeMin: 0, rangeMax: 0, area: 0,
+    learnLevel: 6, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0,
     effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
     hits: [], raw: '',
   }],
@@ -158,12 +165,12 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
       skills: unlockHiddenSkills([
-        ...r.skills.map((s, i) => noHeroHitPenalty(r.id, {
+        ...r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
           name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
-        })),
+        }))),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
       ]),
     };
