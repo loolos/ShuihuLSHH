@@ -8,7 +8,7 @@
  "map": {
   "base": "Act5-3"
  },
- "bgm": "tense",
+ "bgm": ["fire", "tense"],
  "units": [
   {
    "id": "hero",

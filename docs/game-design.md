@@ -809,16 +809,20 @@ N01 的原版事件（已全部由 PAS 直接驱动）：开战时王進、王�
 - **现状**（2026-11-12）：原版 `Sound/` 245 个 WAV（29.9 MB）经负责人同意压成 MP3 放进仓库 `gamedata/sound/`：内容相同的只留一份，单声道 22,050 Hz 64 kbps，共 186 个文件 2.4 MB（`tools/gen-sound.ts`，`index.json` 记 名字 → 文件）。上表的事件都照原版播；原版不出声的场合（回合开始、落空、回复数字等）重制版也不出声（负责人 2026-11-12：能用原版的就用原版）。只有原版音效整体下载失败时才用浏览器合成的简单音效兜底【新】。进关时预先下载本关会用到的声音。敌方快进时不出声。
 - **音量**：顶栏"♪"按钮在 关 / 小 / 中 / 大 之间切换，记在浏览器里【新】。音效和背景音乐一起跟档位走（负责人 2026-11-13 要求）：音效主增益 0 / 0.25 / 0.5 / 0.9，音乐音量 0 / 0.15 / 0.32 / 0.6（同档比音效轻，相邻两档约差 6–7 dB）。切档立即生效，包括正在放的曲子；「关」档同时静音音乐（淡出暂停，切回来从原处接着放）。数值在 `src/game/volume.ts`。iPhone / iPad 的 Safari 不许网页改 `<audio>` 的音量，所以在这些浏览器上音乐接进 Web Audio、用增益节点调音量（第一次点击时接上；曲子按 CORS 取），其他浏览器直接设音量。
 - **手机上音频掉线自动恢复**【新】：手机切后台、锁屏、来电或别的 App 抢走声音后，音效用的 AudioContext 会变成 suspended / interrupted（iOS），或者 running 却不出声（iOS 17/18）；音乐的 `<audio>` 自己会接着放，于是曾出现「音效全没了、只剩音乐」（负责人 2026-11-14 反映）。现在每次点击 / 按键（含 touchend、pointerup、click，手机上只有这些算用户激活）、页面回到前台、播音效前都检查一遍：挂起或被打断就 resume，时钟停住就 suspend + resume 踢一下，被关掉就重建；下载 / 解码失败的音效不再永久记成「没有」。Phaser 自带的声音系统关掉（`audio.noAudio`），不再多开一个上下文。代码在 `src/game/audio-guard.ts`。
-- **背景音乐**【新】：原版用光盘 CD 音轨（`music.ini`，本副本没有）。重制版用负责人用 Suno 生成的配乐（提示词见项目文件 `shuihu-design/bgm-suno-prompts.md`、`bgm-more-prompts.md`），放在仓库 `gamedata/bgm/`（96 kbps 立体声，共 17 首约 20 MB；每关只下载用到的那首）。`index.json` 写曲目文件和关卡指定的曲目，没指定的关 Act 剧情关放 story，其余放 battle。2026-11-12 的分配：
+- **背景音乐**【新】：原版用光盘 CD 音轨（`music.ini`，本副本没有）。重制版用负责人用 Suno 生成的配乐（提示词见项目文件 `shuihu-design/bgm-suno-prompts.md`、`bgm-more-prompts.md`），放在仓库 `gamedata/bgm/`（96 kbps 立体声，共 32 首约 35 MB，其中 3 首是插播短曲；每关只下载用到的那首）。`index.json` 写曲目文件和关卡指定的曲目，没指定的关 Act 剧情关放 story，其余放 battle。2026-11-12 的分配（2026-11-14 加第三批 15 首后更新）：
 
   战斗关（玩的时间长）放 2–3 首轮流的歌单：一首放完，交叉淡化接下一首，循环往复（负责人 2026-11-12 要求）。剧情关和城镇只放一首。
 
   | 关卡类型 | 歌单（按顺序轮放） | 关卡 |
   |---|---|---|
-  | 前半程普通战斗 | battle(02) → rock(17) → battle2(06) | 没指定的战斗关，N-add02、N02、N-add06、N-add07、Train1 |
+  | 前半程普通战斗 | battle(02) → rock(17) → march(19) → battle2(06) | 没指定的战斗关，N-add02、N02、N-add06、N-add07、Train1 |
   | 后半程普通战斗 | battle2(06) → rock(17) → battle(02) | N-add09b、N-add10、N-add12、N-add13、Train2 |
-  | 首领决战 | tense(03) → boss(18) → army(12) | N-add01、N-add04b、N04–N11、N14、N-add16 |
-  | 官军围剿 | army(12) → battle(02) → tense(03) | N01、N03、N-add04a、N-add08、N-add09a、N-add11、N-add14、N12、N-add15、N13 |
+  | 首领决战 | tense(03) → boss(18) → army(12) | N-add04b、N04–N08、N10、N11、N14、N-add16 |
+  | 救人 | rescue(25) → tense → boss | N-add01 山道救母 |
+  | 火攻 | fire(26) → boss → tense | N09 火烧草料场 |
+  | 官军围剿 | army(12) → battle(02) → tense(03) | N03、N-add04a、N-add08、N-add09a、N-add14 |
+  | 突围、断后 | escape(29) → army → tense | N01 护母突围、N-add11 摆脱追骑、N12 东溪村突围、N-add15 断后阻追兵 |
+  | 水战 | naval(13) → army → tense | N13 诱敌蓼儿洼 |
   | 夜战、埋伏 | night(09) → rock(17) → battle(02) | N-add03、N-add05 |
 
   | 单曲 | 原编号 | 用在哪里 |
@@ -831,11 +835,19 @@ N01 的原版事件（已全部由 PAS 直接驱动）：开战时王進、王�
   | night | 09 | 计谋剧情：Act5-1a、Act10-1（智取生辰纲）、Act11-1a |
   | sad | 07 | 林冲蒙冤（Act6-3 白虎节堂）、休妻（Act7-1） |
   | eerie | 16 | 暗流：野猪林伏击前（Act7-1a）、陆谦密谋（Act9-1） |
-  | liangshan | 08 | 上梁山（Act14-2）、通关画面 |
+  | liangshan | 08 | 上梁山（Act14-2）；通关时片尾放完后接它 |
+  | title | 10 | 标题画面 |
+  | ending | 33 | 通关画面，放一遍后接 liangshan |
+  | reeds | 27 | 水乡剧情：阮氏设伏（Act13-2） |
+  | brothers | 28 | 结义剧情：结义闯天下（Act3-4）、酒楼结豪杰（Act5-2）、共议上梁山（Act14-1） |
+
+  外传和主线插关在关卡 JSON 的 `bgm` 里写（可以是歌单）：武松打虎 tiger(22) → tense；赤发鬼夜战插翅虎 nightduel(23) → night → tense；江州牢城·试手 jiangzhou(24) → battle；火烧瓦罐寺 fire(26) → tense；吴用说三阮 reeds(27) → naval(13)。宋江主题（20）还没做。
+
+  插播短曲（2026-11-14，`music.sting()`，放一遍不循环，期间背景音乐压到 20%，4 秒内不重复）：ambush(30) 埋伏的人现身或开打后敌人新冒出来；join(31) 打完一关队里多了新人；chapter(32) 进入新一章的第一关、开始一个外传（重打同一章不再放）。
   | victory | 14 | 过关结算画面（剧情关直接接下一关，不放） |
   | defeat | 15 | 失败画面 |
 
-  某首缺失时用替身（shop/inn→town、rock→battle、boss→tense、comic→story、battle2/army/night→battle、sad/eerie→story、liangshan→town；victory/defeat 缺失则接着放战斗曲）。过关 / 失败时仍先播原版音效 m12 / m05。顶栏「音乐开 / 关」按钮单独控制，记在浏览器里；还没有配乐时按钮显示为不可用。播放方式（负责人 2026-11-12 要求）：Suno 的曲子最后约 5 秒是渐弱，所以不直接循环，而是离结尾 5 秒时另一个播放器从头接上，2.5 秒交叉淡化；换曲时 1 秒淡出淡入；过关 m12、失败 m05 播放期间音乐压到 20%，播完 0.6 秒恢复。音量跟"♪"档位走（见上面「音量」），「音乐开 / 关」按钮只管放不放。浏览器拦住自动播放时，第一次点击（包括点音乐按钮）就开始放，不会把它关掉。
+  某首缺失时用替身（shop/inn→town、rock→battle、boss→tense、comic→story、battle2/army/night→battle、sad/eerie→story、liangshan→town；title/ending→liangshan，naval/march/jiangzhou→battle，tiger/fire→tense，nightduel→night，rescue→boss，reeds/brothers→story，escape→army；短曲缺失就不放；victory/defeat 缺失则接着放战斗曲）。过关 / 失败时仍先播原版音效 m12 / m05。顶栏「音乐开 / 关」按钮单独控制，记在浏览器里；还没有配乐时按钮显示为不可用。播放方式（负责人 2026-11-12 要求）：Suno 的曲子最后约 5 秒是渐弱，所以不直接循环，而是离结尾 5 秒时另一个播放器从头接上，2.5 秒交叉淡化；换曲时 1 秒淡出淡入；过关 m12、失败 m05 播放期间音乐压到 20%，播完 0.6 秒恢复。音量跟"♪"档位走（见上面「音量」），「音乐开 / 关」按钮只管放不放。浏览器拦住自动播放时，第一次点击（包括点音乐按钮）就开始放，不会把它关掉。
 
 ---
 

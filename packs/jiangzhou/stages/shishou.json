@@ -4,7 +4,7 @@
  "map": {
   "base": "N-add02"
  },
- "bgm": "battle",
+ "bgm": ["jiangzhou", "battle"],
  "units": [
   {
    "id": "daizong",

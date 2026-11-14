@@ -4,7 +4,7 @@
  "map": {
   "base": "N12"
  },
- "bgm": "tense",
+ "bgm": ["nightduel", "night", "tense"],
  "units": [
   {
    "id": "liutang",

@@ -9,6 +9,7 @@ import { findStageFile, loadStage } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
 import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText } from '../rules/skills.ts';
 import { sound } from './sound.ts';
+import { music } from './music.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
@@ -980,6 +981,7 @@ export class BattleScene extends Phaser.Scene {
 
   /** 登场：镜头移到这批人的中间，所有人同时淡入 */
   private async appearAll(group: AppearEvent[]) {
+    if (group.some((e) => e.ambush)) void music.sting('ambush');
     const units = group.map((e) => {
       const u = this.battle.unit(e.uid)!;
       Object.assign(this.vs(u), { x: e.x, y: e.y });

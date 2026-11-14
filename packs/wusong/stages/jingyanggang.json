@@ -2,7 +2,7 @@
  "id": "jingyanggang",
  "title": "景阳冈",
  "map": {"base": "N-add01"},
- "bgm": "tense",
+ "bgm": ["tiger", "tense"],
  "units": [
   {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 15},
   {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},

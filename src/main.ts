@@ -9,7 +9,7 @@ import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/ass
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
 import { installTouchGuards } from './game/touch.ts';
-import { installMusic, music } from './game/music.ts';
+import { installMusic, music, type Playlist } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleStageItem } from './game/title.ts';
@@ -304,8 +304,12 @@ function startGame(assets: Assets) {
     }
     const after = recordResult(campaign, battle);
     const { town: t, next } = nextOf(cur);
+    // 新人入伙（这一关打完队里多了人，第一关不算）：插播短曲
+    const had = new Set(before.members.map((m) => m.classId));
+    if (had.size && after.members.some((m) => !had.has(m.classId))) void music.sting('join');
     if (!next.length) {
-      void music.play('liangshan');
+      // 通关：片尾放一遍，再接聚义曲
+      void music.play(['ending', 'liangshan']);
       return ui.result(true, text, [retry], '通关');
     }
     // 结算画面放胜利曲；剧情关直接接下一关，不换
@@ -339,7 +343,14 @@ function startGame(assets: Assets) {
   };
   let loading = 0;
   /** 外传关卡的背景音乐（倒流回来时换回）；玩主线时为 null */
-  let packBgm: string | null = null;
+  let packBgm: Playlist = null;
+  /** 上次插播「开章」短曲的章 / 外传（重打同一章不再放） */
+  let stungChapter = '';
+  const chapterSting = (key: string) => {
+    if (key === stungChapter) return;
+    stungChapter = key;
+    void music.sting('chapter');
+  };
   /** 外传（扩展包关卡，docs/game-design.md §15）：等级固定，不读写主线存档 */
   const runPack = async (value: string) => {
     const ref = parsePackValue(value);
@@ -362,6 +373,7 @@ function startGame(assets: Assets) {
       setupEl.hidden = true;
       packBgm = stage.bgm ?? 'battle';
       void music.play(packBgm);
+      chapterSting(`pack:${rt.id}`);
       const data = {
         assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
         makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
@@ -483,6 +495,7 @@ function startGame(assets: Assets) {
     if (ticket !== loading) return; // 下载期间又换了关
     setupEl.hidden = true;
     void music.stageTrack(stage).then((t) => music.play(t));
+    chapterSting(stageLabel(stageOf(campaign.stage).title, stage).chapterLabel);
     const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), onEnd };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
@@ -542,7 +555,7 @@ function startGame(assets: Assets) {
     ss.map((s) => ({ label: `${p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
   );
   const save = loadSave();
-  void music.play('liangshan');
+  void music.play('title');
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
     chapters: side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters,

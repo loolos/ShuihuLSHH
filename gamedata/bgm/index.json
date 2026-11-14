@@ -16,13 +16,28 @@
   "inn": "inn.mp3",
   "rock": "rock.mp3",
   "boss": "boss.mp3",
-  "comic": "comic.mp3"
+  "comic": "comic.mp3",
+  "title": "title.mp3",
+  "naval": "naval.mp3",
+  "march": "march.mp3",
+  "tiger": "tiger.mp3",
+  "nightduel": "nightduel.mp3",
+  "jiangzhou": "jiangzhou.mp3",
+  "rescue": "rescue.mp3",
+  "fire": "fire.mp3",
+  "reeds": "reeds.mp3",
+  "brothers": "brothers.mp3",
+  "escape": "escape.mp3",
+  "ambush": "ambush.mp3",
+  "join": "join.mp3",
+  "chapter": "chapter.mp3",
+  "ending": "ending.mp3"
  },
  "stages": {
   "n-add01": [
+   "rescue",
    "tense",
-   "boss",
-   "army"
+   "boss"
   ],
   "n-add04b": [
    "tense",
@@ -55,9 +70,9 @@
    "army"
   ],
   "n09": [
-   "tense",
+   "fire",
    "boss",
-   "army"
+   "tense"
   ],
   "n10": [
    "tense",
@@ -80,8 +95,8 @@
    "army"
   ],
   "n01": [
+   "escape",
    "army",
-   "battle",
    "tense"
   ],
   "n03": [
@@ -105,8 +120,8 @@
    "tense"
   ],
   "n-add11": [
+   "escape",
    "army",
-   "battle",
    "tense"
   ],
   "n-add14": [
@@ -115,18 +130,18 @@
    "tense"
   ],
   "n12": [
+   "escape",
    "army",
-   "battle",
    "tense"
   ],
   "n-add15": [
+   "escape",
    "army",
-   "battle",
    "tense"
   ],
   "n13": [
+   "naval",
    "army",
-   "battle",
    "tense"
   ],
   "n-add03": [
@@ -176,29 +191,38 @@
   "n-add02": [
    "battle",
    "rock",
+   "march",
    "battle2"
   ],
   "n02": [
    "battle",
    "rock",
+   "march",
    "battle2"
   ],
   "n-add06": [
    "battle",
    "rock",
+   "march",
    "battle2"
   ],
   "n-add07": [
    "battle",
    "rock",
+   "march",
    "battle2"
   ],
   "train1": [
    "battle",
    "rock",
+   "march",
    "battle2"
   ],
   "act4-3": "comic",
-  "act5-1": "comic"
+  "act5-1": "comic",
+  "act13-2": "reeds",
+  "act3-4": "brothers",
+  "act5-2": "brothers",
+  "act14-1": "brothers"
  }
 }
