@@ -157,6 +157,8 @@ export class Battle {
   private benched = new Set<number>();
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
+  /** 扩展包剧本的标志（指令 103 设上，条件 100 / 101 判断有没有）【新】 */
+  private flags = new Set<number>();
   private pendingDeaths: number[] = [];
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
@@ -438,7 +440,7 @@ export class Battle {
   private state(): string {
     return JSON.stringify({
       units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
-      objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam,
+      objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used,
     });
@@ -484,6 +486,7 @@ export class Battle {
     this.fired = new Set(s.fired);
     this.scriptFlag = s.scriptFlag;
     this.turnParam = s.turnParam;
+    this.flags = new Set(s.flags ?? []);
     this.pendingDeaths = s.pendingDeaths;
     this.teamExp = s.teamExp;
     this.clearGold = s.clearGold;
@@ -1161,6 +1164,11 @@ export class Battle {
     switch (c.type) {
       case 0:
         return this.turnParam === c.arg;
+      // 100 / 101：扩展包剧本标志已设上 / 还没设（指令 103）【新】
+      case 100:
+        return this.flags.has(c.arg);
+      case 101:
+        return !this.flags.has(c.arg);
       case 1:
         // 我方全灭（EXE 0x4111d0 → 0x408380）：只数在场的我方，退场（0x20000）、埋伏（0x40000）的不算。
         // 训练关选人后其余人退场，所以出场的人被打倒就是"全灭"，触发"回合 25 或我方全灭"的过关区块
@@ -1322,6 +1330,10 @@ export class Battle {
           sel.forge[op.flag ?? 0] = 0;
           refreshStats(sel, this.data);
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
+          break;
+        // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
+        case 103:
+          this.flags.add(op.value);
           break;
         // 102 换职业（扩展包【新】，如披虎皮的猎户现出原形）：样子、属性、头像都换，血气回满；text 是新名字
         case 102:

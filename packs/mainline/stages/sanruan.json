@@ -195,6 +195,204 @@
    "level": 16,
    "name": "梁山喽啰",
    "hidden": true
+  },
+  {
+   "id": "s1a",
+   "class": 44,
+   "side": "enemy",
+   "x": 3,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s1b",
+   "class": 45,
+   "side": "enemy",
+   "x": 5,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s1c",
+   "class": 44,
+   "side": "enemy",
+   "x": 4,
+   "y": 5,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s2a",
+   "class": 44,
+   "side": "enemy",
+   "x": 10,
+   "y": 13,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s2b",
+   "class": 45,
+   "side": "enemy",
+   "x": 12,
+   "y": 14,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s2c",
+   "class": 44,
+   "side": "enemy",
+   "x": 9,
+   "y": 12,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s3a",
+   "class": 44,
+   "side": "enemy",
+   "x": 3,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s3b",
+   "class": 45,
+   "side": "enemy",
+   "x": 5,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s3c",
+   "class": 44,
+   "side": "enemy",
+   "x": 4,
+   "y": 5,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s4a",
+   "class": 44,
+   "side": "enemy",
+   "x": 10,
+   "y": 13,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s4b",
+   "class": 45,
+   "side": "enemy",
+   "x": 12,
+   "y": 14,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s4c",
+   "class": 44,
+   "side": "enemy",
+   "x": 9,
+   "y": 12,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s5a",
+   "class": 44,
+   "side": "enemy",
+   "x": 3,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s5b",
+   "class": 45,
+   "side": "enemy",
+   "x": 5,
+   "y": 4,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s5c",
+   "class": 44,
+   "side": "enemy",
+   "x": 4,
+   "y": 5,
+   "facing": 3,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s6a",
+   "class": 44,
+   "side": "enemy",
+   "x": 10,
+   "y": 13,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s6b",
+   "class": 45,
+   "side": "enemy",
+   "x": 12,
+   "y": 14,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
+  },
+  {
+   "id": "s6c",
+   "class": 44,
+   "side": "enemy",
+   "x": 9,
+   "y": 12,
+   "facing": 0,
+   "level": 16,
+   "name": "梁山喽啰",
+   "hidden": true
   }
  ],
  "script": [
@@ -239,7 +437,7 @@
     ],
     [
      "objective",
-     "胜利条件   --- 打倒梁山小头目"
+     "胜利条件   --- 第 12 回合以后打败所有敌人（之前敌人打光，梁山还会再派喽啰来）"
     ],
     [
      "objective",
@@ -430,6 +628,10 @@
      "say",
      "wuyong",
      "（待打退了这伙人，再与他们细说生辰纲的事。）"
+    ],
+    [
+     "flag",
+     "talkDone"
     ]
    ]
   },
@@ -447,18 +649,160 @@
    ]
   },
   {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s1a"
+    ],
+    [
+     "appear",
+     "s1b"
+    ],
+    [
+     "appear",
+     "s1c"
+    ],
+    [
+     "narrate",
+     "湖上又摇来一只船，又跳上几个喽啰来！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s2a"
+    ],
+    [
+     "appear",
+     "s2b"
+    ],
+    [
+     "appear",
+     "s2c"
+    ],
+    [
+     "narrate",
+     "芦苇里又钻出几个喽啰来！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s3a"
+    ],
+    [
+     "appear",
+     "s3b"
+    ],
+    [
+     "appear",
+     "s3c"
+    ],
+    [
+     "narrate",
+     "湖上又摇来一只船，又跳上几个喽啰来！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s4a"
+    ],
+    [
+     "appear",
+     "s4b"
+    ],
+    [
+     "appear",
+     "s4c"
+    ],
+    [
+     "narrate",
+     "芦苇里又钻出几个喽啰来！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s5a"
+    ],
+    [
+     "appear",
+     "s5b"
+    ],
+    [
+     "appear",
+     "s5c"
+    ],
+    [
+     "narrate",
+     "湖上又摇来一只船，又跳上几个喽啰来！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "unless": "talkDone",
+   "do": [
+    [
+     "appear",
+     "s6a"
+    ],
+    [
+     "appear",
+     "s6b"
+    ],
+    [
+     "appear",
+     "s6c"
+    ],
+    [
+     "narrate",
+     "芦苇里又钻出几个喽啰来！"
+    ]
+   ]
+  },
+  {
    "on": {
     "dead": "boss"
    },
    "do": [
     [
      "narrate",
-     "余下的喽啰跳上船，往梁山泊去了。"
+     "梁山小头目倒了！"
     ],
     [
      "say",
      "xiaowu",
      "这等鸟人，也只会欺负打鱼的！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "if": "talkDone",
+   "do": [
+    [
+     "narrate",
+     "喽啰们死的死、逃的逃，余下的跳上船，往梁山泊去了。"
     ],
     [
      "say",
