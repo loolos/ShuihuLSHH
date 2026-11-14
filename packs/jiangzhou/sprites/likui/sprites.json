@@ -59,7 +59,8 @@
     "file": "punch-cross-back.png",
     "frames": 8,
     "ms": 125
-   }
+   },
+   "outfit": "outfit-likui-thrust.json"
   },
   "roll": {
    "source": "Roll",
@@ -79,12 +80,12 @@
    "front": {
     "file": "sword-attack-front.png",
     "frames": 8,
-    "ms": 192
+    "ms": 100
    },
    "back": {
     "file": "sword-attack-back.png",
     "frames": 8,
-    "ms": 192
+    "ms": 100
    }
   },
   "idle": {
