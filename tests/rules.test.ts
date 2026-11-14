@@ -112,6 +112,29 @@ describe('武龍普攻两段', () => {
   });
 });
 
+describe('魯智深三段', () => {
+  it('三世因果、佛法無邊都改成三段 30/30/40，三段全中的总伤害与单段相同', () => {
+    const one = [{ frame: 16, percent: 100, dir: 0 }];
+    const lu = {
+      id: 16, hp: 100, hpGrowth: 100, mp: 50, mpGrowth: 100, stats: Array(5).fill({ base: 10, growth: 100 }), move: 4, weaponType: 0, goldCap: 0, defaultItems: [],
+      skills: [{ ...punch, skillId: 133, hits: one }, { ...punch, skillId: 137, hits: [{ frame: 13, percent: 100, dir: 0 }] }, { ...punch, skillId: 140, hits: one }],
+    } as unknown as ClassRecord;
+    const [c] = buildClasses([lu], ['魯智深'], []);
+    expect(c.skills[0].hits.map((h) => [h.frame, h.percent])).toEqual([[5, 30], [10, 30], [16, 40]]);
+    expect(c.skills[1].hits.map((h) => [h.frame, h.percent])).toEqual([[13, 30], [16, 30], [19, 40]]);
+    expect(c.skills[2].hits).toEqual(one); // 萬佛朝宗 不变
+    const att = unit({ side: 'player', x: 0, y: 1, facing: 0 });
+    att.stats = { ...att.stats, crit: 0, hit: 100000 };
+    const foe = unit({ side: 'enemy', x: 0, y: 0, facing: 2 });
+    const [n] = baseDamage(att, foe, c.skills[0]);
+    const r = rollAttack(att, foe, c.skills[0], new Rng(3), true);
+    expect(r.parts).toHaveLength(3);
+    expect(r.parts.reduce((a, b) => a + b, 0)).toBe(r.damage);
+    expect(r.damage).toBeGreaterThanOrEqual(Math.floor(n * 0.9) - 2);
+    expect(r.damage).toBeLessThanOrEqual(Math.ceil(n * 1.1));
+  });
+});
+
 describe('好汉普攻调整', () => {
   it('吳用、朱武普攻带昏迷 10，楊春、陳達普攻射程 1–2', () => {
     const rec = (id: number, skillId: number) =>

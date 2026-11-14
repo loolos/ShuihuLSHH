@@ -53,11 +53,18 @@ export const CLASS_MOVE_BONUS: Record<number, number> = { 0: 1, 2: 1, 10: 1, 16:
  * 个别职业普通攻击的分段调整（职业号 → 新的分段）【新】。
  * 0 武龍「一鳴驚人」：原版第 9 帧一段 100%，负责人 2026-11-13 要求改成两段 50% + 50%，
  * 在同一帧同时结算（两段各自判定命中和必杀，一起弹出两个数字）。总伤害不变。
+ * 16 魯智深「三世因果」：原版第 16 帧一段 100%，负责人 2026-11-14 要求改成三段，
+ * 取出手动画里禅杖横扫（第 5 帧）、回扫（第 10 帧）、下砸（第 16 帧，原版命中帧）三下，30% / 30% / 40%（同原版三段技的比例）。
  */
 export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
   0: [
     { frame: 9, percent: 50, dir: 0 },
     { frame: 9, percent: 50, dir: 0 },
+  ],
+  16: [
+    { frame: 5, percent: 30, dir: 0 },
+    { frame: 10, percent: 30, dir: 0 },
+    { frame: 16, percent: 40, dir: 0 },
   ],
 };
 
@@ -85,6 +92,9 @@ export const SKILL_OVERRIDES: Record<number, Partial<Pick<SkillDef, 'power' | 'm
   128: { rangeMax: 2 }, // 楊春 撥草尋蛇
   113: { rangeMax: 2 }, // 陳達 餓虎出柵
   56: { stun: 30 }, // 朱武 詭計多端（7 级连续技），原版 5，负责人 2026-11-13 改 30
+  // 137 佛法無邊（魯智深 17 级，以自身为中心的范围技）：原版第 13 帧一段 100%，负责人 2026-11-14 要求改成三段：
+  // 禅杖顿地（第 13 帧，原版命中帧）之后蹲身按杖的第 16、19 帧再各震一下，30% / 30% / 40%；每段放一轮特效
+  137: { hits: [{ frame: 13, percent: 30, dir: 0 }, { frame: 16, percent: 30, dir: 0 }, { frame: 19, percent: 40, dir: 0 }] },
 };
 
 /**
