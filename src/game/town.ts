@@ -85,8 +85,8 @@ export class TownUI {
 
   private enter(shop: number) {
     this.shop = shop;
-    // 酒店放酒馆曲，其他店铺放商店曲，整备放城镇曲【新】
-    void music.play(shop > 0 ? 'shop' : shop === 0 ? 'inn' : 'town');
+    // 酒店放酒馆曲，其他店铺放商店曲，整备放城镇曲【新】；都配第二首轮放（负责人 2026-11-14：每处循环的音乐至少两首）
+    void music.play(shop > 0 ? ['shop', 'comic'] : shop === 0 ? ['inn', 'rock'] : ['town', 'march']);
     this.slot = -1;
     this.giving = false;
     if (shop === PREP) {
