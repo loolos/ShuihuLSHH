@@ -11,7 +11,7 @@ import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules
 import { basicAttack, type SkillDef } from '../src/rules/data.ts';
 import { rollAttack } from '../src/rules/combat.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { computeStats, type Unit } from '../src/rules/unit.ts';
+import { attackSkill, computeStats, type Unit } from '../src/rules/unit.ts';
 import { readExeTables } from '../src/formats/exe.ts';
 import { newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, stageClearGold } from '../src/rules/gold.ts';
@@ -393,6 +393,78 @@ describe.skipIf(!has)('N01', () => {
     (b as { status: string }).status = 'won';
     const c = recordResult(newCampaign(0), b);
     expect(c.active!.sort()).toEqual(mine.map((u) => u.classId).sort());
+  });
+
+  // 直接结算一次出手（跳过回合和走位），再跑出手后的剧本触发
+  const strike = (b: Battle, u: Unit, t: Unit) => {
+    const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+    x.out = [];
+    x.cast(u, attackSkill(u, b.data), { x: t.x, y: t.y }, false);
+    x.afterAction();
+    return x.flush();
+  };
+  const knockOut = (b: Battle, u: Unit, t: Unit) => {
+    t.hp = 1;
+    t.stats.agility = 0;
+    let ev: BattleEvent[] = [];
+    for (let i = 0; i < 30 && t.alive; i++) ev = strike(b, u, t);
+    expect(t.alive).toBe(false);
+    return ev;
+  };
+
+  for (const name of ['Train1', 'Train2']) {
+    it(`${name}：出场的人被王進打倒就过关（"回合 25 或我方全灭"，退场的人不算），王進说完托付的话接下一关`, () => {
+      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      b.begin();
+      b.choose(b.pendingPick!.recommended);
+      const me = b.units.find((u) => u.side === 'player' && u.present)!;
+      const wang = b.units.find((u) => u.classId === 1 && u.side === 'enemy' && u.present)!;
+      const ev = knockOut(b, wang, me);
+      expect(b.status).toBe('won');
+      expect(ev.some((e) => e.type === 'narrate')).toBe(true);
+      expect(ev.at(-1)).toMatchObject({ type: 'end', result: 'won' });
+      expect(b.clearGold).toBe(stageClearGold(name));
+      // 打倒的人算出场（分全队经验、城镇名单），没选上的人照常归队
+      const c = recordResult(newCampaign(0), b);
+      expect(c.active).toContain(me.classId);
+      expect(c.active!.length).toBe(b.benchedUids.length + 1);
+    });
+  }
+
+  it('Train1：每打倒一次王進只说一句、换一个分身上场，不会一次把 25 句说完', () => {
+    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    b.begin();
+    b.choose(b.pendingPick!.recommended);
+    const me = b.units.find((u) => u.side === 'player' && u.present)!;
+    me.stats.attack = 9999;
+    const lines: string[] = [];
+    for (let k = 0; k < 5; k++) {
+      const wang = b.units.filter((u) => u.classId === 1 && u.side === 'enemy' && u.alive && u.present);
+      expect(wang.length).toBe(1);
+      me.x = wang[0].x + 1;
+      me.y = wang[0].y;
+      const ev = knockOut(b, me, wang[0]);
+      const says = ev.filter((e) => e.type === 'say');
+      expect(says.length).toBe(1);
+      expect(ev.filter((e) => e.type === 'appear').length).toBe(1);
+      lines.push(says[0].type === 'say' ? says[0].text : '');
+      expect(b.status).toBe('playing');
+    }
+    expect(lines).toEqual(['好！', '好！', '这招使得不错！', '再来再来！', '漂亮！']);
+  });
+
+  it('N-add15：留下的人倒下关卡继续，主角倒下判负', () => {
+    const b = new Battle(loadStage(files, data, 'N-add15', { simplified: true, seed: 1, text: tr }));
+    b.begin();
+    b.choose(b.pendingPick!.recommended);
+    const hero = b.units.find((u) => u.classId === 0 && u.side === 'player')!;
+    const pal = b.units.find((u) => u.side === 'player' && u.present && u !== hero)!;
+    const foe = b.units.find((u) => u.side === 'enemy' && u.present)!;
+    knockOut(b, foe, pal);
+    expect(b.status).toBe('playing');
+    const ev = knockOut(b, foe, hero);
+    expect(b.status).toBe('lost');
+    expect(ev.some((e) => e.type === 'end' && /斷後失敗|断后失败/.test(e.text))).toBe(true);
   });
 
   it('N-add15：主角先退场，选 1 人和主角一起断后；时光倒流回不到选人之前', () => {
