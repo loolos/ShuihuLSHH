@@ -53,11 +53,17 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
       }
       if (b.status === 'playing') ev.push(...b.endPlayerPhase());
     }
+    if (process.env.TRACE) for (const e of ev) if (e.type === 'attack') console.log('  ', b.units.find((u) => u.uid === e.uid)!.classId, e.skill.name, e.hits.map((h) => `${h.uid}:${JSON.stringify(h.result)}`).join(' '));
     const said = ev.filter((e) => e.type === 'narrate' || e.type === 'say').map((e) => ('text' in e ? e.text : '').slice(0, 8));
-    const ws = b.units.find((u) => u.classId === rt.classIds.get('wusong'))!;
-    const tg = b.units.find((u) => u.classId === rt.classIds.get('tiger'))!;
     if (b.status === 'won') wins++;
-    console.log(`种子 ${seed}: ${b.status} 第 ${b.turn} 回合  武松 ${ws.hp}/${ws.stats.maxHp} 级${ws.level}  老虎 ${tg.hp}/${tg.stats.maxHp}  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}`);
+    const hp = (u: (typeof b.units)[number]) => `${b.data.charNames[u.classId] ?? u.classId} ${u.hp}/${u.stats.maxHp} 级${u.level}`;
+    // 我方和敌方首领（体力上限最高的敌人）的剩余体力
+    const me = b.units.filter((u) => u.side === 'player' && u.present).map(hp).join('、');
+    const boss = b.units.filter((u) => u.side === 'enemy').sort((a, c) => c.stats.maxHp - a.stats.maxHp)[0];
+    const left = b.units.filter((u) => u.side === 'enemy' && u.present && u.hp > 0).length;
+    const flags =
+      id === 'wusong' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
+    console.log(`种子 ${seed}: ${b.status} 第 ${b.turn} 回合  ${me}  ${boss ? hp(boss) : ''}  敌人剩 ${left}${flags}`);
   }
   console.log(`胜 ${wins}/${n}`);
 }
