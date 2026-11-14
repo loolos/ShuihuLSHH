@@ -1104,3 +1104,13 @@ describe('装备命中', () => {
     expect(equipHitBonus(item(126, 0))).toBe(12);
   });
 });
+
+describe('道具表改动', () => {
+  it('青箬笠改名碧雲箬笠上架', async () => {
+    const { withItemOverrides } = await import('../src/rules/data.ts');
+    const base = { id: 127, name: '青箬笠', category: 0, hit: 0, buyPrice: 0, sellPrice: 2250, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
+    const [it] = withItemOverrides([base]);
+    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500 });
+    expect(it.seqA).toContain(7);
+  });
+});
