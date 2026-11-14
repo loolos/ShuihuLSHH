@@ -178,6 +178,14 @@ function packSkill(s: PackSkillJson, skillId: number, group: number, templates: 
 /** 关卡在剧本里的名字（Battle.name、网址 ?stage=） */
 export const packStageName = (pack: string, stage: string) => `pack:${pack}/${stage}`;
 
+/** 关卡里会出现的全部职业（开场的单位，加上剧本 transform 换成的职业），预载动画用 */
+export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
+  const ref = (v: unknown) => (typeof v === 'number' ? v : rt.classIds.get(String(v)));
+  const list = stage.units.map((u) => ref(u.class));
+  for (const b of stage.script) for (const [name, , cls] of b.do) if (name === 'transform') list.push(ref(cls));
+  return [...new Set(list.filter((c): c is number => c !== undefined))];
+}
+
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
 export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string } = {}): StageInput {
   const mapFile = findStageFile(files, stage.map.base, '.map') ?? fail(`找不到地图 ${stage.map.base}`);
@@ -194,10 +202,13 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     return u.type;
   };
   const skillRef = (id: unknown) => rt.skillIds.get(String(id)) ?? fail(`${stage.id}: 没有技能 ${String(id)}`);
-  const blocks = stage.script.map((b, i) => compileBlock(b, i, { charOf, unitRef, skillRef, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const classRef = (v: unknown) => (typeof v === 'number' ? v : (rt.classIds.get(String(v)) ?? fail(`${stage.id}: 没有职业 ${String(v)}`)));
+  const blocks = stage.script.map((b, i) => compileBlock(b, i, { charOf, classRef, unitRef, skillRef, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer };
+  const names: Record<number, string> = {};
+  stage.units.forEach((u, i) => u.name && (names[i] = u.name));
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names };
 }
 
 function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
@@ -223,6 +234,7 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
 
 interface Refs {
   charOf: (id: string) => number;
+  classRef: (v: unknown) => number;
   unitRef: (id: unknown) => { json: PackUnitJson; act: ActUnit };
   skillRef: (id: unknown) => number;
   itemRef: (v: unknown) => number;
@@ -270,6 +282,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       case 'victory':
         op(29, 0, { text: String(a[0] ?? '') });
+        break;
+      case 'transform':
+        select(a[0]);
+        op(102, r.classRef(a[1]), a[2] === undefined ? {} : { text: String(a[2]) });
         break;
       case 'defeat':
         op(30, 0, { text: String(a[0] ?? '') });

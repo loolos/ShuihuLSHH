@@ -17,7 +17,7 @@ import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
-import { compileStage } from './packs/build.ts';
+import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
@@ -332,7 +332,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === ref.stage);
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      const classes = [...new Set(stage.units.map((u) => (typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!)))];
+      const classes = stageClasses(rt, stage);
       await preloadStage(pa, stage.map.base, progress, classes);
       if (ticket !== loading) return;
       setupEl.hidden = true;

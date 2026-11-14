@@ -102,7 +102,7 @@ export interface PasOp {
   flag: number | null; // 操作码 < 24 时才有
   /** 操作码 12/14/15/16/17/18/19/35 等的数值参数（u16 或 u32） */
   value: number;
-  /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容 */
+  /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容；扩展包指令 102 是新名字 */
   text?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
   args?: { stat?: string; pct?: number; add?: number; turns?: number };

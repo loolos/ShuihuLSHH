@@ -105,14 +105,23 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
     expect(Math.abs(tiger.stats.agility - agi / 2)).toBeLessThanOrEqual(0.5);
   });
 
-  it('打死老虎：猎户登场，过关', () => {
+  it('打死老虎：猎户披着虎皮登场，现出原形，过关', () => {
     const { b, ws, tiger } = start();
+    const disguise = rt.classIds.get('hunter-in-tigerskin')!;
+    const hunters = b.units.filter((u) => u.classId === disguise);
+    expect(hunters.map((u) => u.name)).toEqual(['大虫', '大虫']);
     besides(ws, tiger);
     tiger.hp = 1;
     let ev: BattleEvent[] = [];
     for (let i = 0; i < 20 && b.status === 'playing'; i++) ev = strike(b, ws, undefined, tiger);
     expect(b.status).toBe('won');
-    expect(b.units.filter((u) => u.classId === 49).every((u) => u.present)).toBe(true);
+    // 先以老虎的样子登场，旁白之后换成猎户（李吉的样子），名字是猎户甲、乙
+    const appear = ev.findIndex((e) => e.type === 'appear' && e.uid === hunters[0].uid);
+    const look = ev.findIndex((e) => e.type === 'look' && e.uid === hunters[0].uid);
+    expect(appear).toBeGreaterThanOrEqual(0);
+    expect(look).toBeGreaterThan(appear);
+    expect(hunters.map((u) => [u.classId, u.name, u.present])).toEqual([[49, '猎户甲', true], [49, '猎户乙', true]]);
+    expect(ev.some((e) => e.type === 'say' && e.speaker === '猎户甲' && /披了虎皮/.test(e.text))).toBe(true);
     expect(ev.some((e) => e.type === 'end' && e.result === 'won')).toBe(true);
   });
 

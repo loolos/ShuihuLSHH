@@ -74,7 +74,8 @@ export class BattleScene extends Phaser.Scene {
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
    * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
    */
-  private view = new Map<number, { x: number; y: number; facing: number; hp: number; mp: number }>();
+  /** 画面上的状态（回放到哪一步就是哪一步；cls 是画面上的职业，剧本换职业时引擎先变、画面回放到 look 才变） */
+  private view = new Map<number, { x: number; y: number; facing: number; hp: number; mp: number; cls: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   private overlay!: Phaser.GameObjects.Graphics;
   private minimap: Minimap | null = null;
@@ -124,6 +125,7 @@ export class BattleScene extends Phaser.Scene {
     if (!mapFile) throw new Error(`找不到地图 ${this.mapName}`);
     const map = parseMap(files.get(mapFile), mapFile);
     this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
+    for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
@@ -218,13 +220,13 @@ export class BattleScene extends Phaser.Scene {
 
   private vs(u: Unit) {
     let v = this.view.get(u.uid);
-    if (!v) this.view.set(u.uid, (v = { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp }));
+    if (!v) this.view.set(u.uid, (v = { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp, cls: u.classId }));
     return v;
   }
 
   /** 回放结束后与引擎对齐 */
   private syncView() {
-    for (const u of this.battle.units) if (this.view.has(u.uid)) this.view.set(u.uid, { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp });
+    for (const u of this.battle.units) if (this.view.has(u.uid)) this.view.set(u.uid, { x: u.x, y: u.y, facing: u.facing, hp: u.hp, mp: u.mp, cls: u.classId });
   }
 
   private spawn(u: Unit, at?: { x: number; y: number }) {
@@ -233,7 +235,7 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(v.x, v.y);
     const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
     const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
-    this.sprites.set(u.uid, { spr, bar, head: classHead(this.assets, u.classId) });
+    this.sprites.set(u.uid, { spr, bar, head: classHead(this.assets, v.cls) });
     this.pose(u);
     return spr;
   }
@@ -243,8 +245,8 @@ export class BattleScene extends Phaser.Scene {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
-    const action = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
-    const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
+    const action = u.defending ? ACTION.defend : idleAction(this.assets, v.cls);
+    const key = animFor(this, this.assets, v.cls, action, v.facing) ?? animFor(this, this.assets, v.cls, ACTION.walk, v.facing);
     if (key) {
       s.spr.play(key);
       s.spr.anims.pause(s.spr.anims.currentAnim!.frames[0]);
@@ -796,6 +798,14 @@ export class BattleScene extends Phaser.Scene {
         this.sprites.delete(e.uid);
         break;
       }
+      case 'look': {
+        const u = this.battle.unit(e.uid)!;
+        this.vs(u).cls = e.classId;
+        const s = this.sprites.get(u.uid);
+        if (s) s.head = classHead(this.assets, e.classId);
+        this.pose(u);
+        break;
+      }
       case 'appear': {
         const u = this.battle.unit(e.uid)!;
         Object.assign(this.vs(u), { x: e.x, y: e.y });
@@ -909,7 +919,7 @@ export class BattleScene extends Phaser.Scene {
     for (let i = 1; i < path.length; i++) {
       const a = path[i - 1], c = path[i];
       const dir = c.x > a.x ? 3 : c.x < a.x ? 1 : c.y > a.y ? 2 : 0;
-      const key = animFor(this, this.assets, u.classId, ACTION.walk, dir);
+      const key = animFor(this, this.assets, this.vs(u).cls, ACTION.walk, dir);
       if (key && s.spr.anims.currentAnim?.key !== key) s.spr.play(key);
       else s.spr.anims.resume();
       const p = cellToWorld(c.x, c.y);
@@ -939,7 +949,7 @@ export class BattleScene extends Phaser.Scene {
 
   private async playOnce(u: Unit, action: number, facing: number, maxMs = 800) {
     const s = this.sprites.get(u.uid);
-    const key = s && animFor(this, this.assets, u.classId, action, facing, 0);
+    const key = s && animFor(this, this.assets, this.vs(u).cls, action, facing, 0);
     if (!s || !key) return wait(this, 250);
     s.spr.play(key);
     await new Promise<void>((r) => {
@@ -956,7 +966,7 @@ export class BattleScene extends Phaser.Scene {
       case 'say': {
         const u = e.uid !== null ? b.unit(e.uid) : undefined;
         if (u?.present) await this.focusOn(u);
-        const cls = u ? u.classId : this.assets.data.classes.findIndex((c) => c.name === e.speaker);
+        const cls = u ? this.vs(u).cls : this.assets.data.classes.findIndex((c) => c.name === e.speaker);
         await this.ui.say(e.speaker, e.text, cls >= 0 ? cls : null);
         break;
       }
@@ -1000,6 +1010,23 @@ export class BattleScene extends Phaser.Scene {
           await this.banner(e.side === 'player' ? `第 ${e.turn} 回合` : `${PHASE_NAME[e.side]}行动`);
         }
         break;
+      case 'look': {
+        // 换职业：淡出再淡入换样子（披虎皮的猎户现出原形）
+        const u = b.unit(e.uid)!;
+        const s = this.sprites.get(u.uid);
+        if (!s) {
+          this.vs(u).cls = e.classId;
+          break;
+        }
+        await this.focusOn(u, 300);
+        await new Promise<void>((r) => this.tweens.add({ targets: s.spr, alpha: 0, duration: 250, onComplete: () => r() }));
+        this.vs(u).cls = e.classId;
+        s.head = classHead(this.assets, e.classId);
+        this.pose(u);
+        this.drawBar(u);
+        await new Promise<void>((r) => this.tweens.add({ targets: s.spr, alpha: 1, duration: 250, onComplete: () => r() }));
+        break;
+      }
       case 'appear': {
         const u = b.unit(e.uid)!;
         Object.assign(this.vs(u), { x: e.x, y: e.y });
