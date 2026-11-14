@@ -11,6 +11,7 @@ import { installSound } from './game/sound.ts';
 import { installMusic, music } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
+import { TitleScreen, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
@@ -100,6 +101,8 @@ function confirmMismatch(list: string[]): Promise<void> {
 }
 
 const SAVE_KEY = 'shuihu.campaign';
+/** 存档时间（标题画面显示用） */
+const SAVE_AT_KEY = 'shuihu.campaign.at';
 function loadSave(): CampaignState | null {
   try {
     return parseCampaign(localStorage.getItem(SAVE_KEY));
@@ -110,6 +113,7 @@ function loadSave(): CampaignState | null {
 function writeSave(c: CampaignState) {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify(c));
+    localStorage.setItem(SAVE_AT_KEY, String(Date.now()));
   } catch {
     /* 隐私模式等：不存档也能玩 */
   }
@@ -127,21 +131,27 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
-  // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"
-  let group: HTMLOptGroupElement | null = null;
+  // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
+  const chapters: { label: string; items: TitleStageItem[] }[] = [];
   for (const s of stages) {
     const l = stageLabel(s.title, s.mapName);
-    if (!group || group.label !== l.chapterLabel) {
-      group = document.createElement('optgroup');
-      group.label = l.chapterLabel || '其它';
-      sel.append(group);
-    }
-    const o = new Option(l.short, String(s.index));
-    o.title = l.full;
-    group.append(o);
-    // 测试用：每个城镇也能直接进（列在它前面那一关后面）
+    const label = l.chapterLabel || '其它';
+    if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
+    const items = chapters.at(-1)!.items;
+    items.push({ label: l.short, value: String(s.index), title: l.full });
+    // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
-    if (t) group.append(new Option(`城镇 ${townName(t.town)}`, townValue(s.index)));
+    if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
+  }
+  for (const ch of chapters) {
+    const group = document.createElement('optgroup');
+    group.label = ch.label;
+    for (const it of ch.items) {
+      const o = new Option(it.label, it.value);
+      if (it.title) o.title = it.title;
+      group.append(o);
+    }
+    sel.append(group);
   }
   const params = new URLSearchParams(location.search);
   let campaign = loadSave() ?? newCampaign(stages[0].index);
@@ -339,20 +349,68 @@ function startGame(assets: Assets) {
     const b = scene()?.battle;
     if (b && !ui.inDialog) ui.say('', b.objectives.join('\n') || '（本关没有写明的胜负条件）');
   };
+  $('menu').onclick = () =>
+    toast('回到标题画面？本关的进度会丢失（存档记在关卡开头，读取存档会从本关开头重来）。', [
+      { label: '回到标题', primary: true, run: () => (location.href = location.pathname) },
+      { label: '取消', run: hideToast },
+    ]);
   $('reset').onclick = async () => {
     await idbClear();
     location.reload();
   };
   setupUpdateButton();
-  $('hud').hidden = false;
   // 顶栏在窄屏上会折行，小地图跟着顶栏的实际高度往下放
   const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
   new ResizeObserver(hudH).observe($('hud'));
-  hudH();
-  ui.show();
   (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
-  run();
+  /** 离开标题画面进游戏 */
+  const begin = (c: CampaignState) => {
+    title.hide();
+    $('hud').hidden = false;
+    hudH();
+    ui.show();
+    goTo(c);
+  };
+  const title = new TitleScreen();
+  // 网址带 ?stage=（刷新、测试脚本）时直接进关，不经过标题画面
+  if (asked) return begin(campaign);
+  const save = loadSave();
+  void music.play('liangshan');
+  title.show({
+    save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
+    chapters,
+    portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
+    version: versionLabel(BUILD),
+    buttons: [$('sound'), $('music')],
+    onNew: () => begin(newCampaign(stages[0].index)),
+    onLoad: () => begin(save!),
+    onJump: (v) => begin(jump(v, save ?? newCampaign(stages[0].index))),
+  });
+
+  /** 存档摘要：在哪一关 / 哪个城镇，队伍等级与金钱，存档时间 */
+  function saveSummary(c: CampaignState) {
+    const s = stageOf(c.stage);
+    const l = stageLabel(s.title, s.mapName);
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : l.full;
+    const active = new Set(c.active ?? c.members.map((m) => m.classId));
+    const team = c.members
+      .filter((m) => active.has(m.classId))
+      .slice(0, 6)
+      .map((m) => `${assets.tr(assets.data.classes[m.classId]?.name ?? '?')} ${m.level}级`);
+    let at = '';
+    try {
+      const t = Number(localStorage.getItem(SAVE_AT_KEY));
+      if (t) at = new Date(t).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch {
+      /* 读不到就不显示 */
+    }
+    const detail = [team.join('、'), c.members.length ? `金钱 ${c.gold}` : '', at && `存于 ${at}`].filter(Boolean).join('\n');
+    return { where, detail };
+  }
 }
+
+/** 标题画面上的头像：武龙、史进、林冲、鲁智深、吴用、宋江（HUM 职业号） */
+const TITLE_FACES = [0, 3, 11, 16, 10, 6];
 
 /** 提示条：文字 + 可选按钮；不带按钮的几秒后自动消失 */
 let toastTimer = 0;
