@@ -1,0 +1,117 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "crouch-idle": {
+   "source": "Crouch_Idle_Loop",
+   "front": {
+    "file": "crouch-idle-front.png",
+    "frames": 8,
+    "ms": 367
+   },
+   "back": {
+    "file": "crouch-idle-back.png",
+    "frames": 8,
+    "ms": 367
+   }
+  },
+  "death01": {
+   "source": "Death01",
+   "front": {
+    "file": "death01-front.png",
+    "frames": 8,
+    "ms": 300
+   },
+   "back": {
+    "file": "death01-back.png",
+    "frames": 8,
+    "ms": 300
+   }
+  },
+  "hit-chest": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-chest-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-chest-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "idle": {
+   "source": "Idle_Loop",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 312
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 312
+   }
+  },
+  "punch-cross": {
+   "source": "Punch_Cross",
+   "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "punch-jab": {
+   "source": "Punch_Jab",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 108
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 108
+   }
+  },
+  "roll": {
+   "source": "Roll",
+   "front": {
+    "file": "roll-front.png",
+    "frames": 8,
+    "ms": 183
+   },
+   "back": {
+    "file": "roll-back.png",
+    "frames": 8,
+    "ms": 183
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  }
+ }
+}

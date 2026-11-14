@@ -1,7 +1,7 @@
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
 import Phaser from 'phaser';
 import { parseMap } from '../formats/map.ts';
-import { Battle, type BattleEvent } from '../rules/battle.ts';
+import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
 import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
@@ -29,6 +29,9 @@ export interface BattleSceneData {
   joinLevel?: number;
   /** 关卡结束（胜负面板由调用方决定） */
   onEnd?: (battle: Battle, won: boolean, text: string) => void;
+  /** 扩展包关卡：画哪张原版地图，以及每次开打（含重新开始）时生成关卡数据 */
+  map?: string;
+  makeInput?: () => StageInput;
 }
 
 type Mode =
@@ -57,6 +60,9 @@ export class BattleScene extends Phaser.Scene {
   private assets!: Assets;
   private ui!: BattleUI;
   private stageName = 'N01';
+  /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
+  private mapName = 'N01';
+  private makeInput?: () => StageInput;
   private seed?: number;
   private party?: Map<number, Member>;
   private joinLevel?: number;
@@ -103,6 +109,8 @@ export class BattleScene extends Phaser.Scene {
     this.party = data.party;
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
+    this.mapName = data.map ?? data.stage;
+    this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
     this.groundItems = new Map();
@@ -112,10 +120,10 @@ export class BattleScene extends Phaser.Scene {
 
   create() {
     const { files } = this.assets;
-    const mapFile = findStageFile(files, this.stageName, '.map');
-    if (!mapFile) throw new Error(`找不到地图 ${this.stageName}`);
+    const mapFile = findStageFile(files, this.mapName, '.map');
+    if (!mapFile) throw new Error(`找不到地图 ${this.mapName}`);
     const map = parseMap(files.get(mapFile), mapFile);
-    this.battle = new Battle(loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
+    this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
     // 原版技能音效（s<技能号> + 类型音）和菜单音也先下载好
@@ -1121,7 +1129,7 @@ export class BattleScene extends Phaser.Scene {
           ),
         );
         // 集气技、类型 9 的回复技：出手动画放完才放特效（原版 0x407522）
-        sound.cast(skill.skillId, skill.type, basic);
+        sound.cast(skill.soundId ?? skill.skillId, skill.type, basic);
         const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500);
         if (fx?.atEnd) waves.push(cast.then(fxWave));
         await Promise.all([cast, ...waves, ...impacts]);
@@ -1192,7 +1200,7 @@ export class BattleScene extends Phaser.Scene {
         this.select({ kind: 'idle' });
         await wait(this, 300);
         if (this.onEnd) this.onEnd(this.battle, e.result === 'won', e.text);
-        else this.ui.result(e.result === 'won', e.text, [{ label: '重新开始', run: () => this.scene.restart({ assets: this.assets, ui: this.ui, stage: this.stageName }) }]);
+        else this.ui.result(e.result === 'won', e.text, [{ label: '重新开始', run: () => this.scene.restart({ assets: this.assets, ui: this.ui, stage: this.stageName, map: this.mapName, makeInput: this.makeInput }) }]);
         break;
     }
   }

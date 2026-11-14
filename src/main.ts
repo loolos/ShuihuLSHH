@@ -17,6 +17,8 @@ import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
 import { jumpTo, jumpToTown } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
+import { compileStage } from './packs/build.ts';
+import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, recordResult, type CampaignState } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -175,9 +177,16 @@ function startGame(assets: Assets) {
   const ui = new BattleUI();
   ui.tr = assets.tr;
   const faces = new Map<number, string | null>();
+  const headUrl = (i: number) => {
+    if (!faces.has(i)) faces.set(i, i >= 0 && i < assets.heads.count ? frameToCanvas(assets.heads.frame(i), assets.palette).toDataURL() : null);
+    return faces.get(i)!;
+  };
+  /** 正在玩的扩展包（外传）；它的职业接在原版职业后面，头像按包里写的借哪张 */
+  let pack: PackAssets | null = null;
   ui.portrait = (cls) => {
-    if (!faces.has(cls)) faces.set(cls, cls < assets.heads.count ? frameToCanvas(assets.heads.frame(cls), assets.palette).toDataURL() : null);
-    return faces.get(cls)!;
+    const look = pack?.rt.looks.get(cls);
+    if (look) return look.face === null ? null : headUrl(look.face);
+    return headUrl(cls);
   };
 
   const game = new Phaser.Game({
@@ -298,11 +307,68 @@ function startGame(assets: Assets) {
   const rewind = async () => {
     const sc = scene();
     if (!sc || sc.battle.rewindTarget() === null) return;
-    if (sc.battle.status === 'lost') void music.stageTrack(stageOf(campaign.stage).mapName).then((t) => music.play(t));
+    if (sc.battle.status === 'lost') {
+      if (packBgm) void music.play(packBgm);
+      else void music.stageTrack(stageOf(campaign.stage).mapName).then((t) => music.play(t));
+    }
     await sc.rewind();
   };
   let loading = 0;
+  /** 外传关卡的背景音乐（倒流回来时换回）；玩主线时为 null */
+  let packBgm: string | null = null;
+  /** 外传（扩展包关卡，docs/game-design.md §15）：等级固定，不读写主线存档 */
+  const runPack = async (value: string) => {
+    const ref = parsePackValue(value);
+    if (!ref) return;
+    ui.hideResult();
+    town.hide();
+    const ticket = ++loading;
+    try {
+      setupEl.hidden = false;
+      progress('载入外传…', 0);
+      sel.hidden = true; // 顶栏的选关下拉框是主线的，外传里不显示
+      if (pack?.rt.id !== ref.pack) pack = await openPack(assets, ref.pack);
+      const rt = pack.rt;
+      const stage = rt.stages.find((s) => s.id === ref.stage);
+      if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
+      const pa: Assets = { ...assets, data: rt.data, pack };
+      const classes = [...new Set(stage.units.map((u) => (typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!)))];
+      await preloadStage(pa, stage.map.base, progress, classes);
+      if (ticket !== loading) return;
+      setupEl.hidden = true;
+      packBgm = stage.bgm ?? 'battle';
+      void music.play(packBgm);
+      const data = {
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
+        onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
+      };
+      if (scene()) scene()!.scene.restart(data);
+      else game.scene.add('battle', BattleScene, true, data);
+      const u = new URL(location.href);
+      u.searchParams.set('stage', value);
+      history.replaceState(null, '', u);
+    } catch (e) {
+      setupEl.hidden = false;
+      progress(`载入外传失败：${(e as Error).message}`, 0);
+    }
+  };
+  const onPackEnd = (value: string, battle: Battle, won: boolean, text: string) => {
+    const retry = { label: '重新开始本关', run: () => void runPack(value) };
+    if (!won) {
+      void music.play('defeat');
+      const t = battle.rewindTarget();
+      return ui.result(false, text, t === null ? [retry] : [{ label: `时光倒流（回到第 ${t} 回合）`, run: rewind }, retry]);
+    }
+    const ref = parsePackValue(value)!;
+    markPackCleared(ref.pack, ref.stage);
+    void music.play('victory');
+    const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
+    ui.result(true, text + credits, [{ label: '再打一次', run: () => void runPack(value) }, { label: '回到标题', run: () => (location.href = location.pathname) }], '外传通关');
+  };
   const run = async () => {
+    packBgm = null;
+    sel.hidden = false;
     ui.hideResult();
     town.hide();
     if (campaign.town) {
@@ -372,19 +438,32 @@ function startGame(assets: Assets) {
     goTo(c);
   };
   const title = new TitleScreen();
+  /** 进外传：不碰主线存档 */
+  const beginPack = (value: string) => {
+    title.hide();
+    $('hud').hidden = false;
+    hudH();
+    ui.show();
+    void runPack(value);
+  };
   // 网址带 ?stage=（刷新、测试脚本）时直接进关，不经过标题画面
+  if (asked && isPackValue(asked)) return beginPack(asked);
   if (asked) return begin(campaign);
+  // 选关最后一组：外传（扩展包，已通关的打勾）
+  const side = listPacks().flatMap(({ pack: p, stages: ss }) =>
+    ss.map((s) => ({ label: `${p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
+  );
   const save = loadSave();
   void music.play('liangshan');
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
-    chapters,
+    chapters: side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters,
     portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
     version: versionLabel(BUILD),
     buttons: [$('sound'), $('music')],
     onNew: () => begin(newCampaign(stages[0].index)),
     onLoad: () => begin(save!),
-    onJump: (v) => begin(jump(v, save ?? newCampaign(stages[0].index))),
+    onJump: (v) => (isPackValue(v) ? beginPack(v) : begin(jump(v, save ?? newCampaign(stages[0].index)))),
   });
 
   /** 存档摘要：在哪一关 / 哪个城镇，队伍等级与金钱，存档时间 */

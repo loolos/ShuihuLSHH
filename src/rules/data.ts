@@ -5,6 +5,8 @@ import type { ExePrompt } from '../formats/exe.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
+  /** 出手音效用的技能号（s<号>.mp3）；扩展包技能借原版技能的声音，不填就用 skillId */
+  soundId?: number;
 }
 
 export interface ClassDef {

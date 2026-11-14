@@ -1,0 +1,43 @@
+{
+ "id": "wusong",
+ "name": "武松打虎",
+ "description": "外传。武松在景阳冈下连喝十八碗，不听劝上冈，赤手空拳打死吊睛白额大虫（《水浒传》第二十三回）。",
+ "entry": "standalone",
+ "credits": [
+  "武松模型：Quaternius「Universal Animation Library」，CC0",
+  "老虎模型：Tiger model by planeta-elefante (Sketchfab), CC BY 4.0"
+ ],
+ "items": [
+  {"id": "shaobang", "name": "哨棒", "from": 14, "attack": 15, "description": "武松随身带的一条哨棒。"}
+ ],
+ "classes": [
+  {
+   "id": "wusong", "name": "武松",
+   "base": {"hp": 130, "mp": 90, "attack": 78, "defense": 30, "hit": 85, "agility": 40, "crit": 18},
+   "move": 5, "weaponType": 1,
+   "items": ["shaobang", 84, 0, 157, 157],
+   "skills": [
+    {"id": "quan", "name": "拳打脚踢", "from": 201, "anim": "punch-jab", "hitAt": [0.55], "power": 10},
+    {"id": "lianhuan", "name": "连环拳", "from": 210, "anim": "punch-cross", "hitAt": [0.35, 0.55, 0.75], "power": 25, "mpCost": 30},
+    {"id": "antou", "name": "按头痛击", "from": 154, "anim": "punch-cross", "hitAt": [0.6], "power": 60, "mpCost": 60, "stun": 30},
+    {"id": "yunqi", "name": "运气", "from": 206, "anim": "crouch-idle"}
+   ],
+   "sprite": {"sheet": "sprites/wusong", "idle": "idle", "walk": "walk", "hurt": "hit-chest", "defend": "crouch-idle"},
+   "face": {"fromHead": 69}
+  },
+  {
+   "id": "tiger", "name": "吊睛白额虎",
+   "base": {"hp": 360, "mp": 150, "attack": 70, "defense": 24, "hit": 80, "agility": 50, "crit": 8},
+   "move": 7,
+   "skills": [
+    {"id": "bite", "name": "扑咬", "from": 179, "anim": "attack", "hitAt": [0.55], "power": 10},
+    {"id": "pu", "name": "一扑", "from": 8, "anim": "attack", "hitAt": [0.6], "power": 40, "mpCost": 25, "rangeMin": 1, "rangeMax": 3},
+    {"id": "xian", "name": "一掀", "from": 181, "anim": "attack-paw", "hitAt": [0.5], "power": 35, "mpCost": 30, "area": 3},
+    {"id": "jian", "name": "一剪", "from": 204, "anim": "attack-paw", "hitAt": [0.4, 0.7], "power": 30, "mpCost": 30}
+   ],
+   "sprite": {"sheet": "sprites/tiger", "idle": "idle", "walk": "walk", "hurt": "hit-back", "defend": "go-to-sleep", "head": 52},
+   "face": null
+  }
+ ],
+ "stages": ["stages/jingyanggang.json"]
+}

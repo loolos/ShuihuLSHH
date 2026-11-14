@@ -1,0 +1,58 @@
+{
+ "id": "jingyanggang",
+ "title": "景阳冈",
+ "map": {"base": "N-add01"},
+ "bgm": "tense",
+ "units": [
+  {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 15},
+  {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},
+  {"id": "tiger", "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 17, "hidden": true},
+  {"id": "hunter1", "class": 49, "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
+  {"id": "hunter2", "class": 49, "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
+ ],
+ "aiPrefer": {"tiger": ["pu", "xian", "jian"]},
+ "script": [
+  {"on": "start", "do": [
+   ["narrate", "清河县人武松，离了柴大官人庄上，要回乡去寻哥哥武大郎。这一日晌午时分，走到阳谷县地面，冈子下有一家酒店。"],
+   ["say", "innkeeper", "客官，俺家的酒叫做「三碗不过冈」：但凡客人来我店中，吃了三碗的，便醉了，过不得前面的山冈去。"],
+   ["say", "wusong", "俺前前后后吃了十八碗，也不见醉。休要啰唣，俺这便过冈去！"],
+   ["say", "innkeeper", "如今前面景阳冈上有只吊睛白额大虫，晚了出来伤人，坏了三二十条大汉性命。官司榜文叫过往客商结伙成队过冈，客官不如就俺家歇了。"],
+   ["say", "wusong", "俺是清河县人，这条景阳冈上少也走过了一二十遭，几时见说有大虫！你休说这般鸟话来吓俺。便真个有虎，老爷也不怕！"],
+   ["narrate", "武松提了哨棒，大踏步自过景阳冈来。"],
+   ["objective", "胜利条件：打倒吊睛白额大虫"],
+   ["objective", "失败条件：武松倒下，或超过 15 回合（天黑）"],
+   ["turnLimit", 15]
+  ]},
+  {"on": {"enter": "wusong", "area": [0, 0, 17, 9]}, "do": [
+   ["narrate", "武松走上冈来，见一块光挞挞的大青石。酒力发作，正要躺下歇息，只见发起一阵狂风，乱树背后扑地一声响，跳出一只吊睛白额大虫来！"],
+   ["appear", "tiger"],
+   ["say", "tiger", "嗷呜——！"],
+   ["say", "wusong", "呵呀！真个有大虫！"]
+  ]},
+  {"on": {"used": "wusong", "count": 1}, "do": [
+   ["narrate", "武松双手抡起哨棒，尽平生气力，从半空劈将下来。只听得一声响，簌簌地将那树连枝带叶劈脸打将下来——原来打急了，正打在枯树上，把那条哨棒折做两截！"],
+   ["setEquip", "wusong", 0, 0],
+   ["say", "wusong", "罢了，只得赤手空拳和它斗！"]
+  ]},
+  {"on": {"used": "tiger", "skills": ["pu", "xian", "jian"]}, "do": [
+   ["narrate", "原来那大虫拿人，只是一扑、一掀、一剪；三般捉不着时，气性先自没了一半。"],
+   ["buff", "tiger", "attack", {"pct": -50}],
+   ["buff", "tiger", "agility", {"pct": -50}]
+  ]},
+  {"on": {"dead": "tiger"}, "do": [
+   ["narrate", "武松把大虫顶花皮揪住，只顾乱踢，提起铁锤般大小拳头，尽平生之力只顾打。打到五七十拳，那大虫眼里、口里、鼻子里、耳朵里都迸出鲜血来，动掸不得了。"],
+   ["say", "wusong", "……天色已晚，且挣扎下冈去，明早却来理会。"],
+   ["narrate", "走不到半里多路，只见枯草中又钻出两只大虫来！"],
+   ["appear", "hunter1"],
+   ["appear", "hunter2"],
+   ["say", "wusong", "呵呀！俺今番罢了！"],
+   ["say", "hunter1", "好汉莫怕！我们是本处的猎户，披了虎皮在这里埋伏，要捉那大虫。"],
+   ["say", "hunter2", "你……你是人是鬼？独自一个，又没器械，走过冈来？"],
+   ["say", "wusong", "那大虫，吃俺一顿拳脚打死了。"],
+   ["victory", "众猎户点起火把，把大虫抬下冈来。阳谷县知县赏了一千贯，见武松忠厚仁德，又是一条好汉，参他做了本县的步兵都头。"]
+  ]},
+  {"on": {"dead": "wusong"}, "do": [
+   ["defeat", "武松力尽，倒在了景阳冈上……"]
+  ]}
+ ]
+}

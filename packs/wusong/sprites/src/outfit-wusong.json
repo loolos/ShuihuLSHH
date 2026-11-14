@@ -1,0 +1,32 @@
+{"default": [200, 150, 110],
+ "shading": {"ao": 0.4, "edge": 0.2, "fold_scale": 3.5, "fold_strength": 0.35, "fold_distortion": 2.5},
+ "rules": [
+  {"bones": ["Head"], "when": "z > 1.745 or (y > 0.01 and z > 1.6)", "color": [22, 20, 20], "inflate": 0.006},
+  {"bones": ["foot_.*", "ball_.*"], "color": [30, 28, 26], "inflate": 0.006}
+ ],
+ "layers": [
+  {"name": "头巾", "bones": ["Head"], "when": "1.71 <= z <= 1.75", "offset": 0.01, "thickness": 0.006, "color": [70, 55, 45]},
+  {"name": "中衣", "bones": ["spine_0[123]", "clavicle_.*", "neck_01", "upperarm_.*"], "when": "z > 0.98 and z < 1.50",
+   "offset": 0.012, "thickness": 0.005, "color": [230, 225, 210]},
+  {"name": "短褂", "bones": ["spine_0[123]", "clavicle_.*", "upperarm_.*", "lowerarm_.*", "pelvis", "thigh_.*"],
+   "when": "z > 0.66 and z < 1.56 and ax < 0.56 and not (y < -0.03 and z > 1.24 and ax < (1.47 - z) * 0.4)",
+   "offset": "0.03 + (0.22 * (0.98 - z) if z < 0.98 else 0) + (0.5 * (ax - 0.40) if ax > 0.40 else 0)",
+   "thickness": 0.012, "color": [78, 104, 66], "folds": 0.8,
+   "colors": [
+    {"when": "y < -0.02 and z > 1.18 and abs(ax - (1.47 - z) * 0.4) < 0.03", "color": [40, 52, 34]},
+    {"when": "z < 0.71", "color": [44, 58, 37]},
+    {"when": "ax > 0.53", "color": [44, 58, 37]}
+   ]},
+  {"name": "腰带", "bones": ["spine_01", "pelvis"], "when": "0.975 <= z <= 1.07", "offset": 0.058, "thickness": 0.015,
+   "color": [150, 42, 30], "folds": 0.4},
+  {"name": "宽裤", "bones": ["pelvis", "thigh_.*", "calf_.*"], "when": "0.27 < z < 0.95",
+   "offset": "0.03 + (0.03 * (1 - abs(z - 0.42) / 0.15) if abs(z - 0.42) < 0.15 else 0)",
+   "thickness": 0.01, "color": [222, 214, 196], "folds": 1.0},
+  {"name": "裹腿", "bones": ["calf_.*", "foot_.*"], "when": "0.08 < z <= 0.30", "offset": 0.016, "thickness": 0.006,
+   "color": [205, 200, 186], "colors": [{"when": "abs(z - 0.29) < 0.012 or abs(z - 0.10) < 0.012", "color": [120, 70, 45]}]}
+ ],
+ "props": [
+  {"bone": "Head", "shape": "sphere", "radius": 0.05, "at": [0, 0.035, 1.85], "scale": [1, 1, 0.9], "color": [22, 20, 20]},
+  {"bone": "pelvis", "shape": "sphere", "radius": 0.035, "at": [0.10, -0.13, 1.02], "scale": [1, 0.8, 1], "color": [150, 42, 30]},
+  {"bone": "pelvis", "shape": "sphere", "radius": 0.03, "at": [0.12, -0.13, 0.90], "scale": [0.6, 0.4, 2.6], "color": [150, 42, 30]}
+ ]}
