@@ -18,6 +18,22 @@ export interface MiniMark {
   color: string;
 }
 
+/** 小地图上的区域（格子坐标矩形，含两端）：撤退出口等【新】 */
+export interface MiniZone {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  color: string;
+  label: string;
+}
+
+/** 区域外框：格子矩形四个角（格子边缘）在世界坐标里的平行四边形（上、右、下、左） */
+export function zoneCorners(z: { x1: number; y1: number; x2: number; y2: number }) {
+  const at = (gx: number, gy: number) => ({ x: (gx - gy) * HALF_W, y: (gx + gy) * HALF_H });
+  return [at(z.x1 - 0.5, z.y1 - 0.5), at(z.x2 + 0.5, z.y1 - 0.5), at(z.x2 + 0.5, z.y2 + 0.5), at(z.x1 - 0.5, z.y2 + 0.5)];
+}
+
 export interface MiniLayout {
   /** 世界坐标 → 小地图像素的缩放 */
   scale: number;
@@ -186,13 +202,51 @@ export class Minimap {
     g.fill();
   }
 
-  /** 每帧：人物、宝物、镜头范围（世界坐标矩形） */
-  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }) {
+  /** 每帧：目标区域、人物、宝物、镜头范围（世界坐标矩形） */
+  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }, zones: MiniZone[] = []) {
     if (!this.open) return;
     const l = this.layout;
     const g = this.top.getContext('2d')!;
     g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     g.clearRect(0, 0, l.width, l.height);
+    // 撤退出口等区域【新】：半透明填色 + 实线外框，外面再套一个闪动的圈（区域只有两三格时缩小后太小，圈保证看得见），旁边写字
+    const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 260);
+    for (const z of zones) {
+      const pts = zoneCorners(z).map((p) => worldToMini(l, p.x, p.y));
+      g.beginPath();
+      pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
+      g.closePath();
+      g.globalAlpha = 0.35 + 0.25 * pulse;
+      g.fillStyle = z.color;
+      g.fill();
+      g.globalAlpha = 1;
+      g.lineWidth = 2;
+      g.strokeStyle = '#000';
+      g.stroke();
+      g.lineWidth = 1.2;
+      g.strokeStyle = z.color;
+      g.stroke();
+      const cx = (pts[0].x + pts[2].x) / 2, cy = (pts[1].y + pts[3].y) / 2;
+      const r = Math.max(7, Math.hypot(pts[1].x - pts[3].x, pts[0].y - pts[2].y) / 2 + 3) + 2 * pulse;
+      g.beginPath();
+      g.arc(cx, cy, r, 0, Math.PI * 2);
+      g.lineWidth = 3;
+      g.strokeStyle = 'rgba(0,0,0,0.6)';
+      g.stroke();
+      g.lineWidth = 1.5;
+      g.strokeStyle = z.color;
+      g.stroke();
+      // 字放在圈的上方；靠地图上边时放到下方，左右不出边
+      g.font = 'bold 11px sans-serif';
+      const tw = g.measureText(z.label).width;
+      const ty = cy - r - 3 < 12 ? cy + r + 12 : cy - r - 3;
+      const tx = Math.max(2, Math.min(l.width - tw - 2, cx - tw / 2));
+      g.lineWidth = 3;
+      g.strokeStyle = '#000';
+      g.strokeText(z.label, tx, ty);
+      g.fillStyle = z.color;
+      g.fillText(z.label, tx, ty);
+    }
     // 原版是 8×8 的方块；这里随小地图大小在 3～7 像素之间
     const s = Math.max(3, Math.min(7, Math.round(HALF_W * 2 * l.scale)));
     for (const m of marks) {
