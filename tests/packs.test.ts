@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { areaCells } from '../src/rules/skills.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
@@ -260,14 +261,23 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(look.parts?.get(1)).toMatchObject({ from: 68, action: 1, shoes: true });
     expect(look.parts?.get(2)).toMatchObject({ from: 68, action: 2 });
     expect(look.parts?.get(3 + 3)).toMatchObject({ from: 2, action: 6 });
+    expect(look.parts?.get(3 + 6)).toMatchObject({ from: 68, action: 5 });
     expect(look.parts?.get(1)?.recolor?.[0].dst).toEqual([144, 156]);
+    // 负责人 2026-11-14 重做：普攻、回旋技、回气、身前 3×6 范围技、范围回血
     const sk = rt.data.classes[id].skills;
-    expect(sk.map((s) => s.name)).toEqual(['剑击', '跃斩', '剑舞', '旋斩', '及时雨', '运气']);
-    expect(sk.map((s) => s.group)).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(sk.map((s) => s.name)).toEqual(['孝义剑', '四海归心', '卧虎藏锋', '血染浔阳', '及时雨']);
+    expect(sk.map((s) => s.type)).toEqual([5, 2, 8, 14, 9]);
+    expect(sk.map((s) => s.group)).toEqual([0, 3, 5, 6, 4]);
     const hitsOf = (cls: number, skillId: number) => rt.data.classes[cls].skills.find((s) => s.skillId === skillId)!.hits;
     expect(sk[0].hits).toEqual(hitsOf(68, 194));
-    expect(sk[2].hits).toEqual(hitsOf(68, 198));
-    expect(sk[3].hits).toEqual(hitsOf(2, 22));
+    expect(new Set(sk[1].hits.map((h) => h.dir))).toEqual(new Set([0, 1, 2, 3]));
+    expect(sk[3].hits).toEqual(hitsOf(68, 197));
+    // 血染浔阳：身前宽 3、长 6，共 18 格，不含自己
+    const board = { inBounds: () => true } as unknown as Parameters<typeof areaCells>[0];
+    const cells = areaCells(board, { x: 10, y: 10 }, sk[3], { x: 11, y: 10 });
+    expect(cells.length).toBe(18);
+    expect(cells.every((c) => c.x >= 11 && c.x <= 16 && c.y >= 9 && c.y <= 11)).toBe(true);
+    expect(sk[4]).toMatchObject({ area: 3, power: 3, rangeMax: 0 });
   });
 
   it('染鞋：只染贴地的窄条（脚），宽的袍摆和影子不动', () => {
@@ -344,6 +354,26 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     const ev = c.begin();
     expect(ev.some((e) => (e as { text?: string }).text === '题诗')).toBe(true);
     expect(c.status).toBe('won');
+  });
+
+  it('宋江血染浔阳：身前 3×6 里的敌人都挨打，身后的不挨', () => {
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'shishou')!, files, { seed: 1, text: tr }));
+    b.begin();
+    const sj = b.units.find((u) => u.name === '宋江')!;
+    sj.level = 30, (sj.mp = 999);
+    const foes = b.units.filter((u) => u.side === 'enemy');
+    const sk = b.data.classes[sj.classId].skills.find((s) => s.name === '血染浔阳')!;
+    // 宋江在 (3,8)，向右放：x 4–9、y 7–9
+    const spots = [{ x: 4, y: 8 }, { x: 9, y: 7 }, { x: 6, y: 9 }, { x: 2, y: 8 }];
+    foes.slice(0, 4).forEach((f, i) => Object.assign(f, spots[i], { present: true }));
+    for (const f of foes.slice(4)) f.present = false;
+    sj.x = 3, (sj.y = 8);
+    const hp = foes.slice(0, 4).map((f) => f.hp);
+    const ev = b.useSkill(sj, sk, { x: 4, y: 8 });
+    const hit = new Set(ev.flatMap((e) => (e.type === 'attack' ? e.hits.map((h) => h.uid) : [])));
+    expect(foes.slice(0, 3).every((f) => hit.has(f.uid))).toBe(true);
+    expect(hit.has(foes[3].uid)).toBe(false);
+    expect(foes[3].hp).toBe(hp[3]);
   });
 
   it('试手关：敌人全部倒下即过关', () => {

@@ -70,7 +70,7 @@ export function castCells(board: Board, at: Cell, [lo, hi]: [number, number]): C
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
  * - 1：从施放点沿施放方向展开的扇形，第 i 行（从 0 数）向两侧各 floor(i/2) 格，共 size 行（0x40d330）
  * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）
- * - 12 周身技【新】：施放点（自己）周围一圈 8 格；13 横扫技【新】：施放点和它左右两侧（垂直于施放方向）共 3 格
+ * - 12 周身技【新】：施放点（自己）周围一圈 8 格；13 横扫技【新】：施放点和它左右两侧（垂直于施放方向）共 3 格；14 前方长方形【新】：施放者身前宽 3 格、长 size 格
  * - 其余（3、4、7、8、9、11）：以施放点为中心的菱形，曼哈顿距离 < size；size 0 只含施放点（0x40cde0）
  */
 export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell[] {
@@ -99,6 +99,11 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
       break;
     case 13:
       for (let j = -1; j <= 1; j++) add(at.x + dir.y * j, at.y + dir.x * j);
+      break;
+    case 14:
+      // 前方长方形：从施放者身前一格起往前 size 行，每行宽 3 格
+      for (let i = 1; i <= size; i++)
+        for (let j = -1; j <= 1; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
       break;
     default: {
       const r = s.area;
