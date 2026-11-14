@@ -136,3 +136,77 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
     expect(b.prefers(tiger, pu)).toBe(false);
   });
 });
+
+describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
+  const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
+  const tr = has ? buildT2S(files) : (s: string) => s;
+  const rt = has ? loadPackFromDisk('liutang', loadGameData(files, tr)) : (null as never);
+  const start = (seed = 1) => {
+    const b = new Battle(compileStage(rt, rt.stages[0], files, { seed, text: tr }));
+    const ev = b.begin();
+    const of = (cls: number) => b.units.find((u) => u.classId === cls)!;
+    return { b, ev, lt: of(17), lh: of(60), wy: of(10), cg: of(12) };
+  };
+  const strike = (b: Battle, u: Unit, at: Unit) => {
+    const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+    x.out = [];
+    x.cast(u, attackSkill(u, b.data), { x: at.x, y: at.y }, false);
+    x.afterAction();
+    return x.flush();
+  };
+
+  it('没有新职业，全用原版人物；开场雷横带 2 个士兵，另 2 个士兵和晁盖、吴用埋伏', () => {
+    expect(rt.data.classes.length).toBe(loadGameData(files, tr).classes.length);
+    const { b, ev, lt, lh, wy, cg } = start();
+    expect(lt.level).toBe(21);
+    expect(lh.present).toBe(true);
+    expect(b.units.filter((u) => u.side === 'enemy' && u.present).length).toBe(3);
+    expect(wy.present || cg.present).toBe(false);
+    expect(b.objectives.join()).toContain('打倒雷横');
+    // 刘唐被吊了一夜：敏捷 −30%，3 回合；雷横手下留情：必杀 −70%
+    expect(lt.buffs.some((x) => x.stat === 'agility' && x.value < 0 && x.turns <= 3)).toBe(true);
+    expect(lh.buffs.some((x) => x.stat === 'crit' && x.value < 0)).toBe(true);
+    expect(ev.some((e) => e.type === 'say' && /赤发鬼/.test(e.text))).toBe(true);
+  });
+
+  it('第 4 回合士兵增援，第 7 回合吴用、晁盖赶到，过关', () => {
+    const { b, lt, lh, wy, cg } = start();
+    // 只看回合推进，不让谁先倒下（增减益到期时体力会按上限截断，所以每回合都重设）
+    const next = () => {
+      lt.hp = lh.hp = 99999;
+      return b.endPlayerPhase();
+    };
+    const hidden = b.units.filter((u) => u.side === 'enemy' && !u.present);
+    expect(hidden.length).toBe(2);
+    while (b.status === 'playing' && b.turn < 3) next();
+    expect(hidden.some((u) => u.present || !u.alive)).toBe(false);
+    next();
+    expect(hidden.every((u) => u.present || !u.alive)).toBe(true); // 登场（或已被反击打倒）
+    let ev: BattleEvent[] = [];
+    while (b.status === 'playing' && b.turn < 8) ev = next();
+    expect(b.status).toBe('won');
+    expect(wy.present && cg.present).toBe(true);
+    expect(ev.some((e) => e.type === 'say' && /且不要斗/.test(e.text))).toBe(true);
+  });
+
+  it('打倒雷横也过关；刘唐倒下判负', () => {
+    const won = start();
+    won.lh.hp = 1;
+    won.lh.stats.agility = 0;
+    won.lh.x = won.lt.x;
+    won.lh.y = won.lt.y + 1;
+    for (let i = 0; i < 20 && won.b.status === 'playing'; i++) strike(won.b, won.lt, won.lh);
+    expect(won.b.status).toBe('won');
+    expect(won.wy.present).toBe(true);
+
+    const lost = start();
+    lost.lt.hp = 1;
+    lost.lt.stats.agility = 0;
+    lost.lh.x = lost.lt.x;
+    lost.lh.y = lost.lt.y + 1;
+    let ev: BattleEvent[] = [];
+    for (let i = 0; i < 20 && lost.b.status === 'playing'; i++) ev = strike(lost.b, lost.lh, lost.lt);
+    expect(lost.b.status).toBe('lost');
+    expect(ev.some((e) => e.type === 'end' && /押回郓城县/.test(e.text))).toBe(true);
+  });
+});

@@ -1,0 +1,8 @@
+{
+ "id": "liutang",
+ "name": "赤发鬼夜战插翅虎",
+ "description": "外传。赤发鬼刘唐醉卧灵官殿，被插翅虎雷横当贼拿了；晁盖认作外甥放了他，刘唐不服，追上雷横讨还银子，斗到吴用拿铜链隔开（《水浒传》第十三、十四回）。",
+ "entry": "standalone",
+ "classes": [],
+ "stages": ["stages/dongxicun.json"]
+}
