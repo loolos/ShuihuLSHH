@@ -60,6 +60,8 @@ export type BattleEvent =
   | { type: 'attack'; uid: number; skill: SkillDef; cell: Cell; area: Cell[]; facing: number; hits: { uid: number; result: HitResult }[]; counter: boolean }
   | { type: 'hp'; uid: number; hp: number; mp: number; delta: number; /** 气的变化（回复时弹黄字） */ mpDelta?: number; text?: string }
   | { type: 'status'; uid: number; text: string }
+  /** 换了职业（扩展包指令 102）：重画人物、状态条 */
+  | { type: 'look'; uid: number; classId: number }
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
@@ -102,6 +104,8 @@ export interface StageInput {
    * 三招都用过才触发"气势减半"（docs/game-design.md §15.3）。
    */
   aiPrefer?: Record<number, number[]>;
+  /** 扩展包【新】：单位显示的名字（ACT 序号 → 名字），不填用职业名 */
+  names?: Record<number, string>;
 }
 
 /**
@@ -232,7 +236,7 @@ export class Battle {
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
       const stats = computeStats(cls, level, slots, this.data, false, forge);
       this.units.push({
-        uid: a.index, classId: a.type, name: this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
+        uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
@@ -1313,6 +1317,18 @@ export class Battle {
           sel.slots[op.flag ?? 0] = op.value;
           sel.forge[op.flag ?? 0] = 0;
           refreshStats(sel, this.data);
+          this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
+          break;
+        // 102 换职业（扩展包【新】，如披虎皮的猎户现出原形）：样子、属性、头像都换，血气回满；text 是新名字
+        case 102:
+          if (!sel || !this.data.classes[op.value]) break;
+          sel.classId = op.value;
+          sel.name = op.text ?? this.charName(op.value);
+          refreshStats(sel, this.data);
+          sel.hp = sel.stats.maxHp;
+          sel.mp = sel.stats.maxMp;
+          selName = sel.name;
+          this.emit({ type: 'look', uid: sel.uid, classId: op.value });
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
           break;
         // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）

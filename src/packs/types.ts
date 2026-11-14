@@ -105,6 +105,8 @@ export interface PackUnitJson {
   hidden?: boolean;
   /** AI 模式（§8），默认 0 */
   ai?: number;
+  /** 显示的名字，不填用职业名 */
+  name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
   items?: (number | string)[];
 }
@@ -121,7 +123,7 @@ export type PackTrigger =
  * 指令（数组，第一项是名字）：
  * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
- * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]
+ * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]
  */
 export type PackOpJson = [string, ...unknown[]];
 

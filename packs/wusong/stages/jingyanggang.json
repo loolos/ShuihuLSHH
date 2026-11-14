@@ -7,8 +7,8 @@
   {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 15},
   {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},
   {"id": "tiger", "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 17, "hidden": true},
-  {"id": "hunter1", "class": 49, "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
-  {"id": "hunter2", "class": 49, "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
+  {"id": "hunter1", "class": "hunter-in-tigerskin", "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
+  {"id": "hunter2", "class": "hunter-in-tigerskin", "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
  ],
  "aiPrefer": {"tiger": ["pu", "xian", "jian"]},
  "script": [
@@ -46,6 +46,9 @@
    ["appear", "hunter1"],
    ["appear", "hunter2"],
    ["say", "wusong", "呵呀！俺今番罢了！"],
+   ["narrate", "只见那两只大虫在黑影里直立起来。武松定睛看时，却是两个人，把虎皮缝作衣裳，紧紧绷在身上，手里各拿着一条五股叉。"],
+   ["transform", "hunter1", 49, "猎户甲"],
+   ["transform", "hunter2", 49, "猎户乙"],
    ["say", "hunter1", "好汉莫怕！我们是本处的猎户，披了虎皮在这里埋伏，要捉那大虫。"],
    ["say", "hunter2", "你……你是人是鬼？独自一个，又没器械，走过冈来？"],
    ["say", "wusong", "那大虫，吃俺一顿拳脚打死了。"],

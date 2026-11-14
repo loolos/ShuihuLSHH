@@ -37,6 +37,16 @@
    ],
    "sprite": {"sheet": "sprites/tiger", "idle": "idle", "walk": "walk", "hurt": "hit-back", "defend": "go-to-sleep", "head": 52},
    "face": null
+  },
+  {
+   "id": "hunter-in-tigerskin", "name": "大虫",
+   "base": {"hp": 120, "mp": 40, "attack": 30, "defense": 15, "hit": 70, "agility": 30, "crit": 5},
+   "move": 4,
+   "skills": [
+    {"id": "pounce-fake", "name": "扑咬", "from": 179, "anim": "attack", "hitAt": [0.55], "power": 5}
+   ],
+   "sprite": {"sheet": "sprites/tiger", "idle": "idle", "walk": "walk", "hurt": "hit-back", "defend": "go-to-sleep", "head": 52},
+   "face": null
   }
  ],
  "stages": ["stages/jingyanggang.json"]
