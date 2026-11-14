@@ -1101,9 +1101,13 @@ export class Battle {
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'area' || this.fired.has(b.index)) continue;
-      const u = this.unitByChar(t.char);
-      if (u && u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2))
-        this.runBlock(b);
+      // 区域触发（区块头 w0 = 4：选人 且 坐标范围）。原版条件 4 只选单位表里这个角色的第一个单位（EXE 0x410ff0 → 0x40c360，
+      // 不论死活），所以 N-add03 往 (10,0) 逃的那个嘍囉（不是第一个）跑到出口也不算。重制版【新】：这个角色任何一个在场的人
+      // 进了范围都触发（只影响 N-add03"敵人從畫面端逃跑"；其它关只有一个这样的人：N01 王母、N13 何濤、N-add16 主角）
+      const id = t.char === 1000 ? 0 : t.char;
+      const inside = (u: Unit) =>
+        u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
+      if (this.units.some((u) => u.classId === id && u.alive && u.present && inside(u))) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     this.runCondBlocks();
@@ -1133,6 +1137,8 @@ export class Battle {
    * 条件求值（EXE 0x411220）。0 回合；1 死亡（0x400 = 我方全灭、0xFF = 敌方全灭）；2 某人已现身；3 指令 27 的标志；
    * 4 选定某人（之后 5–10 比较他的坐标：5 x =、6 y =、7 x ≥、8 y ≥、9 x ≤、10 y ≤）；11 某人活着（0xFF = 我方无人阵亡）。
    * 角色号 ≥ 1000 时为 角色号 − 1000，且不论是否隐藏；< 1000 时隐藏的人算不在。
+   * "隐藏"只指退场标志 0x20000（EXE 0x411020 只看这一位）：埋伏中的单位（0x40000，AI 模式 6/9）虽然不在地图上，
+   * 也算在。N12 的朱仝开场就被剧本改成埋伏，以前被当成"已死"，一开场就过关；N02 的"所有嘍囉死亡"也会漏算埋伏的嘍囉。
    */
   private evalCond(c: PasCond, select: (u: Unit | undefined) => void, selected: () => Unit | undefined): boolean {
     if ('op' in c) {
@@ -1141,7 +1147,7 @@ export class Battle {
     }
     const find = (arg: number) => {
       const id = arg >= 1000 ? arg - 1000 : arg;
-      return this.units.find((u) => u.classId === id && u.alive && (arg >= 1000 || u.present));
+      return this.units.find((u) => u.classId === id && u.alive && (arg >= 1000 || u.present || this.ambushers.has(u.uid)));
     };
     const s = selected();
     switch (c.type) {
