@@ -1,0 +1,133 @@
+{
+ "id": "shishou",
+ "title": "江州牢城·试手",
+ "map": {
+  "base": "N-add02"
+ },
+ "bgm": "battle",
+ "units": [
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 4,
+   "y": 7,
+   "facing": 3,
+   "level": 22
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 5,
+   "y": 8,
+   "facing": 3,
+   "level": 22
+  },
+  {
+   "id": "s1",
+   "class": 32,
+   "side": "enemy",
+   "x": 10,
+   "y": 6,
+   "facing": 1,
+   "level": 16
+  },
+  {
+   "id": "s2",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 8,
+   "facing": 1,
+   "level": 16
+  },
+  {
+   "id": "s3",
+   "class": 33,
+   "side": "enemy",
+   "x": 12,
+   "y": 7,
+   "facing": 1,
+   "level": 16
+  },
+  {
+   "id": "s4",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 9,
+   "facing": 1,
+   "level": 16
+  },
+  {
+   "id": "s5",
+   "class": 33,
+   "side": "enemy",
+   "x": 13,
+   "y": 6,
+   "facing": 1,
+   "level": 16
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "narrate",
+     "试手关：看看新人物的样子和招式。"
+    ],
+    [
+     "say",
+     "daizong",
+     "小可江州两院押牢节级戴宗，江湖上叫我「神行太保」。缚上四个甲马，一日能行八百里！"
+    ],
+    [
+     "say",
+     "likui",
+     "铁牛在此！哪个鸟人来吃俺一斧？"
+    ],
+    [
+     "objective",
+     "胜利条件：打倒所有敌人"
+    ],
+    [
+     "objective",
+     "失败条件：戴宗或李逵倒下"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "试手结束。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "试手结束。"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "do": [
+    [
+     "victory",
+     "试手完毕。"
+    ]
+   ]
+  }
+ ]
+}

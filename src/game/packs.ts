@@ -52,6 +52,7 @@ export async function openPack(assets: Assets, id: string): Promise<PackAssets> 
   if (!entry) throw new Error(`没有扩展包 ${id}`);
   const sheets: Record<string, SpriteSheetJson> = {};
   for (const c of entry.pack.classes) {
+    if (!('sheet' in c.sprite)) continue; // 借原版动画的职业没有图条
     const j = JSONS[`/packs/${id}/${c.sprite.sheet}/sprites.json`] as SpriteSheetJson | undefined;
     if (j) sheets[c.sprite.sheet] = j;
   }

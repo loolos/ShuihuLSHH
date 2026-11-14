@@ -1,0 +1,181 @@
+{
+ "id": "jiangzhou",
+ "name": "江州好汉（试做）",
+ "description": "外传「江州劫法场」「沂岭杀四虎」要用的新人物：神行太保戴宗、黑旋风李逵。先做人物，关卡还没做；这里是试手的小关。",
+ "entry": "standalone",
+ "classes": [
+  {
+   "id": "daizong",
+   "name": "戴宗",
+   "base": {
+    "hp": 85,
+    "mp": 100,
+    "attack": 58,
+    "defense": 24,
+    "hit": 78,
+    "agility": 45,
+    "crit": 12
+   },
+   "move": 8,
+   "weaponType": 0,
+   "items": [
+    0,
+    83,
+    112,
+    155,
+    155
+   ],
+   "skills": [
+    {
+     "id": "dz-quan",
+     "name": "神行拳",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "dz-xuanfeng",
+     "name": "旋风腿",
+     "from": 225,
+     "anim": 1,
+     "power": 20,
+     "mpCost": 30
+    },
+    {
+     "id": "dz-juqi",
+     "name": "甲马聚气",
+     "from": 227,
+     "anim": 2
+    }
+   ],
+   "sprite": {
+    "fromClass": 38,
+    "recolor": [
+     {
+      "src": [
+       [
+        16,
+        31
+       ]
+      ],
+      "dst": [
+       160,
+       175
+      ],
+      "k": 0.95
+     },
+     {
+      "src": [
+       [
+        185,
+        191
+       ],
+       [
+        48,
+        63
+       ]
+      ],
+      "dst": [
+       16,
+       31
+      ],
+      "k": 0.5
+     },
+     {
+      "src": [
+       [
+        192,
+        199
+       ]
+      ],
+      "dst": [
+       144,
+       159
+      ],
+      "k": 0.6
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 38
+   }
+  },
+  {
+   "id": "likui",
+   "name": "李逵",
+   "base": {
+    "hp": 130,
+    "mp": 90,
+    "attack": 80,
+    "defense": 28,
+    "hit": 70,
+    "agility": 30,
+    "crit": 15
+   },
+   "move": 5,
+   "weaponType": 2,
+   "items": [
+    0,
+    84,
+    0,
+    157,
+    157
+   ],
+   "skills": [
+    {
+     "id": "lk-kan",
+     "name": "板斧砍",
+     "from": 221,
+     "anim": "sword-attack",
+     "hitAt": [
+      0.45
+     ]
+    },
+    {
+     "id": "lk-lianpi",
+     "name": "双斧连劈",
+     "from": 210,
+     "anim": "punch-cross",
+     "hitAt": [
+      0.3,
+      0.55
+     ],
+     "power": 25,
+     "mpCost": 30
+    },
+    {
+     "id": "lk-xuanfeng",
+     "name": "黑旋风",
+     "from": 225,
+     "anim": "sword-attack",
+     "hitAt": [
+      0.45
+     ],
+     "power": 30,
+     "mpCost": 45
+    },
+    {
+     "id": "lk-yunqi",
+     "name": "运气",
+     "from": 227,
+     "anim": "crouch-idle"
+    }
+   ],
+   "sprite": {
+    "sheet": "sprites/likui",
+    "idle": "idle",
+    "walk": "walk",
+    "hurt": "hit-chest",
+    "defend": "crouch-idle"
+   },
+   "face": {
+    "fromHead": 16
+   }
+  }
+ ],
+ "stages": [
+  "stages/shishou.json"
+ ],
+ "credits": [
+  "李逵模型：Quaternius「Universal Animation Library」，CC0"
+ ]
+}
