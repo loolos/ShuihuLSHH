@@ -248,6 +248,15 @@ export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);
  * 原扣除不到 4 点的直接当 0；加命中的照原版【新：负责人 2026-11-14 决定】。如 −5 → −1，−12 → −3，−18 → −4。
  */
 export const equipHitBonus = (it: Item) => EQUIP_HIT_OVERRIDES[it.id] ?? (it.hit >= 0 ? it.hit : it.hit > -4 ? 0 : -Math.floor(-it.hit / 4));
+/**
+ * 道具表改动【新：负责人 2026-11-14】：原版的青箬笠（道具 128，0 起算 127）没有任何关卡、宝箱或商店给，
+ * 改名「碧雲箬笠」上架武器店，作为紅纓氈笠的上一级：防 10（打铁 +3 一次，原版）、移动 +3（原版）、命中 +16，
+ * 城镇 7–11（黄泥冈前起）有卖，4500 两（原版卖价 2250 的两倍）。图标仍用原版这一格。
+ */
+export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
+  127: { name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500, sellPrice: 2250, seqA: [7, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0] },
+};
+export const withItemOverrides = (items: Item[]): Item[] => items.map((it) => (ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it));
 /** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */
 export const EQUIP_HIT_OVERRIDES: Record<number, number> = { 125: 8, 126: 12 };
 

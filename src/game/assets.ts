@@ -6,7 +6,7 @@ import { parseAct } from '../formats/act.ts';
 import { parseMap } from '../formats/map.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
 import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
-import type { GameData, SkillDef } from '../rules/data.ts';
+import { withItemOverrides, type GameData, type SkillDef } from '../rules/data.ts';
 import { FIXED_FX, fxGroups } from './effects.ts';
 import frameAlias from '../data/frame-alias.json' with { type: 'json' };
 import type { PackAssets } from './packs.ts';
@@ -49,7 +49,7 @@ export function loadAssets(files: GameFiles): Assets {
     objects: openPic(files.get('Data/Object.lib'), 'Object.lib'),
     heads: openPic(files.get('Data/Head.lib'), 'Head.lib'),
     exe: readExeTables(files.get('ShuiHu.exe')),
-    items: parseGoods(files.get('Data/Goods.dab')),
+    items: withItemOverrides(parseGoods(files.get('Data/Goods.dab'))),
   };
 }
 
