@@ -16,7 +16,7 @@ import { TitleScreen, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile } from './rules/load.ts';
-import { jumpTo, jumpToTown } from './rules/preset.ts';
+import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
@@ -282,7 +282,13 @@ function startGame(assets: Assets) {
       onLeave: leave,
     });
   };
-  const enterTown = (c: CampaignState) => openTown(c, c.town!, (x) => void go(x));
+  /** 进城镇：整备名单换成城镇之后那一关开局在场的人（docs/game-design.md §7.5.1；旧存档读进城镇时也改过来） */
+  const enterTown = (c: CampaignState) => {
+    const n = nextOf(stageOf(c.stage)).next[0];
+    if (n) c = { ...c, active: townRoster(assets.files, n.mapName) };
+    campaign = c;
+    openTown(c, c.town!, (x) => void go(x));
+  };
   /** 战役结算：继续下一关，或先整备 */
   const proceed = (c: CampaignState, text: string) => {
     const { next } = nextOf(stageOf(c.stage));
