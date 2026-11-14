@@ -215,9 +215,10 @@ describe.skipIf(!has)('测试用跳关', () => {
     };
     expect(gear('n-add01', 0)).toEqual(['布衣', '一字巾']); // 还没到过城镇：照剧本
     expect(gear('n02', 0)).toEqual(['戰袍', '遮日黑箬笠']); // 城镇 1
-    expect(gear('n-add04a', 0)).toEqual(['虎皮戰袍', '紅纓氈笠']); // 城镇 2
-    expect(gear('n-add06', 0)).toEqual(['金繡綠羅袍', '紅纓氈笠']); // 城镇 3
-    expect(gear('n05', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 城镇 4 起
+    expect(gear('n-add04a', 0)).toEqual(['虎皮戰袍', '遮日黑箬笠']); // 城镇 2
+    expect(gear('n-add06', 0)).toEqual(['金繡綠羅袍', '遮日黑箬笠']); // 城镇 3
+    expect(gear('n05', 0)).toEqual(['綠羅花戰袍', '遮日黑箬笠']); // 城镇 4 起；第五章还是遮日黑箬笠
+    expect(gear('n-add08', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 第六章起紅纓氈笠
     expect(gear('n14', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 后面的店有更硬的甲也不换
     expect(gear('n-add04a', 5)[0]).toBe('鑲銀生鐵甲'); // 朱武：剧本衣服防御更高，留着
     expect(gear('n14', 2)).toEqual(['七星道袍', '紅纓氈笠']); // 公孫勝：七星道袍买不到，留着

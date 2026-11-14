@@ -58,6 +58,11 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   }
 
   const shopIds = town ? stock(data, 1, town) : [];
+  /** 目标关是不是已经到了（或过了）地图名为 map 的那一关 */
+  const reached = (map: string) => {
+    const i = stages.findIndex((s) => s.mapName.toLowerCase() === map);
+    return i >= 0 && pos >= i;
+  };
   const shop = shopIds.map((id) => itemOf(data, id)!);
   const drugs = town ? stock(data, 3, town) : [];
   const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
@@ -76,7 +81,7 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     const forge = slots.map(() => 0);
     // 衣服、头饰按固定的阶梯配（负责人 2026-11-14），武器仍取武器店里最好的
     for (let k = 1; k < 3; k++) {
-      const id = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k]);
+      const id = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k], reached);
       if (id !== slots[k]) (slots[k] = id), (forge[k] = 0);
     }
     const atk = (id: number) => itemOf(data, id)?.attack ?? -1;
@@ -97,17 +102,24 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
 
 /** 跳关配的衣服阶梯（负责人 2026-11-14）：戰袍 → 虎皮戰袍 → 金繡綠羅袍 → 綠羅花戰袍（城镇 1 / 2 / 3 / 4 的武器店开始有卖） */
 export const ARMOR_LINE = ['戰袍', '虎皮戰袍', '金繡綠羅袍', '綠羅花戰袍'];
-/** 跳关配的头饰阶梯（负责人 2026-11-14）：前期遮日黑箬笠（城镇 1 起，移动 +1），后期紅纓氈笠（城镇 2 起，移动 +2） */
-export const HEAD_LINE = ['遮日黑箬笠', '紅纓氈笠'];
+/**
+ * 跳关配的头饰阶梯（负责人 2026-11-14）：前期遮日黑箬笠（城镇 1 起，移动 +1），
+ * 第六章（第一关 N-add08）起紅纓氈笠（移动 +2；城镇 2 就有卖，但负责人要后期才换）。
+ * 「名称@关卡」表示从那一关起才配。
+ */
+export const HEAD_LINE = ['遮日黑箬笠', '紅纓氈笠@n-add08'];
 
 /**
- * 从阶梯 line 里取武器店 shop 有卖的最后一件，换掉剧本装备 current：
+ * 从阶梯 line 里取武器店 shop 有卖、且目标关已经到了 @ 后那一关（reached）的最后一件，换掉剧本装备 current：
  * - 剧本装备是店里买不到的（买价 0，如公孫勝的七星道袍、晁蓋的萬字巾）就留着；
  * - 剧本装备防御更高的留着（衣服；如朱武的鑲銀生鐵甲要到綠羅花戰袍才换）；头饰不比防御，一律换成斗笠；
  * - 店里一件都没有（还没到过城镇）就不换。
  */
-export function gearFromLine(data: GameData, line: string[], shop: number[], current: number): number {
-  const ids = line.map((name) => data.items.findIndex((it) => it.name === name) + 1).filter((id) => id > 0 && shop.includes(id));
+export function gearFromLine(data: GameData, line: string[], shop: number[], current: number, reached: (map: string) => boolean = () => true): number {
+  const ids = line
+    .filter((e) => !e.includes('@') || reached(e.split('@')[1]))
+    .map((e) => data.items.findIndex((it) => it.name === e.split('@')[0]) + 1)
+    .filter((id) => id > 0 && shop.includes(id));
   const pick = ids.at(-1);
   if (!pick) return current;
   const cur = itemOf(data, current);
