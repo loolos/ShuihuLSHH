@@ -732,6 +732,201 @@
    "facing": 2,
    "level": 24,
    "hidden": true
+  },
+  {
+   "id": "x2_1",
+   "class": 36,
+   "side": "enemy",
+   "x": 45,
+   "y": 2,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "官吏"
+  },
+  {
+   "id": "x2_2",
+   "class": 36,
+   "side": "enemy",
+   "x": 46,
+   "y": 2,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "官吏"
+  },
+  {
+   "id": "x2_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 43,
+   "y": 4,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "x3_1",
+   "class": 38,
+   "side": "enemy",
+   "x": 43,
+   "y": 1,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "都头"
+  },
+  {
+   "id": "x3_2",
+   "class": 34,
+   "side": "enemy",
+   "x": 45,
+   "y": 1,
+   "facing": 2,
+   "level": 24,
+   "hidden": true
+  },
+  {
+   "id": "x5_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 12,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "x5_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 14,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "x5_3",
+   "class": 36,
+   "side": "enemy",
+   "x": 52,
+   "y": 11,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "官吏"
+  },
+  {
+   "id": "x5_4",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 13,
+   "facing": 2,
+   "level": 24,
+   "hidden": true
+  },
+  {
+   "id": "x5_5",
+   "class": 33,
+   "side": "enemy",
+   "x": 52,
+   "y": 15,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "土兵"
+  },
+  {
+   "id": "x6_1",
+   "class": 38,
+   "side": "enemy",
+   "x": 7,
+   "y": 12,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "都头"
+  },
+  {
+   "id": "x6_2",
+   "class": 36,
+   "side": "enemy",
+   "x": 7,
+   "y": 14,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "官吏"
+  },
+  {
+   "id": "x8_1",
+   "class": 42,
+   "side": "enemy",
+   "x": 41,
+   "y": 3,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "name": "江州团练"
+  },
+  {
+   "id": "x8_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 41,
+   "y": 4,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "x8_3",
+   "class": 43,
+   "side": "enemy",
+   "x": 47,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "x8_4",
+   "class": 34,
+   "side": "enemy",
+   "x": 39,
+   "y": 0,
+   "facing": 2,
+   "level": 24,
+   "hidden": true
+  },
+  {
+   "id": "x9_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 37,
+   "y": 49,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "x9_2",
+   "class": 36,
+   "side": "enemy",
+   "x": 35,
+   "y": 50,
+   "facing": 2,
+   "level": 25,
+   "hidden": true,
+   "name": "官吏"
   }
  ],
  "script": [
@@ -1138,6 +1333,22 @@
     [
      "leave",
      "caijiu"
+    ],
+    [
+     "narrate",
+     "州衙里的官吏带着公人赶来拿人！"
+    ],
+    [
+     "appear",
+     "x2_1"
+    ],
+    [
+     "appear",
+     "x2_2"
+    ],
+    [
+     "appear",
+     "x2_3"
     ]
    ]
   },
@@ -1201,6 +1412,14 @@
     [
      "appear",
      "w3_4"
+    ],
+    [
+     "appear",
+     "x3_1"
+    ],
+    [
+     "appear",
+     "x3_2"
     ]
    ]
   },
@@ -1260,6 +1479,30 @@
     [
      "narrate",
      "那黑大汉哪里来听叫，火杂杂地抡着大斧，只顾砍人。"
+    ],
+    [
+     "narrate",
+     "东门方向，骑兵和弓手杀来！"
+    ],
+    [
+     "appear",
+     "x5_1"
+    ],
+    [
+     "appear",
+     "x5_2"
+    ],
+    [
+     "appear",
+     "x5_3"
+    ],
+    [
+     "appear",
+     "x5_4"
+    ],
+    [
+     "appear",
+     "x5_5"
     ]
    ]
   },
@@ -1287,6 +1530,41 @@
     [
      "appear",
      "w6_4"
+    ],
+    [
+     "appear",
+     "x6_1"
+    ],
+    [
+     "appear",
+     "x6_2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "narrate",
+     "江州团练亲自领着马军赶到！"
+    ],
+    [
+     "appear",
+     "x8_1"
+    ],
+    [
+     "appear",
+     "x8_2"
+    ],
+    [
+     "appear",
+     "x8_3"
+    ],
+    [
+     "appear",
+     "x8_4"
     ]
    ]
   },
@@ -1314,6 +1592,14 @@
     [
      "appear",
      "w9_4"
+    ],
+    [
+     "appear",
+     "x9_1"
+    ],
+    [
+     "appear",
+     "x9_2"
     ]
    ]
   },
