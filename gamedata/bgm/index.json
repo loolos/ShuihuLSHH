@@ -154,10 +154,22 @@
    "rock",
    "battle"
   ],
-  "act4-2": "comic",
-  "act5-1a": "night",
-  "act10-1": "night",
-  "act11-1a": "night",
+  "act4-2": [
+   "comic",
+   "inn"
+  ],
+  "act5-1a": [
+   "night",
+   "eerie"
+  ],
+  "act10-1": [
+   "night",
+   "eerie"
+  ],
+  "act11-1a": [
+   "night",
+   "eerie"
+  ],
   "n-add09b": [
    "battle2",
    "rock",
@@ -183,11 +195,26 @@
    "rock",
    "battle"
   ],
-  "act6-3": "sad",
-  "act7-1": "sad",
-  "act7-1a": "eerie",
-  "act9-1": "eerie",
-  "act14-2": "liangshan",
+  "act6-3": [
+   "sad",
+   "story"
+  ],
+  "act7-1": [
+   "sad",
+   "story"
+  ],
+  "act7-1a": [
+   "eerie",
+   "night"
+  ],
+  "act9-1": [
+   "eerie",
+   "night"
+  ],
+  "act14-2": [
+   "liangshan",
+   "brothers"
+  ],
   "n-add02": [
    "battle",
    "rock",
@@ -218,11 +245,29 @@
    "march",
    "battle2"
   ],
-  "act4-3": "comic",
-  "act5-1": "comic",
-  "act13-2": "reeds",
-  "act3-4": "brothers",
-  "act5-2": "brothers",
-  "act14-1": "brothers"
+  "act4-3": [
+   "comic",
+   "inn"
+  ],
+  "act5-1": [
+   "comic",
+   "inn"
+  ],
+  "act13-2": [
+   "reeds",
+   "story"
+  ],
+  "act3-4": [
+   "brothers",
+   "story"
+  ],
+  "act5-2": [
+   "brothers",
+   "story"
+  ],
+  "act14-1": [
+   "brothers",
+   "story"
+  ]
  }
 }

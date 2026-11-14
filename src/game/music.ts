@@ -183,7 +183,7 @@ class MusicPlayer {
     const idx = await this.loadIndex();
     const named = idx?.stages?.[mapName] ?? idx?.stages?.[mapName.toLowerCase()];
     if (named) return named;
-    if (/^act/i.test(mapName)) return 'story';
+    if (/^act/i.test(mapName)) return ['story', 'brothers'];
     return ['battle', 'rock', 'battle2'];
   }
   /** 歌单 → 实际文件（缺的用替身，重复的去掉） */

@@ -377,7 +377,7 @@ function startGame(assets: Assets) {
       await preloadStage(pa, stage.map.base, progress, classes);
       if (ticket !== loading) return;
       setupEl.hidden = true;
-      packBgm = stage.bgm ?? 'battle';
+      packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
@@ -431,7 +431,7 @@ function startGame(assets: Assets) {
       await preloadStage(pa, stage.map.base, progress, stageClasses(rt, stage));
       if (ticket !== loading) return;
       setupEl.hidden = true;
-      packBgm = stage.bgm ?? 'battle';
+      packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
       // 主线人物关：我方按职业号套用主线进度；视角关用关卡里写的固定等级
       const party = e.pov ? undefined : partyOf(campaign);
@@ -564,7 +564,7 @@ function startGame(assets: Assets) {
     ss.map((s) => ({ label: `${p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
   );
   const save = loadSave();
-  void music.play('title');
+  void music.play(['title', 'liangshan']);
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
     chapters: side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters,
