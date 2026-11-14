@@ -15,7 +15,7 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark } from './minimap.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, idleAction, textureFor } from './sprites.ts';
+import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, frameHeadroom, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -47,6 +47,10 @@ const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as cons
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
+/** 头顶高度最少按这么高算（世界像素） */
+const HEAD_MIN = 44;
+/** 状态条最高处离脚下的高度（头顶往上空 3 像素，再按 3 条算），飘字从这上面弹出 */
+const barTop = (head: number) => head + 3 + 3 * 3 + 1;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
 const slotLabel = (slot: number) => SLOT_LABEL[slot] ?? '物品';
 const wait = (scene: Phaser.Scene, ms: number) => new Promise<void>((r) => scene.time.delayedCall(ms, r));
@@ -60,7 +64,8 @@ export class BattleScene extends Phaser.Scene {
   private joinLevel?: number;
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
-  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics }>();
+  /** head：待机帧里最高的不透明像素离脚下的高度（世界像素），状态条和飘字放在它上面 */
+  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; head: number }>();
   /**
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
    * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
@@ -222,7 +227,7 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(v.x, v.y);
     const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
     const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
-    this.sprites.set(u.uid, { spr, bar });
+    this.sprites.set(u.uid, { spr, bar, head: HEAD_MIN });
     this.pose(u);
     return spr;
   }
@@ -232,11 +237,13 @@ export class BattleScene extends Phaser.Scene {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
-    const action = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
-    const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
+    let action: number = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
+    let key = animFor(this, this.assets, u.classId, action, v.facing);
+    if (!key) key = animFor(this, this.assets, u.classId, (action = ACTION.walk), v.facing);
     if (key) {
       s.spr.play(key);
       s.spr.anims.pause(s.spr.anims.currentAnim!.frames[0]);
+      s.head = Math.max(HEAD_MIN, frameHeadroom(this.assets, u.classId, action, v.facing) ?? HEAD_MIN);
     }
     const p = cellToWorld(v.x, v.y);
     s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
@@ -247,7 +254,8 @@ export class BattleScene extends Phaser.Scene {
   }
 
   /**
-   * 脚下的状态条【新】（负责人 2026-11-13）：体力（阵营色）、气力（黄）；我方好汉再加一条经验（蓝，满了就升级）。
+   * 头顶的状态条【新】（负责人 2026-11-13 加，2026-11-14 从脚下挪到头顶）：体力（阵营色）、气力（黄）；
+   * 我方好汉再加一条经验（蓝，满了就升级）。
    */
   private drawBar(u: Unit) {
     const s = this.sprites.get(u.uid);
@@ -260,9 +268,19 @@ export class BattleScene extends Phaser.Scene {
       [MP_COLOR, v.mp / Math.max(1, u.stats.maxMp)],
     ];
     if (u.side === 'player') rows.push([EXP_COLOR, u.exp / expToNext(u.level)]);
+    const top = p.y - s.head - 3 - (rows.length * 3 + 1); // 底边贴着头顶上方 3 像素
     s.bar.clear().setDepth(depthOf(v.x, v.y, 9));
-    s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, p.y + 10, w + 2, rows.length * 3 + 1);
-    rows.forEach(([color, r], i) => s.bar.fillStyle(color, 1).fillRect(p.x - w / 2, p.y + 11 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
+    s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, top, w + 2, rows.length * 3 + 1);
+    rows.forEach(([color, r], i) => s.bar.fillStyle(color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
+  }
+
+  /** 站在这一格的人物的头顶高度（飘字从状态条上面弹出） */
+  private headAt(x: number, y: number) {
+    for (const [uid, v] of this.view) if (v.x === x && v.y === y) {
+      const s = this.sprites.get(uid);
+      if (s) return s.head;
+    }
+    return HEAD_MIN;
   }
 
   private refreshAll() {
@@ -858,12 +876,12 @@ export class BattleScene extends Phaser.Scene {
    *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
   private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
     const p = cellToWorld(x, y);
-    p.y -= lift * 26;
+    p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
     const t = this.add
-      .text(p.x + side * 4, p.y - 72, text, { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
+      .text(p.x + side * 4, p.y, text, { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
       .setOrigin(side < 0 ? 1 : side > 0 ? 0 : 0.5, 0.5)
       .setDepth(100000);
-    this.tweens.add({ targets: t, y: p.y - 92, duration: 350, ease: 'Cubic.easeOut' });
+    this.tweens.add({ targets: t, y: p.y - 20, duration: 350, ease: 'Cubic.easeOut' });
     this.tweens.add({ targets: t, alpha: 0, delay: 900, duration: 300, onComplete: () => t.destroy() });
   }
 

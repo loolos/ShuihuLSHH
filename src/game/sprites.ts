@@ -83,3 +83,32 @@ export function effectAnim(scene: Phaser.Scene, assets: Assets, group: number): 
   }
   return key;
 }
+
+const headCache = new Map<string, number>();
+
+/**
+ * 职业 cls 的动作 action、朝向 facing 第 1 帧里最高的不透明像素离锚点（脚下）多高（像素）；
+ * 帧图上方常有透明的空白，头顶状态条按这个高度放【新】。
+ */
+export function frameHeadroom(assets: Assets, cls: number, action: number, facing: number): number | null {
+  const c = assets.man.classes[cls];
+  if (!c) return null;
+  const group = c.first + action * 4 + (facing & 3);
+  const range = group <= c.last ? assets.man.actions[group] : undefined;
+  if (!range) return null;
+  const key = `${range.first}`;
+  let h = headCache.get(key);
+  if (h === undefined) {
+    const fr = assets.man.frame(range.first);
+    let top = 0;
+    while (top < fr.height && !rowOpaque(fr.pixels, fr.width, top)) top++;
+    h = fr.anchorY - top;
+    headCache.set(key, h);
+  }
+  return h;
+}
+
+const rowOpaque = (px: ArrayLike<number>, w: number, y: number) => {
+  for (let x = 0; x < w; x++) if (px[y * w + x]) return true;
+  return false;
+};
