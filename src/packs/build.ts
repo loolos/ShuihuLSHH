@@ -30,12 +30,34 @@ export interface PackClassLook {
   from?: number;
   /** 借原版动画时的换色（src/packs/recolor.ts） */
   recolor?: RecolorGroup[];
+  /** 混搭：本职业动作号（0 走路、1 受击、2 防御，3 起出手）→ 改借哪个职业的哪个动作 */
+  parts?: Map<number, LookPart>;
+  /** 待机姿势用走路第 1 帧 */
+  idleWalk?: boolean;
+  /** 染鞋的目标色阶（parts 里 shoes 为真的动作用） */
+  shoes?: { dst: [number, number]; k?: number };
   /** 动作号 → sprites.json 里的动作名：0 走路、1 受击、2 防御，3 起是各技能组的出手动作（同 Man.lib） */
   actions: string[];
   idle: string;
   head?: number;
   /** 原版 Head.lib 的序号，或包里头像图的路径（相对包目录）；null = 没有头像 */
   face: number | string | null;
+}
+
+export interface LookPart {
+  from: number;
+  action: number;
+  recolor?: RecolorGroup[];
+  shoes: boolean;
+}
+
+/** BorrowSprite.parts 的键 → 本职业动作号 */
+function partAction(key: string, pack: string, cls: string): number {
+  if (key === 'walk') return 0;
+  if (key === 'hurt') return 1;
+  if (key === 'defend') return 2;
+  if (/^\d+$/.test(key)) return 3 + Number(key);
+  return fail(`${pack}: 职业 ${cls} 的 parts 键 ${key} 不认识（walk / hurt / defend / 数字）`);
 }
 
 export interface PackRuntime {
@@ -87,19 +109,42 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
     const face = !c.face ? null : 'file' in c.face ? c.face.file : c.face.fromHead;
     if ('fromClass' in c.sprite) {
       // 借原版职业的动画：出手动作 = 原版第几个出手动作，命中帧沿用 from 技能
-      const from = c.sprite.fromClass;
+      const sp = c.sprite;
+      const from = sp.fromClass;
       if (!base.classes[from]) fail(`${pack.id}: 职业 ${c.id} 借的原版职业 ${from} 不存在`);
-      // 同一技能号（如 221 普通攻擊）在各职业里命中帧不同：先找被借职业自己的那一份
-      const own = new Map(templates);
-      for (const t of base.classes[from].skills) own.set(t.skillId, t);
+      const parts = new Map<number, LookPart>();
+      for (const [key, p] of Object.entries(sp.parts ?? {})) {
+        if (!base.classes[p.fromClass]) fail(`${pack.id}: 职业 ${c.id} 的 ${key} 借的原版职业 ${p.fromClass} 不存在`);
+        const recolor = typeof p.recolor === 'string' ? (sp.recolors?.[p.recolor] ?? fail(`${pack.id}: 职业 ${c.id} 没有换色方案 ${p.recolor}`)) : p.recolor;
+        if (p.shoes && !sp.shoes) fail(`${pack.id}: 职业 ${c.id} 的 ${key} 要染鞋，但没写 sprite.shoes`);
+        parts.set(partAction(key, pack.id, c.id), { from: p.fromClass, action: p.action, recolor, shoes: !!p.shoes });
+      }
+      // 同一技能号（如 221 普通攻擊）在各职业里命中帧不同：先找被借职业自己的那一份（混搭的动作找那个动作的出处）
+      const ownOf = (cls: number) => {
+        const own = new Map(templates);
+        for (const t of base.classes[cls].skills) own.set(t.skillId, t);
+        return own;
+      };
       const skills = c.skills.map((s) => {
         const sid = nextSkill++;
         skillIds.set(s.id, sid);
-        return packSkill(s, sid, null, own, null, pack.id);
+        const donor = typeof s.anim === 'number' ? (parts.get(3 + s.anim)?.from ?? from) : from;
+        return packSkill(s, sid, null, ownOf(donor), null, pack.id);
       });
       classes.push(packClass(c, id, skills, itemRef));
       charNames[id] = c.name;
-      looks.set(id, { sheet: '', actions: [], idle: '', from, recolor: c.sprite.recolor, head: c.sprite.head, face });
+      looks.set(id, {
+        sheet: '',
+        actions: [],
+        idle: '',
+        from,
+        recolor: sp.recolor,
+        head: sp.head,
+        face,
+        ...(parts.size ? { parts } : {}),
+        ...(sp.idle === 'walk' ? { idleWalk: true } : {}),
+        ...(sp.shoes ? { shoes: sp.shoes } : {}),
+      });
       continue;
     }
     const sp = c.sprite;

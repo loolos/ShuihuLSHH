@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
-import { recolorLut } from '../src/packs/recolor.ts';
+import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
@@ -248,6 +248,42 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(lut[0]).toBe(0);
     for (let i = 16; i <= 31; i++) expect(lut[i] >= 160 && lut[i] <= 175).toBe(true);
     expect(lut[100]).toBe(100);
+  });
+
+  it('宋江混搭：走路用自己的（职业 6），受击、防御、出手借王伦（68）和公孙胜（2），命中帧跟着出处走', () => {
+    const id = rt.classIds.get('songjiang')!;
+    const look = rt.looks.get(id)!;
+    expect(look.from).toBe(6);
+    expect(look.idleWalk).toBe(true);
+    expect(look.face).toBe(6);
+    expect(look.parts?.get(0)).toBeUndefined();
+    expect(look.parts?.get(1)).toMatchObject({ from: 68, action: 1, shoes: true });
+    expect(look.parts?.get(2)).toMatchObject({ from: 68, action: 2 });
+    expect(look.parts?.get(3 + 3)).toMatchObject({ from: 2, action: 6 });
+    expect(look.parts?.get(1)?.recolor?.[0].dst).toEqual([144, 156]);
+    const sk = rt.data.classes[id].skills;
+    expect(sk.map((s) => s.name)).toEqual(['剑击', '跃斩', '剑舞', '旋斩', '及时雨', '运气']);
+    expect(sk.map((s) => s.group)).toEqual([0, 1, 2, 3, 4, 5]);
+    const hitsOf = (cls: number, skillId: number) => rt.data.classes[cls].skills.find((s) => s.skillId === skillId)!.hits;
+    expect(sk[0].hits).toEqual(hitsOf(68, 194));
+    expect(sk[2].hits).toEqual(hitsOf(68, 198));
+    expect(sk[3].hits).toEqual(hitsOf(2, 22));
+  });
+
+  it('染鞋：只染贴地的窄条（脚），宽的袍摆和影子不动', () => {
+    // 小人：第 0–8 行宽袍（12 像素宽），第 9–11 行两只脚（各 2 像素宽），第 12 行影子
+    const w = 14, h = 13;
+    const px = new Uint8Array(w * h);
+    for (let y = 0; y < 9; y++) for (let x = 1; x < 13; x++) px[y * w + x] = 20;
+    for (let y = 9; y < 12; y++) for (const x of [3, 4, 9, 10]) px[y * w + x] = 20;
+    for (let x = 0; x < w; x++) px[12 * w + x] = 158;
+    const lut = new Uint8Array(256).map((_, i) => (i === 20 ? 40 : i));
+    paintShoes(px, w, h, lut);
+    expect(px[11 * w + 3]).toBe(40);
+    expect(px[9 * w + 10]).toBe(40);
+    expect(px[8 * w + 1]).toBe(20);
+    expect(px[3 * w + 5]).toBe(20);
+    expect(px[12 * w + 5]).toBe(158);
   });
 
   it('李逵用自己的 3D 精灵图条，四个技能，黑旋风沿用迴旋技的四方向命中段', () => {

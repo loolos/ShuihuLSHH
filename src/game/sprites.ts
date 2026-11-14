@@ -5,8 +5,8 @@
 // 原版没有单独的站立动作；待机时显示"第一个出手动作（param 0，通常是动作 3 普通攻击）的第 1 帧"，
 // 即摆好架势的姿势；没有出手动作的职业（平民等）用走路第 1 帧。见 idleAction。
 import Phaser from 'phaser';
-import { frameToCanvas, manClassOf, type Assets } from './assets.ts';
-import { recolorLut } from '../packs/recolor.ts';
+import { frameToCanvas, manClassOf, manSource, type Assets } from './assets.ts';
+import { paintShoes, recolorLut } from '../packs/recolor.ts';
 import type { PackAssets } from './packs.ts';
 
 export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
@@ -26,6 +26,7 @@ export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCan
  */
 export function idleAction(assets: Assets, cls: number): number {
   if (sheetLook(assets, cls)) return PACK_IDLE;
+  if (assets.pack?.rt.looks.get(cls)?.idleWalk) return ACTION.walk;
   const c = assets.man.classes[manClassOf(assets, cls)];
   if (!c) return ACTION.walk;
   for (let g = c.first; g <= c.last; g += 4) if (assets.man.actions[g]?.param === 0) return (g - c.first) / 4;
@@ -35,21 +36,25 @@ export function idleAction(assets: Assets, cls: number): number {
 /** 职业 cls 的动作 action、朝向 facing 对应的动画键；不存在时返回 null */
 export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action: number, facing: number, repeat = -1): string | null {
   if (sheetLook(assets, cls)) return packAnim(scene, assets.pack!, cls, action, facing, repeat);
-  const lut = recolorOf(assets, cls);
-  const c = assets.man.classes[manClassOf(assets, cls)];
+  const { lut, shoes, tag } = paintOf(assets, cls, action);
+  const src = manSource(assets, cls, action);
+  const c = assets.man.classes[src.cls];
   if (!c) return null;
-  const group = c.first + action * 4 + (facing & 3);
+  const group = c.first + src.action * 4 + (facing & 3);
   if (group > c.last) return null;
   const range = assets.man.actions[group];
   if (!range) return null;
-  // 换色的职业用自己的纹理（键里带职业号），不和被借的原版职业共用
-  const tag = lut ? `:c${cls}` : '';
   const key = `man:${group}:${repeat}${tag}`;
   if (!scene.anims.exists(key)) {
     const frames: Phaser.Types.Animations.AnimationFrame[] = [];
     for (let i = range.first; i <= range.last; i++) {
       const fr = assets.man.frame(i);
-      const tk = textureFor(scene, `man:${i}${tag}`, () => frameToCanvas(lut ? { ...fr, pixels: fr.pixels.map((p) => lut[p]) } : fr, assets.palette));
+      const tk = textureFor(scene, `man:${i}${tag}`, () => {
+        if (!lut && !shoes) return frameToCanvas(fr, assets.palette);
+        const pixels = lut ? fr.pixels.map((p) => lut[p]) : Uint8Array.from(fr.pixels);
+        if (shoes) paintShoes(pixels, fr.width, fr.height, shoes);
+        return frameToCanvas({ ...fr, pixels }, assets.palette);
+      });
       // 每帧锚点不同：用帧的自定义原点
       const f = scene.textures.get(tk).get();
       f.customPivot = true;
@@ -134,14 +139,33 @@ const sheetLook = (assets: Assets, cls: number) => {
   return !!look && look.from === undefined;
 };
 
-/** 借原版动画的扩展包职业的换色表（按职业缓存）；不换色时为 null */
-const luts = new WeakMap<object, Map<number, Uint8Array | null>>();
-function recolorOf(assets: Assets, cls: number): Uint8Array | null {
+interface Paint {
+  /** 换色表；不换色为 null */
+  lut: Uint8Array | null;
+  /** 染鞋的换色表；不染为 null */
+  shoes: Uint8Array | null;
+  /** 纹理键的后缀：换过色的帧按职业（混搭的再按动作）单独缓存，不和被借的原版职业共用 */
+  tag: string;
+}
+const NO_PAINT: Paint = { lut: null, shoes: null, tag: '' };
+/** 借原版动画的扩展包职业第 action 个动作的换色（按包缓存） */
+const paints = new WeakMap<object, Map<string, Paint>>();
+function paintOf(assets: Assets, cls: number, action: number): Paint {
   const look = assets.pack?.rt.looks.get(cls);
-  if (!look?.recolor?.length) return null;
-  const m = luts.get(assets.pack!) ?? luts.set(assets.pack!, new Map()).get(assets.pack!)!;
-  if (!m.has(cls)) m.set(cls, recolorLut(assets.palette, look.recolor));
-  return m.get(cls)!;
+  if (!look) return NO_PAINT;
+  const part = look.parts?.get(action);
+  const groups = part ? part.recolor : look.recolor;
+  const shoes = part?.shoes ? look.shoes : undefined;
+  if (!groups?.length && !shoes) return NO_PAINT;
+  const k = part ? `${cls}:${action}` : `${cls}`;
+  const m = paints.get(assets.pack!) ?? paints.set(assets.pack!, new Map()).get(assets.pack!)!;
+  if (!m.has(k))
+    m.set(k, {
+      lut: groups?.length ? recolorLut(assets.palette, groups) : null,
+      shoes: shoes ? recolorLut(assets.palette, [{ src: [[1, 255]], dst: shoes.dst, k: shoes.k }]) : null,
+      tag: part ? `:c${cls}a${action}` : `:c${cls}`,
+    });
+  return m.get(k)!;
 }
 
 /** 扩展包职业的待机动作号（不是 Man.lib 的动作组，animFor 里换成包里的 idle 动作） */

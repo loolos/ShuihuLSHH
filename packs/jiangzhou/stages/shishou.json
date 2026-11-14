@@ -25,6 +25,15 @@
    "level": 22
   },
   {
+   "id": "songjiang",
+   "class": "songjiang",
+   "side": "player",
+   "x": 3,
+   "y": 8,
+   "facing": 3,
+   "level": 22
+  },
+  {
    "id": "s1",
    "class": 32,
    "side": "enemy",
@@ -89,12 +98,17 @@
      "铁牛在此！哪个鸟人来吃俺一斧？"
     ],
     [
+     "say",
+     "songjiang",
+     "在下郓城宋江。两位兄弟，小心了！"
+    ],
+    [
      "objective",
      "胜利条件：打倒所有敌人"
     ],
     [
      "objective",
-     "失败条件：戴宗或李逵倒下"
+     "失败条件：戴宗、李逵或宋江倒下"
     ]
    ]
   },
@@ -112,6 +126,17 @@
   {
    "on": {
     "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "试手结束。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
    },
    "do": [
     [
