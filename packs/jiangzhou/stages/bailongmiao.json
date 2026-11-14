@@ -648,6 +648,361 @@
    "facing": 1,
    "level": 27,
    "hidden": true
+  },
+  {
+   "id": "r2_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 50,
+   "y": 0,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r2_2",
+   "class": 34,
+   "side": "enemy",
+   "x": 50,
+   "y": 2,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r2_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 49,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r3_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 5,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r3_2",
+   "class": 33,
+   "side": "enemy",
+   "x": 52,
+   "y": 6,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r3_3",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 7,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r4_1",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 1,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r4_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 2,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r4_3",
+   "class": 33,
+   "side": "enemy",
+   "x": 44,
+   "y": 1,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r5_1",
+   "class": 34,
+   "side": "enemy",
+   "x": 52,
+   "y": 9,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r5_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 10,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r5_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 51,
+   "y": 11,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r6_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 49,
+   "y": 0,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r6_2",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 0,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r6_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 48,
+   "y": 1,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r7_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 4,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r7_2",
+   "class": 33,
+   "side": "enemy",
+   "x": 53,
+   "y": 7,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r7_3",
+   "class": 34,
+   "side": "enemy",
+   "x": 49,
+   "y": 6,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r8_1",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 0,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r8_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 1,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r8_3",
+   "class": 33,
+   "side": "enemy",
+   "x": 45,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r9_1",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 10,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r9_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 12,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r9_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 50,
+   "y": 11,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r10_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 47,
+   "y": 1,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r10_2",
+   "class": 34,
+   "side": "enemy",
+   "x": 47,
+   "y": 2,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r10_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 49,
+   "y": 4,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r11_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 53,
+   "y": 9,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r11_2",
+   "class": 33,
+   "side": "enemy",
+   "x": 50,
+   "y": 7,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r11_3",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 8,
+   "facing": 2,
+   "level": 25,
+   "hidden": true
+  },
+  {
+   "id": "r12_1",
+   "class": 32,
+   "side": "enemy",
+   "x": 44,
+   "y": 0,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "r12_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 3,
+   "facing": 2,
+   "level": 27,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "r12_3",
+   "class": 33,
+   "side": "enemy",
+   "x": 41,
+   "y": 2,
+   "facing": 2,
+   "level": 26,
+   "hidden": true,
+   "name": "官兵"
   }
  ],
  "script": [
@@ -690,6 +1045,29 @@
   },
   {
    "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "庙后又有官兵杀来！"
+    ],
+    [
+     "appear",
+     "r2_1"
+    ],
+    [
+     "appear",
+     "r2_2"
+    ],
+    [
+     "appear",
+     "r2_3"
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 3
    },
    "do": [
@@ -720,6 +1098,22 @@
     [
      "appear",
      "w3_6"
+    ],
+    [
+     "narrate",
+     "背后的路上来了一队官军！"
+    ],
+    [
+     "appear",
+     "r3_1"
+    ],
+    [
+     "appear",
+     "r3_2"
+    ],
+    [
+     "appear",
+     "r3_3"
     ]
    ]
   },
@@ -777,6 +1171,45 @@
      "say",
      "lijun",
      "我们弟兄在揭阳得了消息，本要来劫法场，特来接应！"
+    ],
+    [
+     "narrate",
+     "官兵从庙后包抄过来！"
+    ],
+    [
+     "appear",
+     "r4_1"
+    ],
+    [
+     "appear",
+     "r4_2"
+    ],
+    [
+     "appear",
+     "r4_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "narrate",
+     "后面又冒出一队官兵！"
+    ],
+    [
+     "appear",
+     "r5_1"
+    ],
+    [
+     "appear",
+     "r5_2"
+    ],
+    [
+     "appear",
+     "r5_3"
     ]
    ]
   },
@@ -793,6 +1226,22 @@
      "say",
      "songjiang",
      "今日二十九个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
+    ],
+    [
+     "narrate",
+     "庙后又有官兵杀来！"
+    ],
+    [
+     "appear",
+     "r6_1"
+    ],
+    [
+     "appear",
+     "r6_2"
+    ],
+    [
+     "appear",
+     "r6_3"
     ]
    ]
   },
@@ -820,6 +1269,137 @@
     [
      "appear",
      "w7_4"
+    ],
+    [
+     "narrate",
+     "背后的路上来了一队官军！"
+    ],
+    [
+     "appear",
+     "r7_1"
+    ],
+    [
+     "appear",
+     "r7_2"
+    ],
+    [
+     "appear",
+     "r7_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "narrate",
+     "官兵从庙后包抄过来！"
+    ],
+    [
+     "appear",
+     "r8_1"
+    ],
+    [
+     "appear",
+     "r8_2"
+    ],
+    [
+     "appear",
+     "r8_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "do": [
+    [
+     "narrate",
+     "后面又冒出一队官兵！"
+    ],
+    [
+     "appear",
+     "r9_1"
+    ],
+    [
+     "appear",
+     "r9_2"
+    ],
+    [
+     "appear",
+     "r9_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "do": [
+    [
+     "narrate",
+     "庙后又有官兵杀来！"
+    ],
+    [
+     "appear",
+     "r10_1"
+    ],
+    [
+     "appear",
+     "r10_2"
+    ],
+    [
+     "appear",
+     "r10_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "do": [
+    [
+     "narrate",
+     "背后的路上来了一队官军！"
+    ],
+    [
+     "appear",
+     "r11_1"
+    ],
+    [
+     "appear",
+     "r11_2"
+    ],
+    [
+     "appear",
+     "r11_3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "do": [
+    [
+     "narrate",
+     "官兵从庙后包抄过来！"
+    ],
+    [
+     "appear",
+     "r12_1"
+    ],
+    [
+     "appear",
+     "r12_2"
+    ],
+    [
+     "appear",
+     "r12_3"
     ]
    ]
   },
