@@ -54,6 +54,14 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
     expect(rt.looks.get(rt.classIds.get('tiger')!)!.actions.slice(3)).toEqual(['attack', 'attack-paw']);
   });
 
+  it('武松用包里自己的头像（140 宽），老虎没有头像', () => {
+    const face = rt.looks.get(rt.classIds.get('wusong')!)!.face;
+    expect(typeof face).toBe('string');
+    const png = fs.readFileSync(path.join('packs/wusong', face as string));
+    expect(png.readUInt32BE(16)).toBe(140); // IHDR 宽
+    expect(rt.looks.get(rt.classIds.get('tiger')!)!.face).toBeNull();
+  });
+
   it('开场：老虎埋伏不在场，有回合限制和胜负条件，武松带着哨棒', () => {
     const { b, ws, tiger } = start();
     expect(tiger.present).toBe(false);

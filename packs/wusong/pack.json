@@ -23,7 +23,7 @@
     {"id": "yunqi", "name": "运气", "from": 206, "anim": "crouch-idle"}
    ],
    "sprite": {"sheet": "sprites/wusong", "idle": "idle", "walk": "walk", "hurt": "hit-chest", "defend": "crouch-idle"},
-   "face": {"fromHead": 69}
+   "face": {"file": "faces/wusong.png"}
   },
   {
    "id": "tiger", "name": "吊睛白额虎",

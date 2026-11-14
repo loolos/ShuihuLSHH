@@ -68,6 +68,9 @@ export async function openPack(assets: Assets, id: string): Promise<PackAssets> 
   return { rt, images };
 }
 
+/** 包里头像图的地址（随代码打包）；没有这张图时返回 undefined */
+export const packFaceUrl = (id: string, file: string): string | undefined => PNGS[`/packs/${id}/${file}`];
+
 const CLEARED_KEY = (id: string) => `shuihu.pack.${id}`;
 /** 外传的进度另存（不碰主线存档）：过了哪些关 */
 export function packCleared(id: string): string[] {

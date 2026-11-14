@@ -40,8 +40,8 @@ export interface PackClassJson {
     /** 头顶状态条的高度（像素，脚下往上），不填用普通身材 */
     head?: number;
   };
-  /** 对话头像：借原版 Head.lib 第几张；null = 不显示 */
-  face?: { fromHead: number } | null;
+  /** 对话头像：借原版 Head.lib 第几张，或者包里自己的图（相对包目录，宽 140、透明底，tools/make-portrait.py 生成）；null = 不显示 */
+  face?: { fromHead: number } | { file: string } | null;
 }
 
 export interface PackSkillJson {
