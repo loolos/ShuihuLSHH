@@ -1,11 +1,11 @@
 """把带动画的 3D 模型渲染成原版风格的精灵图条（扩展包用，docs/game-design.md §15.4）。
 
 用法（需要 Blender 的 Python 模块 bpy，可 `pip install bpy`，要求 Python 版本与 bpy 轮子一致）：
-  python tools/render-sprites.py 模型.glb|.fbx 输出目录 [--height 1.75] [--ppm 40] [--frames 12]
+  python tools/render-sprites.py 模型.glb|.fbx 输出目录 [--height 1.75 | --length 2.2] [--ppm 50] [--frames 12] [--scale-by bones|mesh] [--outfit 上色.json]
          [--actions 名字,名字] [--yaw 0] [--samples 16]
 
 - 相机：正交，俯角 30.7°（原版菱形格 90×46，sin 俯角 = 46/90），方位角 45°，和原版等距格对齐。
-- 比例：--ppm 每米多少像素（默认 40：1.75 m 的人站着约 60 像素高，接近原版武龍）。
+- 比例：--ppm 每米多少像素（默认 50：1.75 m 的人站着约 65 像素高，接近原版武龍）。
   模型尺寸不对时用 --height 把模型整体缩放到这个身高（米）；四足动物用 --length 按身长缩放。
 - 朝向：只渲染 front（正面朝斜下）和 back（背面朝斜上）两个方向，另两个由游戏水平镜像（原版 Man.lib 朝向 1/3 正是 0/2 的镜像）。
   模型的正面不是 -Y 时用 --yaw 转（度）。
@@ -35,7 +35,7 @@ def parse_args():
     p.add_argument('model')
     p.add_argument('out')
     p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'shuihu', 'Data', 'Default.pal'))
-    p.add_argument('--ppm', type=float, default=40)
+    p.add_argument('--ppm', type=float, default=50)
     p.add_argument('--height', type=float, help='把模型缩放到这个身高（米）')
     p.add_argument('--length', type=float, help='把模型缩放到这个身长（米，四足动物）')
     p.add_argument('--frames', type=int, default=12)
