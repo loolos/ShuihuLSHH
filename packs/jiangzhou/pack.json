@@ -449,6 +449,138 @@
    "face": {
     "file": "faces/caijiu.png"
    }
+  },
+  {
+   "id": "huarong",
+   "name": "花荣",
+   "base": {
+    "hp": 85,
+    "mp": 80,
+    "attack": 62,
+    "defense": 22,
+    "hit": 95,
+    "agility": 40,
+    "crit": 20
+   },
+   "move": 5,
+   "weaponType": 11,
+   "items": [
+    0,
+    103,
+    124
+   ],
+   "skills": [
+    {
+     "id": "hr-shen",
+     "name": "百步穿杨",
+     "from": 222,
+     "anim": 0
+    }
+   ],
+   "sprite": {
+    "fromClass": 34,
+    "recolor": [
+     {
+      "src": [
+       [
+        16,
+        31
+       ]
+      ],
+      "dst": [
+       64,
+       79
+      ],
+      "k": 1.3
+     },
+     {
+      "src": [
+       [
+        32,
+        47
+       ]
+      ],
+      "dst": [
+       224,
+       239
+      ],
+      "k": 1.4
+     }
+    ]
+   },
+   "face": null
+  },
+  {
+   "id": "huangxin",
+   "name": "黄信",
+   "base": {
+    "hp": 95,
+    "mp": 80,
+    "attack": 64,
+    "defense": 26,
+    "hit": 90,
+    "agility": 32,
+    "crit": 12
+   },
+   "move": 5,
+   "weaponType": 0,
+   "items": [
+    0,
+    85,
+    0
+   ],
+   "skills": [
+    {
+     "id": "hx-jian",
+     "name": "丧门剑",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "hx-xuan",
+     "name": "镇三山",
+     "from": 225,
+     "anim": 1
+    },
+    {
+     "id": "hx-qi",
+     "name": "聚气",
+     "from": 227,
+     "anim": 2
+    }
+   ],
+   "sprite": {
+    "fromClass": 38,
+    "recolor": [
+     {
+      "src": [
+       [
+        16,
+        31
+       ]
+      ],
+      "dst": [
+       16,
+       31
+      ],
+      "k": 0.45
+     },
+     {
+      "src": [
+       [
+        224,
+        239
+       ]
+      ],
+      "dst": [
+       32,
+       47
+      ],
+      "k": 1.0
+     }
+    ]
+   },
+   "face": null
   }
  ],
  "stages": [

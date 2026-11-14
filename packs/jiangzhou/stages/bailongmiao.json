@@ -4,7 +4,11 @@
  "map": {
   "base": "N13"
  },
- "bgm": ["escape", "army", "battle2"],
+ "bgm": [
+  "escape",
+  "army",
+  "battle2"
+ ],
  "units": [
   {
    "id": "likui",
@@ -115,23 +119,23 @@
   },
   {
    "id": "huarong",
-   "class": 34,
+   "class": "huarong",
    "side": "ally",
    "x": 45,
    "y": 13,
    "facing": 2,
    "level": 27,
-   "name": "花荣"
+   "name": "小李广花荣"
   },
   {
    "id": "huangxin",
-   "class": 38,
+   "class": "huangxin",
    "side": "ally",
    "x": 45,
    "y": 15,
    "facing": 2,
    "level": 27,
-   "name": "黄信"
+   "name": "镇三山黄信"
   },
   {
    "id": "lufang",
@@ -141,7 +145,7 @@
    "y": 16,
    "facing": 2,
    "level": 26,
-   "name": "吕方"
+   "name": "小温侯吕方"
   },
   {
    "id": "guosheng",
@@ -151,7 +155,7 @@
    "y": 17,
    "facing": 2,
    "level": 26,
-   "name": "郭盛"
+   "name": "赛仁贵郭盛"
   },
   {
    "id": "yanshun",
@@ -161,7 +165,7 @@
    "y": 18,
    "facing": 2,
    "level": 27,
-   "name": "燕顺"
+   "name": "锦毛虎燕顺"
   },
   {
    "id": "zhugui",
@@ -171,7 +175,7 @@
    "y": 14,
    "facing": 2,
    "level": 26,
-   "name": "朱贵"
+   "name": "旱地忽律朱贵"
   },
   {
    "id": "wangying",
@@ -181,7 +185,7 @@
    "y": 14,
    "facing": 2,
    "level": 26,
-   "name": "王矮虎"
+   "name": "矮脚虎王英"
   },
   {
    "id": "zhengtianshou",
@@ -191,7 +195,7 @@
    "y": 15,
    "facing": 2,
    "level": 26,
-   "name": "郑天寿"
+   "name": "白面郎君郑天寿"
   },
   {
    "id": "shiyong",
@@ -201,7 +205,7 @@
    "y": 17,
    "facing": 2,
    "level": 26,
-   "name": "石勇"
+   "name": "石将军石勇"
   },
   {
    "id": "zhangshun",
@@ -212,7 +216,7 @@
    "facing": 1,
    "level": 27,
    "hidden": true,
-   "name": "张顺"
+   "name": "浪里白条张顺"
   },
   {
    "id": "zhangheng",
@@ -223,7 +227,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "张横"
+   "name": "船火儿张横"
   },
   {
    "id": "lijun",
@@ -234,7 +238,7 @@
    "facing": 1,
    "level": 27,
    "hidden": true,
-   "name": "李俊"
+   "name": "混江龙李俊"
   },
   {
    "id": "lili",
@@ -245,7 +249,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "李立"
+   "name": "催命判官李立"
   },
   {
    "id": "muhong",
@@ -256,7 +260,7 @@
    "facing": 1,
    "level": 27,
    "hidden": true,
-   "name": "穆弘"
+   "name": "没遮拦穆弘"
   },
   {
    "id": "muchun",
@@ -267,7 +271,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "穆春"
+   "name": "小遮拦穆春"
   },
   {
    "id": "tongwei",
@@ -278,7 +282,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "童威"
+   "name": "出洞蛟童威"
   },
   {
    "id": "tongmeng",
@@ -289,7 +293,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "童猛"
+   "name": "翻江蜃童猛"
   },
   {
    "id": "xueyong",
@@ -300,7 +304,7 @@
    "facing": 1,
    "level": 26,
    "hidden": true,
-   "name": "薛永"
+   "name": "病大虫薛永"
   },
   {
    "id": "e1",
