@@ -84,27 +84,31 @@ export function effectAnim(scene: Phaser.Scene, assets: Assets, group: number): 
   return key;
 }
 
-const headCache = new Map<string, number>();
+const headCache = new Map<number, number>();
+/** 普通身材的人物头顶状态条一律按这个高度放（世界像素，脚下往上）【新】 */
+export const HEAD_STD = 62;
 
 /**
- * 职业 cls 的动作 action、朝向 facing 第 1 帧里最高的不透明像素离锚点（脚下）多高（像素）；
- * 帧图上方常有透明的空白，头顶状态条按这个高度放【新】。
+ * 职业 cls 的头顶高度（负责人 2026-11-14：所有人状态条差不多高）。取走路动作 4 个朝向第 1 帧里
+ * 最高不透明像素离锚点高度的最小值（举起的兵器只在部分朝向冒出来，取最小值就去掉了）；
+ * 普通身材（不超过 70）一律按 HEAD_STD，只有骑马、巨汉这类明显高大的职业（42、43、48、54 等）按实际高度。
  */
-export function frameHeadroom(assets: Assets, cls: number, action: number, facing: number): number | null {
+export function classHead(assets: Assets, cls: number): number {
+  let h = headCache.get(cls);
+  if (h !== undefined) return h;
   const c = assets.man.classes[cls];
-  if (!c) return null;
-  const group = c.first + action * 4 + (facing & 3);
-  const range = group <= c.last ? assets.man.actions[group] : undefined;
-  if (!range) return null;
-  const key = `${range.first}`;
-  let h = headCache.get(key);
-  if (h === undefined) {
+  let min = Infinity;
+  for (let d = 0; c && d < 4; d++) {
+    const g = c.first + d;
+    const range = g <= c.last ? assets.man.actions[g] : undefined;
+    if (!range) continue;
     const fr = assets.man.frame(range.first);
     let top = 0;
     while (top < fr.height && !rowOpaque(fr.pixels, fr.width, top)) top++;
-    h = fr.anchorY - top;
-    headCache.set(key, h);
+    min = Math.min(min, fr.anchorY - top);
   }
+  h = min > 70 && min !== Infinity ? min : HEAD_STD;
+  headCache.set(cls, h);
   return h;
 }
 

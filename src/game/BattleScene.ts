@@ -15,7 +15,7 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark } from './minimap.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
-import { ACTION, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, frameHeadroom, idleAction, textureFor } from './sprites.ts';
+import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
 export interface BattleSceneData {
@@ -47,8 +47,6 @@ const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as cons
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
-/** 头顶高度最少按这么高算（世界像素） */
-const HEAD_MIN = 44;
 /** 状态条最高处离脚下的高度（头顶往上空 3 像素，再按 3 条算），飘字从这上面弹出 */
 const barTop = (head: number) => head + 3 + 3 * 3 + 1;
 const SLOT_LABEL = ['武器', '衣服', '头饰'];
@@ -64,7 +62,7 @@ export class BattleScene extends Phaser.Scene {
   private joinLevel?: number;
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
-  /** head：待机帧里最高的不透明像素离脚下的高度（世界像素），状态条和飘字放在它上面 */
+  /** head：头顶高度（世界像素，见 classHead），状态条和飘字放在它上面 */
   private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; head: number }>();
   /**
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
@@ -227,7 +225,7 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(v.x, v.y);
     const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
     const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
-    this.sprites.set(u.uid, { spr, bar, head: HEAD_MIN });
+    this.sprites.set(u.uid, { spr, bar, head: classHead(this.assets, u.classId) });
     this.pose(u);
     return spr;
   }
@@ -237,13 +235,11 @@ export class BattleScene extends Phaser.Scene {
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);
-    let action: number = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
-    let key = animFor(this, this.assets, u.classId, action, v.facing);
-    if (!key) key = animFor(this, this.assets, u.classId, (action = ACTION.walk), v.facing);
+    const action = u.defending ? ACTION.defend : idleAction(this.assets, u.classId);
+    const key = animFor(this, this.assets, u.classId, action, v.facing) ?? animFor(this, this.assets, u.classId, ACTION.walk, v.facing);
     if (key) {
       s.spr.play(key);
       s.spr.anims.pause(s.spr.anims.currentAnim!.frames[0]);
-      s.head = Math.max(HEAD_MIN, frameHeadroom(this.assets, u.classId, action, v.facing) ?? HEAD_MIN);
     }
     const p = cellToWorld(v.x, v.y);
     s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
@@ -280,7 +276,7 @@ export class BattleScene extends Phaser.Scene {
       const s = this.sprites.get(uid);
       if (s) return s.head;
     }
-    return HEAD_MIN;
+    return HEAD_STD;
   }
 
   private refreshAll() {
