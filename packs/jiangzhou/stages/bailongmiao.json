@@ -1,0 +1,864 @@
+{
+ "id": "bailongmiao",
+ "title": "白龙庙聚义",
+ "map": {
+  "base": "N13"
+ },
+ "bgm": "battle2",
+ "units": [
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 41,
+   "y": 17,
+   "facing": 2,
+   "level": 28
+  },
+  {
+   "id": "songjiang",
+   "class": "songjiang",
+   "side": "player",
+   "x": 44,
+   "y": 11,
+   "facing": 2,
+   "level": 26
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 43,
+   "y": 12,
+   "facing": 2,
+   "level": 27
+  },
+  {
+   "id": "chaogai",
+   "class": 12,
+   "side": "player",
+   "x": 42,
+   "y": 15,
+   "facing": 2,
+   "level": 30,
+   "name": "晁盖"
+  },
+  {
+   "id": "liutang",
+   "class": 17,
+   "side": "player",
+   "x": 40,
+   "y": 16,
+   "facing": 2,
+   "level": 28,
+   "name": "刘唐"
+  },
+  {
+   "id": "ruanxiaoer",
+   "class": 7,
+   "side": "player",
+   "x": 42,
+   "y": 18,
+   "facing": 2,
+   "level": 27,
+   "name": "阮小二"
+  },
+  {
+   "id": "ruanxiaowu",
+   "class": 8,
+   "side": "player",
+   "x": 43,
+   "y": 19,
+   "facing": 2,
+   "level": 27,
+   "name": "阮小五"
+  },
+  {
+   "id": "ruanxiaoqi",
+   "class": 9,
+   "side": "player",
+   "x": 41,
+   "y": 19,
+   "facing": 2,
+   "level": 27,
+   "name": "阮小七"
+  },
+  {
+   "id": "baisheng",
+   "class": 4,
+   "side": "player",
+   "x": 43,
+   "y": 16,
+   "facing": 2,
+   "level": 26,
+   "name": "白胜"
+  },
+  {
+   "id": "duqian",
+   "class": 69,
+   "side": "player",
+   "x": 39,
+   "y": 17,
+   "facing": 2,
+   "level": 26,
+   "name": "杜迁"
+  },
+  {
+   "id": "songwan",
+   "class": 70,
+   "side": "player",
+   "x": 40,
+   "y": 18,
+   "facing": 2,
+   "level": 26,
+   "name": "宋万"
+  },
+  {
+   "id": "huarong",
+   "class": 34,
+   "side": "ally",
+   "x": 45,
+   "y": 13,
+   "facing": 2,
+   "level": 27,
+   "name": "花荣"
+  },
+  {
+   "id": "huangxin",
+   "class": 38,
+   "side": "ally",
+   "x": 45,
+   "y": 15,
+   "facing": 2,
+   "level": 27,
+   "name": "黄信"
+  },
+  {
+   "id": "lufang",
+   "class": 39,
+   "side": "ally",
+   "x": 46,
+   "y": 16,
+   "facing": 2,
+   "level": 26,
+   "name": "吕方"
+  },
+  {
+   "id": "guosheng",
+   "class": 39,
+   "side": "ally",
+   "x": 46,
+   "y": 17,
+   "facing": 2,
+   "level": 26,
+   "name": "郭盛"
+  },
+  {
+   "id": "yanshun",
+   "class": 65,
+   "side": "ally",
+   "x": 45,
+   "y": 18,
+   "facing": 2,
+   "level": 27,
+   "name": "燕顺"
+  },
+  {
+   "id": "zhugui",
+   "class": 65,
+   "side": "ally",
+   "x": 44,
+   "y": 14,
+   "facing": 2,
+   "level": 26,
+   "name": "朱贵"
+  },
+  {
+   "id": "wangying",
+   "class": 44,
+   "side": "ally",
+   "x": 46,
+   "y": 14,
+   "facing": 2,
+   "level": 26,
+   "name": "王矮虎"
+  },
+  {
+   "id": "zhengtianshou",
+   "class": 67,
+   "side": "ally",
+   "x": 47,
+   "y": 15,
+   "facing": 2,
+   "level": 26,
+   "name": "郑天寿"
+  },
+  {
+   "id": "shiyong",
+   "class": 66,
+   "side": "ally",
+   "x": 47,
+   "y": 17,
+   "facing": 2,
+   "level": 26,
+   "name": "石勇"
+  },
+  {
+   "id": "zhangshun",
+   "class": 66,
+   "side": "ally",
+   "x": 52,
+   "y": 7,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "张顺"
+  },
+  {
+   "id": "zhangheng",
+   "class": 21,
+   "side": "ally",
+   "x": 53,
+   "y": 8,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "张横"
+  },
+  {
+   "id": "lijun",
+   "class": 65,
+   "side": "ally",
+   "x": 52,
+   "y": 8,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "李俊"
+  },
+  {
+   "id": "lili",
+   "class": 45,
+   "side": "ally",
+   "x": 52,
+   "y": 10,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "李立"
+  },
+  {
+   "id": "muhong",
+   "class": 38,
+   "side": "ally",
+   "x": 53,
+   "y": 11,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "穆弘"
+  },
+  {
+   "id": "muchun",
+   "class": 39,
+   "side": "ally",
+   "x": 52,
+   "y": 11,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "穆春"
+  },
+  {
+   "id": "tongwei",
+   "class": 21,
+   "side": "ally",
+   "x": 51,
+   "y": 4,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "童威"
+  },
+  {
+   "id": "tongmeng",
+   "class": 21,
+   "side": "ally",
+   "x": 52,
+   "y": 4,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "童猛"
+  },
+  {
+   "id": "xueyong",
+   "class": 39,
+   "side": "ally",
+   "x": 53,
+   "y": 6,
+   "facing": 1,
+   "level": 26,
+   "hidden": true,
+   "name": "薛永"
+  },
+  {
+   "id": "e1",
+   "class": 33,
+   "side": "enemy",
+   "x": 32,
+   "y": 21,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e2",
+   "class": 32,
+   "side": "enemy",
+   "x": 31,
+   "y": 22,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e3",
+   "class": 34,
+   "side": "enemy",
+   "x": 33,
+   "y": 22,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "e4",
+   "class": 32,
+   "side": "enemy",
+   "x": 32,
+   "y": 23,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e5",
+   "class": 33,
+   "side": "enemy",
+   "x": 33,
+   "y": 23,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 34,
+   "y": 23,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "e7",
+   "class": 32,
+   "side": "enemy",
+   "x": 31,
+   "y": 24,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e8",
+   "class": 33,
+   "side": "enemy",
+   "x": 33,
+   "y": 24,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 32,
+   "y": 25,
+   "facing": 1,
+   "level": 28,
+   "name": "骑兵"
+  },
+  {
+   "id": "e10",
+   "class": 43,
+   "side": "enemy",
+   "x": 39,
+   "y": 30,
+   "facing": 1,
+   "level": 28,
+   "name": "骑兵"
+  },
+  {
+   "id": "e11",
+   "class": 32,
+   "side": "enemy",
+   "x": 38,
+   "y": 31,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e12",
+   "class": 33,
+   "side": "enemy",
+   "x": 39,
+   "y": 32,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e13",
+   "class": 43,
+   "side": "enemy",
+   "x": 44,
+   "y": 32,
+   "facing": 1,
+   "level": 28,
+   "name": "骑兵"
+  },
+  {
+   "id": "e14",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 32,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e15",
+   "class": 34,
+   "side": "enemy",
+   "x": 39,
+   "y": 34,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "e16",
+   "class": 32,
+   "side": "enemy",
+   "x": 43,
+   "y": 34,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e17",
+   "class": 33,
+   "side": "enemy",
+   "x": 44,
+   "y": 34,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "e18",
+   "class": 34,
+   "side": "enemy",
+   "x": 45,
+   "y": 34,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "dujian",
+   "class": 42,
+   "side": "enemy",
+   "x": 46,
+   "y": 47,
+   "facing": 1,
+   "level": 32,
+   "ai": 8,
+   "name": "江州兵马都监"
+  },
+  {
+   "id": "d1",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 46,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "d2",
+   "class": 33,
+   "side": "enemy",
+   "x": 47,
+   "y": 46,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "d3",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 48,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "d4",
+   "class": 43,
+   "side": "enemy",
+   "x": 44,
+   "y": 45,
+   "facing": 1,
+   "level": 27
+  },
+  {
+   "id": "d5",
+   "class": 32,
+   "side": "enemy",
+   "x": 47,
+   "y": 48,
+   "facing": 1,
+   "level": 27,
+   "name": "官兵"
+  },
+  {
+   "id": "w3_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 26,
+   "y": 36,
+   "facing": 1,
+   "level": 28,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w3_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 28,
+   "y": 36,
+   "facing": 1,
+   "level": 28,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w3_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 26,
+   "y": 38,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "w3_4",
+   "class": 33,
+   "side": "enemy",
+   "x": 29,
+   "y": 38,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "w3_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 27,
+   "y": 40,
+   "facing": 1,
+   "level": 27,
+   "hidden": true
+  },
+  {
+   "id": "w3_6",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 40,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "w7_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 30,
+   "y": 30,
+   "facing": 1,
+   "level": 28,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w7_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 31,
+   "y": 31,
+   "facing": 1,
+   "level": 28,
+   "hidden": true,
+   "name": "骑兵"
+  },
+  {
+   "id": "w7_3",
+   "class": 32,
+   "side": "enemy",
+   "x": 30,
+   "y": 31,
+   "facing": 1,
+   "level": 27,
+   "hidden": true,
+   "name": "官兵"
+  },
+  {
+   "id": "w7_4",
+   "class": 34,
+   "side": "enemy",
+   "x": 29,
+   "y": 33,
+   "facing": 1,
+   "level": 27,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "objective",
+     "胜利：打倒江州兵马都监，或守满 12 回合\n失败：宋江倒下"
+    ],
+    [
+     "narrate",
+     "众好汉跟着李逵，一路杀到江边。前面大江拦截，没了去路，众人奔进一座庙里——却是白龙神庙。"
+    ],
+    [
+     "say",
+     "chaogai",
+     "前面都是大江，又无船只，城里官军早晚追来，如何是好？"
+    ],
+    [
+     "say",
+     "songjiang",
+     "若不是众位兄弟，宋江、戴宗今日必死。只是连累了众位！"
+    ],
+    [
+     "say",
+     "likui",
+     "怕什么！官兵来一个，俺砍一个！"
+    ],
+    [
+     "narrate",
+     "只听得城里鼓响，江州官军约有五七千人马，摇旗呐喊，杀奔江边来。"
+    ],
+    [
+     "say",
+     "dujian",
+     "反贼都在白龙庙里，一个也休放走！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "西边又有一队官军赶到！"
+    ],
+    [
+     "appear",
+     "w3_1"
+    ],
+    [
+     "appear",
+     "w3_2"
+    ],
+    [
+     "appear",
+     "w3_3"
+    ],
+    [
+     "appear",
+     "w3_4"
+    ],
+    [
+     "appear",
+     "w3_5"
+    ],
+    [
+     "appear",
+     "w3_6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "只见江面上三只大船，飞也似摇将来，船上都是好汉，各执兵器。"
+    ],
+    [
+     "appear",
+     "zhangshun"
+    ],
+    [
+     "appear",
+     "zhangheng"
+    ],
+    [
+     "appear",
+     "lijun"
+    ],
+    [
+     "appear",
+     "lili"
+    ],
+    [
+     "appear",
+     "muhong"
+    ],
+    [
+     "appear",
+     "muchun"
+    ],
+    [
+     "appear",
+     "tongwei"
+    ],
+    [
+     "appear",
+     "tongmeng"
+    ],
+    [
+     "appear",
+     "xueyong"
+    ],
+    [
+     "say",
+     "zhangshun",
+     "宋公明哥哥休慌，张顺来也！"
+    ],
+    [
+     "say",
+     "lijun",
+     "我们弟兄在揭阳得了消息，本要来劫法场，特来接应！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "do": [
+    [
+     "narrate",
+     "宋江见了众好汉，又惊又喜。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "今日二十九个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "do": [
+    [
+     "narrate",
+     "官军的骑兵又冲上来了！"
+    ],
+    [
+     "appear",
+     "w7_1"
+    ],
+    [
+     "appear",
+     "w7_2"
+    ],
+    [
+     "appear",
+     "w7_3"
+    ],
+    [
+     "appear",
+     "w7_4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "dujian"
+   },
+   "do": [
+    [
+     "narrate",
+     "都监一倒，官军大乱，四散奔逃。"
+    ],
+    [
+     "victory",
+     "众好汉杀退官军，上了大船，往穆太公庄上去了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "do": [
+    [
+     "narrate",
+     "官军死伤大半，再不敢上前。"
+    ],
+    [
+     "victory",
+     "众好汉杀退官军，上了大船，往穆太公庄上去了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了。"
+    ]
+   ]
+  }
+ ]
+}
