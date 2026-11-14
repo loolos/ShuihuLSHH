@@ -195,43 +195,68 @@
    "skills": [
     {
      "id": "sj-jian",
-     "name": "剑击",
+     "name": "孝义剑",
      "from": 194,
      "anim": 0
     },
     {
-     "id": "sj-yuezhan",
-     "name": "跃斩",
-     "from": 196,
-     "anim": 1,
-     "learnLevel": 1
-    },
-    {
-     "id": "sj-jianwu",
-     "name": "剑舞",
-     "from": 198,
-     "anim": 2,
-     "learnLevel": 1
-    },
-    {
-     "id": "sj-xuanzhan",
-     "name": "旋斩",
-     "from": 22,
+     "id": "sj-sihai",
+     "name": "四海归心",
+     "from": 225,
      "anim": 3,
-     "learnLevel": 1
+     "power": 20,
+     "mpCost": 30,
+     "hits": [
+      {
+       "frame": 10,
+       "percent": 100,
+       "dir": 2
+      },
+      {
+       "frame": 11,
+       "percent": 100,
+       "dir": 1
+      },
+      {
+       "frame": 13,
+       "percent": 100,
+       "dir": 0
+      },
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 3
+      }
+     ]
+    },
+    {
+     "id": "sj-wohu",
+     "name": "卧虎藏锋",
+     "from": 199,
+     "anim": 5
+    },
+    {
+     "id": "sj-xueran",
+     "name": "血染浔阳",
+     "from": 197,
+     "anim": 6,
+     "type": 14,
+     "area": 6,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "power": 35,
+     "mpCost": 60,
+     "effect": 46,
+     "learnLevel": 20
     },
     {
      "id": "sj-jishiyu",
      "name": "及时雨",
      "from": 200,
      "anim": 4,
-     "learnLevel": 1
-    },
-    {
-     "id": "sj-yunqi",
-     "name": "运气",
-     "from": 199,
-     "anim": 5
+     "area": 3,
+     "power": 3,
+     "mpCost": 40
     }
    ],
    "sprite": {
@@ -343,18 +368,6 @@
       "recolor": "wanglun",
       "shoes": true
      },
-     "1": {
-      "fromClass": 68,
-      "action": 4,
-      "recolor": "wanglun",
-      "shoes": true
-     },
-     "2": {
-      "fromClass": 68,
-      "action": 6,
-      "recolor": "wanglun",
-      "shoes": true
-     },
      "3": {
       "fromClass": 2,
       "action": 6,
@@ -370,6 +383,12 @@
      "5": {
       "fromClass": 68,
       "action": 7,
+      "recolor": "wanglun",
+      "shoes": true
+     },
+     "6": {
+      "fromClass": 68,
+      "action": 5,
       "recolor": "wanglun",
       "shoes": true
      }

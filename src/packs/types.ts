@@ -102,6 +102,12 @@ export interface PackSkillJson {
   poison?: number;
   hitMod?: number;
   critMod?: number;
+  /** 范围类型（同原版技能类型；14 = 身前宽 3、长 area 格的长方形【新】） */
+  type?: number;
+  /** 特效：Effect.lib 组号 + 1 */
+  effect?: number;
+  /** 命中段（借原版动画时用）：原版帧号、伤害百分比、方向（迴旋技 0–3 四个方向） */
+  hits?: { frame: number; percent: number; dir: number }[];
 }
 
 export interface PackItemJson {

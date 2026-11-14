@@ -243,7 +243,9 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     poison: s.poison ?? t.poison,
     hitMod: s.hitMod ?? t.hitMod,
     critMod: s.critMod ?? t.critMod,
-    hits,
+    type: s.type ?? t.type,
+    effect: s.effect ?? t.effect,
+    hits: s.hits ?? hits,
   };
 }
 
