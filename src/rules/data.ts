@@ -243,6 +243,13 @@ export function forgeGainText(it: Item, n: number) {
 
 /** 装备的移动力加成：原版有不少装备扣移动（负值），重制版一律不扣，加移动的照原版【新：负责人 2026-11-12 决定】 */
 export const equipMoveBonus = (it: Item) => Math.max(0, it.moveBonus);
+/**
+ * 装备的命中加成：原版扣命中的装备（槍、叉、鏟、铁甲、铁盔等）重制版只扣原值的 1/4（向零取整），
+ * 原扣除不到 4 点的直接当 0；加命中的照原版【新：负责人 2026-11-14 决定】。如 −5 → −1，−12 → −3，−18 → −4。
+ */
+export const equipHitBonus = (it: Item) => EQUIP_HIT_OVERRIDES[it.id] ?? (it.hit >= 0 ? it.hit : it.hit > -4 ? 0 : -Math.floor(-it.hit / 4));
+/** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */
+export const EQUIP_HIT_OVERRIDES: Record<number, number> = { 125: 8, 126: 12 };
 
 /** 回复类消耗品 */
 export const isHealing = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 17;
@@ -299,7 +306,9 @@ export function itemSummary(it: Item, n = 0): string {
     const f = forgedStats(it, n);
     if (f.attack) p.push(`攻${f.attack}`);
     if (f.defense) p.push(`防${f.defense}`);
-    for (const [k, l] of [['hit', '命'], ['agility', '敏'], ['crit', '必'], ['range', '射程'], ['maxHp', '体'], ['maxMp', '气']] as const)
+    const hit = equipHitBonus(it);
+    if (hit) p.push(`命${hit > 0 ? '+' : ''}${hit}`);
+    for (const [k, l] of [['agility', '敏'], ['crit', '必'], ['range', '射程'], ['maxHp', '体'], ['maxMp', '气']] as const)
       if (it[k]) p.push(`${l}${it[k] > 0 ? '+' : ''}${it[k]}`);
     if (equipMoveBonus(it)) p.push(`移+${equipMoveBonus(it)}`);
     if (it.regenHp) p.push(`每回合回体${it.regenHp}`);
