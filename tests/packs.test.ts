@@ -237,7 +237,8 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(mine[0].hits).toEqual(src[0].hits);
     expect(mine[1].name).toBe('旋风腿');
     expect(rt.data.classes[id].move).toBe(8);
-    expect(look.face).toBe(38);
+    expect(look.face).toBe('faces/daizong.png');
+    expect(rt.looks.get(rt.classIds.get('likui')!)!.face).toBe('faces/likui.png');
   });
 
   it('换色表：只换指定色阶，透明色不动，结果落在目标色阶里', () => {

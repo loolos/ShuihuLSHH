@@ -1043,6 +1043,8 @@ packs/wusong/
 - 动作名映射到游戏动作：待机、走、受击、防御、出手、倒地。
 - 缺的动作借相近的动作，比如防御借受击的第一帧。
 
+**头像（黑底）**：负责人用图像工具出黑底半身像（提示词要加轮廓光，免得黑发、黑须和底色粘连），`tools/make-portrait.py 原图 输出 --black 10 --box ...` 抠掉和图边连通的近黑色，裁成 140×187、缩到 `Default.pal`。框图让头占上半、带到胸口，和武松的头像比例一致。戴宗、李逵的头像就是这样做的（原图在项目文件 `shuihu-design/portraits/`）。
+
 **道具模型**：outfit JSON 的 `props` 除了球体，还可以写 `"shape": "box"`（单位立方体，按 `scale` 定长宽高）、`"shape": "cylinder"`（`radius`、`depth`），`rot` 是角度。挂到骨骼（如 `hand_r`）上。李逵的两把板斧 = 圆柱斧柄 + 扁盒斧刃（`packs/jiangzhou/sprites/src/outfit-likui.json`）。
 
 **已知问题**

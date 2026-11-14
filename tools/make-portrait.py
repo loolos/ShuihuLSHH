@@ -1,11 +1,12 @@
-"""把一张白底的人物半身像做成原版风格的对话头像（Head.lib 那样：宽 140、透明底、颜色缩到 Default.pal）。
+"""把一张白底（或加 --black 的黑底）人物半身像做成原版风格的对话头像（Head.lib 那样：宽 140、透明底、颜色缩到 Default.pal）。
 
 用法：
-  python3 tools/make-portrait.py 原图 输出.png [--box x0,y0,x1,y1] [--width 140] [--white 238]
+  python3 tools/make-portrait.py 原图 输出.png [--box x0,y0,x1,y1] [--width 140] [--white 215 | --black 10]
 
 步骤：
   1. 按 --box 裁剪（原图像素坐标；不填就自动裁掉四周空白，再按 140:187 补齐比例）；
   2. 从图边缘往里"漫水"，把和边缘连通的近白色（三个通道都 ≥ --white）当作背景，变透明；
+     黑底图加 --black N：和边缘连通、三个通道都 ≤ N 的近黑色算背景（头发、深色衣服贴着图边时 N 要小）；
   3. 缩到宽 --width（高按比例），只留几乎不透明的像素（免得留白边）；
   4. 颜色用误差扩散抖动缩到原版 Default.pal 的 16–255 号（0–15 是界面色，159 是影子色，都不用）。
 只依赖 Pillow 和 numpy。
@@ -27,8 +28,8 @@ def load_palette(path):
     return raw, np.array(usable)
 
 
-def auto_box(rgb, white):
-    content = rgb.min(axis=2) < white
+def auto_box(rgb, is_bg):
+    content = ~is_bg
     ys = np.where(content.any(axis=1))[0]
     xs = np.where(content.any(axis=0))[0]
     x0, x1, y0, y1 = xs[0], xs[-1] + 1, ys[0], ys[-1] + 1
@@ -42,9 +43,8 @@ def auto_box(rgb, white):
     return x0, y0, x1, y1
 
 
-def background_mask(rgb, white):
-    h, w = rgb.shape[:2]
-    near_white = rgb.min(axis=2) >= white
+def background_mask(near_white):
+    h, w = near_white.shape
     bg = np.zeros((h, w), dtype=bool)
     q = deque()
     for x in range(w):
@@ -74,21 +74,23 @@ def main():
     p.add_argument('--box', help='x0,y0,x1,y1（原图像素）')
     p.add_argument('--width', type=int, default=140)
     p.add_argument('--white', type=int, default=215, help='三个通道都不低于它、又和图边连通的像素算背景')
+    p.add_argument('--black', type=int, help='黑底：三个通道都不高于它、又和图边连通的像素算背景')
     p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'shuihu', 'Data', 'Default.pal'))
     a = p.parse_args()
 
     im = Image.open(a.src).convert('RGB')
+    is_bg = (lambda c: c.max(axis=2) <= a.black) if a.black is not None else (lambda c: c.min(axis=2) >= a.white)
     rgb = np.asarray(im).astype(np.int32)
-    box = tuple(int(v) for v in a.box.split(',')) if a.box else auto_box(rgb, a.white)
+    box = tuple(int(v) for v in a.box.split(',')) if a.box else auto_box(rgb, is_bg(rgb))
     im = im.crop(box)
     rgb = np.asarray(im).astype(np.int32)
-    alpha = np.where(background_mask(rgb, a.white), 0, 255).astype(np.uint8)
+    alpha = np.where(background_mask(is_bg(rgb)), 0, 255).astype(np.uint8)
     rgba = np.dstack([rgb.astype(np.uint8), alpha])
 
     w = a.width
     h = round(im.height * w / im.width)
     small = np.asarray(Image.fromarray(rgba, 'RGBA').resize((w, h), Image.LANCZOS)).astype(np.int32)
-    # 边缘半透明的像素混着白底，留下会有白边：只留几乎不透明的
+    # 边缘半透明的像素混着底色，留下会有白边 / 黑边：只留几乎不透明的
     body = small[..., 3] >= 240
 
     # 缩色用误差扩散抖动（原版头像也是抖动出来的；直接取最近色会出现色块）

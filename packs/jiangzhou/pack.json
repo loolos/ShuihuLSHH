@@ -96,7 +96,7 @@
     ]
    },
    "face": {
-    "fromHead": 38
+    "file": "faces/daizong.png"
    }
   },
   {
@@ -168,7 +168,7 @@
     "defend": "crouch-idle"
    },
    "face": {
-    "fromHead": 16
+    "file": "faces/likui.png"
    }
   }
  ],
