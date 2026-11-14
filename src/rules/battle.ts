@@ -47,7 +47,8 @@ export type BattleEvent =
   | { type: 'narrate'; text: string }
   | { type: 'objective'; lines: string[] }
   | { type: 'phase'; side: Side; turn: number }
-  | { type: 'appear'; uid: number; x: number; y: number }
+  /** ambush：埋伏的人现身，或开打后敌方新冒出来（重制版插播「伏兵」短曲用） */
+  | { type: 'appear'; uid: number; x: number; y: number; ambush?: boolean }
   /** 剧情里退场或埋伏（离开地图，不算战败） */
   | { type: 'leave'; uid: number }
   /** 二选一：伏兵号令（EXE 0x407af3：AI 模式 9 的单位行动时弹出）。选第一项时调用 signal() */
@@ -1428,9 +1429,10 @@ export class Battle {
     u.x = c.x;
     u.y = c.y;
     u.present = true;
+    const ambush = this.ambushers.has(u.uid) || (u.side === 'enemy' && this.turn > 1);
     this.ambushers.delete(u.uid);
     u.ended = u.side === this.phase;
-    this.emit({ type: 'appear', uid: u.uid, x: u.x, y: u.y });
+    this.emit({ type: 'appear', uid: u.uid, x: u.x, y: u.y, ambush });
   }
 
   private hide(u: Unit, ambush: boolean) {

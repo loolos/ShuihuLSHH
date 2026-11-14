@@ -6,7 +6,7 @@
  "map": {
   "base": "Act13-2"
  },
- "bgm": "tense",
+ "bgm": ["reeds", "naval"],
  "units": [
   {
    "id": "wuyong",
