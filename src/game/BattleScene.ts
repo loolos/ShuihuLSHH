@@ -48,6 +48,14 @@ type Mode =
   | { kind: 'skill'; u: Unit; skill: SkillDef };
 const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
+type AppearEvent = Extract<BattleEvent, { type: 'appear' }>;
+type LeaveEvent = Extract<BattleEvent, { type: 'leave' }>;
+/** 剧情登场淡入、退场淡出的时长（ms）。原来分别是 400 / 500，而且一个接一个播；现在缩短，连着的几个人同时播【新】 */
+const APPEAR_MS = 250;
+const LEAVE_MS = 250;
+/** 一批人同时登场时，最后一个人比第一个人最多晚多久开始淡入 */
+const APPEAR_SPREAD_MS = 400;
+
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 // 友军墨绿（负责人 2026-11-13：原来的蓝色和经验条太像）
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
@@ -922,7 +930,17 @@ export class BattleScene extends Phaser.Scene {
     this.ui.setEndTurnEnabled(false);
     this.ui.setRewind(null);
     try {
-      for (const e of events) {
+      for (let i = 0; i < events.length; i++) {
+        const e = events[i];
+        // 连着的几个登场（或几个退场）一起淡入淡出，不再一个接一个【新】（负责人 2026-11-14：伏兵逐一出现太慢）
+        if (!this.fast && !this.ui.skipping && (e.type === 'appear' || e.type === 'leave')) {
+          const group: BattleEvent[] = [e];
+          while (events[i + 1]?.type === e.type) group.push(events[++i]);
+          if (group.length > 1) {
+            await (e.type === 'appear' ? this.appearAll(group as AppearEvent[]) : this.leaveAll(group as LeaveEvent[]));
+            continue;
+          }
+        }
         // 跳过剧情：对白不显示，也不为它移动镜头；其余事件按快进处理
         if (this.ui.skipping) {
           this.setFast(true);
@@ -953,6 +971,43 @@ export class BattleScene extends Phaser.Scene {
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       this.ui.setRewind(b.rewindTarget());
       if (this.mode.kind !== 'idle') this.redraw();
+    }
+  }
+
+  private fade(target: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[], alpha: number, duration: number) {
+    return new Promise<void>((r) => this.tweens.add({ targets: target, alpha, duration, onComplete: () => r() }));
+  }
+
+  /** 登场：镜头移到这批人的中间，所有人同时淡入 */
+  private async appearAll(group: AppearEvent[]) {
+    const units = group.map((e) => {
+      const u = this.battle.unit(e.uid)!;
+      Object.assign(this.vs(u), { x: e.x, y: e.y });
+      return u;
+    });
+    const n = group.length;
+    await this.focus(Math.round(group.reduce((a, e) => a + e.x, 0) / n), Math.round(group.reduce((a, e) => a + e.y, 0) / n));
+    const sprs = units.map((u, k) => {
+      const spr = this.sprites.get(u.uid)?.spr ?? this.spawn(u, { x: group[k].x, y: group[k].y });
+      spr.setAlpha(0);
+      this.pose(u);
+      return spr;
+    });
+    // 一批人稍微错开一点（总共不超过 APPEAR_SPREAD_MS），看得出是陆续涌出来的
+    const step = n > 1 ? Math.min(40, APPEAR_SPREAD_MS / (n - 1)) : 0;
+    await Promise.all(
+      sprs.map((spr, k) => new Promise<void>((r) => this.tweens.add({ targets: spr, alpha: 1, delay: k * step, duration: APPEAR_MS, onComplete: () => r() }))),
+    );
+  }
+
+  /** 剧情退场：几个人同时淡出 */
+  private async leaveAll(group: LeaveEvent[]) {
+    const gone = group.map((e) => this.sprites.get(e.uid)).filter((s) => !!s);
+    for (const s of gone) s.bar.destroy();
+    if (gone.length) await this.fade(gone.map((s) => s.spr), 0, LEAVE_MS);
+    for (const e of group) {
+      this.sprites.get(e.uid)?.spr.destroy();
+      this.sprites.delete(e.uid);
     }
   }
 
@@ -1113,16 +1168,9 @@ export class BattleScene extends Phaser.Scene {
         await new Promise<void>((r) => this.tweens.add({ targets: s.spr, alpha: 1, duration: 250, onComplete: () => r() }));
         break;
       }
-      case 'appear': {
-        const u = b.unit(e.uid)!;
-        Object.assign(this.vs(u), { x: e.x, y: e.y });
-        await this.focusOn(u);
-        const spr = this.sprites.get(u.uid)?.spr ?? this.spawn(u, { x: e.x, y: e.y });
-        spr.setAlpha(0);
-        this.pose(u);
-        await new Promise<void>((r) => this.tweens.add({ targets: spr, alpha: 1, duration: 400, onComplete: () => r() }));
+      case 'appear':
+        await this.appearAll([e]);
         break;
-      }
       case 'move': {
         const u = b.unit(e.uid)!;
         const v = this.vs(u);
@@ -1289,7 +1337,7 @@ export class BattleScene extends Phaser.Scene {
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();
-          await new Promise<void>((r) => this.tweens.add({ targets: s.spr, alpha: 0, duration: 500, onComplete: () => r() }));
+          await this.fade(s.spr, 0, e.type === 'die' ? 500 : LEAVE_MS);
           s.spr.destroy();
           this.sprites.delete(e.uid);
         }
