@@ -13,6 +13,7 @@ import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark } from './minimap.ts';
+import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
@@ -78,6 +79,9 @@ export class BattleScene extends Phaser.Scene {
   /** 画面上的状态（回放到哪一步就是哪一步；cls 是画面上的职业，剧本换职业时引擎先变、画面回放到 look 才变） */
   private view = new Map<number, { x: number; y: number; facing: number; hp: number; mp: number; cls: number }>();
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
+  /** 地上物的遮挡索引，和被挡住的人物的虚影（按单位 uid；key 记下上次判断时的位置和帧，没变就不重算） */
+  private occluders = new OccluderIndex();
+  private ghosts = new Map<number, { img: Phaser.GameObjects.Image; key: string; cover: number | null }>();
   private overlay!: Phaser.GameObjects.Graphics;
   private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
@@ -116,6 +120,8 @@ export class BattleScene extends Phaser.Scene {
     this.sprites = new Map();
     this.view = new Map();
     this.groundItems = new Map();
+    this.occluders = new OccluderIndex();
+    this.ghosts = new Map();
     this.mode = { kind: 'idle' };
     this.busy = false;
   }
@@ -137,6 +143,7 @@ export class BattleScene extends Phaser.Scene {
       ...[...allSkills.flatMap((s) => fxGroups(s)), ...FIXED_FX].map((g) => String(g + 1)),
     ]);
 
+    const masks = new Map<number, CoarseMask>();
     for (let y = 0; y < map.height; y++)
       for (let x = 0; x < map.width; x++) {
         map.cells[y * map.width + x].forEach((l, k) => {
@@ -146,10 +153,15 @@ export class BattleScene extends Phaser.Scene {
           const lib = k === 0 ? 'ground' : 'upper';
           const fr = this.assets[lib].frame(l.tile);
           const key = textureFor(this, `${lib}:${l.tile}`, () => frameToCanvas(fr, this.assets.palette));
+          const depth = k === 0 ? -2 : depthOf(x, y, k);
           this.add
             .image(p.x, p.y, key)
             .setOrigin(fr.anchorX / Math.max(1, fr.width), fr.anchorY / Math.max(1, fr.height))
-            .setDepth(k === 0 ? -2 : depthOf(x, y, k));
+            .setDepth(depth);
+          if (k === 0 || !fr.width || !fr.height) return;
+          let mask = masks.get(l.tile);
+          if (!mask) masks.set(l.tile, (mask = coarseMask(fr.width, fr.height, fr.pixels)));
+          this.occluders.add(p.x - fr.anchorX, p.y - fr.anchorY, fr.width, fr.height, depth, mask);
         });
       }
     this.overlay = this.add.graphics().setDepth(-1);
@@ -465,6 +477,56 @@ export class BattleScene extends Phaser.Scene {
   update() {
     this.placeFloat();
     this.drawMinimap();
+    this.syncGhosts();
+  }
+
+  /**
+   * 被地上物挡住的人物（敌我都算）在遮挡物上面再画一份 50% 透明的虚影【新】（负责人 2026-11-14）。
+   * 虚影和本体同帧同位置：没被挡住的部分叠在本体上看不出来，被挡住的部分透出半透明的轮廓。
+   * 状态条也提到遮挡物上面，保证看得清。
+   */
+  private syncGhosts() {
+    for (const [uid, g] of this.ghosts) {
+      const s = this.sprites.get(uid);
+      if (!s || !s.spr.active || s.spr !== g.img.getData('spr')) {
+        g.img.destroy();
+        this.ghosts.delete(uid);
+      }
+    }
+    for (const [uid, s] of this.sprites) {
+      const spr = s.spr;
+      if (!spr.active || !spr.visible || spr.texture.key === '__DEFAULT') continue;
+      const key = `${spr.x},${spr.y},${spr.depth},${spr.texture.key},${spr.frame.name}`;
+      let g = this.ghosts.get(uid);
+      if (!g || g.key !== key) {
+        // 包围盒往上多算一段，把头顶的状态条也算进去
+        const top = spr.y - Math.max(spr.displayOriginY, s.head + 14);
+        const cover = this.occluders.cover({ x: spr.x - spr.displayOriginX, y: top, w: spr.width, h: spr.y - top + (spr.height - spr.displayOriginY) }, spr.depth);
+        if (!g) {
+          if (cover === null) continue;
+          const img = this.add.image(0, 0, spr.texture.key).setData('spr', spr);
+          this.ghosts.set(uid, (g = { img, key, cover }));
+        }
+        g.key = key;
+        g.cover = cover;
+      }
+      const img = g.img;
+      if (g.cover === null) {
+        if (img.visible) s.bar.setDepth(spr.depth + 1);
+        img.setVisible(false);
+        continue;
+      }
+      img
+        .setTexture(spr.texture.key, spr.frame.name)
+        .setPosition(spr.x, spr.y)
+        .setFlipX(spr.flipX)
+        .setDepth(g.cover + 0.5)
+        .setAlpha(spr.alpha * 0.5)
+        .setVisible(true);
+      if (spr.isTinted) img.setTint(spr.tintTopLeft);
+      else img.clearTint();
+      s.bar.setDepth(g.cover + 0.6);
+    }
   }
 
   /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */
