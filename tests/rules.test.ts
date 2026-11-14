@@ -4,7 +4,7 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buildClasses, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
@@ -1090,5 +1090,17 @@ describe('技能菜单的简略加成', () => {
   it('回复技 / 集气技显示回复比例', () => {
     expect(skillBonusText(sk({ type: 9, power: 4 }))).toBe('回体1/4');
     expect(skillBonusText(sk({ type: 8, power: 3 }))).toBe('回气1/3');
+  });
+});
+
+describe('装备命中', () => {
+  const item = (id: number, hit: number) => ({ id, hit }) as Parameters<typeof equipHitBonus>[0];
+  it('扣命中减为 1/4，原扣除不到 4 点当 0', () => {
+    expect([-2, -3, -4, -5, -7, -8, -12, -14, -18].map((h) => equipHitBonus(item(1, h)))).toEqual([0, 0, -1, -1, -1, -2, -3, -3, -4]);
+  });
+  it('加命中照原版', () => expect(equipHitBonus(item(1, 10))).toBe(10));
+  it('两顶斗笠加命中', () => {
+    expect(equipHitBonus(item(125, 0))).toBe(8);
+    expect(equipHitBonus(item(126, 0))).toBe(12);
   });
 });

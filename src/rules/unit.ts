@@ -1,6 +1,6 @@
 // 战场单位与属性计算。成长规则见 growth.ts 与 docs/game-design.md §3。
 import { statAt, tierGear } from './growth.ts';
-import { basicAttack, type Buff, EQUIP_SLOTS, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
+import { basicAttack, type Buff, EQUIP_SLOTS, equipHitBonus, equipMoveBonus, forgedStats, isEquipment, itemOf, type ClassDef, type GameData, type SkillDef } from './data.ts';
 
 export type Side = 'player' | 'ally' | 'enemy';
 
@@ -106,7 +106,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     const f = forgedStats(it!, forge[k] ?? 0);
     st.attack += f.attack;
     st.defense += f.defense;
-    st.hit += it!.hit;
+    st.hit += equipHitBonus(it!);
     st.agility += it!.agility;
     st.crit += it!.crit;
     st.move += equipMoveBonus(it!);
