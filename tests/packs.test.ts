@@ -411,10 +411,13 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(by('宋江').slots[0]).toBe(0);
     expect(by('李逵').present).toBe(true);
     expect(b.units.filter((u) => u.name === '刽子手' && u.present)).toEqual([]);
+    // 乔装的四伙人吵完留在场上围住法场（友军、原地不动），真身还没登场
     for (const n of ['弄蛇丐者', '使枪棒卖药的', '挑担脚夫', '推车客商']) {
-      expect(said.length).toBeGreaterThan(0);
-      expect(b.units.filter((u) => u.name === n).every((u) => !u.present)).toBe(true);
+      const ds = b.units.filter((u) => u.name === n);
+      expect(ds.length, n).toBeGreaterThanOrEqual(4);
+      expect(ds.every((u) => u.present && u.side === 'ally'), n).toBe(true);
     }
+    expect(b.units.some((u) => u.name === '晁盖' && u.present)).toBe(false);
     expect(said.some((t) => t.includes('午时三刻'))).toBe(true);
     // 第 1 回合我方能动的只有李逵
     expect(b.units.filter((u) => u.side === 'player' && b.canAct(u)).map((u) => u.name)).toEqual(['李逵']);
@@ -428,6 +431,8 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     for (const n of ['晁盖', '阮小二', '阮小五', '阮小七', '白胜']) expect(here(n)?.side, n).toBe('player');
     for (const n of ['花荣', '黄信', '吕方', '郭盛']) expect(here(n)?.side, n).toBe('ally');
     expect(by('晁盖').classId).toBe(12);
+    expect(b.units.filter((u) => (u.name === '推车客商' || u.name === '弄蛇丐者') && u.present)).toEqual([]);
+    expect(b.units.filter((u) => u.name === '使枪棒卖药的' && u.present).length).toBe(4);
     expect(here('刘唐')).toBeUndefined();
     expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
     advance(b, 3, log);
