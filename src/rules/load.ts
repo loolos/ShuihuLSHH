@@ -7,6 +7,7 @@ import { parseMap } from '../formats/map.ts';
 import { parsePasBlocks, parsePasHeader } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
+import { tuneBlocks, tuneUnits } from './stage-tune.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, withItemOverrides, type ClassDef, type GameData } from './data.ts';
 import { statAt, tierGear } from './growth.ts';
@@ -87,13 +88,15 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
   const actFile = mapFile.replace(/\.map$/i, '.act');
   const pabFile = findStageFile(files, stage, '.pab');
   const pasFile = findStageFile(files, stage, '.pas');
+  // 后期关卡追加的敌人和增援（stage-tune.ts）
+  const units = files.has(actFile) ? tuneUnits(stage, adjustEnemies(stage, parseAct(files.get(actFile), actFile)), board) : [];
   return {
     name: stage,
     board,
-    units: files.has(actFile) ? adjustEnemies(stage, parseAct(files.get(actFile), actFile)) : [],
-    blocks: pabFile ? parsePasBlocks(files.get(pabFile), 'big5') : [],
+    units,
+    blocks: pabFile ? tuneBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5'), units, 'big5') : [],
     header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
-    displayBlocks: opts.simplified && pasFile ? parsePasBlocks(files.get(pasFile), 'gbk') : undefined,
+    displayBlocks: opts.simplified && pasFile ? tuneBlocks(stage, parsePasBlocks(files.get(pasFile), 'gbk'), units, 'gbk') : undefined,
     data,
     seed: opts.seed,
     text: opts.text,
