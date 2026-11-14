@@ -37,6 +37,7 @@ export interface BattleSceneData {
 type Mode =
   | { kind: 'idle' }
   | { kind: 'selected'; u: Unit }
+  | { kind: 'move'; u: Unit }
   | { kind: 'attack'; u: Unit }
   | { kind: 'item'; u: Unit }
   /** 选中了一格道具；op = 正在选使用 / 给予的对象，或确认丢弃 */
@@ -322,6 +323,11 @@ export class BattleScene extends Phaser.Scene {
       // 其它阵营：预览移动范围【新】
       const r = this.battle.reachOf(u, u.stats.move);
       for (const n of r.values()) this.diamond(g, n, u.side === 'enemy' ? 0xe04030 : 0x5aa0d8, 0.22);
+    } else if (m.kind === 'move') {
+      // 移动模式：菜单收起，只画移动格（lolo 2026-11-14）
+      const { green, yellow } = this.battle.moveRange(u);
+      for (const c of green) this.diamond(g, c, 0x3fbf4f, 0.4), this.diamond(g, c, 0x3fbf4f, 0.8, true);
+      for (const c of yellow) this.diamond(g, c, 0xd8c040, 0.4), this.diamond(g, c, 0xd8c040, 0.8, true);
     } else if (m.kind === 'attack') {
       for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, 0.25);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
@@ -407,15 +413,15 @@ export class BattleScene extends Phaser.Scene {
     const target = hovered && u.side === 'player' && this.battle.attackTargets(u).includes(hovered) ? hovered : undefined;
     if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
-    else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : '');
+    else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : m.kind === 'move' ? '选择移动位置（绿 = 移动，黄 = 强行军，走完本回合结束）' : '');
     if (this.isTargeting(m)) this.setTargetCommands(m);
     else this.setFloatCommands(m);
   }
 
-  /** 在地图上选目标的模式：攻击、技能施放位置、道具使用 / 给予的对象 */
+  /** 在地图上选目标的模式：移动、攻击、技能施放位置、道具使用 / 给予的对象 */
   private isTargeting(m: Mode): boolean {
     if (m.kind === 'idle' || m.u.side !== 'player' || !this.battle.canAct(m.u)) return false;
-    return m.kind === 'attack' || m.kind === 'skill' || (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give'));
+    return m.kind === 'move' || m.kind === 'attack' || m.kind === 'skill' || (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give'));
   }
 
   /**
@@ -501,14 +507,18 @@ export class BattleScene extends Phaser.Scene {
       ];
     }
     const skills = b.skillsOf(u);
+    const range = b.moveRange(u);
     return [
+      // 移动：菜单收起，只看地图上的移动格，方便点（lolo 2026-11-14）【新】
+      ...(b.canMove(u) ? [{ label: '移动', enabled: range.green.length + range.yellow.length > 0, run: () => this.select({ kind: 'move', u }) }] : []),
       // 范围里没有敌人也能点"攻击"查看攻击范围（lolo 2026-11-13）【新】
       { label: '攻击', enabled: !u.acted, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
       ...(skills.length ? [{ label: '技能', enabled: skills.some((k) => k.usable), run: () => this.select({ kind: 'skills', u }) }] : []),
       { label: '防御', run: () => this.exec(u, () => b.defend(u)) },
       { label: '休息', enabled: !u.acted, run: () => this.exec(u, () => b.rest(u)) },
       { label: '道具', enabled: u.slots.some(Boolean), run: () => this.select({ kind: 'item', u }) },
-      { label: '待机', run: () => this.exec(u, () => b.wait(u)) },
+      // 待机：只是先放下这个人、收起菜单，不结束他的行动，本回合还能再选他（lolo 2026-11-14）【新】
+      { label: '待机', run: () => this.select({ kind: 'idle' }) },
       ...(b.canUndo(u) ? [{ label: '撤销移动', run: () => this.exec(u, () => b.undoMove(u)) }] : []),
     ];
   }
@@ -748,6 +758,13 @@ export class BattleScene extends Phaser.Scene {
         return void this.exec(u, () => (m.op === 'use' ? b.useItem(u, slot, at) : b.giveItem(u, slot, at)), list);
       }
       return this.select({ ...m, op: undefined });
+    }
+    if (m.kind === 'move') {
+      const { u } = m;
+      const { green, yellow } = b.moveRange(u);
+      if (!at && [...green, ...yellow].some((g) => sameCell(g, c))) return void this.exec(u, () => b.move(u, c.x, c.y));
+      // 点了范围外：回到行动菜单
+      return this.select({ kind: 'selected', u });
     }
     if (m.kind === 'item' || m.kind === 'itemSlot') {
       if (at && at !== m.u) return this.select({ kind: 'selected', u: at });
