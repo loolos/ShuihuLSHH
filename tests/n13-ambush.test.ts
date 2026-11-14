@@ -1,4 +1,4 @@
-// N13（诱敌蓼儿洼）：伏兵只看回合数——第 7 回合开始时登场（原版第 11 回合，重制版提前），与何涛位置无关；胜利条件后面补回合提示。
+// N13（诱敌蓼儿洼）：伏兵只看回合数——第 8 回合开始时登场（原版第 11 回合，重制版提前），与何涛位置无关；胜利条件后面补回合提示。
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -9,7 +9,7 @@ import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
 describe.skipIf(!has)('N13 诱敌深入', () => {
-  it('第 7 回合开始时伏兵登场，胜利条件带回合提示', () => {
+  it('第 8 回合开始时伏兵登场，胜利条件带回合提示', () => {
     const files = new NodeFiles(DATA);
     const tr = buildT2S(files);
     const data = loadGameData(files, tr);
@@ -21,14 +21,14 @@ describe.skipIf(!has)('N13 诱敌深入', () => {
       kill(u, t, d);
     };
     b.begin();
-    expect(b.objectives.some((l) => l.includes('引诱何涛深入蓼儿洼') && l.includes('第 7 回合'))).toBe(true);
+    expect(b.objectives.some((l) => l.includes('引诱何涛深入蓼儿洼') && l.includes('第 8 回合'))).toBe(true);
     const heroes = () => b.units.filter((u) => u.side === 'player' && u.present).length;
     expect(heroes()).toBe(2);
-    while (b.turn < 6) b.endPlayerPhase();
+    while (b.turn < 7) b.endPlayerPhase();
     expect(b.status).toBe('playing');
     expect(heroes()).toBe(2);
     b.endPlayerPhase();
-    expect(b.turn).toBe(7);
+    expect(b.turn).toBe(8);
     expect(heroes()).toBe(16);
     expect(b.objectives.some((l) => l.includes('打败所有敌人') && !l.includes('回合，'))).toBe(true);
   });
