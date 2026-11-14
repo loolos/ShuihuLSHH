@@ -4,7 +4,7 @@
 import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
-import { ROUTES, type CampaignState, type Member } from './campaign.ts';
+import { ROUTES, startingParty, type CampaignState, type Member } from './campaign.ts';
 import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
@@ -40,7 +40,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 技能随等级自动领悟；
  * - 银子 = 打到上一关为止的期望收入 expectedGold（掉钱基数 + 过关奖励，不扣沿途花销），不沿用手上的钱。
  */
-export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number } = {}): CampaignState {
+export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number; partyFrom?: number } = {}): CampaignState {
   const pos = stages.findIndex((s) => s.index === target);
   if (pos < 0) return c;
   const info = new Map<number, ReturnType<typeof readStage>>();
@@ -71,9 +71,12 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   const script = new Map<number, number>();
   // 没有我方出场的过场（如 Act13-1 之后进城镇 9）用城镇之后那一关的人
   const hasParty = (i: number) => at(i).units.some((u) => u.side === 'player');
-  const from = hasParty(pos) || lpos < 0 ? pos : lpos;
+  // 进城镇时人物取城镇之后那一关开局在场的人（townRoster），不取进城前那一关（可能是剧情关，带着客串的人）
+  const ppos = opts.partyFrom === undefined ? -1 : stages.findIndex((s) => s.index === opts.partyFrom);
+  const from = ppos >= 0 ? ppos : hasParty(pos) || lpos < 0 ? pos : lpos;
+  const roster = ppos >= 0 ? startingParty(at(from).units) : null;
   for (const u of at(from).units) {
-    if (u.side !== 'player' || !data.classes[u.type]) continue;
+    if (u.side !== 'player' || !data.classes[u.type] || (roster && !roster.includes(u.type))) continue;
     const cls = data.classes[u.type];
     const slots = cls.defaultItems.slice(0, SLOT_COUNT);
     u.items.forEach((id, k) => id && (slots[k] = id));
@@ -181,7 +184,8 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
 
 /**
  * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
- * - 人物和装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
+ * - 人物 = 城镇整备名单（城镇之后那一关开局在场的人，townRoster），active 也设成它；
+ * - 装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
  * - 银子 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
  *   固定这个数，不沿用手上的钱（负责人 2026-11-14）。
@@ -189,9 +193,13 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
 export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
   const pos = stages.findIndex((s) => s.index === stage);
   if (pos < 0) return c;
-  const base = jumpTo(files, data, stages, stage, c, { levelFrom: next });
-  return { ...base, town, gold: expectedGold(files, data, stages, pos) };
+  const base = jumpTo(files, data, stages, stage, c, { levelFrom: next, partyFrom: next });
+  const n = stages.find((s) => s.index === next);
+  return { ...base, town, gold: expectedGold(files, data, stages, pos), active: n ? townRoster(files, n.mapName) : undefined };
 }
+
+/** 城镇整备名单：城镇之后那一关（mapName）开局在场的我方角色号（startingParty） */
+export const townRoster = (files: FileSource, mapName: string): number[] => startingParty(readStage(files, { index: -1, mapName }).units);
 
 /** 打到第 pos 关（含）为止，敌人掉钱的期望加过关奖励的总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
 export function expectedGold(files: FileSource, data: GameData, stages: Stage[], pos: number): number {

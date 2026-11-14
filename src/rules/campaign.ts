@@ -1,5 +1,6 @@
 // 关卡串联：我方人物在关卡之间延续等级、经验、装备与金钱（docs/game-design.md §10）。
 import type { Battle } from './battle.ts';
+import type { ActUnit } from '../formats/act.ts';
 
 /** 我方一个人物的延续状态（按角色号保存） */
 export interface Member {
@@ -73,6 +74,20 @@ export const ROUTES: Record<number, { prompt: number; alt: number }> = {
 /** 剧本头决定的下一关；城镇 2、5 还要问分路（返回对话框序号与小径关卡） */
 export function nextByHeader(header: { town: number; next: number }): { next: number; route?: { prompt: number; alt: number } } {
   return { next: header.next, route: ROUTES[header.town] };
+}
+
+/**
+ * 城镇整备名单（docs/game-design.md §7.5.1）：城镇之后那一关开局就在场的我方人物（ACT 里我方、不隐藏、不埋伏、不摆在场外），按角色号去重。
+ * 不用"上一关出场的人"：进城前那一关常是剧情关，名单不全或带着客串的人（如 Act11-2 只剩宋江，城镇 8 一个好汉都不列）。
+ */
+export function startingParty(units: ActUnit[]): number[] {
+  const ids: number[] = [];
+  for (const u of units) {
+    const mode = u.flags >> 8;
+    if (u.side !== 'player' || u.flags & 0xff || mode === 6 || mode === 7 || mode === 9 || (!u.x && !u.y)) continue;
+    if (!ids.includes(u.type)) ids.push(u.type);
+  }
+  return ids;
 }
 
 /** 关卡开始时套用的我方状态 */

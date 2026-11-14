@@ -258,3 +258,84 @@ describe.skipIf(!has)('测试用跳关', () => {
     expect(expectedGold(files, data, stages, p42)).toBeLessThan(expectedGold(files, data, stages, p41) * 1.5);
   });
 });
+
+describe('城镇整备名单', () => {
+  it('startingParty：只取开局在场的我方，隐藏、埋伏、场外占位都不算，按角色号去重', async () => {
+    const { startingParty } = await import('../src/rules/campaign.ts');
+    const u = (type: number, o: { side?: string; flags?: number; x?: number; y?: number } = {}) =>
+      ({ index: 0, type, group: 0, side: o.side ?? 'player', facing: 0, x: o.x ?? 3, y: o.y ?? 4, level: 1, flags: o.flags ?? 0, extra: [0, 0, 0], items: [], raw: [] }) as never;
+    expect(startingParty([u(0), u(1, { flags: 1 }), u(2, { flags: 7 << 8 }), u(3, { flags: 6 << 8 }), u(4, { x: 0, y: 0 }), u(5, { side: 'ally' }), u(0), u(6)])).toEqual([0, 6]);
+  });
+});
+
+describe.skipIf(!has)('城镇整备名单（原版数据）', async () => {
+  const { loadGameData } = await import('../src/rules/load.ts');
+  const { jumpToTown, townRoster } = await import('../src/rules/preset.ts');
+  const { parseAct } = await import('../src/formats/act.ts');
+  const files = {
+    index: new Map<string, string>(),
+    init() {
+      for (const d of ['', 'Data', 'Map']) for (const f of fs.readdirSync(path.join(DATA, d))) this.index.set((d ? `${d}/${f}` : f).toLowerCase(), path.join(DATA, d, f));
+      return this;
+    },
+    get(p: string) { return fs.readFileSync(this.index.get(p.toLowerCase())!); },
+    has(p: string) { return this.index.has(p.toLowerCase()); },
+    list(dir: string, ext: string) { return [...this.index.keys()].filter((k) => k.startsWith(dir.toLowerCase() + '/') && k.endsWith(ext)); },
+  }.init();
+  const data = loadGameData(files);
+  const stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName);
+  const header = (m: string) => parsePasHeader(files.get(`Map/${m}.pab`));
+  const towns = stages.flatMap((s) => {
+    const h = header(s.mapName);
+    const next = stages.find((x) => x.index === h.next);
+    return h.town && next ? [{ stage: s, town: h.town, next }] : [];
+  });
+  const names = (ids: number[]) => ids.map((i) => data.charNames[i]).sort().join(' ');
+  /** 每个城镇该列的人（docs/game-design.md §7.5.1）；排序后比较 */
+  const ROSTER: Record<number, string> = {
+    1: '武龍 王進',
+    2: '武龍 史進 朱武 陳達 楊春',
+    3: '武龍 史進 朱武 陳達 楊春 魯智深',
+    4: '武龍 史進 朱武 陳達 楊春 魯智深',
+    13: '武龍 林沖 史進 朱武 陳達 楊春 魯智深',
+    5: '武龍 林沖 史進 朱武 陳達 楊春 魯智深',
+    6: '武龍 林沖 史進 朱武 陳達 楊春 魯智深',
+    12: '武龍 林沖 史進 朱武 陳達 楊春 魯智深',
+    7: '武龍 林沖 史進 朱武 陳達 楊春 魯智深',
+    8: '武龍 林沖 史進 朱武 陳達 楊春 魯智深 楊志',
+    9: '武龍 林沖 史進 朱武 陳達 楊春 魯智深 楊志 晁蓋 吳用 公孫勝 劉唐 阮小二 阮小五 阮小七 白勝',
+    10: '武龍 林沖 史進 朱武 陳達 楊春 魯智深 楊志 晁蓋 吳用 公孫勝 劉唐 阮小二 阮小五 阮小七 白勝',
+    11: '武龍 林沖 史進 朱武 陳達 楊春 魯智深 楊志 晁蓋 吳用 公孫勝 劉唐 阮小二 阮小五 阮小七 白勝',
+  };
+  const sorted = (s: string) => s.split(' ').sort().join(' ');
+
+  it('13 个城镇的名单都对得上表', () => {
+    expect(towns.map((t) => t.town).sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+    for (const t of towns) expect(names(townRoster(files, t.next.mapName)), `城镇 ${t.town}`).toBe(sorted(ROSTER[t.town]));
+  });
+
+  it('城镇 8（郓城县，Act11-2 之后）没有宋江，朱武、陈达、杨春在', () => {
+    const t = towns.find((x) => x.town === 8)!;
+    const r = townRoster(files, t.next.mapName);
+    expect(r).not.toContain(6);
+    expect(r).toEqual(expect.arrayContaining([5, 13, 15]));
+  });
+
+  it('名单里只有已经入伙的人：每个人在主线上之前就以我方身份出场过', () => {
+    for (const t of towns) {
+      const upto = stages.slice(0, stages.indexOf(t.stage) + 1);
+      const seen = new Set(upto.flatMap((s) => (files.has(`Map/${s.mapName}.act`) ? parseAct(files.get(`Map/${s.mapName}.act`)) : []).filter((u) => u.side === 'player').map((u) => u.type)));
+      for (const id of townRoster(files, t.next.mapName)) expect(seen.has(id), `城镇 ${t.town} ${data.charNames[id]}`).toBe(true);
+    }
+  });
+
+  it('选关直接进城镇：人物和整备名单与正常进城一样，不带客串的人', () => {
+    for (const t of towns) {
+      const c = jumpToTown(files, data, stages, t.stage.index, t.town, t.next.index, newCampaign(0));
+      const roster = townRoster(files, t.next.mapName);
+      expect(c.active, `城镇 ${t.town}`).toEqual(roster);
+      expect(names(c.members.map((m) => m.classId)), `城镇 ${t.town}`).toBe(names(roster));
+      expect(names(partyMembers(c).map((m) => m.classId))).toBe(sorted(ROSTER[t.town]));
+    }
+  });
+});
