@@ -103,6 +103,8 @@ export interface PackSkillJson {
   rangedDamage?: [number, number];
   /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
   castCycles?: number;
+  /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
+  castSpeed?: number;
   rangeMin?: number;
   rangeMax?: number;
   area?: number;

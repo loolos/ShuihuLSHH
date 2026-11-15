@@ -68,3 +68,14 @@ export function chargeTiming(assets: Pick<Assets, 'man' | 'pack' | 'effects'>, c
   }
   return { natural, played, fx, before: natural + fx, after: played + fx };
 }
+
+/** 单招出手与命中时间轴共用的倍率，未配置或配置无效时保持原速。 */
+export function castPlaybackRate(skill: Pick<SkillDef, 'castSpeed'>): number {
+  const speed = skill.castSpeed ?? 1;
+  return Number.isFinite(speed) && speed > 0 ? speed : 1;
+}
+
+/** HUM命中帧按原45ms换算后，与该招动作同步加速。 */
+export function castSegmentMs(frame: number, skill: Pick<SkillDef, 'castSpeed'>): number {
+  return (frame - 1) * ACTION_FRAME_MS / castPlaybackRate(skill);
+}

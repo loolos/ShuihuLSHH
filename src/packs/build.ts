@@ -251,6 +251,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     chargeTarget: s.chargeTarget,
     rangedDamage: s.rangedDamage,
     castCycles: s.castCycles,
+    castSpeed: s.castSpeed,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,

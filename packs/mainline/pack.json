@@ -1281,6 +1281,7 @@
         "rangeMax": 8,
         "critMod": 0,
         "castCycles": 3,
+        "castSpeed": 1.2,
         "rangedDamage": [
           1,
           0.6
