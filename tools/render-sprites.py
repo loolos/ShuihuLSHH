@@ -49,6 +49,7 @@ def parse_args():
     p.add_argument('--ambient', type=float, default=0.9, help='环境光强度（小一点明暗对比更强）')
     p.add_argument('--toon', type=int, default=0, help='平涂明暗档数（如 3）；0 = 照常的连续明暗。需要 --outfit')
     p.add_argument('--outline', action='store_true', help='外轮廓和衣物分界画深色描边')
+    p.add_argument('--poses', help='自拼动作 JSON：在已有动作的某一帧上按世界坐标轴转动骨骼、打关键帧，生成新动作（如踢腿，见 make_actions）')
     p.add_argument('--outfit', help='上色方案 JSON：按骨骼给通用假人模型的各部位上色（见 apply_outfit）')
     return p.parse_args(argv)
 
@@ -230,6 +231,60 @@ def apply_outfit(path):
         ob.parent_bone = pr['bone']
         bpy.context.view_layer.update()
         ob.matrix_world = mw
+
+
+def make_actions(path, scene):
+    """模型里没有的动作（如踢腿）用关键帧拼出来。
+
+    JSON：{"actions": [{"name": "Kick", "base": "Idle_Loop", "baseFrame": 0, "frames": 18,
+            "keys": [{"t": 0.3, "rot": {"thigh_r": [-100, 0, 0]}, "move": {"pelvis": [0, 0, 0.05]}}]}]}
+    - 每个关键帧都从基础姿势（base 动作的 baseFrame 帧）出发；t 是 0–1 的时间位置。
+    - rot：绕骨骼头部、按世界坐标轴 X/Y/Z 依次转多少度（人物正面朝 -Y，右手在 -X，Z 向上；
+      绕 X 转负角 = 往前抬）。按骨骼层级从父到子处理，子骨骼跟着父骨骼走，再叠加自己的转动。
+    - move：骨骼整体平移（米，世界坐标），用来做起跳、压低重心。
+    """
+    from mathutils import Euler, Matrix
+    spec = json.load(open(path, encoding='utf-8'))
+    arm = next(o for o in scene.objects if o.type == 'ARMATURE')
+
+    def depth(pb):
+        d = 0
+        while pb.parent:
+            pb, d = pb.parent, d + 1
+        return d
+
+    for a in spec['actions']:
+        base = bpy.data.actions[a['base']]
+        set_action(arm, base)
+        scene.frame_set(int(base.frame_range[0]) + a.get('baseFrame', 0))
+        bpy.context.view_layer.update()
+        pose0 = {pb.name: (pb.location.copy(), pb.rotation_quaternion.copy(), pb.scale.copy()) for pb in arm.pose.bones}
+        act = bpy.data.actions.new(a['name'])
+        set_action(arm, act)
+        n = a.get('frames', 24)
+        for key in a['keys']:
+            frame = 1 + round(key['t'] * n)
+            for pb in arm.pose.bones:
+                pb.rotation_mode = 'QUATERNION'
+                loc, rot, scl = pose0[pb.name]
+                pb.location, pb.rotation_quaternion, pb.scale = loc, rot, scl
+            bpy.context.view_layer.update()
+            names = set(key.get('rot', {})) | set(key.get('move', {}))
+            for name in sorted(names, key=lambda b: depth(arm.pose.bones[b])):
+                pb = arm.pose.bones[name]
+                mw = arm.matrix_world @ pb.matrix
+                head = mw.translation.copy()
+                if name in key.get('rot', {}):
+                    r = Euler([math.radians(v) for v in key['rot'][name]], 'XYZ').to_matrix().to_4x4()
+                    mw = Matrix.Translation(head) @ r @ Matrix.Translation(-head) @ mw
+                if name in key.get('move', {}):
+                    mw = Matrix.Translation(key['move'][name]) @ mw
+                pb.matrix = arm.matrix_world.inverted() @ mw
+                bpy.context.view_layer.update()
+            for pb in arm.pose.bones:
+                for path_ in ('location', 'rotation_quaternion', 'scale'):
+                    pb.keyframe_insert(path_, frame=frame)
+        print('拼出动作', a['name'], f'{n} 帧')
 
 
 def set_action(arm, act):
@@ -470,6 +525,8 @@ def main():
     os.makedirs(args.out, exist_ok=True)
     pal, usable = load_palette(args.palette)
     scene, root, cam = setup_scene(args)
+    if args.poses:
+        make_actions(args.poses, scene)
     ground(scene, root, args.height, args.length, args.scale_by)
     arm = next((o for o in scene.objects if o.type == 'ARMATURE'), None)
     actions = list(bpy.data.actions)

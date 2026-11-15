@@ -12,7 +12,7 @@
 
 | 目录 | 动作 |
 |---|---|
-| `wusong/` | idle 待机、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
+| `wusong/` | idle 待机、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 
 ## 来源与授权
@@ -29,6 +29,10 @@ uv venv --python 3.13 venv && uv pip install --python venv bpy==5.2.4
 venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/wusong --scale-by mesh --height 1.75 --ppm 50 \
   --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-wusong.json \
   --actions Idle_Loop,Walk_Loop,Hit_Chest,Punch_Jab,Punch_Cross,Death01,Roll,Crouch_Idle_Loop
+# 模型里没有踢腿：用 --poses 按关键帧自拼（Kick_R、Kick_L），渲染后 kick-rl = Kick_R 8 帧 + Kick_L 8 帧横向拼接
+venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/kick --scale-by mesh --height 1.75 --ppm 50 \
+  --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-wusong.json \
+  --poses packs/mainline/sprites/src/poses-wusong.json --actions Kick_R,Kick_L
 venv/bin/python tools/render-sprites.py tiger.glb out/tiger --length 2.2 --ppm 50 --frames 8 --samples 8 \
   --actions "Idle,Walk,Attack,Attack Paw,Hit Back,Go To Sleep"
 ```

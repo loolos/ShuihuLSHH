@@ -593,7 +593,7 @@
         "id": "yuanyang-jiao",
         "name": "玉环鸳鸯脚",
         "from": 210,
-        "anim": "punch-four",
+        "anim": "kick-four",
         "poison": 0,
         "stun": 0,
         "hitAt": [

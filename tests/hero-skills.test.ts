@@ -56,11 +56,12 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
       expect(attackParts(s)).toHaveLength(cycles);expect(s).toMatchObject({power,mpCost:cost});
       expect(s.hits.reduce((a,h)=>a+h.percent,0)).toBe(100);
       for(const strip of [action.front,action.back]) {
-        expect(strip.cycles).toBe(cycles);
-        const cycleMs=strip.frames*strip.ms;
+        // 一段 = 一次出拳 / 一脚：鸳鸯脚的图条一轮是右脚 + 左脚两脚，循环 2 次
+        const totalMs=strip.frames*strip.ms*(strip.cycles??1),cycleMs=totalMs/cycles;
+        expect(Number.isInteger(strip.frames*(strip.cycles??1)/cycles)).toBe(true);
         s.hits.forEach((h,i)=>expect((h.frame-1)*45).toBeGreaterThanOrEqual(i*cycleMs-22.5));
         s.hits.forEach((h,i)=>expect((h.frame-1)*45).toBeLessThan((i+1)*cycleMs));
-        expect(cycleMs*cycles).toBeLessThan(2500);
+        expect(totalMs).toBeLessThan(2500);
       }
     }
     expect(skill('wusong','擒虎镇岳').stun).toBe(30);
