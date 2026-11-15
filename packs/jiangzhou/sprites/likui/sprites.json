@@ -128,6 +128,96 @@
     "ms": 65,
     "cycles": 4
    }
+  },
+"axe-two": {
+  "source": "Sword_Attack × 2",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 90,
+    "cycles": 2
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 90,
+    "cycles": 2
   }
- }
+},
+"axe-3": {
+  "source": "Sword_Attack × 3",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 3
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 3
+  }
+},
+"axe-4": {
+  "source": "Sword_Attack × 4",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  }
+},
+"axe-5": {
+  "source": "Sword_Attack × 5",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 55,
+    "cycles": 5
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 55,
+    "cycles": 5
+  }
+},
+"axe-6": {
+  "source": "Sword_Attack × 6",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 45,
+    "cycles": 6
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 45,
+    "cycles": 6
+  }
+},
+"axe-sweep": {
+  "source": "Sword_Attack × 1",
+  "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 100,
+    "cycles": 1
+  },
+  "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 100,
+    "cycles": 1
+  }
+}
+}
 }

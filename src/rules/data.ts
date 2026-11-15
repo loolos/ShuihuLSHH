@@ -7,6 +7,8 @@ export interface SkillDef extends ClassSkill {
   name: string;
   /** 出手音效用的技能号（s<号>.mp3）；扩展包技能借原版技能的声音，不填就用 skillId */
   soundId?: number;
+  /** 指定技能可在曼哈顿距离内选点；默认保持原版四向直线。 */
+  targetShape?: 'diamond';
 }
 
 export interface ClassDef {

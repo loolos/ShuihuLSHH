@@ -122,47 +122,171 @@
    ],
    "skills": [
     {
-     "id": "lk-kan",
-     "name": "板斧砍",
-     "from": 221,
-     "anim": "axe-four",
-     "hitAt": [
-      0.1125,
-      0.3625,
-      0.6125,
-      0.8625
-     ]
+        "id": "lk-kan",
+        "name": "双斧开山",
+        "from": 221,
+        "anim": "axe-four",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.1125,
+            0.3625,
+            0.6125,
+            0.8625
+        ],
+        "power": 0,
+        "mpCost": 0,
+        "learnLevel": 1
     },
     {
-     "id": "lk-lianpi",
-     "name": "双斧连劈",
-     "from": 210,
-     "anim": "punch-cross",
-     "hitAt": [
-      0.3,
-      0.55
-     ],
-     "power": 25,
-     "mpCost": 30
+        "id": "lk-kuanglan-lv1",
+        "name": "狂澜裂岳LV1",
+        "from": 42,
+        "anim": "axe-3",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.15,
+            0.483333,
+            0.816667
+        ],
+        "power": 0,
+        "mpCost": 60,
+        "learnLevel": 4,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 3,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
     },
     {
-     "id": "lk-xuanfeng",
-     "name": "黑旋风",
-     "from": 225,
-     "anim": "sword-attack",
-     "hitAt": [
-      0.45
-     ],
-     "power": 30,
-     "mpCost": 45
+        "id": "lk-lianpi",
+        "name": "裂石连斩",
+        "from": 210,
+        "anim": "axe-two",
+        "poison": 0,
+        "stun": 30,
+        "hitAt": [
+            0.225,
+            0.725
+        ],
+        "power": 25,
+        "mpCost": 30,
+        "learnLevel": 8,
+        "type": 7,
+        "rangeMin": 1,
+        "rangeMax": 2,
+        "area": 1,
+        "effect": 0
     },
     {
-     "id": "lk-yunqi",
-     "name": "运气",
-     "from": 227,
-     "anim": "crouch-idle"
+        "id": "lk-yunqi",
+        "name": "沉息蓄锋",
+        "from": 227,
+        "anim": "crouch-idle",
+        "poison": 0,
+        "stun": 0,
+        "power": 2,
+        "mpCost": 0,
+        "learnLevel": 12
+    },
+    {
+        "id": "lk-kuanglan-lv2",
+        "name": "狂澜裂岳LV2",
+        "from": 42,
+        "anim": "axe-4",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.1125,
+            0.3625,
+            0.6125,
+            0.8625
+        ],
+        "power": 20,
+        "mpCost": 80,
+        "learnLevel": 16,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 4,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "lk-xuanfeng",
+        "name": "旋风卷岳",
+        "from": 225,
+        "anim": "axe-sweep",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.45
+        ],
+        "power": 30,
+        "mpCost": 45,
+        "learnLevel": 20,
+        "type": 2,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 1,
+        "effect": 0
+    },
+    {
+        "id": "lk-kuanglan-lv3",
+        "name": "狂澜裂岳LV3",
+        "from": 42,
+        "anim": "axe-5",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.09,
+            0.29,
+            0.49,
+            0.69,
+            0.89
+        ],
+        "power": 40,
+        "mpCost": 100,
+        "learnLevel": 24,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 5,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "lk-kuanglan-lv4",
+        "name": "狂澜裂岳LV4",
+        "from": 42,
+        "anim": "axe-6",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.075,
+            0.241667,
+            0.408333,
+            0.575,
+            0.741667,
+            0.908333
+        ],
+        "power": 60,
+        "mpCost": 120,
+        "learnLevel": 28,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 6,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
     }
-   ],
+],
    "sprite": {
     "sheet": "sprites/likui",
     "idle": "idle",
