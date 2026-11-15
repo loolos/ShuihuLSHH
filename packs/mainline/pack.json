@@ -692,7 +692,7 @@
         "fromClass": 57
       },
       "face": {
-        "fromHead": 57
+        "file": "faces/ximenqing.png"
       }
     },
     {
@@ -720,7 +720,7 @@
         "fromClass": 31
       },
       "face": {
-        "fromHead": 31
+        "file": "faces/panjinlian.png"
       }
     }
   ],
