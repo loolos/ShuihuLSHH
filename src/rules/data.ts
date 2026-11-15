@@ -113,9 +113,9 @@ export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
   27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
   // 白勝 監守自盜LV1–3：原版威力 15、命中 −5/−10/−15（换算后 10/5/1，加上远程衰减只有普攻一半）
-  48: { mpCost: 5, power: 30, hitMod: 0 },
-  49: { mpCost: 5, power: 40, hitMod: 0 },
-  50: { mpCost: 5, power: 50, hitMod: 0 },
+  48: { mpCost: 5, power: 40, hitMod: 0 },
+  49: { mpCost: 5, power: 50, hitMod: 0 },
+  50: { mpCost: 5, power: 60, hitMod: 0 },
   47: { mpCost: 15 }, // 白勝 窮鼠噬貓 50 → 15（原版已是三段 20/20/60%）
   // 陳達 黑虎偷心：威力 +20（原版 30、命中 −10 → 实际 20 → 40），耗气 20 不变；
   // 两段：跃起挥枪（第 12 帧）40% + 落地突刺（第 23 帧，原版命中帧）60%
