@@ -94,6 +94,24 @@ describe('属性', () => {
   it('个别职业的初始值调整（王進攻击 80）', () => {
     expect(statAt(cls(1, { attack: g(70, 104) }), 'attack', 0)).toBe(CLASS_OVERRIDES[1].attack);
   });
+  it('五位我方好汉必杀基础调整并正常成长，吴用只降低普攻必杀修正', () => {
+    const rec = (id: number) => ({
+      id, hp: 100, mp: 100, hpGrowth: 100, mpGrowth: 100, move: 5, weaponType: 0, goldCap: 0,
+      stats: Array(5).fill({ base: 5, growth: 100 }), defaultItems: [],
+      skills: [{ ...punch, skillId: 86, critMod: 20 }, { ...punch, skillId: 999, critMod: 25 }],
+    }) as unknown as ClassRecord;
+    const ids = [5, 9, 10, 12, 16, 53, 58];
+    const built = buildClasses(ids.map(rec), [], []);
+    for (const [i, initial] of [8, 8, 10, 10, 8, 5, 5].entries()) {
+      expect(baseStat(built[i], 'crit'), `职业 ${ids[i]}`).toBe(initial);
+      expect(statAt(built[i], 'crit', 20)).toBe(initial === 10 ? 25 : initial === 8 ? 21 : 16);
+      expect(perLevel(built[i], 'crit')).toBeGreaterThan(0);
+    }
+    const wu = built[2], enemyWu = built[5];
+    expect(wu.skills[0]).toMatchObject({ skillId: 86, critMod: 10, stun: 10, power: punch.power, mpCost: punch.mpCost });
+    expect(wu.skills[1].critMod).toBe(25);
+    expect(enemyWu.skills[0].critMod).toBe(20);
+  });
   it('按职业的偏移：百分比和加点数', () => {
     expect(CLASS_TWEAKS[66].pct!.hp).toBe(-15);
     const assassin = cls(66), captain = cls(65), constable = cls(38);
