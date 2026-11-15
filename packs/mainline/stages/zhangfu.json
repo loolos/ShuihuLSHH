@@ -6,7 +6,17 @@
     "gold": 0
   },
   "map": {
-    "base": "Act8-1"
+    "base": "Act8-1",
+    "open": [
+      [
+        8,
+        9
+      ],
+      [
+        9,
+        9
+      ]
+    ]
   },
   "bgm": [
     "eerie",
@@ -17,52 +27,101 @@
       "id": "wusong",
       "class": "wusong",
       "side": "player",
-      "x": 10,
-      "y": 12,
+      "x": 17,
+      "y": 10,
       "level": 29
     },
     {
       "id": "zhangdujian",
       "class": "zhangdujian",
       "side": "ally",
-      "x": 10,
-      "y": 7,
+      "x": 4,
+      "y": 8,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "hidden": true
     },
     {
       "id": "yulan",
       "class": 31,
       "side": "ally",
-      "x": 11,
-      "y": 7,
+      "x": 3,
+      "y": 9,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "name": "玉兰",
+      "hidden": true
     },
     {
       "id": "attendant",
       "class": 37,
       "side": "ally",
-      "x": 12,
-      "y": 8,
+      "x": 7,
+      "y": 9,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "name": "张府亲随",
+      "hidden": true
     },
     {
       "id": "hero",
       "class": 0,
       "side": "ally",
-      "x": 13,
+      "x": 17,
       "y": 11,
       "level": 1,
       "ai": 8
     },
     {
+      "id": "guard-a",
+      "class": 32,
+      "side": "ally",
+      "x": 3,
+      "y": 5,
+      "level": 1,
+      "ai": 8,
+      "name": "张府军汉",
+      "hidden": true
+    },
+    {
+      "id": "guard-b",
+      "class": 33,
+      "side": "ally",
+      "x": 6,
+      "y": 4,
+      "level": 1,
+      "ai": 8,
+      "name": "张府军汉",
+      "hidden": true
+    },
+    {
+      "id": "officer-a",
+      "class": 36,
+      "side": "ally",
+      "x": 10,
+      "y": 9,
+      "level": 1,
+      "ai": 8,
+      "name": "防送公人",
+      "hidden": true
+    },
+    {
+      "id": "officer-b",
+      "class": 36,
+      "side": "ally",
+      "x": 10,
+      "y": 11,
+      "level": 1,
+      "ai": 8,
+      "name": "防送公人",
+      "hidden": true
+    },
+    {
       "id": "shien",
       "class": "shien",
       "side": "ally",
-      "x": 10,
-      "y": 16,
+      "x": 16,
+      "y": 12,
       "level": 1,
       "ai": 8,
       "hidden": true
@@ -73,8 +132,45 @@
       "on": "start",
       "do": [
         [
+          "title",
+          "孟州 · 张都监府"
+        ],
+        [
           "narrate",
-          "快活林事后不久，张都监遣人请武松入府，声称赏识他的本领，要留在身边听用。宋江等留在客店，亲随只准武松一人进门。"
+          "快活林事后不久，张都监差人到牢城营，指名请武松入府听用。宋江、武龙放心不下，陪他走到府门前。"
+        ],
+        [
+          "move",
+          "wusong",
+          11,
+          9
+        ],
+        [
+          "move",
+          "hero",
+          12,
+          10
+        ],
+        [
+          "move",
+          "attendant",
+          10,
+          8
+        ],
+        [
+          "face",
+          "attendant",
+          "wusong"
+        ],
+        [
+          "say",
+          "attendant",
+          "都监相公只请武都头一人进去，闲人在门外候着。"
+        ],
+        [
+          "face",
+          "hero",
+          "wusong"
         ],
         [
           "say",
@@ -82,13 +178,50 @@
           "武二哥，这般热络，还是留个心眼。"
         ],
         [
+          "face",
+          "wusong",
+          "hero"
+        ],
+        [
           "say",
           "wusong",
           "俺是他治下配军，怎好不去？请宋三哥放心，有事俺自会传话。"
         ],
         [
+          "move",
+          "hero",
+          17,
+          11
+        ],
+        [
           "leave",
           "hero"
+        ],
+        [
+          "move",
+          "attendant",
+          6,
+          9
+        ],
+        [
+          "move",
+          "wusong",
+          5,
+          9
+        ],
+        [
+          "appear",
+          "zhangdujian"
+        ],
+        [
+          "face",
+          "wusong",
+          "zhangdujian"
+        ],
+        [
+          "face",
+          "zhangdujian",
+          "wusong"
         ],
         [
           "say",
@@ -96,12 +229,118 @@
           "我帐前见缺恁地一个人，不知你肯与我做亲随梯己人么？"
         ],
         [
+          "say",
+          "wusong",
+          "小人是个牢城营内囚徒，若蒙恩相抬举，小人当以执鞭坠镫，伏侍恩相。"
+        ],
+        [
+          "leave",
+          "attendant"
+        ],
+        [
+          "tint",
+          "night"
+        ],
+        [
+          "title",
+          "八月十五 · 中秋"
+        ],
+        [
           "narrate",
-          "张都监赐衣食，命玉兰唱曲，假作亲厚。中秋夜忽闻后院捉贼，武松奔去相助，反被亲随拿住，从箱中搜出早已藏下的银器。"
+          "张都监赐衣赐食，留武松在府中出入。到了中秋，又在后堂深处鸳鸯楼下安排筵宴，叫武松同席赏月，唤养娘玉兰出来。"
+        ],
+        [
+          "appear",
+          "yulan"
+        ],
+        [
+          "say",
+          "zhangdujian",
+          "你可唱个中秋对月时景的曲儿，教我们听则个。"
+        ],
+        [
+          "narrate",
+          "玉兰执着象板，唱一只东坡学士「明月几时有」的中秋词。张都监指着玉兰对武松说，要将她与他为妻。"
+        ],
+        [
+          "say",
+          "zhangdujian",
+          "如你不嫌低微，数日之间，择了良辰，将来与你做个妻室。"
+        ],
+        [
+          "narrate",
+          "武松谢了，吃到夜深才回房歇息。约莫三更时分，只听得后堂里一片声叫起「有贼」来。"
+        ],
+        [
+          "move",
+          "yulan",
+          5,
+          7
+        ],
+        [
+          "say",
+          "yulan",
+          "一个贼奔入后花园里去了！"
+        ],
+        [
+          "move",
+          "wusong",
+          5,
+          3
+        ],
+        [
+          "appear",
+          "guard-a"
+        ],
+        [
+          "appear",
+          "guard-b"
+        ],
+        [
+          "move",
+          "guard-a",
+          4,
+          3
+        ],
+        [
+          "move",
+          "guard-b",
+          6,
+          3
+        ],
+        [
+          "narrate",
+          "武松提条哨棒抢入后花园，寻了一遍不见人影，转身时却被一条板凳绊翻，七八个军汉叫声「捉贼」，就地把他绑了。"
+        ],
+        [
+          "act",
+          "guard-a",
+          "attack",
+          "wusong"
+        ],
+        [
+          "act",
+          "wusong",
+          "hurt"
         ],
         [
           "bind",
           "wusong"
+        ],
+        [
+          "move",
+          "zhangdujian",
+          5,
+          5
+        ],
+        [
+          "narrate",
+          "众人去武松房里打开柳藤箱，上面是些衣服，下面却是一二百两银酒器皿。"
+        ],
+        [
+          "say",
+          "zhangdujian",
+          "你这个贼配军，本是个强盗，贼心贼肝的人！我倒抬举你一力成人，你如何却做这等的勾当！"
         ],
         [
           "say",
@@ -109,21 +348,79 @@
           "相公，非干我事！我来捉贼，如何倒把我捉了做贼？武松是个顶天立地的好汉，不做这般的事！"
         ],
         [
+          "leave",
+          "zhangdujian"
+        ],
+        [
+          "leave",
+          "yulan"
+        ],
+        [
+          "leave",
+          "guard-a"
+        ],
+        [
+          "leave",
+          "guard-b"
+        ],
+        [
+          "tint",
+          ""
+        ],
+        [
+          "title",
+          "一月之后"
+        ],
+        [
           "narrate",
           "宋江闻讯，同施恩周全牢中用度；武龙护应，戴宗往来传信，花荣探听消息。李逵欲闯牢，被宋江劝住。武松不愿劫狱牵累施恩父子，仍待官司明白。"
         ],
         [
           "narrate",
-          "官司拖延月余，武松终于免死，改配恩州。施恩赶来送行，见押送的两个公人神色不善，忙将武松拉到一旁叮嘱。"
+          "官司拖延月余，武松终于免死，脊杖二十，刺配恩州牢城，当厅钉了一面七斤半铁叶团头护身枷。"
+        ],
+        [
+          "cleanse",
+          "wusong"
         ],
         [
           "appear",
+          "officer-a"
+        ],
+        [
+          "appear",
+          "officer-b"
+        ],
+        [
+          "move",
+          "wusong",
+          11,
+          10
+        ],
+        [
+          "move",
+          "shien",
+          12,
+          10
+        ],
+        [
+          "face",
+          "shien",
+          "wusong"
+        ],
+        [
+          "face",
+          "wusong",
           "shien"
+        ],
+        [
+          "narrate",
+          "施恩包着头、吊着胳膊赶来，把两只熟鹅挂在武松枷上，又将一包衣服银两拴在他腰里，趁公人不备，凑近低声叮嘱。"
         ],
         [
           "say",
           "shien",
-          "兄长，路上千万小心。这两个差人不怀好意，须防他们暗下毒手！"
+          "兄长，只是要路上仔细提防，这两个贼男女不怀好意！"
         ],
         [
           "say",
@@ -131,12 +428,48 @@
           "不须分付，我已省得了，再着两个来也不惧他。你自回去将息，且请放心。我自有措置。"
         ],
         [
-          "narrate",
-          "施恩伤势未愈，送罢先回。宋江等分路跟随，公人借口官差不许闲人紧跟，渐渐拉开距离；两个提刀汉子又搭上了道。"
+          "move",
+          "shien",
+          16,
+          12
         ],
         [
-          "cleanse",
+          "leave",
+          "shien"
+        ],
+        [
+          "narrate",
+          "两个公人催着上路。宋江等分路跟随，公人借口官差不许闲人紧跟，渐渐拉开距离；走不数里，两个提朴刀的汉子又搭上了道。"
+        ],
+        [
+          "move",
+          "officer-a",
+          16,
+          9
+        ],
+        [
+          "move",
+          "wusong",
+          17,
+          10
+        ],
+        [
+          "move",
+          "officer-b",
+          16,
+          11
+        ],
+        [
+          "leave",
+          "officer-a"
+        ],
+        [
+          "leave",
           "wusong"
+        ],
+        [
+          "leave",
+          "officer-b"
         ],
         [
           "victory",
