@@ -43,6 +43,46 @@ function unit(o: Partial<Unit>): Unit {
 }
 
 describe('属性', () => {
+  it('己方等级移动力：5 级 +1，20 级累计 +2；同职业敌方、友军均不增加', () => {
+    for (const [level, bonus] of [[1, 0], [4, 0], [5, 1], [19, 1], [20, 2], [30, 2], [99, 2]]) {
+      for (const side of ['player', 'enemy', 'ally'] as const) {
+        const stats = computeStats(data.classes[0], level, [], data, false, [], [], side);
+        expect(stats.move, `${side} Lv${level}`).toBe(4 + (side === 'player' ? bonus : 0));
+      }
+    }
+    // 外传职业也只按所在阵营生效，不以原版职业编号为限制。
+    expect(computeStats(cls(72), 20, [], data, false, [], [], 'player').move).toBe(6);
+  });
+
+  it('进关时同职业只给己方加成，初始可用移动点同步增加', () => {
+    const units = [
+      { ...act(0, 0, 'player', 1, 1), level: 20 },
+      { ...act(1, 0, 'enemy', 8, 8), level: 20 },
+      { ...act(2, 0, 'ally', 2, 2), level: 20 },
+    ];
+    const b = new Battle({ name: 't', board: new Board(10, 10), units, blocks: [], data, seed: 1 });
+    expect(b.unit(0)!.stats.move).toBe(6);
+    expect(b.unit(0)!.movementRemaining).toBe(6);
+    expect(b.unit(1)!.stats.move).toBe(4);
+    expect(b.unit(2)!.stats.move).toBe(4);
+  });
+
+  it('升级、阵营变化后刷新属性不会重复叠加等级移动力', () => {
+    const u = unit({ level: 4, side: 'player' });
+    refreshStats(u, data);
+    expect(u.stats.move).toBe(4);
+    u.level = 5;
+    refreshStats(u, data);
+    expect(u.stats.move).toBe(5);
+    u.level = 20;
+    refreshStats(u, data);
+    refreshStats(u, data);
+    expect(u.stats.move).toBe(6);
+    u.side = 'enemy';
+    refreshStats(u, data);
+    expect(u.stats.move).toBe(4);
+  });
+
   it('每级加 固定点数 + 初始值 × 百分比，累计后取整，不封顶', () => {
     const wulong = cls(0, { attack: g(65, 105), defense: g(30, 110) });
     expect(perLevel(wulong, 'attack')).toBeCloseTo(1.5 + 65 * 0.03); // 3.45

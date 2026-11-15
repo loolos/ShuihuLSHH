@@ -285,7 +285,7 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const stats = computeStats(cls, level, slots, this.data, false, forge);
+      const stats = computeStats(cls, level, slots, this.data, false, forge, [], a.side);
       this.units.push({
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,

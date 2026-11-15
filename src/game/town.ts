@@ -300,7 +300,7 @@ export class TownUI {
   private memberCard(m: Member, open: boolean): string {
     const d = this.data, cls = d.classes[m.classId];
     const forge = m.forge ?? [];
-    const st = computeStats(cls, m.level, m.slots, d, false, forge);
+    const st = computeStats(cls, m.level, m.slots, d, false, forge, [], 'player');
     const face = this.portrait(m.classId);
     const head = `<button class="who" data-do="member" data-v="${m.classId}">
       ${face ? `<img class="face" alt="" src="${face}">` : ''}
