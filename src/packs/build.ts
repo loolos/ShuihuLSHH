@@ -250,6 +250,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     targetShape: s.targetShape,
     chargeTarget: s.chargeTarget,
     rangedDamage: s.rangedDamage,
+    castCycles: s.castCycles,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,

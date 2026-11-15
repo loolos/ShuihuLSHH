@@ -76,7 +76,7 @@ export const RANGED_MAX = 0.5;
 export const RANGED_MIN = 0.1;
 
 export function rangedFactor(att: Unit, def: Unit, skill: SkillDef): number {
-  if (skill.type !== 10) return 1;
+  if (skill.type !== 10 && !skill.rangedDamage) return 1;
   const hi = Math.max(1, skill.rangeMax + att.stats.rangeBonus);
   const [near, far] = skill.rangedDamage ?? [RANGED_MAX, RANGED_MIN];
   if (hi <= 1) return near;
