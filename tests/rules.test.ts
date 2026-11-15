@@ -7,7 +7,7 @@ import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, re
 import { buffLabel, buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
+import { attackSkill, computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_CLASSES, GRUNT_GEAR, OFFICER, OFFICER_CLASSES, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
@@ -827,10 +827,23 @@ describe('技能', () => {
     const d: GameData = { ...data, classes: [...data.classes] };
     d.classes[HERO_CLASSES] = cls(HERO_CLASSES);
     const hero = unit({ classId: 1 });
-    const grunt = { ...unit({ classId: 1 }), classId: HERO_CLASSES };
+    const grunt = { ...unit({ classId: 1, side: 'enemy' }), classId: HERO_CLASSES };
     expect(announcesSkill(hero, punch, d)).toBe(true);
     expect(announcesSkill(grunt, punch, d)).toBe(false);
     expect(announcesSkill(grunt, skill, d)).toBe(true);
+  });
+
+  it.each([18, 69, 70, 80, 100])('我方和友军职业%s普攻均显示招式名，不受原版好汉编号限制', (classId) => {
+    const d: GameData = { ...data, classes: [...data.classes] };
+    const basic = { ...punch, name: '好汉拳法' };
+    d.classes[classId] = { ...cls(classId), skills: [basic] };
+    for (const side of ['player', 'ally'] as const) {
+      const hero = { ...unit({ classId: 1, side }), classId };
+      expect(announcesSkill(hero, attackSkill(hero, d), d)).toBe(true);
+    }
+    const enemy = { ...unit({ classId: 1, side: 'enemy' }), classId };
+    expect(announcesSkill(enemy, attackSkill(enemy, d), d)).toBe(false);
+    expect(announcesSkill(enemy, { ...basic, name: '特殊技能' }, d)).toBe(true);
   });
 
   const sk = (o: Partial<SkillDef>): SkillDef => ({ ...punch, hits: [{ frame: 5, percent: 100, dir: 0 }], ...o });
