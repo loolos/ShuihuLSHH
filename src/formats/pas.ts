@@ -111,6 +111,8 @@ export interface PasOp {
   args?: { stat?: string; pct?: number; add?: number; turns?: number };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
   quiet?: boolean;
+  /** 剧情点名：已战败角色仅供演出，不复活、不改变战斗状态。near为显示时靠近的职业号。 */
+  actor?: { action: 'show' | 'speak' | 'hide'; near?: number };
 }
 
 export interface PasBlock {

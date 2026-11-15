@@ -115,7 +115,25 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(ev.find((e) => e.type === 'say' && e.text.includes('沧州也不能待下去了'))).toMatchObject({
       type: 'say', uid: b.units.find((u) => u.classId === 0)!.uid,
     });
-    expect(ev.some((e) => e.type === 'appear')).toBe(false);
+    const lu = b.units.find(u => u.classId === 64)!;
+    const show = ev.findIndex(e => e.type === 'appear' && e.uid === lu.uid);
+    const plea = ev.findIndex(e => e.type === 'say' && e.text.includes('不干小人事'));
+    const killed = ev.findIndex(e => e.type === 'say' && e.text.includes('结果了陆谦'));
+    const hide = ev.findIndex(e => e.type === 'leave' && e.uid === lu.uid);
+    const next = ev.findIndex(e => e.type === 'say' && e.text.includes('沧州也不能待下去了'));
+    expect(show).toBeGreaterThanOrEqual(0);
+    expect(show).toBeLessThan(plea);
+    expect(hide).toBeGreaterThan(killed);
+    expect(hide).toBeLessThan(next);
+    expect(ev.filter(e => e.type === 'appear').map(e => e.uid)).toEqual([lu.uid]);
+    expect(ev.find(e => e.type === 'say' && e.text.includes('不干小人事'))).toMatchObject({ uid: lu.uid });
+    const appearance = ev[show];
+    if (appearance.type !== 'appear') throw new Error('Missing actor');
+    expect(b.board.passable(appearance.x, appearance.y)).toBe(true);
+    expect(b.active().some(u => u.x === appearance.x && u.y === appearance.y)).toBe(false);
+    expect(lu.alive).toBe(false); expect(lu.hp).toBe(0); expect(lu.gold).toBe(0);
+    expect(b.foesOf(player)).toEqual([]);
+    expect(ev.some(e => e.type === 'die' || e.type === 'attack')).toBe(false);
     // 已触发的胜利区块不会再次执行或重复处决陆谦。
     expect(b.endPlayerPhase()).toEqual([]);
   });

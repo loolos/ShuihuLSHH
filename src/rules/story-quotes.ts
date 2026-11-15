@@ -13,6 +13,8 @@ export interface StoryInsert {
   /** 插在这句（连同它前面点名说话者的指令）之前 */
   before?: string;
   lines: QuoteLine[];
+  /** 本段临时显示的剧情人物，允许已战败者出镜，末尾退场。 */
+  actors?: { who: number; near: number }[];
 }
 
 /** 新加的死亡触发区块：角色号 death 的单位倒下时说几句 */
@@ -150,6 +152,7 @@ export const STORY_INSERTS: Record<string, StoryInsert[]> = {
     },
     {
       before: '沧州也不能待下去了',
+      actors: [{ who: LU_QIAN, near: LIN }],
       lines: [
         [N, '一场恶战过后，喊杀声渐息。陆谦负伤倒在雪地里，尚有一口气，正挣扎着往外爬。林冲赶上前，劈胸只一提，将他掼翻在地。'],
         [LU_QIAN, '饶命！不干小人事，太尉差遣，不敢不来。'],
@@ -253,12 +256,19 @@ export const STORY_DEATH_BLOCKS: Record<string, StoryDeathBlock[]> = {
 
 const NARRATOR = 0xffffffff;
 
-function lineOps(lines: QuoteLine[]): PasOp[] {
-  // quiet：只点名说话，不让隐藏的人随之登场（白胜在登场之前先唱歌）
-  return lines.flatMap(([who, text]) => [
-    { op: 12, flag: 1, value: who === '旁白' ? NARRATOR : who, quiet: true },
-    { op: 13, flag: 1, value: 0, text },
-  ]);
+function lineOps(lines: QuoteLine[], actors: NonNullable<StoryInsert['actors']> = []): PasOp[] {
+  // 普通补充对白只点名；显式声明的剧情人物可临时出镜，但不复活。
+  const selectActor = (who: number, action: 'show' | 'hide', near?: number): PasOp =>
+    ({ op: 12, flag: 1, value: who, quiet: true, actor: { action, near } });
+  return [
+    ...actors.map(a => selectActor(a.who, 'show', a.near)),
+    ...lines.flatMap(([who, text]): PasOp[] => [
+      { op: 12, flag: 1, value: who === '旁白' ? NARRATOR : who, quiet: true,
+        ...(actors.some(a => a.who === who) ? { actor: { action: 'speak' as const } } : {}) },
+      { op: 13, flag: 1, value: 0, text },
+    ]),
+    ...actors.map(a => selectActor(a.who, 'hide')),
+  ];
 }
 
 const norm = (s: string) => s.trim();
@@ -290,7 +300,7 @@ export function applyStoryQuotes(stage: string, blocks: PasBlock[], text: (s: st
         at = i;
         while (at > 0 && ops[at - 1].op === 12) at--;
       }
-      const add = lineOps(ins.lines);
+      const add = lineOps(ins.lines, ins.actors);
       // 插在句子之后、下一句又没有重新点名时，把原来的说话者点回来
       const next = ops[at];
       if (next && next.op !== 12) {
