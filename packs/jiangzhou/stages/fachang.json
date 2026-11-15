@@ -16,7 +16,7 @@
    "class": "likui",
    "side": "player",
    "x": 42,
-   "y": 11,
+   "y": 13,
    "facing": 2,
    "level": 27,
    "hidden": true
@@ -470,7 +470,7 @@
   },
   {
    "id": "ex1",
-   "class": 66,
+   "class": 36,
    "side": "enemy",
    "x": 41,
    "y": 14,
@@ -481,7 +481,7 @@
   },
   {
    "id": "ex2",
-   "class": 66,
+   "class": 36,
    "side": "enemy",
    "x": 43,
    "y": 14,
