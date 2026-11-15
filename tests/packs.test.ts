@@ -977,6 +977,35 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   const start = (id: string, c?: CampaignState) => {
     const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
   };
+  it('快活林三店逐一由武松靠近喝酒，施恩可以移动帮忙', () => {
+    const s = stage('kuaihuolin'), b = start('kuaihuolin');
+    const wu = b.units.find(u => u.classId === cid('wusong'))!;
+    const shien = b.units.find(u => u.classId === cid('shien'))!;
+    expect(shien.side).toBe('player');
+    expect(b.canAct(shien)).toBe(true);
+    expect(b.canMove(shien)).toBe(true);
+    expect(b.moveRange(shien).green.length).toBeGreaterThan(1);
+    const check = () => (b as unknown as { afterAction: () => void }).afterAction();
+    for (const name of ['wine-1', 'wine-2', 'wine-3']) {
+      const index = s.units.findIndex(u => u.id === name), npc = b.unit(index)!;
+      expect(b.board.passable(npc.x, npc.y)).toBe(true);
+      const trigger = compileStage(rt, s, files).blocks.find(blk => blk.trigger.kind === 'near' && blk.trigger.uid === index)!;
+      expect(trigger).toBeDefined();
+      // 同职业三个店小二分别识别；施恩在身边不会替武松喝酒。
+      wu.x = 12; wu.y = 22;
+      shien.x = npc.x + 1; shien.y = npc.y;
+      check();
+      const before = wu.buffs.length;
+      expect(before).toBe((Number(name.at(-1)) - 1) * 2);
+      wu.x = npc.x + 1; wu.y = npc.y;
+      shien.x = 14; shien.y = 23;
+      check();
+      expect(wu.buffs.length).toBe(before + 2);
+      check();
+      expect(wu.buffs.length).toBe(before + 2); // 反复靠近只给一次酒劲。
+    }
+  });
+
   it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
     for (const id of ['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']) {
       const s=stage(id), b = new Battle(compileStage(rt,s,files));

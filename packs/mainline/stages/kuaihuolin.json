@@ -82,38 +82,40 @@
     {
       "id": "shien",
       "class": "shien",
-      "side": "ally",
+      "side": "player",
       "x": 14,
       "y": 23,
-      "level": 27,
-      "ai": 8
+      "level": 27
     },
     {
       "id": "wine-1",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 20,
+      "x": 7,
+      "y": 23,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-2",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 14,
+      "x": 8,
+      "y": 18,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-3",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 8,
+      "x": 7,
+      "y": 14,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "jiangmenshen",
@@ -257,7 +259,7 @@
         ],
         [
           "objective",
-          "击败蒋门神；武松或施恩倒下、超过20回合失败。"
+          "武松逐家走到三位店小二身边喝酒，再击败蒋门神；武松或施恩倒下、超过20回合失败。"
         ],
         [
           "turnLimit",
@@ -267,13 +269,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          19,
-          13,
-          21
-        ]
+        "near": "wine-1",
+        "by": "wusong"
       },
       "do": [
         [
@@ -305,13 +302,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          13,
-          13,
-          15
-        ]
+        "near": "wine-2",
+        "by": "wusong"
       },
       "do": [
         [
@@ -343,13 +335,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          7,
-          13,
-          9
-        ]
+        "near": "wine-3",
+        "by": "wusong"
       },
       "do": [
         [
