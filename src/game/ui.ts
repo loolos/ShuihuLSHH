@@ -135,8 +135,7 @@ export class BattleUI {
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
     const buffs = u.buffs.map(buffLabel);
     const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), u.ended && u.side === 'player' && '已行动']
-      .filter(Boolean)
-      .join('　');
+      .filter((state): state is string => typeof state === 'string');
     const face = this.portrait(u.classId);
     this.panel.innerHTML = `
       ${face ? `<img class="face" alt="" src="${face}">` : ''}
@@ -148,7 +147,7 @@ export class BattleUI {
         ${u.side === 'player' ? `<div>经验 <span class="bar2 exp"><i style="width:${pct(u.exp, expToNext(u.level))}"></i></span> ${u.exp}/${expToNext(u.level)}</div>` : ''}
       </div>
       <div class="grid"><span>攻 ${s.attack}</span><span>防 ${s.defense}</span><span>移 ${s.move}</span><span>命 ${s.hit}</span><span>敏 ${s.agility}</span><span>必 ${s.crit}</span></div>
-      ${states ? `<div>${states}</div>` : ''}
+      ${states.length ? `<div class="statuses">${states.map(state => `<span>${esc(state)}</span>`).join('')}</div>` : ''}
       ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}${preview.parts > 1 ? `（${preview.parts} 段）` : ''}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
       ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}
       ${

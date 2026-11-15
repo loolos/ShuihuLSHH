@@ -1282,7 +1282,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const bridgeReach = b.board.reach({ x: 21, y: 10 }, 1000, new Set());
     for (const u of b.units) expect([...bridgeReach.values()].some(c => c.x === u.x && c.y === u.y), `桥面可达 ${u.name}`).toBe(true);
     expect(foes).toHaveLength(36);
-    expect(new Set(foes.map(u => u.classId))).toEqual(new Set([32, 67, 65, 38]));
+    expect(new Set(foes.map(u => u.classId))).toEqual(new Set([32, 36, 67, 65, 38]));
     // 默认 28 级模板，移除原先 566 血的自定义精英职业。
     for (const u of foes) {
       expect(u.stats.maxHp).toBeLessThan(300);
