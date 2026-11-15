@@ -1,5 +1,6 @@
 {
-  "id": "songjiang-yanshixi",
+  "dynamicLevels": true,
+ "id": "songjiang-yanshixi",
   "title": "坐楼杀惜",
   "after": "N14",
   "map": {

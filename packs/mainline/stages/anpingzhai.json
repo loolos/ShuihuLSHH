@@ -1,0 +1,118 @@
+{
+  "id": "anpingzhai",
+  "title": "安平寨",
+  "after": "N14",
+  "chapter": "第十七章 孟州风雨",
+  "dynamicLevels": true,
+  "gearAt": "none",
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act8-1"
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 10,
+      "y": 13,
+      "level": 29
+    },
+    {
+      "id": "shien",
+      "class": "shien",
+      "side": "ally",
+      "x": 11,
+      "y": 11,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "warden",
+      "class": 27,
+      "side": "ally",
+      "x": 12,
+      "y": 10,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "jailer",
+      "class": 32,
+      "side": "ally",
+      "x": 10,
+      "y": 11,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "ally",
+      "x": 13,
+      "y": 11,
+      "level": 1,
+      "ai": 8,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "且说武松到了孟州安平寨，管营之子施恩暗中关照，免了新囚的杀威棒，日日好酒好食相待。"
+        ],
+        [
+          "say",
+          "wusong",
+          "你每日如此相待，必有话说。武松不是不知恩的人。"
+        ],
+        [
+          "say",
+          "shien",
+          "兄长请坐。待小弟备细告诉衷曲之事。"
+        ],
+        [
+          "say",
+          "wusong",
+          "小管营不要文文诌诌，拣紧要的话直说来。"
+        ],
+        [
+          "say",
+          "shien",
+          "小弟在快活林经营酒店，被蒋门神仗张团练的势力夺去，连我也打成重伤。"
+        ],
+        [
+          "narrate",
+          "施恩经营快活林也有仗势取利之处。武松受他照顾，却不肯容那蒋门神横行欺人。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "say",
+          "hero",
+          "宋三哥托我来探望。若有围攻的，我们替二哥挡住。"
+        ],
+        [
+          "say",
+          "wusong",
+          "蒋门神俺自去会，你们只拦旁人。明日便走！"
+        ],
+        [
+          "victory",
+          "施恩相待，武松应允往快活林。"
+        ]
+      ]
+    }
+  ]
+}

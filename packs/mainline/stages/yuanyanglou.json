@@ -1,0 +1,342 @@
+{
+  "id": "yuanyanglou",
+  "title": "鸳鸯楼",
+  "after": "N14",
+  "chapter": "第十八章 血溅鸳鸯楼",
+  "dynamicLevels": true,
+  "gearAt": "none",
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act9-1"
+  },
+  "bgm": [
+    "eerie",
+    "tense"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 8,
+      "y": 12,
+      "level": 29
+    },
+    {
+      "id": "zhangdujian",
+      "class": "zhangdujian",
+      "side": "enemy",
+      "x": 9,
+      "y": 6,
+      "level": 28,
+      "levelOffset": 0
+    },
+    {
+      "id": "zhangtuanlian",
+      "class": "zhangtuanlian",
+      "side": "enemy",
+      "x": 10,
+      "y": 6,
+      "level": 28,
+      "levelOffset": 0
+    },
+    {
+      "id": "jiangmenshen",
+      "class": "jiangmenshen",
+      "side": "enemy",
+      "x": 8,
+      "y": 6,
+      "level": 28,
+      "levelOffset": 0
+    },
+    {
+      "id": "attendant",
+      "class": 37,
+      "side": "ally",
+      "x": 10,
+      "y": 10,
+      "level": 1,
+      "ai": 8,
+      "hidden": true
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 8,
+      "y": 14,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 9,
+      "y": 14,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "shijin",
+      "class": 3,
+      "side": "player",
+      "x": 7,
+      "y": 14,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 11,
+      "y": 14,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 8,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 9,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "linchong",
+      "class": 11,
+      "side": "player",
+      "x": 9,
+      "y": 16,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "duqian",
+      "class": 69,
+      "side": "player",
+      "x": 10,
+      "y": 16,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "songwan",
+      "class": 70,
+      "side": "player",
+      "x": 12,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "且说众好汉随武松折回孟州。到得后园，武松先入黑影，问明三人还在鸳鸯楼吃酒，众人分守门路，约定听号相应。"
+        ],
+        [
+          "say",
+          "attendant",
+          "三位还在楼上饮酒，尚未散席。"
+        ],
+        [
+          "leave",
+          "attendant"
+        ],
+        [
+          "move",
+          "wusong",
+          8,
+          10
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "亏了相公与小人报了冤仇。再当重重地答报恩相。"
+        ],
+        [
+          "say",
+          "zhangdujian",
+          "不是看我兄弟张团练面上，谁肯干这等的事！"
+        ],
+        [
+          "say",
+          "zhangtuanlian",
+          "这一夜四个对付他一个，有甚么不了！再有几个性命也没了。"
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "小人也分付徒弟来，只教就那里下手，结果了快来回报。"
+        ],
+        [
+          "say",
+          "wusong",
+          "飞云浦四个，已等不得你们的回报了！武松在此！"
+        ],
+        [
+          "move",
+          "wusong",
+          8,
+          9
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "appear",
+          "shijin"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "appear",
+          "linchong"
+        ],
+        [
+          "appear",
+          "duqian"
+        ],
+        [
+          "appear",
+          "songwan"
+        ],
+        [
+          "say",
+          "songjiang",
+          "好个官府，竟与恶霸串通谋害人命！"
+        ],
+        [
+          "say",
+          "linchong",
+          "众位护住门路，今日便与你们分说明白！"
+        ],
+        [
+          "buff",
+          "zhangdujian",
+          "attack",
+          {
+            "pct": 25
+          }
+        ],
+        [
+          "buff",
+          "zhangdujian",
+          "defense",
+          {
+            "pct": 35
+          }
+        ],
+        [
+          "buff",
+          "zhangtuanlian",
+          "attack",
+          {
+            "pct": 25
+          }
+        ],
+        [
+          "buff",
+          "zhangtuanlian",
+          "defense",
+          {
+            "pct": 35
+          }
+        ],
+        [
+          "buff",
+          "jiangmenshen",
+          "attack",
+          {
+            "pct": 25
+          }
+        ],
+        [
+          "buff",
+          "jiangmenshen",
+          "defense",
+          {
+            "pct": 35
+          }
+        ],
+        [
+          "objective",
+          "张都监、张团练、蒋门神全部倒下；武松倒下或超过20回合失败。"
+        ],
+        [
+          "turnLimit",
+          20
+        ]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "三凶伏诛，楼中又起杀伤。武松在粉壁题下「杀人者，打虎武松也！」众好汉护他离开孟州，再投十字坡。"
+        ],
+        [
+          "narrate",
+          "张青、孙二娘接入店中将养。二娘取出皂直裰、戒箍、度牒、数珠与双戒刀，为武松改扮行者，遮掩金印。"
+        ],
+        [
+          "say",
+          "wusong",
+          "这个也使得，只恐我不象出家人模样。"
+        ],
+        [
+          "narrate",
+          "武龙、史进、林冲、杜迁、宋万回梁山复命；宋江与花荣等商议清风寨的去处。自此江湖上又多了一个行者武松，后事且待另说。"
+        ],
+        [
+          "victory",
+          "众好汉脱身，行者武松由此扬名。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "wusong"
+      },
+      "do": [
+        [
+          "defeat",
+          "武松倒下，众人未能脱险。"
+        ]
+      ]
+    }
+  ]
+}

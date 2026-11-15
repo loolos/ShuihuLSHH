@@ -1,0 +1,581 @@
+{
+  "id": "kuaihuolin",
+  "title": "快活林",
+  "after": "N14",
+  "chapter": "第十七章 孟州风雨",
+  "dynamicLevels": true,
+  "gearAt": "none",
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N05",
+    "crop": [
+      28,
+      12,
+      26,
+      26
+    ]
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 13,
+      "y": 22,
+      "level": 29
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 14,
+      "y": 22,
+      "level": 29
+    },
+    {
+      "id": "shijin",
+      "class": 3,
+      "side": "player",
+      "x": 20,
+      "y": 18,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 19,
+      "y": 18,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 20,
+      "y": 19,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 19,
+      "y": 19,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "shien",
+      "class": "shien",
+      "side": "ally",
+      "x": 14,
+      "y": 23,
+      "level": 27,
+      "ai": 8
+    },
+    {
+      "id": "wine-1",
+      "class": 35,
+      "side": "ally",
+      "x": 11,
+      "y": 20,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "wine-2",
+      "class": 35,
+      "side": "ally",
+      "x": 11,
+      "y": 14,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "wine-3",
+      "class": 35,
+      "side": "ally",
+      "x": 11,
+      "y": 8,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "jiangmenshen",
+      "class": "jiangmenshen",
+      "side": "enemy",
+      "x": 9,
+      "y": 5,
+      "level": 28,
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "jiang-wife",
+      "class": 31,
+      "side": "ally",
+      "x": 8,
+      "y": 4,
+      "level": 1,
+      "ai": 8,
+      "hidden": true
+    },
+    {
+      "id": "guard-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 7,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 13,
+      "y": 7,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 13,
+      "y": 5,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 19,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 20,
+      "y": 6,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 20,
+      "y": 8,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "guard-8",
+      "class": 33,
+      "side": "enemy",
+      "x": 19,
+      "y": 9,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "disciple-a",
+      "class": 67,
+      "side": "enemy",
+      "x": 8,
+      "y": 3,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "disciple-b",
+      "class": 67,
+      "side": "enemy",
+      "x": 10,
+      "y": 3,
+      "level": 28,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "武松认了施恩这位兄弟，宋江、武龙陪他出了孟州东门，沿路见酒旗便停。"
+        ],
+        [
+          "say",
+          "wusong",
+          "我和你出得城去，只要还我无三不过望。"
+        ],
+        [
+          "say",
+          "shien",
+          "兄长，如何是无三不过望？小弟不省其意。"
+        ],
+        [
+          "say",
+          "wusong",
+          "但遇着一个酒店便请我吃三碗酒。若无三碗时，便不过望子去。"
+        ],
+        [
+          "borrowEquip",
+          "wusong",
+          0,
+          0
+        ],
+        [
+          "objective",
+          "击败蒋门神；武松或施恩倒下、超过20回合失败。"
+        ],
+        [
+          "turnLimit",
+          20
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "wusong",
+        "area": [
+          10,
+          19,
+          13,
+          21
+        ]
+      },
+      "do": [
+        [
+          "say",
+          "wine-1",
+          "客官，三碗好酒，请！"
+        ],
+        [
+          "narrate",
+          "武松三碗下肚，气力更盛，脚步却有些虚浮。"
+        ],
+        [
+          "buff",
+          "wusong",
+          "attack",
+          {
+            "pct": 10
+          }
+        ],
+        [
+          "buff",
+          "wusong",
+          "hit",
+          {
+            "pct": -5
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "wusong",
+        "area": [
+          10,
+          13,
+          13,
+          15
+        ]
+      },
+      "do": [
+        [
+          "say",
+          "wine-2",
+          "客官，三碗好酒，请！"
+        ],
+        [
+          "narrate",
+          "武松三碗下肚，气力更盛，脚步却有些虚浮。"
+        ],
+        [
+          "buff",
+          "wusong",
+          "attack",
+          {
+            "pct": 10
+          }
+        ],
+        [
+          "buff",
+          "wusong",
+          "hit",
+          {
+            "pct": -5
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "wusong",
+        "area": [
+          10,
+          7,
+          13,
+          9
+        ]
+      },
+      "do": [
+        [
+          "say",
+          "wine-3",
+          "客官，三碗好酒，请！"
+        ],
+        [
+          "narrate",
+          "武松三碗下肚，气力更盛，脚步却有些虚浮。"
+        ],
+        [
+          "buff",
+          "wusong",
+          "attack",
+          {
+            "pct": 10
+          }
+        ],
+        [
+          "buff",
+          "wusong",
+          "hit",
+          {
+            "pct": -5
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "wusong",
+        "area": [
+          6,
+          1,
+          16,
+          9
+        ]
+      },
+      "do": [
+        [
+          "leave",
+          "wine-1"
+        ],
+        [
+          "leave",
+          "wine-2"
+        ],
+        [
+          "leave",
+          "wine-3"
+        ],
+        [
+          "say",
+          "jiang-wife",
+          "甚么人在此撒野？"
+        ],
+        [
+          "leave",
+          "jiang-wife"
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "敢来快活林寻事，先问问蒋门神的拳头！"
+        ],
+        [
+          "say",
+          "wusong",
+          "你这店却是哪里来的？今日还给施恩，免得吃打！"
+        ],
+        [
+          "appear",
+          "jiangmenshen"
+        ],
+        [
+          "appear",
+          "guard-1"
+        ],
+        [
+          "appear",
+          "guard-2"
+        ],
+        [
+          "appear",
+          "guard-3"
+        ],
+        [
+          "appear",
+          "guard-4"
+        ],
+        [
+          "appear",
+          "guard-5"
+        ],
+        [
+          "appear",
+          "guard-6"
+        ],
+        [
+          "appear",
+          "guard-7"
+        ],
+        [
+          "appear",
+          "guard-8"
+        ],
+        [
+          "appear",
+          "disciple-a"
+        ],
+        [
+          "appear",
+          "disciple-b"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "appear",
+          "shijin"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "say",
+          "shijin",
+          "我自山寨来寻你们，路上恰遇三位好汉，都在寻宋三哥！"
+        ],
+        [
+          "say",
+          "huarong",
+          "兄长久无音信，我等循路寻到孟州，今日总算见着了。"
+        ],
+        [
+          "say",
+          "daizong",
+          "正赶上兄长在此，我等来助一臂之力。"
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥有话，铁牛听着！那伙仗势欺人的，俺来对付！"
+        ],
+        [
+          "narrate",
+          "宋江招呼众人相助，嘱咐不可伤了店家客人。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "used": "wusong",
+        "skills": [
+          "yuanyang-jiao"
+        ]
+      },
+      "do": [
+        [
+          "narrate",
+          "武松虚影一晃，玉环步转身，鸳鸯脚连出；众人替他挡住围上来的军汉。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "jiangmenshen"
+      },
+      "do": [
+        [
+          "say",
+          "wusong",
+          "若要我饶你性命，只要依我三件事。"
+        ],
+        [
+          "narrate",
+          "蒋门神败服，答应归还酒店什物，请人赔话，离开孟州。快活林一时重归施恩，宋江等也与赶来的好汉相认。"
+        ],
+        [
+          "narrate",
+          "史进见官面与恶霸勾连，便辞了众人回梁山请援。戴宗、花荣、李逵留在宋江身边照应。"
+        ],
+        [
+          "victory",
+          "醉打蒋门神，史进回山请援。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "wusong"
+      },
+      "do": [
+        [
+          "defeat",
+          "武松倒下，众人未能脱险。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "shien"
+      },
+      "do": [
+        [
+          "defeat",
+          "施恩倒下，众人未能护住他。"
+        ]
+      ]
+    }
+  ]
+}
