@@ -8,7 +8,7 @@
  "bgm": ["tiger", "tense"],
  "units": [
   {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 27},
-  {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},
+  {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8, "offstage": true},
   {"id": "tiger", "levelOffset": 2, "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 29, "hidden": true},
   {"id": "hunter1", "class": "hunter-in-tigerskin", "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
   {"id": "hunter2", "class": "hunter-in-tigerskin", "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
