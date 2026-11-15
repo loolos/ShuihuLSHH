@@ -2,7 +2,7 @@
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
-import { GRUNT_CLASSES, OFFICER_CLASSES } from './growth.ts';
+import { GRUNT_CLASSES, OFFICER_CLASSES, statAt, tierGear } from './growth.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
@@ -279,6 +279,12 @@ export const TROOP_SKILLS: TroopSkill[] = [
 /** 有「遠程攻擊」（射程 2）的兵 15 级起射程 +1（负责人 2026-11-15）；技能号 222，同名高等级版本取代原版 */
 export const TROOP_REACH_CLASSES = new Set([20, 21, 33, 36, 37, 41, 67]);
 
+/** 远射技耗气 = 学会那一级的最大气（模板气力 + 档次装备加成）：刚学会时满气正好放一次（负责人 2026-11-15） */
+export function troopMp(id: number, level: number): number {
+  const cls = { id } as ClassDef;
+  return statAt(cls, 'mp', level) + (tierGear(cls)?.mp ?? 0);
+}
+
 function troopSkills(id: number, own: SkillDef[]): SkillDef[] {
   const tier = GRUNT_CLASSES.has(id) ? TROOP_GRUNT_LEVEL : OFFICER_CLASSES.has(id) ? TROOP_OFFICER_LEVEL : 0;
   if (!tier) return [];
@@ -289,7 +295,7 @@ function troopSkills(id: number, own: SkillDef[]): SkillDef[] {
     if (!t.classes.includes(id)) return;
     const b = own[t.borrow] ?? own[0];
     const last = b?.hits.at(-1)?.frame ?? 1;
-    out.push(extraSkill({ skillId: 1100 + i, group: b?.group ?? 0, learnLevel: tier, power: 0, critMod: -10, soundId: b?.soundId ?? b?.skillId, volley: true, hits: [{ frame: last, percent: 100, dir: 0 }], ...t.skill }));
+    out.push(extraSkill({ skillId: 1100 + i, group: b?.group ?? 0, learnLevel: tier, power: 0, critMod: -10, soundId: b?.soundId ?? b?.skillId, volley: true, hits: [{ frame: last, percent: 100, dir: 0 }], ...t.skill, mpCost: troopMp(id, tier) }));
   });
   return out;
 }
