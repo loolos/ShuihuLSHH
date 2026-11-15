@@ -2,8 +2,6 @@
  "dynamicLevels": true,
  "id": "chaijin-liubin",
  "title": "柴进留宾",
- "after": "N14",
- "chapter": "景阳冈打虎",
  "pov": true,
  "rewards": {
   "gold": 0

@@ -13,7 +13,8 @@ import { installMusic, music, type Playlist } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
-import { cnNumber, stageLabel, townName } from './game/stage-names.ts';
+import { stageLabel, townName } from './game/stage-names.ts';
+import { CHAPTERS, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
@@ -142,48 +143,58 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
-  /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
+  /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：位置和先后都按章节表（src/rules/chapters.ts） */
   // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
-  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; chapter?: string; townAfter?: number })[] = listPacks()
-    .filter((e) => e.pack.entry === 'mainline')
-    .flatMap((e) =>
-      e.stages
-        .filter((s) => s.before || s.after)
-        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, chapter: s.chapter, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
-    );
+  const packStages = new Map(
+    listPacks()
+      .filter((e) => e.pack.entry === 'mainline')
+      .flatMap((e) => e.stages.map((s) => [`${e.pack.id}/${s.id}`.toLowerCase(), s] as const)),
+  );
+  const chapterErrors = validateChapters(stages.map((s) => s.mapName), [...packStages.keys()]);
+  if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; townAfter?: number })[] = insertPlaces().flatMap((p) => {
+    const s = packStages.get(p.ref.toLowerCase());
+    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' }] : [];
+  });
   const insValue = (ref: string) => `ins:${ref}`;
-  // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
+  /** 续篇城镇（townAfter）之后接哪一段：章节表里紧跟它的插关 */
+  const insertAfter = (ref: string) => inserts[inserts.findIndex((x) => x.ref === ref) + 1]?.ref;
+  /** 续篇城镇在选关列表里的值：打完就进这个城镇的那一段 */
+  const insertTownOf = (next: string) => {
+    const i = inserts.findIndex((x) => x.ref === next);
+    return i > 0 && inserts[i - 1].townAfter ? `itown:${inserts[i - 1].ref}` : undefined;
+  };
+  // 按章节表分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏选关和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
-  /** 插关所在的章（续篇可以另开新章，见关卡 JSON 的 chapter） */
+  /** 插关所在的章 */
   const insChapter = new Map<string, string>();
-  let lastChapter = 0;
-  for (const s of stages) {
-    const l = stageLabel(s.title, s.mapName);
-    if (l.chapter) lastChapter = Math.max(lastChapter, l.chapter);
-    const label = l.chapterLabel || '其它';
-    if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
-    let items = chapters.at(-1)!.items;
-    // 插在这一关前面的主线插关
-    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase())) {
-      insChapter.set(e.ref, l.chapterLabel);
-      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
-    }
-    items.push({ label: l.short, value: String(s.index), title: l.full });
-    let chLabel = l.chapterLabel;
-    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase())) {
-      if (e.chapter) {
-        chLabel = `第${cnNumber(++lastChapter)}章 ${e.chapter}`;
-        chapters.push({ label: chLabel, items: [] });
-        items = chapters.at(-1)!.items;
+  const stageByMap = new Map(stages.map((s) => [s.mapName.toLowerCase(), s]));
+  CHAPTERS.forEach((ch, i) => {
+    const chLabel = chapterLabel(i + 1);
+    const items: TitleStageItem[] = [];
+    for (const key of ch.stages) {
+      if (isInsertKey(key)) {
+        const e = inserts.find((x) => x.ref.toLowerCase() === key.toLowerCase());
+        if (!e) continue;
+        insChapter.set(e.ref, chLabel);
+        items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+        if (e.townAfter) items.push({ label: '城镇 阳谷整备', value: `itown:${e.ref}`, title: `${chLabel} 城镇 阳谷整备` });
+        continue;
       }
-      insChapter.set(e.ref, chLabel);
-      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
-      if (e.townAfter) items.push({ label: '城镇 阳谷整备', value: `itown:${e.ref}`, title: '狮子楼后购买与整备' });
+      const s = stageByMap.get(key.toLowerCase());
+      if (!s) continue;
+      const l = stageLabel(s.title, s.mapName);
+      items.push({ label: l.short, value: String(s.index), title: l.full });
+      // 每个城镇也能直接进（列在进城前那一关后面）
+      const t = towns.get(s.index);
+      if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${chLabel} 城镇 ${townName(t.town)}` });
     }
-    // 每个城镇也能直接进（列在它前面那一关后面）
-    const t = towns.get(s.index);
-    if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
-  }
+    if (items.length) chapters.push({ label: chLabel, items });
+  });
+  // 不在章节表里的原版关卡（表写漏了）排在最后，免得进不去
+  const listed = new Set(CHAPTERS.flatMap((c) => c.stages.map((k) => k.toLowerCase())));
+  const stray = stages.filter((s) => !listed.has(s.mapName.toLowerCase()));
+  if (stray.length) chapters.push({ label: '其它', items: stray.map((s) => ({ label: stageLabel(s.title, s.mapName).short, value: String(s.index), title: s.mapName })) });
   // 最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）。顶栏下拉框和标题画面的选关共用
   const sideItems = (): TitleStageItem[] =>
     listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
@@ -209,7 +220,7 @@ function startGame(assets: Assets) {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('itown:')) {
       const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
-      if (e?.townAfter) return { ...c, finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: 'mainline/shizipo', town: e.townAfter, seen: false } };
+      if (e?.townAfter) return { ...c, finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
     }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
@@ -241,8 +252,10 @@ function startGame(assets: Assets) {
   // 已通关的旧存档也能接上后来新增、尚未游玩的终章续篇。
   if (!asked && campaign.finished) {
     const continuation = pendingInsert(campaign, inserts, stages.find((s) => s.index === campaign.stage)!.mapName, 'after');
-    if (continuation) campaign = campaign.inserts?.includes('mainline/shizilou') && continuation === 'mainline/shizipo'
-      ? { ...campaign, finished: false, insert: undefined, insertTown: { pack: 'mainline', next: continuation, town: 11, seen: false } }
+    // 接下来那一段前面是续篇城镇（如狮子楼之后的阳谷整备），且城镇前那一段已经打过：先进城镇
+    const prev = continuation ? inserts[inserts.findIndex((x) => x.ref === continuation) - 1] : undefined;
+    if (continuation) campaign = prev?.townAfter && campaign.inserts?.includes(prev.ref)
+      ? { ...campaign, finished: false, insert: undefined, insertTown: { pack: prev.ref.split('/')[0], next: continuation, town: prev.townAfter, seen: false } }
       : { ...campaign, finished: false, insert: continuation };
   }
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
@@ -581,8 +594,9 @@ function startGame(assets: Assets) {
     view = { ...view, active: ids };
     campaign = saveTownParty(view, rt);
     writeSave(campaign);
-    setHere('itown:mainline/shizilou');
-    const u = new URL(location.href); u.searchParams.set('stage', 'itown:mainline/shizilou'); history.replaceState(null,'',u);
+    const spot = insertTownOf(stop.next) ?? 'itown:mainline/shizilou';
+    setHere(spot);
+    const u = new URL(location.href); u.searchParams.set('stage', spot); history.replaceState(null,'',u);
     if (!stop.seen) {
       await ui.say('宋江', '二郎，你既要依文投营，哥哥不拦。只是孟州路远，我与武龙陪你走一程，也好从中照应。', ids[0]);
       if (ticket !== loading) return;
@@ -726,7 +740,7 @@ function startGame(assets: Assets) {
   }
   /** 存档停在哪一项（选关列表里的值） */
   function placeOf(c: CampaignState) {
-    if (c.insertTown) return "itown:mainline/shizilou";
+    if (c.insertTown) return insertTownOf(c.insertTown.next) ?? 'itown:mainline/shizilou';
     if (c.insert) return insValue(c.insert);
     if (c.town && towns.has(c.stage)) return townValue(c.stage);
     return String(c.stage);

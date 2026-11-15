@@ -11,7 +11,7 @@ export interface PackJson {
   description?: string;
   /**
    * 在游戏流程里的位置：standalone = 外传，从标题「选关」单独进入，等级固定，不碰主线存档；
-   * mainline = 主线插关（docs/game-design.md §15.8），每个关卡用 before 写插在哪一关前面
+   * mainline = 主线插关与续篇（docs/game-design.md §15.8），插在哪里、属于哪一章写在章节表 src/rules/chapters.ts
    */
   entry: 'standalone' | 'mainline';
   /** 素材来源与署名（CC-BY 的必须写） */
@@ -136,9 +136,6 @@ export interface PackItemJson {
 export interface PackStageJson {
   id: string;
   title: string;
-  /** 主线插关：before 插在指定关卡前；after 插在指定关卡后（只用于 entry = mainline 的包） */
-  before?: string;
-  after?: string;
   /**
    * 故事视角标签（切到武松等人物）。主线插关仍读写连续存档；独立外传才隔离主线资产。
    * 主线通过packParty/recordPackResult保存原版及包职业，不再由此字段跳过结算
@@ -149,16 +146,11 @@ export interface PackStageJson {
   /** 胜利后进入续篇城镇整备（原版商品表号）。 */
   townAfter?: number;
   /**
-   * 从这一关起另开新的一章（选关里分组、进关时放开章短曲），值是章名，如「景阳冈打虎」；章号接在它所在原版章节后面。
-   * 只对终章后的续篇（after）有效，之后登记的续篇都算这一章，直到下一个写了 chapter 的（负责人 2026-11-15）
-   */
-  chapter?: string;
-  /**
    * 默认装备、药品按每个人的等级表生成。"none" 禁用自动配装（剧情中装备由关卡指定）。
    * 旧存档/包中的主线地图名仍可读取，但不再影响配装。
    */
   gearAt?: string;
-  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线同一 after 的续篇按 stages 登记顺序接续 */
+  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线插关的先后按章节表 */
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };

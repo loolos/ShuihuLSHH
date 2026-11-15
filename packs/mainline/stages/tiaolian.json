@@ -2,7 +2,6 @@
  "dynamicLevels": true,
  "id": "tiaolian",
  "title": "挑帘裁衣",
- "after": "N14",
  "pov": true,
  "rewards": {
   "gold": 0

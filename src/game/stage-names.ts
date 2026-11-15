@@ -4,25 +4,11 @@
  * 其中 5、9、12、13 号城镇没有点明地名，按剧情路线推测。
  */
 
-/** 第 1–15 章（下标 = 章号） */
-export const CHAPTER_NAMES = [
-  '',
-  '私走延安府',
-  '九纹龙史进',
-  '夜走华阴县',
-  '大闹桃花村',
-  '东京遇林冲',
-  '误入白虎堂',
-  '大闹野猪林',
-  '柴门招豪客',
-  '风雪山神庙',
-  '青面兽杨志',
-  '认义东溪村',
-  '义释晁天王',
-  '石碣村三雄',
-  '投奔梁山泊',
-  '梁山泊聚义',
-];
+import { CHAPTERS, chapterLabel as labelOfChapter, chapterOf, cnNumber } from '../rules/chapters.ts';
+export { cnNumber };
+
+/** 章名（下标 = 章号）；分章与章名都在章节表 src/rules/chapters.ts */
+export const CHAPTER_NAMES = ['', ...CHAPTERS.map((c) => c.name)];
 
 /** 地图名（小写）→ 关名 */
 export const STAGE_NAMES: Record<string, string> = {
@@ -108,16 +94,8 @@ export const TOWN_NAMES: Record<number, string> = {
   13: '野猪林前',
 };
 
-const DIGITS = '零一二三四五六七八九';
-/** 1–99 的中文数字 */
-export function cnNumber(n: number): string {
-  if (n < 10) return DIGITS[n];
-  const t = Math.floor(n / 10), u = n % 10;
-  return `${t === 1 ? '' : DIGITS[t]}十${u ? DIGITS[u] : ''}`;
-}
-
 export interface StageLabel {
-  /** 章号（取自 EXE 关卡表标题"第N章"；取不到为 0） */
+  /** 章号（取自章节表 src/rules/chapters.ts；不在表里时取 EXE 关卡表标题"第N章"；都取不到为 0） */
   chapter: number;
   /** 例："第三章 夜走华阴县" */
   chapterLabel: string;
@@ -131,14 +109,13 @@ export interface StageLabel {
   full: string;
 }
 
-/** 由 EXE 关卡表标题（繁体，如"第3章 戰役2""第5章 訓練""第2章"）和地图名拼出显示用名字 */
+/** 由 EXE 关卡表标题（繁体，如"第3章 戰役2""第5章 訓練""第2章"）和地图名拼出显示用名字；章按章节表 */
 export function stageLabel(title: string, mapName: string): StageLabel {
-  // 陆谦拦路、关前遇盘查归第七章；前置插关与关后城镇继承对应关卡章节。
-  const ch = ['act7-1a', 'n-add09a'].includes(mapName.toLowerCase()) ? 7 : Number(/第\s*(\d+)\s*章/.exec(title)?.[1] ?? 0);
+  const ch = chapterOf(mapName) || Number(/第\s*(\d+)\s*章/.exec(title)?.[1] ?? 0);
   const battle = /戰役\s*(\d+)/.exec(title);
   const kind = battle ? `战役${cnNumber(Number(battle[1]))}` : /訓練/.test(title) ? '训练' : '剧情';
   const name = STAGE_NAMES[mapName.toLowerCase()] ?? (title || mapName);
-  const chapterLabel = ch ? `第${cnNumber(ch)}章 ${CHAPTER_NAMES[ch] ?? ''}`.trim() : '';
+  const chapterLabel = labelOfChapter(ch) || (ch ? `第${cnNumber(ch)}章` : '');
   const short = `${kind} ${name}`;
   return { chapter: ch, chapterLabel, kind, name, short, full: ch ? `第${cnNumber(ch)}章 ${kind} · ${name}` : short };
 }

@@ -3,7 +3,6 @@
  "id": "shizilou",
  "title": "狮子楼",
  "townAfter": 11,
- "after": "N14",
  "rewards": {
   "gold": 1000
  },
