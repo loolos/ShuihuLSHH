@@ -12,7 +12,7 @@ const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 const STAGES: Record<string, string> = {
   'n-add01': 'N-add01', 'act2-2': 'Act2-2', n02: 'N02', n03: 'N03', 'act3-4': 'Act3-4', 'act5-1': 'Act5-1', 'act5-2': 'Act5-2',
   'act5-3': 'Act5-3', n05: 'N05', 'act8-1': 'Act8-1', 'n-add10': 'N-add10', n09: 'N09', 'act10-1': 'Act10-1',
-  'act14-2': 'Act14-2', 'act14-3': 'Act14-3', n13: 'N13',
+  'act9-1': 'Act9-1', 'act14-2': 'Act14-2', 'act14-3': 'Act14-3', n13: 'N13',
 };
 
 describe.skipIf(!has)('主线对白补原著原文', () => {
@@ -31,7 +31,11 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
       expect(gbk.blocks.length, stage).toBe(big5.blocks.length);
       gbk.blocks.forEach((b, i) => expect(b.ops.map((o) => o.op), `${stage} #${i}`).toEqual(big5.blocks[i].ops.map((o) => o.op)));
       const texts = gbk.blocks.flatMap((b) => b.ops.map((o) => o.text ?? ''));
-      for (const r of Object.values(STORY_REPLACE[key] ?? {})) expect(texts, stage).toContain(r);
+      const logicTexts = big5.blocks.flatMap((b) => b.ops.map((o) => o.text ?? ''));
+      for (const r of Object.values(STORY_REPLACE[key] ?? {})) {
+        expect(texts, stage).toContain(r);
+        expect(logicTexts, stage).toContain(r);
+      }
       for (const ins of STORY_INSERTS[key] ?? []) for (const [, t] of ins.lines) expect(texts, stage).toContain(t);
     }
   });
@@ -42,6 +46,45 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     return { b, ev: b.begin() };
   };
   const says = (ev: BattleEvent[]) => ev.flatMap((e) => (e.type === 'say' ? [`${e.speaker}：${e.text}`] : []));
+
+  it('沧州设毒计：柴进安排草料场差事，洪教头只获悉消息，不再写信诱约', () => {
+    const { b, ev } = play('Act9-1');
+    expect(b.status).toBe('won');
+    const lines = ev.flatMap((e) => e.type === 'say' || e.type === 'narrate' ? [e.text] : []).join('\n');
+    expect(lines).toContain('柴进托人替林冲');
+    expect(lines).toContain('这差事不是我安排的');
+    expect(lines).toContain('纵然侥幸逃出');
+    expect(lines).not.toMatch(/用信件|诱出来|要胁|出来私了/);
+  });
+
+  it('火烧草料场：采购归来见火，听完三人毒计后才现身交战', () => {
+    const { b, ev } = play('N09');
+    expect(b.status).toBe('playing');
+    expect(b.turnLimit).toBe(40);
+    const lines = ev.flatMap((e) => e.type === 'say' || e.type === 'narrate' ? [e.text] : []);
+    const find = (text: string) => lines.findIndex((l) => l.includes(text));
+    const supply = find('一道出外采买修屋的材料');
+    const fire = find('不好！草料场怎么已经烧起来了');
+    const hide = find('听听动静');
+    const confession = find('点了十来处火');
+    const sentence = find('也得个死罪');
+    const reveal = find('随他现身');
+    const challenge = find('泼贼！你们竟放火害我');
+    expect(supply).toBeGreaterThanOrEqual(0);
+    expect(fire).toBeGreaterThan(supply);
+    expect(hide).toBeGreaterThan(fire);
+    expect(confession).toBeGreaterThan(hide);
+    expect(sentence).toBeGreaterThan(confession);
+    expect(reveal).toBeGreaterThan(sentence);
+    expect(challenge).toBeGreaterThan(reveal);
+    expect(lines.join()).not.toMatch(/挑战书|不赴约|把你叫到这里/);
+    expect(ev.some((e) => e.type === 'attack')).toBe(false);
+    // 纯文字调整不改原版战斗触发、增援与胜负条件指令。
+    const input = loadStage(files, loadGameData(files, tr), 'N09', { text: tr, simplified: true });
+    const raw = parsePasBlocks(files.get(findStageFile(files, 'N09', '.pab')!), 'big5');
+    const gameplay = (blocks: typeof raw) => blocks.map((b) => ({ trigger: b.trigger, ops: b.ops.filter((o) => o.op !== 12 && o.op !== 13) }));
+    expect(gameplay(input.blocks)).toEqual(gameplay(raw));
+  });
 
   it('黄泥冈：白胜先唱歌后登场，原来的对白照常接上', () => {
     const { ev } = play('Act10-1');
