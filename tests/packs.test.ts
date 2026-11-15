@@ -13,6 +13,28 @@ import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
+describe('宋江杀惜剧本', () => {
+  it('送别后阎婆惜才入场看信，宋江回来后才起争执', () => {
+    const stage = JSON.parse(fs.readFileSync('packs/mainline/stages/songjiang-yanshixi.json', 'utf8'));
+    const actions = stage.script[0].do as string[][];
+    const index = (action: string, value: string) => actions.findIndex((a) => a[0] === action && a[1] === value);
+    const liuLeaves = index('leave', 'liutang');
+    const songLeaves = index('leave', 'songjiang');
+    const yanAppears = index('appear', 'yanpoxishi');
+    const readsLetter = actions.findIndex((a) => a[0] === 'narrate' && a[1].includes('藏起'));
+    const songReturns = index('appear', 'songjiang');
+    const dispute = actions.findIndex((a, i) => i > songReturns && a[0] === 'say' && a[1] === 'songjiang');
+    expect(stage.units.find((u: { id: string }) => u.id === 'yanpoxishi').hidden).toBe(true);
+    expect(liuLeaves).toBeGreaterThan(-1);
+    expect(songLeaves).toBeGreaterThan(liuLeaves);
+    expect(yanAppears).toBeGreaterThan(songLeaves);
+    expect(readsLetter).toBeGreaterThan(yanAppears);
+    expect(songReturns).toBeGreaterThan(readsLetter);
+    expect(dispute).toBeGreaterThan(songReturns);
+    expect(actions.slice(0, yanAppears).some((a) => a[0] === 'say' && a[1] === 'yanpoxishi')).toBe(false);
+  });
+});
+
 describe.skipIf(!has)('扩展包：武松打虎', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
@@ -539,18 +561,46 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     return ev;
   };
 
-  it('插关登记位置正确，开场后都在进行，在场单位都站在可通行格上', () => {
+  it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
     expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([
       ['wawasi', 'N-add06', false],
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],
+      ['songjiang-yanshixi', undefined, false],
     ]);
-    for (const s of rt.stages) {
+    for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
     }
+  });
+
+  it('终章之后的纯剧情播放辞金、杀惜与逃亡，演完即通关', () => {
+    const stage = stageOf('songjiang-yanshixi');
+    expect(stage.after).toBe('N14');
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    const ev = b.begin();
+    expect(b.status).toBe('won');
+    const lines = ev.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => e.text).join('\n');
+    expect(lines).toMatch(/收下/);
+    expect(lines).toMatch(/阎婆惜/);
+    expect(lines).toMatch(/逃走/);
+    const song = b.units.find((u) => u.classId === 6)!;
+    const liu = b.units.find((u) => u.name === '刘唐')!;
+    const yan = b.units.find((u) => u.name === '阎婆惜')!;
+    const eventIndex = (type: 'leave' | 'appear', uid: number) => ev.findIndex((e) => e.type === type && e.uid === uid);
+    const liuLeaves = eventIndex('leave', liu.uid);
+    const songLeaves = eventIndex('leave', song.uid);
+    const yanAppears = eventIndex('appear', yan.uid);
+    const songReturns = eventIndex('appear', song.uid);
+    const readsLetter = ev.findIndex((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('藏起'));
+    expect(liuLeaves).toBeGreaterThan(-1);
+    expect(songLeaves).toBeGreaterThan(liuLeaves);
+    expect(yanAppears).toBeGreaterThan(songLeaves);
+    expect(readsLetter).toBeGreaterThan(yanAppears);
+    expect(songReturns).toBeGreaterThan(readsLetter);
+    expect(ev.some((e, i) => i > songReturns && e.type === 'say' && e.uid === yan.uid)).toBe(true);
   });
 
   it('瓦罐寺：我方按职业号套用主线进度；过关奖励用关卡里写的银子', () => {

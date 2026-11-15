@@ -134,10 +134,10 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
-  /** 主线插关（docs/game-design.md §15.8）：entry = mainline 的包里每个关卡插在 before 那一关前面 */
+  /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
   const inserts: (InsertEntry & { pov: boolean; title: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
-    .flatMap((e) => e.stages.filter((s) => s.before).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before!, pov: !!s.pov, title: s.title })));
+    .flatMap((e) => e.stages.filter((s) => s.before || s.after).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title })));
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
@@ -146,10 +146,12 @@ function startGame(assets: Assets) {
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
     const items = chapters.at(-1)!.items;
-    // 插在这一关前面的主线插关（类型叫「遭遇战」，不占原版的战役编号）
-    for (const e of inserts.filter((x) => x.before.toLowerCase() === s.mapName.toLowerCase()))
+    // 插在这一关前面的主线遭遇战（不占原版的战役编号）
+    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
       items.push({ label: `遭遇战 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 遭遇战 · ${e.title}${e.pov ? '（视角关）' : ''}` });
     items.push({ label: l.short, value: String(s.index), title: l.full });
+    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase()))
+      items.push({ label: `后续剧情 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 后续剧情 · ${e.title}` });
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
@@ -168,18 +170,19 @@ function startGame(assets: Assets) {
   let campaign = loadSave() ?? newCampaign(stages[0].index);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
-    // 主线插关：人物按它前面那一关（before）配，再把插关排在最前
+    // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
-      const s = e && stages.find((x) => x.mapName.toLowerCase() === e.before.toLowerCase());
+      const anchor = e?.before ?? e?.after;
+      const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
         const done = (c.inserts ?? []).filter((r) => r !== e.ref);
-        return { ...jumpTo(assets.files, assets.data, stages, s.index, c), insert: e.ref, inserts: done };
+        return { ...jumpTo(assets.files, assets.data, stages, s.index, c), insert: e.ref, inserts: done, finished: undefined };
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
-    if (t) return jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c);
-    return jumpTo(assets.files, assets.data, stages, Number(value), c);
+    if (t) return { ...jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c), finished: undefined };
+    return { ...jumpTo(assets.files, assets.data, stages, Number(value), c), finished: undefined };
   };
   const asked = params.get('stage')?.toLowerCase();
   if (asked?.startsWith('ins:')) {
@@ -314,9 +317,18 @@ function startGame(assets: Assets) {
     const had = new Set(before.members.map((m) => m.classId));
     if (had.size && after.members.some((m) => !had.has(m.classId))) void music.sting('join');
     if (!next.length) {
+      const continuation = pendingInsert(after, inserts, cur.mapName, 'after');
+      if (continuation) return goTo({ ...after, town: undefined, insert: continuation });
       // 通关：片尾放一遍，再接聚义曲
       void music.play(['ending', 'liangshan']);
-      return ui.result(true, text, [retry], '通关');
+      campaign = { ...after, finished: true };
+      writeSave(campaign);
+      const replay = () => {
+        campaign = before;
+        writeSave(before);
+        run();
+      };
+      return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, { label: '重新开始本关', run: replay }], '通关');
     }
     // 结算画面放胜利曲；剧情关直接接下一关，不换
     if (!isAct(cur)) void music.play('victory');
@@ -462,7 +474,8 @@ function startGame(assets: Assets) {
     void music.play('victory');
     // 视角关打完不写回人物和银子；主线人物关照常记下，出场名单并进上一关的名单
     const after = pov ? campaign : recordResult(campaign, battle, { keepActive: true });
-    const c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
+    const entry = inserts.find((x) => x.ref === ref);
+    const c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])], ...(entry?.after ? { finished: true } : {}) };
     campaign = c;
     writeSave(c);
     const replay = () => {
@@ -470,6 +483,13 @@ function startGame(assets: Assets) {
       writeSave(before);
       run();
     };
+    if (entry?.after) {
+      void music.play(['ending', 'liangshan']);
+      const u = new URL(location.href);
+      u.searchParams.delete('stage');
+      history.replaceState(null, '', u);
+      return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, { label: '再看一次本段', run: replay }], '通关');
+    }
     const cont = { label: `继续：${label(stageOf(c.stage))}`, run: () => goTo(c) };
     ui.result(true, text, [cont, { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => goTo(x)) }, { label: '再打一次本关', run: replay }]);
   };
@@ -478,6 +498,10 @@ function startGame(assets: Assets) {
     sel.hidden = false;
     ui.hideResult();
     town.hide();
+    if (campaign.finished) {
+      void music.play(['ending', 'liangshan']);
+      return ui.result(true, '梁山聚义，故事未完待续。', [{ label: '回到标题', run: () => (location.href = location.pathname) }], '通关');
+    }
     if (campaign.insert) return runInsert(campaign.insert);
     if (campaign.town) {
       // 存档停在城镇里

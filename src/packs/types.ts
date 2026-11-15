@@ -125,8 +125,9 @@ export interface PackItemJson {
 export interface PackStageJson {
   id: string;
   title: string;
-  /** 主线插关：要进这一关（原版地图名，如 N-add06）时先打本关（只用于 entry = mainline 的包） */
+  /** 主线插关：before 插在指定关卡前；after 插在指定关卡后（只用于 entry = mainline 的包） */
   before?: string;
+  after?: string;
   /**
    * 主线插关的视角关：切到还没入伙的人，等级用关卡里写的固定值，打完不写回主线人物和银子。
    * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
