@@ -13,7 +13,7 @@ import { Battle } from '../src/rules/battle.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
 import { balanceLevels } from '../src/rules/preset.ts';
 import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills, skillBonusText } from '../src/rules/skills.ts';
-import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { adjustEnemies, enemyFloor, enemyLevel } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
@@ -1006,16 +1006,19 @@ describe('关卡串联', () => {
     expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
   });
 
-  it('敌人等级修正：整关平移、只降不升、1 级摆设不动、最低 2 级', () => {
-    expect(enemyShift('N14')).toBeLessThan(0);
-    expect(enemyShift('n14')).toBe(enemyShift('N14'));
-    expect(enemyShift('Train1')).toBe(0);
-    const d = enemyShift('N14');
-    expect(enemyLevel('N14', 42)).toBe(42 + d);
-    expect(enemyLevel('N14', 1)).toBe(1);
-    expect(enemyLevel('N14', 3)).toBe(Math.max(2, 3 + d));
-    const units = adjustEnemies('N14', [{ ...act(0, 0, 'enemy', 20, 0), level: 30 }, { ...act(1, 1, 'player', 0, 0), level: 30 }]);
-    expect(units.map((u) => u.level)).toEqual([30 + d, 30]);
+  it('敌方基础等级来自自有配置，不受原剧本等级影响；缺配置或身份不符时报错', () => {
+    const index = 7; // N01 都头的自有基础等级为 2，输入剧本等级即使改成 1 也不影响
+    const level = enemyLevel('N01', index, 38);
+    expect(level).toBe(2);
+    expect(enemyLevel('N01', 3, 32)).toBe(1);
+    expect(enemyLevel('n01', index, 38)).toBe(level);
+    const input = [{ ...act(index, 38, 'enemy', 2, 0), level: 99 }, { ...act(1, 1, 'player', 0, 0), level: 30 }];
+    expect(adjustEnemies('N01', input).map(u => u.level)).toEqual([level, 30]);
+    expect(input[0].level).toBe(99);
+    expect(adjustEnemies('N01', [{ ...input[0], level: 1 }])[0].level).toBe(level);
+    expect(() => enemyLevel('missing', index, 38)).toThrow('缺少自有等级配置');
+    expect(() => enemyLevel('N01', 9999, 38)).toThrow('缺少自有等级配置');
+    expect(() => enemyLevel('N01', index, 9999)).toThrow('职业与等级配置不符');
   });
 
   it('击倒掉落：职业上限的一半 ±15%，上限为 0 的不掉', () => {
