@@ -1133,16 +1133,51 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBeUndefined();
     expect(stage('shizilou').townAfter).toBe(11);
   });
-  it('飞云浦隐藏徒弟未出现不提前胜；鸳鸯楼三首领缺一不可',()=> {
+  it('飞云浦等待后续增援不提前胜；鸳鸯楼三首领缺一不可',()=> {
     const b=start('feiyunpu');
     for(const u of b.units) { if(u.side==='player')u.hp=99999; else if(u.present){u.hp=0;u.alive=false;u.present=false;} }
     b.endPlayerPhase();expect(b.status).toBe('playing');expect(b.turn).toBe(2);
-    expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(2);
+    expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(6);
     const y=start('yuanyanglou'), bosses=y.units.filter(u=>u.side==='enemy');
     for(const u of y.units)if(u.side==='player')u.hp=99999;
     for(const u of bosses.slice(0,2)){u.hp=0;u.alive=false;u.present=false;}
     bosses[2].hp=99999;y.endPlayerPhase();expect(y.status).toBe('playing');
     bosses[2].hp=0;bosses[2].alive=false;bosses[2].present=false;y.endPlayerPhase();expect(y.status).toBe('won');
+  });
+  it('飞云浦使用默认模板，连续五回合各来六人，最后一波全灭才获胜', () => {
+    const b = start('feiyunpu');
+    const foes = b.units.filter(u => u.side === 'enemy');
+    expect(stage('feiyunpu').map).toEqual({ custom: 'dukou' });
+    expect([b.board.width, b.board.height]).toEqual([30, 24]);
+    const bridgeReach = b.board.reach({ x: 21, y: 10 }, 1000, new Set());
+    for (const u of b.units) expect([...bridgeReach.values()].some(c => c.x === u.x && c.y === u.y), `桥面可达 ${u.name}`).toBe(true);
+    expect(foes).toHaveLength(36);
+    expect(new Set(foes.map(u => u.classId))).toEqual(new Set([32, 67, 65, 38]));
+    // 默认 28 级模板，移除原先 566 血的自定义精英职业。
+    for (const u of foes) {
+      expect(u.stats.maxHp).toBeLessThan(300);
+      expect(u.stats.attack).toBeLessThan(200);
+    }
+    for (const u of b.units) if (u.side === 'player') u.hp = 99999;
+    const clear = () => { for (const u of foes) if (u.present) { u.hp = 0; u.alive = false; u.present = false; } };
+    expect(foes.filter(u => u.present)).toHaveLength(6);
+    for (let turn = 2; turn <= 6; turn++) {
+      clear();
+      b.endPlayerPhase();
+      expect(b.status, `第${turn}回合前不能提前通关`).toBe('playing');
+      expect(b.turn).toBe(turn);
+      expect(foes.filter(u => u.present)).toHaveLength(6);
+    }
+    // 最后一批还活着一个时也不胜利。
+    const survivor = foes.find(u => u.present)!;
+    for (const u of foes) if (u.present && u !== survivor) { u.hp = 0; u.alive = false; u.present = false; }
+    survivor.hp = 99999;
+    b.endPlayerPhase();
+    expect(b.status).toBe('playing');
+    clear();
+    b.endPlayerPhase();
+    expect(b.status).toBe('won');
+    expect(foes.every(u => !u.alive)).toBe(true);
   });
   it('六名换色保护透明肤色阴影，孙二娘没有战斗技',()=> {
     const pal=new Uint8Array(files.get('Data/Default.pal'));
