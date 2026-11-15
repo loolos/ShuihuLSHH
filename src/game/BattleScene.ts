@@ -17,6 +17,7 @@ import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
+import { applyTint, type StageTint } from './tint.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
@@ -34,6 +35,8 @@ export interface BattleSceneData {
   /** 扩展包关卡：画哪张原版地图，以及每次开打（含重新开始）时生成关卡数据 */
   map?: string;
   makeInput?: () => StageInput;
+  /** 天色滤镜（扩展包关卡的 tint，§15.15） */
+  tint?: StageTint;
 }
 
 type Mode =
@@ -83,6 +86,7 @@ export class BattleScene extends Phaser.Scene {
   private stageName = 'N01';
   /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
   private mapName = 'N01';
+  private tint: StageTint | undefined;
   private makeInput?: () => StageInput;
   private seed?: number;
   private party?: Map<number, Member>;
@@ -139,6 +143,7 @@ export class BattleScene extends Phaser.Scene {
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
     this.mapName = data.map ?? data.stage;
+    this.tint = data.tint;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
@@ -208,6 +213,7 @@ export class BattleScene extends Phaser.Scene {
     const f = cellToWorld(focus.x, focus.y);
     cam.centerOn(f.x, f.y);
     cam.roundPixels = true;
+    applyTint(cam, this.tint);
 
     // 左上角的小地图（原版微缩地图只画地表，见 minimap.ts）
     const board = this.battle.board;

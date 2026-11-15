@@ -34,6 +34,7 @@
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版每关下载量、重复文件和重复帧 |
 | `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
+| `node --experimental-transform-types tools/compose-map.ts [名字]` | 按 `tools/map-recipes/` 的配方拼新地图，写 `packs/maps/*.json`（§15.15，见配方目录的 README） |
 
 Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需要编译。
 
