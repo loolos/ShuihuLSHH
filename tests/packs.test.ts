@@ -697,7 +697,17 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     x.flush();
     expect(ws.slots[0]).toBe(0);
     ws.hp = 9999;
-    while (b.turn < 2 && b.status === 'playing') b.endPlayerPhase();
+    const arrivalEvents: BattleEvent[] = [];
+    while (b.turn < 2 && b.status === 'playing') arrivalEvents.push(...b.endPlayerPhase());
+    const uid = (id: string) => stage.units.findIndex(u => u.id === id);
+    const songArrival = arrivalEvents.findIndex(e => e.type === 'appear' && e.uid === uid('songjiang'));
+    expect(songArrival).toBeGreaterThan(-1);
+    for (const id of ['bangxian1', 'bangxian2', 'bangxian3', 'bangxian4', 'bandang3', 'bandang4']) {
+      const enemyArrival = arrivalEvents.findIndex(e => e.type === 'appear' && e.uid === uid(id));
+      expect(enemyArrival, id).toBeGreaterThan(-1);
+      expect(enemyArrival, id).toBeLessThan(songArrival);
+    }
+    expect(arrivalEvents.some(e => e.type === 'say' && e.uid === uid('songjiang') && e.text.includes('拦住这些帮手'))).toBe(true);
     expect(mine()).toEqual(expect.arrayContaining(['武松', '宋江', '鲁智深', '史进']));
     // 打倒西门庆还不算赢：要把第 3 回合来的护院、徒弟在内的手下全部打倒（负责人 2026-11-15）
     const hit = (t: Unit) => {
