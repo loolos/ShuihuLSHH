@@ -1036,13 +1036,55 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(ids).not.toContain(3);
   });
 
+  it('快活林第4回合张团练带六人来援，打倒首领不提前胜，全灭后败逃并在鸳鸯楼再战', () => {
+    const s = stage('kuaihuolin'), b = start('kuaihuolin');
+    const get = (id: string) => b.unit(s.units.findIndex(u => u.id === id))!;
+    const check = () => (b as unknown as { afterAction: () => void }).afterAction();
+    const kill = (u: Unit) => (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(get('wusong'), u);
+    for (const u of b.units) if (u.side !== 'enemy') u.hp = 999999;
+    get('wusong').x = 12; get('wusong').y = 8; check();
+    const reinforcements = b.units.filter(u => s.units[u.uid].id === 'zhangtuanlian' || s.units[u.uid].id.startsWith('zhang-rescue-'));
+    expect(reinforcements).toHaveLength(7);
+    expect(reinforcements.every(u => !u.present && u.alive)).toBe(true);
+    for (const u of b.units.filter(u => u.side === 'enemy' && u.present)) kill(u);
+    check(); expect(b.status).toBe('playing'); // 蒋门神和原有手下已败，仍须等增援。
+    for (let turn = 2; turn <= 4; turn++) {
+      b.endPlayerPhase();
+      expect(b.turn).toBe(turn);
+      expect(reinforcements.filter(u => u.present)).toHaveLength(turn === 4 ? 7 : 0);
+    }
+    expect(get('zhangtuanlian').classId).toBe(cid('zhangtuanlian'));
+    kill(get('zhangtuanlian')); check(); expect(b.status).toBe('playing');
+    const troops = reinforcements.filter(u => u.alive);
+    for (const u of troops.slice(0, -1)) kill(u);
+    check(); expect(b.status).toBe('playing');
+    kill(troops.at(-1)!); check(); expect(b.status).toBe('won');
+    expect((b as unknown as { out: BattleEvent[] }).out.some(e => e.type === 'say' && e.text.includes('狼狈逃走'))).toBe(true);
+    expect(b.units.filter(u => u.side === 'enemy').every(u => !u.alive)).toBe(true);
+    const later = start('yuanyanglou');
+    for (const id of ['jiangmenshen', 'zhangtuanlian']) expect(later.units.find(u => u.classId === cid(id))!.alive).toBe(true);
+  });
+
+  it('快活林还没触发酒店交锋时，清掉张团练救援也不能漏算隐藏敌人', () => {
+    const s = stage('kuaihuolin'), b = start('kuaihuolin');
+    for (const u of b.units) if (u.side !== 'enemy') u.hp = 999999;
+    for (let i = 0; i < 3; i++) b.endPlayerPhase();
+    const wu = b.units.find(u => u.classId === cid('wusong'))!;
+    for (const u of b.units.filter(u => u.side === 'enemy' && u.present))
+      (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(wu, u);
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(b.status).toBe('playing');
+    const boss = b.unit(s.units.findIndex(u => u.id === 'jiangmenshen'))!;
+    expect(boss.alive).toBe(true); expect(boss.present).toBe(false);
+  });
+
   it('快活林蒋门神的八名手下使用喽啰职业，保留两名徒弟', () => {
     const s = stage('kuaihuolin');
     const guards = s.units.filter(u => u.id.startsWith('guard-'));
     expect(guards).toHaveLength(8);
     expect(guards.every(u => [22, 23].includes(Number(u.class)) && u.side === 'enemy' && u.hidden)).toBe(true);
     expect(s.units.filter(u => u.id.startsWith('disciple-'))).toHaveLength(2);
-    expect(s.units.some(u => u.side === 'enemy' && [32, 33, 34, 36, 38, 39, 42, 43].includes(Number(u.class)))).toBe(false);
+    expect(s.units.filter(u => u.id.startsWith('guard-') || u.id.startsWith('disciple-')).some(u => [32, 33, 34, 36, 38, 39, 42, 43].includes(Number(u.class)))).toBe(false);
   });
 
   it('快活林三店逐一由武松靠近喝酒，施恩可以移动帮忙', () => {

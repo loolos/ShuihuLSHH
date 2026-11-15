@@ -373,14 +373,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   let trigger: PasTrigger;
   let cond: PasBlock['cond'] = { type: 0, arg: 0 };
   if (on === 'start') trigger = { kind: 'turn', turn: 0 };
-  else if (on === 'enemiesDefeated') {
+  else if (on === 'enemiesDefeated' || on === 'allEnemiesDefeated') {
     trigger = { kind: 'cond' };
-    cond = { type: 1, arg: 0xff }; // 原版条件 1、参数 0xFF：敌方全灭
+    cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated`);
+  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {

@@ -226,6 +226,76 @@
       "y": 3,
       "level": 28,
       "hidden": true
+    },
+    {
+      "id": "zhangtuanlian",
+      "class": "zhangtuanlian",
+      "side": "enemy",
+      "x": 22,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "zhang-rescue-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 1,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 23,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 3,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-5",
+      "class": 38,
+      "side": "enemy",
+      "x": 22,
+      "y": 0,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练头目"
+    },
+    {
+      "id": "zhang-rescue-6",
+      "class": 65,
+      "side": "enemy",
+      "x": 21,
+      "y": 1,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练头目"
     }
   ],
   "script": [
@@ -269,7 +339,7 @@
         ],
         [
           "objective",
-          "武松逐家走到三位店小二身边喝酒，再击败蒋门神；武松或施恩倒下、超过20回合失败。"
+          "武松可逐家喝酒助兴；击败所有敌人（包括第4回合张团练带来的增援）。武松或施恩倒下、超过20回合失败。"
         ],
         [
           "turnLimit",
@@ -490,6 +560,48 @@
       },
       "do": [
         [
+          "narrate",
+          "张团练听闻快活林起了争斗，带着军汉和头目从侧街赶来，为蒋门神助阵。"
+        ],
+        [
+          "appear",
+          "zhangtuanlian"
+        ],
+        [
+          "appear",
+          "zhang-rescue-1"
+        ],
+        [
+          "appear",
+          "zhang-rescue-2"
+        ],
+        [
+          "appear",
+          "zhang-rescue-3"
+        ],
+        [
+          "appear",
+          "zhang-rescue-4"
+        ],
+        [
+          "appear",
+          "zhang-rescue-5"
+        ],
+        [
+          "appear",
+          "zhang-rescue-6"
+        ],
+        [
+          "say",
+          "zhangtuanlian",
+          "蒋兄莫慌，张蒙方带人来了！谁敢在我的地面上撒野？"
+        ],
+        [
+          "say",
+          "wusong",
+          "你纵容蒋门神夺店伤人，如今还要带兵帮凶？来多少，俺便打退多少！"
+        ],
+        [
           "appear",
           "daizong"
         ],
@@ -542,6 +654,26 @@
       },
       "do": [
         [
+          "narrate",
+          "蒋门神被武松打得站立不住，退到路旁求饶；其余敌人仍在，众人继续迎战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangtuanlian"
+      },
+      "do": [
+        [
+          "narrate",
+          "张团练败下阵来，手下仍在抵抗；先打退其余敌人，休叫他们再伤店家！"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
           "say",
           "wusong",
           "若要我饶你性命，只要依我三件事。"
@@ -580,8 +712,16 @@
           "施恩收拾酒店，安顿伤者，向众人拜谢。宋江嘱他安心养伤，莫再与蒋门神私下争斗。"
         ],
         [
+          "narrate",
+          "张团练与带来的军汉、头目也尽数败下阵来。武松收住拳脚，喝令他们滚出快活林，不许再来欺人。"
+        ],
+        [
+          "narrate",
+          "张团练不敢再战，招呼还能走动的手下，扶起蒋门神，带着伤者狼狈逃走。众人只将他们打败赶走，并未取他们性命。"
+        ],
+        [
           "victory",
-          "醉打蒋门神，快活林重归施恩。"
+          "击退蒋门神与张团练众人，快活林重归施恩。"
         ]
       ]
     },
