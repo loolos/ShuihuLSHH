@@ -13,7 +13,7 @@ import { installMusic, music, type Playlist } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
-import { stageLabel, townName } from './game/stage-names.ts';
+import { cnNumber, stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
@@ -135,27 +135,41 @@ function startGame(assets: Assets) {
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
   // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
-  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string })[] = listPacks()
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; chapter?: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
     .flatMap((e) =>
       e.stages
         .filter((s) => s.before || s.after)
-        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
+        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, chapter: s.chapter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
     );
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
+  /** 插关所在的章（续篇可以另开新章，见关卡 JSON 的 chapter） */
+  const insChapter = new Map<string, string>();
+  let lastChapter = 0;
   for (const s of stages) {
     const l = stageLabel(s.title, s.mapName);
+    if (l.chapter) lastChapter = Math.max(lastChapter, l.chapter);
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
-    const items = chapters.at(-1)!.items;
+    let items = chapters.at(-1)!.items;
     // 插在这一关前面的主线插关
-    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
+    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase())) {
+      insChapter.set(e.ref, l.chapterLabel);
       items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    }
     items.push({ label: l.short, value: String(s.index), title: l.full });
-    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    let chLabel = l.chapterLabel;
+    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase())) {
+      if (e.chapter) {
+        chLabel = `第${cnNumber(++lastChapter)}章 ${e.chapter}`;
+        chapters.push({ label: chLabel, items: [] });
+        items = chapters.at(-1)!.items;
+      }
+      insChapter.set(e.ref, chLabel);
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    }
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
@@ -447,6 +461,8 @@ function startGame(assets: Assets) {
     ui.hideResult();
     town.hide();
     setHere(insValue(ref));
+    // 主线插关也按所在的章放开章短曲（续篇另开的新章，如第十六章）
+    chapterSting(insChapter.get(ref) ?? '');
     const ticket = ++loading;
     try {
       setupEl.hidden = false;
@@ -656,7 +672,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))
