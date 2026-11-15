@@ -198,6 +198,8 @@ export type PackTrigger =
   | 'start'
   /** 在场的敌人全部倒下（还没登场的隐藏单位不算，要等他们登场后也倒下） */
   | 'enemiesDefeated'
+  /** 本关全部敌人战败，包含尚未登场的隐藏增援。 */
+  | 'allEnemiesDefeated'
   | { turn: number }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
@@ -218,7 +220,7 @@ export type PackOpJson = [string, ...unknown[]];
 
 export interface PackBlockJson {
   on: PackTrigger;
-  /** 只对 enemiesDefeated 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
+  /** 只对 enemiesDefeated / allEnemiesDefeated 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
   if?: string;
   unless?: string;
   do: PackOpJson[];
