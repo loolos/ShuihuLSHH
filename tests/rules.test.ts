@@ -1,5 +1,5 @@
 // 规则引擎单元测试：使用手写的小数据，不依赖原版文件。
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
@@ -245,20 +245,49 @@ describe('命中与伤害', () => {
     expect(hitChance(e, p, { ...punch, hitMod: 10 })).toBe(85); // 120 / 140
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
-  it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
+  it('普通伤害不变，必杀加上与实际必杀率有关的独立伤害项', () => {
     const d = unit({ side: 'enemy', facing: 2 }); // 正面
-    expect(baseDamage(a, d, punch)).toEqual([36, 90]); // 60² / 100，120² / 160
+    expect(baseDamage(a, d, punch)[0]).toBe(36);
+    expect(baseDamage(a, d, punch)[1]).toBeCloseTo(36 + 1.02 * 3600 / 120);
     const tough = unit({ facing: 2, stats: { ...d.stats, defense: 240 } });
     const [n, c] = baseDamage(a, tough, punch);
     expect(n).toBeCloseTo(3600 / 540);
-    expect(c).toBe(24); // 120² / 600
+    expect(c).toBeCloseTo(n + 1.02 * 3600 / 780);
     const rng = new Rng(1);
     for (let i = 0; i < 50; i++) {
       const r = rollAttack(a, tough, punch, rng, true);
-      expect(r.damage).toBeGreaterThanOrEqual(r.crit ? 21 : 6);
-      expect(r.damage).toBeLessThanOrEqual(r.crit ? 26 : 7);
+      expect(r.damage).toBeGreaterThanOrEqual(Math.floor((r.crit ? c : n) * 0.9));
+      expect(r.damage).toBeLessThanOrEqual(Math.floor((r.crit ? c : n) * 1.1));
     }
     expect(critChance(a, { ...punch, critMod: 10 })).toBe(7); // x = 20：400 / 5300
+  });
+  it('技能威力计入 A，技能修正与敌方名将折扣计入最终必杀率', () => {
+    const att = unit({ stats: { ...a.stats, attack: 80, crit: 50 } });
+    const def = unit({ side: 'enemy', facing: 2, stats: { ...a.stats, defense: 50 } });
+    const skill = { ...punch, power: 20, critMod: 20 };
+    expect(critChance(att, skill)).toBe(50);
+    expect(baseDamage(att, def, skill)).toEqual([50, 110]);
+    const enemy = { ...att, side: 'enemy' as const, classId: 68 };
+    expect(critChance(enemy, skill)).toBe(39);
+    expect(baseDamage(enemy, def, skill)[1]).toBeCloseTo(105.6);
+    expect(baseDamage(att, def, { ...skill, critMod: 0 })[1]).toBeCloseTo(103.2);
+  });
+  it('多段必杀沿用每段概率，并拆分总伤害而不重复附加伤害项', () => {
+    const att = unit({ stats: { ...a.stats, attack: 100, crit: 70 } });
+    const def = unit({ side: 'enemy', facing: 2, stats: { ...a.stats, defense: 50 } });
+    const skill = { ...punch, hits: [25, 25, 25, 25].map((percent, i) => ({ frame: i + 1, percent, dir: 0 })) };
+    const rng = new Rng(1);
+    const chance = vi.spyOn(rng, 'chance').mockReturnValue(true);
+    vi.spyOn(rng, 'next').mockReturnValue(0.5);
+    const result = rollAttack(att, def, skill, rng, true);
+    expect(result.damage).toBe(110);
+    expect(chance.mock.calls.slice(0, 4)).toEqual([[50], [50], [50], [50]]);
+  });
+  it('非正攻击不产生伤害，负防御按零计算', () => {
+    const def = unit({ facing: 2, stats: { ...a.stats, defense: -10 } });
+    for (const attack of [0, -10]) expect(baseDamage({ ...a, stats: { ...a.stats, attack } }, def, punch)).toEqual([0, 0]);
+    const att = { ...a, stats: { ...a.stats, attack: 100, crit: 70 } };
+    expect(baseDamage(att, def, punch)).toEqual([100, 250]);
   });
   it('必杀率 = x² / (x² + 70²)，越高越接近 100% 但不到', () => {
     const a = unit({ side: 'player', x: 0, y: 0, facing: 0 });
@@ -291,15 +320,15 @@ describe('命中与伤害', () => {
         const defense = defending ? 0.7 : 1;
         const [normal, critical] = baseDamage(att, def, punch);
         expect(normal).toBeCloseTo(36 * f);
-        expect(critical).toBeCloseTo(90 * f);
+        expect(critical).toBeCloseTo((36 + (1 + critChance(att, punch) / 100) * 30) * f);
         const preview = previewAttack(att, def, punch);
         expect(preview.damage).toBe(Math.floor(normal * defense));
         expect(preview.critDamage).toBe(Math.floor(critical * defense));
         const rng = new Rng(17);
-        rng.chance(crit / 2); // forceHit跳过命中随机，只消耗必杀判定
+        const isCritical = rng.chance(critChance(att, punch)); // forceHit跳过命中随机
         const variation = 0.9 + rng.next() * 0.2;
         const result = rollAttack(att, def, punch, new Rng(17), true);
-        expect(result.damage).toBe(Math.floor((crit ? critical : normal) * (defense * variation)));
+        expect(result.damage).toBe(Math.floor((isCritical ? critical : normal) * (defense * variation)));
       }
     }
   });
