@@ -1349,7 +1349,7 @@ export class Battle {
           else sel = undefined; // 0xFFFFFFFF：旁白
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
           // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
-          if (sel && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
+          if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
           break;
         case 13:
           this.emit({ type: 'say', uid: sel?.uid ?? null, speaker: selName, text: textOf(i) });
