@@ -8,7 +8,7 @@ import { buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type Ga
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
-import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
+import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_CLASSES, GRUNT_GEAR, OFFICER, OFFICER_CLASSES, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
 import { balanceLevels } from '../src/rules/preset.ts';
@@ -99,7 +99,7 @@ describe('属性', () => {
     const assassin = cls(66), captain = cls(65), constable = cls(38);
     expect(baseStat(constable, 'hp')).toBe(OFFICER.hp); // 都頭是标准
     expect(baseStat(assassin, 'hp')).toBe(Math.round(OFFICER.hp * 0.85));
-    expect(baseStat(assassin, 'crit')).toBe(OFFICER.crit + 8);
+    expect(baseStat(assassin, 'crit')).toBe(OFFICER.crit);
     expect(baseStat(captain, 'hp')).toBe(Math.round(OFFICER.hp * 1.15));
     expect(baseStat(cls(59, { attack: g(100) }), 'attack')).toBe(70); // 陳達 −30%
   });
@@ -109,6 +109,29 @@ describe('属性', () => {
     expect(statAt(soldier, 'hit', 0)).toBe(GRUNT.hit);
     const d2: GameData = { ...data, classes: [soldier] };
     expect(computeStats(soldier, 0, [1], d2).attack).toBe(GRUNT.attack + GRUNT_GEAR.attack!); // 皮手套 +7 不算
+  });
+  it('全部模板职业必杀固定为杂兵 10、小头目 15，升级刷新与装备不增加必杀', () => {
+    const gear = { ...glove, crit: 80 };
+    for (const [ids, expected] of [[GRUNT_CLASSES, 10], [OFFICER_CLASSES, 15]] as const) {
+      for (const id of ids) {
+        const c = cls(id, { crit: g(90) });
+        const d = { ...data, classes: [...data.classes], items: [gear] };
+        d.classes[id] = c;
+        expect(baseStat(c, 'crit')).toBe(expected);
+        expect(perLevel(c, 'crit')).toBe(0);
+        for (const level of [0, 1, 5, 20, 50, 99]) {
+          expect(statAt(c, 'crit', level), `${id} Lv${level}`).toBe(expected);
+          expect(computeStats(c, level, [1], d).crit).toBe(expected);
+        }
+        const u = { ...unit({}), classId: id, side: 'enemy' as const, level: 1, slots: [1] };
+        u.level = 50;
+        refreshStats(u, d);
+        refreshStats(u, d);
+        expect(u.stats.crit).toBe(expected);
+      }
+    }
+    // 好汉、有名有姓的首领仍保留各自必杀成长。
+    for (const id of [0, 16, 56, 64, 71]) expect(perLevel(cls(id), 'crit')).toBeGreaterThan(0);
   });
   it('装备加成按道具编号（从 1 开始）计算', () => {
     expect(computeStats(data.classes[0], 0, [1], data).attack).toBe(67);
@@ -753,6 +776,28 @@ describe('经验', () => {
 });
 
 describe('技能', () => {
+  it('模板普攻默认无必杀修正、刺客保留上限 5，特殊技与其他职业保持约定', () => {
+    const mods = [40, 55, 25, 5, 0, -10];
+    const record = (id: number) => ({
+      id, hp: 100, mp: 100, hpGrowth: 100, mpGrowth: 100, move: 5, weaponType: 0, goldCap: 0,
+      stats: Array(5).fill({ base: 50, growth: 100 }), defaultItems: [],
+      skills: mods.map((critMod, i) => ({ ...punch, skillId: i === 0 ? 221 : 222, type: i === 0 ? 5 : 10, critMod })),
+    }) as unknown as ClassRecord;
+    for (const id of [...GRUNT_CLASSES, ...OFFICER_CLASSES]) {
+      const [c] = buildClasses([record(id)], [], []);
+      expect(c.skills.map((s) => s.critMod), `职业 ${id}`).toEqual([id === 66 ? 5 : 0, 5, 5, 5, 0, -10]);
+    }
+    for (const id of [0, 16, 56, 64, 71]) {
+      const [c] = buildClasses([record(id)], [], []);
+      expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual(mods);
+    }
+    const soldier = { ...unit({}), classId: 32, side: 'enemy' as const, stats: { ...unit({}).stats, crit: 10 } };
+    const officer = { ...soldier, classId: 38, stats: { ...soldier.stats, crit: 15 } };
+    expect(critChance(soldier, { ...punch, critMod: 0 })).toBe(2);
+    expect(critChance(officer, { ...punch, critMod: 0 })).toBe(4);
+    expect(critChance({ ...officer, classId: 66 }, { ...punch, critMod: 5 })).toBe(7);
+  });
+
   it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
     const skill = { ...punch, name: '技能', mpCost: 10 };
     const d: GameData = { ...data, classes: [...data.classes] };
