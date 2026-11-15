@@ -1143,7 +1143,7 @@
         }
       ]
     },
-    "face": null
+    "face": { "file": "faces/huarong.png" }
   },
   {
     "id": "likui",
@@ -1446,9 +1446,7 @@
         }
       ]
     },
-    "face": {
-      "fromHead": 69
-    }
+    "face": { "file": "faces/jiangmenshen.png" }
   },
   {
     "id": "shien",
@@ -1638,9 +1636,7 @@
         }
       ]
     },
-    "face": {
-      "fromHead": 30
-    }
+    "face": { "file": "faces/sunerniang.png" }
   },
   {
     "id": "zhangdujian",
