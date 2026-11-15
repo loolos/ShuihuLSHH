@@ -106,7 +106,7 @@ code { color: var(--ink); }
 }
 #log:empty { display: none; }
 #log div:last-child { color: var(--ink); }
-#unit-panel { flex: 0 0 auto; padding: 8px 12px; font-size: 13px; line-height: 1.5; min-width: 190px; }
+#unit-panel { flex: 0 1 auto; width: 400px; max-width: 100%; min-width: 0; padding: 8px 12px; font-size: 13px; line-height: 1.5; }
 #unit-panel .name { font-size: 16px; color: var(--accent); }
 #unit-panel .side-enemy { color: var(--danger); }
 #unit-panel .side-ally { color: #7fb4d8; }
@@ -117,6 +117,8 @@ code { color: var(--ink); }
 #unit-panel .bar2.exp i { background: #4a8ff0; }
 #unit-panel .grid { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; color: var(--muted); }
 #unit-panel .preview { margin-top: 4px; color: var(--ink); }
+#unit-panel .statuses { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 4px; overflow-wrap: anywhere; }
+#unit-panel .statuses span { max-width: 100%; }
 #cmd { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
 /* 跟着人物的指令菜单：位置由 BattleUI.placeCommands 用 transform 设置 */
 #cmd-float {
@@ -160,7 +162,7 @@ code { color: var(--ink); }
 #dialog-face[hidden] { display: none; }
 #unit-panel.has-face { display: flex; gap: 10px; align-items: flex-start; }
 #unit-panel .face { flex: 0 0 auto; height: 104px; width: auto; margin-left: -4px; }
-#unit-panel .info { flex: 1 1 auto; min-width: 190px; }
+#unit-panel .info { flex: 1 1 auto; min-width: 0; }
 #dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
 #dialog-who:empty { display: none; }
 #dialog-text { color: #fff; font-size: 17px; line-height: 1.7; white-space: pre-line; }
@@ -283,7 +285,7 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
   #toast { font-size: 13px; }
   #bottom { flex-direction: column; align-items: stretch; gap: 4px; padding: 4px 6px max(4px, env(safe-area-inset-bottom)); }
   #log { max-height: 42px; font-size: 12px; padding: 3px 8px; }
-  #unit-panel { min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
+  #unit-panel { width: 100%; min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
   #unit-panel .name { font-size: 14px; }
   #unit-panel .bars { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
   #unit-panel .bar2 { min-width: 30px; }
