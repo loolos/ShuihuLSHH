@@ -689,7 +689,26 @@
         }
       ],
       "sprite": {
-        "fromClass": 57
+        "fromClass": 57,
+        "recolor": [
+          {
+            "src": [
+              [
+                16,
+                31
+              ],
+              [
+                160,
+                175
+              ]
+            ],
+            "dst": [
+              144,
+              156
+            ],
+            "k": 0.6
+          }
+        ]
       },
       "face": {
         "file": "faces/ximenqing.png"
@@ -717,10 +736,115 @@
         }
       ],
       "sprite": {
-        "fromClass": 31
+        "fromClass": 31,
+        "recolor": [
+          {
+            "src": [
+              [
+                32,
+                47
+              ]
+            ],
+            "dst": [
+              32,
+              47
+            ],
+            "k": 0.7
+          }
+        ]
       },
       "face": {
         "file": "faces/panjinlian.png"
+      }
+    },
+    {
+      "id": "wangpo",
+      "name": "王婆",
+      "base": {
+        "hp": 60,
+        "mp": 30,
+        "attack": 35,
+        "defense": 30,
+        "hit": 40,
+        "agility": 20,
+        "crit": 1
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "wp-guai",
+          "name": "拐杖",
+          "from": 221,
+          "anim": 0
+        }
+      ],
+      "sprite": {
+        "fromClass": 18,
+        "recolor": [
+          {
+            "src": [
+              [
+                120,
+                127
+              ]
+            ],
+            "dst": [
+              160,
+              175
+            ],
+            "k": 1
+          }
+        ]
+      },
+      "face": {
+        "fromHead": 18
+      }
+    },
+    {
+      "id": "wudalang",
+      "name": "武大郎",
+      "base": {
+        "hp": 40,
+        "mp": 20,
+        "attack": 20,
+        "defense": 10,
+        "hit": 50,
+        "agility": 15,
+        "crit": 0
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "wdl-hit",
+          "name": "推搡",
+          "from": 194,
+          "anim": 0
+        }
+      ],
+      "sprite": {
+        "fromClass": 35,
+        "recolor": [
+          {
+            "src": [
+              [
+                64,
+                79
+              ],
+              [
+                80,
+                95
+              ]
+            ],
+            "dst": [
+              160,
+              175
+            ],
+            "k": 0.9
+          }
+        ]
+      },
+      "face": {
+        "fromHead": 35
       }
     }
   ],

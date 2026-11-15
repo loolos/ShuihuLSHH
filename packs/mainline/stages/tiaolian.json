@@ -28,7 +28,7 @@
   },
   {
    "id": "wuda",
-   "class": 35,
+   "class": "wudalang",
    "side": "ally",
    "x": 11,
    "y": 10,
@@ -61,7 +61,7 @@
   },
   {
    "id": "wangpo",
-   "class": 18,
+   "class": "wangpo",
    "side": "ally",
    "x": 13,
    "y": 4,

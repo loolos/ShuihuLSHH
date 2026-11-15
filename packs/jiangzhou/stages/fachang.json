@@ -122,7 +122,7 @@
   },
   {
    "id": "lufang",
-   "class": 39,
+   "class": "lvfang",
    "side": "ally",
    "x": 43,
    "y": 6,
@@ -145,7 +145,7 @@
   },
   {
    "id": "guosheng",
-   "class": 39,
+   "class": "guosheng",
    "side": "ally",
    "x": 44,
    "y": 6,
@@ -354,7 +354,7 @@
   },
   {
    "id": "yanshun",
-   "class": 65,
+   "class": "yanshun",
    "side": "ally",
    "x": 33,
    "y": 13,

@@ -584,6 +584,442 @@
     ]
    },
    "face": null
+  },
+  {
+   "id": "lvfang",
+   "name": "吕方",
+   "base": {
+    "hp": 70,
+    "mp": 60,
+    "attack": 60,
+    "defense": 23,
+    "hit": 100,
+    "agility": 30,
+    "crit": 12
+   },
+   "move": 5,
+   "weaponType": 1,
+   "items": [
+    18,
+    96,
+    113
+   ],
+   "skills": [
+    {
+     "id": "lf-ji",
+     "name": "方天画戟",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "lf-tiao",
+     "name": "画戟挑",
+     "from": 222,
+     "anim": 1
+    }
+   ],
+   "sprite": {
+    "fromClass": 67,
+    "recolor": [
+     {
+      "src": [
+       [
+        120,
+        127
+       ]
+      ],
+      "dst": [
+       32,
+       47
+      ],
+      "k": 1
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 67
+   }
+  },
+  {
+   "id": "guosheng",
+   "name": "郭盛",
+   "base": {
+    "hp": 70,
+    "mp": 60,
+    "attack": 60,
+    "defense": 23,
+    "hit": 100,
+    "agility": 30,
+    "crit": 12
+   },
+   "move": 5,
+   "weaponType": 1,
+   "items": [
+    18,
+    96,
+    113
+   ],
+   "skills": [
+    {
+     "id": "gs-ji",
+     "name": "方天画戟",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "gs-tiao",
+     "name": "画戟挑",
+     "from": 222,
+     "anim": 1
+    }
+   ],
+   "sprite": {
+    "fromClass": 67,
+    "recolor": [
+     {
+      "src": [
+       [
+        120,
+        127
+       ]
+      ],
+      "dst": [
+       16,
+       31
+      ],
+      "k": 1.4
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 67
+   }
+  },
+  {
+   "id": "zhangshun",
+   "name": "张顺",
+   "base": {
+    "hp": 90,
+    "mp": 100,
+    "attack": 60,
+    "defense": 20,
+    "hit": 80,
+    "agility": 45,
+    "crit": 20
+   },
+   "move": 6,
+   "weaponType": 6,
+   "items": [
+    31,
+    84,
+    114
+   ],
+   "skills": [
+    {
+     "id": "zs-dao",
+     "name": "分水刀",
+     "from": 72,
+     "anim": 0
+    },
+    {
+     "id": "zs-lang",
+     "name": "浪里钻",
+     "from": 74,
+     "anim": 1,
+     "learnLevel": 15
+    },
+    {
+     "id": "zs-qi",
+     "name": "换气",
+     "from": 75,
+     "anim": 2
+    }
+   ],
+   "sprite": {
+    "fromClass": 51,
+    "recolor": [
+     {
+      "src": [
+       [
+        96,
+        111
+       ],
+       [
+        240,
+        255
+       ],
+       [
+        160,
+        175
+       ],
+       [
+        48,
+        63
+       ],
+       [
+        224,
+        239
+       ]
+      ],
+      "dst": [
+       16,
+       31
+      ],
+      "k": 1.25
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 51
+   }
+  },
+  {
+   "id": "lijun",
+   "name": "李俊",
+   "base": {
+    "hp": 100,
+    "mp": 100,
+    "attack": 60,
+    "defense": 25,
+    "hit": 65,
+    "agility": 35,
+    "crit": 15
+   },
+   "move": 5,
+   "weaponType": 9,
+   "items": [
+    73,
+    84,
+    114
+   ],
+   "skills": [
+    {
+     "id": "lj-cha",
+     "name": "混江叉",
+     "from": 63,
+     "anim": 0
+    },
+    {
+     "id": "lj-fan",
+     "name": "翻江",
+     "from": 65,
+     "anim": 1
+    },
+    {
+     "id": "lj-qi",
+     "name": "聚气",
+     "from": 68,
+     "anim": 2
+    }
+   ],
+   "sprite": {
+    "fromClass": 50,
+    "recolor": [
+     {
+      "src": [
+       [
+        80,
+        95
+       ]
+      ],
+      "dst": [
+       144,
+       156
+      ],
+      "k": 0.6
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 50
+   }
+  },
+  {
+   "id": "zhangheng",
+   "name": "张横",
+   "base": {
+    "hp": 60,
+    "mp": 40,
+    "attack": 50,
+    "defense": 25,
+    "hit": 80,
+    "agility": 20,
+    "crit": 5
+   },
+   "move": 5,
+   "weaponType": 9,
+   "items": [
+    73,
+    86,
+    114
+   ],
+   "skills": [
+    {
+     "id": "zh-cha",
+     "name": "船叉",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "zh-zhi",
+     "name": "掷叉",
+     "from": 222,
+     "anim": 1
+    }
+   ],
+   "sprite": {
+    "fromClass": 21,
+    "recolor": [
+     {
+      "src": [
+       [
+        16,
+        31
+       ]
+      ],
+      "dst": [
+       176,
+       191
+      ],
+      "k": 1
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 21
+   }
+  },
+  {
+   "id": "yanshun",
+   "name": "燕顺",
+   "base": {
+    "hp": 100,
+    "mp": 100,
+    "attack": 60,
+    "defense": 25,
+    "hit": 65,
+    "agility": 35,
+    "crit": 15
+   },
+   "move": 5,
+   "weaponType": 0,
+   "items": [
+    0,
+    96,
+    115
+   ],
+   "skills": [
+    {
+     "id": "ys-quan",
+     "name": "朴刀",
+     "from": 221,
+     "anim": 0
+    },
+    {
+     "id": "ys-lian",
+     "name": "连斩",
+     "from": 224,
+     "anim": 1
+    },
+    {
+     "id": "ys-xuan",
+     "name": "回旋斩",
+     "from": 225,
+     "anim": 2
+    },
+    {
+     "id": "ys-qi",
+     "name": "聚气",
+     "from": 227,
+     "anim": 3
+    }
+   ],
+   "sprite": {
+    "fromClass": 65,
+    "recolor": [
+     {
+      "src": [
+       [
+        240,
+        255
+       ],
+       [
+        144,
+        156
+       ],
+       [
+        80,
+        95
+       ]
+      ],
+      "dst": [
+       176,
+       191
+      ],
+      "k": 1
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 65
+   }
+  },
+  {
+   "id": "huangwenbing",
+   "name": "黄文炳",
+   "base": {
+    "hp": 60,
+    "mp": 40,
+    "attack": 50,
+    "defense": 20,
+    "hit": 85,
+    "agility": 20,
+    "crit": 5
+   },
+   "move": 4,
+   "weaponType": 0,
+   "items": [
+    0,
+    88,
+    118
+   ],
+   "skills": [
+    {
+     "id": "hwb-quan",
+     "name": "拳脚",
+     "from": 188,
+     "anim": 0
+    }
+   ],
+   "sprite": {
+    "fromClass": 64,
+    "recolor": [
+     {
+      "src": [
+       [
+        224,
+        239
+       ],
+       [
+        48,
+        63
+       ],
+       [
+        160,
+        175
+       ]
+      ],
+      "dst": [
+       64,
+       79
+      ],
+      "k": 0.75
+     }
+    ]
+   },
+   "face": {
+    "fromHead": 64
+   }
   }
  ],
  "stages": [

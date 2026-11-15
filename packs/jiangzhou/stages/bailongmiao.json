@@ -139,7 +139,7 @@
   },
   {
    "id": "lufang",
-   "class": 39,
+   "class": "lvfang",
    "side": "ally",
    "x": 46,
    "y": 16,
@@ -149,7 +149,7 @@
   },
   {
    "id": "guosheng",
-   "class": 39,
+   "class": "guosheng",
    "side": "ally",
    "x": 46,
    "y": 17,
@@ -159,7 +159,7 @@
   },
   {
    "id": "yanshun",
-   "class": 65,
+   "class": "yanshun",
    "side": "ally",
    "x": 45,
    "y": 18,
@@ -209,7 +209,7 @@
   },
   {
    "id": "zhangshun",
-   "class": 66,
+   "class": "zhangshun",
    "side": "ally",
    "x": 52,
    "y": 7,
@@ -220,7 +220,7 @@
   },
   {
    "id": "zhangheng",
-   "class": 21,
+   "class": "zhangheng",
    "side": "ally",
    "x": 53,
    "y": 8,
@@ -231,7 +231,7 @@
   },
   {
    "id": "lijun",
-   "class": 65,
+   "class": "lijun",
    "side": "ally",
    "x": 52,
    "y": 8,
