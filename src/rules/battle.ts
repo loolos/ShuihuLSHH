@@ -1231,8 +1231,8 @@ export class Battle {
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
-      const who = this.units.find((u) => u.classId === t.char && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && u.alive && u.present && dist(u, who) === 1)) this.runBlock(b);
+      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && dist(u, who) === 1)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     this.runCondBlocks();

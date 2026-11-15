@@ -386,7 +386,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     const [x1, y1, x2, y2] = on.area;
     const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
-  } else if ('near' in on) trigger = { kind: 'near', char: r.charOf(on.near) };
+  } else if ('near' in on) {
+    const target = r.unitRef(on.near).act;
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}) };
+  }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });

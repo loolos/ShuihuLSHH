@@ -90,8 +90,8 @@ export type PasTrigger =
    * 原版剧本没有这种触发，只由扩展包关卡（src/packs/）生成。
    */
   | { kind: 'used'; char: number; skills?: number[]; count?: number }
-  /** 扩展包【新】：任一在场的我方单位走到角色号 char 的单位身边（相邻一格）。劫法场"走过去松绑"用 */
-  | { kind: 'near'; char: number };
+  /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
+  | { kind: 'near'; char: number; uid?: number; by?: number };
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
