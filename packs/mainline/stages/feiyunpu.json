@@ -210,6 +210,114 @@
       "hidden": true
     },
     {
+      "id": "wave1se-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 26,
+      "y": 20,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1se-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1se-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 29,
+      "y": 19,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 12,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 15,
+      "y": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 12,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 16,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 26,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 27,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
       "id": "wave3-1",
       "class": 67,
       "side": "enemy",
@@ -639,6 +747,58 @@
         [
           "appear",
           "wave2-4"
+        ],
+        [
+          "narrate",
+          "与此同时，东南芦苇荡、北面小路、南边码头和东北岸上，各有三个张团练的人手听得动静，一齐围拢过来！"
+        ],
+        [
+          "appear",
+          "wave1se-1"
+        ],
+        [
+          "appear",
+          "wave1se-2"
+        ],
+        [
+          "appear",
+          "wave1se-3"
+        ],
+        [
+          "appear",
+          "wave1n-1"
+        ],
+        [
+          "appear",
+          "wave1n-2"
+        ],
+        [
+          "appear",
+          "wave1n-3"
+        ],
+        [
+          "appear",
+          "wave1s-1"
+        ],
+        [
+          "appear",
+          "wave1s-2"
+        ],
+        [
+          "appear",
+          "wave1s-3"
+        ],
+        [
+          "appear",
+          "wave1ne-1"
+        ],
+        [
+          "appear",
+          "wave1ne-2"
+        ],
+        [
+          "appear",
+          "wave1ne-3"
         ],
         [
           "focus",
