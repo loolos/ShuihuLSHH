@@ -504,9 +504,14 @@ function startGame(assets: Assets) {
     const after = pov ? campaign : recordResult(campaign, battle, { keepActive: true });
     const entry = inserts.find((x) => x.ref === ref);
     let c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
-    // 终章后可能有多段续篇；按登记顺序接完，最后一段才标记通关。
-    const continuation = entry?.after ? pendingInsert(c, inserts, entry.after, 'after') : undefined;
+    // 同一位置可能有多段（终章后的续篇、Act10-1 前的赤发鬼 → 三阮）；按登记顺序接完，终章续篇最后一段才标记通关。
+    const continuation = entry?.after
+      ? pendingInsert(c, inserts, entry.after, 'after', ref)
+      : entry?.before
+        ? pendingInsert(c, inserts, entry.before, 'before', ref)
+        : undefined;
     if (entry?.after) c = { ...c, finished: !continuation, insert: continuation };
+    else c = { ...c, insert: continuation };
     campaign = c;
     writeSave(c);
     const replay = () => {
@@ -528,7 +533,8 @@ function startGame(assets: Assets) {
       history.replaceState(null, '', u);
       return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, { label: '再看一次本段', run: replay }], '通关');
     }
-    const cont = { label: `继续：${label(stageOf(c.stage))}`, run: () => goTo(c) };
+    const nextTitle = continuation ? inserts.find((x) => x.ref === continuation)?.title : undefined;
+    const cont = { label: `继续：${nextTitle ?? label(stageOf(c.stage))}`, run: () => goTo(c) };
     ui.result(true, text, [cont, { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => goTo(x)) }, { label: '再打一次本关', run: replay }]);
   };
   const run = async () => {
