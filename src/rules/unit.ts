@@ -43,6 +43,8 @@ export interface Unit {
   slots: number[];
   /** 每格道具打铁的次数（随道具移动） */
   forge: number[];
+  /** 剧情临时借装：原装备随倒流一起保存，结算时恢复。 */
+  storyGear?: Record<number, { item: number; forge: number }>;
   gold: number;
   ai: AiState;
   present: boolean; // 是否在场（未登场或已战败为 false）

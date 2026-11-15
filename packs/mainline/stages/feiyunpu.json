@@ -1,0 +1,283 @@
+{
+  "id": "feiyunpu",
+  "title": "飞云浦",
+  "after": "N14",
+  "chapter": "第十八章 血溅鸳鸯楼",
+  "dynamicLevels": true,
+  "gearAt": "none",
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N13",
+    "crop": [
+      18,
+      20,
+      20,
+      20
+    ]
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 9,
+      "y": 10,
+      "level": 29
+    },
+    {
+      "id": "escort-a",
+      "class": "fy-escort",
+      "side": "enemy",
+      "x": 7,
+      "y": 9,
+      "level": 28
+    },
+    {
+      "id": "escort-b",
+      "class": "fy-escort",
+      "side": "enemy",
+      "x": 9,
+      "y": 3,
+      "level": 28
+    },
+    {
+      "id": "disciple-a",
+      "class": "fy-disciple",
+      "side": "enemy",
+      "x": 15,
+      "y": 5,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "disciple-b",
+      "class": "fy-disciple",
+      "side": "enemy",
+      "x": 17,
+      "y": 6,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 5,
+      "y": 12,
+      "level": 29
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 4,
+      "y": 12,
+      "level": 29
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 5,
+      "y": 13,
+      "level": 29
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 4,
+      "y": 13,
+      "level": 29
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 6,
+      "y": 13,
+      "level": 29
+    },
+    {
+      "id": "shijin",
+      "class": 3,
+      "side": "player",
+      "x": 3,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "linchong",
+      "class": 11,
+      "side": "player",
+      "x": 4,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "duqian",
+      "class": 69,
+      "side": "player",
+      "x": 5,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "songwan",
+      "class": 70,
+      "side": "player",
+      "x": 6,
+      "y": 15,
+      "level": 29,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "到得飞云浦，武松见四人挤眉弄眼，已知八分尴尬。宋江等从后路追赶，武松在桥畔停步。"
+        ],
+        [
+          "say",
+          "wusong",
+          "这里地名唤做甚么去处？"
+        ],
+        [
+          "say",
+          "escort-a",
+          "你又不眼瞎，须见桥边牌额上写道‘飞云浦’！"
+        ],
+        [
+          "say",
+          "wusong",
+          "我要净手则个。"
+        ],
+        [
+          "borrowEquip",
+          "wusong",
+          0,
+          0
+        ],
+        [
+          "buff",
+          "wusong",
+          "defense",
+          {
+            "pct": -50
+          }
+        ],
+        [
+          "objective",
+          "四名杀手全败；武松倒下或超过15回合失败。"
+        ],
+        [
+          "turnLimit",
+          15
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "武松把枷只一扭，折做两半个，扯开封皮，将来撇在水里。"
+        ],
+        [
+          "cleanse",
+          "wusong"
+        ],
+        [
+          "appear",
+          "disciple-a"
+        ],
+        [
+          "appear",
+          "disciple-b"
+        ],
+        [
+          "flag",
+          "four-present"
+        ],
+        [
+          "appear",
+          "shijin"
+        ],
+        [
+          "appear",
+          "linchong"
+        ],
+        [
+          "appear",
+          "duqian"
+        ],
+        [
+          "appear",
+          "songwan"
+        ],
+        [
+          "say",
+          "shijin",
+          "宋三哥！我请得林教头、杜迁、宋万，听说你们出了城，便沿路追来！"
+        ],
+        [
+          "say",
+          "linchong",
+          "我也受过这般押解暗害，岂容他们再伤好汉！"
+        ],
+        [
+          "narrate",
+          "宋江招呼众人先救武松。"
+        ]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "徒弟临死招认：小人两个是蒋门神徒弟。今被师父和张团练定计，使小人两个来相帮防送公人，一处来害好汉。三名主谋此刻正在鸳鸯楼饮酒。"
+        ],
+        [
+          "say",
+          "wusong",
+          "不杀得张都监，如何出得这口恨气！"
+        ],
+        [
+          "narrate",
+          "众人带武松回孟州，查明主谋；林冲、杜迁、宋万自此一同接应。"
+        ],
+        [
+          "victory",
+          "脱险飞云浦，回城辨主谋。"
+        ]
+      ],
+      "if": "four-present"
+    },
+    {
+      "on": {
+        "dead": "wusong"
+      },
+      "do": [
+        [
+          "defeat",
+          "武松倒下，众人未能脱险。"
+        ]
+      ]
+    }
+  ]
+}

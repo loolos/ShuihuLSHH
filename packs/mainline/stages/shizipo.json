@@ -1,0 +1,155 @@
+{
+  "id": "shizipo",
+  "title": "十字坡",
+  "after": "N14",
+  "chapter": "第十七章 孟州风雨",
+  "dynamicLevels": true,
+  "gearAt": "none",
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act5-2"
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 10,
+      "y": 15,
+      "level": 29
+    },
+    {
+      "id": "zhangqing",
+      "class": "zhangqing",
+      "side": "ally",
+      "x": 10,
+      "y": 10,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "sunerniang",
+      "class": "sunerniang",
+      "side": "ally",
+      "x": 9,
+      "y": 11,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "escort-a",
+      "class": 32,
+      "side": "ally",
+      "x": 9,
+      "y": 15,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "escort-b",
+      "class": 33,
+      "side": "ally",
+      "x": 10,
+      "y": 16,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "ally",
+      "x": 11,
+      "y": 16,
+      "level": 1,
+      "ai": 8,
+      "hidden": true
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "ally",
+      "x": 12,
+      "y": 16,
+      "level": 1,
+      "ai": 8,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "话分两头。且说武松刺配孟州，宋江与武龙跟着押送公人，沿途照应。这日来到十字坡，店中夫妇备下酒食。"
+        ],
+        [
+          "say",
+          "sunerniang",
+          "客官且歇脚，吃碗酒再走。"
+        ],
+        [
+          "narrate",
+          "武松见酒色有异，佯作醉倒。二娘近前，武松翻身拿住，店后一个汉子忙来分解。"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "娘子休得无礼！敢问好汉高姓大名？"
+        ],
+        [
+          "say",
+          "wusong",
+          "我行不更名，坐不改姓，都头武松的便是。"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "原来是景阳冈打虎的好汉！张青有眼不识好人。"
+        ],
+        [
+          "say",
+          "sunerniang",
+          "是我一时糊涂，望好汉饶恕。"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "小弟便打发了这两个公人，留兄长在此安身如何？"
+        ],
+        [
+          "say",
+          "wusong",
+          "我若害了他，天理也不容我。这两个公人待俺不薄，快救醒他们。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "say",
+          "songjiang",
+          "二郎处处重义，哥哥更不能不管。此行只照应盘缠，不坏官差。"
+        ],
+        [
+          "narrate",
+          "夫妇救醒公人，赠了盘缠，送众人往孟州。"
+        ],
+        [
+          "victory",
+          "十字坡结识好汉，前往孟州牢城。"
+        ]
+      ]
+    }
+  ]
+}
