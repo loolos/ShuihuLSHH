@@ -269,7 +269,10 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
           ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
-          name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
+          // 縣尉两招气功共用技能号 226；范围技单独命名，避免 learnedSkills 按同名去重时被直线技覆盖。
+          name: r.id === 42 && s.skillId === 226 && s.type === 3
+            ? '震地氣功'
+            : SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         }))),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),

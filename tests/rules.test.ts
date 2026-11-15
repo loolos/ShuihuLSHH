@@ -10,6 +10,7 @@ import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
 import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
+import { planAi } from '../src/rules/ai.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
 import { balanceLevels } from '../src/rules/preset.ts';
 import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills, skillBonusText } from '../src/rules/skills.ts';
@@ -724,6 +725,35 @@ describe('经验', () => {
 });
 
 describe('技能', () => {
+  it('县尉范围气功独立命名，两招都保留，AI 能选择范围技', () => {
+    const record = {
+      id: 42, hp: 95, mp: 80, hpGrowth: 100, mpGrowth: 100, move: 0, weaponType: 0, goldCap: 0,
+      stats: Array.from({ length: 5 }, () => ({ base: 50, growth: 100, grade: 'd' })),
+      defaultItems: [0, 0, 0, 0, 0, 0, 0],
+      skills: [punch,
+        { ...punch, skillId: 226, type: 3, mpCost: 30, power: 15, rangeMin: 0, rangeMax: 0, area: 5 },
+        { ...punch, skillId: 226, type: 0, mpCost: 50, power: 25, area: 8 },
+      ],
+    } as unknown as ClassRecord;
+    const names: string[] = [];
+    names[226] = '氣功技';
+    const [officer, cavalry] = buildClasses([record, { ...record, id: 43 }], [], names);
+    const d = { ...data, classes: [...data.classes] };
+    d.classes[42] = officer;
+    const known = learnedSkills({ classId: 42, level: 1 } as Unit, d);
+    expect(known.map((s) => [s.name, s.type, s.mpCost, s.power, s.area])).toEqual([
+      ['震地氣功', 3, 30, 15, 5], ['氣功技', 0, 50, 25, 8],
+    ]);
+    expect(cavalry.skills[1].name).toBe('氣功技');
+    const b = new Battle({ name: 't', board: new Board(10, 10),
+      units: [act(0, 0, 'player', 6, 6), act(1, 42, 'enemy', 5, 5)], blocks: [], data: d, seed: 1 });
+    b.begin();
+    // 目标在斜角，不能移动的县尉只有自身范围技打得到。
+    const plan = planAi(b, b.unit(1)!);
+    expect(plan.skill?.name).toBe('震地氣功');
+    expect(plan.cell).toEqual({ x: 5, y: 5 });
+  });
+
   it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
     const skill = { ...punch, name: '技能', mpCost: 10 };
     const d: GameData = { ...data, classes: [...data.classes] };
