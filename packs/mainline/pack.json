@@ -610,6 +610,7 @@
         "rangeMax": 4,
         "area": 2,
         "targetShape": "diamond",
+        "hitFx": "blood",
         "effect": 0
     },
     {

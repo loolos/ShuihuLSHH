@@ -1084,6 +1084,32 @@ export class BattleScene extends Phaser.Scene {
 
   /** 地图上的飘字：照原版用调色板色（伤害红、回血绿、回气黄，见 float-text.ts），加黑描边保证在地图上看得清【新】。
    *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
+  /** 溅血（技能 hitFx: 'blood'）：受击者胸口迸出几滴红点，抛物线落下后淡出；必杀多溅几滴 */
+  private bloodSplash(x: number, y: number, crit = false) {
+    const p = cellToWorld(x, y);
+    const cy = p.y - 34; // 大约胸口高度
+    const n = crit ? 14 : 8;
+    for (let i = 0; i < n; i++) {
+      const r = 1.5 + Math.random() * 2;
+      const drop = this.add.circle(p.x, cy, r, Math.random() < 0.3 ? 0x8a0a0a : 0xc81414).setDepth(depthOf(x, y, 11));
+      const vx = (Math.random() - 0.5) * 60;
+      const up = 18 + Math.random() * 22;
+      const t = { k: 0 };
+      this.tweens.add({
+        targets: t,
+        k: 1,
+        duration: 420 + Math.random() * 180,
+        ease: 'Linear',
+        onUpdate: () => {
+          drop.x = p.x + vx * t.k;
+          drop.y = cy - up * t.k + 70 * t.k * t.k;
+          drop.setAlpha(1 - t.k * t.k);
+        },
+        onComplete: () => drop.destroy(),
+      });
+    }
+  }
+
   private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
     const p = cellToWorld(x, y);
     p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
@@ -1339,6 +1365,7 @@ export class BattleScene extends Phaser.Scene {
                   // 同一帧里第一段命中的负责受击动作和受击声（另一段必杀时再补一声必杀音）
                   const lead = frames.findIndex((g, j) => g === f && (!perPart || res.partHit[j])) === i;
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
+                  if (dmg !== null && dmg > 0 && skill.hitFx === 'blood') this.bloodSplash(tv.x, tv.y, crit);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
                     this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
