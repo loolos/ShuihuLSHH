@@ -66,6 +66,7 @@ export type BattleEvent =
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
+  | { type: 'subtitle'; text: string }
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
@@ -1082,7 +1083,11 @@ export class Battle {
       this.emit({ type: 'sound', name: 'm04' }); // 升级音（EXE 0x406990）
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, text: '升級了！' });
       this.emit({ type: 'message', text: `${u.name}升級了！（Lv${u.level}）` });
-      for (const s of skillsLearnedAt(u, this.data, u.level)) this.emit({ type: 'message', text: `${u.name}領悟了${this.tr(s.name)}！` });
+      for (const s of skillsLearnedAt(u, this.data, u.level)) {
+        const text = `${u.name}領悟了${this.tr(s.name)}！`;
+        this.emit({ type: 'message', text });
+        this.emit({ type: 'subtitle', text });
+      }
     }
   }
 

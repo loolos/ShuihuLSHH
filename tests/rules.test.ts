@@ -873,6 +873,7 @@ describe('技能', () => {
     p.stats.hit = 255;
     const ev = b.attack(p, b.unit(1)!);
     expect(ev.some((e) => e.type === 'message' && e.text.includes('領悟了絕招'))).toBe(true);
+    expect(ev.some((e) => e.type === 'subtitle' && e.text.includes('領悟了絕招'))).toBe(true);
   });
 
   it('敌人会用气力够用的攻击技', () => {
