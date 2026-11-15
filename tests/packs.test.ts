@@ -604,7 +604,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('宋家庄：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
+  it('义释宋公明：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
     const stage = stageOf('songjiazhuang');
     expect(stage.after).toBe('N14');
     expect(stage.pov).toBe(true);
@@ -627,7 +627,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('宋家庄：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
+  it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
     const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
     b.begin();
     const zt = b.units.find((u) => u.classId === rt.classIds.get('zhutong'))!;
@@ -647,7 +647,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('宋家庄：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
+  it('义释宋公明：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
     const start = () => {
       const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
       b.begin();
