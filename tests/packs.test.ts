@@ -10,7 +10,8 @@ import { compileStage } from '../src/packs/build.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
-import { buy, pawn } from '../src/rules/town.ts';
+import { buy, pawn, stock } from '../src/rules/town.ts';
+import { insertTownName, prepareInsertTown, insertTownIntro } from '../src/packs/towns.ts';
 import { inheritAssets, pendingInsert, recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { insertPlaces } from '../src/rules/chapters.ts';
 /** 章节表算出的插关位置：关卡 id → before / after */
@@ -1228,6 +1229,46 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(next.members.find(m=>m.classId===0)!.slots[0]).toBe(0);
     }
   });
+  it('飞云浦后接孟州整备再进鸳鸯楼，全部十名好汉可购物且读档不重置资产', () => {
+    const sequence = insertPlaces().map(p => p.ref);
+    const index = sequence.indexOf('mainline/feiyunpu');
+    expect(sequence[index + 1]).toBe('mainline/yuanyanglou');
+    expect(stage('feiyunpu').townAfter).toBe(11);
+    const next = 'mainline/yuanyanglou';
+    expect(insertTownName(next)).toBe('孟州整备');
+    expect(insertTownName('mainline/shizipo')).toBe('阳谷整备');
+    expect(insertTownIntro(next).some(l => l.text.includes('补齐药品'))).toBe(true);
+    const c: CampaignState = { version: 1, stage: 75, gold: 10000, members: [
+      { classId: 0, level: 18, exp: 17, slots: [2, 84, 0, 0, 0, 0, 0], forge: [2, 3, 0, 0, 0, 0, 0] },
+    ], companions: { 'mainline/wusong': { level: 18, exp: 23, slots: [1, 84, 0, 0, 0, 0, 0], forge: [4, 2, 0, 0, 0, 0, 0] } },
+      insertTown: { pack: 'mainline', next, town: 11, seen: true } };
+    const prepared = prepareInsertTown(c, rt, next);
+    const expected = stage('yuanyanglou').units.filter(u => u.side === 'player').map(u => typeof u.class === 'number' ? u.class : cid(u.class));
+    expect(prepared.active).toEqual(expected);
+    expect(prepared.active).toHaveLength(10);
+    expect(prepared.members.find(m => m.classId === 0)).toMatchObject(c.members[0]);
+    expect(prepared.members.filter(m => expected.includes(m.classId)).every(m => m.level === 18)).toBe(true);
+    const medicine = stock(rt.data, 3, 11)[0];
+    expect(medicine).toBeGreaterThan(0);
+    expect(stock(rt.data, 1, 11).length).toBeGreaterThan(0);
+    const bought = buy(prepared, rt.data, cid('wusong'), medicine);
+    expect(bought.ok).toBe(true);
+    expect(bought.c.gold).toBe(c.gold - rt.data.items[medicine - 1].buyPrice);
+    const saved = JSON.parse(JSON.stringify(saveTownParty(bought.c, rt))) as CampaignState;
+    const reopened = prepareInsertTown(saved, rt, next);
+    expect(reopened.gold).toBe(bought.c.gold);
+    for (const member of bought.c.members) expect(reopened.members.find(m => m.classId === member.classId)).toMatchObject(member);
+    expect(reopened.active).toEqual(expected);
+    expect(saved.insertTown).toEqual(c.insertTown);
+    // 离城后真正构造下一战：已购道具、锻造、等级和经验均沿用。
+    const b = new Battle(compileStage(rt, stage('yuanyanglou'), files, { party: packParty(saved, rt) }));
+    const wu = b.units.find(u => u.classId === cid('wusong'))!;
+    expect(wu.slots).toContain(medicine);
+    expect(wu.forge.slice(0, 2)).toEqual([4, 2]);
+    expect([wu.level, wu.exp]).toEqual([18, 23]);
+    expect(prepareInsertTown(c, rt, 'mainline/shizipo').active).toEqual([cid('sj-fugitive'), cid('wusong'), 0]);
+  });
+
   it('城镇买卖包人物、消费后序列化重读，不补药不改余额，稳定id不串号',()=> {
     const initial:CampaignState={version:1,stage:1,gold:100000,members:[],insertTown:{pack:'mainline',next:'mainline/shizipo',town:11,seen:true},companions:{'mainline/wusong':{level:31,exp:8,slots:[0,84,0,0,0,0,0],forge:[]}}};
     const id=cid('wusong');let view=townParty(initial,rt);view.active=[id];

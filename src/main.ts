@@ -20,6 +20,7 @@ import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
+import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
@@ -178,7 +179,10 @@ function startGame(assets: Assets) {
         if (!e) continue;
         insChapter.set(e.ref, chLabel);
         items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
-        if (e.townAfter) items.push({ label: '城镇 阳谷整备', value: `itown:${e.ref}`, title: `${chLabel} 城镇 阳谷整备` });
+        if (e.townAfter) {
+          const name = insertTownName(insertAfter(e.ref) ?? '');
+          items.push({ label: `城镇 ${name}`, value: `itown:${e.ref}`, title: `${chLabel} 城镇 ${name}` });
+        }
         continue;
       }
       const s = stageByMap.get(key.toLowerCase());
@@ -237,7 +241,7 @@ function startGame(assets: Assets) {
   };
   const asked = params.get('stage')?.toLowerCase();
   if (asked?.startsWith('itown:')) {
-    if (!campaign.insertTown) campaign = jump(asked,campaign);
+    if (!campaign.insertTown || insertTownOf(campaign.insertTown.next) !== asked) campaign = jump(asked,campaign);
   } else if (asked?.startsWith('ins:')) {
     if (campaign.insert !== asked.slice(4)) campaign = jump(asked, campaign);
   } else if (asked) {
@@ -584,33 +588,27 @@ function startGame(assets: Assets) {
     if (pack?.rt.id !== stop.pack) pack = await openPack(assets, stop.pack);
     if (ticket !== loading) return;
     const rt = pack.rt, pa: Assets = { ...assets, data: rt.data, items: rt.data.items, pack };
-    const ids = [rt.classIds.get('sj-fugitive')!, rt.classIds.get('wusong')!, 0];
-    let view = townParty(campaign, rt);
-    // Old saves that never recorded package actors initialize once, not on every town visit.
-    for (const classId of ids) if (!view.members.some(m=>m.classId===classId)) {
-      const level = joinLevel(campaign) || 28;
-      view.members.push({ classId, level, exp: 0, slots: [...rt.data.classes[classId].defaultItems], forge: [] });
-    }
-    view = { ...view, active: ids };
+    const view = prepareInsertTown(campaign, rt, stop.next);
+    const ids = view.active!;
     campaign = saveTownParty(view, rt);
     writeSave(campaign);
     const spot = insertTownOf(stop.next) ?? 'itown:mainline/shizilou';
     setHere(spot);
     const u = new URL(location.href); u.searchParams.set('stage', spot); history.replaceState(null,'',u);
     if (!stop.seen) {
-      await ui.say('宋江', '二郎，你既要依文投营，哥哥不拦。只是孟州路远，我与武龙陪你走一程，也好从中照应。', ids[0]);
-      if (ticket !== loading) return;
-      await ui.say('武松', '哥哥肯这般相待，武松感激不尽。只是不可坏了公人的差事。', ids[1]);
-      if (ticket !== loading) return;
-      await ui.say('宋江', '只照应盘缠行李，不劫官差。且在城中置办些衣药，再一同上路。', ids[0]);
-      if (ticket !== loading) return;
+      for (const line of insertTownIntro(stop.next)) {
+        const actor = rt.classIds.get(line.actor)!;
+        await ui.say(rt.data.classes[actor].name, line.text, actor);
+        if (ticket !== loading) return;
+      }
       ui.endSkip();
       campaign = { ...campaign, insertTown: { ...stop, seen: true } };
       writeSave(campaign);
     }
     town.setAssets(pa);
     town.show({ ...townParty(campaign,rt), active: ids }, {
-      town: stop.town, title: '城镇 · 阳谷整备',
+      town: stop.town, title: `城镇 · ${insertTownName(stop.next)}`,
+      leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
       onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
     });
@@ -751,7 +749,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.insertTown ? "城镇 · 阳谷整备" : c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
+    const where = c.insertTown ? `城镇 · ${insertTownName(c.insertTown.next)}` : c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))
