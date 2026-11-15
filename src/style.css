@@ -54,7 +54,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 
 /* 检查更新的提示条 */
 #toast {
-  position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 6;
+  position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 9;
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
   max-width: calc(100vw - 32px); padding: 8px 14px; border: 1px solid var(--accent); border-radius: 6px;
   background: rgba(42, 34, 25, 0.96); font-size: 14px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -356,8 +356,8 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 .title-stage-grid button.town { color: #9fc48a; }
 .title-stage-grid button.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .title-stage-grid button:hover, .title-stage-grid button:focus-visible { border-color: var(--accent); outline: none; }
-.title-foot { width: min(860px, 100%); display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
-.title-tools { display: flex; gap: 6px; }
+.title-foot { width: min(860px, 100%); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.title-tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .title-tools button {
   font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); cursor: pointer;
   border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; min-height: 30px;
