@@ -1,8 +1,6 @@
 {
   "id": "yuanyanglou",
   "title": "鸳鸯楼",
-  "after": "N14",
-  "chapter": "第十八章 血溅鸳鸯楼",
   "dynamicLevels": true,
   "rewards": {
     "gold": 0

@@ -2,7 +2,6 @@
  "dynamicLevels": true,
  "id": "chifagui",
  "title": "赤发鬼夜战插翅虎",
- "before": "Act10-1",
  "pov": true,
  "map": {
   "base": "N12"

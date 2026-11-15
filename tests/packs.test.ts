@@ -11,6 +11,9 @@ import { attackSkill, type Unit } from '../src/rules/unit.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
 import { buy, pawn } from '../src/rules/town.ts';
 import { inheritAssets, pendingInsert, recordResult, type CampaignState } from '../src/rules/campaign.ts';
+import { insertPlaces } from '../src/rules/chapters.ts';
+/** 章节表算出的插关位置：关卡 id → before / after */
+const placeOf = (id: string) => insertPlaces().find((p) => p.ref === `mainline/${id}`);
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
@@ -608,7 +611,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   };
 
   it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
-    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([
+    expect(rt.stages.map((s) => [s.id, placeOf(s.id)?.before, !!s.pov])).toEqual([
       ['wawasi', 'N-add06', false],
       ['chifagui', 'Act10-1', true],
       ['sanruan', 'Act10-1', true],
@@ -631,7 +634,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   });
 
   it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
-    const after = rt.stages.filter((s) => s.after === 'N14').map((s) => s.id);
+    const after = insertPlaces().filter((p) => p.after === 'N14').map((p) => p.ref.slice('mainline/'.length));
     expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
       const stage = stageOf(id);
@@ -698,7 +701,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('义释宋公明：三人可操作、前三回合敌人分三拨来、30回合，所有人能沿地形互相到达', () => {
     const stage = stageOf('songjiazhuang');
-    expect(stage.after).toBe('N14');
+    expect(placeOf(stage.id)?.after).toBe('N14');
     expect(stage.pov).toBe(true);
     const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
     b.begin();
@@ -788,7 +791,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('终章之后的纯剧情播放辞金、杀惜与逃亡，演完即通关', () => {
     const stage = stageOf('songjiang-yanshixi');
-    expect(stage.after).toBe('N14');
+    expect(placeOf(stage.id)?.after).toBe('N14');
     const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
     const ev = b.begin();
     expect(b.status).toBe('won');
@@ -1025,7 +1028,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(b.units.find(u=>u.classId===cid('wusong'))!.buffs.some(x=>x.value<0)).toBe(false);
     expect(ev.findIndex(e=>e.type==='narrate'&&e.text.includes('枷只一扭'))).toBeLessThan(ev.findIndex(e=>e.type==='say'&&e.text.includes('林教头')));
     const y=start('yuanyanglou');expect(y.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(10);
-    const list=rt.stages.filter(s=>s.after==='N14').map(s=>({ref:`mainline/${s.id}`,after:s.after}));
+    const list=insertPlaces().filter(p=>p.after==='N14');
     for(const id of ['shizilou','shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu'])expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after',`mainline/${id}`)).toBeTruthy();
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBeUndefined();
     expect(stage('shizilou').townAfter).toBe(11);
