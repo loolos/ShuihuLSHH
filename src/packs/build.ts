@@ -270,6 +270,10 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
+  for (const [x, y] of stage.map.open ?? []) {
+    if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
+    board.blocked[y * board.width + x] = 0;
+  }
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
   kitPlayers(rt, stage, units, files);
   const byId = new Map(stage.units.map((u, i) => [u.id, { json: u, act: units[i] }]));

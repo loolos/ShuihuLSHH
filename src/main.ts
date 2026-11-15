@@ -12,8 +12,8 @@ import { installTouchGuards } from './game/touch.ts';
 import { installMusic, music, type Playlist } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
 import { TownUI } from './game/town.ts';
-import { TitleScreen, type TitleStageItem } from './game/title.ts';
-import { stageLabel, townName } from './game/stage-names.ts';
+import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
+import { cnNumber, stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
@@ -124,8 +124,7 @@ function writeSave(c: CampaignState) {
 
 function startGame(assets: Assets) {
   const stages = assets.exe.stages.filter((s) => s.mapName && assets.files.has(`Map/${s.mapName}.act`));
-  const sel = $<HTMLSelectElement>('stage');
-  sel.add(new Option('⟲ 新游戏（从第1章开始）', 'new'));
+  const stageBtn = $<HTMLButtonElement>('stage');
   /** 过关后进城的关卡：关卡号 → 城镇号与城镇之后的下一关（剧本头 +9 / +11） */
   const towns = new Map<number, { town: number; next: number }>();
   for (const s of stages) {
@@ -136,27 +135,41 @@ function startGame(assets: Assets) {
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
   // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
-  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string })[] = listPacks()
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; chapter?: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
     .flatMap((e) =>
       e.stages
         .filter((s) => s.before || s.after)
-        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
+        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, chapter: s.chapter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
     );
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
+  /** 插关所在的章（续篇可以另开新章，见关卡 JSON 的 chapter） */
+  const insChapter = new Map<string, string>();
+  let lastChapter = 0;
   for (const s of stages) {
     const l = stageLabel(s.title, s.mapName);
+    if (l.chapter) lastChapter = Math.max(lastChapter, l.chapter);
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
-    const items = chapters.at(-1)!.items;
+    let items = chapters.at(-1)!.items;
     // 插在这一关前面的主线插关
-    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
+    for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase())) {
+      insChapter.set(e.ref, l.chapterLabel);
       items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    }
     items.push({ label: l.short, value: String(s.index), title: l.full });
-    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    let chLabel = l.chapterLabel;
+    for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase())) {
+      if (e.chapter) {
+        chLabel = `第${cnNumber(++lastChapter)}章 ${e.chapter}`;
+        chapters.push({ label: chLabel, items: [] });
+        items = chapters.at(-1)!.items;
+      }
+      insChapter.set(e.ref, chLabel);
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+    }
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
@@ -170,23 +183,15 @@ function startGame(assets: Assets) {
     const side = sideItems();
     return side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters;
   };
-  /** 外传通关后给下拉框里的那一项补上 ✓ */
-  const refreshSideOptions = () => {
-    for (const it of sideItems()) {
-      const o = [...sel.options].find((x) => x.value === it.value);
-      if (o) o.text = it.label;
-    }
+  /** 选关列表里的值 → 显示名（顶栏选关按钮上显示正在玩的这一项） */
+  const itemLabel = (value: string) => stageGroups().flatMap((g) => g.items).find((x) => x.value === value)?.label;
+  /** 正在玩的那一项（选关列表里高亮） */
+  let here = '';
+  const setHere = (value: string) => {
+    here = value;
+    stageBtn.hidden = false;
+    stageBtn.textContent = `${itemLabel(value)?.replace(/ ✓$/, '') ?? '选关'} ▾`;
   };
-  for (const ch of stageGroups()) {
-    const group = document.createElement('optgroup');
-    group.label = ch.label;
-    for (const it of ch.items) {
-      const o = new Option(it.label, it.value);
-      if (it.title) o.title = it.title;
-      group.append(o);
-    }
-    sel.append(group);
-  }
   const params = new URLSearchParams(location.search);
   let campaign = loadSave() ?? newCampaign(stages[0].index);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
@@ -405,8 +410,7 @@ function startGame(assets: Assets) {
     try {
       setupEl.hidden = false;
       progress('载入外传…', 0);
-      sel.hidden = false;
-      sel.value = value;
+      setHere(value);
       if (pack?.rt.id !== ref.pack) pack = await openPack(assets, ref.pack);
       const rt = pack.rt;
       const stage = rt.stages.find((s) => s.id === ref.stage);
@@ -443,7 +447,6 @@ function startGame(assets: Assets) {
     }
     const ref = parsePackValue(value)!;
     markPackCleared(ref.pack, ref.stage);
-    refreshSideOptions();
     void music.play('victory');
     const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
     const next = pack?.rt.stages.find((s) => s.id === ref.stage)?.next;
@@ -457,8 +460,9 @@ function startGame(assets: Assets) {
     const e = inserts.find((x) => x.ref === ref);
     ui.hideResult();
     town.hide();
-    sel.hidden = false;
-    sel.value = insValue(ref);
+    setHere(insValue(ref));
+    // 主线插关也按所在的章放开章短曲（续篇另开的新章，如第十六章）
+    chapterSting(insChapter.get(ref) ?? '');
     const ticket = ++loading;
     try {
       setupEl.hidden = false;
@@ -541,7 +545,6 @@ function startGame(assets: Assets) {
   };
   const run = async () => {
     packBgm = null;
-    sel.hidden = false;
     ui.hideResult();
     town.hide();
     if (campaign.finished) {
@@ -551,13 +554,13 @@ function startGame(assets: Assets) {
     if (campaign.insert) return runInsert(campaign.insert);
     if (campaign.town) {
       // 存档停在城镇里
-      sel.value = towns.has(campaign.stage) ? townValue(campaign.stage) : String(campaign.stage);
+      setHere(towns.has(campaign.stage) ? townValue(campaign.stage) : String(campaign.stage));
       const u = new URL(location.href);
       u.searchParams.set('stage', `town:${stageOf(campaign.stage).mapName}`);
       history.replaceState(null, '', u);
       return enterTown(campaign);
     }
-    sel.value = String(campaign.stage);
+    setHere(String(campaign.stage));
     const stage = stageOf(campaign.stage).mapName;
     // 网页版：先下载本关要用的人物、特效和图块（已缓存的不再下载）
     const ticket = ++loading;
@@ -582,11 +585,8 @@ function startGame(assets: Assets) {
     u.searchParams.set('stage', stage);
     history.replaceState(null, '', u);
   };
-  sel.onchange = () => {
-    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空；外传不碰主线存档
-    if (isPackValue(sel.value)) return void runPack(sel.value);
-    goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jump(sel.value, campaign));
-  };
+  // 顶栏的选关按钮打开的就是标题画面的选关页（同一份列表、同一种进入方式），返回则回到游戏
+  stageBtn.onclick = () => title.show(titleOptions(here), 'stages');
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
   $('zoom-out').onclick = () => scene()?.zoomBy(1 / 1.25);
   $('end-turn').onclick = () => scene()?.endTurn();
@@ -609,46 +609,70 @@ function startGame(assets: Assets) {
   const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
   new ResizeObserver(hudH).observe($('hud'));
   (window as unknown as { __game: Phaser.Game }).__game = game; // 调试与截图脚本用
-  /** 离开标题画面进游戏 */
-  const begin = (c: CampaignState) => {
+  /** 离开标题画面（或顶栏打开的选关页）进游戏 */
+  const leaveTitle = () => {
     title.hide();
     $('hud').hidden = false;
     hudH();
     ui.show();
+  };
+  const begin = (c: CampaignState) => {
+    leaveTitle();
     goTo(c);
   };
-  const title = new TitleScreen();
-  /** 进外传：不碰主线存档 */
-  const beginPack = (value: string) => {
-    title.hide();
-    $('hud').hidden = false;
-    hudH();
-    ui.show();
-    void runPack(value);
+  /**
+   * 选关列表里选了一项：标题画面和游戏里顶栏的选关都走这里。
+   * 主线关 / 插关 / 城镇：按那一关的难度重新配等级和装备，覆盖主线存档；外传：等级固定，不碰主线存档。
+   */
+  const enter = (value: string) => {
+    if (isPackValue(value)) {
+      leaveTitle();
+      return void runPack(value);
+    }
+    begin(jump(value, campaign));
   };
+  const title = new TitleScreen();
   // 网址带 ?stage=（刷新、测试脚本）时直接进关，不经过标题画面
-  if (asked && isPackValue(asked)) return beginPack(asked);
+  if (asked && isPackValue(asked)) return enter(asked);
   // asked 以 ins: 开头时 campaign 已经排好了插关
   if (asked) return begin(campaign);
-  const save = loadSave() ? campaign : null;
   void music.play(['title', 'liangshan']);
-  title.show({
-    save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
-    chapters: stageGroups(),
-    portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
-    version: versionLabel(BUILD),
-    buttons: [$('sound'), $('music')],
-    onNew: () => begin(newCampaign(stages[0].index)),
-    onLoad: () => begin(save!),
-    onJump: (v) => (isPackValue(v) ? beginPack(v) : begin(jump(v, save ?? newCampaign(stages[0].index)))),
-  });
+  title.show(titleOptions(null));
+
+  /** 标题画面的选项；current = 选关列表里要高亮的那一项（游戏里 = 正在玩的，标题画面 = 存档所在的） */
+  function titleOptions(current: string | null): TitleOptions {
+    const save = loadSave() ? campaign : null;
+    const ok = save && stages.some((s) => s.index === save.stage) ? save : null;
+    return {
+      save: ok ? saveSummary(ok) : null,
+      chapters: stageGroups(),
+      current: current ?? (ok ? placeOf(ok) : undefined),
+      portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
+      version: versionLabel(BUILD),
+      buttons: [$('sound'), $('music')],
+      onNew: () => begin(newCampaign(stages[0].index)),
+      onLoad: () => begin(ok!),
+      onJump: enter,
+      onBack: current === null ? undefined : leaveTitleOnly,
+    };
+  }
+  /** 从游戏里打开的选关页按「返回」：直接回到游戏，什么都不变 */
+  function leaveTitleOnly() {
+    title.hide();
+  }
+  /** 存档停在哪一项（选关列表里的值） */
+  function placeOf(c: CampaignState) {
+    if (c.insert) return insValue(c.insert);
+    if (c.town && towns.has(c.stage)) return townValue(c.stage);
+    return String(c.stage);
+  }
 
   /** 存档摘要：在哪一关 / 哪个城镇，队伍等级与金钱，存档时间 */
   function saveSummary(c: CampaignState) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))

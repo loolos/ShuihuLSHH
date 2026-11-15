@@ -24,7 +24,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
   font-size: 14px; z-index: 2;
 }
 #hud[hidden] { display: none; }
-#hud select, #hud button {
+#hud button {
   font: inherit; color: var(--ink); background: var(--panel);
   border: 1px solid #5a4832; border-radius: 4px; padding: 4px 8px; min-height: 32px;
 }
@@ -215,6 +215,9 @@ code { color: var(--ink); }
   background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
 }
 #town[hidden] { display: none; }
+/* 在城镇里顶栏照常显示在上面（选关等），城镇界面从顶栏下面开始；战斗专用的按钮不显示 */
+body.in-town #town { top: var(--hud-h, 0px); }
+body.in-town #hud :is(#turn, #team-exp, #objective-btn, #zoom-out, #zoom-in, #rewind, #end-turn) { display: none; }
 /* 说书时对白框和选项面板盖在城镇界面上 */
 body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 #town button.story { border-color: var(--accent); }
@@ -266,8 +269,8 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 
 @media (max-width: 640px) {
   #hud { font-size: 13px; gap: 4px; padding: 4px 6px; }
-  #hud select { max-width: 40vw; }
-  #hud select, #hud button { padding: 2px 6px; min-height: 30px; }
+  #stage { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #hud button { padding: 2px 6px; min-height: 30px; }
   #reset { display: none; }
   #toast { font-size: 13px; }
   #bottom { flex-direction: column; align-items: stretch; gap: 4px; padding: 4px 6px max(4px, env(safe-area-inset-bottom)); }
@@ -351,6 +354,7 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 }
 .title-stage-grid button.story { color: var(--muted); }
 .title-stage-grid button.town { color: #9fc48a; }
+.title-stage-grid button.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .title-stage-grid button:hover, .title-stage-grid button:focus-visible { border-color: var(--accent); outline: none; }
 .title-foot { width: min(860px, 100%); display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
 .title-tools { display: flex; gap: 6px; }

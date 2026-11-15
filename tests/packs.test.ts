@@ -627,7 +627,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场演完就过关', () => {
+  it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
     const after = rt.stages.filter((s) => s.after === 'N14').map((s) => s.id);
     expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
@@ -640,6 +640,9 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       if (id === 'chaijin-liubin' || id === 'tiaolian') {
         expect(b.status, id).toBe('won');
         expect(ev.some((e) => e.type === 'end' && e.result === 'won')).toBe(true);
+        // 每个 move 都真的走到了（走不到时剧本会原地不动）
+        const moves = stage.script.flatMap((blk) => blk.do.filter((op) => op[0] === 'move'));
+        expect(ev.filter((e) => e.type === 'move').length, id).toBe(moves.length);
       } else expect(b.status, id).toBe('playing');
     }
   });
