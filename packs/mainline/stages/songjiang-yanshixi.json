@@ -9,7 +9,7 @@
   "units": [
     {
       "id": "songjiang",
-      "class": 6,
+      "class": "sj-fugitive",
       "side": "player",
       "x": 10,
       "y": 11,

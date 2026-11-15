@@ -44,6 +44,17 @@ describe('宋江杀惜剧本', () => {
   });
 });
 
+describe('宋江职业', () => {
+  it('主线续篇的宋江和江州外传的宋江用同一套属性、技能和形象（只有随身道具和技能 id 不同）', () => {
+    const cls = (pack: string, id: string) => JSON.parse(fs.readFileSync(`packs/${pack}/pack.json`, 'utf8')).classes.find((c: { id: string }) => c.id === id);
+    const strip = (c: Record<string, unknown>) => {
+      const { id: _id, items: _items, skills, ...rest } = c;
+      return { ...rest, skills: (skills as { id: string }[]).map(({ id: _sid, ...s }) => s) };
+    };
+    expect(strip(cls('mainline', 'sj-fugitive'))).toEqual(strip(cls('jiangzhou', 'songjiang')));
+  });
+});
+
 describe.skipIf(!has)('扩展包：武松打虎', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
@@ -682,7 +693,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(lines).toMatch(/收下/);
     expect(lines).toMatch(/阎婆惜/);
     expect(lines).toMatch(/逃走/);
-    const song = b.units.find((u) => u.classId === 6)!;
+    const song = b.units.find((u) => u.name === '宋江')!;
     const liu = b.units.find((u) => u.name === '刘唐')!;
     const yan = b.units.find((u) => u.name === '阎婆惜')!;
     const eventIndex = (type: 'leave' | 'appear', uid: number) => ev.findIndex((e) => e.type === type && e.uid === uid);
