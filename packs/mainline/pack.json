@@ -1197,6 +1197,7 @@
         "id": "hr-shen",
         "name": "百步穿杨",
         "from": 222,
+        "rangedDamage": [1, 0.6],
         "anim": 0
       }
     ],
