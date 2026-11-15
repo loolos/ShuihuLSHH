@@ -1308,6 +1308,9 @@ export class Battle {
         return this.flags.has(c.arg);
       case 101:
         return !this.flags.has(c.arg);
+      // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
+      case 102:
+        return !this.units.some(u => u.side === 'enemy' && u.alive);
       case 1:
         // 我方全灭（EXE 0x4111d0 → 0x408380）：只数在场的我方，退场（0x20000）、埋伏（0x40000）的不算。
         // 训练关选人后其余人退场，所以出场的人被打倒就是"全灭"，触发"回合 25 或我方全灭"的过关区块
