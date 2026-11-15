@@ -74,6 +74,13 @@ export function levelMoveBonus(level: number, side: Side): number {
   return side === 'player' ? Number(level >= 5) + Number(level >= 20) : 0;
 }
 
+/** 敌方 16 级起基础移动力至少 5（负责人 2026-11-15）：本来就 ≥ 5 的不变；只看阵营为敌方。 */
+export const ENEMY_MOVE_LEVEL = 16;
+export const ENEMY_MIN_MOVE = 5;
+export function baseMove(cls: ClassDef, level: number, side: Side): number {
+  return side === 'enemy' && level >= ENEMY_MOVE_LEVEL ? Math.max(cls.move, ENEMY_MIN_MOVE) : cls.move;
+}
+
 export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = [], side: Side = 'enemy'): Stats {
   const st: Stats = {
     maxHp: statAt(cls, 'hp', level),
@@ -83,7 +90,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     hit: statAt(cls, 'hit', level),
     agility: statAt(cls, 'agility', level),
     crit: statAt(cls, 'crit', level),
-    move: cls.move + levelMoveBonus(level, side),
+    move: baseMove(cls, level, side) + levelMoveBonus(level, side),
     rangeBonus: 0,
     poison: 0,
     stun: 0,
