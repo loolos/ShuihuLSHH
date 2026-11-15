@@ -156,7 +156,23 @@ function startGame(assets: Assets) {
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
   }
-  for (const ch of chapters) {
+  // 最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）。顶栏下拉框和标题画面的选关共用
+  const sideItems = (): TitleStageItem[] =>
+    listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
+      ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description })),
+    );
+  const stageGroups = () => {
+    const side = sideItems();
+    return side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters;
+  };
+  /** 外传通关后给下拉框里的那一项补上 ✓ */
+  const refreshSideOptions = () => {
+    for (const it of sideItems()) {
+      const o = [...sel.options].find((x) => x.value === it.value);
+      if (o) o.text = it.label;
+    }
+  };
+  for (const ch of stageGroups()) {
     const group = document.createElement('optgroup');
     group.label = ch.label;
     for (const it of ch.items) {
@@ -384,7 +400,8 @@ function startGame(assets: Assets) {
     try {
       setupEl.hidden = false;
       progress('载入外传…', 0);
-      sel.hidden = true; // 顶栏的选关下拉框是主线的，外传里不显示
+      sel.hidden = false;
+      sel.value = value;
       if (pack?.rt.id !== ref.pack) pack = await openPack(assets, ref.pack);
       const rt = pack.rt;
       const stage = rt.stages.find((s) => s.id === ref.stage);
@@ -421,6 +438,7 @@ function startGame(assets: Assets) {
     }
     const ref = parsePackValue(value)!;
     markPackCleared(ref.pack, ref.stage);
+    refreshSideOptions();
     void music.play('victory');
     const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
     const next = pack?.rt.stages.find((s) => s.id === ref.stage)?.next;
@@ -552,7 +570,8 @@ function startGame(assets: Assets) {
     history.replaceState(null, '', u);
   };
   sel.onchange = () => {
-    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空
+    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空；外传不碰主线存档
+    if (isPackValue(sel.value)) return void runPack(sel.value);
     goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jump(sel.value, campaign));
   };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
@@ -598,15 +617,11 @@ function startGame(assets: Assets) {
   if (asked && isPackValue(asked)) return beginPack(asked);
   // asked 以 ins: 开头时 campaign 已经排好了插关
   if (asked) return begin(campaign);
-  // 选关最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）
-  const side = listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
-    ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
-  );
   const save = loadSave() ? campaign : null;
   void music.play(['title', 'liangshan']);
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
-    chapters: side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters,
+    chapters: stageGroups(),
     portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
     version: versionLabel(BUILD),
     buttons: [$('sound'), $('music')],
