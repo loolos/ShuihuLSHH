@@ -196,6 +196,11 @@ function startGame(assets: Assets) {
     } else if (s && (s.index !== campaign.stage || campaign.town)) campaign = jump(String(s.index), campaign);
   }
   if (!stages.some((s) => s.index === campaign.stage)) campaign = newCampaign(stages[0].index);
+  // 已通关的旧存档也能接上后来新增、尚未游玩的终章续篇。
+  if (!asked && campaign.finished) {
+    const continuation = pendingInsert(campaign, inserts, stages.find((s) => s.index === campaign.stage)!.mapName, 'after');
+    if (continuation) campaign = { ...campaign, finished: false, insert: continuation };
+  }
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
   ui.tr = assets.tr;
@@ -475,7 +480,10 @@ function startGame(assets: Assets) {
     // 视角关打完不写回人物和银子；主线人物关照常记下，出场名单并进上一关的名单
     const after = pov ? campaign : recordResult(campaign, battle, { keepActive: true });
     const entry = inserts.find((x) => x.ref === ref);
-    const c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])], ...(entry?.after ? { finished: true } : {}) };
+    let c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
+    // 终章后可能有多段续篇；按登记顺序接完，最后一段才标记通关。
+    const continuation = entry?.after ? pendingInsert(c, inserts, entry.after, 'after') : undefined;
+    if (entry?.after) c = { ...c, finished: !continuation, insert: continuation };
     campaign = c;
     writeSave(c);
     const replay = () => {
@@ -484,6 +492,13 @@ function startGame(assets: Assets) {
       run();
     };
     if (entry?.after) {
+      if (continuation) {
+        const title = inserts.find((x) => x.ref === continuation)?.title ?? '下一关';
+        return ui.result(true, text, [
+          { label: `继续：${title}`, run: () => goTo({ ...c, insert: continuation }) },
+          { label: '再看一次本段', run: replay },
+        ]);
+      }
       void music.play(['ending', 'liangshan']);
       const u = new URL(location.href);
       u.searchParams.delete('stage');
@@ -587,7 +602,7 @@ function startGame(assets: Assets) {
   const side = listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
     ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
   );
-  const save = loadSave();
+  const save = loadSave() ? campaign : null;
   void music.play(['title', 'liangshan']);
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,

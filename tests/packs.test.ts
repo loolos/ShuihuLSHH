@@ -576,6 +576,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],
       ['songjiang-yanshixi', undefined, false],
+      ['songjiang-tavern', undefined, true],
     ]);
     for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
@@ -583,6 +584,82 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
     }
+  });
+
+  it('酒肆：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
+    const stage = stageOf('songjiang-tavern');
+    expect(stage.after).toBe('N14');
+    expect(stage.pov).toBe(true);
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    b.begin();
+    expect(b.status).toBe('playing');
+    expect(b.turnLimit).toBe(30);
+    expect(b.active().filter((u) => u.side === 'player').map((u) => u.name)).toEqual(['宋江', '朱仝', '雷横']);
+    expect(b.active().filter((u) => u.side === 'enemy')).toHaveLength(7);
+    const distances = b.board.distanceField([b.units[0]]);
+    const cells = new Set<string>();
+    for (const u of b.active()) {
+      expect(b.board.passable(u.x, u.y)).toBe(true);
+      expect(Number.isFinite(distances[u.y * b.board.width + u.x])).toBe(true);
+      expect(cells.has(`${u.x},${u.y}`)).toBe(false);
+      cells.add(`${u.x},${u.y}`);
+    }
+  });
+
+  it('酒肆：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
+    const b = new Battle(compileStage(rt, stageOf('songjiang-tavern'), files, { seed: 1, text: tr }));
+    b.begin();
+    const zt = b.units.find((u) => u.classId === rt.classIds.get('zhutong'))!;
+    const lh = b.units.find((u) => u.classId === rt.classIds.get('leiheng'))!;
+    const skills = (u: Unit) => b.data.classes[u.classId].skills;
+    expect(areaCells(b.board, zt, skills(zt)[1], { x: zt.x + 1, y: zt.y })).toHaveLength(3);
+    expect(areaCells(b.board, zt, skills(zt)[2], { x: zt.x + 1, y: zt.y })).toEqual([
+      { x: zt.x + 1, y: zt.y }, { x: zt.x + 2, y: zt.y }, { x: zt.x + 3, y: zt.y },
+    ]);
+    expect(skills(lh)[1].hits.map((h) => h.percent)).toEqual([30, 20, 20, 30]);
+    for (const u of [zt, lh]) {
+      u.mp = 0;
+      const charge = skills(u).find((s) => s.type === 8)!;
+      expect(charge.learnLevel).toBe(6);
+      b.useSkill(u, charge, u);
+      expect(u.mp).toBe(Math.floor(u.stats.maxMp / 3));
+    }
+  });
+
+  it('酒肆：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
+    const start = () => {
+      const b = new Battle(compileStage(rt, stageOf('songjiang-tavern'), files, { seed: 1, text: tr }));
+      b.begin();
+      return b;
+    };
+    const check = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
+    const b = start();
+    const enemies = b.units.filter((u) => u.side === 'enemy');
+    enemies[0].hp = 0; enemies[0].alive = false; enemies[0].present = false;
+    check(b);
+    expect(b.status).toBe('playing');
+    enemies.forEach((u) => { u.hp = 0; u.alive = false; u.present = false; });
+    check(b);
+    expect(b.status).toBe('won');
+    for (const id of ['sj-fugitive', 'zhutong', 'leiheng']) {
+      const b = start();
+      const fallen = b.units.find((u) => u.classId === rt.classIds.get(id))!;
+      fallen.hp = 0; fallen.alive = false; fallen.present = false;
+      (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(fallen.classId);
+      check(b);
+      expect(b.status).toBe('lost');
+    }
+    const timeout = start();
+    for (const u of timeout.units.filter((u) => u.side === 'enemy')) u.present = false;
+    // 留一名敌人，每回合由 advance 补血，验证回合上限而非伤亡。
+    const enemy = timeout.units.find((u) => u.side === 'enemy')!;
+    enemy.present = true;
+    enemy.mp = 0;
+    for (const u of timeout.units.filter((u) => u.side === 'player')) u.hp = 999999;
+    advance(timeout, 30);
+    expect(timeout.status).toBe('playing');
+    timeout.endPlayerPhase();
+    expect(timeout.status).toBe('lost');
   });
 
   it('终章之后的纯剧情播放辞金、杀惜与逃亡，演完即通关', () => {

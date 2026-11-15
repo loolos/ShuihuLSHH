@@ -133,7 +133,7 @@ export interface PackStageJson {
    * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
    */
   pov?: boolean;
-  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id） */
+  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线同一 after 的续篇按 stages 登记顺序接续 */
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
