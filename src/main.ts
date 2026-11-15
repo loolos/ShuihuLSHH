@@ -243,6 +243,9 @@ function startGame(assets: Assets) {
     parent: 'game',
     backgroundColor: '#14110d',
     pixelArt: true,
+    // 低帧率或刚切回页面时，默认 delta 平滑会把实际帧间隔压回 16.7ms，
+    // 防御特效、回合横幅的计时随之变慢，看起来像操作卡住。按实际时间播放。
+    fps: { smoothStep: false },
     // 不用 Phaser 的声音系统（音效 / 音乐在 sound.ts / music.ts）：免得它再开一个 AudioContext，失焦时去挂起它
     audio: { noAudio: true },
     scale: { mode: Phaser.Scale.RESIZE, width: window.innerWidth, height: window.innerHeight },

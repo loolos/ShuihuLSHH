@@ -147,6 +147,10 @@ export class BattleScene extends Phaser.Scene {
     this.ghosts = new Map();
     this.mode = { kind: 'idle' };
     this.busy = false;
+    // restart 会复用 Scene 实例；旧场景的等待可被销毁，finally 未必有机会解锁。
+    this.ending = false;
+    this.fast = false;
+    this.playingSide = 'player';
   }
 
   create() {
