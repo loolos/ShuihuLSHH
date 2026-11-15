@@ -978,6 +978,18 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   const start = (id: string, c?: CampaignState) => {
     const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
   };
+  it('快活林第4回合只有戴宗、花荣、李逵来援，史进不在本关出场', () => {
+    const s = stage('kuaihuolin'), b = start('kuaihuolin');
+    expect(s.units.some(u => u.id === 'shijin' || u.class === 3)).toBe(false);
+    expect(b.units.filter(u => u.side === 'player' && u.present)).toHaveLength(3);
+    for (let i = 0; i < 3; i++) b.endPlayerPhase();
+    expect(b.turn).toBe(4);
+    const ids = b.units.filter(u => u.side === 'player' && u.present).map(u => u.classId);
+    expect(ids).toHaveLength(6);
+    expect(ids).toEqual(expect.arrayContaining([cid('daizong'), cid('huarong'), cid('likui')]));
+    expect(ids).not.toContain(3);
+  });
+
   it('快活林蒋门神的八名手下使用喽啰职业，保留两名徒弟', () => {
     const s = stage('kuaihuolin');
     const guards = s.units.filter(u => u.id.startsWith('guard-'));
