@@ -940,7 +940,7 @@
         ]
       },
       "face": {
-        "fromHead": 18
+        "file": "faces/wangpo.png"
       }
     },
     {
@@ -987,7 +987,7 @@
         ]
       },
       "face": {
-        "fromHead": 35
+        "file": "faces/wudalang.png"
       }
     },
   {
