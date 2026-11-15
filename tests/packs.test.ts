@@ -1095,6 +1095,30 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(packParty(saved,shifted).get(id+20)!.slots[0]).toBe(item+9);
     expect(packParty(saved,shifted).get(0)!.slots[0]).toBe(item+9);
   });
+  it('飞云浦先揭穿公人灭口，再让五名同伴现身；第二批援军不提前出现', () => {
+    const s = stage('feiyunpu');
+    const b = new Battle(compileStage(rt, s, files));
+    const first = ['hero', 'songjiang', 'daizong', 'huarong', 'likui'];
+    const later = ['shijin', 'linchong', 'duqian', 'songwan'];
+    const uid = (id: string) => s.units.findIndex(u => u.id === id);
+    for (const id of [...first, ...later]) expect(b.unit(uid(id))!.present, id).toBe(false);
+    expect(b.units.filter(u => u.side === 'player' && u.present).map(u => u.uid)).toEqual([uid('wusong')]);
+    const events = b.begin();
+    const plot = events.findIndex(e => e.type === 'say' && e.text.includes('张团练又替蒋门神出了银子'));
+    const attack = events.findIndex(e => e.type === 'say' && e.text.includes('要趁他戴枷一齐下手'));
+    expect(plot).toBeGreaterThan(-1);
+    expect(attack).toBeGreaterThan(plot);
+    for (const id of first) {
+      const enter = events.findIndex(e => e.type === 'appear' && e.uid === uid(id));
+      const speak = events.findIndex(e => e.type === 'say' && e.uid === uid(id));
+      expect(enter, id).toBeGreaterThan(attack);
+      expect(speak, id).toBeGreaterThan(enter);
+      expect(b.unit(uid(id))!.present).toBe(true);
+    }
+    for (const id of later) expect(b.unit(uid(id))!.present).toBe(false);
+    expect(b.units.filter(u => u.side === 'player' && u.present)).toHaveLength(6);
+    expect(b.status).toBe('playing');
+  });
   it('飞云浦先断枷再到史进四人，鸳鸯楼十人实际在场，只有末段结束续篇',()=> {
     const b=start('feiyunpu');expect(b.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(6);
     expect(b.units.find(u=>u.classId===3)!.present).toBe(false);
