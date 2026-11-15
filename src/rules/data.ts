@@ -112,6 +112,7 @@ const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) =
  * 依据：按期望伤害折成"几次普通攻击"，回气一回合回半条气，单体技原来要 50–100% 气条却只有 1.5–2.2 次普攻。
  */
 export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
+  86: { critMod: 10 }, // 吳用普攻「暗度陳倉」必杀修正 +20 → +10；敌方版吴用保留原值。
   // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
   26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
   27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满

@@ -37,6 +37,11 @@ export const tierOf = (cls: ClassDef): Tier => (GRUNT_CLASSES.has(cls.id) ? 'gru
 /** 个别职业的初始值调整（职业号 → 属性），覆盖职业表原值 */
 export const CLASS_OVERRIDES: Record<number, Partial<Record<StatKey, number>>> = {
   1: { attack: 80 }, // 王進：原版 70。改成新成长后前期显弱，负责人 2026-11-12 要求前期打兵伤害约 +15%
+  5: { crit: 8 }, // 朱武
+  9: { crit: 8 }, // 阮小七
+  10: { crit: 10 }, // 吳用
+  12: { crit: 10 }, // 晁蓋
+  16: { crit: 8 }, // 魯智深
 };
 
 /**

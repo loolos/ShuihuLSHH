@@ -1507,7 +1507,7 @@
       ]
     },
     "face": {
-      "fromHead": 55
+      "file": "faces/shien.png"
     }
   },
   {
@@ -1715,7 +1715,7 @@
       ]
     },
     "face": {
-      "fromHead": 56
+      "file": "faces/zhangdujian.png"
     }
   },
   {
