@@ -8,7 +8,8 @@
   "gold": 0
  },
  "map": {
-  "base": "Act8-1"
+  "base": "Act8-1",
+  "open": [[8, 9], [9, 9]]
  },
  "bgm": ["brothers", "story"],
  "units": [
@@ -38,8 +39,8 @@
    "id": "chaijin",
    "class": 26,
    "side": "ally",
-   "x": 10,
-   "y": 8,
+   "x": 7,
+   "y": 9,
    "facing": 3,
    "level": 30,
    "name": "柴进",
@@ -50,8 +51,8 @@
    "id": "zhuangke",
    "class": 19,
    "side": "ally",
-   "x": 11,
-   "y": 7,
+   "x": 7,
+   "y": 9,
    "facing": 3,
    "level": 10,
    "name": "庄客",
@@ -62,9 +63,9 @@
    "id": "wusong",
    "class": "wusong",
    "side": "ally",
-   "x": 10,
-   "y": 5,
-   "facing": 2,
+   "x": 14,
+   "y": 8,
+   "facing": 1,
    "level": 27,
    "name": "武松",
    "ai": 8,
@@ -104,6 +105,12 @@
      "zhuangke"
     ],
     [
+     "move",
+     "zhuangke",
+     11,
+     9
+    ],
+    [
      "say",
      "zhuangke",
      "二位客官从哪里来？可是来寻我家大官人的？"
@@ -114,12 +121,28 @@
      "烦请通报一声：郓城县宋江，特来拜见柴大官人。"
     ],
     [
+     "move",
+     "zhuangke",
+     7,
+     9
+    ],
+    [
+     "leave",
+     "zhuangke"
+    ],
+    [
      "narrate",
      "庄客飞也似入去报知。不多时，只见柴进从庄里奔将出来，口里叫道——"
     ],
     [
      "appear",
      "chaijin"
+    ],
+    [
+     "move",
+     "chaijin",
+     11,
+     9
     ],
     [
      "say",
@@ -142,20 +165,34 @@
      "多谢大官人！我哥哥连日奔走，到此方得安心。"
     ],
     [
+     "move",
+     "chaijin",
+     7,
+     9
+    ],
+    [
      "leave",
      "chaijin"
     ],
     [
-     "leave",
-     "zhuangke"
-    ],
-    [
-     "leave",
-     "songqing"
+     "move",
+     "songjiang",
+     7,
+     9
     ],
     [
      "leave",
      "songjiang"
+    ],
+    [
+     "move",
+     "songqing",
+     7,
+     9
+    ],
+    [
+     "leave",
+     "songqing"
     ],
     [
      "narrate",
@@ -172,8 +209,8 @@
     [
      "move",
      "songjiang",
-     9,
-     5
+     13,
+     8
     ],
     [
      "narrate",
@@ -191,8 +228,8 @@
     [
      "move",
      "zhuangke",
-     9,
-     6
+     13,
+     9
     ],
     [
      "say",
@@ -215,8 +252,8 @@
     [
      "move",
      "chaijin",
-     9,
-     7
+     12,
+     8
     ],
     [
      "say",
@@ -273,14 +310,34 @@
     ],
     [
      "move",
+     "zhuangke",
+     7,
+     9
+    ],
+    [
+     "leave",
+     "zhuangke"
+    ],
+    [
+     "move",
+     "chaijin",
+     7,
+     9
+    ],
+    [
+     "leave",
+     "chaijin"
+    ],
+    [
+     "move",
      "songjiang",
-     12,
+     14,
      9
     ],
     [
      "move",
      "wusong",
-     13,
+     15,
      9
     ],
     [
