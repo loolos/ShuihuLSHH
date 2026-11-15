@@ -2,11 +2,10 @@
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock, PasOp, PasTrigger } from '../formats/pas.ts';
-import { parseMap } from '../formats/map.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
-import { findStageFile, type FileSource } from '../rules/load.ts';
+import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
 import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
@@ -264,8 +263,7 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
 export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string } = {}): StageInput {
-  const mapFile = findStageFile(files, stage.map.base, '.map') ?? fail(`找不到地图 ${stage.map.base}`);
-  const map = parseMap(files.get(mapFile), mapFile);
+  const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
   const units = stage.units.map((u, i) => actUnit(rt, u, i));

@@ -34,3 +34,12 @@ export function parseMap(buf: Buffer, file = 'map'): MapData {
   if (o !== buf.length) throw new Error(`${file}: 解析后剩余 ${buf.length - o} 字节`);
   return { width, height, cells };
 }
+
+/** 从地图里截一块矩形（扩展包关卡借原版大地图的一角用）；越出原图的部分当地图外 */
+export function cropMap(map: MapData, x0: number, y0: number, width: number, height: number): MapData {
+  const cells: MapLayer[][] = [];
+  for (let y = y0; y < y0 + height; y++)
+    for (let x = x0; x < x0 + width; x++)
+      cells.push(x >= 0 && y >= 0 && x < map.width && y < map.height ? map.cells[y * map.width + x] : [{ tile: 0, flags: 0 }]);
+  return { width, height, cells };
+}

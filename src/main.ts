@@ -15,7 +15,7 @@ import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
-import { findStageFile } from './rules/load.ts';
+import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
@@ -408,14 +408,14 @@ function startGame(assets: Assets) {
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
       const classes = stageClasses(rt, stage);
-      await preloadStage(pa, stage.map.base, progress, classes);
+      await preloadStage(pa, stageMapName(stage.map), progress, classes);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
         makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
@@ -463,7 +463,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      await preloadStage(pa, stage.map.base, progress, stageClasses(rt, stage));
+      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage));
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
@@ -472,7 +472,7 @@ function startGame(assets: Assets) {
       const party = e.pov ? undefined : partyOf(campaign);
       const join = e.pov ? undefined : joinLevel(campaign);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
         makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr }), party, joinLevel: join }),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };
