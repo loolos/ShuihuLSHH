@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { areaCells } from '../src/rules/skills.ts';
+import { announcesSkill, areaCells } from '../src/rules/skills.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
@@ -1102,6 +1102,16 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(after.members.find(m => m.classId === 0)).toMatchObject(c.members[0]);
     expect(after.companions!['mainline/sj-fugitive']).toMatchObject(c.companions!['mainline/sj-fugitive']);
     expect(after.gold).toBe(4321);
+  });
+  it('鸳鸯楼全体十名好汉使用真实普攻时均显示招式名，包括扩展职业与杜迁宋万', () => {
+    const b = start('yuanyanglou');
+    const heroes = b.units.filter(u => u.side === 'player');
+    expect(heroes).toHaveLength(10);
+    for (const u of heroes) {
+      const basic = attackSkill(u, rt.data);
+      expect(basic.name, u.name).toBeTruthy();
+      expect(announcesSkill(u, basic, rt.data), `${u.name}：${basic.name}`).toBe(true);
+    }
   });
   it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
     for (const id of ['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']) {

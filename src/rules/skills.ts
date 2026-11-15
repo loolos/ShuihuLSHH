@@ -17,9 +17,9 @@ export const isSupportSkill = (s: SkillDef) => isChargeSkill(s) || isHealSkill(s
 export const HERO_CLASSES = 18;
 
 /**
- * 出手时是否在出手者身上弹出技能名：技能都弹；普通攻击只有好汉弹（如林沖「一寸丹心」），杂兵的普攻不弹【新】（负责人 2026-11-13）。
+ * 出手时是否在出手者身上弹出技能名：技能都弹；普通攻击对我方、友军与原版好汉弹（如林沖「一寸丹心」）；敌方杂兵普攻不弹【新】（负责人 2026-11-13）。
  */
-export const announcesSkill = (u: Unit, skill: SkillDef, data: GameData) => skill !== attackSkill(u, data) || u.classId < HERO_CLASSES;
+export const announcesSkill = (u: Unit, skill: SkillDef, data: GameData) => skill !== attackSkill(u, data) || u.side !== 'enemy' || u.classId < HERO_CLASSES;
 
 /** "千軍萬馬LV2" → "千軍萬馬" */
 export const skillBaseName = (name: string) => name.replace(/\s*LV\s*\d+$/i, '');
