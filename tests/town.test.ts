@@ -221,7 +221,21 @@ describe.skipIf(!has)('测试用跳关', () => {
     expect(gear('n-add08', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 第六章起紅纓氈笠
     expect(gear('act9-1', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']);
     expect(gear('n-add11', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 到过城镇 7 起碧雲箬笠
-    expect(gear('n14', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 后面的店有更硬的甲也不换
+    expect(gear('n12', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 城镇 5–8 没有更好的衣服
+    expect(gear('n-add15', 0)).toEqual(['梅花榆葉甲', '碧雲箬笠']); // 城镇 9 起梅花榆葉甲（负责人 2026-11-15）
+    expect(gear('n14', 0)).toEqual(['雁翎圈金甲', '碧雲箬笠']); // 城镇 10 起雁翎圈金甲
+    // 药随最后去过的城镇升级（负责人 2026-11-15）；王進随身的狗皮膏藥是剧本给的
+    const bag = (map: string, cls: number) => {
+      const s = stages.find((x) => x.mapName.toLowerCase() === map)!;
+      const m = jumpTo(files, data, stages, s.index, newCampaign(0)).members.find((x) => x.classId === cls)!;
+      return m.slots.slice(3).filter(Boolean).map((id) => data.items[id - 1].name).filter((n) => n !== '狗皮膏藥');
+    };
+    expect(bag('n-add01', 0)).toEqual([]); // 还没到过城镇
+    expect(bag('n02', 0)).toEqual(['跌打藥', '跌打藥']);
+    expect(bag('n05', 0)).toEqual(['銀創藥', '銀創藥']);
+    expect(bag('n07', 0)).toEqual(['大還銀丹', '大還銀丹']);
+    expect(bag('n-add11', 0)).toEqual(['大還金丹', '大還金丹']);
+    expect(bag('n14', 0)).toEqual(['大還金丹', '大還金丹', '天山雪蓮']);
     expect(gear('n-add04a', 5)[0]).toBe('鑲銀生鐵甲'); // 朱武：剧本衣服防御更高，留着
     expect(gear('n14', 2)).toEqual(['七星道袍', '碧雲箬笠']); // 公孫勝：七星道袍买不到，留着
     expect(gear('n14', 12)[1]).toBe('萬字巾'); // 晁蓋：萬字巾买不到，留着

@@ -3,9 +3,8 @@ import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/
 import { readExeTables, type ExeTables } from '../formats/exe.ts';
 import { parseGoods, type Item } from '../formats/goo.ts';
 import { parseAct } from '../formats/act.ts';
-import { parseMap } from '../formats/map.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
-import { buildT2S, findStageFile, loadGameData } from '../rules/load.ts';
+import { buildT2S, loadGameData, loadStageMap } from '../rules/load.ts';
 import { withItemOverrides, type GameData, type SkillDef } from '../rules/data.ts';
 import { FIXED_FX, fxGroups } from './effects.ts';
 import frameAlias from '../data/frame-alias.json' with { type: 'json' };
@@ -136,9 +135,9 @@ const ACTION_FIRST_SKILL = 3;
 export async function preloadStage(assets: Assets, stage: string, progress?: Progress, classesOverride?: number[]): Promise<number> {
   const { files } = assets;
   const job = new Fetch();
-  const mapFile = findStageFile(files, stage, '.map');
-  if (!mapFile) return 0;
-  const map = parseMap(files.get(mapFile), mapFile);
+  const loaded = loadStageMap(files, stage);
+  if (!loaded) return 0;
+  const { file: mapFile, map } = loaded;
   for (const cell of map.cells)
     cell.forEach((l, k) => {
       const lib = k === 0 ? assets.ground : assets.upper;

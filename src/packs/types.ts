@@ -2,7 +2,6 @@
 // 载入时（src/packs/build.ts）接到原版编号后面。原版素材一律按编号引用，不复制。
 
 import type { RecolorGroup } from './recolor.ts';
-import type { MapCrop } from '../formats/map.ts';
 
 export type StatBlock = { hp: number; mp: number; attack: number; defense: number; hit: number; agility: number; crit: number };
 
@@ -134,12 +133,18 @@ export interface PackStageJson {
    * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
    */
   pov?: boolean;
-  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id） */
+  /**
+   * 我方装备、药品按主线哪一关的进度配（主线关卡地图名，如 "N06"）。不写就按我方平均等级找主线上第一次到这个等级的那一关
+   * （负责人 2026-11-15：跳关的装备、药品规则也用于外传，src/rules/preset.ts storyPoint）。写 "none" 不配。
+   */
+  gearAt?: string;
+  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线同一 after 的续篇按 stages 登记顺序接续 */
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
-  /** 地图：借原版地图，可选裁剪矩形（裁剪后单位和剧本坐标以新地图左上角为原点） */
-  map: { base: string; crop?: MapCrop };
+  /** 地图：借原版地图（地表、地上物、通行都照原版） */
+  /** base：借用的原版地图；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块） */
+  map: { base: string; crop?: [number, number, number, number] };
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   units: PackUnitJson[];

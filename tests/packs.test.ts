@@ -20,11 +20,20 @@ describe('宋江杀惜剧本', () => {
     const index = (action: string, value: string) => actions.findIndex((a) => a[0] === action && a[1] === value);
     const liuLeaves = index('leave', 'liutang');
     const songLeaves = index('leave', 'songjiang');
-    const yanAppears = index('appear', 'yanpoxishi');
+    const enters = (id: string, from = 0) => actions.findIndex((a, i) => i >= from && (a[0] === 'appear' || a[0] === 'move') && a[1] === id);
+    const liuEnters = enters('liutang');
+    const yanAppears = enters('yanpoxishi');
     const readsLetter = actions.findIndex((a) => a[0] === 'narrate' && a[1].includes('藏起'));
-    const songReturns = index('appear', 'songjiang');
+    const songReturns = enters('songjiang', songLeaves);
     const dispute = actions.findIndex((a, i) => i > songReturns && a[0] === 'say' && a[1] === 'songjiang');
     expect(stage.units.find((u: { id: string }) => u.id === 'yanpoxishi').hidden).toBe(true);
+    expect(stage.units.find((u: { id: string }) => u.id === 'liutang').hidden).toBe(true);
+    // 刘唐、宋江进出门都走路：入场第一个动作是 move，每次退场前最后一个动作也是 move
+    const lastMoveBefore = (id: string, i: number) => actions.slice(0, i).filter((x) => x[1] === id && x[0] !== 'say').at(-1)?.[0];
+    expect(actions[liuEnters][0]).toBe('move');
+    expect(lastMoveBefore('liutang', liuLeaves)).toBe('move');
+    actions.forEach((x, i) => { if (x[0] === 'leave' && x[1] === 'songjiang') expect(lastMoveBefore('songjiang', i)).toBe('move'); });
+    expect(actions[songReturns][0]).toBe('move');
     expect(liuLeaves).toBeGreaterThan(-1);
     expect(songLeaves).toBeGreaterThan(liuLeaves);
     expect(yanAppears).toBeGreaterThan(songLeaves);
@@ -32,6 +41,17 @@ describe('宋江杀惜剧本', () => {
     expect(songReturns).toBeGreaterThan(readsLetter);
     expect(dispute).toBeGreaterThan(songReturns);
     expect(actions.slice(0, yanAppears).some((a) => a[0] === 'say' && a[1] === 'yanpoxishi')).toBe(false);
+  });
+});
+
+describe('宋江职业', () => {
+  it('主线续篇的宋江和江州外传的宋江用同一套属性、技能和形象（只有随身道具和技能 id 不同）', () => {
+    const cls = (pack: string, id: string) => JSON.parse(fs.readFileSync(`packs/${pack}/pack.json`, 'utf8')).classes.find((c: { id: string }) => c.id === id);
+    const strip = (c: Record<string, unknown>) => {
+      const { id: _id, items: _items, skills, ...rest } = c;
+      return { ...rest, skills: (skills as { id: string }[]).map(({ id: _sid, ...s }) => s) };
+    };
+    expect(strip(cls('mainline', 'sj-fugitive'))).toEqual(strip(cls('jiangzhou', 'songjiang')));
   });
 });
 
@@ -170,12 +190,12 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
   });
 });
 
-describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
+describe.skipIf(!has)('主线插关：赤发鬼夜战插翅虎', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
-  const rt = has ? loadPackFromDisk('liutang', loadGameData(files, tr)) : (null as never);
+  const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
   const start = (seed = 1) => {
-    const b = new Battle(compileStage(rt, rt.stages[0], files, { seed, text: tr }));
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'chifagui')!, files, { seed, text: tr }));
     const ev = b.begin();
     const of = (cls: number) => b.units.find((u) => u.classId === cls)!;
     return { b, ev, lt: of(17), lh: of(60), wy: of(10), cg: of(12) };
@@ -188,8 +208,7 @@ describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
     return x.flush();
   };
 
-  it('没有新职业，全用原版人物；开场雷横带 2 个士兵，另 2 个士兵和晁盖、吴用埋伏', () => {
-    expect(rt.data.classes.length).toBe(loadGameData(files, tr).classes.length);
+  it('全用原版人物；开场雷横带 2 个士兵，另 2 个士兵和晁盖、吴用埋伏；说书式开场从主角团转过来', () => {
     const { b, ev, lt, lh, wy, cg } = start();
     expect(lt.level).toBe(21);
     expect(lh.present).toBe(true);
@@ -200,6 +219,7 @@ describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
     expect(lt.buffs.some((x) => x.stat === 'agility' && x.value < 0 && x.turns <= 3)).toBe(true);
     expect(lh.buffs.some((x) => x.stat === 'crit' && x.value < 0)).toBe(true);
     expect(ev.some((e) => e.type === 'say' && /赤发鬼/.test(e.text))).toBe(true);
+    expect(ev.some((e) => e.type === 'say' && !e.speaker && /武龙/.test(e.text) && /按下不表/.test(e.text))).toBe(true);
   });
 
   it('第 4 回合士兵增援，第 7 回合吴用、晁盖赶到，过关', () => {
@@ -248,6 +268,19 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
   const rt = has ? loadPackFromDisk('jiangzhou', loadGameData(files, tr)) : (null as never);
+
+  it('我方装备、药按对应的主线进度配（负责人 2026-11-15，和跳关同一套规则）', () => {
+    const names = (stageId: string, cls: string) => {
+      const u = compileStage(rt, rt.stages.find((s) => s.id === stageId)!, files).units.find((x) => x.side === 'player' && x.type === rt.classIds.get(cls))!;
+      return u.items.filter(Boolean).map((id) => rt.data.items[id - 1].name);
+    };
+    // 试手 22 级 ≈ 主线到过城镇 7：碧雲箬笠、大還金丹 ×2；戴宗默认是布衣、一字巾、狗皮膏藥 ×2
+    expect(names('shishou', 'daizong')).toEqual(['鋼刺拳', '綠羅花戰袍', '碧雲箬笠', '狗皮膏藥', '狗皮膏藥', '大還金丹', '大還金丹']);
+    // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
+    const ws = loadPackFromDisk('wusong', rt.data);
+    const u = compileStage(ws, ws.stages[0], files).units.find((x) => x.side === 'player')!;
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '紅纓氈笠']);
+  });
 
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
     const id = rt.classIds.get('daizong')!;
@@ -325,6 +358,13 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(look.sheet).toBe('sprites/likui');
     const sk = rt.data.classes[id].skills;
     expect(sk.map((s) => s.name)).toEqual(['板斧砍', '双斧连劈', '黑旋风', '运气']);
+    expect(sk[0].hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
+    expect(sk[0].hits.map((h) => h.frame)).toEqual([6, 18, 29, 41]);
+    const combo = rt.sheets[look.sheet].actions['axe-four'];
+    for (const strip of [combo.front, combo.back]) {
+      expect(strip.cycles).toBe(4);
+      expect(strip.frames * strip.ms * strip.cycles!).toBe(2080);
+    }
     expect(sk[1].hits.length).toBe(2);
     expect(new Set(sk[2].hits.map((h) => h.dir)).size).toBe(4);
   });
@@ -501,8 +541,9 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     advance(b, 4, log);
     for (const n of ['旱地忽律朱贵', '矮脚虎王英', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
     // 换回真身后兵器也是自己的
-    expect(by('阮小二').slots[0]).toBe(73);
-    expect(by('白胜').slots[0]).toBe(56);
+    // 换回真身后兵器也是自己的（关卡写的魚叉 / 白勝的刀，按主线进度换成同类更好的：鋼叉 / 腰刀，§15 外传装备）
+    expect(b.data.items[by('阮小二').slots[0] - 1].name).toBe('鋼叉');
+    expect(b.data.items[by('白胜').slots[0] - 1].type).toBe(b.data.items[56 - 1].type);
   });
 
   it('法场：走到宋江身边松绑、还他剑；两人都到出口过关；宋江倒下判负', () => {
@@ -564,9 +605,11 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
     expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([
       ['wawasi', 'N-add06', false],
+      ['chifagui', 'Act10-1', true],
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],
       ['songjiang-yanshixi', undefined, false],
+      ['songjiazhuang', undefined, true],
     ]);
     for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
@@ -574,6 +617,96 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
     }
+  });
+
+  it('义释宋公明：三人可操作、前三回合敌人分三拨来、30回合，所有人能沿地形互相到达', () => {
+    const stage = stageOf('songjiazhuang');
+    expect(stage.after).toBe('N14');
+    expect(stage.pov).toBe(true);
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    b.begin();
+    expect(b.status).toBe('playing');
+    expect(b.turnLimit).toBe(30);
+    expect(stage.map).toEqual({ base: 'N05', crop: [8, 0, 24, 15] });
+    expect([b.board.width, b.board.height]).toEqual([24, 15]);
+    expect(b.active().filter((u) => u.side === 'player').map((u) => [u.name, u.x, u.y])).toEqual([['宋江', 10, 5], ['朱仝', 9, 5], ['雷横', 8, 6]]);
+    expect(b.active().some((u) => u.name === '宋太公')).toBe(false);
+    const enemyCount = () => b.active().filter((u) => u.side === 'enemy').length;
+    expect(enemyCount()).toBe(4);
+    expect(b.units.filter((u) => u.side === 'enemy')).toHaveLength(14);
+    const distances = b.board.distanceField([b.units[0]]);
+    const cells = new Set<string>();
+    for (const u of b.units.filter((x) => x.name !== '宋太公')) {
+      expect(b.board.passable(u.x, u.y)).toBe(true);
+      expect(Number.isFinite(distances[u.y * b.board.width + u.x])).toBe(true);
+      expect(cells.has(`${u.x},${u.y}`)).toBe(false);
+      cells.add(`${u.x},${u.y}`);
+    }
+    for (const u of b.units.filter((x) => x.side === 'player')) u.hp = 999999;
+    advance(b, 2);
+    expect(enemyCount()).toBe(8);
+    advance(b, 3);
+    expect(enemyCount()).toBe(14);
+  });
+
+  it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
+    const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
+    b.begin();
+    const zt = b.units.find((u) => u.classId === rt.classIds.get('zhutong'))!;
+    const lh = b.units.find((u) => u.classId === rt.classIds.get('leiheng'))!;
+    const skills = (u: Unit) => b.data.classes[u.classId].skills;
+    expect(areaCells(b.board, zt, skills(zt)[1], { x: zt.x + 1, y: zt.y })).toHaveLength(3);
+    expect(areaCells(b.board, zt, skills(zt)[2], { x: zt.x + 1, y: zt.y })).toEqual([
+      { x: zt.x + 1, y: zt.y }, { x: zt.x + 2, y: zt.y }, { x: zt.x + 3, y: zt.y },
+    ]);
+    expect(skills(lh)[1].hits.map((h) => h.percent)).toEqual([30, 20, 20, 30]);
+    for (const u of [zt, lh]) {
+      u.mp = 0;
+      const charge = skills(u).find((s) => s.type === 8)!;
+      expect(charge.learnLevel).toBe(6);
+      b.useSkill(u, charge, u);
+      expect(u.mp).toBe(Math.floor(u.stats.maxMp / 3));
+    }
+  });
+
+  it('义释宋公明：打倒张文远即过关（他有对白），任一主角战败即失败，超时也失败', () => {
+    const start = () => {
+      const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
+      b.begin();
+      return b;
+    };
+    const check = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
+    const b = start();
+    const kill = (u: Unit) => {
+      u.hp = 0; u.alive = false; u.present = false;
+      (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(u.classId);
+    };
+    const enemies = b.units.filter((u) => u.side === 'enemy');
+    kill(enemies.find((u) => u.name === '张家打手')!);
+    check(b);
+    expect(b.status).toBe('playing');
+    kill(enemies.find((u) => u.name === '张文远')!);
+    check(b);
+    expect(b.status).toBe('won');
+    for (const id of ['sj-fugitive', 'zhutong', 'leiheng']) {
+      const b = start();
+      const fallen = b.units.find((u) => u.classId === rt.classIds.get(id))!;
+      fallen.hp = 0; fallen.alive = false; fallen.present = false;
+      (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(fallen.classId);
+      check(b);
+      expect(b.status).toBe('lost');
+    }
+    const timeout = start();
+    for (const u of timeout.units.filter((u) => u.side === 'enemy')) u.present = false;
+    // 留一名敌人，每回合由 advance 补血，验证回合上限而非伤亡。
+    const enemy = timeout.units.find((u) => u.side === 'enemy')!;
+    enemy.present = true;
+    enemy.mp = 0;
+    for (const u of timeout.units.filter((u) => u.side === 'player')) u.hp = 999999;
+    advance(timeout, 30);
+    expect(timeout.status).toBe('playing');
+    timeout.endPlayerPhase();
+    expect(timeout.status).toBe('lost');
   });
 
   it('终章之后的纯剧情播放辞金、杀惜与逃亡，演完即通关', () => {
@@ -586,7 +719,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(lines).toMatch(/收下/);
     expect(lines).toMatch(/阎婆惜/);
     expect(lines).toMatch(/逃走/);
-    const song = b.units.find((u) => u.classId === 6)!;
+    const song = b.units.find((u) => u.name === '宋江')!;
     const liu = b.units.find((u) => u.name === '刘唐')!;
     const yan = b.units.find((u) => u.name === '阎婆惜')!;
     const eventIndex = (type: 'leave' | 'appear', uid: number) => ev.findIndex((e) => e.type === type && e.uid === uid);

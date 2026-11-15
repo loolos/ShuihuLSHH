@@ -12,19 +12,6 @@ export interface MapData {
   cells: MapLayer[][];
 }
 
-export type MapCrop = [x: number, y: number, width: number, height: number];
-
-export function cropMap(map: MapData, crop?: MapCrop): MapData {
-  if (!crop) return map;
-  const [x, y, width, height] = crop;
-  if (!crop.every(Number.isInteger) || x < 0 || y < 0 || width <= 0 || height <= 0 || x + width > map.width || y + height > map.height)
-    throw new Error(`地图裁剪范围无效: ${crop.join(',')}`);
-  const cells: MapLayer[][] = [];
-  for (let row = y; row < y + height; row++)
-    cells.push(...map.cells.slice(row * map.width + x, row * map.width + x + width));
-  return { width, height, cells };
-}
-
 export function parseMap(buf: Buffer, file = 'map'): MapData {
   expectMagic(buf, 'MAP\0', file);
   const width = buf.readUInt16LE(5);
@@ -45,5 +32,14 @@ export function parseMap(buf: Buffer, file = 'map'): MapData {
     cells.push(layers);
   }
   if (o !== buf.length) throw new Error(`${file}: 解析后剩余 ${buf.length - o} 字节`);
+  return { width, height, cells };
+}
+
+/** 从地图里截一块矩形（扩展包关卡借原版大地图的一角用）；越出原图的部分当地图外 */
+export function cropMap(map: MapData, x0: number, y0: number, width: number, height: number): MapData {
+  const cells: MapLayer[][] = [];
+  for (let y = y0; y < y0 + height; y++)
+    for (let x = x0; x < x0 + width; x++)
+      cells.push(x >= 0 && y >= 0 && x < map.width && y < map.height ? map.cells[y * map.width + x] : [{ tile: 0, flags: 0 }]);
   return { width, height, cells };
 }

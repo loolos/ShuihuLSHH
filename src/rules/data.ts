@@ -192,7 +192,7 @@ const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100
 /**
  * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
  * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
- * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）。
+ * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）；1008 晁蓋 天王八荒式（周身技，三段）。
  */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
@@ -212,6 +212,11 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   10: [
     extraSkill({ name: '運籌帷幄', skillId: 1006, type: 8, group: 1, learnLevel: 24, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0, hits: [] }),
     extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
+  ],
+  // 晁蓋（24 级左右入队）：回旋技，借天王舉鼎式的旋身腾跃动作（第 1 组，原版三个击打帧 8/12/18），拆三段 30/30/40%；
+  // 第 43 组白色打击火花（小、9 帧；负责人 2026-11-15 嫌第 34 组旋风太复杂）；数值按林沖 風雪交加（13 级：威力 30 / 气 50，约攻击 26%、气条 28%）折算到 24 级
+  12: [
+    extraSkill({ name: '天王八荒式', skillId: 1008, type: 12, group: 1, learnLevel: 22, mpCost: 70, power: 40, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, effect: 44, soundId: 106, hits: hitsAt([8, 12, 18], [30, 30, 40]) }),
   ],
   // 陳達：借黑虎偷心的动作（第 1 组）、第 19 组弧形扫击特效（原版没有技能用）
   13: [

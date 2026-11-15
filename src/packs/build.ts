@@ -2,11 +2,14 @@
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock, PasOp, PasTrigger } from '../formats/pas.ts';
-import { cropMap, parseMap } from '../formats/map.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
-import { findStageFile, type FileSource } from '../rules/load.ts';
+import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
+import { readExeTables } from '../formats/exe.ts';
+import { SLOT_COUNT } from '../rules/data.ts';
+import { outfit, potionsFor, storyPoint } from '../rules/preset.ts';
+import { stock } from '../rules/town.ts';
 import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
@@ -20,6 +23,8 @@ export interface SpriteStrip {
   file: string;
   frames: number;
   ms: number;
+  /** 一次出手内连续播放这套动作的次数，默认 1 */
+  cycles?: number;
 }
 
 /** 一个扩展包职业在画面上的样子 */
@@ -211,7 +216,7 @@ function packClass(c: PackClassJson, id: number, skills: SkillDef[], itemRef: (v
 
 /** 命中位置（动画的 0–1）→ 原版帧号：按 45 ms 一帧换算，BattleScene 按这个时间点结算受击 */
 function hitFrame(at: number, strip: SpriteStrip) {
-  return Math.max(1, Math.round((at * strip.frames * strip.ms) / ORIGINAL_FRAME_MS) + 1);
+  return Math.max(1, Math.round((at * strip.frames * strip.ms * (strip.cycles ?? 1)) / ORIGINAL_FRAME_MS) + 1);
 }
 
 function packSkill(s: PackSkillJson, skillId: number, group: number | null, templates: Map<number, SkillDef>, sheet: SpriteSheetJson | null, pack: string): SkillDef {
@@ -262,11 +267,11 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
 export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string } = {}): StageInput {
-  const mapFile = findStageFile(files, stage.map.base, '.map') ?? fail(`找不到地图 ${stage.map.base}`);
-  const map = cropMap(parseMap(files.get(mapFile), mapFile), stage.map.crop);
+  const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
+  kitPlayers(rt, stage, units, files);
   const byId = new Map(stage.units.map((u, i) => [u.id, { json: u, act: units[i] }]));
   const unitRef = (id: unknown) => byId.get(String(id)) ?? fail(`${stage.id}: 没有单位 ${String(id)}`);
   /** 触发条件按角色号找人，所以同一职业只能有一个人当触发对象 */
@@ -286,6 +291,32 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
   return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold };
+}
+
+const exeStages = new WeakMap<FileSource, { index: number; mapName: string }[]>();
+
+/**
+ * 外传我方的装备和药按对应的主线进度配，和跳关同一套规则（负责人 2026-11-15，src/rules/preset.ts outfit / storyPoint）：
+ * 关卡里写的装备当作剧本装备，比店里的好就留着；包自带的道具（如武松的哨棒）不换。没有原版 EXE（单元测试的假文件）就不配。
+ */
+function kitPlayers(rt: PackRuntime, stage: PackStageJson, units: ActUnit[], files: FileSource): void {
+  const players = units.filter((u) => u.side === 'player' && rt.data.classes[u.type]);
+  if (!players.length || stage.gearAt === 'none' || !files.has('ShuiHu.exe')) return;
+  let stages = exeStages.get(files);
+  if (!stages) exeStages.set(files, (stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName)));
+  const level = players.reduce((a, u) => a + u.level, 0) / players.length;
+  const sp = storyPoint(files, stages, level, stage.gearAt);
+  const custom = new Set(rt.itemIds.values());
+  const shopIds = sp.town ? stock(rt.data, 1, sp.town).filter((id) => !custom.has(id)) : [];
+  const potions = potionsFor(rt.data, sp.town);
+  for (const u of players) {
+    const cls = rt.data.classes[u.type];
+    const slots = cls.defaultItems.slice(0, 7);
+    while (slots.length < SLOT_COUNT) slots.push(0);
+    u.items.forEach((id, k) => id && (slots[k] = id));
+    outfit(rt.data, cls, slots, shopIds, potions, sp.reached, (id) => custom.has(id));
+    u.items = slots;
+  }
 }
 
 function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {

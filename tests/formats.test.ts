@@ -14,15 +14,13 @@ const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 const read = (...p: string[]) => fs.readFileSync(path.join(DATA, ...p));
 
 describe('地图裁剪', () => {
-  it('按行裁剪所有图层，并拒绝越界或无效范围', () => {
+  it('按行裁剪所有图层，越界部分当地图外', () => {
     const cells = Array.from({ length: 20 }, (_, tile) => [{ tile, flags: tile }]);
     const map = { width: 5, height: 4, cells };
-    const cropped = cropMap(map, [1, 1, 3, 2]);
+    const cropped = cropMap(map, 1, 1, 3, 2);
     expect([cropped.width, cropped.height]).toEqual([3, 2]);
     expect(cropped.cells.map((c) => c[0].tile)).toEqual([6, 7, 8, 11, 12, 13]);
-    expect(cropMap(map)).toBe(map);
-    for (const crop of [[-1, 0, 1, 1], [4, 0, 2, 1], [0, 3, 1, 2], [0, 0, 0, 1], [0.5, 0, 1, 1]] as [number, number, number, number][])
-      expect(() => cropMap(map, crop)).toThrow();
+    expect(cropMap(map, 4, 3, 2, 2).cells).toEqual([cells[19], ...Array(3).fill([{ tile: 0, flags: 0 }])]);
   });
 });
 

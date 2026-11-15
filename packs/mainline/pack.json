@@ -1,13 +1,436 @@
 {
- "id": "mainline",
- "name": "主线插关",
- "description": "主线插关与后续剧情，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10）。",
- "entry": "mainline",
- "classes": [],
- "stages": [
-  "stages/wawasi.json",
-  "stages/sanruan.json",
-  "stages/zhizhulin.json",
-  "stages/songjiang-yanshixi.json"
- ]
+  "id": "mainline",
+  "name": "主线插关",
+  "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
+  "entry": "mainline",
+  "classes": [
+    {
+      "id": "sj-fugitive",
+      "name": "宋江",
+      "base": {
+        "hp": 90,
+        "mp": 90,
+        "attack": 60,
+        "defense": 25,
+        "hit": 85,
+        "agility": 30,
+        "crit": 10
+      },
+      "move": 5,
+      "weaponType": 7,
+      "items": [
+        63,
+        89,
+        119,
+        157,
+        157,
+        160
+      ],
+      "skills": [
+        {
+          "id": "escape-sj-jian",
+          "name": "孝义剑",
+          "from": 194,
+          "anim": 0
+        },
+        {
+          "id": "escape-sj-sihai",
+          "name": "四海归心",
+          "from": 225,
+          "anim": 3,
+          "power": 20,
+          "mpCost": 30,
+          "hits": [
+            {
+              "frame": 10,
+              "percent": 100,
+              "dir": 2
+            },
+            {
+              "frame": 11,
+              "percent": 100,
+              "dir": 1
+            },
+            {
+              "frame": 13,
+              "percent": 100,
+              "dir": 0
+            },
+            {
+              "frame": 14,
+              "percent": 100,
+              "dir": 3
+            }
+          ]
+        },
+        {
+          "id": "escape-sj-wohu",
+          "name": "卧虎藏锋",
+          "from": 199,
+          "anim": 5
+        },
+        {
+          "id": "escape-sj-xueran",
+          "name": "血染浔阳",
+          "from": 197,
+          "anim": 6,
+          "type": 14,
+          "area": 6,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 35,
+          "mpCost": 60,
+          "effect": 46,
+          "learnLevel": 20
+        },
+        {
+          "id": "escape-sj-jishiyu",
+          "name": "及时雨",
+          "from": 200,
+          "anim": 4,
+          "area": 3,
+          "power": 3,
+          "mpCost": 40
+        }
+      ],
+      "sprite": {
+        "fromClass": 6,
+        "idle": "walk",
+        "recolors": {
+          "wanglun": [
+            {
+              "src": [
+                [
+                  16,
+                  31
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  11,
+                  11
+                ],
+                [
+                  224,
+                  239
+                ],
+                [
+                  48,
+                  63
+                ],
+                [
+                  96,
+                  111
+                ],
+                [
+                  144,
+                  156
+                ]
+              ],
+              "dst": [
+                144,
+                156
+              ],
+              "k": 0.72
+            }
+          ],
+          "gongsun": [
+            {
+              "src": [
+                [
+                  240,
+                  255
+                ],
+                [
+                  144,
+                  156
+                ],
+                [
+                  16,
+                  31
+                ],
+                [
+                  1,
+                  7
+                ],
+                [
+                  11,
+                  11
+                ],
+                [
+                  224,
+                  239
+                ],
+                [
+                  96,
+                  111
+                ]
+              ],
+              "dst": [
+                144,
+                156
+              ],
+              "k": 0.85
+            }
+          ]
+        },
+        "shoes": {
+          "dst": [
+            36,
+            46
+          ],
+          "k": 1.0
+        },
+        "parts": {
+          "hurt": {
+            "fromClass": 68,
+            "action": 1,
+            "recolor": "wanglun",
+            "shoes": true
+          },
+          "defend": {
+            "fromClass": 68,
+            "action": 2,
+            "recolor": "wanglun",
+            "shoes": true
+          },
+          "0": {
+            "fromClass": 68,
+            "action": 3,
+            "recolor": "wanglun",
+            "shoes": true
+          },
+          "3": {
+            "fromClass": 2,
+            "action": 6,
+            "recolor": "gongsun",
+            "shoes": true
+          },
+          "4": {
+            "fromClass": 68,
+            "action": 8,
+            "recolor": "wanglun",
+            "shoes": true
+          },
+          "5": {
+            "fromClass": 68,
+            "action": 7,
+            "recolor": "wanglun",
+            "shoes": true
+          },
+          "6": {
+            "fromClass": 68,
+            "action": 5,
+            "recolor": "wanglun",
+            "shoes": true
+          }
+        }
+      },
+      "face": {
+        "fromHead": 6
+      }
+    },
+    {
+      "id": "zhutong",
+      "name": "朱仝",
+      "base": {
+        "hp": 130,
+        "mp": 100,
+        "attack": 68,
+        "defense": 28,
+        "hit": 78,
+        "agility": 35,
+        "crit": 10
+      },
+      "move": 6,
+      "weaponType": 3,
+      "items": [
+        37,
+        104,
+        130,
+        157,
+        157,
+        160
+      ],
+      "sprite": {
+        "fromClass": 48
+      },
+      "face": {
+        "fromHead": 48
+      },
+      "skills": [
+        {
+          "id": "zt-danxin",
+          "name": "丹心照胆",
+          "from": 151,
+          "anim": 0
+        },
+        {
+          "id": "zt-yanyue",
+          "name": "长髯偃月",
+          "from": 151,
+          "anim": 0,
+          "type": 13,
+          "area": 1,
+          "power": 30,
+          "mpCost": 32,
+          "learnLevel": 8
+        },
+        {
+          "id": "zt-qianli",
+          "name": "千里流光",
+          "from": 151,
+          "anim": 0,
+          "effect": 32,
+          "area": 3,
+          "power": 40,
+          "mpCost": 45,
+          "learnLevel": 16
+        },
+        {
+          "id": "zt-haoran",
+          "name": "浩然养气",
+          "from": 178,
+          "anim": 0,
+          "type": 8,
+          "rangeMin": 0,
+          "rangeMax": 0,
+          "area": 0,
+          "power": 3,
+          "mpCost": 0,
+          "hits": [],
+          "learnLevel": 6
+        }
+      ]
+    },
+    {
+      "id": "leiheng",
+      "name": "雷横",
+      "base": {
+        "hp": 120,
+        "mp": 120,
+        "attack": 66,
+        "defense": 25,
+        "hit": 82,
+        "agility": 42,
+        "crit": 16
+      },
+      "move": 6,
+      "weaponType": 6,
+      "items": [
+        57,
+        104,
+        130,
+        157,
+        157,
+        160
+      ],
+      "sprite": {
+        "fromClass": 60
+      },
+      "face": {
+        "fromHead": 60
+      },
+      "skills": [
+        {
+          "id": "lh-polan",
+          "name": "破澜双锋",
+          "from": 175,
+          "anim": 0
+        },
+        {
+          "id": "lh-fenglei",
+          "name": "风雷振翮",
+          "from": 177,
+          "anim": 1,
+          "power": 38,
+          "mpCost": 42,
+          "stun": 0,
+          "hitMod": 20,
+          "critMod": 10,
+          "hits": [
+            {
+              "frame": 6,
+              "percent": 30,
+              "dir": 0
+            },
+            {
+              "frame": 13,
+              "percent": 20,
+              "dir": 0
+            },
+            {
+              "frame": 19,
+              "percent": 20,
+              "dir": 0
+            },
+            {
+              "frame": 24,
+              "percent": 30,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 8
+        },
+        {
+          "id": "lh-duanjiang",
+          "name": "横江断流",
+          "from": 175,
+          "anim": 0,
+          "type": 13,
+          "area": 1,
+          "power": 25,
+          "mpCost": 30,
+          "stun": 0,
+          "learnLevel": 16
+        },
+        {
+          "id": "lh-lianyi",
+          "name": "敛翼息风",
+          "from": 178,
+          "anim": 2,
+          "power": 3,
+          "learnLevel": 6
+        }
+      ]
+    },
+    {
+      "id": "yanpoxi",
+      "name": "阎婆惜",
+      "base": {
+        "hp": 40,
+        "mp": 20,
+        "attack": 10,
+        "defense": 5,
+        "hit": 50,
+        "agility": 30,
+        "crit": 0
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "ypx-hit",
+          "name": "拉扯",
+          "from": 194,
+          "anim": 0
+        }
+      ],
+      "sprite": {
+        "fromClass": 31
+      },
+      "face": {
+        "file": "faces/yanpoxi.png"
+      }
+    }
+  ],
+  "stages": [
+    "stages/wawasi.json",
+    "stages/chifagui.json",
+    "stages/sanruan.json",
+    "stages/zhizhulin.json",
+    "stages/songjiang-yanshixi.json",
+    "stages/songjiazhuang.json"
+  ]
 }

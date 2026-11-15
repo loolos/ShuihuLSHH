@@ -133,10 +133,14 @@ export interface InsertEntry {
   after?: string;
 }
 
-/** 要进 mapName 这一关前 / 之后，还没打过的插关（同一位置有多个时按登记顺序来） */
-export function pendingInsert(c: CampaignState, list: InsertEntry[], mapName: string, position: 'before' | 'after' = 'before'): string | undefined {
+/**
+ * 要进 mapName 这一关前 / 之后，还没打过的插关（同一位置有多个时按登记顺序来）。
+ * from = 刚打完的插关：只往它后面找，用来把同一位置的几段接起来（选关直接跳进后一段时，不会回头补前一段）。
+ */
+export function pendingInsert(c: CampaignState, list: InsertEntry[], mapName: string, position: 'before' | 'after' = 'before', from?: string): string | undefined {
   const done = new Set(c.inserts ?? []);
-  return list.find((e) => e[position]?.toLowerCase() === mapName.toLowerCase() && !done.has(e.ref))?.ref;
+  const start = from === undefined ? 0 : list.findIndex((e) => e.ref === from) + 1;
+  return list.slice(start).find((e) => e[position]?.toLowerCase() === mapName.toLowerCase() && !done.has(e.ref))?.ref;
 }
 
 /** 读取存档（坏档返回 null） */
