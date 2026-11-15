@@ -747,7 +747,7 @@ describe('经验', () => {
 });
 
 describe('技能', () => {
-  it('全部模板的普攻和特殊技必杀修正上限 5，其他职业的同号技能保留原值', () => {
+  it('模板普攻默认无必杀修正、刺客保留上限 5，特殊技与其他职业保持约定', () => {
     const mods = [40, 55, 25, 5, 0, -10];
     const record = (id: number) => ({
       id, hp: 100, mp: 100, hpGrowth: 100, mpGrowth: 100, move: 5, weaponType: 0, goldCap: 0,
@@ -756,16 +756,17 @@ describe('技能', () => {
     }) as unknown as ClassRecord;
     for (const id of [...GRUNT_CLASSES, ...OFFICER_CLASSES]) {
       const [c] = buildClasses([record(id)], [], []);
-      expect(c.skills.map((s) => s.critMod), `职业 ${id}`).toEqual([5, 5, 5, 5, 0, -10]);
+      expect(c.skills.map((s) => s.critMod), `职业 ${id}`).toEqual([id === 66 ? 5 : 0, 5, 5, 5, 0, -10]);
     }
     for (const id of [0, 16, 56, 64, 71]) {
       const [c] = buildClasses([record(id)], [], []);
       expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual(mods);
     }
     const soldier = { ...unit({}), classId: 32, side: 'enemy' as const, stats: { ...unit({}).stats, crit: 10 } };
-    const officer = { ...soldier, classId: 66, stats: { ...soldier.stats, crit: 15 } };
-    expect(critChance(soldier, { ...punch, critMod: 5 })).toBe(4);
-    expect(critChance(officer, { ...punch, critMod: 5 })).toBe(7);
+    const officer = { ...soldier, classId: 38, stats: { ...soldier.stats, crit: 15 } };
+    expect(critChance(soldier, { ...punch, critMod: 0 })).toBe(2);
+    expect(critChance(officer, { ...punch, critMod: 0 })).toBe(4);
+    expect(critChance({ ...officer, classId: 66 }, { ...punch, critMod: 5 })).toBe(7);
   });
 
   it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
