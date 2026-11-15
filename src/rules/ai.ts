@@ -20,33 +20,51 @@ export interface AiPlan {
 
 interface Option {
   cell: Cell;
-  cost: number;
   skill: SkillDef;
   at: Cell;
   target: Unit;
-  primary: boolean;
-  /** 扩展包：优先用的技能（Battle.prefers） */
+  count: number;
   pref: boolean;
   kills: number;
   expected: number;
 }
 
-/** 原版默认 AI 追的是单位表里第一个敌对单位（EXE 0x40d930），即 ACT 中排在最前的敌人 */
+/** 每次攻击决策抽一次策略；概率不按候选站位或技能重复抽。 */
+export const LEGACY_ATTACK_PERCENT = 30;
+
+/** 打不到人时仍按脚本模式追击单位表中的首个敌对单位。 */
 export function primaryFoe(b: Battle, u: Unit): Unit | undefined {
   return b.foesOf(u)[0];
 }
 
+interface Choice { best: Option | null; ties: number }
+
+/** 蓄水池抽样：完全同分的站位/技能等概率选，不保存全部候选方案。 */
+function consider(b: Battle, choice: Choice, option: Option, compare: (a: Option, c: Option) => number) {
+  const score = choice.best ? compare(option, choice.best) : 1;
+  if (score > 0) { choice.best = option; choice.ties = 1; }
+  else if (score === 0 && b.rng.int(++choice.ties) === 0) choice.best = option;
+}
+
 /**
- * 在移动范围内找攻击位置与招式。原版（EXE 0x40d850）只按方向和距离逐格找到能打的位置，不挑目标；
- * 这里【新】：在普通攻击和气力够用的攻击技能里挑——先打主要目标（primaryFoe），其次击倒人数多的，
- * 再次少走路，最后期望伤害高的（技能按"期望伤害 − 气力消耗 / 2"折算，免得为一点伤害耗光气力）。
+ * 扫描所有合法移动落点、已学会且气力足够的攻击技和施放点。
+ * 30%：预计击倒人数 → 期望伤害 → 目标体力低 → 初始距离近。
+ * 70%：范围攻击覆盖人数 → 期望总伤害，同分随机；仅单体可用时先等概率抽目标，再选高伤招式。
+ * 治疗、跟随、警戒及脚本指定目标等约束仍由外层模式控制。
  */
 function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
+  const legacy = b.rng.chance(LEGACY_ATTACK_PERCENT);
   const reach = b.reachOf(u, u.stats.move);
   const basic = attackSkill(u, b.data);
-  const skills = [basic, ...learnedSkills(u, b.data).filter((s) => !isSupportSkill(s) && s.mpCost <= u.mp)];
-  const main = primaryFoe(b, u);
-  let best: Option | null = null;
+  const skills = [basic, ...learnedSkills(u, b.data).filter(s => !isSupportSkill(s) && s.mpCost <= u.mp)];
+  let bestLegacy: Option | null = null;
+  const bestArea: Choice = { best: null, ties: 0 };
+  const singles = new Map<number, Choice>();
+  let hasArea = false;
+  const byDamage = (a: Option, c: Option) => a.expected - c.expected;
+  const byArea = (a: Option, c: Option) => a.count - c.count || byDamage(a, c);
+  const byLegacy = (a: Option, c: Option) => a.kills - c.kills || byDamage(a, c)
+    || c.target.hp - a.target.hp || dist(u, c.target) - dist(u, a.target) || Number(a.pref) - Number(c.pref);
   for (const n of reach.values()) {
     const at = { x: n.x, y: n.y };
     const self = { ...u, x: n.x, y: n.y };
@@ -57,24 +75,33 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
         let expected = 0, kills = 0;
         for (const t of hit) {
           const p = previewAttack(self, t, skill);
-          expected += (p.hit / 100) * Math.min(t.hp, p.damage);
-          if (p.damage >= t.hp) kills++;
+          // 含命中、必杀概率，并按剩余体力截断；不预掷命中，不因耗气或少走路压过人数/伤害。
+          expected += (p.hit / 100) * ((1 - p.crit / 100) * Math.min(t.hp, p.damage) + (p.crit / 100) * Math.min(t.hp, p.critDamage));
+          if (p.hit > 0 && p.damage >= t.hp) kills++;
         }
-        if (skill !== basic) expected -= skill.mpCost / 2;
-        const target = b.unitAt(cell.x, cell.y) && hit.includes(b.unitAt(cell.x, cell.y)!) ? b.unitAt(cell.x, cell.y)! : hit[0];
-        const o: Option = { cell, cost: n.cost, skill, at, target, primary: !!main && hit.includes(main), pref: b.prefers(u, skill), kills, expected };
-        if (!best || better(o, best)) best = o;
+        const onCell = b.unitAt(cell.x, cell.y);
+        const target = onCell && hit.includes(onCell) ? onCell : hit[0];
+        const area = !legacy && b.skillArea(u, skill, cell, at).length > 1;
+        const o: Option = { cell, skill, at, target, count: hit.length, pref: b.prefers(u, skill), kills, expected };
+        if (legacy) {
+          if (!bestLegacy || byLegacy(o, bestLegacy) > 0) bestLegacy = o;
+        } else {
+          consider(b, bestArea, o, byArea);
+          if (area && !hasArea) { hasArea = true; singles.clear(); }
+          if (!hasArea) {
+            const choice = singles.get(target.uid) ?? { best: null, ties: 0 };
+            singles.set(target.uid, choice);
+            consider(b, choice, o, byDamage);
+          }
+        }
       }
   }
+  let best = bestLegacy;
+  if (!legacy) {
+    // 按角色去重后再抽，站位多、可用技能多不会提高该目标被选中的概率。
+    best = hasArea ? bestArea.best : singles.size ? [...singles.values()][b.rng.int(singles.size)].best : null;
+  }
   return best ? { path: b.pathOf(reach, best.at), target: best.target, skill: best.skill, cell: best.cell } : null;
-}
-
-function better(a: Option, b: Option) {
-  if (a.primary !== b.primary) return a.primary;
-  if (a.kills !== b.kills) return a.kills > b.kills;
-  if (a.pref !== b.pref) return a.pref;
-  if (a.cost !== b.cost) return a.cost < b.cost;
-  return a.expected > b.expected;
 }
 
 /** 朝目标移动：在移动范围内取离目标地形距离最近的格子（stopAt：到这个距离就停，如跟随时停在相邻格） */
