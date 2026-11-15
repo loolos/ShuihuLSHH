@@ -29,14 +29,13 @@
     },
     {
       "id": "yanpoxishi",
-      "class": 31,
+      "class": "yanpoxi",
       "side": "ally",
       "x": 9,
       "y": 4,
       "facing": 2,
       "level": 28,
-      "hidden": true,
-      "name": "阎婆惜"
+      "hidden": true
     },
     {
       "id": "yanpo",

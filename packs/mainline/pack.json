@@ -3,7 +3,36 @@
  "name": "主线插关",
  "description": "主线插关与后续剧情，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10）。",
  "entry": "mainline",
- "classes": [],
+ "classes": [
+  {
+   "id": "yanpoxi",
+   "name": "阎婆惜",
+   "base": {
+    "hp": 40,
+    "mp": 20,
+    "attack": 10,
+    "defense": 5,
+    "hit": 50,
+    "agility": 30,
+    "crit": 0
+   },
+   "move": 4,
+   "skills": [
+    {
+     "id": "ypx-hit",
+     "name": "拉扯",
+     "from": 194,
+     "anim": 0
+    }
+   ],
+   "sprite": {
+    "fromClass": 31
+   },
+   "face": {
+    "file": "faces/yanpoxi.png"
+   }
+  }
+ ],
  "stages": [
   "stages/wawasi.json",
   "stages/sanruan.json",
