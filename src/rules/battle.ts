@@ -1385,9 +1385,15 @@ export class Battle {
         case 12:
           // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
           if (op.value > 1000 && op.value < 0x10000) sel = this.unit(this.groups.get(op.value - 1000) ?? -1);
-          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && u.alive);
+          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && (u.alive || !!op.actor));
           else sel = undefined; // 0xFFFFFFFF：旁白
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
+          if (sel && op.actor?.action === 'show') {
+            const near = this.active().find(u => u.classId === op.actor!.near) ?? sel;
+            const at = this.board.nearestFree(near.x, near.y, this.occupied()) ?? sel;
+            // 只发画面事件：不改alive/present/体力、掉落或经验，战败不会被撤销。
+            this.emit({ type: 'appear', uid: sel.uid, x: at.x, y: at.y, ambush: false });
+          } else if (sel && op.actor?.action === 'hide') this.emit({ type: 'leave', uid: sel.uid });
           // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
           if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
           break;
