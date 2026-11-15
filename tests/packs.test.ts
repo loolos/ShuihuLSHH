@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { areaCells } from '../src/rules/skills.ts';
+import { planAi } from '../src/rules/ai.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
@@ -990,10 +991,10 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const s = stage('kuaihuolin'), b = start('kuaihuolin');
     const wu = b.units.find(u => u.classId === cid('wusong'))!;
     const shien = b.units.find(u => u.classId === cid('shien'))!;
-    expect(shien.side).toBe('player');
-    expect(b.canAct(shien)).toBe(true);
-    expect(b.canMove(shien)).toBe(true);
-    expect(b.moveRange(shien).green.length).toBeGreaterThan(1);
+    expect(shien.side).toBe('ally');
+    expect(shien.ai.mode).toBe(0);
+    expect(b.canAct(shien)).toBe(false); // 玩家阶段不可操作友军。
+    expect(b.canMove(shien)).toBe(false);
     const check = () => (b as unknown as { afterAction: () => void }).afterAction();
     for (const name of ['wine-1', 'wine-2', 'wine-3']) {
       const index = s.units.findIndex(u => u.id === name), npc = b.unit(index)!;
@@ -1013,6 +1014,11 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       check();
       expect(wu.buffs.length).toBe(before + 2); // 反复靠近只给一次酒劲。
     }
+    // 友军采用会行动、会攻击的 AI；并非恢复成原地不动的 AI8。
+    const guard = b.unit(s.units.findIndex(u => u.id === 'guard-1'))!;
+    guard.present = true;
+    shien.x = guard.x; shien.y = guard.y + 2;
+    expect(planAi(b, shien).target?.side).toBe('enemy');
   });
 
   it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
