@@ -79,3 +79,10 @@ describe('敌兵远射技 AI', () => {
     expect(alertRadius(b, e)).toBe(e.stats.move + 2) // 普攻射程 1 + 范围 1;
   });
 });
+
+describe('远射技调整（负责人 2026-11-15）', () => {
+  it('亂石飛投、火箭齊發为一线 3 格，連環飛鏢射程 2–4', () => {
+    for (const id of [19, 34]) expect(classes[id].skills.find((s) => s.volley)).toMatchObject({ type: 0, area: 3 });
+    expect(classes[67].skills.find((s) => s.volley)).toMatchObject({ rangeMin: 2, rangeMax: 4 });
+  });
+});
