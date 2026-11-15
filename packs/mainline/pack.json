@@ -1,8 +1,21 @@
 {
   "id": "mainline",
   "name": "主线插关",
-  "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
+  "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10–§15.12）。",
   "entry": "mainline",
+  "credits": [
+    "武松模型：Quaternius「Universal Animation Library」，CC0",
+    "老虎模型：Tiger model by planeta-elefante (Sketchfab), CC BY 4.0"
+  ],
+  "items": [
+    {
+      "id": "shaobang",
+      "name": "哨棒",
+      "from": 14,
+      "attack": 15,
+      "description": "武松随身带的一条哨棒。"
+    }
+  ],
   "classes": [
     {
       "id": "sj-fugitive",
@@ -424,6 +437,291 @@
       "face": {
         "file": "faces/yanpoxi.png"
       }
+    },
+    {
+      "id": "wusong",
+      "name": "武松",
+      "base": {
+        "hp": 130,
+        "mp": 90,
+        "attack": 78,
+        "defense": 30,
+        "hit": 85,
+        "agility": 40,
+        "crit": 18
+      },
+      "move": 5,
+      "weaponType": 1,
+      "items": [
+        "shaobang",
+        84,
+        0,
+        157,
+        157
+      ],
+      "skills": [
+        {
+          "id": "quan",
+          "name": "拳打脚踢",
+          "from": 201,
+          "anim": "punch-jab",
+          "hitAt": [
+            0.55
+          ],
+          "power": 10
+        },
+        {
+          "id": "lianhuan",
+          "name": "连环拳",
+          "from": 210,
+          "anim": "punch-cross",
+          "hitAt": [
+            0.35,
+            0.55,
+            0.75
+          ],
+          "power": 25,
+          "mpCost": 30
+        },
+        {
+          "id": "antou",
+          "name": "按头痛击",
+          "from": 154,
+          "anim": "punch-cross",
+          "hitAt": [
+            0.6
+          ],
+          "power": 60,
+          "mpCost": 60,
+          "stun": 30
+        },
+        {
+          "id": "yunqi",
+          "name": "运气",
+          "from": 206,
+          "anim": "crouch-idle"
+        },
+        {
+          "id": "tizhi",
+          "name": "提掷",
+          "from": 154,
+          "anim": "punch-cross",
+          "hitAt": [
+            0.6
+          ],
+          "power": 45,
+          "mpCost": 60,
+          "learnLevel": 28
+        }
+      ],
+      "sprite": {
+        "sheet": "sprites/wusong",
+        "idle": "idle",
+        "walk": "walk",
+        "hurt": "hit-chest",
+        "defend": "crouch-idle"
+      },
+      "face": {
+        "file": "faces/wusong.png"
+      }
+    },
+    {
+      "id": "tiger",
+      "name": "吊睛白额虎",
+      "base": {
+        "hp": 360,
+        "mp": 150,
+        "attack": 70,
+        "defense": 24,
+        "hit": 80,
+        "agility": 50,
+        "crit": 8
+      },
+      "move": 7,
+      "skills": [
+        {
+          "id": "bite",
+          "name": "扑咬",
+          "from": 179,
+          "anim": "attack",
+          "hitAt": [
+            0.55
+          ],
+          "power": 10
+        },
+        {
+          "id": "pu",
+          "name": "一扑",
+          "from": 8,
+          "anim": "attack",
+          "hitAt": [
+            0.6
+          ],
+          "power": 40,
+          "mpCost": 25,
+          "rangeMin": 1,
+          "rangeMax": 3
+        },
+        {
+          "id": "xian",
+          "name": "一掀",
+          "from": 181,
+          "anim": "attack-paw",
+          "hitAt": [
+            0.5
+          ],
+          "power": 35,
+          "mpCost": 30,
+          "area": 3
+        },
+        {
+          "id": "jian",
+          "name": "一剪",
+          "from": 204,
+          "anim": "attack-paw",
+          "hitAt": [
+            0.4,
+            0.7
+          ],
+          "power": 30,
+          "mpCost": 30
+        }
+      ],
+      "sprite": {
+        "sheet": "sprites/tiger",
+        "idle": "idle",
+        "walk": "walk",
+        "hurt": "hit-back",
+        "defend": "go-to-sleep",
+        "head": 52
+      },
+      "face": null
+    },
+    {
+      "id": "hunter-in-tigerskin",
+      "name": "大虫",
+      "base": {
+        "hp": 120,
+        "mp": 40,
+        "attack": 30,
+        "defense": 15,
+        "hit": 70,
+        "agility": 30,
+        "crit": 5
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "pounce-fake",
+          "name": "扑咬",
+          "from": 179,
+          "anim": "attack",
+          "hitAt": [
+            0.55
+          ],
+          "power": 5
+        }
+      ],
+      "sprite": {
+        "sheet": "sprites/tiger",
+        "idle": "idle",
+        "walk": "walk",
+        "hurt": "hit-back",
+        "defend": "go-to-sleep",
+        "head": 52
+      },
+      "face": null
+    },
+    {
+      "id": "ximenqing",
+      "name": "西门庆",
+      "base": {
+        "hp": 220,
+        "mp": 110,
+        "attack": 56,
+        "defense": 30,
+        "hit": 78,
+        "agility": 42,
+        "crit": 6
+      },
+      "move": 5,
+      "weaponType": 0,
+      "items": [
+        8,
+        90,
+        119,
+        157,
+        157
+      ],
+      "skills": [
+        {
+          "id": "xmq-quan",
+          "name": "拳脚",
+          "from": 170,
+          "anim": 0
+        },
+        {
+          "id": "xmq-feijiao",
+          "name": "飞脚",
+          "from": 172,
+          "anim": 1,
+          "power": 20,
+          "mpCost": 30,
+          "poison": 0,
+          "stun": 0,
+          "critMod": -50
+        },
+        {
+          "id": "xmq-saotui",
+          "name": "旋身扫腿",
+          "from": 173,
+          "anim": 2,
+          "power": 20,
+          "mpCost": 30,
+          "poison": 0,
+          "stun": 0
+        },
+        {
+          "id": "xmq-qi",
+          "name": "聚气",
+          "from": 174,
+          "anim": 3
+        }
+      ],
+      "sprite": {
+        "fromClass": 57
+      },
+      "face": {
+        "fromHead": 57
+      }
+    },
+    {
+      "id": "panjinlian",
+      "name": "潘金莲",
+      "base": {
+        "hp": 40,
+        "mp": 20,
+        "attack": 10,
+        "defense": 5,
+        "hit": 50,
+        "agility": 30,
+        "crit": 0
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "pjl-hit",
+          "name": "拉扯",
+          "from": 194,
+          "anim": 0
+        }
+      ],
+      "sprite": {
+        "fromClass": 31
+      },
+      "face": {
+        "fromHead": 31
+      }
     }
   ],
   "stages": [
@@ -432,6 +730,10 @@
     "stages/sanruan.json",
     "stages/zhizhulin.json",
     "stages/songjiang-yanshixi.json",
-    "stages/songjiazhuang.json"
+    "stages/songjiazhuang.json",
+    "stages/chaijin-liubin.json",
+    "stages/jingyanggang.json",
+    "stages/tiaolian.json",
+    "stages/shizilou.json"
   ]
 }

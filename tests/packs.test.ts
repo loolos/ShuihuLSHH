@@ -8,6 +8,7 @@ import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
+import { recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
@@ -55,12 +56,12 @@ describe('宋江职业', () => {
   });
 });
 
-describe.skipIf(!has)('扩展包：武松打虎', () => {
+describe.skipIf(!has)('主线续篇：景阳冈（武松打虎，原外传）', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
   const base = has ? loadGameData(files, tr) : (null as never);
-  const rt = has ? loadPackFromDisk('wusong', base) : (null as never);
-  const stage = has ? rt.stages[0] : (null as never);
+  const rt = has ? loadPackFromDisk('mainline', base) : (null as never);
+  const stage = has ? rt.stages.find((s) => s.id === 'jingyanggang')! : (null as never);
   const start = (seed = 1) => {
     const b = new Battle(compileStage(rt, stage, files, { seed, text: tr }));
     const ev = b.begin();
@@ -83,10 +84,11 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
   };
 
   it('职业、技能、道具接在原版后面，原版数据不变', () => {
-    expect(rt.classIds.get('wusong')).toBe(base.classes.length);
-    expect(rt.classIds.get('tiger')).toBe(base.classes.length + 1);
-    expect(rt.data.classes[base.classes.length].name).toBe('武松');
-    expect(rt.data.charNames[base.classes.length + 1]).toBe('吊睛白额虎');
+    const ws = rt.classIds.get('wusong')!;
+    expect(ws).toBeGreaterThanOrEqual(base.classes.length);
+    expect(rt.classIds.get('tiger')).toBe(ws + 1);
+    expect(rt.data.classes[ws].name).toBe('武松');
+    expect(rt.data.charNames[ws + 1]).toBe('吊睛白额虎');
     expect([...rt.skillIds.values()].every((id) => id >= 2000)).toBe(true);
     const staff = rt.data.items[rt.itemIds.get('shaobang')! - 1];
     expect(staff.name).toBe('哨棒');
@@ -101,7 +103,7 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
   it('武松用包里自己的头像（140 宽），老虎没有头像', () => {
     const face = rt.looks.get(rt.classIds.get('wusong')!)!.face;
     expect(typeof face).toBe('string');
-    const png = fs.readFileSync(path.join('packs/wusong', face as string));
+    const png = fs.readFileSync(path.join('packs/mainline', face as string));
     expect(png.readUInt32BE(16)).toBe(140); // IHDR 宽
     expect(rt.looks.get(rt.classIds.get('tiger')!)!.face).toBeNull();
   });
@@ -112,8 +114,9 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
     expect(b.turnLimit).toBe(15);
     expect(b.objectives.join()).toContain('吊睛白额大虫');
     expect(ws.slots[0]).toBe(rt.itemIds.get('shaobang'));
-    expect(ws.level).toBe(15);
-    expect(tiger.level).toBe(17);
+    // 接在终章续篇里，和前后两段的宋江、武松对齐（负责人 2026-11-15）
+    expect(ws.level).toBe(27);
+    expect(tiger.level).toBe(29);
   });
 
   it('武松走上冈，老虎登场', () => {
@@ -277,9 +280,9 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     // 试手 22 级 ≈ 主线到过城镇 7：碧雲箬笠、大還金丹 ×2；戴宗默认是布衣、一字巾、狗皮膏藥 ×2
     expect(names('shishou', 'daizong')).toEqual(['鋼刺拳', '綠羅花戰袍', '碧雲箬笠', '狗皮膏藥', '狗皮膏藥', '大還金丹', '大還金丹']);
     // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
-    const ws = loadPackFromDisk('wusong', rt.data);
-    const u = compileStage(ws, ws.stages[0], files).units.find((x) => x.side === 'player')!;
-    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '紅纓氈笠']);
+    const ws = loadPackFromDisk('mainline', loadGameData(files, tr));
+    const u = compileStage(ws, ws.stages.find((s) => s.id === 'jingyanggang')!, files).units.find((x) => x.side === 'player')!;
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '碧雲箬笠']);
   });
 
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
@@ -610,13 +613,72 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['zhizhulin', 'Act7-1a', false],
       ['songjiang-yanshixi', undefined, false],
       ['songjiazhuang', undefined, true],
+      ['chaijin-liubin', undefined, true],
+      ['jingyanggang', undefined, true],
+      ['tiaolian', undefined, true],
+      ['shizilou', undefined, false],
     ]);
-    for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
+    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian'];
+    for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
     }
+  });
+
+  it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场演完就过关', () => {
+    const after = rt.stages.filter((s) => s.after === 'N14').map((s) => s.id);
+    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']);
+    for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
+      const stage = stageOf(id);
+      const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+      for (const u of stage.units) expect(b.board.passable(u.x, u.y), `${id} ${u.id} (${u.x},${u.y})`).toBe(true);
+      for (const blk of stage.script)
+        for (const op of blk.do) if (op[0] === 'move') expect(b.board.passable(op[2] as number, op[3] as number), `${id} move ${op.slice(1).join()}`).toBe(true);
+      const ev = b.begin();
+      if (id === 'chaijin-liubin' || id === 'tiaolian') {
+        expect(b.status, id).toBe('won');
+        expect(ev.some((e) => e.type === 'end' && e.result === 'won')).toBe(true);
+      } else expect(b.status, id).toBe('playing');
+    }
+  });
+
+  it('狮子楼：开场只有武松带解腕尖刀；西门庆出手踢落刀；第 2 回合宋江一行登场；打倒西门庆过关', () => {
+    const stage = stageOf('shizilou');
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    b.begin();
+    const mine = () => b.active().filter((u) => u.side === 'player').map((u) => u.name);
+    expect(mine()).toEqual(['武松']);
+    const ws = b.units.find((u) => u.name === '武松')!;
+    expect(rt.data.items[ws.slots[0] - 1].name).toBe('解腕尖刀');
+    const xmq = b.units.find((u) => u.name === '西门庆')!;
+    const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+    xmq.x = ws.x + 1; xmq.y = ws.y;
+    ws.hp = 9999;
+    x.out = [];
+    x.cast(xmq, attackSkill(xmq, b.data), { x: ws.x, y: ws.y }, false);
+    x.afterAction();
+    x.flush();
+    expect(ws.slots[0]).toBe(0);
+    ws.hp = 9999;
+    while (b.turn < 2 && b.status === 'playing') b.endPlayerPhase();
+    expect(mine()).toEqual(expect.arrayContaining(['武松', '宋江', '鲁智深', '史进']));
+    xmq.hp = 1;
+    x.out = [];
+    for (let i = 0; i < 20 && b.status === 'playing'; i++) {
+      x.cast(ws, attackSkill(ws, b.data), { x: xmq.x, y: xmq.y }, false);
+      x.afterAction();
+    }
+    expect(b.status).toBe('won');
+  });
+
+  it('续篇里的包职业（宋江、武松）不记进梁山名单', () => {
+    const stage = stageOf('shizilou');
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    b.begin();
+    const c = recordResult({ version: 1, stage: 75, members: [], gold: 0 } as unknown as CampaignState, b, { keepActive: true, classLimit: 72 });
+    expect(c.members.map((m) => m.classId).sort((p, q) => p - q)).toEqual([0, 3, 16]);
   });
 
   it('义释宋公明：三人可操作、前三回合敌人分三拨来、30回合，所有人能沿地形互相到达', () => {

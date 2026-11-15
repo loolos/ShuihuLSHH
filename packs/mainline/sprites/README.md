@@ -27,7 +27,7 @@
 ```sh
 uv venv --python 3.13 venv && uv pip install --python venv bpy==5.2.4
 venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/wusong --scale-by mesh --height 1.75 --ppm 50 \
-  --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/wusong/sprites/src/outfit-wusong.json \
+  --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-wusong.json \
   --actions Idle_Loop,Walk_Loop,Hit_Chest,Punch_Jab,Punch_Cross,Death01,Roll,Crouch_Idle_Loop
 venv/bin/python tools/render-sprites.py tiger.glb out/tiger --length 2.2 --ppm 50 --frames 8 --samples 8 \
   --actions "Idle,Walk,Attack,Attack Paw,Hit Back,Go To Sleep"

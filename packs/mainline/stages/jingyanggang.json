@@ -1,19 +1,21 @@
 {
  "id": "jingyanggang",
+ "after": "N14",
+ "pov": true,
  "title": "景阳冈",
  "map": {"base": "N-add01"},
  "bgm": ["tiger", "tense"],
  "units": [
-  {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 15},
+  {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 27},
   {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},
-  {"id": "tiger", "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 17, "hidden": true},
+  {"id": "tiger", "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 29, "hidden": true},
   {"id": "hunter1", "class": "hunter-in-tigerskin", "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
   {"id": "hunter2", "class": "hunter-in-tigerskin", "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
  ],
  "aiPrefer": {"tiger": ["pu", "xian", "jian"]},
  "script": [
   {"on": "start", "do": [
-   ["narrate", "清河县人武松，离了柴大官人庄上，要回乡去寻哥哥武大郎。这一日晌午时分，走到阳谷县地面，冈子下有一家酒店。"],
+   ["narrate", "话分两头。且说清河县人武松辞了宋江，离了柴大官人庄上，要回乡去寻哥哥武大郎。在路上行了几日，这一日晌午时分，走到阳谷县地面，冈子下有一家酒店。"],
    ["say", "innkeeper", "客官，俺家的酒叫做「三碗不过冈」：但凡客人来我店中，吃了三碗的，便醉了，过不得前面的山冈去。"],
    ["say", "wusong", "俺前前后后吃了十八碗，也不见醉。休要啰唣，俺这便过冈去！"],
    ["say", "innkeeper", "如今前面景阳冈上有只吊睛白额大虫，晚了出来伤人，坏了三二十条大汉性命。官司榜文叫过往客商结伙成队过冈，客官不如就俺家歇了。"],
@@ -52,7 +54,7 @@
    ["say", "hunter1", "好汉莫怕！我们是本处的猎户，披了虎皮在这里埋伏，要捉那大虫。"],
    ["say", "hunter2", "你……你是人是鬼？独自一个，又没器械，走过冈来？"],
    ["say", "wusong", "那大虫，吃俺一顿拳脚打死了。"],
-   ["victory", "众猎户点起火把，把大虫抬下冈来。阳谷县知县赏了一千贯，见武松忠厚仁德，又是一条好汉，参他做了本县的步兵都头。"]
+   ["victory", "众猎户点起火把，把大虫抬下冈来。阳谷县知县赏了一千贯，见武松忠厚仁德，又是一条好汉，参他做了本县的步兵都头。次日武松上街闲玩，只听得背后一个人叫道：「武都头，你今日发迹了，如何不看觑我则个？」回过头来看了——原来正是他亲哥哥武大郎。"]
   ]},
   {"on": {"dead": "wusong"}, "do": [
    ["defeat", "武松力尽，倒在了景阳冈上……"]

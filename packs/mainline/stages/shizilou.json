@@ -1,0 +1,638 @@
+{
+ "id": "shizilou",
+ "title": "狮子楼",
+ "after": "N14",
+ "rewards": {
+  "gold": 1000
+ },
+ "gearAt": "none",
+ "map": {
+  "base": "N05",
+  "crop": [
+   32,
+   0,
+   22,
+   22
+  ]
+ },
+ "bgm": [
+  "boss",
+  "tense"
+ ],
+ "units": [
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "side": "player",
+   "x": 5,
+   "y": 8,
+   "facing": 0,
+   "level": 28,
+   "items": [
+    56,
+    89,
+    119,
+    157,
+    157,
+    160
+   ]
+  },
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 8,
+   "y": 12,
+   "facing": 0,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 9,
+   "y": 13,
+   "facing": 0,
+   "level": 29,
+   "hidden": true
+  },
+  {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "player",
+   "x": 7,
+   "y": 13,
+   "facing": 0,
+   "level": 29,
+   "hidden": true
+  },
+  {
+   "id": "shijin",
+   "class": 3,
+   "side": "player",
+   "x": 8,
+   "y": 14,
+   "facing": 0,
+   "level": 29,
+   "hidden": true
+  },
+  {
+   "id": "ximenqing",
+   "class": "ximenqing",
+   "side": "enemy",
+   "x": 15,
+   "y": 2,
+   "facing": 2,
+   "level": 30
+  },
+  {
+   "id": "caizhu",
+   "class": 27,
+   "side": "ally",
+   "x": 16,
+   "y": 2,
+   "facing": 2,
+   "level": 15,
+   "name": "财主",
+   "ai": 8
+  },
+  {
+   "id": "jiubao",
+   "class": 35,
+   "side": "ally",
+   "x": 11,
+   "y": 7,
+   "facing": 2,
+   "level": 10,
+   "name": "酒保",
+   "ai": 8
+  },
+  {
+   "id": "bandang1",
+   "class": 37,
+   "side": "enemy",
+   "x": 14,
+   "y": 2,
+   "facing": 2,
+   "level": 24,
+   "name": "伴当"
+  },
+  {
+   "id": "bandang2",
+   "class": 37,
+   "side": "enemy",
+   "x": 17,
+   "y": 2,
+   "facing": 2,
+   "level": 24,
+   "name": "伴当"
+  },
+  {
+   "id": "bandang3",
+   "class": 37,
+   "side": "enemy",
+   "x": 20,
+   "y": 11,
+   "facing": 1,
+   "level": 26,
+   "name": "伴当",
+   "hidden": true
+  },
+  {
+   "id": "bandang4",
+   "class": 37,
+   "side": "enemy",
+   "x": 21,
+   "y": 14,
+   "facing": 1,
+   "level": 26,
+   "name": "伴当",
+   "hidden": true
+  },
+  {
+   "id": "bangxian1",
+   "class": 19,
+   "side": "enemy",
+   "x": 20,
+   "y": 12,
+   "facing": 1,
+   "level": 26,
+   "name": "帮闲",
+   "hidden": true
+  },
+  {
+   "id": "bangxian2",
+   "class": 20,
+   "side": "enemy",
+   "x": 21,
+   "y": 13,
+   "facing": 1,
+   "level": 26,
+   "name": "帮闲",
+   "hidden": true
+  },
+  {
+   "id": "bangxian3",
+   "class": 19,
+   "side": "enemy",
+   "x": 20,
+   "y": 14,
+   "facing": 1,
+   "level": 26,
+   "name": "帮闲",
+   "hidden": true
+  },
+  {
+   "id": "bangxian4",
+   "class": 20,
+   "side": "enemy",
+   "x": 21,
+   "y": 12,
+   "facing": 1,
+   "level": 26,
+   "name": "帮闲",
+   "hidden": true
+  },
+  {
+   "id": "huyuan1",
+   "class": 39,
+   "side": "enemy",
+   "x": 0,
+   "y": 6,
+   "facing": 3,
+   "level": 28,
+   "name": "护院",
+   "hidden": true
+  },
+  {
+   "id": "huyuan2",
+   "class": 39,
+   "side": "enemy",
+   "x": 1,
+   "y": 6,
+   "facing": 3,
+   "level": 28,
+   "name": "护院",
+   "hidden": true
+  },
+  {
+   "id": "tudi1",
+   "class": 67,
+   "side": "enemy",
+   "x": 0,
+   "y": 7,
+   "facing": 3,
+   "level": 27,
+   "name": "护院徒弟",
+   "hidden": true
+  },
+  {
+   "id": "tudi2",
+   "class": 67,
+   "side": "enemy",
+   "x": 1,
+   "y": 7,
+   "facing": 3,
+   "level": 27,
+   "name": "护院徒弟",
+   "hidden": true
+  },
+  {
+   "id": "tudi3",
+   "class": 67,
+   "side": "enemy",
+   "x": 2,
+   "y": 7,
+   "facing": 3,
+   "level": 27,
+   "name": "护院徒弟",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "narrate",
+     "话说宋江在柴大官人庄上住了些时。梁山泊晁天王得知宋押司吃了官司在逃，放心不下，差武龙、鲁智深、史进三个下山寻访。三人寻到横海郡，与宋江相见。宋江闻得阳谷县出了个景阳冈打虎的武都头，正是兄弟武二郎，便同三位好汉往阳谷县来相会。"
+    ],
+    [
+     "narrate",
+     "看官听说：武松从东京回来，哥哥已死。问了何九叔、郓哥，拿着骨殖去县里告西门庆。知县受了贿赂，只说：「自古道：捉奸见双，捉贼见赃，杀人见伤。」不肯准状。"
+    ],
+    [
+     "narrate",
+     "武松当下请了四家邻舍来家，说声「众高邻休怪小人粗卤，胡乱请些个」，在哥哥灵前问明了实情，祭了哥哥，身边带一把尖长柄短、背厚刃薄的解腕刀，径投狮子桥下酒楼来。"
+    ],
+    [
+     "move",
+     "wusong",
+     11,
+     6
+    ],
+    [
+     "say",
+     "wusong",
+     "西门庆大郎和甚人吃酒？"
+    ],
+    [
+     "say",
+     "jiubao",
+     "和一个一般的财主，在楼上边街阁儿里吃酒。"
+    ],
+    [
+     "leave",
+     "jiubao"
+    ],
+    [
+     "move",
+     "wusong",
+     15,
+     3
+    ],
+    [
+     "narrate",
+     "武松一直奔上楼去，见西门庆坐着主位，对面一个坐着客席。西门庆认得是武松，吃了一惊。"
+    ],
+    [
+     "say",
+     "wusong",
+     "西门庆！我哥哥武大是怎生死的？"
+    ],
+    [
+     "leave",
+     "caizhu"
+    ],
+    [
+     "say",
+     "ximenqing",
+     "来人！给我拿下这厮！"
+    ],
+    [
+     "move",
+     "ximenqing",
+     18,
+     5
+    ],
+    [
+     "narrate",
+     "西门庆也会些拳棒，跳起身来，闪到伴当们身后，仗着人多，倒也不怕。"
+    ],
+    [
+     "buff",
+     "ximenqing",
+     "defense",
+     {
+      "pct": 100,
+      "turns": 3
+     }
+    ],
+    [
+     "buff",
+     "wusong",
+     "defense",
+     {
+      "pct": 100,
+      "turns": 3
+     }
+    ],
+    [
+     "objective",
+     "胜利条件：打倒西门庆"
+    ],
+    [
+     "objective",
+     "失败条件：武松、宋江或武龙倒下，或超过 15 回合（西门庆逃走）"
+    ],
+    [
+     "turnLimit",
+     15
+    ]
+   ]
+  },
+  {
+   "on": {
+    "used": "ximenqing",
+    "count": 1
+   },
+   "do": [
+    [
+     "narrate",
+     "西门庆见武松来得凶，飞起右脚——恰好那一脚正踢中武松右手，那口刀踢将起来，直落下街心里去了。"
+    ],
+    [
+     "setEquip",
+     "wusong",
+     0,
+     0
+    ],
+    [
+     "say",
+     "wusong",
+     "没了刀，俺这双拳头也打得死大虫！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "这时宋江一行四人正走到狮子桥下，只听得楼上桌椅乱响，有人厮打。"
+    ],
+    [
+     "appear",
+     "songjiang"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "shijin"
+    ],
+    [
+     "say",
+     "songjiang",
+     "那不是武二郎么！"
+    ],
+    [
+     "say",
+     "hero",
+     "哥哥认得此人？"
+    ],
+    [
+     "say",
+     "songjiang",
+     "便是我在柴大官人庄上结拜的兄弟，景阳冈打虎的武松！他一个人吃人围住了，众位兄弟，随我去助他一臂之力！"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家正手痒，走！"
+    ],
+    [
+     "narrate",
+     "东街口又赶来一伙帮闲，都是平日跟着西门庆吃白食的，还有两个下楼叫人的伴当。"
+    ],
+    [
+     "appear",
+     "bangxian1"
+    ],
+    [
+     "appear",
+     "bangxian2"
+    ],
+    [
+     "appear",
+     "bangxian3"
+    ],
+    [
+     "appear",
+     "bangxian4"
+    ],
+    [
+     "appear",
+     "bandang3"
+    ],
+    [
+     "appear",
+     "bandang4"
+    ],
+    [
+     "say",
+     "bangxian1",
+     "西门大官人在楼上吃人打，快上！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "北边巷子里又杀出几个西门庆家里养的护院，抄宋江一伙的后路。"
+    ],
+    [
+     "appear",
+     "huyuan1"
+    ],
+    [
+     "appear",
+     "huyuan2"
+    ],
+    [
+     "appear",
+     "tudi1"
+    ],
+    [
+     "appear",
+     "tudi2"
+    ],
+    [
+     "appear",
+     "tudi3"
+    ],
+    [
+     "say",
+     "ximenqing",
+     "我是这阳谷县有名的财主，县里上下都是我的人。打死了你们，也只是白打！"
+    ],
+    [
+     "say",
+     "shijin",
+     "好大的口气！先吃我一棍！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "ximenqing"
+   },
+   "do": [
+    [
+     "narrate",
+     "武松一手按住西门庆，一手提起他来，望楼窗外只一丢——只见头在下，脚在上，倒撞落在当街心里去了。"
+    ],
+    [
+     "narrate",
+     "帮闲、伴当见主人吃打，一哄都散了。"
+    ],
+    [
+     "leave",
+     "bandang1"
+    ],
+    [
+     "leave",
+     "bandang2"
+    ],
+    [
+     "leave",
+     "bandang3"
+    ],
+    [
+     "leave",
+     "bandang4"
+    ],
+    [
+     "leave",
+     "bangxian1"
+    ],
+    [
+     "leave",
+     "bangxian2"
+    ],
+    [
+     "leave",
+     "bangxian3"
+    ],
+    [
+     "leave",
+     "bangxian4"
+    ],
+    [
+     "leave",
+     "huyuan1"
+    ],
+    [
+     "leave",
+     "huyuan2"
+    ],
+    [
+     "leave",
+     "tudi1"
+    ],
+    [
+     "leave",
+     "tudi2"
+    ],
+    [
+     "leave",
+     "tudi3"
+    ],
+    [
+     "say",
+     "wusong",
+     "哥哥！不想在这里与哥哥相见。今日若不是哥哥和众位好汉，武二也难脱身。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "兄弟，你哥哥的事，我们一路上都听说了。如今仇人已死，你待如何？"
+    ],
+    [
+     "say",
+     "hero",
+     "武二哥何不随我们同上梁山泊？晁天王最敬好汉，强似在这里吃官司！"
+    ],
+    [
+     "say",
+     "wusong",
+     "多承好意。只是武二为哥哥报仇，须得明明白白告到官里。俺自去县里首告，便是死了，也落得个清白。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "好汉子！洒家佩服。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "兄弟既如此说，我也不强你。众位兄弟替我拜上晁天王：宋江老父在堂，不敢便去落草，且往清风寨花知寨处躲避几时。"
+    ],
+    [
+     "narrate",
+     "武松带了四家邻舍，径投县里自首。知县念他是个有义的汉子，又有众邻舍作证，把招状改得轻了，后来武松刺配孟州牢城。宋江别了众人，往清风寨投花荣去了；武龙、鲁智深、史进回梁山泊，报知晁天王。"
+    ],
+    [
+     "victory",
+     "武松斗杀西门庆，为兄报了大仇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "wusong"
+   },
+   "do": [
+    [
+     "defeat",
+     "武松力尽倒下，西门庆逃了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}
