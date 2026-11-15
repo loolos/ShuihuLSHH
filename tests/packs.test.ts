@@ -678,7 +678,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(ev.some((e) => e.type === 'appear' && e.uid === xiao.uid)).toBe(false);
   });
 
-  it('狮子楼：开场只有武松带解腕尖刀；西门庆出手踢落刀；第 2 回合宋江一行登场；打倒西门庆过关', () => {
+  it('狮子楼：开场只有武松带解腕尖刀；西门庆出手踢落刀；第 2 回合宋江一行登场；打倒西门庆和全部手下才过关', () => {
     const stage = stageOf('shizilou');
     const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
     b.begin();
@@ -698,12 +698,22 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     ws.hp = 9999;
     while (b.turn < 2 && b.status === 'playing') b.endPlayerPhase();
     expect(mine()).toEqual(expect.arrayContaining(['武松', '宋江', '鲁智深', '史进']));
-    xmq.hp = 1;
-    x.out = [];
-    for (let i = 0; i < 20 && b.status === 'playing'; i++) {
-      x.cast(ws, attackSkill(ws, b.data), { x: xmq.x, y: xmq.y }, false);
-      x.afterAction();
-    }
+    // 打倒西门庆还不算赢：要把第 3 回合来的护院、徒弟在内的手下全部打倒（负责人 2026-11-15）
+    const hit = (t: Unit) => {
+      t.hp = 1;
+      for (let i = 0; i < 20 && t.alive; i++) {
+        ws.x = t.x; ws.y = t.y + 1;
+        x.out = [];
+        x.cast(ws, attackSkill(ws, b.data), { x: t.x, y: t.y }, false);
+        x.afterAction();
+      }
+    };
+    hit(xmq);
+    expect(xmq.alive).toBe(false);
+    expect(b.status).toBe('playing');
+    while (b.turn < 3 && b.status === 'playing') b.endPlayerPhase();
+    for (const t of b.units.filter((u) => u.side === 'enemy' && u.present && u.alive)) hit(t);
+    expect(b.units.some((u) => u.side === 'enemy' && u.alive && u.present)).toBe(false);
     expect(b.status).toBe('won');
   });
 
