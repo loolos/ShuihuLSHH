@@ -1,6 +1,7 @@
 // 城镇与整备界面（HTML）：顶部是店铺分页，左边是本店的货或传闻，右边是队员和他们的 7 格道具。
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
 import { itemTypeName, type Item } from '../formats/goo.ts';
+import { EQUIPMENT_CATEGORIES } from '../rules/equipment.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
 import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
@@ -47,7 +48,7 @@ export class TownUI {
   private rumor = new Map<number, number>();
   private icons = new Map<number, string>();
   private telling = false;
-  private openGoods = new Set<number>();
+  private openGoods = new Set<string>();
 
   constructor(
     private assets: Assets,
@@ -57,7 +58,7 @@ export class TownUI {
     this.root.addEventListener('toggle', (e) => {
       const group = e.target;
       if (!(group instanceof HTMLDetailsElement) || !group.matches('[data-goods-type]') || !this.root.contains(group)) return;
-      const type = Number(group.dataset.goodsType);
+      const type = group.dataset.goodsType!;
       if (group.open) this.openGoods.add(type);
       else this.openGoods.delete(type);
     }, true);
@@ -288,17 +289,23 @@ export class TownUI {
       const who = partyMembers(this.c)
         .map((m) => `<button data-do="member" data-v="${m.classId}" class="${m.classId === this.member ? 'on' : ''}">${esc(this.tr(d.charNames[m.classId] ?? ''))}</button>`)
         .join('');
-      const groups = new Map<number, number[]>();
+      const groups = new Map<string, { type: number; name: string; ids: number[] }>();
       for (const id of list) {
-        const type = itemOf(d, id)!.type;
-        if (!groups.has(type)) groups.set(type, []);
-        groups.get(type)!.push(id);
+        const it = itemOf(d, id)!;
+        const type = it.type;
+        const name = type === 13 || type === 14
+          ? Object.keys(EQUIPMENT_CATEGORIES).find((key) => EQUIPMENT_CATEGORIES[key].includes(it.name)) ?? '其他'
+          : type === 11 ? '武器·弓' : itemTypeName(type);
+        const key = `${type}:${name}`;
+        if (!groups.has(key)) groups.set(key, { type, name, ids: [] });
+        groups.get(key)!.ids.push(id);
       }
-      const goods = [...groups].sort(([a], [b]) => a - b).map(([type, ids]) => {
-        // 沿用道具类型；原版未命名的弓类在商店显示为弓。
-        const name = type === 11 ? '武器·弓' : itemTypeName(type);
-        return `<details class="goods-group" data-goods-type="${type}" ${this.openGoods.has(type) ? 'open' : ''}>
-          <summary>${esc(this.tr(name))}<span class="goods-count">${ids.length} 件</span></summary>
+      const sections = new Map<number, { count: number; content: string }>();
+      const detail = (key: string, name: string, count: number, content: string) =>
+        `<details class="goods-group" data-goods-type="${esc(key)}" ${this.openGoods.has(key) ? 'open' : ''}>
+          <summary>${esc(this.tr(name))}<span class="goods-count">${count} 件</span></summary>${content}</details>`;
+      for (const [key, { type, name, ids }] of [...groups].sort(([, a], [, b]) => a.type - b.type)) {
+        const content = `
           <ul class="goods">${ids.map((id) => {
             const it = itemOf(d, id)!;
             const ok = this.c.gold >= it.buyPrice;
@@ -306,7 +313,16 @@ export class TownUI {
             return `<li><button data-do="buy" data-v="${id}" ${ok ? '' : 'disabled'}>
               ${this.icon(it)}<span class="nm">${esc(this.tr(it.name))}${fit ? '' : '<small class="warn">不合用</small>'}</span>
               <span class="eff">${esc(this.summary(it))}</span><span class="price">${it.buyPrice} 两</span></button></li>`;
-          }).join('')}</ul></details>`;
+          }).join('')}</ul>`;
+        // 装备先按槽位折叠，再按既有武器/衣帽类别折叠；非装备保留原有分类。
+        const section = type <= 12 ? 0 : type;
+        const previous = sections.get(section) ?? { count: 0, content: '' };
+        sections.set(section, { count: previous.count + ids.length, content: previous.content + detail(`sub:${key}`, name, ids.length, content) });
+      }
+      const goods = [...sections].map(([type, { count, content }]) => {
+        if (type > 14) return content;
+        const name = type === 0 ? '武器' : type === 13 ? '衣服' : '头饰';
+        return detail(`main:${type}`, name, count, `<div class="goods-subgroups">${content}</div>`);
       }).join('');
       return `<div class="town-actions"><small class="hint">买给</small>${who}</div><div class="goods-groups">${goods}</div>`;
     }
