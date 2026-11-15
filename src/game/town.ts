@@ -22,6 +22,8 @@ export interface TownOptions {
   /** 城镇号 1–13；0 = 没有城镇，只整备 */
   town: number;
   title: string;
+  /** 续篇城镇显示明确的下一关名称。 */
+  leaveLabel?: string;
   /** 每次买卖、整理后调用（用来存档） */
   onChange: (c: CampaignState) => void;
   onLeave: (c: CampaignState) => void;
@@ -117,7 +119,7 @@ export class TownUI {
 
   /** 酒店交谈：依次说出本城的传闻，说完从头再来（EXE 0x4194d1） */
   private talk() {
-    if (this.c.insertTown) { this.line = "孟州路远，诸位可在此置办衣药，整备妥当再上路。"; return; }
+    if (this.c.insertTown) { this.line = "诸位可在此置办衣药，整备妥当再上路。"; return; }
     const list = this.assets.exe.town.rumors[this.o.town] ?? [];
     if (!list.length) {
       this.line = '最近没听说什么新鲜事。'; // 原版这些城镇点"交談"没有反应【新】
@@ -268,7 +270,7 @@ export class TownUI {
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
         <span class="gold">银子 <b>${this.c.gold}</b> 两</span>
-        <button class="leave" data-do="leave">${this.c.insertTown ? '出发：十字坡 ▸' : town ? '离开城镇 ▸' : '完成 ▸'}</button>
+        <button class="leave" data-do="leave">${esc(this.o.leaveLabel ?? (this.c.insertTown ? '出发：十字坡 ▸' : town ? '离开城镇 ▸' : '完成 ▸'))}</button>
       </div>
       ${shops ? `<nav class="town-shops">${shops}</nav>` : ''}
       <div class="town-body">
