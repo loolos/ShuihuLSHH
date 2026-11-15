@@ -393,7 +393,7 @@ function startGame(assets: Assets) {
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, mapCrop: stage.map.crop, ui, seed,
         makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
@@ -449,7 +449,7 @@ function startGame(assets: Assets) {
       const party = e.pov ? undefined : partyOf(campaign);
       const join = e.pov ? undefined : joinLevel(campaign);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, mapCrop: stage.map.crop, ui, seed,
         makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr }), party, joinLevel: join }),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };

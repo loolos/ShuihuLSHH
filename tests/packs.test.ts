@@ -688,37 +688,36 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(lost.status).toBe('lost');
   });
 
-  it('野猪林：林冲先被绑，鲁智深第 2 回合赶到；打退董超、薛霸后强人出现', () => {
+  it('野猪林：两人一同救林冲，打退官差和强人后头目现身', () => {
     const b = new Battle(compileStage(rt, stageOf('zhizhulin'), files, { seed: 1, text: tr }));
-    const ev = b.begin();
     const of = (id: number) => b.units.find((u) => u.classId === id)!;
-    const lin = of(11), lu = of(16), hero = of(0);
+    const lin = of(11), lu = of(16), hero = of(0), boss = of(65);
+    expect([b.board.width, b.board.height]).toEqual([18, 18]);
+    expect(hero.present || lu.present || boss.present).toBe(false);
+    const ev = b.begin();
     expect(b.units.filter((u) => u.side === 'player').map((u) => u.classId)).toEqual([0, 11, 16]);
-    expect(lin.stunTurns).toBeGreaterThanOrEqual(1000);
-    expect(lu.present).toBe(false);
-    expect(ev.some((e) => e.type === 'say' && /董超、薛霸/.test(e.text))).toBe(true);
-
-    advance(b, 2);
-    expect(lu.present).toBe(true);
+    expect(hero.present && lu.present).toBe(true);
+    const appearHero = ev.findIndex((e) => e.type === 'appear' && e.uid === hero.uid);
+    const appearLu = ev.findIndex((e) => e.type === 'appear' && e.uid === lu.uid);
+    const threat = ev.findIndex((e) => e.type === 'say' && /少说废话/.test(e.text));
+    expect(appearHero).toBeGreaterThan(threat);
+    expect(appearLu).toBe(appearHero + 1);
+    expect(ev.some((e) => e.type === 'status' && e.uid === lin.uid && e.text === '被綁')).toBe(true);
     expect(lin.stunTurns).toBe(0);
-
-    const strike = (attacker: Unit, target: Unit) => {
-      target.hp = 1;
-      target.stats.agility = 0;
-      target.x = attacker.x;
-      target.y = attacker.y + 1;
-      return strikeUnit(b, attacker, target);
-    };
-    const strikeUnit = (battle: Battle, attacker: Unit, target: Unit) => {
-      const x = battle as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
-      x.out = [];
-      x.cast(attacker, attackSkill(attacker, battle.data), { x: target.x, y: target.y }, false);
-      x.afterAction();
-      return x.flush();
-    };
-    for (const official of b.units.filter((u) => u.name === '董超' || u.name === '薛霸')) strike(hero, official);
+    const reachable = b.board.distanceField([{ x: lin.x, y: lin.y }]);
+    for (const u of b.units) {
+      expect(b.board.passable(u.x, u.y), u.name).toBe(true);
+      expect(reachable[u.y * b.board.width + u.x], u.name).toBeLessThan(Infinity);
+    }
+    wipe(b, hero);
     expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.alive).length).toBe(4);
     expect(b.units.filter((u) => u.name === '强人' && u.present).length).toBe(4);
+    expect(boss.present).toBe(false);
+    wipe(b, hero);
+    expect(b.status).toBe('playing');
+    expect(boss.present && boss.alive).toBe(true);
+    wipe(b, hero);
+    expect(b.status).toBe('won');
   });
 
   it('林冲别妻与大野猪林开场对白衔接到发配和暗中护送', () => {

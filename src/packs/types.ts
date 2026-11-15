@@ -2,6 +2,7 @@
 // 载入时（src/packs/build.ts）接到原版编号后面。原版素材一律按编号引用，不复制。
 
 import type { RecolorGroup } from './recolor.ts';
+import type { MapCrop } from '../formats/map.ts';
 
 export type StatBlock = { hp: number; mp: number; attack: number; defense: number; hit: number; agility: number; crit: number };
 
@@ -137,8 +138,8 @@ export interface PackStageJson {
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
-  /** 地图：借原版地图（地表、地上物、通行都照原版） */
-  map: { base: string };
+  /** 地图：借原版地图，可选裁剪矩形（裁剪后单位和剧本坐标以新地图左上角为原点） */
+  map: { base: string; crop?: MapCrop };
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   units: PackUnitJson[];

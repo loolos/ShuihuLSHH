@@ -1,6 +1,6 @@
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
 import Phaser from 'phaser';
-import { parseMap } from '../formats/map.ts';
+import { cropMap, parseMap, type MapCrop } from '../formats/map.ts';
 import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
 import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
@@ -34,6 +34,7 @@ export interface BattleSceneData {
   onEnd?: (battle: Battle, won: boolean, text: string) => void;
   /** 扩展包关卡：画哪张原版地图，以及每次开打（含重新开始）时生成关卡数据 */
   map?: string;
+  mapCrop?: MapCrop;
   makeInput?: () => StageInput;
 }
 
@@ -84,6 +85,7 @@ export class BattleScene extends Phaser.Scene {
   private stageName = 'N01';
   /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
   private mapName = 'N01';
+  private mapCrop?: MapCrop;
   private makeInput?: () => StageInput;
   private seed?: number;
   private party?: Map<number, Member>;
@@ -140,6 +142,7 @@ export class BattleScene extends Phaser.Scene {
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
     this.mapName = data.map ?? data.stage;
+    this.mapCrop = data.mapCrop;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
@@ -154,7 +157,7 @@ export class BattleScene extends Phaser.Scene {
     const { files } = this.assets;
     const mapFile = findStageFile(files, this.mapName, '.map');
     if (!mapFile) throw new Error(`找不到地图 ${this.mapName}`);
-    const map = parseMap(files.get(mapFile), mapFile);
+    const map = cropMap(parseMap(files.get(mapFile), mapFile), this.mapCrop);
     this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载

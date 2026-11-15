@@ -12,6 +12,19 @@ export interface MapData {
   cells: MapLayer[][];
 }
 
+export type MapCrop = [x: number, y: number, width: number, height: number];
+
+export function cropMap(map: MapData, crop?: MapCrop): MapData {
+  if (!crop) return map;
+  const [x, y, width, height] = crop;
+  if (!crop.every(Number.isInteger) || x < 0 || y < 0 || width <= 0 || height <= 0 || x + width > map.width || y + height > map.height)
+    throw new Error(`地图裁剪范围无效: ${crop.join(',')}`);
+  const cells: MapLayer[][] = [];
+  for (let row = y; row < y + height; row++)
+    cells.push(...map.cells.slice(row * map.width + x, row * map.width + x + width));
+  return { width, height, cells };
+}
+
 export function parseMap(buf: Buffer, file = 'map'): MapData {
   expectMagic(buf, 'MAP\0', file);
   const width = buf.readUInt16LE(5);
