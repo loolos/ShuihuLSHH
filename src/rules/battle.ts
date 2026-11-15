@@ -9,7 +9,7 @@ import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResu
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
-import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
+import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { enemyFloor } from './enemy-level.ts';
 import { stageTune, type StageTune } from './stage-tune.ts';
@@ -404,14 +404,16 @@ export class Battle {
   skillArea(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Cell[] {
     return areaCells(this.board, at, skill, cell);
   }
-  /** 施放点 cell 会影响的单位：攻击技为范围内的敌人，回复技为范围内的己方，集气技为自己 */
+  /** 攻击技只影响敌人；回复与援气只影响同阵营，援气不含自身或满气目标。 */
   affected(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Unit[] {
-    if (isChargeSkill(skill)) return [u];
+    if (isSelfChargeSkill(skill)) return [u];
     const area = new Set(this.skillArea(u, skill, cell, at).map((c) => key(c.x, c.y)));
-    const heal = isHealSkill(skill);
+    const allyCharge = isAllyChargeSkill(skill);
+    const heal = isHealSkill(skill) || allyCharge;
     return this.active().filter((t) => {
       const pos = t === u ? at : t;
-      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side));
+      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side))
+        && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
   }
   /** 能施放的格子（范围内至少有一个可作用的单位） */
@@ -766,7 +768,7 @@ export class Battle {
     if (!this.canAct(u) || u.acted) return undefined;
     const after = (s: SkillDef) => Math.min(u.stats.maxMp, u.mp - s.mpCost + Math.floor(u.stats.maxMp / Math.max(1, s.power)));
     return learnedSkills(u, this.data)
-      .filter((s) => isChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
+      .filter((s) => isSelfChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
       .filter((s) => this.skillTargets(u, s).some((c) => c.x === u.x && c.y === u.y))
       .sort((a, b) => after(b) - after(a) || a.mpCost - b.mpCost)[0];
   }

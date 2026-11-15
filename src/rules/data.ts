@@ -10,6 +10,8 @@ export interface SkillDef extends ClassSkill {
   soundId?: number;
   /** 指定技能可在曼哈顿距离内选点；默认保持原版四向直线。 */
   targetShape?: 'diamond';
+  /** 集气技可指定一名同阵营队友为目标；不含施放者本人。 */
+  chargeTarget?: 'ally';
 }
 
 export interface ClassDef {

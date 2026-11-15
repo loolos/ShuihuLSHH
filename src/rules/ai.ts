@@ -3,7 +3,7 @@ import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
-import { castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { castRange, isAllyChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
 export interface AiPlan {
@@ -113,7 +113,7 @@ function healSkill(b: Battle, u: Unit): AiPlan | null {
 /** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
 function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
   if (plan.skill || u.mp >= u.stats.maxMp / 2) return plan;
-  const s = learnedSkills(u, b.data).find(isChargeSkill);
+  const s = learnedSkills(u, b.data).find(isSelfChargeSkill);
   if (!s) return plan;
   const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
   return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
@@ -122,10 +122,26 @@ function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
 function defaultPlan(b: Battle, u: Unit): AiPlan {
   const heal = healIfLow(b, u) ?? healSkill(b, u);
   if (heal) return heal;
+  // 相邻队友严重缺气时先援气；自身回气仍只选择自身集气技能。
+  const aid = allyChargePlan(b, u);
+  if (aid) return aid;
   const atk = bestAttack(b, u);
   if (atk) return atk;
   const main = primaryFoe(b, u);
   return withCharge(b, u, approach(b, u, main ? [main] : []));
+}
+
+function allyChargePlan(b: Battle, u: Unit): AiPlan | null {
+  let best: { skill: SkillDef; cell: Cell; restored: number } | null = null;
+  for (const skill of learnedSkills(u, b.data).filter((s) => isAllyChargeSkill(s) && s.mpCost <= u.mp)) {
+    for (const cell of b.skillTargets(u, skill)) {
+      const t = b.affected(u, skill, cell)[0];
+      if (!t || t.mp >= t.stats.maxMp / 3) continue;
+      const restored = Math.min(t.stats.maxMp - t.mp, Math.floor(t.stats.maxMp / Math.max(1, skill.power)));
+      if (restored > 0 && (!best || restored > best.restored)) best = { skill, cell, restored };
+    }
+  }
+  return best ? { skill: best.skill, cell: best.cell } : null;
 }
 
 function foesWithin(b: Battle, u: Unit, radius: number) {
