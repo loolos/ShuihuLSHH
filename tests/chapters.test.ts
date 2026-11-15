@@ -59,13 +59,13 @@ describe('章节表', () => {
     expect(at['mainline/chifagui']).toBe('Act10-1');
     expect(at['mainline/sanruan']).toBe('Act10-1');
     expect(at['mainline/yuanyanglou']).toBe('after N14');
-    // 续篇各章：坐楼杀惜、义释宋公明留在第十五章；第十六–十八章各一组
+    // 续篇各章：坐楼杀惜、义释宋公明留在第十五章；第十六、十七章各一组
     expect(chapterOf('mainline/songjiazhuang')).toBe(15);
     expect(chapterOf('mainline/chaijin-liubin')).toBe(16);
     expect(chapterOf('mainline/shizipo')).toBe(17);
     expect(chapterOf('mainline/zhangfu')).toBe(17);
-    expect(chapterOf('mainline/yuanyanglou')).toBe(18);
-    expect(CHAPTERS).toHaveLength(18);
+    expect(chapterOf('mainline/yuanyanglou')).toBe(17);
+    expect(CHAPTERS).toHaveLength(17);
   });
 });
 
@@ -88,8 +88,8 @@ describe.skipIf(!fs.existsSync(EXE))('章节表与原版', () => {
     }
   });
   it('原版关卡的分章和 EXE 标题里的"第N章"一致，负责人调整过的除外（再调整时把它加进 moved）', () => {
-    // 负责人调整过的（#234）：EXE 标题第六章 / 第八章，重制版归第七章
-    const moved: Record<string, number> = { 'act7-1a': 7, 'n-add09a': 7 };
+    // 负责人调整过的：#234 两关归第七章；沧州设毒计（原第八章）、摆脱追骑（原第十章）归第九章
+    const moved: Record<string, number> = { 'act7-1a': 7, 'n-add09a': 7, 'act9-1': 9, 'n-add11': 9 };
     for (const s of stages) expect(chapterOf(s.mapName), s.mapName).toBe(moved[s.mapName.toLowerCase()] ?? Number(/第\s*(\d+)\s*章/.exec(s.title)?.[1]));
   });
 });

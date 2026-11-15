@@ -28,17 +28,18 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '误入白虎堂', stages: ['N-add08', 'Act6-3', 'N06', 'Act7-1'] },
   // 负责人 2026-11-15（#234）：野猪林义援、陆谦拦路、关前遇盘查（及其后的城镇 沧州城）归第七章
   { name: '大闹野猪林', stages: ['mainline/zhizhulin', 'Act7-1a', 'N07', 'N-add09a'] },
-  { name: '柴门招豪客', stages: ['N-add09b', 'Act8-1', 'N-add10', 'N08', 'Act9-1'] },
-  { name: '风雪山神庙', stages: ['N09'] },
-  { name: '青面兽杨志', stages: ['N-add11', 'mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
+  { name: '柴门招豪客', stages: ['N-add09b', 'Act8-1', 'N-add10', 'N08'] },
+  // 负责人 2026-11-15：沧州设毒计、摆脱追骑（及中间的城镇 黄泥冈前）归第九章
+  { name: '风雪山神庙', stages: ['Act9-1', 'N09', 'N-add11'] },
+  { name: '青面兽杨志', stages: ['mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
   { name: '认义东溪村', stages: ['N-add13', 'N11'] },
   { name: '义释晁天王', stages: ['N-add14', 'N12', 'Act13-1'] },
   { name: '石碣村三雄', stages: ['N-add15', 'Act13-2', 'N13', 'Act14-1'] },
   { name: '投奔梁山泊', stages: ['N-add16', 'Train2', 'Act14-2', 'Act14-3'] },
   { name: '梁山泊聚义', stages: ['N14', 'mainline/songjiang-yanshixi', 'mainline/songjiazhuang'] },
   { name: '景阳冈打虎', stages: ['mainline/chaijin-liubin', 'mainline/jingyanggang', 'mainline/tiaolian', 'mainline/shizilou'] },
-  { name: '孟州风雨', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu'] },
-  { name: '血溅鸳鸯楼', stages: ['mainline/feiyunpu', 'mainline/yuanyanglou'] },
+  // 负责人 2026-11-15：十字坡到鸳鸯楼合成一章（原第十七章 孟州风雨、第十八章 血溅鸳鸯楼）
+  { name: '血溅鸳鸯楼', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu', 'mainline/feiyunpu', 'mainline/yuanyanglou'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
