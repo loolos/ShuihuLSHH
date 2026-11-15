@@ -611,8 +611,8 @@ export class Battle {
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
       if (u.buffs.length) {
-        for (const b of u.buffs) b.turns--;
-        u.buffs = u.buffs.filter((b) => b.turns > 0);
+        // 0 表示本关持续；限时效果扣到 0 时立即移除，不转成本关持续。
+        u.buffs = u.buffs.filter((b) => b.turns === 0 || --b.turns > 0);
         refreshStats(u, this.data);
       }
     }
@@ -1563,7 +1563,7 @@ export class Battle {
           const stat = op.args.stat as BuffStat;
           const cur = (sel.stats as unknown as Record<string, number>)[stat] ?? 0;
           const value = op.args.pct ? Math.round((cur * op.args.pct) / 100) : (op.args.add ?? 0);
-          sel.buffs.push({ stat, value, turns: op.args.turns || 999 });
+          sel.buffs.push({ stat, value, turns: op.args.turns ?? 0 });
           refreshStats(sel, this.data);
           this.emit({ type: 'status', uid: sel.uid, text: `${buffName(stat)}${value > 0 ? '+' : ''}${value}` });
           break;

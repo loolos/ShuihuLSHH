@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { areaCells } from '../src/rules/skills.ts';
+import { planAi } from '../src/rules/ai.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
@@ -977,6 +978,49 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   const start = (id: string, c?: CampaignState) => {
     const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
   };
+
+  it('快活林三次酒劲各结算一次，本关持续与有限回合增益互不混淆', () => {
+    const original = stage('kuaihuolin');
+    const s = { ...original, script: [...original.script, {
+      on: 'start' as const, do: [['buff', 'wusong', 'defense', { add: 7, turns: 3 }]] as [string, ...unknown[]][],
+    }] };
+    const b = new Battle(compileStage(rt, s, files, { seed: 1 })); b.begin();
+    const wu = b.units.find(u => u.classId === cid('wusong'))!;
+    const startingDefense = wu.stats.defense;
+    expect(wu.buffs.find(buff => buff.stat === 'defense')?.turns).toBe(2); // 开局已过一次回合开始结算。
+    expect(wu.stats.attack).toBe(189);
+    const attacks = [208, 229, 252], hits = [229, 218, 207];
+    for (let i = 0; i < 3; i++) {
+      const npc = s.units.find(u => u.id === `wine-${i + 1}`)!;
+      wu.x = npc.x + 1; wu.y = npc.y;
+      (b as unknown as { afterAction: () => void }).afterAction();
+      expect(wu.stats.attack).toBe(attacks[i]);
+      expect(wu.stats.hit).toBe(hits[i]);
+    }
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(wu.buffs.filter(buff => buff.turns === 0)).toHaveLength(6);
+    b.endPlayerPhase();
+    expect(wu.buffs.find(buff => buff.stat === 'defense')?.turns).toBe(1);
+    b.endPlayerPhase();
+    expect(wu.buffs.some(buff => buff.stat === 'defense')).toBe(false);
+    expect(wu.stats.defense).toBe(startingDefense - 7);
+    expect(wu.buffs).toHaveLength(6);
+    expect(wu.stats.attack).toBe(252);
+    expect(wu.stats.hit).toBe(207);
+  });
+
+  it('快活林第4回合只有戴宗、花荣、李逵来援，史进不在本关出场', () => {
+    const s = stage('kuaihuolin'), b = start('kuaihuolin');
+    expect(s.units.some(u => u.id === 'shijin' || u.class === 3)).toBe(false);
+    expect(b.units.filter(u => u.side === 'player' && u.present)).toHaveLength(3);
+    for (let i = 0; i < 3; i++) b.endPlayerPhase();
+    expect(b.turn).toBe(4);
+    const ids = b.units.filter(u => u.side === 'player' && u.present).map(u => u.classId);
+    expect(ids).toHaveLength(6);
+    expect(ids).toEqual(expect.arrayContaining([cid('daizong'), cid('huarong'), cid('likui')]));
+    expect(ids).not.toContain(3);
+  });
+
   it('快活林蒋门神的八名手下使用喽啰职业，保留两名徒弟', () => {
     const s = stage('kuaihuolin');
     const guards = s.units.filter(u => u.id.startsWith('guard-'));
@@ -990,10 +1034,10 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const s = stage('kuaihuolin'), b = start('kuaihuolin');
     const wu = b.units.find(u => u.classId === cid('wusong'))!;
     const shien = b.units.find(u => u.classId === cid('shien'))!;
-    expect(shien.side).toBe('player');
-    expect(b.canAct(shien)).toBe(true);
-    expect(b.canMove(shien)).toBe(true);
-    expect(b.moveRange(shien).green.length).toBeGreaterThan(1);
+    expect(shien.side).toBe('ally');
+    expect(shien.ai.mode).toBe(0);
+    expect(b.canAct(shien)).toBe(false); // 玩家阶段不可操作友军。
+    expect(b.canMove(shien)).toBe(false);
     const check = () => (b as unknown as { afterAction: () => void }).afterAction();
     for (const name of ['wine-1', 'wine-2', 'wine-3']) {
       const index = s.units.findIndex(u => u.id === name), npc = b.unit(index)!;
@@ -1013,6 +1057,11 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       check();
       expect(wu.buffs.length).toBe(before + 2); // 反复靠近只给一次酒劲。
     }
+    // 友军采用会行动、会攻击的 AI；并非恢复成原地不动的 AI8。
+    const guard = b.unit(s.units.findIndex(u => u.id === 'guard-1'))!;
+    guard.present = true;
+    shien.x = guard.x; shien.y = guard.y + 2;
+    expect(planAi(b, shien).target?.side).toBe('enemy');
   });
 
   it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
