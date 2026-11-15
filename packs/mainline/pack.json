@@ -461,75 +461,166 @@
         157
       ],
       "skills": [
-        {
-          "id": "quan",
-          "name": "拳打脚踢",
-          "from": 201,
-          "anim": "punch-jab",
-          "hitAt": [
-            0.55
-          ],
-          "power": 10
-        },
-        {
-          "id": "lianhuan",
-          "name": "连环拳",
-          "from": 210,
-          "anim": "punch-cross",
-          "hitAt": [
-            0.35,
-            0.55,
-            0.75
-          ],
-          "power": 25,
-          "mpCost": 30
-        },
-        {
-          "id": "antou",
-          "name": "按头痛击",
-          "from": 154,
-          "anim": "punch-cross",
-          "hitAt": [
-            0.6
-          ],
-          "power": 60,
-          "mpCost": 60,
-          "stun": 30
-        },
-        {
-          "id": "yunqi",
-          "name": "运气",
-          "from": 206,
-          "anim": "crouch-idle"
-        },
-        {
-          "id": "tizhi",
-          "name": "提掷",
-          "from": 154,
-          "anim": "punch-cross",
-          "hitAt": [
-            0.6
-          ],
-          "power": 45,
-          "mpCost": 60,
-          "learnLevel": 28
-        }
-      ,
-{
-  "id": "yuanyang-jiao",
-  "name": "鸳鸯脚",
-  "from": 210,
-  "anim": "punch-cross",
-  "hitAt": [
-    0.35,
-    0.75
-  ],
-  "power": 40,
-  "mpCost": 40,
-  "learnLevel": 28,
-  "stun": 0,
-  "poison": 0
-}],
+    {
+        "id": "quan",
+        "name": "伏虎拳",
+        "from": 201,
+        "anim": "punch-two",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.275,
+            0.775
+        ],
+        "power": 0,
+        "mpCost": 0,
+        "learnLevel": 1,
+        "type": 5,
+        "area": 1,
+        "rangeMin": 1,
+        "rangeMax": 1
+    },
+    {
+        "id": "hengjiang-lv1",
+        "name": "横江断浪LV1",
+        "from": 210,
+        "anim": "punch-wave",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.275,
+            0.775
+        ],
+        "power": 20,
+        "mpCost": 50,
+        "learnLevel": 4,
+        "type": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 3,
+        "hitMod": 0,
+        "critMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "antou",
+        "name": "擒虎镇岳",
+        "from": 154,
+        "anim": "punch-three",
+        "poison": 0,
+        "stun": 30,
+        "hitAt": [
+            0.183333,
+            0.516667,
+            0.85
+        ],
+        "power": 60,
+        "mpCost": 60,
+        "learnLevel": 8,
+        "area": 1,
+        "effect": 0
+    },
+    {
+        "id": "yunqi",
+        "name": "抱元归息",
+        "from": 206,
+        "anim": "crouch-idle",
+        "poison": 0,
+        "stun": 0,
+        "power": 2,
+        "mpCost": 0,
+        "learnLevel": 12
+    },
+    {
+        "id": "hengjiang-lv2",
+        "name": "横江断浪LV2",
+        "from": 210,
+        "anim": "punch-wave",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.275,
+            0.775
+        ],
+        "power": 20,
+        "mpCost": 65,
+        "learnLevel": 16,
+        "type": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 4,
+        "hitMod": 0,
+        "critMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "yuanyang-jiao",
+        "name": "玉环鸳鸯脚",
+        "from": 210,
+        "anim": "punch-four",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.1375,
+            0.3875,
+            0.6375,
+            0.8875
+        ],
+        "power": 40,
+        "mpCost": 40,
+        "learnLevel": 20,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 4,
+        "area": 2,
+        "targetShape": "diamond",
+        "effect": 0
+    },
+    {
+        "id": "hengjiang-lv3",
+        "name": "横江断浪LV3",
+        "from": 210,
+        "anim": "punch-wave",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.275,
+            0.775
+        ],
+        "power": 20,
+        "mpCost": 80,
+        "learnLevel": 24,
+        "type": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 5,
+        "hitMod": 0,
+        "critMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "hengjiang-lv4",
+        "name": "横江断浪LV4",
+        "from": 210,
+        "anim": "punch-wave",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.275,
+            0.775
+        ],
+        "power": 20,
+        "mpCost": 95,
+        "learnLevel": 28,
+        "type": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 6,
+        "hitMod": 0,
+        "critMod": 0,
+        "effect": 0
+    }
+],
       "sprite": {
         "sheet": "sprites/wusong",
         "idle": "idle",
@@ -1040,48 +1131,172 @@
       157
     ],
     "skills": [
-      {
+    {
         "id": "lk-kan",
-        "name": "板斧砍",
+        "name": "双斧开山",
         "from": 221,
         "anim": "axe-four",
+        "poison": 0,
+        "stun": 0,
         "hitAt": [
-          0.1125,
-          0.3625,
-          0.6125,
-          0.8625
-        ]
-      },
-      {
+            0.1125,
+            0.3625,
+            0.6125,
+            0.8625
+        ],
+        "power": 0,
+        "mpCost": 0,
+        "learnLevel": 1
+    },
+    {
+        "id": "lk-kuanglan-lv1",
+        "name": "狂澜裂岳LV1",
+        "from": 42,
+        "anim": "axe-3",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.15,
+            0.483333,
+            0.816667
+        ],
+        "power": 0,
+        "mpCost": 60,
+        "learnLevel": 4,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 3,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    },
+    {
         "id": "lk-lianpi",
-        "name": "双斧连劈",
+        "name": "裂石连斩",
         "from": 210,
-        "anim": "punch-cross",
+        "anim": "axe-two",
+        "poison": 0,
+        "stun": 30,
         "hitAt": [
-          0.3,
-          0.55
+            0.225,
+            0.725
         ],
         "power": 25,
-        "mpCost": 30
-      },
-      {
-        "id": "lk-xuanfeng",
-        "name": "黑旋风",
-        "from": 225,
-        "anim": "sword-attack",
+        "mpCost": 30,
+        "learnLevel": 8,
+        "type": 7,
+        "rangeMin": 1,
+        "rangeMax": 2,
+        "area": 1,
+        "effect": 0
+    },
+    {
+        "id": "lk-yunqi",
+        "name": "沉息蓄锋",
+        "from": 227,
+        "anim": "crouch-idle",
+        "poison": 0,
+        "stun": 0,
+        "power": 2,
+        "mpCost": 0,
+        "learnLevel": 12
+    },
+    {
+        "id": "lk-kuanglan-lv2",
+        "name": "狂澜裂岳LV2",
+        "from": 42,
+        "anim": "axe-4",
+        "poison": 0,
+        "stun": 20,
         "hitAt": [
-          0.45
+            0.1125,
+            0.3625,
+            0.6125,
+            0.8625
+        ],
+        "power": 20,
+        "mpCost": 80,
+        "learnLevel": 16,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 4,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "lk-xuanfeng",
+        "name": "旋风卷岳",
+        "from": 225,
+        "anim": "axe-sweep",
+        "poison": 0,
+        "stun": 0,
+        "hitAt": [
+            0.45
         ],
         "power": 30,
-        "mpCost": 45
-      },
-      {
-        "id": "lk-yunqi",
-        "name": "运气",
-        "from": 227,
-        "anim": "crouch-idle"
-      }
-    ],
+        "mpCost": 45,
+        "learnLevel": 20,
+        "type": 2,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "area": 1,
+        "effect": 0
+    },
+    {
+        "id": "lk-kuanglan-lv3",
+        "name": "狂澜裂岳LV3",
+        "from": 42,
+        "anim": "axe-5",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.09,
+            0.29,
+            0.49,
+            0.69,
+            0.89
+        ],
+        "power": 40,
+        "mpCost": 100,
+        "learnLevel": 24,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 5,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    },
+    {
+        "id": "lk-kuanglan-lv4",
+        "name": "狂澜裂岳LV4",
+        "from": 42,
+        "anim": "axe-6",
+        "poison": 0,
+        "stun": 20,
+        "hitAt": [
+            0.075,
+            0.241667,
+            0.408333,
+            0.575,
+            0.741667,
+            0.908333
+        ],
+        "power": 60,
+        "mpCost": 120,
+        "learnLevel": 28,
+        "type": 3,
+        "rangeMin": 1,
+        "rangeMax": 6,
+        "area": 2,
+        "critMod": 20,
+        "hitMod": 0,
+        "effect": 0
+    }
+],
     "sprite": {
       "sheet": "sprites/likui",
       "idle": "idle",

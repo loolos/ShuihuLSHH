@@ -54,7 +54,14 @@ export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number
  * 可以选作施放点的格子：沿 4 个方向直线，距离在 [下限, 上限]；下限为 0 时含自身（原版 0x40d5d0）。
  * 原版遇到 0x40d7e0 判定失败的格子会停在那个方向；那是高度检查，在现有地图上永远通过（binary-formats §5.1），所以这里不阻挡。
  */
-export function castCells(board: Board, at: Cell, [lo, hi]: [number, number]): Cell[] {
+export function castCells(board: Board, at: Cell, [lo, hi]: [number, number], shape?: SkillDef['targetShape']): Cell[] {
+  if (shape === 'diamond') {
+    const cells: Cell[] = [];
+    for (let dy = -hi; dy <= hi; dy++) for (let dx = -hi + Math.abs(dy); dx <= hi - Math.abs(dy); dx++) {
+      if (Math.abs(dx) + Math.abs(dy) >= lo && board.inBounds(at.x + dx, at.y + dy)) cells.push({ x: at.x + dx, y: at.y + dy });
+    }
+    return cells;
+  }
   const out: Cell[] = [];
   if (lo === 0) out.push({ x: at.x, y: at.y });
   for (const d of DIRS)

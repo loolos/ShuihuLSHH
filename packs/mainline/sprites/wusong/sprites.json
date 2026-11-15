@@ -112,6 +112,66 @@
     "frames": 8,
     "ms": 167
    }
+  },
+"punch-two": {
+  "source": "Punch_Jab × 2",
+  "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
+  },
+  "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
   }
- }
+},
+"punch-three": {
+  "source": "Punch_Jab × 3",
+  "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 3
+  },
+  "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 3
+  }
+},
+"punch-four": {
+  "source": "Punch_Cross × 4",
+  "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  },
+  "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  }
+},
+"punch-wave": {
+  "source": "Punch_Cross × 2",
+  "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
+  },
+  "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
+  }
+}
+}
 }

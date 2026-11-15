@@ -393,7 +393,7 @@ export class Battle {
   }
   /** 施放距离内的全部格子（显示用）；at 为假设的站位 */
   skillCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
-    return castCells(this.board, at, castRange(u, skill, this.data));
+    return castCells(this.board, at, castRange(u, skill, this.data), skill.targetShape);
   }
   /** 施放点 cell 的作用范围 */
   skillArea(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Cell[] {

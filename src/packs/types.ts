@@ -95,6 +95,8 @@ export interface PackSkillJson {
   power?: number;
   mpCost?: number;
   learnLevel?: number;
+  /** 可在距离内的整个菱形选点，不限四条直线。 */
+  targetShape?: 'diamond';
   rangeMin?: number;
   rangeMax?: number;
   area?: number;

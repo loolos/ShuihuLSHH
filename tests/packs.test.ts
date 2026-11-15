@@ -356,13 +356,13 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(px[12 * w + 5]).toBe(158);
   });
 
-  it('李逵用自己的 3D 精灵图条，四个技能，黑旋风沿用迴旋技的四方向命中段', () => {
+  it('李逵用自己的图条，五招分八个学习节点，普攻四斧与旋风四方向保留', () => {
     const id = rt.classIds.get('likui')!;
     const look = rt.looks.get(id)!;
     expect(look.from).toBeUndefined();
     expect(look.sheet).toBe('sprites/likui');
     const sk = rt.data.classes[id].skills;
-    expect(sk.map((s) => s.name)).toEqual(['板斧砍', '双斧连劈', '黑旋风', '运气']);
+    expect(sk.map((s) => s.name)).toEqual(['双斧开山','狂澜裂岳LV1','裂石连斩','沉息蓄锋','狂澜裂岳LV2','旋风卷岳','狂澜裂岳LV3','狂澜裂岳LV4']);
     expect(sk[0].hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
     expect(sk[0].hits.map((h) => h.frame)).toEqual([6, 18, 29, 41]);
     const combo = rt.sheets[look.sheet].actions['axe-four'];
@@ -370,8 +370,8 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
       expect(strip.cycles).toBe(4);
       expect(strip.frames * strip.ms * strip.cycles!).toBe(2080);
     }
-    expect(sk[1].hits.length).toBe(2);
-    expect(new Set(sk[2].hits.map((h) => h.dir)).size).toBe(4);
+    expect(sk.find(s=>s.name==='裂石连斩')!.hits.length).toBe(2);
+    expect(new Set(sk.find(s=>s.name==='旋风卷岳')!.hits.map((h) => h.dir)).size).toBe(4);
   });
 
   it('绑住、走到身边松绑、几人都到区域才触发、纯剧情关', () => {
