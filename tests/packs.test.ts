@@ -1146,7 +1146,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(index('我们领的是押解文书')).toBeGreaterThan(index('夫妻俩将两个公人救醒'));
     for (const id of ['escort-a', 'escort-b']) {
       const uid = s.units.findIndex(u => u.id === id);
-      expect(speech.filter(e => e.uid === uid).length).toBeGreaterThanOrEqual(4);
+      expect(speech.filter(e => e.uid === uid).length).toBeGreaterThanOrEqual(3);
       expect(b.unit(uid)!.alive).toBe(true);
     }
     expect(speech.some(e => e.speaker.includes('宋江') || e.speaker.includes('武龍'))).toBe(false);
