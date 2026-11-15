@@ -81,6 +81,44 @@ export function capSkillCosts(classes: ClassDef[]): ClassDef[] {
  */
 export const STAGE_TURN_TRIGGERS: Record<string, Record<number, number>> = { N13: { 10: 7 } };
 
+/** 林沖刺配沧州后由好汉暗中护送；不改原版文件，只替换剧情文字。 */
+export const STAGE_STORY_TEXT: Record<string, Record<string, string>> = {
+  'act7-1': {
+    '啊...我不会这么容易就被小人陷害。娘子，我现在已经变成通缉犯了；高俅那厮必定在四处张贴通告悬赏我的人头。你要是跟着我，一定是过着朝不保夕、被人追杀的生活；我可以写下休书，你也不用跟着我受苦...如果有适当的人选，不如再嫁了吧...':
+      '高俅虽败，仍借白虎节堂一事定我罪，判我刺配沧州。娘子，这一去不知几时才能回来……',
+    '相公！小女子又没有做过什么玷污相公名声的事，为何把我休了？！':
+      '相公蒙冤受屈，小女子怎会因而埋怨？我在东京等你回来！',
+    '唉...现在时局很乱；我也是一番好意，不希望耽误了你的大好青春...':
+      '这一路凶险，不能带你同行；等我在沧州安顿下来，再设法接你过去。',
+    '不！我不要！': '相公保重，我和锦儿在东京等你。',
+    '唉！罢了！罢了！我不再提这件事了。锦儿，你与夫人就先找个地方躲起来吧！等到时局安定后，我再去迎接你们...首先，叫家人们开始收拾行李...':
+      '锦儿，你照顾好夫人；此去沧州，我会小心。等我离开后，你们寻处安身，莫要叫高府的人找到。',
+    '动作怎么这么快？！': '董超、薛霸二位公人也已到门外？林冲这便随二位起程。',
+    '只是今后该往何处安身，林冲心中实在没有主意啊！':
+      '娘子珍重。董超、薛霸两位公人押我去沧州，诸位不必明着相送。',
+    '总之这里是片刻也不能停留了，如今只得暂且走一步算一步了。':
+      '二位公人这就押林教头起程。我们不能明着同行，待他们走远，便暗中跟上，护他一路去沧州。',
+    '林冲被小人陷害,该往何处安身?': '董超、薛霸押着林冲离去。众人忧心忡忡，悄悄出城，远远跟上。',
+  },
+  'act7-1a': {
+    '这里就是『野猪林』了，大家小心点！': '董超、薛霸和那伙强人已被打退。林教头无恙，众人仍暗中护送他去沧州。',
+  },
+};
+
+/** 对逻辑剧本与简体显示剧本同时替换文字，保持两份区块结构一致。 */
+export function adjustStoryText(stage: string, blocks: PasBlock[], text: (s: string) => string = (s) => s): PasBlock[] {
+  const overrides = STAGE_STORY_TEXT[stage.toLowerCase()];
+  if (!overrides) return blocks;
+  return blocks.map((block) => ({
+    ...block,
+    ops: block.ops.map((op) => {
+      if (!op.text) return op;
+      const replacement = overrides[text(op.text)];
+      return replacement ? { ...op, text: replacement } : op;
+    }),
+  }));
+}
+
 export function adjustBlocks(stage: string, blocks: PasBlock[]): PasBlock[] {
   const map = STAGE_TURN_TRIGGERS[stage.toUpperCase()];
   if (!map) return blocks;
@@ -106,9 +144,13 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     name: stage,
     board,
     units,
-    blocks: pabFile ? tuneBlocks(stage, adjustBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5')), units, 'big5') : [],
+    blocks: pabFile
+      ? tuneBlocks(stage, adjustStoryText(stage, adjustBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5')), opts.text), units, 'big5')
+      : [],
     header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
-    displayBlocks: opts.simplified && pasFile ? tuneBlocks(stage, parsePasBlocks(files.get(pasFile), 'gbk'), units, 'gbk') : undefined,
+    displayBlocks: opts.simplified && pasFile
+      ? tuneBlocks(stage, adjustStoryText(stage, parsePasBlocks(files.get(pasFile), 'gbk')), units, 'gbk')
+      : undefined,
     data,
     seed: opts.seed,
     text: opts.text,
@@ -116,4 +158,3 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     joinLevel: opts.joinLevel,
   };
 }
-

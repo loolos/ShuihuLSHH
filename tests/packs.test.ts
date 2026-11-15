@@ -4,7 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { areaCells } from '../src/rules/skills.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
-import { buildT2S, loadGameData } from '../src/rules/load.ts';
+import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
@@ -541,7 +541,8 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
 describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8）', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
-  const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
+  const base = has ? loadGameData(files, tr) : (null as never);
+  const rt = has ? loadPackFromDisk('mainline', base) : (null as never);
   const stageOf = (id: string) => rt.stages.find((s) => s.id === id)!;
   const strike = (b: Battle, u: Unit, at: Unit) => {
     const x = b as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
@@ -560,9 +561,14 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     return ev;
   };
 
-  it('两关都插在主线某关前面，开场后都在进行，在场单位都站在可通行格上', () => {
-    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([['wawasi', 'N-add06', false], ['sanruan', 'Act10-1', true], ['songjiang-yanshixi', undefined, false]]);
-    for (const s of rt.stages.slice(0, 2)) {
+  it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
+    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([
+      ['wawasi', 'N-add06', false],
+      ['sanruan', 'Act10-1', true],
+      ['zhizhulin', 'Act7-1a', false],
+      ['songjiang-yanshixi', undefined, false],
+    ]);
+    for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
       expect(b.status).toBe('playing');
@@ -680,5 +686,48 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     foe.y = w2.y - 1;
     for (let i = 0; i < 20 && lost.status === 'playing'; i++) strike(lost, foe, w2);
     expect(lost.status).toBe('lost');
+  });
+
+  it('野猪林：林冲先被绑，鲁智深第 2 回合赶到；打退董超、薛霸后强人出现', () => {
+    const b = new Battle(compileStage(rt, stageOf('zhizhulin'), files, { seed: 1, text: tr }));
+    const ev = b.begin();
+    const of = (id: number) => b.units.find((u) => u.classId === id)!;
+    const lin = of(11), lu = of(16), hero = of(0);
+    expect(b.units.filter((u) => u.side === 'player').map((u) => u.classId)).toEqual([0, 11, 16]);
+    expect(lin.stunTurns).toBeGreaterThanOrEqual(1000);
+    expect(lu.present).toBe(false);
+    expect(ev.some((e) => e.type === 'say' && /董超、薛霸/.test(e.text))).toBe(true);
+
+    advance(b, 2);
+    expect(lu.present).toBe(true);
+    expect(lin.stunTurns).toBe(0);
+
+    const strike = (attacker: Unit, target: Unit) => {
+      target.hp = 1;
+      target.stats.agility = 0;
+      target.x = attacker.x;
+      target.y = attacker.y + 1;
+      return strikeUnit(b, attacker, target);
+    };
+    const strikeUnit = (battle: Battle, attacker: Unit, target: Unit) => {
+      const x = battle as unknown as { out: BattleEvent[]; cast: (...a: unknown[]) => void; afterAction: () => void; flush: () => BattleEvent[] };
+      x.out = [];
+      x.cast(attacker, attackSkill(attacker, battle.data), { x: target.x, y: target.y }, false);
+      x.afterAction();
+      return x.flush();
+    };
+    for (const official of b.units.filter((u) => u.name === '董超' || u.name === '薛霸')) strike(hero, official);
+    expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.alive).length).toBe(4);
+    expect(b.units.filter((u) => u.name === '强人' && u.present).length).toBe(4);
+  });
+
+  it('林冲别妻与大野猪林开场对白衔接到发配和暗中护送', () => {
+    const act = loadStage(files, base, 'Act7-1', { simplified: true, text: tr });
+    const ambush = loadStage(files, base, 'Act7-1a', { simplified: true, text: tr });
+    const text = (input: typeof act) => input.displayBlocks!.flatMap((block) => block.ops.map((op) => op.text ?? '')).join('\n');
+    expect(text(act)).toContain('判我刺配沧州');
+    expect(text(act)).toContain('董超、薛霸押着林冲离去');
+    expect(text(act)).toContain('暗中跟上');
+    expect(text(ambush)).toContain('那伙强人已被打退');
   });
 });
