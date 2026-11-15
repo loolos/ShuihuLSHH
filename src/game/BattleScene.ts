@@ -1,11 +1,10 @@
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
 import Phaser from 'phaser';
-import { parseMap } from '../formats/map.ts';
 import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
 import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
-import { findStageFile, loadStage } from '../rules/load.ts';
+import { loadStage, loadStageMap } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
 import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText } from '../rules/skills.ts';
 import { sound } from './sound.ts';
@@ -152,9 +151,9 @@ export class BattleScene extends Phaser.Scene {
 
   create() {
     const { files } = this.assets;
-    const mapFile = findStageFile(files, this.mapName, '.map');
-    if (!mapFile) throw new Error(`找不到地图 ${this.mapName}`);
-    const map = parseMap(files.get(mapFile), mapFile);
+    const loaded = loadStageMap(files, this.mapName);
+    if (!loaded) throw new Error(`找不到地图 ${this.mapName}`);
+    const { map } = loaded;
     this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载

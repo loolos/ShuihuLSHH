@@ -3,7 +3,7 @@ import { parseAct } from '../formats/act.ts';
 import { readExeTables } from '../formats/exe.ts';
 import { parseGoods } from '../formats/goo.ts';
 import { parseHuman } from '../formats/hum.ts';
-import { parseMap } from '../formats/map.ts';
+import { cropMap, parseMap, type MapData } from '../formats/map.ts';
 import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
@@ -129,10 +129,26 @@ export function findStageFile(files: FileSource, stage: string, ext: string): st
   return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
 
+/** 关卡地图名，可带截取范围「名字@x,y,宽,高」（扩展包借原版大地图的一角，见 PackStageJson.map.crop） */
+export function stageMapName(map: { base: string; crop?: readonly number[] }): string {
+  return map.crop ? `${map.base}@${map.crop.join(',')}` : map.base;
+}
+
+/** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径 */
+export function loadStageMap(files: FileSource, name: string): { file: string; map: MapData } | undefined {
+  const [base, crop] = name.split('@');
+  const file = findStageFile(files, base, '.map');
+  if (!file) return undefined;
+  const map = parseMap(files.get(file), file);
+  if (!crop) return { file, map };
+  const [x, y, w, h] = crop.split(',').map(Number);
+  return { file, map: cropMap(map, x, y, w, h) };
+}
+
 export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party']; joinLevel?: number } = {}): StageInput {
-  const mapFile = findStageFile(files, stage, '.map');
-  if (!mapFile) throw new Error(`找不到地图 ${stage}`);
-  const map = parseMap(files.get(mapFile), mapFile);
+  const loaded = loadStageMap(files, stage);
+  if (!loaded) throw new Error(`找不到地图 ${stage}`);
+  const { file: mapFile, map } = loaded;
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
   const actFile = mapFile.replace(/\.map$/i, '.act');
