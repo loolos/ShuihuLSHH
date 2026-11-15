@@ -6,10 +6,8 @@ import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
 import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
-import { readExeTables } from '../formats/exe.ts';
 import { SLOT_COUNT } from '../rules/data.ts';
-import { outfit, potionsFor, storyPoint } from '../rules/preset.ts';
-import { stock } from '../rules/town.ts';
+import { levelKit } from '../rules/equipment.ts';
 import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
@@ -297,28 +295,18 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold };
 }
 
-const exeStages = new WeakMap<FileSource, { index: number; mapName: string }[]>();
-
-/**
- * 外传我方的装备和药按对应的主线进度配，和跳关同一套规则（负责人 2026-11-15，src/rules/preset.ts outfit / storyPoint）：
- * 关卡里写的装备当作剧本装备，比店里的好就留着；包自带的道具（如武松的哨棒）不换。没有原版 EXE（单元测试的假文件）就不配。
- */
+/** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
 function kitPlayers(rt: PackRuntime, stage: PackStageJson, units: ActUnit[], files: FileSource): void {
-  const players = units.filter((u) => u.side === 'player' && rt.data.classes[u.type]);
-  if (!players.length || stage.gearAt === 'none' || !files.has('ShuiHu.exe')) return;
-  let stages = exeStages.get(files);
-  if (!stages) exeStages.set(files, (stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName)));
-  const level = players.reduce((a, u) => a + u.level, 0) / players.length;
-  const sp = storyPoint(files, stages, level, stage.gearAt);
+  if (stage.gearAt === 'none') return;
   const custom = new Set(rt.itemIds.values());
-  const shopIds = sp.town ? stock(rt.data, 1, sp.town).filter((id) => !custom.has(id)) : [];
-  const potions = potionsFor(rt.data, sp.town);
-  for (const u of players) {
+  for (const u of units) {
+    if (u.side !== 'player') continue;
     const cls = rt.data.classes[u.type];
-    const slots = cls.defaultItems.slice(0, 7);
+    if (!cls) continue;
+    const slots = cls.defaultItems.slice();
     while (slots.length < SLOT_COUNT) slots.push(0);
     u.items.forEach((id, k) => id && (slots[k] = id));
-    outfit(rt.data, cls, slots, shopIds, potions, sp.reached, (id) => custom.has(id));
+    levelKit(rt.data, cls, u.level, slots, (id) => custom.has(id));
     u.items = slots;
   }
 }

@@ -1,3 +1,4 @@
+import { levelKit } from './equipment.ts';
 // 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
 // 跳关不沿用之前的任何状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备）；银子也按关卡固定。
@@ -5,9 +6,8 @@ import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import { ROUTES, startingParty, type CampaignState, type Member } from './campaign.ts';
-import { canEquip, equipSlotOf, itemOf, SLOT_COUNT, type ClassDef, type GameData } from './data.ts';
+import { SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
-import { stock } from './town.ts';
 import { goldBase, stageClearGold } from './gold.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
@@ -34,9 +34,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 等级 = 照常从头打到这一关时这个人的等级（entry-levels.json，由主线期望值估算生成，见 tools/gen-entry-levels.ts）；
  *   表里没有的人（或没有模拟到的关）用这一关敌人的平均等级（foeLevel）；都不低于剧本里写的等级；
  * - 再校验：我方平均等级和这一关敌人平均等级相差不超过 JUMP_LEVEL_GAP（balanceLevels），超过就全员一起升 / 降；
- * - 装备 = 剧本里的初始装备；武器：之前去过的最后一个城镇的武器店里本职业能用的攻击最高的，比它好就换上；
- *   衣服、头饰按 ARMOR_LINE / HEAD_LINE 阶梯取那家店有卖的最后一件（gearFromLine）；
- * - 物品栏按 POTION_LINE 补药，随最后去过的城镇升级（负责人 2026-11-15）；
+ * - 装备与药品：等级平衡完成后，按 equipment.ts 的人物类别和等级表生成；
  * - 技能随等级自动领悟；
  * - 银子 = 打到上一关为止的期望收入 expectedGold（掉钱基数 + 过关奖励，不扣沿途花销），不沿用手上的钱。
  */
@@ -51,20 +49,6 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   const lstage = stages[lpos < 0 ? pos : lpos];
   const table = ENTRY_LEVELS[lstage.mapName.toLowerCase()] ?? {};
   const level = foeLevel(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units);
-  let town = 0;
-  for (let i = 0; i < pos; i++) {
-    const t = at(i).town;
-    if (t && TOWN_ORDER.indexOf(t) > TOWN_ORDER.indexOf(town)) town = t;
-  }
-
-  const shopIds = town ? stock(data, 1, town) : [];
-  /** 目标关是不是已经到了（或过了）地图名为 map 的那一关 */
-  const reached = (map: string) => {
-    const i = stages.findIndex((s) => s.mapName.toLowerCase() === map);
-    return i >= 0 && pos >= i;
-  };
-  const potions = potionsFor(data, town);
-
   const members = new Map<number, Member>();
   const script = new Map<number, number>();
   // 没有我方出场的过场（如 Act13-1 之后进城镇 9）用城镇之后那一关的人
@@ -80,64 +64,14 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     u.items.forEach((id, k) => id && (slots[k] = id));
     while (slots.length < SLOT_COUNT) slots.push(0);
     const forge = slots.map(() => 0);
-    outfit(data, cls, slots, shopIds, potions, reached);
+
     members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
     script.set(u.type, u.level);
   }
   balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
+  for (const m of members.values()) levelKit(data, data.classes[m.classId], m.level, m.slots);
   // 银子固定为打到上一关为止的期望收入（负责人 2026-11-14），不沿用手上的钱
   return { version: 1, stage: target, gold: pos > 0 ? expectedGold(files, data, stages, pos - 1) : 0, members: [...members.values()] };
-}
-
-/**
- * 跳关配的衣服阶梯（负责人 2026-11-14）：戰袍 → 虎皮戰袍 → 金繡綠羅袍 → 綠羅花戰袍（城镇 1 / 2 / 3 / 4 的武器店开始有卖）；
- * 之后（负责人 2026-11-15）→ 梅花榆葉甲（防 45，城镇 9 起）→ 雁翎圈金甲（防 50，城镇 10 起）。城镇 5–8 没有比綠羅花戰袍更好的衣服。
- */
-export const ARMOR_LINE = ['戰袍', '虎皮戰袍', '金繡綠羅袍', '綠羅花戰袍', '梅花榆葉甲', '雁翎圈金甲'];
-
-/**
- * 跳关配的药，随最后去过的城镇升级（负责人 2026-11-15）：[从哪个城镇起, [[药名, 个数], …]]，按 TOWN_ORDER 的先后取最后一档。
- * 原版每个药铺都卖全部药品，以前取「回复最多的」，结果从城镇 1 起人人 2 颗天山雪蓮。还没到过城镇的关照剧本。
- */
-export const POTION_LINE: [number, [string, number][]][] = [
-  [1, [['跌打藥', 2]]], // 回体 100：第 2–4 章
-  [3, [['銀創藥', 2]]], // 回体 200：第 5–6 章
-  [5, [['大還銀丹', 2]]], // 回体 300、气 100：第 7–9 章
-  [7, [['大還金丹', 2]]], // 回体 400、气 200：第 10–11 章
-  [9, [['大還金丹', 2], ['天山雪蓮', 1]]], // 第 12 章起再加一颗全满
-];
-
-/** 最后去过城镇 town 时跳关配的药：[道具号, 个数] */
-export function potionsFor(data: GameData, town: number): [number, number][] {
-  const at = TOWN_ORDER.indexOf(town);
-  const row = town ? POTION_LINE.filter(([t]) => TOWN_ORDER.indexOf(t) <= at).at(-1) : undefined;
-  return (row?.[1] ?? []).map(([name, n]): [number, number] => [data.items.findIndex((it) => it.name === name) + 1, n]).filter(([id]) => id > 0);
-}
-/**
- * 跳关配的头饰阶梯（负责人 2026-11-14）：前期遮日黑箬笠（城镇 1 起，移动 +1），
- * 第六章（第一关 N-add08）起紅纓氈笠（移动 +2；城镇 2 就有卖，但负责人要后期才换）。
- * 到过城镇 7（碧雲箬笠开始有卖，第一关 N-add11）之后配碧雲箬笠（移动 +3，负责人 2026-11-14）。
- * 「名称@关卡」表示从那一关起才配。
- */
-export const HEAD_LINE = ['遮日黑箬笠', '紅纓氈笠@n-add08', '碧雲箬笠'];
-
-/**
- * 从阶梯 line 里取武器店 shop 有卖、且目标关已经到了 @ 后那一关（reached）的最后一件，换掉剧本装备 current：
- * - 剧本装备是店里买不到的（买价 0，如公孫勝的七星道袍、晁蓋的萬字巾）就留着；
- * - 剧本装备防御更高的留着（衣服；如朱武的鑲銀生鐵甲要到綠羅花戰袍才换）；头饰不比防御，一律换成斗笠；
- * - 店里一件都没有（还没到过城镇）就不换。
- */
-export function gearFromLine(data: GameData, line: string[], shop: number[], current: number, reached: (map: string) => boolean = () => true): number {
-  const ids = line
-    .filter((e) => !e.includes('@') || reached(e.split('@')[1]))
-    .map((e) => data.items.findIndex((it) => it.name === e.split('@')[0]) + 1)
-    .filter((id) => id > 0 && shop.includes(id));
-  const pick = ids.at(-1);
-  if (!pick) return current;
-  const cur = itemOf(data, current);
-  if (cur && !cur.buyPrice) return current;
-  if (cur && equipSlotOf(cur) === 1 && cur.defense > itemOf(data, pick)!.defense) return current;
-  return pick;
 }
 
 /**
@@ -187,57 +121,13 @@ export function balanceLevels(members: Member[], script: Map<number, number>, fo
   }
 }
 
-/**
- * 按进度配一个人的装备和药（跳关、外传共用），直接改 slots：
- * - 衣服、头饰按 ARMOR_LINE / HEAD_LINE 阶梯（gearFromLine）；武器取武器店 shopIds 里本职业能用的攻击最高的，比现有的好才换；
- * - 药按 potions 补到个数（只往空的随身格放，原有的药留着）；
- * - keep(id) 为真的装备不换（外传包自带的道具，如武松的哨棒）。
- */
-export function outfit(data: GameData, cls: ClassDef, slots: number[], shopIds: number[], potions: [number, number][], reached: (map: string) => boolean, keep: (id: number) => boolean = () => false): void {
-  for (let k = 1; k < 3; k++) if (!keep(slots[k])) slots[k] = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k], reached);
-  const atk = (id: number) => itemOf(data, id)?.attack ?? -1;
-  const weapon = shopIds.map((id) => itemOf(data, id)!).filter((it) => equipSlotOf(it) === 0 && canEquip(cls, it, data)).sort((a, b) => b.attack - a.attack)[0];
-  const wid = weapon ? data.items.indexOf(weapon) + 1 : 0;
-  if (wid && !keep(slots[0]) && atk(wid) > atk(slots[0])) slots[0] = wid;
-  for (const [potion, want] of potions) {
-    let n = slots.filter((id, k) => k >= 3 && id === potion).length;
-    for (let k = 3; k < slots.length && n < want; k++) if (!slots[k]) (slots[k] = potion), n++;
-  }
-}
-
-/**
- * 外传、视角插关的「对应主线进度」（负责人 2026-11-15：跳关的装备、药品规则也用于外传）：
- * 外传等级是固定的，按我方平均等级 level 找主线上入场平均等级（entry-levels.json）第一次到 level 的那一关，
- * 装备按跳到那一关配（gearAt 可以直接写主线关卡名）。训练关不算。返回最后去过的城镇和 reached。
- */
-export function storyPoint(files: FileSource, stages: Stage[], level: number, gearAt?: string): { town: number; map: string; reached: (map: string) => boolean } {
-  const main = stages.filter((s) => !/^train/i.test(s.mapName));
-  let pos = gearAt ? main.findIndex((s) => s.mapName.toLowerCase() === gearAt.toLowerCase()) : -1;
-  if (pos < 0) {
-    const avg = (s: Stage) => {
-      const v = Object.values(ENTRY_LEVELS[s.mapName.toLowerCase()] ?? {});
-      return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0;
-    };
-    pos = main.findIndex((s) => avg(s) >= level - 0.5);
-    if (pos < 0) pos = main.length - 1;
-  }
-  let town = 0;
-  for (let i = 0; i < pos; i++) {
-    const t = readStage(files, main[i]).town;
-    if (t && TOWN_ORDER.indexOf(t) > TOWN_ORDER.indexOf(town)) town = t;
-  }
-  const at = main[pos];
-  const all = stages.findIndex((s) => s === at);
-  return { town, map: at.mapName, reached: (map) => { const i = stages.findIndex((s) => s.mapName.toLowerCase() === map); return i >= 0 && all >= i; } };
-}
-
 /** 第 i 关的 ACT 单位（生成入场等级表用） */
 export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).units;
 
 /**
  * 测试用：直接进第 stage 关之后的城镇 town（关卡下拉框里的「城镇」项，或网址 `?stage=town:<关卡名>`）。
  * - 人物 = 城镇整备名单（城镇之后那一关开局在场的人，townRoster），active 也设成它；
- * - 装备按刚打完第 stage 关配：装备只用这个城镇之前的武器店（这个城镇的货留给玩家自己买）；
+ * - 装备和药品也按下一关的人物等级配，不再依赖城镇商店；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
  * - 银子 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
  *   固定这个数，不沿用手上的钱（负责人 2026-11-14）。
