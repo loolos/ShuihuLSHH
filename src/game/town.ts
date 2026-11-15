@@ -72,10 +72,13 @@ export class TownUI {
     if (o.town) this.enter(0);
     else this.enter(PREP);
     this.root.hidden = false;
+    // 城镇界面让出顶栏（选关、音量、主菜单照常能用），战斗用的按钮先藏起来
+    document.body.classList.add('in-town');
   }
 
   hide() {
     this.root.hidden = true;
+    document.body.classList.remove('in-town');
   }
 
   private tr = (s: string) => this.assets.tr(s);
