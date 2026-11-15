@@ -5,7 +5,7 @@ import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import { ROUTES, startingParty, type CampaignState, type Member } from './campaign.ts';
-import { canEquip, equipSlotOf, isHealing, itemOf, SLOT_COUNT, type GameData } from './data.ts';
+import { canEquip, equipSlotOf, itemOf, SLOT_COUNT, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
 import { goldBase, stageClearGold } from './gold.ts';
@@ -36,7 +36,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 再校验：我方平均等级和这一关敌人平均等级相差不超过 JUMP_LEVEL_GAP（balanceLevels），超过就全员一起升 / 降；
  * - 装备 = 剧本里的初始装备；武器：之前去过的最后一个城镇的武器店里本职业能用的攻击最高的，比它好就换上；
  *   衣服、头饰按 ARMOR_LINE / HEAD_LINE 阶梯取那家店有卖的最后一件（gearFromLine）；
- * - 物品栏补 2 个药铺里回复最多的药；
+ * - 物品栏按 POTION_LINE 补药，随最后去过的城镇升级（负责人 2026-11-15）；
  * - 技能随等级自动领悟；
  * - 银子 = 打到上一关为止的期望收入 expectedGold（掉钱基数 + 过关奖励，不扣沿途花销），不沿用手上的钱。
  */
@@ -64,8 +64,7 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     return i >= 0 && pos >= i;
   };
   const shop = shopIds.map((id) => itemOf(data, id)!);
-  const drugs = town ? stock(data, 3, town) : [];
-  const potion = drugs.filter((id) => isHealing(itemOf(data, id))).sort((a, b) => heal(data, b) - heal(data, a))[0];
+  const potions = potionsFor(data, town);
 
   const members = new Map<number, Member>();
   const script = new Map<number, number>();
@@ -91,9 +90,9 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     const weapon = shop.filter((it) => equipSlotOf(it) === 0 && canEquip(cls, it, data)).sort((a, b) => b.attack - a.attack)[0];
     const wid = weapon ? data.items.indexOf(weapon) + 1 : 0;
     if (wid && atk(wid) > atk(slots[0])) (slots[0] = wid), (forge[0] = 0);
-    if (potion) {
+    for (const [potion, want] of potions) {
       let n = slots.filter((id, k) => k >= 3 && id === potion).length;
-      for (let k = 3; k < SLOT_COUNT && n < 2; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
+      for (let k = 3; k < SLOT_COUNT && n < want; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
     }
     members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
     script.set(u.type, u.level);
@@ -103,8 +102,30 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   return { version: 1, stage: target, gold: pos > 0 ? expectedGold(files, data, stages, pos - 1) : 0, members: [...members.values()] };
 }
 
-/** 跳关配的衣服阶梯（负责人 2026-11-14）：戰袍 → 虎皮戰袍 → 金繡綠羅袍 → 綠羅花戰袍（城镇 1 / 2 / 3 / 4 的武器店开始有卖） */
-export const ARMOR_LINE = ['戰袍', '虎皮戰袍', '金繡綠羅袍', '綠羅花戰袍'];
+/**
+ * 跳关配的衣服阶梯（负责人 2026-11-14）：戰袍 → 虎皮戰袍 → 金繡綠羅袍 → 綠羅花戰袍（城镇 1 / 2 / 3 / 4 的武器店开始有卖）；
+ * 之后（负责人 2026-11-15）→ 梅花榆葉甲（防 45，城镇 9 起）→ 雁翎圈金甲（防 50，城镇 10 起）。城镇 5–8 没有比綠羅花戰袍更好的衣服。
+ */
+export const ARMOR_LINE = ['戰袍', '虎皮戰袍', '金繡綠羅袍', '綠羅花戰袍', '梅花榆葉甲', '雁翎圈金甲'];
+
+/**
+ * 跳关配的药，随最后去过的城镇升级（负责人 2026-11-15）：[从哪个城镇起, [[药名, 个数], …]]，按 TOWN_ORDER 的先后取最后一档。
+ * 原版每个药铺都卖全部药品，以前取「回复最多的」，结果从城镇 1 起人人 2 颗天山雪蓮。还没到过城镇的关照剧本。
+ */
+export const POTION_LINE: [number, [string, number][]][] = [
+  [1, [['跌打藥', 2]]], // 回体 100：第 2–4 章
+  [3, [['銀創藥', 2]]], // 回体 200：第 5–6 章
+  [5, [['大還銀丹', 2]]], // 回体 300、气 100：第 7–9 章
+  [7, [['大還金丹', 2]]], // 回体 400、气 200：第 10–11 章
+  [9, [['大還金丹', 2], ['天山雪蓮', 1]]], // 第 12 章起再加一颗全满
+];
+
+/** 最后去过城镇 town 时跳关配的药：[道具号, 个数] */
+export function potionsFor(data: GameData, town: number): [number, number][] {
+  const at = TOWN_ORDER.indexOf(town);
+  const row = town ? POTION_LINE.filter(([t]) => TOWN_ORDER.indexOf(t) <= at).at(-1) : undefined;
+  return (row?.[1] ?? []).map(([name, n]): [number, number] => [data.items.findIndex((it) => it.name === name) + 1, n]).filter(([id]) => id > 0);
+}
 /**
  * 跳关配的头饰阶梯（负责人 2026-11-14）：前期遮日黑箬笠（城镇 1 起，移动 +1），
  * 第六章（第一关 N-add08）起紅纓氈笠（移动 +2；城镇 2 就有卖，但负责人要后期才换）。
@@ -214,8 +235,3 @@ export function expectedGold(files: FileSource, data: GameData, stages: Stage[],
   }
   return Math.round(sum);
 }
-
-const heal = (data: GameData, id: number) => {
-  const it = itemOf(data, id)!;
-  return it.healHp < 0 ? 999 : it.healHp;
-};
