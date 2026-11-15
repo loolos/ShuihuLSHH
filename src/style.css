@@ -215,6 +215,9 @@ code { color: var(--ink); }
   background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
 }
 #town[hidden] { display: none; }
+/* 在城镇里顶栏照常显示在上面（选关等），城镇界面从顶栏下面开始；战斗专用的按钮不显示 */
+body.in-town #town { top: var(--hud-h, 0px); }
+body.in-town #hud :is(#turn, #team-exp, #objective-btn, #zoom-out, #zoom-in, #rewind, #end-turn) { display: none; }
 /* 说书时对白框和选项面板盖在城镇界面上 */
 body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 #town button.story { border-color: var(--accent); }
