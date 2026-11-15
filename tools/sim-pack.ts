@@ -29,7 +29,7 @@ function walkTo(b: Battle, u: Battle['units'][number], x: number, y: number, ev:
 }
 
 if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
-  const [id = 'wusong', stageId, n = '20'] = process.argv.slice(2);
+  const [id = 'mainline', stageId = 'jingyanggang', n = '20'] = process.argv.slice(2);
   const files = new NodeFiles(DATA);
   const tr = buildT2S(files);
   const rt = loadPackFromDisk(id, loadGameData(files, tr));
@@ -88,7 +88,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const boss = b.units.filter((u) => u.side === 'enemy').sort((a, c) => c.stats.maxHp - a.stats.maxHp)[0];
     const left = b.units.filter((u) => u.side === 'enemy' && u.present && u.hp > 0).length;
     const flags =
-      id === 'wusong' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
+      stage.id === 'jingyanggang' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
     console.log(`种子 ${seed}: ${b.status} 第 ${b.turn} 回合  ${me}  ${boss ? hp(boss) : ''}  敌人剩 ${left}${flags}`);
   }
   console.log(`胜 ${wins}/${n}`);

@@ -6,7 +6,7 @@
 
 戴宗没有新图：借原版都頭（38）的动画换色，见 `pack.json` 和 `docs/game-design.md` §15.2。
 
-格式同 `packs/wusong/sprites/README.md`（每帧 160×160，锚点 (80,120)，正面 / 背面两条）。
+格式同 `packs/mainline/sprites/README.md`（每帧 160×160，锚点 (80,120)，正面 / 背面两条）。
 
 ## 来源与授权
 
