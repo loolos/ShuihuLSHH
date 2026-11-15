@@ -6,7 +6,7 @@
     "gold": 0
   },
   "map": {
-    "base": "Act9-1"
+    "custom": "guanfu"
   },
   "bgm": [
     "eerie",
@@ -17,7 +17,7 @@
       "id": "wusong",
       "class": "wusong",
       "side": "player",
-      "x": 8,
+      "x": 13,
       "y": 12,
       "level": 29
     },
@@ -25,35 +25,41 @@
       "id": "zhangdujian",
       "class": "zhangdujian",
       "side": "enemy",
-      "x": 9,
-      "y": 6,
+      "x": 16,
+      "y": 5,
       "level": 28,
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 11,
+      "facing": 2
     },
     {
       "id": "zhangtuanlian",
       "class": "zhangtuanlian",
       "side": "enemy",
-      "x": 10,
-      "y": 6,
+      "x": 19,
+      "y": 5,
       "level": 28,
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 11,
+      "facing": 2
     },
     {
       "id": "jiangmenshen",
       "class": "jiangmenshen",
       "side": "enemy",
-      "x": 8,
-      "y": 6,
+      "x": 18,
+      "y": 7,
       "level": 28,
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 11,
+      "facing": 2
     },
     {
       "id": "attendant",
       "class": 37,
       "side": "ally",
-      "x": 10,
-      "y": 10,
+      "x": 14,
+      "y": 12,
       "level": 1,
       "ai": 8,
       "hidden": true
@@ -62,8 +68,8 @@
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 8,
-      "y": 14,
+      "x": 12,
+      "y": 15,
       "level": 29,
       "hidden": true
     },
@@ -71,8 +77,8 @@
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
-      "x": 9,
-      "y": 14,
+      "x": 10,
+      "y": 16,
       "level": 29,
       "hidden": true
     },
@@ -80,8 +86,8 @@
       "id": "shijin",
       "class": 3,
       "side": "player",
-      "x": 7,
-      "y": 14,
+      "x": 11,
+      "y": 17,
       "level": 29,
       "hidden": true
     },
@@ -89,8 +95,8 @@
       "id": "daizong",
       "class": "daizong",
       "side": "player",
-      "x": 11,
-      "y": 14,
+      "x": 12,
+      "y": 17,
       "level": 29,
       "hidden": true
     },
@@ -98,8 +104,8 @@
       "id": "huarong",
       "class": "huarong",
       "side": "player",
-      "x": 8,
-      "y": 15,
+      "x": 13,
+      "y": 16,
       "level": 29,
       "hidden": true
     },
@@ -107,8 +113,8 @@
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 9,
-      "y": 15,
+      "x": 10,
+      "y": 18,
       "level": 29,
       "hidden": true
     },
@@ -116,8 +122,8 @@
       "id": "linchong",
       "class": 11,
       "side": "player",
-      "x": 9,
-      "y": 16,
+      "x": 13,
+      "y": 18,
       "level": 29,
       "hidden": true
     },
@@ -125,8 +131,8 @@
       "id": "duqian",
       "class": 69,
       "side": "player",
-      "x": 10,
-      "y": 16,
+      "x": 11,
+      "y": 19,
       "level": 29,
       "hidden": true
     },
@@ -135,9 +141,297 @@
       "class": 70,
       "side": "player",
       "x": 12,
-      "y": 15,
+      "y": 19,
       "level": 29,
       "hidden": true
+    },
+    {
+      "id": "guard-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 11,
+      "level": 28,
+      "name": "北廊军汉"
+    },
+    {
+      "id": "guard-2",
+      "class": 34,
+      "side": "enemy",
+      "x": 10,
+      "y": 10,
+      "level": 28,
+      "name": "北廊弓手"
+    },
+    {
+      "id": "guard-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 14,
+      "y": 10,
+      "level": 28,
+      "name": "后堂徒弟"
+    },
+    {
+      "id": "guard-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 3,
+      "y": 13,
+      "level": 28,
+      "name": "西厢军汉"
+    },
+    {
+      "id": "guard-5",
+      "class": 33,
+      "side": "enemy",
+      "x": 4,
+      "y": 15,
+      "level": 28,
+      "name": "西厢军汉"
+    },
+    {
+      "id": "guard-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 2,
+      "y": 19,
+      "level": 28,
+      "name": "西厢弓手"
+    },
+    {
+      "id": "guard-7",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 13,
+      "level": 28,
+      "name": "东厢军汉"
+    },
+    {
+      "id": "guard-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 17,
+      "level": 28,
+      "name": "东厢弓手"
+    },
+    {
+      "id": "guard-9",
+      "class": 67,
+      "side": "enemy",
+      "x": 22,
+      "y": 20,
+      "level": 28,
+      "name": "东厢徒弟"
+    },
+    {
+      "id": "guard-10",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 21,
+      "level": 28,
+      "name": "门前军汉"
+    },
+    {
+      "id": "guard-11",
+      "class": 33,
+      "side": "enemy",
+      "x": 12,
+      "y": 22,
+      "level": 28,
+      "name": "门前军汉"
+    },
+    {
+      "id": "guard-12",
+      "class": 36,
+      "side": "enemy",
+      "x": 14,
+      "y": 21,
+      "level": 28,
+      "name": "巡夜官差"
+    },
+    {
+      "id": "wave2-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 3,
+      "y": 12,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 5,
+      "y": 12,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 2,
+      "y": 15,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 12,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-5",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 14,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-6",
+      "class": 67,
+      "side": "enemy",
+      "x": 22,
+      "y": 19,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 8,
+      "y": 5,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-2",
+      "class": 34,
+      "side": "enemy",
+      "x": 9,
+      "y": 7,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 14,
+      "y": 5,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 23,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-5",
+      "class": 33,
+      "side": "enemy",
+      "x": 12,
+      "y": 23,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-6",
+      "class": 36,
+      "side": "enemy",
+      "x": 13,
+      "y": 22,
+      "level": 28,
+      "hidden": true,
+      "name": "巡夜官差"
+    },
+    {
+      "id": "wave6-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 2,
+      "y": 13,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-2",
+      "class": 34,
+      "side": "enemy",
+      "x": 3,
+      "y": 21,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-3",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 21,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-4",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 15,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-5",
+      "class": 67,
+      "side": "enemy",
+      "x": 8,
+      "y": 9,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-6",
+      "class": 36,
+      "side": "enemy",
+      "x": 20,
+      "y": 8,
+      "level": 28,
+      "hidden": true,
+      "name": "巡夜官差"
     }
   ],
   "script": [
@@ -146,7 +440,7 @@
       "do": [
         [
           "narrate",
-          "且说众好汉随武松折回孟州。到得后园，武松先入黑影，问明三人还在鸳鸯楼吃酒，众人分守门路，约定听号相应。"
+          "且说众好汉随武松折回孟州，潜入张都监府后园。武松先探到前后堂相接的门廊，听那三人在后堂饮酒说话，众人在前院分守门路，约定听号相应。"
         ],
         [
           "say",
@@ -160,8 +454,8 @@
         [
           "move",
           "wusong",
-          8,
-          10
+          13,
+          13
         ],
         [
           "say",
@@ -191,8 +485,8 @@
         [
           "move",
           "wusong",
-          8,
-          9
+          11,
+          15
         ],
         [
           "appear",
@@ -241,56 +535,28 @@
           "众位护住门路，今日便与你们分说明白！"
         ],
         [
-          "buff",
+          "say",
           "zhangdujian",
-          "attack",
-          {
-            "pct": 25
-          }
+          "来人！前院、两厢、后门一齐围住！我等守在后堂，休教他们近身！"
         ],
         [
-          "buff",
-          "zhangdujian",
-          "defense",
-          {
-            "pct": 35
-          }
-        ],
-        [
-          "buff",
+          "say",
           "zhangtuanlian",
-          "attack",
-          {
-            "pct": 25
-          }
+          "各处军汉听令，先拿下这伙贼人！外头巡夜的也都唤进来！"
         ],
         [
-          "buff",
-          "zhangtuanlian",
-          "defense",
-          {
-            "pct": 35
-          }
-        ],
-        [
-          "buff",
+          "say",
           "jiangmenshen",
-          "attack",
-          {
-            "pct": 25
-          }
+          "徒弟们，给我围上去！"
         ],
         [
-          "buff",
-          "jiangmenshen",
-          "defense",
-          {
-            "pct": 35
-          }
+          "say",
+          "songjiang",
+          "他们要从四面合围。众位互相照应，先挡住院中的军汉！"
         ],
         [
           "objective",
-          "张都监、张团练、蒋门神全部倒下；武松倒下或超过20回合失败。"
+          "击败三凶与全部武装守卫；第2、4、6回合有增援，最后一批到齐后全灭敌军获胜。武松倒下或超过20回合失败。"
         ],
         [
           "turnLimit",
@@ -303,7 +569,7 @@
       "do": [
         [
           "narrate",
-          "三凶伏诛，楼中又起杀伤。武松在粉壁题下「杀人者，打虎武松也！」众好汉护他离开孟州，再投十字坡。"
+          "三凶伏诛，府中武装守卫尽被打散。武松在粉壁题下「杀人者，打虎武松也！」众好汉护他离开孟州，再投十字坡。"
         ],
         [
           "narrate",
@@ -322,7 +588,8 @@
           "victory",
           "众好汉脱身，行者武松由此扬名。"
         ]
-      ]
+      ],
+      "if": "all-waves-arrived"
     },
     {
       "on": {
@@ -332,6 +599,119 @@
         [
           "defeat",
           "武松倒下，众人未能脱险。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "院中喊杀声起，两厢的军汉与弓手赶来，从东西两面夹攻！"
+        ],
+        [
+          "appear",
+          "wave2-1"
+        ],
+        [
+          "appear",
+          "wave2-2"
+        ],
+        [
+          "appear",
+          "wave2-3"
+        ],
+        [
+          "appear",
+          "wave2-4"
+        ],
+        [
+          "appear",
+          "wave2-5"
+        ],
+        [
+          "appear",
+          "wave2-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "北廊又有护院赶来，南面府门也闯进一队巡夜官差，前后堵截众人！"
+        ],
+        [
+          "appear",
+          "wave4-1"
+        ],
+        [
+          "appear",
+          "wave4-2"
+        ],
+        [
+          "appear",
+          "wave4-3"
+        ],
+        [
+          "appear",
+          "wave4-4"
+        ],
+        [
+          "appear",
+          "wave4-5"
+        ],
+        [
+          "appear",
+          "wave4-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "narrate",
+          "府外最后一批巡夜军汉闻声入院，各处伏守的徒弟也一齐杀出！"
+        ],
+        [
+          "appear",
+          "wave6-1"
+        ],
+        [
+          "appear",
+          "wave6-2"
+        ],
+        [
+          "appear",
+          "wave6-3"
+        ],
+        [
+          "appear",
+          "wave6-4"
+        ],
+        [
+          "appear",
+          "wave6-5"
+        ],
+        [
+          "appear",
+          "wave6-6"
+        ],
+        [
+          "flag",
+          "all-waves-arrived"
+        ],
+        [
+          "narrate",
+          "各路援兵已尽数赶到。击败三凶和剩余守卫，便可杀出张府！"
         ]
       ]
     }

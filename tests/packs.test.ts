@@ -1273,16 +1273,20 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBeUndefined();
     expect(stage('shizilou').townAfter).toBe(11);
   });
-  it('飞云浦等待后续增援不提前胜；鸳鸯楼三首领缺一不可',()=> {
+  it('飞云浦等待后续增援不提前胜；鸳鸯楼三首领与守卫全灭且援兵到齐才胜',()=> {
     const b=start('feiyunpu');
     for(const u of b.units) { if(u.side==='player')u.hp=99999; else if(u.present){u.hp=0;u.alive=false;u.present=false;} }
     b.endPlayerPhase();expect(b.status).toBe('playing');expect(b.turn).toBe(2);
     expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(6);
-    const y=start('yuanyanglou'), bosses=y.units.filter(u=>u.side==='enemy');
+    const y=start('yuanyanglou'), foes=y.units.filter(u=>u.side==='enemy');
+    const bosses=foes.filter(u=>u.ai.mode===11);
     for(const u of y.units)if(u.side==='player')u.hp=99999;
-    for(const u of bosses.slice(0,2)){u.hp=0;u.alive=false;u.present=false;}
+    const kill=(u:Unit)=>{u.hp=0;u.alive=false;u.present=false;};
+    for(const u of bosses.slice(0,2))kill(u);
     bosses[2].hp=99999;y.endPlayerPhase();expect(y.status).toBe('playing');
-    bosses[2].hp=0;bosses[2].alive=false;bosses[2].present=false;y.endPlayerPhase();expect(y.status).toBe('won');
+    kill(bosses[2]);y.endPlayerPhase();expect(y.status).toBe('playing');
+    while(y.turn<6){for(const u of foes)if(u.present)kill(u);y.endPlayerPhase();expect(y.status).toBe('playing');}
+    for(const u of foes)if(u.present)kill(u);y.endPlayerPhase();expect(y.status).toBe('won');
   });
   it('飞云浦使用默认模板，连续五回合各来六人，最后一波全灭才获胜', () => {
     const b = start('feiyunpu');
