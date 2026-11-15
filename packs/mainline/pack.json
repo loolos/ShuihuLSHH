@@ -6,6 +6,7 @@
  "classes": [],
  "stages": [
   "stages/wawasi.json",
-  "stages/sanruan.json"
+  "stages/sanruan.json",
+  "stages/zhizhulin.json"
  ]
 }

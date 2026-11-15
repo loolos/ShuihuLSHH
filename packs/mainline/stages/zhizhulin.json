@@ -1,0 +1,180 @@
+{
+  "id": "zhizhulin",
+  "title": "野猪林救林冲",
+  "before": "Act7-1a",
+  "rewards": {
+    "gold": 200
+  },
+  "map": {
+    "base": "Act7-1a"
+  },
+  "bgm": ["eerie", "battle"],
+  "units": [
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 23,
+      "y": 43,
+      "facing": 1,
+      "level": 16
+    },
+    {
+      "id": "linchong",
+      "class": 11,
+      "side": "player",
+      "x": 25,
+      "y": 43,
+      "facing": 1,
+      "level": 16
+    },
+    {
+      "id": "luzhishen",
+      "class": 16,
+      "side": "player",
+      "x": 23,
+      "y": 40,
+      "facing": 1,
+      "level": 16,
+      "hidden": true
+    },
+    {
+      "id": "dongchao",
+      "class": 36,
+      "side": "enemy",
+      "x": 26,
+      "y": 43,
+      "facing": 1,
+      "level": 16,
+      "name": "董超"
+    },
+    {
+      "id": "xueba",
+      "class": 36,
+      "side": "enemy",
+      "x": 25,
+      "y": 42,
+      "facing": 1,
+      "level": 16,
+      "name": "薛霸"
+    },
+    {
+      "id": "bandit1",
+      "class": 44,
+      "side": "enemy",
+      "x": 20,
+      "y": 42,
+      "facing": 3,
+      "level": 15,
+      "name": "强人",
+      "hidden": true
+    },
+    {
+      "id": "bandit2",
+      "class": 45,
+      "side": "enemy",
+      "x": 21,
+      "y": 42,
+      "facing": 3,
+      "level": 15,
+      "name": "强人",
+      "hidden": true
+    },
+    {
+      "id": "bandit3",
+      "class": 44,
+      "side": "enemy",
+      "x": 29,
+      "y": 40,
+      "facing": 1,
+      "level": 15,
+      "name": "强人",
+      "hidden": true
+    },
+    {
+      "id": "bandit4",
+      "class": 45,
+      "side": "enemy",
+      "x": 29,
+      "y": 42,
+      "facing": 1,
+      "level": 15,
+      "name": "强人",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        ["bind", "linchong"],
+        ["narrate", "林冲获罪刺配沧州，董超、薛霸押着他行至野猪林，借口歇息，将他绑在树旁。"],
+        ["say", "dongchao", "林冲，到了这无人处，也该了结你的性命了！"],
+        ["say", "linchong", "董超、薛霸！你们受高俅指使，竟敢在押解途中害我！"],
+        ["say", "xueba", "少说废话！今日便叫你死在这野猪林中！"],
+        ["narrate", "主角一路暗中跟随，眼见二人要下毒手，立刻现身拦阻。"],
+        ["say", "hero", "住手！有我在，休想伤林教头分毫！"],
+        ["objective", "限制回合数 --- 18"],
+        ["objective", "胜利条件   --- 打退董超、薛霸和林中强人"],
+        ["objective", "失败条件一 --- 主角死亡"],
+        ["objective", "失败条件二 --- 林冲死亡"],
+        ["objective", "失败条件三 --- 鲁智深死亡"],
+        ["turnLimit", 18]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        ["appear", "luzhishen"],
+        ["narrate", "一声断喝从林中传来，鲁智深提着禅杖赶到！"],
+        ["say", "luzhishen", "洒家早料到这两个公人没安好心！林教头，洒家来救你！"],
+        ["cleanse", "linchong"],
+        ["say", "linchong", "鲁大哥！多谢救命之恩！"],
+        ["say", "luzhishen", "先打发了这两个狗官，咱们再说话！"]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        ["appear", "bandit1"],
+        ["appear", "bandit2"],
+        ["appear", "bandit3"],
+        ["appear", "bandit4"],
+        ["narrate", "喊杀声四起，野猪林中又窜出数名强人！"]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        ["narrate", "董超、薛霸伏法，林中强人也被打退。众人不敢久留，继续暗中护送林冲前往沧州。"],
+        ["victory", "野猪林救下林冲！"]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        ["defeat", "主角倒在野猪林中，林冲与鲁智深被强人围住，终究未能脱身……"]
+      ]
+    },
+    {
+      "on": {
+        "dead": "linchong"
+      },
+      "do": [
+        ["defeat", "林冲死于押解途中，鲁智深与主角悲愤难当，却被官差和强人团团围住……"]
+      ]
+    },
+    {
+      "on": {
+        "dead": "luzhishen"
+      },
+      "do": [
+        ["defeat", "鲁智深倒在野猪林中，林冲与主角再难抵挡官差和强人……"]
+      ]
+    }
+  ]
+}
