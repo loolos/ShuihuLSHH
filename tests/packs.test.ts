@@ -960,11 +960,11 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
-  it('阳谷整备的武器店卖五把弓，花荣能装备', async () => {
+  it('阳谷整备的武器店卖三把弓，花荣能装备', async () => {
     const { stock } = await import('../src/rules/town.ts');
     const { canEquip } = await import('../src/rules/data.ts');
     const bows = stock(rt.data, 1, 11).map((id) => rt.data.items[id - 1]).filter((it) => it.type === 11);
-    expect(bows.map((it) => it.name)).toEqual(['獵弓', '角弓', '鵲畫弓', '鐵胎弓', '寶雕弓']);
+    expect(bows.map((it) => it.name)).toEqual(['獵弓', '鵲畫弓', '寶雕弓']);
     for (const it of bows) expect(canEquip(rt.data.classes[cid('huarong')], it, rt.data)).toBe(true);
     expect(canEquip(rt.data.classes[cid('wusong')], bows[0], rt.data)).toBe(false);
   });
@@ -976,7 +976,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       for (const u of b.units.filter((u) => u.side === 'player')) expect(u.slots[0], `${id} ${u.name}`).toBeGreaterThan(0);
       // 花荣按等级配弓（负责人 2026-11-15 新增弓）
       const hr = b.units.find((u) => u.classId === cid('huarong'))!;
-      expect(rt.data.items[hr.slots[0] - 1].name).toBe('鐵胎弓');
+      expect(rt.data.items[hr.slots[0] - 1].name).toBe('寶雕弓');
     }
     for (const [id, story] of [['jingyanggang', '哨棒'], ['shizilou', '解腕尖刀']] as const) {
       const b = new Battle(compileStage(rt, stage(id), files, { seed: 1 }));
