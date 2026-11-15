@@ -1,6 +1,6 @@
 // 城镇与整备界面（HTML）：顶部是店铺分页，左边是本店的货或传闻，右边是队员和他们的 7 格道具。
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
-import type { Item } from '../formats/goo.ts';
+import { itemTypeName, type Item } from '../formats/goo.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
 import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
@@ -47,12 +47,20 @@ export class TownUI {
   private rumor = new Map<number, number>();
   private icons = new Map<number, string>();
   private telling = false;
+  private openGoods = new Set<number>();
 
   constructor(
     private assets: Assets,
     private portrait: (classId: number) => string | null,
     private stage?: TownStage,
   ) {
+    this.root.addEventListener('toggle', (e) => {
+      const group = e.target;
+      if (!(group instanceof HTMLDetailsElement) || !group.matches('[data-goods-type]') || !this.root.contains(group)) return;
+      const type = Number(group.dataset.goodsType);
+      if (group.open) this.openGoods.add(type);
+      else this.openGoods.delete(type);
+    }, true);
     this.root.addEventListener('click', (e) => {
       const el = (e.target as Element).closest<HTMLElement>('[data-do]');
       if (el) this.on(el.dataset.do!, Number(el.dataset.v ?? 0));
@@ -90,6 +98,7 @@ export class TownUI {
 
   private enter(shop: number) {
     this.shop = shop;
+    this.openGoods.clear();
     // 酒店放酒馆曲，其他店铺放商店曲，整备放城镇曲【新】；都配第二首轮放（负责人 2026-11-14：每处循环的音乐至少两首）
     void music.play(shop > 0 ? ['shop', 'comic'] : shop === 0 ? ['inn', 'rock'] : ['town', 'march']);
     this.slot = -1;
@@ -279,16 +288,27 @@ export class TownUI {
       const who = partyMembers(this.c)
         .map((m) => `<button data-do="member" data-v="${m.classId}" class="${m.classId === this.member ? 'on' : ''}">${esc(this.tr(d.charNames[m.classId] ?? ''))}</button>`)
         .join('');
-      return `<div class="town-actions"><small class="hint">买给</small>${who}</div><ul class="goods">${list
-        .map((id) => {
-          const it = itemOf(d, id)!;
-          const ok = this.c.gold >= it.buyPrice;
-          const fit = equipSlotOf(it) !== 0 || canEquip(d.classes[this.member], it, d);
-          return `<li><button data-do="buy" data-v="${id}" ${ok ? '' : 'disabled'}>
-            ${this.icon(it)}<span class="nm">${esc(this.tr(it.name))}${fit ? '' : '<small class="warn">不合用</small>'}</span>
-            <span class="eff">${esc(this.summary(it))}</span><span class="price">${it.buyPrice} 两</span></button></li>`;
-        })
-        .join('')}</ul>`;
+      const groups = new Map<number, number[]>();
+      for (const id of list) {
+        const type = itemOf(d, id)!.type;
+        if (!groups.has(type)) groups.set(type, []);
+        groups.get(type)!.push(id);
+      }
+      const goods = [...groups].sort(([a], [b]) => a - b).map(([type, ids]) => {
+        // 沿用道具类型；原版未命名的弓类在商店显示为弓。
+        const name = type === 11 ? '武器·弓' : itemTypeName(type);
+        return `<details class="goods-group" data-goods-type="${type}" ${this.openGoods.has(type) ? 'open' : ''}>
+          <summary>${esc(this.tr(name))}<span class="goods-count">${ids.length} 件</span></summary>
+          <ul class="goods">${ids.map((id) => {
+            const it = itemOf(d, id)!;
+            const ok = this.c.gold >= it.buyPrice;
+            const fit = equipSlotOf(it) !== 0 || canEquip(d.classes[this.member], it, d);
+            return `<li><button data-do="buy" data-v="${id}" ${ok ? '' : 'disabled'}>
+              ${this.icon(it)}<span class="nm">${esc(this.tr(it.name))}${fit ? '' : '<small class="warn">不合用</small>'}</span>
+              <span class="eff">${esc(this.summary(it))}</span><span class="price">${it.buyPrice} 两</span></button></li>`;
+          }).join('')}</ul></details>`;
+      }).join('');
+      return `<div class="town-actions"><small class="hint">买给</small>${who}</div><div class="goods-groups">${goods}</div>`;
     }
     if (this.action === 'pawn') return '<p class="hint">点选右边队员的道具典当，按道具的卖价收钱。</p>';
     if (this.action === 'forge') return '<p class="hint">点选右边队员的装备打铁：点一下就打一次，每次收买价的一半。装备上会标出这次打铁加多少攻、防，还能再打几次；没标的不能在这里打铁。</p>';
