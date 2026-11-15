@@ -82,38 +82,40 @@
     {
       "id": "shien",
       "class": "shien",
-      "side": "ally",
+      "side": "player",
       "x": 14,
       "y": 23,
-      "level": 27,
-      "ai": 8
+      "level": 27
     },
     {
       "id": "wine-1",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 20,
+      "x": 7,
+      "y": 23,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-2",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 14,
+      "x": 8,
+      "y": 18,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-3",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 8,
+      "x": 7,
+      "y": 14,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "jiangmenshen",
@@ -137,75 +139,83 @@
     },
     {
       "id": "guard-1",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 10,
       "y": 7,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-2",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 13,
       "y": 7,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-3",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 10,
       "y": 4,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-4",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 13,
       "y": 5,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-5",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 19,
       "y": 4,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-6",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 20,
       "y": 6,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-7",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 20,
       "y": 8,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-8",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 19,
       "y": 9,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "disciple-a",
@@ -257,7 +267,7 @@
         ],
         [
           "objective",
-          "击败蒋门神；武松或施恩倒下、超过20回合失败。"
+          "武松逐家走到三位店小二身边喝酒，再击败蒋门神；武松或施恩倒下、超过20回合失败。"
         ],
         [
           "turnLimit",
@@ -267,13 +277,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          19,
-          13,
-          21
-        ]
+        "near": "wine-1",
+        "by": "wusong"
       },
       "do": [
         [
@@ -305,13 +310,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          13,
-          13,
-          15
-        ]
+        "near": "wine-2",
+        "by": "wusong"
       },
       "do": [
         [
@@ -343,13 +343,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          7,
-          13,
-          9
-        ]
+        "near": "wine-3",
+        "by": "wusong"
       },
       "do": [
         [
@@ -491,7 +486,7 @@
         [
           "say",
           "shijin",
-          "我自山寨来寻你们，路上恰遇三位好汉，都在寻宋三哥！"
+          "我同这三位好汉在城中相遇，听说宋三哥在快活林，便一道赶来了！"
         ],
         [
           "say",
@@ -524,7 +519,7 @@
       "do": [
         [
           "narrate",
-          "武松虚影一晃，玉环步转身，鸳鸯脚连出；众人替他挡住围上来的军汉。"
+          "武松虚影一晃，玉环步转身，鸳鸯脚连出；众人替他挡住围上来的打手。"
         ]
       ]
     },
@@ -544,11 +539,11 @@
         ],
         [
           "narrate",
-          "史进见官面与恶霸勾连，便辞了众人回梁山请援。戴宗、花荣、李逵留在宋江身边照应。"
+          "施恩收拾酒店，安顿伤者，向众人拜谢。宋江嘱他安心养伤，莫再与蒋门神私下争斗。"
         ],
         [
           "victory",
-          "醉打蒋门神，史进回山请援。"
+          "醉打蒋门神，快活林重归施恩。"
         ]
       ]
     },

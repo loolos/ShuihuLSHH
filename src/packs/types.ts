@@ -200,8 +200,8 @@ export type PackTrigger =
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   | { enter: string | string[]; area: [number, number, number, number] }
-  /** 任一在场的我方单位走到这个人身边（相邻一格） */
-  | { near: string }
+  /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
+  | { near: string; by?: string }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number };
 
