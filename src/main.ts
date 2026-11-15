@@ -134,7 +134,7 @@ function startGame(assets: Assets) {
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
-  /** 主线插关（docs/game-design.md §15.8）：entry = mainline 的包里每个关卡插在 before 那一关前面 */
+  /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
   const inserts: (InsertEntry & { pov: boolean; title: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
     .flatMap((e) => e.stages.filter((s) => s.before || s.after).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title })));
@@ -146,7 +146,7 @@ function startGame(assets: Assets) {
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
     const items = chapters.at(-1)!.items;
-    // 插在这一关前面的主线插关（类型叫「遭遇战」，不占原版的战役编号）
+    // 插在这一关前面的主线遭遇战（不占原版的战役编号）
     for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
       items.push({ label: `遭遇战 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 遭遇战 · ${e.title}${e.pov ? '（视角关）' : ''}` });
     items.push({ label: l.short, value: String(s.index), title: l.full });
@@ -170,7 +170,7 @@ function startGame(assets: Assets) {
   let campaign = loadSave() ?? newCampaign(stages[0].index);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
-    // 主线插关：人物按它前面那一关（before）配，再把插关排在最前
+    // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
       const anchor = e?.before ?? e?.after;
@@ -323,7 +323,12 @@ function startGame(assets: Assets) {
       void music.play(['ending', 'liangshan']);
       campaign = { ...after, finished: true };
       writeSave(campaign);
-      return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, retry], '通关');
+      const replay = () => {
+        campaign = before;
+        writeSave(before);
+        run();
+      };
+      return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, { label: '重新开始本关', run: replay }], '通关');
     }
     // 结算画面放胜利曲；剧情关直接接下一关，不换
     if (!isAct(cur)) void music.play('victory');
@@ -480,6 +485,9 @@ function startGame(assets: Assets) {
     };
     if (entry?.after) {
       void music.play(['ending', 'liangshan']);
+      const u = new URL(location.href);
+      u.searchParams.delete('stage');
+      history.replaceState(null, '', u);
       return ui.result(true, text, [{ label: '回到标题', run: () => (location.href = location.pathname) }, { label: '再看一次本段', run: replay }], '通关');
     }
     const cont = { label: `继续：${label(stageOf(c.stage))}`, run: () => goTo(c) };

@@ -24,7 +24,7 @@ export interface CampaignState {
   active?: number[];
   /** 已领过礼物的说书（src/rules/storyteller.ts 的故事 id）【新】 */
   tales?: string[];
-  /** 主线插关（docs/game-design.md §15.8）：正要打的插关（<包>/<关卡>），打完清掉，再进 stage 那一关 */
+  /** 主线插关 / 续篇（docs/game-design.md §15.8、§15.10）：当前要演的段落（<包>/<关卡>） */
   insert?: string;
   /** 已经打过的插关（<包>/<关卡>），读档、重进不再重复 */
   inserts?: string[];
