@@ -272,6 +272,7 @@
           "name": "长髯偃月",
           "from": 151,
           "anim": 0,
+          "effect": 35,
           "type": 13,
           "area": 1,
           "power": 30,
