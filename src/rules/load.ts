@@ -3,7 +3,7 @@ import { parseAct } from '../formats/act.ts';
 import { readExeTables } from '../formats/exe.ts';
 import { parseGoods } from '../formats/goo.ts';
 import { parseHuman } from '../formats/hum.ts';
-import { cropMap, parseMap, type MapData } from '../formats/map.ts';
+import { cropMap, mapFromJson, parseMap, type MapData, type MapJson } from '../formats/map.ts';
 import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts';
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
@@ -136,17 +136,41 @@ export function findStageFile(files: FileSource, stage: string, ext: string): st
   return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
 
-/** 关卡地图名，可带截取范围「名字@x,y,宽,高」（扩展包借原版大地图的一角，见 PackStageJson.map.crop） */
-export function stageMapName(map: { base: string; crop?: readonly number[] }): string {
-  return map.crop ? `${map.base}@${map.crop.join(',')}` : map.base;
+/** 自拼地图（packs/maps/<名字>.json）在地图名里的前缀：custom:<名字> */
+export const CUSTOM_MAP_PREFIX = 'custom:';
+let customMapLoader: (name: string) => MapJson | undefined = () => undefined;
+const customMapCache = new Map<string, MapData>();
+/** 设置自拼地图的来源：浏览器里是随代码打包的 JSON（src/game/packs.ts），Node 里读磁盘（src/packs/custom-maps-node.ts） */
+export function setCustomMapLoader(fn: (name: string) => MapJson | undefined): void {
+  customMapLoader = fn;
+  customMapCache.clear();
 }
 
-/** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径 */
+/** 关卡地图名，可带截取范围「名字@x,y,宽,高」（扩展包借原版大地图的一角，见 PackStageJson.map.crop）；自拼地图是「custom:名字」 */
+export function stageMapName(map: { base?: string; custom?: string; crop?: readonly number[] }): string {
+  const name = map.custom ? CUSTOM_MAP_PREFIX + map.custom : map.base ?? '';
+  return map.crop ? `${name}@${map.crop.join(',')}` : name;
+}
+
+/** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径（自拼地图是一个不存在的路径，所以也没有 .act） */
 export function loadStageMap(files: FileSource, name: string): { file: string; map: MapData } | undefined {
   const [base, crop] = name.split('@');
-  const file = findStageFile(files, base, '.map');
-  if (!file) return undefined;
-  const map = parseMap(files.get(file), file);
+  let file: string | undefined;
+  let map: MapData | undefined;
+  if (base.startsWith(CUSTOM_MAP_PREFIX)) {
+    const id = base.slice(CUSTOM_MAP_PREFIX.length);
+    map = customMapCache.get(id);
+    if (!map) {
+      const j = customMapLoader(id);
+      if (!j) return undefined;
+      customMapCache.set(id, (map = mapFromJson(j, `packs/maps/${id}.json`)));
+    }
+    file = `Map/${id}.custom.map`;
+  } else {
+    file = findStageFile(files, base, '.map');
+    if (!file) return undefined;
+    map = parseMap(files.get(file), file);
+  }
   if (!crop) return { file, map };
   const [x, y, w, h] = crop.split(',').map(Number);
   return { file, map: cropMap(map, x, y, w, h) };

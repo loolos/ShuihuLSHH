@@ -3,9 +3,14 @@
 import { buildPack, packStageName, type PackRuntime, type SpriteSheetJson } from '../packs/build.ts';
 import type { PackJson, PackStageJson } from '../packs/types.ts';
 import type { Assets } from './assets.ts';
+import { setCustomMapLoader } from '../rules/load.ts';
+import type { MapJson } from '../formats/map.ts';
 
 const JSONS = import.meta.glob('/packs/**/*.json', { eager: true, import: 'default' }) as Record<string, unknown>;
 const PNGS = import.meta.glob('/packs/**/*.png', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+
+// 自拼地图（§15.15）：packs/maps/<名字>.json，随代码打包
+setCustomMapLoader((name) => JSONS[`/packs/maps/${name}.json`] as MapJson | undefined);
 
 export interface PackAssets {
   rt: PackRuntime;

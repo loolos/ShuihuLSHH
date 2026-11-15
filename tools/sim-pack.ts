@@ -6,9 +6,12 @@ import { Battle } from '../src/rules/battle.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { attackSkill } from '../src/rules/unit.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
+import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
+
+useDiskCustomMaps(); // 自拼地图 packs/maps/*.json（§15.15）
 
 export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(DATA))) {
   const dir = path.resolve(import.meta.dirname, '../packs', id);
