@@ -2,6 +2,7 @@
  "id": "jingyanggang",
  "title": "景阳冈",
  "map": {"base": "N-add01"},
+ "gearAt": "none",
  "bgm": ["tiger", "tense"],
  "units": [
   {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 15},
