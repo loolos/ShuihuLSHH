@@ -650,6 +650,15 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
+  it('景阳冈：店小二只在对话里出声，不上地图（offstage）', () => {
+    const b = new Battle(compileStage(rt, stageOf('jingyanggang'), files, { seed: 1, text: tr }));
+    const ev = b.begin();
+    const xiao = b.units.find((u) => u.classId === 35)!;
+    expect(xiao.present).toBe(false);
+    expect(ev.some((e) => e.type === 'say' && e.uid === xiao.uid && e.text.includes('三碗不过冈'))).toBe(true);
+    expect(ev.some((e) => e.type === 'appear' && e.uid === xiao.uid)).toBe(false);
+  });
+
   it('狮子楼：开场只有武松带解腕尖刀；西门庆出手踢落刀；第 2 回合宋江一行登场；打倒西门庆过关', () => {
     const stage = stageOf('shizilou');
     const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));

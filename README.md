@@ -13,7 +13,7 @@
 
 ## 文档
 
-- [docs/game-design.md](docs/game-design.md)：游戏设计。实现时以它为准，包括规则、内容、界面、架构和里程碑。
+- [docs/game-design.md](docs/game-design.md)：唯一设计主文档。先读“阅读导航”和“当前状态与冲突处理”，再按主题查规则、内容、界面与架构；§15 提供扩展内容索引，实现记录与历史策划已区分。
 - [docs/binary-formats.md](docs/binary-formats.md)：原版文件格式和字段，以及 EXE 中的数据与代码地址。
 - [docs/reference/](docs/reference/)：自动生成的参考资料，用 `npm run gen:docs` 生成，不要手改。包括：
   - 规则数据表、关卡简报；
