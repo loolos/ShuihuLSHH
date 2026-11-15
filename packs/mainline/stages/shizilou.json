@@ -320,20 +320,15 @@
      "move",
      "ximenqing",
      18,
-     5
+     7
     ],
     [
      "narrate",
      "西门庆也会些拳棒，跳起身来，闪到伴当们身后，仗着人多，倒也不怕。"
     ],
     [
-     "buff",
-     "ximenqing",
-     "defense",
-     {
-      "pct": 100,
-      "turns": 3
-     }
+     "narrate",
+     "武松见了仇人，怒从心上起，恶向胆边生，一股暴烈脾气发作起来，浑身筋骨都绷紧了，哪里还觉得疼痛。"
     ],
     [
      "buff",
@@ -346,11 +341,11 @@
     ],
     [
      "objective",
-     "胜利条件：打倒西门庆"
+     "胜利条件：打倒西门庆和他的全部手下"
     ],
     [
      "objective",
-     "失败条件：武松、宋江或武龙倒下，或超过 15 回合（西门庆逃走）"
+     "失败条件：武松、宋江或武龙倒下，或超过 15 回合"
     ],
     [
      "turnLimit",
@@ -499,6 +494,10 @@
      "say",
      "shijin",
      "好大的口气！先吃我一棍！"
+    ],
+    [
+     "flag",
+     "wave3"
     ]
    ]
   },
@@ -513,59 +512,22 @@
     ],
     [
      "narrate",
-     "帮闲、伴当见主人吃打，一哄都散了。"
+     "帮闲、伴当见主人吃打，都红了眼，一齐拥上来要拼命。"
     ],
     [
-     "leave",
-     "bandang1"
-    ],
+     "say",
+     "wusong",
+     "害死俺哥哥的奸贼已死，你们这班帮凶，一个也休想走脱！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "if": "wave3",
+   "do": [
     [
-     "leave",
-     "bandang2"
-    ],
-    [
-     "leave",
-     "bandang3"
-    ],
-    [
-     "leave",
-     "bandang4"
-    ],
-    [
-     "leave",
-     "bangxian1"
-    ],
-    [
-     "leave",
-     "bangxian2"
-    ],
-    [
-     "leave",
-     "bangxian3"
-    ],
-    [
-     "leave",
-     "bangxian4"
-    ],
-    [
-     "leave",
-     "huyuan1"
-    ],
-    [
-     "leave",
-     "huyuan2"
-    ],
-    [
-     "leave",
-     "tudi1"
-    ],
-    [
-     "leave",
-     "tudi2"
-    ],
-    [
-     "leave",
-     "tudi3"
+     "narrate",
+     "西门庆一伙的帮闲、伴当、护院，都吃众好汉打倒在狮子楼前。"
     ],
     [
      "say",
