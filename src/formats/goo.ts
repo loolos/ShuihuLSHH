@@ -8,6 +8,8 @@ export interface Item {
   type: number; // +0 类型码：0–12 武器类、13 衣服、14 头饰、≥15 消耗品/特殊
   category: number; // +1 大类
   icon: number; // +2 图标编号（Object.lib 帧号）
+  /** 扩展包道具自带的图标（图片地址），有就代替 icon */
+  iconUrl?: string;
   name: string; // +6
   description: string; // +26
   moveBonus: number; // +104 移动力加成

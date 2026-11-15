@@ -121,6 +121,15 @@ export interface PackItemJson {
   attack?: number;
   defense?: number;
   agility?: number;
+  hit?: number;
+  /** 道具类型码（0–12 武器类，如 11 = 弓）；不写沿用 from */
+  type?: number;
+  /** 买价；卖价取一半 */
+  buyPrice?: number;
+  /** 在哪些城镇（原版城镇号）的武器店有卖 */
+  shop?: number[];
+  /** 27×27 图标 PNG（包内路径）；没有这张图时沿用 from 的原版图标 */
+  icon?: string;
 }
 
 /** 剧本里指单位用关卡 units 的 id */
