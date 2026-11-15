@@ -135,9 +135,14 @@ function startGame(assets: Assets) {
   }
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
-  const inserts: (InsertEntry & { pov: boolean; title: string })[] = listPacks()
+  // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
-    .flatMap((e) => e.stages.filter((s) => s.before || s.after).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title })));
+    .flatMap((e) =>
+      e.stages
+        .filter((s) => s.before || s.after)
+        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
+    );
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
@@ -146,12 +151,12 @@ function startGame(assets: Assets) {
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
     const items = chapters.at(-1)!.items;
-    // 插在这一关前面的主线遭遇战（不占原版的战役编号）
+    // 插在这一关前面的主线插关
     for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `遭遇战 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 遭遇战 · ${e.title}${e.pov ? '（视角关）' : ''}` });
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
     items.push({ label: l.short, value: String(s.index), title: l.full });
     for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `后续剧情 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 后续剧情 · ${e.title}` });
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
@@ -635,7 +640,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} 遭遇战 · ${ins.title}` : l.full;
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))

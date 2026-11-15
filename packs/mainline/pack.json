@@ -1,7 +1,7 @@
 {
   "id": "mainline",
   "name": "主线插关",
-  "description": "主线插关与后续剧情，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
+  "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
   "entry": "mainline",
   "classes": [
     {
