@@ -1124,6 +1124,17 @@ describe('主线插关的排队（campaign.ts pendingInsert）', () => {
     expect(pendingInsert(c, list, 'N-add07')).toBeUndefined();
     expect(pendingInsert({ ...c, inserts: ['mainline/wawasi'] }, list, 'N-add06')).toBeUndefined();
   });
+  it('同一关前有两段插关：按登记顺序接上；从后一段开始打不回头补前一段', async () => {
+    const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');
+    const list = [
+      { ref: 'mainline/chifagui', before: 'Act10-1' },
+      { ref: 'mainline/sanruan', before: 'Act10-1' },
+    ];
+    const c = newCampaign(50);
+    expect(pendingInsert(c, list, 'Act10-1')).toBe('mainline/chifagui');
+    expect(pendingInsert({ ...c, inserts: ['mainline/chifagui'] }, list, 'Act10-1', 'before', 'mainline/chifagui')).toBe('mainline/sanruan');
+    expect(pendingInsert({ ...c, inserts: ['mainline/sanruan'] }, list, 'Act10-1', 'before', 'mainline/sanruan')).toBeUndefined();
+  });
   it('终章之后的续篇只排一次，且不会当作 before 插关', async () => {
     const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');
     const list = [{ ref: 'mainline/songjiang-yanshixi', after: 'N14' }, { ref: 'mainline/songjiazhuang', after: 'N14' }];

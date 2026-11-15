@@ -190,12 +190,12 @@ describe.skipIf(!has)('扩展包：武松打虎', () => {
   });
 });
 
-describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
+describe.skipIf(!has)('主线插关：赤发鬼夜战插翅虎', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
-  const rt = has ? loadPackFromDisk('liutang', loadGameData(files, tr)) : (null as never);
+  const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
   const start = (seed = 1) => {
-    const b = new Battle(compileStage(rt, rt.stages[0], files, { seed, text: tr }));
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'chifagui')!, files, { seed, text: tr }));
     const ev = b.begin();
     const of = (cls: number) => b.units.find((u) => u.classId === cls)!;
     return { b, ev, lt: of(17), lh: of(60), wy: of(10), cg: of(12) };
@@ -208,8 +208,7 @@ describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
     return x.flush();
   };
 
-  it('没有新职业，全用原版人物；开场雷横带 2 个士兵，另 2 个士兵和晁盖、吴用埋伏', () => {
-    expect(rt.data.classes.length).toBe(loadGameData(files, tr).classes.length);
+  it('全用原版人物；开场雷横带 2 个士兵，另 2 个士兵和晁盖、吴用埋伏；说书式开场从主角团转过来', () => {
     const { b, ev, lt, lh, wy, cg } = start();
     expect(lt.level).toBe(21);
     expect(lh.present).toBe(true);
@@ -220,6 +219,7 @@ describe.skipIf(!has)('扩展包：赤发鬼夜战插翅虎', () => {
     expect(lt.buffs.some((x) => x.stat === 'agility' && x.value < 0 && x.turns <= 3)).toBe(true);
     expect(lh.buffs.some((x) => x.stat === 'crit' && x.value < 0)).toBe(true);
     expect(ev.some((e) => e.type === 'say' && /赤发鬼/.test(e.text))).toBe(true);
+    expect(ev.some((e) => e.type === 'say' && !e.speaker && /武龙/.test(e.text) && /按下不表/.test(e.text))).toBe(true);
   });
 
   it('第 4 回合士兵增援，第 7 回合吴用、晁盖赶到，过关', () => {
@@ -591,6 +591,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
     expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([
       ['wawasi', 'N-add06', false],
+      ['chifagui', 'Act10-1', true],
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],
       ['songjiang-yanshixi', undefined, false],
