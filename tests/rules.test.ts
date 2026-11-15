@@ -380,6 +380,26 @@ describe('命中与伤害', () => {
     }
   });
 
+  it('花荣专属远程系数为100%到60%，预览和实战共用；其他远程不受影响', () => {
+    const bow: SkillDef = { ...punch, type: 10, rangeMax: 8, rangedDamage: [1, 0.6] };
+    const target = unit({ side: 'enemy', x: 0, y: 0, facing: 2 });
+    for (const [distance, factor] of [[1, 1], [4, 1 - 0.4 * 3 / 7], [8, 0.6]]) {
+      const att = unit({ x: 0, y: distance });
+      expect(rangedFactor(att, target, bow)).toBeCloseTo(factor);
+      const [n, c] = baseDamage(att, target, punch);
+      const preview = previewAttack(att, target, bow);
+      expect(preview.damage).toBe(Math.floor(n * factor));
+      expect(preview.critDamage).toBe(Math.floor(c * factor));
+      const rng = new Rng(7);
+      const crit = rng.chance(critChance(att, bow));
+      const variation = 0.9 + rng.next() * 0.2;
+      expect(rollAttack(att, target, bow, new Rng(7), true).damage).toBe(Math.floor((crit ? c : n) * factor * variation));
+      expect(rangedFactor(att, target, { ...bow, rangedDamage: undefined })).toBeCloseTo(factor - 0.5);
+    }
+    const att = unit({ x: 0, y: 10, stats: { ...a.stats, rangeBonus: 2 } });
+    expect(rangedFactor(att, target, bow)).toBeCloseTo(0.6);
+    expect(rangedFactor(att, target, { ...bow, rangeMax: 1 })).toBeCloseTo(0.6);
+  });
   it('远程攻击按距离打折：距离 1 为 50%，最远射程为 10%', () => {
     const bow = { ...punch, type: 10, rangeMin: 1, rangeMax: 8 };
     const d = unit({ side: 'enemy', x: 0, y: 0 });
