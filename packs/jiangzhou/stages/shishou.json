@@ -2,7 +2,7 @@
  "id": "shishou",
  "title": "牢城试手",
  "map": {
-  "base": "N-add02"
+  "custom": "laocheng"
  },
  "bgm": [
   "jiangzhou",
@@ -13,27 +13,27 @@
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 4,
-   "y": 7,
-   "facing": 3,
+   "x": 11,
+   "y": 20,
+   "facing": 0,
    "level": 22
   },
   {
    "id": "likui",
    "class": "likui",
    "side": "player",
-   "x": 5,
-   "y": 8,
-   "facing": 3,
+   "x": 12,
+   "y": 21,
+   "facing": 0,
    "level": 22
   },
   {
    "id": "songjiang",
    "class": "songjiang",
    "side": "player",
-   "x": 3,
-   "y": 8,
-   "facing": 3,
+   "x": 10,
+   "y": 21,
+   "facing": 0,
    "level": 22
   },
   {
@@ -41,35 +41,35 @@
    "class": 32,
    "side": "enemy",
    "x": 10,
-   "y": 6,
-   "facing": 1,
+   "y": 12,
+   "facing": 2,
    "level": 16
   },
   {
    "id": "s2",
    "class": 32,
    "side": "enemy",
-   "x": 11,
-   "y": 8,
-   "facing": 1,
+   "x": 12,
+   "y": 13,
+   "facing": 2,
    "level": 16
   },
   {
    "id": "s3",
    "class": 33,
    "side": "enemy",
-   "x": 12,
-   "y": 7,
-   "facing": 1,
+   "x": 11,
+   "y": 11,
+   "facing": 2,
    "level": 16
   },
   {
    "id": "s4",
    "class": 32,
    "side": "enemy",
-   "x": 12,
-   "y": 9,
-   "facing": 1,
+   "x": 14,
+   "y": 12,
+   "facing": 2,
    "level": 16
   },
   {
@@ -77,8 +77,8 @@
    "class": 33,
    "side": "enemy",
    "x": 13,
-   "y": 6,
-   "facing": 1,
+   "y": 10,
+   "facing": 2,
    "level": 16
   }
  ],
