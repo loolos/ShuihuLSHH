@@ -1,12 +1,13 @@
 {
   "id": "zhizhulin",
-  "title": "野猪林救林冲",
+  "title": "野猪林义援",
   "before": "Act7-1a",
   "rewards": {
     "gold": 200
   },
   "map": {
-    "base": "Act7-1a"
+    "base": "Act7-1a",
+    "crop": [16, 32, 18, 18]
   },
   "bgm": ["eerie", "battle"],
   "units": [
@@ -14,17 +15,18 @@
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 23,
-      "y": 43,
+      "x": 7,
+      "y": 11,
       "facing": 1,
-      "level": 16
+      "level": 16,
+      "hidden": true
     },
     {
       "id": "linchong",
       "class": 11,
       "side": "player",
-      "x": 25,
-      "y": 43,
+      "x": 9,
+      "y": 11,
       "facing": 1,
       "level": 16
     },
@@ -32,8 +34,8 @@
       "id": "luzhishen",
       "class": 16,
       "side": "player",
-      "x": 23,
-      "y": 40,
+      "x": 7,
+      "y": 8,
       "facing": 1,
       "level": 16,
       "hidden": true
@@ -42,8 +44,8 @@
       "id": "dongchao",
       "class": 36,
       "side": "enemy",
-      "x": 26,
-      "y": 43,
+      "x": 10,
+      "y": 11,
       "facing": 1,
       "level": 16,
       "name": "董超"
@@ -52,8 +54,8 @@
       "id": "xueba",
       "class": 36,
       "side": "enemy",
-      "x": 25,
-      "y": 42,
+      "x": 9,
+      "y": 10,
       "facing": 1,
       "level": 16,
       "name": "薛霸"
@@ -62,8 +64,8 @@
       "id": "bandit1",
       "class": 44,
       "side": "enemy",
-      "x": 20,
-      "y": 42,
+      "x": 4,
+      "y": 10,
       "facing": 3,
       "level": 15,
       "name": "强人",
@@ -73,8 +75,8 @@
       "id": "bandit2",
       "class": 45,
       "side": "enemy",
-      "x": 21,
-      "y": 42,
+      "x": 5,
+      "y": 10,
       "facing": 3,
       "level": 15,
       "name": "强人",
@@ -84,8 +86,8 @@
       "id": "bandit3",
       "class": 44,
       "side": "enemy",
-      "x": 29,
-      "y": 40,
+      "x": 13,
+      "y": 8,
       "facing": 1,
       "level": 15,
       "name": "强人",
@@ -95,11 +97,22 @@
       "id": "bandit4",
       "class": 45,
       "side": "enemy",
-      "x": 29,
-      "y": 42,
+      "x": 13,
+      "y": 10,
       "facing": 1,
       "level": 15,
       "name": "强人",
+      "hidden": true
+    },
+    {
+      "id": "bandit-chief",
+      "class": 65,
+      "side": "enemy",
+      "x": 5,
+      "y": 8,
+      "facing": 3,
+      "level": 17,
+      "name": "强人头目",
       "hidden": true
     }
   ],
@@ -112,27 +125,20 @@
         ["say", "dongchao", "林冲，到了这无人处，也该了结你的性命了！"],
         ["say", "linchong", "董超、薛霸！你们受高俅指使，竟敢在押解途中害我！"],
         ["say", "xueba", "少说废话！今日便叫你死在这野猪林中！"],
-        ["narrate", "主角一路暗中跟随，眼见二人要下毒手，立刻现身拦阻。"],
+        ["narrate", "眼见二人举起棍棒，林中忽然传来一声断喝！"],
+        ["appear", "hero"],
+        ["appear", "luzhishen"],
         ["say", "hero", "住手！有我在，休想伤林教头分毫！"],
+        ["say", "luzhishen", "洒家早料到这两个公人没安好心！林教头，洒家来救你！"],
+        ["cleanse", "linchong"],
+        ["say", "linchong", "鲁大哥！多谢救命之恩！"],
+        ["say", "luzhishen", "先打发了这两个狗官，咱们再说话！"],
         ["objective", "限制回合数 --- 18"],
-        ["objective", "胜利条件   --- 打退董超、薛霸和林中强人"],
+        ["objective", "胜利条件   --- 打退董超、薛霸及林中强人和头目"],
         ["objective", "失败条件一 --- 主角死亡"],
         ["objective", "失败条件二 --- 林冲死亡"],
         ["objective", "失败条件三 --- 鲁智深死亡"],
         ["turnLimit", 18]
-      ]
-    },
-    {
-      "on": {
-        "turn": 2
-      },
-      "do": [
-        ["appear", "luzhishen"],
-        ["narrate", "一声断喝从林中传来，鲁智深提着禅杖赶到！"],
-        ["say", "luzhishen", "洒家早料到这两个公人没安好心！林教头，洒家来救你！"],
-        ["cleanse", "linchong"],
-        ["say", "linchong", "鲁大哥！多谢救命之恩！"],
-        ["say", "luzhishen", "先打发了这两个狗官，咱们再说话！"]
       ]
     },
     {
@@ -143,6 +149,14 @@
         ["appear", "bandit3"],
         ["appear", "bandit4"],
         ["narrate", "喊杀声四起，野猪林中又窜出数名强人！"]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        ["appear", "bandit-chief"],
+        ["narrate", "强人四散逃走，林中头目闻声赶来，拦住众人的去路。"],
+        ["say", "bandit-chief", "打了我的弟兄，还想从野猪林安然走出去？"]
       ]
     },
     {

@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { openGrp, openLib, openPic } from '../src/formats/image.ts';
-import { parseMap } from '../src/formats/map.ts';
+import { cropMap, parseMap } from '../src/formats/map.ts';
 import { parseAct } from '../src/formats/act.ts';
 import { parseHuman } from '../src/formats/hum.ts';
 import { parseGoods } from '../src/formats/goo.ts';
@@ -12,6 +12,17 @@ import { readExeTables } from '../src/formats/exe.ts';
 const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 const read = (...p: string[]) => fs.readFileSync(path.join(DATA, ...p));
+
+describe('地图裁剪', () => {
+  it('按行裁剪所有图层，越界部分当地图外', () => {
+    const cells = Array.from({ length: 20 }, (_, tile) => [{ tile, flags: tile }]);
+    const map = { width: 5, height: 4, cells };
+    const cropped = cropMap(map, 1, 1, 3, 2);
+    expect([cropped.width, cropped.height]).toEqual([3, 2]);
+    expect(cropped.cells.map((c) => c[0].tile)).toEqual([6, 7, 8, 11, 12, 13]);
+    expect(cropMap(map, 4, 3, 2, 2).cells).toEqual([cells[19], ...Array(3).fill([{ tile: 0, flags: 0 }])]);
+  });
+});
 
 describe.skipIf(!has)('原版文件解析', () => {
   it('EXE 表：72 个角色、76 个关卡', () => {
