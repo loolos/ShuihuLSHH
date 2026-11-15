@@ -8,11 +8,11 @@ import Phaser from 'phaser';
 import { frameToCanvas, manClassOf, manSource, type Assets } from './assets.ts';
 import { paintShoes, recolorLut } from '../packs/recolor.ts';
 import type { PackAssets } from './packs.ts';
+import { ACTION_FRAME_MS, EFFECT_FRAME_MS } from './cast-timing.ts';
 
 export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
 export const FRAME_MS = 120;
-/** 一次性动作（攻击、受击）的帧间隔：比循环动作快，免得出手拖沓【新】 */
-export const ACTION_FRAME_MS = 45;
+export { ACTION_FRAME_MS, EFFECT_FRAME_MS };
 
 export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCanvasElement): string {
   if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
@@ -67,11 +67,8 @@ export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action
   return key;
 }
 
-/**
- * 技能特效帧间隔。原版每个特效对象自带 75 ms 计时（EXE 构造函数 0x4036ad 写 +0x2f = 0x4B，0x403610 按毫秒比较）；
- * 这里和人物出手动作一样加快一些【新】。
- */
-export const EFFECT_FRAME_MS = 60;
+// 技能特效帧间隔 EFFECT_FRAME_MS（cast-timing.ts）：原版每个特效对象自带 75 ms 计时
+// （EXE 构造函数 0x4036ad 写 +0x2f = 0x4B，0x403610 按毫秒比较）；这里和人物出手动作一样加快一些【新】。
 
 /**
  * Effect.lib 第 group 组（0 起）的动画。技能用哪一组见 src/game/effects.ts（不是直接拿技能子项 +6）。
