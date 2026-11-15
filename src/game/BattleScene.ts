@@ -924,6 +924,8 @@ export class BattleScene extends Phaser.Scene {
       case 'message':
         this.ui.message(e.text);
         break;
+      case 'subtitle':
+        break;
       case 'sound':
         if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
         sound.sfx(e.name);
@@ -1390,6 +1392,9 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'message':
         this.ui.message(e.text);
+        break;
+      case 'subtitle':
+        await this.banner(tr(e.text));
         break;
       case 'sound':
         if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
