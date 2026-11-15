@@ -133,7 +133,8 @@ export interface StageLabel {
 
 /** 由 EXE 关卡表标题（繁体，如"第3章 戰役2""第5章 訓練""第2章"）和地图名拼出显示用名字 */
 export function stageLabel(title: string, mapName: string): StageLabel {
-  const ch = Number(/第\s*(\d+)\s*章/.exec(title)?.[1] ?? 0);
+  // 陆谦拦路与其前置插关「野猪林义援」同属第七章；插关继承锚点章节。
+  const ch = mapName.toLowerCase() === 'act7-1a' ? 7 : Number(/第\s*(\d+)\s*章/.exec(title)?.[1] ?? 0);
   const battle = /戰役\s*(\d+)/.exec(title);
   const kind = battle ? `战役${cnNumber(Number(battle[1]))}` : /訓練/.test(title) ? '训练' : '剧情';
   const name = STAGE_NAMES[mapName.toLowerCase()] ?? (title || mapName);
