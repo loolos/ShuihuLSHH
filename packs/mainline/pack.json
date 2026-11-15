@@ -15,6 +15,66 @@
       "from": 14,
       "attack": 15,
       "description": "武松随身带的一条哨棒。"
+    },
+    {
+      "id": "liegong",
+      "name": "獵弓",
+      "from": 14,
+      "type": 11,
+      "attack": 10,
+      "hit": 0,
+      "buyPrice": 300,
+      "shop": [11],
+      "icon": "icons/liegong.png",
+      "description": "山中獵戶常用的木弓，弓力不大。"
+    },
+    {
+      "id": "jiaogong",
+      "name": "角弓",
+      "from": 14,
+      "type": 11,
+      "attack": 18,
+      "hit": 0,
+      "buyPrice": 900,
+      "shop": [11],
+      "icon": "icons/jiaogong.png",
+      "description": "牛角、筋膠合製的軍中常用弓。"
+    },
+    {
+      "id": "quehuagong",
+      "name": "鵲畫弓",
+      "from": 14,
+      "type": 11,
+      "attack": 25,
+      "hit": 5,
+      "buyPrice": 1800,
+      "shop": [11],
+      "icon": "icons/quehuagong.png",
+      "description": "弓背描著喜鵲的好弓，花榮慣用。"
+    },
+    {
+      "id": "tietaigong",
+      "name": "鐵胎弓",
+      "from": 14,
+      "type": 11,
+      "attack": 32,
+      "hit": 5,
+      "buyPrice": 3200,
+      "shop": [11],
+      "icon": "icons/tietaigong.png",
+      "description": "鐵胎硬弓，非臂力過人拉不開。"
+    },
+    {
+      "id": "baodiaogong",
+      "name": "寶雕弓",
+      "from": 14,
+      "type": 11,
+      "attack": 38,
+      "hit": 10,
+      "buyPrice": 5000,
+      "shop": [11],
+      "icon": "icons/baodiaogong.png",
+      "description": "雕翎寶弓，百步穿楊。"
     }
   ],
   "classes": [
@@ -1064,7 +1124,7 @@
     "move": 5,
     "weaponType": 11,
     "items": [
-      0,
+      "liegong",
       103,
       124
     ],

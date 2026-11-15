@@ -95,7 +95,7 @@ describe.skipIf(!has)('主线续篇：景阳冈（武松打虎，原外传）', 
     const staff = rt.data.items[rt.itemIds.get('shaobang')! - 1];
     expect(staff.name).toBe('哨棒');
     expect(staff.attack).toBe(15);
-    expect(base.items.length).toBe(rt.data.items.length - 1);
+    expect(base.items.length).toBe(rt.data.items.length - rt.itemIds.size);
     // 老虎的出手动作：普攻、一扑同一个动作（组 0），一掀、一剪同一个（组 1）
     const tigerSkills = rt.data.classes[rt.classIds.get('tiger')!].skills;
     expect(tigerSkills.map((s) => s.group)).toEqual([0, 0, 1, 1]);
@@ -957,11 +957,23 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
+  it('阳谷整备的武器店卖五把弓，花荣能装备', async () => {
+    const { stock } = await import('../src/rules/town.ts');
+    const { canEquip } = await import('../src/rules/data.ts');
+    const bows = stock(rt.data, 1, 11).map((id) => rt.data.items[id - 1]).filter((it) => it.type === 11);
+    expect(bows.map((it) => it.name)).toEqual(['獵弓', '角弓', '鵲畫弓', '鐵胎弓', '寶雕弓']);
+    for (const it of bows) expect(canEquip(rt.data.classes[cid('huarong')], it, rt.data)).toBe(true);
+    expect(canEquip(rt.data.classes[cid('wusong')], bows[0], rt.data)).toBe(false);
+  });
+
   it('第一次出场的人自带武器；武松用手套，哨棒、解腕刀只是本场临时拿着（负责人 2026-11-15）', () => {
     const glove = (id: number) => rt.data.items[id - 1]?.type === 0;
     for (const id of ['kuaihuolin', 'feiyunpu', 'yuanyanglou']) {
       const b = new Battle(compileStage(rt, stage(id), files, { seed: 1 }));
-      for (const u of b.units.filter((u) => u.side === 'player' && u.classId !== cid('huarong'))) expect(u.slots[0], `${id} ${u.name}`).toBeGreaterThan(0);
+      for (const u of b.units.filter((u) => u.side === 'player')) expect(u.slots[0], `${id} ${u.name}`).toBeGreaterThan(0);
+      // 花荣按等级配弓（负责人 2026-11-15 新增弓）
+      const hr = b.units.find((u) => u.classId === cid('huarong'))!;
+      expect(rt.data.items[hr.slots[0] - 1].name).toBe('鐵胎弓');
     }
     for (const [id, story] of [['jingyanggang', '哨棒'], ['shizilou', '解腕尖刀']] as const) {
       const b = new Battle(compileStage(rt, stage(id), files, { seed: 1 }));

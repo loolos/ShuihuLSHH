@@ -219,6 +219,7 @@ export class TownUI {
   }
 
   private icon(it: Item): string {
+    if (it.iconUrl) return `<img class="ico" alt="" src="${it.iconUrl}">`;
     if (!this.icons.has(it.icon)) {
       let url = '';
       try {
