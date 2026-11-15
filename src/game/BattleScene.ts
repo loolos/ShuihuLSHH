@@ -17,7 +17,7 @@ import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
-import { applyTint, type StageTint } from './tint.ts';
+import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { castPlayMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
@@ -88,6 +88,8 @@ export class BattleScene extends Phaser.Scene {
   /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
   private mapName = 'N01';
   private tint: StageTint | undefined;
+  /** 当前的天色滤镜（剧情里可以换，扩展包指令 tint） */
+  private tintFilter?: Phaser.Filters.Controller;
   private makeInput?: () => StageInput;
   private seed?: number;
   private party?: Map<number, Member>;
@@ -214,7 +216,7 @@ export class BattleScene extends Phaser.Scene {
     const f = cellToWorld(focus.x, focus.y);
     cam.centerOn(f.x, f.y);
     cam.roundPixels = true;
-    applyTint(cam, this.tint);
+    this.tintFilter = applyTint(cam, this.tint);
 
     // 左上角的小地图（原版微缩地图只画地表，见 minimap.ts）
     const board = this.battle.board;
@@ -1405,6 +1407,28 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'subtitle':
         await this.banner(tr(e.text));
+        break;
+      // 剧情演出（扩展包指令 109–113）
+      case 'act': {
+        const u = b.unit(e.uid)!;
+        const v = this.vs(u);
+        v.facing = e.facing;
+        await this.focusOn(u, 300);
+        if (e.action === 'hurt') sound.hurt(false);
+        const action = e.action === 'hurt' ? ACTION.hurt : e.action === 'defend' ? ACTION.defend : idleAction(this.assets, v.cls);
+        await this.playOnce(u, action, e.facing, 1200);
+        if (e.action !== 'defend') this.pose(u);
+        break;
+      }
+      case 'tint':
+        this.tintFilter = applyTint(this.cameras.main, isStageTint(e.tint) ? e.tint : undefined, this.tintFilter);
+        await wait(this, 200);
+        break;
+      case 'focus':
+        await this.focus(e.x, e.y, 400);
+        break;
+      case 'wait':
+        await wait(this, this.fast ? 0 : e.ms);
         break;
       case 'sound':
         if (e.name === 'm12' || e.name === 'm05') this.endSound = true;

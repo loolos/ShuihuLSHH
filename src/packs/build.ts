@@ -457,6 +457,40 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         ops.push({ op: 101, flag: null, value: 0, args: { stat: String(a[1]), pct: o.pct, add: o.add, turns: o.turns } });
         break;
       }
+      // 剧情演出【新】（battle.ts 指令 108–113）
+      case 'face': {
+        // ['face', 谁, 朝向 0–3 或 另一个人的 id]
+        select(a[0]);
+        if (typeof a[1] === 'string') ops.push({ op: 108, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
+        else ops.push({ op: 108, flag: null, value: Number(a[1]) & 3 });
+        break;
+      }
+      case 'act': {
+        // ['act', 谁, 'attack' | 'hurt' | 'defend', 朝向谁（可省）]
+        const action = String(a[1] ?? 'attack');
+        if (!['attack', 'hurt', 'defend'].includes(action)) fail(`第 ${index} 个区块：act 的动作只能是 attack / hurt / defend`);
+        select(a[0]);
+        ops.push({ op: 109, flag: null, value: 0, args: { action, ...(a[2] !== undefined ? { toward: r.unitRef(a[2]).act.group } : {}) } });
+        break;
+      }
+      case 'tint':
+        // ['tint', 'night' | 'dusk' | 'snow' | ''] 换天色，'' 恢复
+        if (a[0] && !['night', 'dusk', 'snow'].includes(String(a[0]))) fail(`第 ${index} 个区块：tint 只能是 night / dusk / snow 或空`);
+        op(110, 0, { text: String(a[0] ?? '') });
+        break;
+      case 'title':
+        op(111, 0, { text: String(a[0]) });
+        break;
+      case 'focus': {
+        // ['focus', x, y] 或 ['focus', 谁]
+        if (typeof a[0] === 'string') {
+          ops.push({ op: 112, flag: null, value: 0, args: { toward: r.unitRef(a[0]).act.group } });
+        } else ops.push({ op: 112, flag: null, value: 0, args: { x: Number(a[0]), y: Number(a[1]) } });
+        break;
+      }
+      case 'wait':
+        op(113, Math.max(0, Math.min(5000, Number(a[0]) || 0)));
+        break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
     }

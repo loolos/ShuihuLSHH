@@ -14,10 +14,15 @@ const MATRIX: Record<StageTint, { saturate: number; m: number[] }> = {
   dusk: { saturate: -0.15, m: [0.95, 0, 0, 0, 10, 0, 0.75, 0, 0, 0, 0, 0, 0.6, 0, 0, 0, 0, 0, 1, 0] },
 };
 
-export function applyTint(cam: Phaser.Cameras.Scene2D.Camera, tint: StageTint | undefined): void {
-  if (!tint || !MATRIX[tint]) return;
+/** 加上天色滤镜；prev 是之前 applyTint 返回的滤镜，先摘掉（剧情里换天色，扩展包指令 tint）。返回新滤镜，没有天色返回 undefined */
+export function applyTint(cam: Phaser.Cameras.Scene2D.Camera, tint: StageTint | undefined, prev?: Phaser.Filters.Controller): Phaser.Filters.Controller | undefined {
+  if (prev) cam.filters.internal.remove(prev, true);
+  if (!tint || !MATRIX[tint]) return undefined;
   const { saturate, m } = MATRIX[tint];
-  const cm = cam.filters.internal.addColorMatrix().colorMatrix;
-  cm.saturate(saturate);
-  cm.multiply(m, true);
+  const f = cam.filters.internal.addColorMatrix();
+  f.colorMatrix.saturate(saturate);
+  f.colorMatrix.multiply(m, true);
+  return f;
 }
+
+export const isStageTint = (s: unknown): s is StageTint => typeof s === 'string' && s in MATRIX;

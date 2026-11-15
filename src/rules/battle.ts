@@ -68,6 +68,11 @@ export type BattleEvent =
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
   | { type: 'subtitle'; text: string }
+  /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
+  | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
+  | { type: 'tint'; tint: string }
+  | { type: 'focus'; x: number; y: number }
+  | { type: 'wait'; ms: number }
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
@@ -1478,6 +1483,42 @@ export class Battle {
           sel.forge[op.flag ?? 0] = 0;
           refreshStats(sel, this.data);
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
+          break;
+        // 108–113 剧情演出（扩展包【新】，挑帘裁衣等纯剧情关）：只改朝向或放画面，不动血量、位置和胜负
+        // 108 转身：value = 朝向 0–3，或 args.toward = 朝向某个编组的人
+        case 108: {
+          if (!sel || !sel.present) break;
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          sel.facing = t ? facingTowards(sel, t, sel.facing) : op.value & 3;
+          this.emit({ type: 'face', uid: sel.uid, facing: sel.facing });
+          break;
+        }
+        // 109 做一个动作（出手、受击、防御），args.toward 先转向那人
+        case 109: {
+          if (!sel || !sel.present) break;
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          if (t) sel.facing = facingTowards(sel, t, sel.facing);
+          const action = op.args?.action === 'hurt' || op.args?.action === 'defend' ? op.args.action : 'attack';
+          this.emit({ type: 'act', uid: sel.uid, action, facing: sel.facing });
+          break;
+        }
+        // 110 换天色（text = night / dusk / snow，空 = 恢复白天）
+        case 110:
+          this.emit({ type: 'tint', tint: op.text ?? '' });
+          break;
+        // 111 场景字幕（画面中间的大字，如「次日」「当夜」）
+        case 111:
+          this.emit({ type: 'subtitle', text: op.text ?? '' });
+          break;
+        // 112 镜头移到某格
+        case 112: {
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          this.emit({ type: 'focus', x: t?.x ?? op.args?.x ?? 0, y: t?.y ?? op.args?.y ?? 0 });
+          break;
+        }
+        // 113 停顿（毫秒）
+        case 113:
+          this.emit({ type: 'wait', ms: op.value });
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:

@@ -653,6 +653,22 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
+  it('挑帘裁衣：自拼紫石街地图；剧情演出指令（转身、动作、天色、字幕）编进事件，天色最后回到夜里', () => {
+    const stage = stageOf('tiaolian');
+    expect(stage.map).toMatchObject({ custom: 'zishijie' });
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    const ev = b.begin();
+    const tints = ev.filter((e) => e.type === 'tint').map((e) => (e as { tint: string }).tint);
+    expect(tints).toContain('snow');
+    expect(tints.at(-1)).toBe('night');
+    expect(ev.filter((e) => e.type === 'subtitle').length).toBeGreaterThanOrEqual(10);
+    const xmq = b.units.find((u) => u.name === '西门庆')!;
+    expect(ev.some((e) => e.type === 'act' && e.uid === xmq.uid && e.action === 'attack')).toBe(true);
+    expect(ev.some((e) => e.type === 'face')).toBe(true);
+    // 演出不改血量
+    expect(b.units.every((u) => u.hp === u.stats.maxHp)).toBe(true);
+  });
+
   it('景阳冈：店小二只在对话里出声，不上地图（offstage）', () => {
     const b = new Battle(compileStage(rt, stageOf('jingyanggang'), files, { seed: 1, text: tr }));
     const ev = b.begin();
