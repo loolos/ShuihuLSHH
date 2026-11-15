@@ -18,6 +18,8 @@ export interface SkillDef extends ClassSkill {
   castCycles?: number;
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
+  /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）；只是画面 */
+  hitFx?: 'blood';
   /** 固定伤害系数（取代远程距离系数）：敌兵远射技伤害 = 正常公式 × 此值（§6.6） */
   damageScale?: number;
   /** 敌兵远射技（§6.6）：AI 只在能打到 2 人以上、或没有别的攻击可用时才放；不计入迎击警戒半径 */
