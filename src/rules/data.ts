@@ -260,14 +260,14 @@ interface TroopSkill {
 const DIAMOND = { targetShape: 'diamond' as const };
 export const TROOP_SKILLS: TroopSkill[] = [
   // 杂兵（伤害 35%）
-  { classes: [19, 20, 40, 41], borrow: 0, skill: { name: '亂石飛投', type: 3, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 44, ...DIAMOND } }, // 莊客：十字 5 格，第 43 组白色火花
+  { classes: [19, 20, 40, 41], borrow: 0, skill: { name: '亂石飛投', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 44, ...DIAMOND } }, // 莊客：从落点往前一线 3 格，第 43 组白色火花
   { classes: [22, 23, 44, 45], borrow: 0, skill: { name: '滾木擂石', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 44, ...DIAMOND } }, // 囉嘍：从落点往前一线 3 格
   { classes: [21], borrow: 1, skill: { name: '撒網', type: 3, area: 2, rangeMin: 2, rangeMax: 3, mpCost: 25, damageScale: 0.35, stun: 10, effect: 49, ...DIAMOND } }, // 漁人：十字 5 格，第 48 组蓝环
   { classes: [32, 33], borrow: 0, skill: { name: '擲槍', type: 10, area: 2, rangeMin: 2, rangeMax: 5, mpCost: 25, damageScale: 0.35, effect: 57 } }, // 士兵：直线飞枪，贯穿 2 格（飞刀弹道 56–59）
-  { classes: [34], borrow: 0, skill: { name: '火箭齊發', type: 3, area: 2, rangeMin: 3, rangeMax: 7, mpCost: 30, damageScale: 0.35, effect: 42, ...DIAMOND } }, // 弓箭手：十字 5 格，第 41 组火焰
+  { classes: [34], borrow: 0, skill: { name: '火箭齊發', type: 0, area: 3, rangeMin: 3, rangeMax: 7, mpCost: 30, damageScale: 0.35, effect: 42, ...DIAMOND } }, // 弓箭手：从落点往前一线 3 格，第 41 组火焰
   { classes: [36], borrow: 1, skill: { name: '飛鏈鎖拿', type: 0, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, stun: 15, effect: 49, ...DIAMOND } }, // 官吏：一线 2 格
   { classes: [37], borrow: 1, skill: { name: '石灰包', type: 3, area: 2, rangeMin: 2, rangeMax: 3, mpCost: 25, damageScale: 0.35, stun: 15, effect: 32, ...DIAMOND } }, // 家人：十字 5 格，第 31 组白粉星光
-  { classes: [67], borrow: 1, skill: { name: '連環飛鏢', type: 10, area: 2, rangeMin: 2, rangeMax: 6, mpCost: 25, damageScale: 0.35, effect: 57 } }, // 徒弟：直线飞镖，贯穿 2 格
+  { classes: [67], borrow: 1, skill: { name: '連環飛鏢', type: 10, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 57 } }, // 徒弟：直线飞镖，贯穿 2 格
   // 小头目（伤害 40%，頭領 30%）
   { classes: [38], borrow: 0, skill: { name: '震地拳風', type: 3, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 35, damageScale: 0.4, effect: 38, ...DIAMOND } }, // 都頭：十字 5 格，第 37 组蓝色冲击
   { classes: [39], borrow: 0, skill: { name: '劈空掌', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 35, damageScale: 0.4, effect: 44, ...DIAMOND } }, // 教頭：一线 3 格
