@@ -78,9 +78,10 @@ export const RANGED_MIN = 0.1;
 export function rangedFactor(att: Unit, def: Unit, skill: SkillDef): number {
   if (skill.type !== 10) return 1;
   const hi = Math.max(1, skill.rangeMax + att.stats.rangeBonus);
-  if (hi <= 1) return RANGED_MAX;
+  const [near, far] = skill.rangedDamage ?? [RANGED_MAX, RANGED_MIN];
+  if (hi <= 1) return near;
   const d = Math.min(hi, Math.max(1, dist(att, def)));
-  return RANGED_MAX - ((RANGED_MAX - RANGED_MIN) * (d - 1)) / (hi - 1);
+  return near - ((near - far) * (d - 1)) / (hi - 1);
 }
 
 /** 不含随机部分的伤害：返回 [普通, 必杀]（未取整），已乘远程距离系数和侧背攻击加成（守方防御时无侧背加成） */

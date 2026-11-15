@@ -99,6 +99,8 @@ export interface PackSkillJson {
   targetShape?: 'diamond';
   /** 类型 8 的回气技作用于队友，而非自己。 */
   chargeTarget?: 'ally';
+  /** 类型10的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
+  rangedDamage?: [number, number];
   rangeMin?: number;
   rangeMax?: number;
   area?: number;

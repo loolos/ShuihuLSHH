@@ -20,6 +20,17 @@ import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
+describe.skipIf(!has)('花荣专属远程衰减', () => {
+  it.each(['mainline', 'jiangzhou'])('%s仅花荣拥有100%到60%的距离伤害系数', (pack) => {
+    const rt = loadPackFromDisk(pack);
+    const id = rt.classIds.get('huarong')!;
+    expect(rt.data.classes[id].skills[0].rangedDamage).toEqual([1, 0.6]);
+    for (const c of rt.data.classes) for (const skill of c.skills) {
+      if (c.id !== id) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
+    }
+  });
+});
+
 describe('宋江杀惜剧本', () => {
   it('送别后阎婆惜才入场看信，宋江回来后才起争执', () => {
     const stage = JSON.parse(fs.readFileSync('packs/mainline/stages/songjiang-yanshixi.json', 'utf8'));

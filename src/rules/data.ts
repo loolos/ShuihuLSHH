@@ -12,6 +12,8 @@ export interface SkillDef extends ClassSkill {
   targetShape?: 'diamond';
   /** 集气技可指定一名同阵营队友为目标；不含施放者本人。 */
   chargeTarget?: 'ally';
+  /** 类型10的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
+  rangedDamage?: [number, number];
 }
 
 export interface ClassDef {
