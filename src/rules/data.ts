@@ -2,6 +2,7 @@
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
+import { GRUNT_CLASSES, OFFICER_CLASSES } from './growth.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
@@ -269,6 +270,8 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
           ...s,
           ...SKILL_OVERRIDES[s.skillId],
           ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
+          // 模板职业的普攻、特殊技能必杀修正均不超过 5；同号技能在其他职业上保留原值。
+          ...(GRUNT_CLASSES.has(r.id) || OFFICER_CLASSES.has(r.id) ? { critMod: Math.min(5, SKILL_OVERRIDES[s.skillId]?.critMod ?? s.critMod) } : {}),
           name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
           ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
         }))),
