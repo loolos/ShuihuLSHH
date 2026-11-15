@@ -59,13 +59,13 @@ describe('章节表', () => {
     expect(at['mainline/chifagui']).toBe('Act10-1');
     expect(at['mainline/sanruan']).toBe('Act10-1');
     expect(at['mainline/yuanyanglou']).toBe('after N14');
-    // 续篇各章：坐楼杀惜、义释宋公明留在第十五章；第十六–十八章各一组
+    // 续篇各章：坐楼杀惜、义释宋公明留在第十五章；第十六、十七章各一组
     expect(chapterOf('mainline/songjiazhuang')).toBe(15);
     expect(chapterOf('mainline/chaijin-liubin')).toBe(16);
     expect(chapterOf('mainline/shizipo')).toBe(17);
     expect(chapterOf('mainline/zhangfu')).toBe(17);
-    expect(chapterOf('mainline/yuanyanglou')).toBe(18);
-    expect(CHAPTERS).toHaveLength(18);
+    expect(chapterOf('mainline/yuanyanglou')).toBe(17);
+    expect(CHAPTERS).toHaveLength(17);
   });
 });
 

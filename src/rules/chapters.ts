@@ -38,8 +38,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '投奔梁山泊', stages: ['N-add16', 'Train2', 'Act14-2', 'Act14-3'] },
   { name: '梁山泊聚义', stages: ['N14', 'mainline/songjiang-yanshixi', 'mainline/songjiazhuang'] },
   { name: '景阳冈打虎', stages: ['mainline/chaijin-liubin', 'mainline/jingyanggang', 'mainline/tiaolian', 'mainline/shizilou'] },
-  { name: '孟州风雨', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu'] },
-  { name: '血溅鸳鸯楼', stages: ['mainline/feiyunpu', 'mainline/yuanyanglou'] },
+  // 负责人 2026-11-15：十字坡到鸳鸯楼合成一章（原第十七章 孟州风雨、第十八章 血溅鸳鸯楼）
+  { name: '血溅鸳鸯楼', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu', 'mainline/feiyunpu', 'mainline/yuanyanglou'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
