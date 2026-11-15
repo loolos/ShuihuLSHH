@@ -1,0 +1,317 @@
+{
+ "id": "chaijin-liubin",
+ "title": "柴进留宾",
+ "after": "N14",
+ "pov": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "base": "Act8-1"
+ },
+ "bgm": ["brothers", "story"],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 17,
+   "y": 10,
+   "facing": 1,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "songqing",
+   "class": 37,
+   "side": "ally",
+   "x": 17,
+   "y": 11,
+   "facing": 1,
+   "level": 20,
+   "name": "宋清",
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "chaijin",
+   "class": 26,
+   "side": "ally",
+   "x": 10,
+   "y": 8,
+   "facing": 3,
+   "level": 30,
+   "name": "柴进",
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "zhuangke",
+   "class": 19,
+   "side": "ally",
+   "x": 11,
+   "y": 7,
+   "facing": 3,
+   "level": 10,
+   "name": "庄客",
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "side": "ally",
+   "x": 10,
+   "y": 5,
+   "facing": 2,
+   "level": 27,
+   "name": "武松",
+   "ai": 8,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "narrate",
+     "话说宋江别了朱仝，当夜同兄弟宋清离了宋家村。思量江湖上有三个去处可以安身，头一个便是沧州横海郡小旋风柴进庄上。弟兄两个晓行夜住，不则一日，来到柴大官人庄前。"
+    ],
+    [
+     "appear",
+     "songjiang"
+    ],
+    [
+     "appear",
+     "songqing"
+    ],
+    [
+     "move",
+     "songjiang",
+     12,
+     9
+    ],
+    [
+     "move",
+     "songqing",
+     13,
+     10
+    ],
+    [
+     "appear",
+     "zhuangke"
+    ],
+    [
+     "say",
+     "zhuangke",
+     "二位客官从哪里来？可是来寻我家大官人的？"
+    ],
+    [
+     "say",
+     "songjiang",
+     "烦请通报一声：郓城县宋江，特来拜见柴大官人。"
+    ],
+    [
+     "narrate",
+     "庄客飞也似入去报知。不多时，只见柴进从庄里奔将出来，口里叫道——"
+    ],
+    [
+     "appear",
+     "chaijin"
+    ],
+    [
+     "say",
+     "chaijin",
+     "端的想杀柴进！天幸今日甚风吹得到此，大慰平生渴仰之念。多幸，多幸！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "宋江疏顽小吏，今日特来相投。实不相瞒：小可杀了一个人，官司追捕得紧，无处安身，只得来投奔大官人。"
+    ],
+    [
+     "say",
+     "chaijin",
+     "兄长放心。遮莫做下十恶大罪，既到敝庄，但不用忧心。"
+    ],
+    [
+     "say",
+     "songqing",
+     "多谢大官人！我哥哥连日奔走，到此方得安心。"
+    ],
+    [
+     "leave",
+     "chaijin"
+    ],
+    [
+     "leave",
+     "zhuangke"
+    ],
+    [
+     "leave",
+     "songqing"
+    ],
+    [
+     "leave",
+     "songjiang"
+    ],
+    [
+     "narrate",
+     "柴进置酒相待，直吃到初更时分。宋江起身去净手，转出东廊下来。廊下一条大汉害着疟疾，正在那里向火。"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "songjiang"
+    ],
+    [
+     "move",
+     "songjiang",
+     9,
+     5
+    ],
+    [
+     "narrate",
+     "宋江已有八分酒，脚步趄了，只顾踏去，正踏在火锨柄上，把那火锨里炭火都掀在那汉脸上。"
+    ],
+    [
+     "say",
+     "wusong",
+     "你是甚么鸟人，敢来消遣我！"
+    ],
+    [
+     "appear",
+     "zhuangke"
+    ],
+    [
+     "move",
+     "zhuangke",
+     9,
+     6
+    ],
+    [
+     "say",
+     "zhuangke",
+     "不得无礼！这位是大官人的亲戚客官。"
+    ],
+    [
+     "say",
+     "wusong",
+     "客官，客官！我初来时也是客官，也曾相待的厚。如今却听庄客搬口，便疏慢了我。"
+    ],
+    [
+     "narrate",
+     "那汉提起拳头，正要打宋江，只见柴进亲自赶到廊下。"
+    ],
+    [
+     "appear",
+     "chaijin"
+    ],
+    [
+     "move",
+     "chaijin",
+     9,
+     7
+    ],
+    [
+     "say",
+     "chaijin",
+     "大汉，你不认的这位奢遮的押司？"
+    ],
+    [
+     "say",
+     "wusong",
+     "奢遮，奢遮！他敢比不得郓城宋押司少些儿！"
+    ],
+    [
+     "say",
+     "chaijin",
+     "你认得宋押司么？"
+    ],
+    [
+     "say",
+     "wusong",
+     "我虽不曾认的，江湖上久闻他是个及时雨宋公明，仗义疏财，扶危济困，是个天下闻名的好汉。我如今只等病好时，便去投奔他。"
+    ],
+    [
+     "say",
+     "chaijin",
+     "大汉，远便十万八千，近便在面前。此位便是及时雨宋公明。"
+    ],
+    [
+     "say",
+     "wusong",
+     "真个也？……我不是梦里么？与兄长相见！"
+    ],
+    [
+     "narrate",
+     "那汉翻身便拜，伏地不肯起来。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "何故如此错爱？快请起来。敢问足下高姓大名？"
+    ],
+    [
+     "say",
+     "wusong",
+     "小人是此间邻郡清河县人氏，姓武名松，排行第二。因酒后打了人，只道打死了，逃来柴大官人庄上躲了一年有余。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "原来是武二郎！今夜便与兄弟同席，吃个尽醉。"
+    ],
+    [
+     "narrate",
+     "自此宋江每日带挈武松一处饮酒相陪，武松的疟疾不觉都好了。住了十数日，武松思乡，要回清河县看望哥哥。宋江送出庄来，路上一处酒店里，两个结拜了，武松拜宋江为兄。"
+    ],
+    [
+     "move",
+     "songjiang",
+     12,
+     9
+    ],
+    [
+     "move",
+     "wusong",
+     13,
+     9
+    ],
+    [
+     "say",
+     "songjiang",
+     "兄弟此去，一路小心。这锭银子你且收着，路上使用。"
+    ],
+    [
+     "say",
+     "wusong",
+     "哥哥，休要远送。常言道：送君千里，终须一别。哥哥恩义，武二牢记在心，日后再来相会！"
+    ],
+    [
+     "move",
+     "wusong",
+     17,
+     10
+    ],
+    [
+     "leave",
+     "wusong"
+    ],
+    [
+     "say",
+     "songjiang",
+     "好一条汉子！但愿他一路平安。"
+    ],
+    [
+     "victory",
+     "武松辞了宋江，回清河县寻哥哥去了。"
+    ]
+   ]
+  }
+ ]
+}
