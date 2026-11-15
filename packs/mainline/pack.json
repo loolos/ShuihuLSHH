@@ -350,6 +350,34 @@
           "learnLevel": 6
         }
       ]
+    },
+    {
+      "id": "yanpoxi",
+      "name": "阎婆惜",
+      "base": {
+        "hp": 40,
+        "mp": 20,
+        "attack": 10,
+        "defense": 5,
+        "hit": 50,
+        "agility": 30,
+        "crit": 0
+      },
+      "move": 4,
+      "skills": [
+        {
+          "id": "ypx-hit",
+          "name": "拉扯",
+          "from": 194,
+          "anim": 0
+        }
+      ],
+      "sprite": {
+        "fromClass": 31
+      },
+      "face": {
+        "file": "faces/yanpoxi.png"
+      }
     }
   ],
   "stages": [
