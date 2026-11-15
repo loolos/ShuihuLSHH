@@ -62,6 +62,10 @@ export async function openPack(assets: Assets, id: string): Promise<PackAssets> 
     if (j) sheets[c.sprite.sheet] = j;
   }
   const rt = buildPack(assets.data, entry.pack, entry.stages, sheets);
+  for (const it of entry.pack.items ?? []) {
+    const url = it.icon && PNGS[`/packs/${id}/${it.icon}`];
+    if (url) rt.data.items[rt.itemIds.get(it.id)! - 1].iconUrl = url;
+  }
   const images = new Map<string, HTMLImageElement>();
   const jobs: Promise<void>[] = [];
   for (const [sheet, j] of Object.entries(sheets))

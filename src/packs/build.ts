@@ -73,6 +73,8 @@ export interface PackRuntime {
   classIds: Map<string, number>;
   skillIds: Map<string, number>;
   itemIds: Map<string, number>;
+  /** 包里在城镇有卖的道具（运行时道具号）：和原版装备一样按等级表换，不当剧情道具保留 */
+  shopItems: Set<number>;
   /** 运行时职业号 → 画面信息 */
   looks: Map<number, PackClassLook>;
   stages: PackStageJson[];
@@ -93,12 +95,19 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
   const skillIds = new Map<string, number>();
   const itemIds = new Map<string, number>();
   const items = [...base.items];
+  const shopItems = new Set<number>();
   for (const it of pack.items ?? []) {
     const from = base.items[it.from - 1];
     if (!from) throw new Error(`${pack.id}: 道具 ${it.id} 借的原版道具 ${it.from} 不存在`);
     const id = items.length + 1;
-    items.push({ ...from, id, name: it.name, description: it.description ?? from.description, attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility });
+    const sale = it.shop ? { category: 2, seqA: [...it.shop, ...Array(13).fill(0)].slice(0, 13) } : {};
+    const price = it.buyPrice !== undefined ? { buyPrice: it.buyPrice, sellPrice: Math.floor(it.buyPrice / 2) } : {};
+    items.push({
+      ...from, ...sale, ...price, id, name: it.name, type: it.type ?? from.type, description: it.description ?? from.description,
+      attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility, hit: it.hit ?? from.hit,
+    });
     itemIds.set(it.id, id);
+    if (it.shop) shopItems.add(id);
   }
   const itemRef = (v: number | string) => (typeof v === 'number' ? v : (itemIds.get(v) ?? fail(`${pack.id}: 没有道具 ${v}`)));
   const templates = new Map<number, SkillDef>();
@@ -181,6 +190,7 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
     classIds,
     skillIds,
     itemIds,
+    shopItems,
     looks,
     stages,
     sheets,
@@ -312,7 +322,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
 function kitPlayers(rt: PackRuntime, stage: PackStageJson, units: ActUnit[], files: FileSource): void {
   if (stage.gearAt === 'none') return;
-  const custom = new Set(rt.itemIds.values());
+  const custom = new Set([...rt.itemIds.values()].filter((id) => !rt.shopItems.has(id)));
   for (const u of units) {
     if (u.side !== 'player') continue;
     const cls = rt.data.classes[u.type];

@@ -25,9 +25,10 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '夜走华阴县', stages: ['N03', 'Act3-4', 'N-add04a', 'N-add04b', 'Act5-1a'] },
   { name: '大闹桃花村', stages: ['N-add05', 'Act4-2', 'Act4-3', 'N04', 'Act5-1'] },
   { name: '东京遇林冲', stages: ['mainline/wawasi', 'N-add06', 'Train1', 'N-add07', 'Act5-2', 'Act5-3', 'N05', 'Act6-1', 'Act6-2'] },
-  { name: '误入白虎堂', stages: ['N-add08', 'Act6-3', 'N06', 'Act7-1', 'mainline/zhizhulin', 'Act7-1a'] },
-  { name: '大闹野猪林', stages: ['N07'] },
-  { name: '柴门招豪客', stages: ['N-add09a', 'N-add09b', 'Act8-1', 'N-add10', 'N08', 'Act9-1'] },
+  { name: '误入白虎堂', stages: ['N-add08', 'Act6-3', 'N06', 'Act7-1'] },
+  // 负责人 2026-11-15（#234）：野猪林义援、陆谦拦路、关前遇盘查（及其后的城镇 沧州城）归第七章
+  { name: '大闹野猪林', stages: ['mainline/zhizhulin', 'Act7-1a', 'N07', 'N-add09a'] },
+  { name: '柴门招豪客', stages: ['N-add09b', 'Act8-1', 'N-add10', 'N08', 'Act9-1'] },
   { name: '风雪山神庙', stages: ['N09'] },
   { name: '青面兽杨志', stages: ['N-add11', 'mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
   { name: '认义东溪村', stages: ['N-add13', 'N11'] },

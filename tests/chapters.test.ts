@@ -87,7 +87,9 @@ describe.skipIf(!fs.existsSync(EXE))('章节表与原版', () => {
       expect(order.indexOf(next), `${s.mapName} → ${next}`).toBeGreaterThan(order.indexOf(s.index));
     }
   });
-  it('原版关卡的分章和 EXE 标题里的"第N章"一致（要改原版关卡的分章时改这条测试）', () => {
-    for (const s of stages) expect(chapterOf(s.mapName), s.mapName).toBe(Number(/第\s*(\d+)\s*章/.exec(s.title)?.[1]));
+  it('原版关卡的分章和 EXE 标题里的"第N章"一致，负责人调整过的除外（再调整时把它加进 moved）', () => {
+    // 负责人调整过的（#234）：EXE 标题第六章 / 第八章，重制版归第七章
+    const moved: Record<string, number> = { 'act7-1a': 7, 'n-add09a': 7 };
+    for (const s of stages) expect(chapterOf(s.mapName), s.mapName).toBe(moved[s.mapName.toLowerCase()] ?? Number(/第\s*(\d+)\s*章/.exec(s.title)?.[1]));
   });
 });
