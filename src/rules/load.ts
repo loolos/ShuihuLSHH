@@ -8,6 +8,7 @@ import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts
 import { Board } from './board.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import { tuneBlocks, tuneUnits } from './stage-tune.ts';
+import { applyStoryQuotes } from './story-quotes.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, withItemOverrides, type ClassDef, type GameData } from './data.ts';
 import { statAt, tierGear } from './growth.ts';
@@ -107,6 +108,10 @@ export const STAGE_STORY_TEXT: Record<string, Record<string, string>> = {
 
 /** 对逻辑剧本与简体显示剧本同时替换文字，保持两份区块结构一致。 */
 export function adjustStoryText(stage: string, blocks: PasBlock[], text: (s: string) => string = (s) => s): PasBlock[] {
+  return applyStoryQuotes(stage, replaceStoryText(stage, blocks, text), text).blocks;
+}
+
+function replaceStoryText(stage: string, blocks: PasBlock[], text: (s: string) => string): PasBlock[] {
   const overrides = STAGE_STORY_TEXT[stage.toLowerCase()];
   if (!overrides) return blocks;
   return blocks.map((block) => ({

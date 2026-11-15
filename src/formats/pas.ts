@@ -109,6 +109,8 @@ export interface PasOp {
   text?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
   args?: { stat?: string; pct?: number; add?: number; turns?: number };
+  /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
+  quiet?: boolean;
 }
 
 export interface PasBlock {
