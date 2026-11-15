@@ -125,9 +125,12 @@
      "id": "lk-kan",
      "name": "板斧砍",
      "from": 221,
-     "anim": "sword-attack",
+     "anim": "axe-four",
      "hitAt": [
-      0.45
+      0.1125,
+      0.3625,
+      0.6125,
+      0.8625
      ]
     },
     {

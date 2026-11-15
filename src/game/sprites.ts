@@ -209,7 +209,8 @@ function packAnim(scene: Phaser.Scene, pack: PackAssets, cls: number, action: nu
       f.pivotY = sheet.anchor[1] / fh;
       frames.push({ key: tk });
     }
-    scene.anims.create({ key, frames, frameRate: 1000 / strip.ms, repeat });
+    const sequence = Array.from({ length: strip.cycles ?? 1 }, () => frames).flat();
+    scene.anims.create({ key, frames: sequence, frameRate: 1000 / strip.ms, repeat });
   }
   return key;
 }

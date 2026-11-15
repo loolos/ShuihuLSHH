@@ -334,6 +334,13 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(look.sheet).toBe('sprites/likui');
     const sk = rt.data.classes[id].skills;
     expect(sk.map((s) => s.name)).toEqual(['板斧砍', '双斧连劈', '黑旋风', '运气']);
+    expect(sk[0].hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
+    expect(sk[0].hits.map((h) => h.frame)).toEqual([6, 18, 29, 41]);
+    const combo = rt.sheets[look.sheet].actions['axe-four'];
+    for (const strip of [combo.front, combo.back]) {
+      expect(strip.cycles).toBe(4);
+      expect(strip.frames * strip.ms * strip.cycles!).toBe(2080);
+    }
     expect(sk[1].hits.length).toBe(2);
     expect(new Set(sk[2].hits.map((h) => h.dir)).size).toBe(4);
   });
