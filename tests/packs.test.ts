@@ -20,11 +20,20 @@ describe('宋江杀惜剧本', () => {
     const index = (action: string, value: string) => actions.findIndex((a) => a[0] === action && a[1] === value);
     const liuLeaves = index('leave', 'liutang');
     const songLeaves = index('leave', 'songjiang');
-    const yanAppears = index('appear', 'yanpoxishi');
+    const enters = (id: string, from = 0) => actions.findIndex((a, i) => i >= from && (a[0] === 'appear' || a[0] === 'move') && a[1] === id);
+    const liuEnters = enters('liutang');
+    const yanAppears = enters('yanpoxishi');
     const readsLetter = actions.findIndex((a) => a[0] === 'narrate' && a[1].includes('藏起'));
-    const songReturns = index('appear', 'songjiang');
+    const songReturns = enters('songjiang', songLeaves);
     const dispute = actions.findIndex((a, i) => i > songReturns && a[0] === 'say' && a[1] === 'songjiang');
     expect(stage.units.find((u: { id: string }) => u.id === 'yanpoxishi').hidden).toBe(true);
+    expect(stage.units.find((u: { id: string }) => u.id === 'liutang').hidden).toBe(true);
+    // 刘唐、宋江进出门都走路：入场第一个动作是 move，每次退场前最后一个动作也是 move
+    const lastMoveBefore = (id: string, i: number) => actions.slice(0, i).filter((x) => x[1] === id && x[0] !== 'say').at(-1)?.[0];
+    expect(actions[liuEnters][0]).toBe('move');
+    expect(lastMoveBefore('liutang', liuLeaves)).toBe('move');
+    actions.forEach((x, i) => { if (x[0] === 'leave' && x[1] === 'songjiang') expect(lastMoveBefore('songjiang', i)).toBe('move'); });
+    expect(actions[songReturns][0]).toBe('move');
     expect(liuLeaves).toBeGreaterThan(-1);
     expect(songLeaves).toBeGreaterThan(liuLeaves);
     expect(yanAppears).toBeGreaterThan(songLeaves);
