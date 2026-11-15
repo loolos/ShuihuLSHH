@@ -285,7 +285,7 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const stats = computeStats(cls, level, slots, this.data, false, forge);
+      const stats = computeStats(cls, level, slots, this.data, false, forge, [], a.side);
       this.units.push({
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
@@ -860,6 +860,10 @@ export class Battle {
         return this.flush();
       }
     }
+    if (u.storyGear?.[slot] || u.storyGear?.[to]) {
+      this.emit({ type: 'message', text: '本场暂以拳脚应战，原武器已妥善保管。' });
+      return this.flush();
+    }
     [u.slots[slot], u.slots[to]] = [u.slots[to] ?? 0, u.slots[slot]];
     [u.forge[slot], u.forge[to]] = [u.forge[to] ?? 0, u.forge[slot] ?? 0];
     const before = u.stats.move;
@@ -874,6 +878,7 @@ export class Battle {
   canEquipItem(u: Unit, slot: number): boolean {
     const it = itemOf(this.data, u.slots[slot]);
     if (!it || u.side !== 'player' || !this.canAct(u)) return false;
+    if (u.storyGear?.[slot] || u.storyGear?.[equipSlotOf(it)]) return false;
     if (slot < EQUIP_SLOTS) return freeBagSlot(u.slots) >= 0;
     return equipSlotOf(it) >= 0 && canEquip(this.data.classes[u.classId], it, this.data);
   }
@@ -1454,6 +1459,13 @@ export class Battle {
           break;
         // 100 起：扩展包的新指令【新】（src/packs/script.ts）
         // 100 换装备：flag = 格号（0 武器、1 衣服、2 头饰），value = 道具号，0 = 卸掉（武松的哨棒折断）
+        case 107:
+          if (sel) {
+            const slot = op.flag ?? 0;
+            sel.storyGear ??= {};
+            sel.storyGear[slot] ??= { item: sel.slots[slot], forge: sel.forge[slot] ?? 0 };
+          }
+          // fall through: change this battle’s gear, keeping the original for settlement
         case 100:
           if (!sel) break;
           sel.slots[op.flag ?? 0] = op.value;

@@ -10,10 +10,16 @@ export interface Member {
   slots: number[];
   /** 每格道具打铁的次数（旧存档没有） */
   forge?: number[];
+  /** 原版好汉携带包道具时也保留稳定道具键。 */
+  itemKeys?: Record<number, string>;
 }
 
 export interface CampaignState {
   version: 1;
+  /** 包人物以稳定的包/职业id保存，装备也不依赖运行时编号。 */
+  companions?: Record<string, Omit<Member, "classId" | "slots"> & { slots: (number | string)[] }>;
+  /** 续篇城镇：不借原版下一关推算名单或去向。 */
+  insertTown?: { pack: string; next: string; seen: boolean; town: number };
   /** 当前（或下一场要打的）关卡在 EXE 关卡表里的序号 */
   stage: number;
   members: Member[];
@@ -112,6 +118,7 @@ export function joinLevel(c: CampaignState): number {
  */
 export function recordResult(c: CampaignState, battle: Battle, opts: { keepActive?: boolean; classLimit?: number } = {}): CampaignState {
   const members = new Map(c.members.map((m) => [m.classId, m]));
+  const itemKeys = Object.assign({}, ...c.members.map(m=>m.itemKeys ?? {})) as Record<number, string>;
   let gold = c.gold + (battle.status === 'won' ? battle.clearGold : 0);
   const active: number[] = [];
   const benched = new Set(battle.benchedUids);
@@ -121,7 +128,9 @@ export function recordResult(c: CampaignState, battle: Battle, opts: { keepActiv
     if (opts.classLimit !== undefined && u.classId >= opts.classLimit) continue;
     // 没登场或中途退场（如王進）的不算；选人关没被选上的人只是这一关不出战，仍在队里
     if (u.present || !u.alive || benched.has(u.uid)) active.push(u.classId);
-    members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots: [...u.slots], forge: [...u.forge] });
+    const slots = [...u.slots], forge = [...u.forge];
+    for (const [k, gear] of Object.entries(u.storyGear ?? {})) { slots[Number(k)] = gear.item; forge[Number(k)] = gear.forge; }
+    members.set(u.classId, { classId: u.classId, level: u.level, exp: u.exp, slots, forge, itemKeys: Object.fromEntries(slots.filter(id=>itemKeys[id]).map(id=>[id,itemKeys[id]])) });
   }
   // 没有我方出场的过场（如 Act13-1 只有官军）沿用上一关的出场名单，免得城镇里一个人都不列
   if (opts.keepActive && c.active) for (const id of c.active) if (!active.includes(id)) active.push(id);
@@ -155,4 +164,15 @@ export function parseCampaign(text: string | null): CampaignState | null {
   } catch {
     return null;
   }
+}
+
+/** 选关可调整等级，但已有资产优先；无记录才采用试玩初始化。 */
+export function inheritAssets(previous: CampaignState, recommended: CampaignState): CampaignState {
+  if (!previous.members.length && !Object.keys(previous.companions ?? {}).length) return recommended;
+  const members = new Map(previous.members.map(m=>[m.classId,m]));
+  for (const m of recommended.members) {
+    const kept = members.get(m.classId);
+    members.set(m.classId, kept ? { ...m, slots: [...kept.slots], forge: kept.forge ? [...kept.forge] : undefined, itemKeys: kept.itemKeys } : m);
+  }
+  return { ...previous, ...recommended, members: [...members.values()], gold: previous.gold, companions: previous.companions, insertTown: undefined };
 }

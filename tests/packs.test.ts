@@ -8,7 +8,9 @@ import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { attackSkill, type Unit } from '../src/rules/unit.ts';
-import { recordResult, type CampaignState } from '../src/rules/campaign.ts';
+import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
+import { buy, pawn } from '../src/rules/town.ts';
+import { inheritAssets, pendingInsert, recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
@@ -617,8 +619,9 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['jingyanggang', undefined, true],
       ['tiaolian', undefined, true],
       ['shizilou', undefined, false],
+      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou'].map(id => [id,undefined,false]),
     ]);
-    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian'];
+    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu'];
     for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
@@ -629,7 +632,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
     const after = rt.stages.filter((s) => s.after === 'N14').map((s) => s.id);
-    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']);
+    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
       const stage = stageOf(id);
       const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
@@ -928,3 +931,101 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(text(ambush)).toContain('那伙强人已被打退');
   });
 });
+
+describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
+  const files = new NodeFiles(DATA), rt = loadPackFromDisk('mainline');
+  const stage = (id: string) => rt.stages.find(s=>s.id===id)!;
+  const cid = (id: string) => rt.classIds.get(id)!;
+  const start = (id: string, c?: CampaignState) => {
+    const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
+  };
+  it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
+    for (const id of ['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']) {
+      const s=stage(id), b = new Battle(compileStage(rt,s,files));
+      const cells=new Set<string>();
+      for (const u of s.units) { expect(b.board.passable(u.x,u.y),`${id}/${u.id}`).toBe(true); expect(cells.has(`${u.x},${u.y}`)).toBe(false);cells.add(`${u.x},${u.y}`); }
+      for(const blk of s.script)for(const op of blk.do)if(op[0]==='move')expect(b.board.passable(Number(op[2]),Number(op[3]))).toBe(true);
+      b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
+    }
+  });
+  it('动态等级确定后才发默认药品，低等级不会拿到剧本高等级药品', () => {
+    for (const [level, names] of [[5, ['跌打藥', '跌打藥']], [30, ['天山雪蓮', '天山雪蓮', '天山雪蓮']]] as const) {
+      const input = compileStage(rt, { ...stage('kuaihuolin'), gearAt: undefined }, files, { joinLevel: level });
+      const hero = input.units.find(u => u.side === 'player' && u.type === 0)!;
+      expect(hero.level).toBe(level);
+      const medicines = hero.items.slice(3).filter(id => id && rt.data.items[id - 1].type >= 15 && rt.data.items[id - 1].type <= 22);
+      expect(medicines.map(id => rt.data.items[id - 1].name)).toEqual(names);
+    }
+  });
+
+  it('已有装备、空槽、锻造、经验优先；敌友随实际队伍等级变化，资产不变',()=> {
+    for(const level of [12,39]) {
+      const c:CampaignState={version:1,stage:1,gold:1234,members:[{classId:0,level,exp:17,slots:[0,84,0,156,0],forge:[0,3,0,0,0]}],companions:{'mainline/wusong':{level,exp:23,slots:[56,84,0,156,0],forge:[4,2,0,0,0]}}};
+      const b=start('kuaihuolin',c), wu=b.units.find(u=>u.classId===cid('wusong'))!, hero=b.units.find(u=>u.classId===0)!;
+      expect(wu.level).toBe(level);expect(wu.exp).toBe(23);expect(wu.slots[0]).toBe(0);expect(wu.storyGear?.[0]).toEqual({item:56,forge:4});
+      wu.slots[4]=56; expect(b.canEquipItem(wu,4)).toBe(false); b.equipItem(wu,4); expect(wu.slots[0]).toBe(0); wu.slots[4]=0;
+      expect(hero.slots.slice(0,5)).toEqual([0,84,0,156,0]);expect(hero.forge[1]).toBe(3);
+      expect(b.units.find(u=>u.side==='enemy')!.level).toBe(level);expect(c.gold).toBe(1234);
+      b.status='won';const next=recordPackResult(c,b,rt);expect(next.companions!['mainline/wusong'].slots[0]).toBe(56);expect(next.companions!['mainline/wusong'].forge![0]).toBe(4);
+      expect(next.companions!['mainline/likui']).toBeUndefined(); // hidden, never arrived
+      expect(next.members.find(m=>m.classId===0)!.slots[0]).toBe(0);
+    }
+  });
+  it('城镇买卖包人物、消费后序列化重读，不补药不改余额，稳定id不串号',()=> {
+    const initial:CampaignState={version:1,stage:1,gold:100000,members:[],insertTown:{pack:'mainline',next:'mainline/shizipo',town:11,seen:true},companions:{'mainline/wusong':{level:31,exp:8,slots:[0,84,0,0,0,0,0],forge:[]}}};
+    const id=cid('wusong');let view=townParty(initial,rt);view.active=[id];
+    const bought=buy(view,rt.data,id,156);expect(bought.ok).toBe(true);
+    const saved=saveTownParty(bought.c,rt), loaded=JSON.parse(JSON.stringify(saved));
+    expect(saved.members).toEqual([]);expect(loaded.gold).toBe(initial.gold-rt.data.items[155].buyPrice);
+    expect(packParty(loaded,rt).get(id)!.slots.filter(n=>n===156)).toHaveLength(1);expect(loaded.insertTown.seen).toBe(true);
+    const sold=pawn(townParty(loaded,rt),rt.data,id,3);expect(sold.ok).toBe(true);
+    const final=saveTownParty(sold.c,rt);expect(packParty(final,rt).get(id)!.slots[3]).toBe(0);expect(final.gold).toBeGreaterThan(loaded.gold);
+  });
+  it('包道具随职业表/道具表重排仍还原同一件，原版好汉也可持有',()=> {
+    const id=cid('wusong'), item=rt.itemIds.get('shaobang')!;
+    const c:CampaignState={version:1,stage:1,gold:7,members:[{classId:id,level:28,exp:0,slots:[item,0,0]},{classId:0,level:30,exp:0,slots:[item,0,0]}]};
+    const saved=saveTownParty(c,rt);
+    const shifted={...rt,classIds:new Map([...rt.classIds].map(([key,n])=>[key,n+20])),itemIds:new Map([['shaobang',item+9]]),data:{...rt.data,classes:[...rt.data.classes,...Array(20).fill(rt.data.classes[0])]}};
+    expect(packParty(saved,shifted).get(id+20)!.slots[0]).toBe(item+9);
+    expect(packParty(saved,shifted).get(0)!.slots[0]).toBe(item+9);
+  });
+  it('飞云浦先断枷再到史进四人，鸳鸯楼十人实际在场，只有末段结束续篇',()=> {
+    const b=start('feiyunpu');expect(b.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(6);
+    expect(b.units.find(u=>u.classId===3)!.present).toBe(false);
+    for(const u of b.units)if(u.side==='player')u.hp=99999;
+    const ev=b.endPlayerPhase();
+    expect(b.turn).toBe(2);expect(b.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(10);
+    expect(b.units.find(u=>u.classId===cid('wusong'))!.buffs.some(x=>x.value<0)).toBe(false);
+    expect(ev.findIndex(e=>e.type==='narrate'&&e.text.includes('枷只一扭'))).toBeLessThan(ev.findIndex(e=>e.type==='say'&&e.text.includes('林教头')));
+    const y=start('yuanyanglou');expect(y.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(10);
+    const list=rt.stages.filter(s=>s.after==='N14').map(s=>({ref:`mainline/${s.id}`,after:s.after}));
+    for(const id of ['shizilou','shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu'])expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after',`mainline/${id}`)).toBeTruthy();
+    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBeUndefined();
+    expect(stage('shizilou').townAfter).toBe(11);
+  });
+  it('飞云浦隐藏徒弟未出现不提前胜；鸳鸯楼三首领缺一不可',()=> {
+    const b=start('feiyunpu');
+    for(const u of b.units) { if(u.side==='player')u.hp=99999; else if(u.present){u.hp=0;u.alive=false;u.present=false;} }
+    b.endPlayerPhase();expect(b.status).toBe('playing');expect(b.turn).toBe(2);
+    expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(2);
+    const y=start('yuanyanglou'), bosses=y.units.filter(u=>u.side==='enemy');
+    for(const u of y.units)if(u.side==='player')u.hp=99999;
+    for(const u of bosses.slice(0,2)){u.hp=0;u.alive=false;u.present=false;}
+    bosses[2].hp=99999;y.endPlayerPhase();expect(y.status).toBe('playing');
+    bosses[2].hp=0;bosses[2].alive=false;bosses[2].present=false;y.endPlayerPhase();expect(y.status).toBe('won');
+  });
+  it('六名换色保护透明肤色阴影，孙二娘没有战斗技',()=> {
+    const pal=new Uint8Array(files.get('Data/Default.pal'));
+    for(const id of ['jiangmenshen','shien','zhangqing','sunerniang','zhangdujian','zhangtuanlian']) {
+      const lut=recolorLut(pal,rt.looks.get(cid(id))!.recolor!);
+      for(const n of [0,157,158,159,...Array.from({length:32},(_,i)=>192+i)])expect(lut[n]).toBe(n);
+    }
+    expect(rt.data.classes[cid('sunerniang')].skills).toEqual([]);
+  });
+});
+
+ it('跳关只调整建议等级，不覆盖已有装备和银子',()=> {
+   const previous:CampaignState={version:1,stage:1,gold:19,members:[{classId:0,level:3,exp:0,slots:[0,84,0,0],forge:[0,2,0,0]}]};
+   const jumped=inheritAssets(previous,{version:1,stage:40,gold:100000,members:[{classId:0,level:29,exp:0,slots:[10,90,120,156]}]});
+   expect(jumped.gold).toBe(19);expect(jumped.members[0].slots).toEqual(previous.members[0].slots);expect(jumped.members[0].forge).toEqual(previous.members[0].forge);expect(jumped.members[0].level).toBe(29);
+ });

@@ -1,4 +1,5 @@
 {
+ "dynamicLevels": true,
  "id": "sanruan",
  "title": "吴用说三阮",
  "before": "Act10-1",

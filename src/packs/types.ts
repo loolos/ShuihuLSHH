@@ -129,10 +129,14 @@ export interface PackStageJson {
   before?: string;
   after?: string;
   /**
-   * 主线插关的视角关：切到还没入伙的人，等级用关卡里写的固定值，打完不写回主线人物和银子。
-   * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
+   * 故事视角标签（切到武松等人物）。主线插关仍读写连续存档；独立外传才隔离主线资产。
+   * 主线通过packParty/recordPackResult保存原版及包职业，不再由此字段跳过结算
    */
   pov?: boolean;
+  /** 主线按本场实际队伍平均等级调整敌友，已有队友等级不重置。 */
+  dynamicLevels?: boolean;
+  /** 胜利后进入续篇城镇整备（原版商品表号）。 */
+  townAfter?: number;
   /**
    * 从这一关起另开新的一章（选关里分组、进关时放开章短曲），值是章名，如「景阳冈打虎」；章号接在它所在原版章节后面。
    * 只对终章后的续篇（after）有效，之后登记的续篇都算这一章，直到下一个写了 chapter 的（负责人 2026-11-15）
@@ -147,10 +151,12 @@ export interface PackStageJson {
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
-  /** 地图：借原版地图（地表、地上物、通行都照原版） */
-  /** base：借用的原版地图；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
+  /** 地图：借原版地图（地表、地上物、通行都照原版），或用重制版自拼地图 */
+  /** base：借用的原版地图；custom：自拼地图 packs/maps/<名字>.json（§15.15）；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
    *  open：改成可通行的格子 [[x, y], …]（坐标同单位，例如让人从原版堵死的大门走出来） */
-  map: { base: string; crop?: [number, number, number, number]; open?: [number, number][] };
+  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][] };
+  /** 天色滤镜（§15.15）：夜、雪、黄昏；只改画面，不改规则 */
+  tint?: 'night' | 'snow' | 'dusk';
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   units: PackUnitJson[];
@@ -169,6 +175,8 @@ export interface PackUnitJson {
   /** 0 背向右上、1 背向左上、2 面向左下、3 面向右下（同原版） */
   facing?: number;
   level: number;
+  /** 相对本场队伍平均等级的偏移（动态关卡敌人/友军）。 */
+  levelOffset?: number;
   /** 开局不在场，剧本点名（appear / say）时登场 */
   hidden?: boolean;
   /** AI 模式（§8），默认 0 */

@@ -28,7 +28,7 @@ export interface Outcome {
 
 const fail = (c: CampaignState, text: string): Outcome => ({ c, ok: false, text });
 
-function edit(c: CampaignState, classId: number, f: (m: Required<Member>) => void): CampaignState {
+function edit(c: CampaignState, classId: number, f: (m: Member & { forge: number[] }) => void): CampaignState {
   return {
     ...c,
     members: c.members.map((m) => {
@@ -117,7 +117,7 @@ export function equip(c: CampaignState, data: GameData, classId: number, slot: n
   return { ok: true, text: `裝備了${it.name}。`, c: edit(c, classId, (n) => swap(n, slot, k)) };
 }
 
-function swap(n: Required<Member>, a: number, b: number) {
+function swap(n: Member & { forge: number[] }, a: number, b: number) {
   [n.slots[a], n.slots[b]] = [n.slots[b], n.slots[a]];
   [n.forge[a], n.forge[b]] = [n.forge[b], n.forge[a]];
 }

@@ -1,4 +1,5 @@
 {
+ "dynamicLevels": true,
  "id": "jingyanggang",
  "after": "N14",
  "pov": true,
@@ -8,7 +9,7 @@
  "units": [
   {"id": "wusong", "class": "wusong", "side": "player", "x": 11, "y": 16, "facing": 0, "level": 27},
   {"id": "innkeeper", "class": 35, "side": "ally", "x": 12, "y": 17, "facing": 1, "level": 5, "ai": 8},
-  {"id": "tiger", "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 29, "hidden": true},
+  {"id": "tiger", "levelOffset": 2, "class": "tiger", "side": "enemy", "x": 3, "y": 4, "facing": 2, "level": 29, "hidden": true},
   {"id": "hunter1", "class": "hunter-in-tigerskin", "side": "ally", "x": 1, "y": 3, "facing": 3, "level": 10, "hidden": true, "ai": 8},
   {"id": "hunter2", "class": "hunter-in-tigerskin", "side": "ally", "x": 2, "y": 1, "facing": 3, "level": 10, "hidden": true, "ai": 8}
  ],
@@ -33,7 +34,7 @@
   ]},
   {"on": {"used": "wusong", "count": 1}, "do": [
    ["narrate", "武松双手抡起哨棒，尽平生气力，从半空劈将下来。只听得一声响，簌簌地将那树连枝带叶劈脸打将下来——原来打急了，正打在枯树上，把那条哨棒折做两截！"],
-   ["setEquip", "wusong", 0, 0],
+   ["borrowEquip", "wusong", 0, 0],
    ["say", "wusong", "罢了，只得赤手空拳和它斗！"]
   ]},
   {"on": {"used": "tiger", "skills": ["pu", "xian", "jian"]}, "do": [

@@ -63,6 +63,8 @@ export class TownUI {
     return !this.root.hidden;
   }
 
+  setAssets(assets: Assets) { this.assets = assets; this.icons.clear(); }
+
   show(c: CampaignState, o: TownOptions) {
     this.c = c;
     this.o = o;
@@ -105,6 +107,7 @@ export class TownUI {
 
   /** 酒店交谈：依次说出本城的传闻，说完从头再来（EXE 0x4194d1） */
   private talk() {
+    if (this.c.insertTown) { this.line = "孟州路远，诸位可在此置办衣药，整备妥当再上路。"; return; }
     const list = this.assets.exe.town.rumors[this.o.town] ?? [];
     if (!list.length) {
       this.line = '最近没听说什么新鲜事。'; // 原版这些城镇点"交談"没有反应【新】
@@ -249,12 +252,12 @@ export class TownUI {
         ? ''
         : SHOPS[this.shop].actions
             .map((a) => `<button data-do="action" data-v="${['talk', 'buy', 'items', 'forge', 'pawn'].indexOf(a)}" class="${this.action === a ? 'on' : ''}">${this.tr(ACTION_LABEL[a])}</button>`)
-            .join('') + (this.shop === 0 && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
+            .join('') + (this.shop === 0 && !this.c.insertTown && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
         <span class="gold">银子 <b>${this.c.gold}</b> 两</span>
-        <button class="leave" data-do="leave">${town ? '离开城镇 ▸' : '完成 ▸'}</button>
+        <button class="leave" data-do="leave">${this.c.insertTown ? '出发：十字坡 ▸' : town ? '离开城镇 ▸' : '完成 ▸'}</button>
       </div>
       ${shops ? `<nav class="town-shops">${shops}</nav>` : ''}
       <div class="town-body">
@@ -300,7 +303,7 @@ export class TownUI {
   private memberCard(m: Member, open: boolean): string {
     const d = this.data, cls = d.classes[m.classId];
     const forge = m.forge ?? [];
-    const st = computeStats(cls, m.level, m.slots, d, false, forge);
+    const st = computeStats(cls, m.level, m.slots, d, false, forge, [], 'player');
     const face = this.portrait(m.classId);
     const head = `<button class="who" data-do="member" data-v="${m.classId}">
       ${face ? `<img class="face" alt="" src="${face}">` : ''}

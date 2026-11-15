@@ -4,6 +4,7 @@
   "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10–§15.12）。",
   "entry": "mainline",
   "credits": [
+    "李逵模型：Quaternius Universal Animation Library，CC0",
     "武松模型：Quaternius「Universal Animation Library」，CC0",
     "老虎模型：Tiger model by planeta-elefante (Sketchfab), CC BY 4.0"
   ],
@@ -513,7 +514,22 @@
           "mpCost": 60,
           "learnLevel": 28
         }
-      ],
+      ,
+{
+  "id": "yuanyang-jiao",
+  "name": "鸳鸯脚",
+  "from": 210,
+  "anim": "punch-cross",
+  "hitAt": [
+    0.35,
+    0.75
+  ],
+  "power": 40,
+  "mpCost": 40,
+  "learnLevel": 28,
+  "stun": 0,
+  "poison": 0
+}],
       "sprite": {
         "sheet": "sprites/wusong",
         "idle": "idle",
@@ -846,8 +862,798 @@
       "face": {
         "fromHead": 35
       }
+    },
+  {
+    "id": "daizong",
+    "name": "戴宗",
+    "base": {
+      "hp": 85,
+      "mp": 100,
+      "attack": 58,
+      "defense": 24,
+      "hit": 78,
+      "agility": 45,
+      "crit": 12
+    },
+    "move": 8,
+    "weaponType": 0,
+    "items": [
+      0,
+      84,
+      113,
+      156,
+      156
+    ],
+    "skills": [
+      {
+        "id": "dz-quan",
+        "name": "神行拳",
+        "from": 221,
+        "anim": 0
+      },
+      {
+        "id": "dz-xuanfeng",
+        "name": "旋风腿",
+        "from": 225,
+        "anim": 1,
+        "power": 20,
+        "mpCost": 30
+      },
+      {
+        "id": "dz-juqi",
+        "name": "甲马聚气",
+        "from": 227,
+        "anim": 2
+      }
+    ],
+    "sprite": {
+      "fromClass": 38,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            160,
+            175
+          ],
+          "k": 0.95
+        },
+        {
+          "src": [
+            [
+              185,
+              191
+            ],
+            [
+              48,
+              63
+            ]
+          ],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.5
+        },
+        {
+          "src": [
+            [
+              192,
+              199
+            ]
+          ],
+          "dst": [
+            144,
+            159
+          ],
+          "k": 0.6
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/daizong.png"
+    }
+  },
+  {
+    "id": "huarong",
+    "name": "花荣",
+    "base": {
+      "hp": 85,
+      "mp": 80,
+      "attack": 62,
+      "defense": 22,
+      "hit": 95,
+      "agility": 40,
+      "crit": 20
+    },
+    "move": 5,
+    "weaponType": 11,
+    "items": [
+      0,
+      103,
+      124
+    ],
+    "skills": [
+      {
+        "id": "hr-shen",
+        "name": "百步穿杨",
+        "from": 222,
+        "anim": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 34,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            64,
+            79
+          ],
+          "k": 1.3
+        },
+        {
+          "src": [
+            [
+              32,
+              47
+            ]
+          ],
+          "dst": [
+            224,
+            239
+          ],
+          "k": 1.4
+        }
+      ]
+    },
+    "face": null
+  },
+  {
+    "id": "likui",
+    "name": "李逵",
+    "base": {
+      "hp": 130,
+      "mp": 90,
+      "attack": 80,
+      "defense": 28,
+      "hit": 70,
+      "agility": 30,
+      "crit": 15
+    },
+    "move": 5,
+    "weaponType": 2,
+    "items": [
+      0,
+      84,
+      0,
+      157,
+      157
+    ],
+    "skills": [
+      {
+        "id": "lk-kan",
+        "name": "板斧砍",
+        "from": 221,
+        "anim": "axe-four",
+        "hitAt": [
+          0.1125,
+          0.3625,
+          0.6125,
+          0.8625
+        ]
+      },
+      {
+        "id": "lk-lianpi",
+        "name": "双斧连劈",
+        "from": 210,
+        "anim": "punch-cross",
+        "hitAt": [
+          0.3,
+          0.55
+        ],
+        "power": 25,
+        "mpCost": 30
+      },
+      {
+        "id": "lk-xuanfeng",
+        "name": "黑旋风",
+        "from": 225,
+        "anim": "sword-attack",
+        "hitAt": [
+          0.45
+        ],
+        "power": 30,
+        "mpCost": 45
+      },
+      {
+        "id": "lk-yunqi",
+        "name": "运气",
+        "from": 227,
+        "anim": "crouch-idle"
+      }
+    ],
+    "sprite": {
+      "sheet": "sprites/likui",
+      "idle": "idle",
+      "walk": "walk",
+      "hurt": "hit-chest",
+      "defend": "crouch-idle"
+    },
+    "face": {
+      "file": "faces/likui.png"
+    }
+  },
+  {
+    "id": "jiangmenshen",
+    "name": "蒋门神",
+    "base": {
+      "hp": 230,
+      "mp": 150,
+      "attack": 70,
+      "defense": 38,
+      "hit": 80,
+      "agility": 25,
+      "crit": 10
+    },
+    "move": 4,
+    "weaponType": 0,
+    "items": [
+      0,
+      98,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "jiangmenshen-0",
+        "name": "门神掌",
+        "from": 201,
+        "anim": 0,
+        "power": 0,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "jiangmenshen-1",
+        "name": "横江连擂",
+        "from": 203,
+        "anim": 1,
+        "power": 25,
+        "mpCost": 30,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "jiangmenshen-2",
+        "name": "撼岳回环",
+        "from": 204,
+        "anim": 2,
+        "power": 20,
+        "mpCost": 35,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "jiangmenshen-3",
+        "name": "抱元息",
+        "from": 206,
+        "anim": 4,
+        "power": 2,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 69,
+      "recolor": [
+        {
+          "src": [[224, 239]],
+          "dst": [
+            160,
+            175
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[128, 156]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[240, 255]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[64, 95]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 69
+    }
+  },
+  {
+    "id": "shien",
+    "name": "施恩",
+    "base": {
+      "hp": 140,
+      "mp": 120,
+      "attack": 70,
+      "defense": 25,
+      "hit": 70,
+      "agility": 40,
+      "crit": 15
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      98,
+      116,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "shien-0",
+        "name": "彪锋",
+        "from": 160,
+        "anim": 0,
+        "power": 0,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "shien-1",
+        "name": "金眸断流",
+        "from": 162,
+        "anim": 1,
+        "power": 25,
+        "mpCost": 25,
+        "stun": 0,
+        "poison": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 55,
+      "recolor": [
+        {
+          "src": [[64, 95]],
+          "dst": [
+            224,
+            239
+          ],
+          "k": 1
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 55
+    }
+  },
+  {
+    "id": "zhangqing",
+    "name": "张青",
+    "base": {
+      "hp": 100,
+      "mp": 80,
+      "attack": 55,
+      "defense": 25,
+      "hit": 60,
+      "agility": 35,
+      "crit": 10
+    },
+    "move": 6,
+    "weaponType": 0,
+    "items": [
+      0,
+      97,
+      122,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [],
+    "sprite": {
+      "fromClass": 49,
+      "recolor": [
+        {
+          "src": [[64, 95]],
+          "dst": [
+            160,
+            175
+          ],
+          "k": 0.85
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 49
+    }
+  },
+  {
+    "id": "sunerniang",
+    "name": "孙二娘",
+    "base": {
+      "hp": 60,
+      "mp": 30,
+      "attack": 40,
+      "defense": 20,
+      "hit": 40,
+      "agility": 20,
+      "crit": 1
+    },
+    "move": 4,
+    "weaponType": 0,
+    "items": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [],
+    "sprite": {
+      "fromClass": 30,
+      "recolor": [
+        {
+          "src": [[1, 7]],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[11, 11]],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[16, 31]],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[240, 255]],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[48, 63]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.45
+        },
+        {
+          "src": [[224, 239]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.45
+        },
+        {
+          "src": [[160, 175]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.45
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 30
+    }
+  },
+  {
+    "id": "zhangdujian",
+    "name": "张都监",
+    "base": {
+      "hp": 240,
+      "mp": 200,
+      "attack": 75,
+      "defense": 40,
+      "hit": 80,
+      "agility": 40,
+      "crit": 30
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      85,
+      125,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "zhangdujian-0",
+        "name": "镇营手",
+        "from": 164,
+        "anim": 1,
+        "power": 0,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "zhangdujian-1",
+        "name": "铁幕摧锋",
+        "from": 167,
+        "anim": 2,
+        "power": 25,
+        "mpCost": 45,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "zhangdujian-2",
+        "name": "敛势调息",
+        "from": 168,
+        "anim": 3,
+        "power": 2,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 56,
+      "recolor": [
+        {
+          "src": [[32, 47]],
+          "dst": [
+            64,
+            79
+          ],
+          "k": 0.65
+        },
+        {
+          "src": [[176, 191]],
+          "dst": [
+            64,
+            79
+          ],
+          "k": 0.65
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 56
+    }
+  },
+  {
+    "id": "zhangtuanlian",
+    "name": "张团练",
+    "base": {
+      "hp": 240,
+      "mp": 140,
+      "attack": 76,
+      "defense": 42,
+      "hit": 100,
+      "agility": 30,
+      "crit": 10
+    },
+    "move": 5,
+    "weaponType": 1,
+    "items": [
+      18,
+      98,
+      118,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "zhangtuanlian-0",
+        "name": "铁甲横棍",
+        "from": 215,
+        "anim": 0,
+        "power": 0,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "zhangtuanlian-1",
+        "name": "压阵一击",
+        "from": 217,
+        "anim": 1,
+        "power": 20,
+        "mpCost": 25,
+        "stun": 0,
+        "poison": 0
+      },
+      {
+        "id": "zhangtuanlian-2",
+        "name": "蓄锐",
+        "from": 220,
+        "anim": 4,
+        "power": 2,
+        "mpCost": 0,
+        "stun": 0,
+        "poison": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 71,
+      "recolor": [
+        {
+          "src": [[48, 111]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[160, 175]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[224, 239]],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.55
+        },
+        {
+          "src": [[32, 47]],
+          "dst": [
+            176,
+            191
+          ],
+          "k": 0.75
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 71
+    }
+  }
+
+  ,
+{
+  "id": "fy-escort",
+  "name": "押送公人",
+  "base": {
+    "hp": 300,
+    "mp": 120,
+    "attack": 90,
+    "defense": 50,
+    "hit": 88,
+    "agility": 38,
+    "crit": 12
+  },
+  "move": 5,
+  "weaponType": 6,
+  "items": [
+    55,
+    85,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "skills": [
+    {
+      "id": "fy-escort-attack",
+      "name": "断路斩",
+      "from": 221,
+      "anim": 0,
+      "power": 10,
+      "mpCost": 0,
+      "stun": 0,
+      "poison": 0
     }
   ],
+  "sprite": {
+    "fromClass": 32
+  },
+  "face": {
+    "fromHead": 32
+  }
+},
+{
+  "id": "fy-disciple",
+  "name": "蒋门神徒弟",
+  "base": {
+    "hp": 300,
+    "mp": 120,
+    "attack": 90,
+    "defense": 50,
+    "hit": 88,
+    "agility": 38,
+    "crit": 12
+  },
+  "move": 5,
+  "weaponType": 1,
+  "items": [
+    18,
+    96,
+    113,
+    0,
+    0,
+    0,
+    0
+  ],
+  "skills": [
+    {
+      "id": "fy-disciple-attack",
+      "name": "夺命拳",
+      "from": 221,
+      "anim": 0,
+      "power": 10,
+      "mpCost": 0,
+      "stun": 0,
+      "poison": 0
+    }
+  ],
+  "sprite": {
+    "fromClass": 67
+  },
+  "face": {
+    "fromHead": 67
+  }
+}
+],
   "stages": [
     "stages/wawasi.json",
     "stages/chifagui.json",
@@ -858,6 +1664,12 @@
     "stages/chaijin-liubin.json",
     "stages/jingyanggang.json",
     "stages/tiaolian.json",
-    "stages/shizilou.json"
+    "stages/shizilou.json",
+    "stages/shizipo.json",
+    "stages/anpingzhai.json",
+    "stages/kuaihuolin.json",
+    "stages/zhangfu.json",
+    "stages/feiyunpu.json",
+    "stages/yuanyanglou.json"
   ]
 }

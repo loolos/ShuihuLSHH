@@ -8,6 +8,7 @@ import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
 import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
 import { SLOT_COUNT } from '../rules/data.ts';
 import { levelKit } from '../rules/equipment.ts';
+import type { Member } from '../rules/campaign.ts';
 import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
@@ -264,7 +265,7 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 }
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
-export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string } = {}): StageInput {
+export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number } = {}): StageInput {
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
@@ -273,6 +274,18 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     board.blocked[y * board.width + x] = 0;
   }
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
+  if (stage.dynamicLevels) {
+    const levels = units.filter(u => u.side === 'player').map(u => opts.party?.get(u.type)?.level).filter((n): n is number => n !== undefined);
+    const level = levels.length ? Math.round(levels.reduce((a,b) => a+b,0)/levels.length) : opts.joinLevel || Math.round(units.filter(u=>u.side==='player').reduce((a,u)=>a+u.level,0)/Math.max(1, units.filter(u=>u.side==='player').length));
+    units.forEach((u,i) => {
+      if (u.side === 'player') u.level = opts.party?.get(u.type)?.level ?? level;
+      else if (u.level > 1) u.level = Math.max(1, level + (stage.units[i].levelOffset ?? (u.side === 'enemy' ? -1 : 0)));
+    });
+  } else if (opts.party) {
+    // A story's authored level must not silently promote an existing member or erase experience.
+    for (const u of units) if (u.side === 'player' && opts.party.has(u.type)) u.level = opts.party.get(u.type)!.level;
+  }
+  // 先确定动态等级，再生成默认配装；已有队员装备仍由 party 继承。
   kitPlayers(rt, stage, units, files);
   const byId = new Map(stage.units.map((u, i) => [u.id, { json: u, act: units[i] }]));
   const unitRef = (id: unknown) => byId.get(String(id)) ?? fail(`${stage.id}: 没有单位 ${String(id)}`);
@@ -292,7 +305,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold, party: opts.party, joinLevel: opts.joinLevel };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -413,9 +426,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'flag':
         op(103, r.flagRef(a[0]));
         break;
+      case 'borrowEquip':
       case 'setEquip':
         select(a[0]);
-        ops.push({ op: 100, flag: Number(a[1]), value: Number(a[2]) ? r.itemRef(a[2]) : 0 });
+        ops.push({ op: name === 'borrowEquip' ? 107 : 100, flag: Number(a[1]), value: a[2] === 0 ? 0 : r.itemRef(a[2]) });
         break;
       case 'bind':
         select(a[0]);

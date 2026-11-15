@@ -18,9 +18,10 @@ import { parsePasHeader } from './formats/pas.ts';
 import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
+import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
-import { newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
+import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -135,12 +136,12 @@ function startGame(assets: Assets) {
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
   // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
-  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; chapter?: string })[] = listPacks()
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; chapter?: string; townAfter?: number })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
     .flatMap((e) =>
       e.stages
         .filter((s) => s.before || s.after)
-        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, chapter: s.chapter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
+        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, chapter: s.chapter, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
     );
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
@@ -169,6 +170,7 @@ function startGame(assets: Assets) {
       }
       insChapter.set(e.ref, chLabel);
       items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
+      if (e.townAfter) items.push({ label: '城镇 阳谷整备', value: `itown:${e.ref}`, title: '狮子楼后购买与整备' });
     }
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
@@ -197,21 +199,27 @@ function startGame(assets: Assets) {
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
+    if (value.startsWith('itown:')) {
+      const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
+      if (e?.townAfter) return { ...c, finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: 'mainline/shizipo', town: e.townAfter, seen: false } };
+    }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
       const anchor = e?.before ?? e?.after;
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
         const done = (c.inserts ?? []).filter((r) => r !== e.ref);
-        return { ...jumpTo(assets.files, assets.data, stages, s.index, c), insert: e.ref, inserts: done, finished: undefined };
+        return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, inserts: done, finished: undefined };
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
-    if (t) return { ...jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c), finished: undefined };
-    return { ...jumpTo(assets.files, assets.data, stages, Number(value), c), finished: undefined };
+    if (t) return { ...inheritAssets(c, jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c)), insert: undefined, finished: undefined };
+    return { ...inheritAssets(c, jumpTo(assets.files, assets.data, stages, Number(value), c)), insert: undefined, town: undefined, finished: undefined };
   };
   const asked = params.get('stage')?.toLowerCase();
-  if (asked?.startsWith('ins:')) {
+  if (asked?.startsWith('itown:')) {
+    if (!campaign.insertTown) campaign = jump(asked,campaign);
+  } else if (asked?.startsWith('ins:')) {
     if (campaign.insert !== asked.slice(4)) campaign = jump(asked, campaign);
   } else if (asked) {
     const inTown = asked.startsWith('town:');
@@ -225,7 +233,9 @@ function startGame(assets: Assets) {
   // 已通关的旧存档也能接上后来新增、尚未游玩的终章续篇。
   if (!asked && campaign.finished) {
     const continuation = pendingInsert(campaign, inserts, stages.find((s) => s.index === campaign.stage)!.mapName, 'after');
-    if (continuation) campaign = { ...campaign, finished: false, insert: continuation };
+    if (continuation) campaign = campaign.inserts?.includes('mainline/shizilou') && continuation === 'mainline/shizipo'
+      ? { ...campaign, finished: false, insert: undefined, insertTown: { pack: 'mainline', next: continuation, town: 11, seen: false } }
+      : { ...campaign, finished: false, insert: continuation };
   }
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
@@ -306,6 +316,7 @@ function startGame(assets: Assets) {
     },
   });
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
+    town.setAssets(assets);
     town.show(c, {
       town: t,
       title: t ? `城镇 · ${townName(t)}` : '整备',
@@ -424,7 +435,7 @@ function startGame(assets: Assets) {
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed,
         makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
@@ -477,12 +488,12 @@ function startGame(assets: Assets) {
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
-      // 主线人物关：我方按职业号套用主线进度；视角关用关卡里写的固定等级
-      const party = e.pov ? undefined : partyOf(campaign);
-      const join = e.pov ? undefined : joinLevel(campaign);
+      // 故事视角不隔离资产；所有主线好汉沿用实际存档。
+      const party = packParty(campaign, rt);
+      const join = joinLevel({ ...campaign, members: [...party.values()] });
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
-        makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr }), party, joinLevel: join }),
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed,
+        makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr, party, joinLevel: join }) }),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };
       if (scene()) scene()!.scene.restart(data);
@@ -495,7 +506,7 @@ function startGame(assets: Assets) {
       progress(`载入关卡失败：${(err as Error).message}`, 0);
     }
   };
-  const onInsertEnd = (ref: string, pov: boolean, battle: Battle, won: boolean, text: string) => {
+  const onInsertEnd = (ref: string, _pov: boolean, battle: Battle, won: boolean, text: string) => {
     const before = campaign;
     if (!won) {
       void music.play('defeat');
@@ -504,8 +515,8 @@ function startGame(assets: Assets) {
       return ui.result(false, text, t === null ? [retry] : [{ label: `时光倒流（回到第 ${t} 回合）`, run: rewind }, retry]);
     }
     void music.play('victory');
-    // 视角关打完不写回人物和银子；主线人物关照常记下，出场名单并进上一关的名单
-    const after = pov ? campaign : recordResult(campaign, battle, { keepActive: true, classLimit: assets.data.classes.length });
+    // 主线所有插关连续读写资产；包角色用稳定身份保存，不混入原版职业号。
+    const after = recordPackResult(campaign, battle, pack!.rt);
     const entry = inserts.find((x) => x.ref === ref);
     let c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
     // 同一位置可能有多段（终章后的续篇、Act10-1 前的赤发鬼 → 三阮）；按登记顺序接完，终章续篇最后一段才标记通关。
@@ -516,6 +527,7 @@ function startGame(assets: Assets) {
         : undefined;
     if (entry?.after) c = { ...c, finished: !continuation, insert: continuation };
     else c = { ...c, insert: continuation };
+    if (entry?.townAfter && continuation) c = { ...c, insert: undefined, insertTown: { pack: ref.split('/')[0], next: continuation, town: entry.townAfter, seen: false }, finished: undefined };
     campaign = c;
     writeSave(c);
     const replay = () => {
@@ -523,6 +535,7 @@ function startGame(assets: Assets) {
       writeSave(before);
       run();
     };
+    if (c.insertTown) return ui.result(true, text, [{ label: '进入城镇', run: () => goTo(c) }, { label: '再打一次本关', run: replay }]);
     if (entry?.after) {
       if (continuation) {
         const title = inserts.find((x) => x.ref === continuation)?.title ?? '下一关';
@@ -543,10 +556,49 @@ function startGame(assets: Assets) {
     const cont = { label: `继续：${nextTitle ?? label(stageOf(c.stage))}`, run: () => goTo(c) };
     ui.result(true, text, [cont, { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => goTo(x)) }, { label: '再打一次本关', run: replay }]);
   };
+  const runInsertTown = async () => {
+    scene()?.scene.pause();
+    const stop = campaign.insertTown!;
+    const ticket = ++loading;
+    if (pack?.rt.id !== stop.pack) pack = await openPack(assets, stop.pack);
+    if (ticket !== loading) return;
+    const rt = pack.rt, pa: Assets = { ...assets, data: rt.data, items: rt.data.items, pack };
+    const ids = [rt.classIds.get('sj-fugitive')!, rt.classIds.get('wusong')!, 0];
+    let view = townParty(campaign, rt);
+    // Old saves that never recorded package actors initialize once, not on every town visit.
+    for (const classId of ids) if (!view.members.some(m=>m.classId===classId)) {
+      const level = joinLevel(campaign) || 28;
+      view.members.push({ classId, level, exp: 0, slots: [...rt.data.classes[classId].defaultItems], forge: [] });
+    }
+    view = { ...view, active: ids };
+    campaign = saveTownParty(view, rt);
+    writeSave(campaign);
+    setHere('itown:mainline/shizilou');
+    const u = new URL(location.href); u.searchParams.set('stage', 'itown:mainline/shizilou'); history.replaceState(null,'',u);
+    if (!stop.seen) {
+      await ui.say('宋江', '二郎，你既要依文投营，哥哥不拦。只是孟州路远，我与武龙陪你走一程，也好从中照应。', ids[0]);
+      if (ticket !== loading) return;
+      await ui.say('武松', '哥哥肯这般相待，武松感激不尽。只是不可坏了公人的差事。', ids[1]);
+      if (ticket !== loading) return;
+      await ui.say('宋江', '只照应盘缠行李，不劫官差。且在城中置办些衣药，再一同上路。', ids[0]);
+      if (ticket !== loading) return;
+      ui.endSkip();
+      campaign = { ...campaign, insertTown: { ...stop, seen: true } };
+      writeSave(campaign);
+    }
+    town.setAssets(pa);
+    town.show({ ...townParty(campaign,rt), active: ids }, {
+      town: stop.town, title: '城镇 · 阳谷整备',
+      onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
+      onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
+    });
+    setupEl.hidden = true;
+  };
   const run = async () => {
     packBgm = null;
     ui.hideResult();
     town.hide();
+    if (campaign.insertTown) return runInsertTown();
     if (campaign.finished) {
       void music.play(['ending', 'liangshan']);
       return ui.result(true, '梁山聚义，故事未完待续。', [{ label: '回到标题', run: () => (location.href = location.pathname) }], '通关');
@@ -662,6 +714,7 @@ function startGame(assets: Assets) {
   }
   /** 存档停在哪一项（选关列表里的值） */
   function placeOf(c: CampaignState) {
+    if (c.insertTown) return "itown:mainline/shizilou";
     if (c.insert) return insValue(c.insert);
     if (c.town && towns.has(c.stage)) return townValue(c.stage);
     return String(c.stage);
@@ -672,7 +725,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
+    const where = c.insertTown ? "城镇 · 阳谷整备" : c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))
