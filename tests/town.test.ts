@@ -210,15 +210,24 @@ describe.skipIf(!has)('测试用跳关', () => {
       for (const m of state.members) {
         const cls = data.classes[m.classId], profile = kitProfile(data, cls), band = kitBand(m.level);
         const type = data.items[cls.defaultItems[0] - 1]?.type ?? cls.weaponType;
-        expect(data.items[m.slots[0] - 1]?.name).toBe(WEAPON_TABLE[type][band]);
-        expect(data.items[m.slots[1] - 1]?.name).toBe(GEAR_TABLE[profile.armor][band]);
-        expect(data.items[m.slots[2] - 1]?.name).toBe(GEAR_TABLE[profile.head][band]);
+        // 剧本装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比防御
+        const tableOrBetter = (k: number, want: string) => {
+          const got = data.items[m.slots[k] - 1], ref = data.items.find((it) => it.name === want)!;
+          if (got?.name === want) return;
+          expect(k === 0 ? got.attack : got.defense, `${stage.mapName} ${cls.name} ${got?.name} / ${want}`).toBeGreaterThan(k === 0 ? ref.attack : ref.defense);
+        };
+        tableOrBetter(0, WEAPON_TABLE[type][band]);
+        tableOrBetter(1, GEAR_TABLE[profile.armor][band]);
+        tableOrBetter(2, GEAR_TABLE[profile.head][band]);
         const meds = m.slots.slice(3).filter((id) => id && [15, 16, 17].includes(data.items[id - 1].type)).map((id) => data.items[id - 1].name);
         expect(meds).toEqual(MEDICINE_TABLE[band]);
         expect(meds.length).toBeLessThanOrEqual(3);
         expect(m.forge?.every((n) => n === 0)).toBe(true);
       }
     }
+    // 剧本武器比表里这一档好就留着：N03 陳達的白點鋼槍（攻 31）不换成筆管槍
+    const n03 = jumpTo(files, data, stages, stages.find((s) => s.mapName.toLowerCase() === 'n03')!.index, newCampaign(0));
+    expect(data.items[n03.members.find((m) => m.classId === 13)!.slots[0] - 1].name).toBe('白點鋼槍');
     // 先跳到后期再跳回前面：不沿用后期的等级、装备和银子，和直接跳过去一样
     const early = stages.find((s) => s.mapName.toLowerCase() === 'n01')!.index;
     const back = jumpTo(files, data, stages, early, { ...c, gold: 500 });

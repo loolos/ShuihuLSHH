@@ -452,9 +452,9 @@
         "crit": 18
       },
       "move": 5,
-      "weaponType": 1,
+      "weaponType": 0,
       "items": [
-        "shaobang",
+        1,
         84,
         0,
         157,

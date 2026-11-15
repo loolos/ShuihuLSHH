@@ -281,10 +281,10 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     };
     // 戴宗 22 级：常服／头巾；剧本旧药清理后发两颗大还金丹
     expect(names('shishou', 'daizong')).toEqual(['精鋼拳', '麻布寬衫', '萬字巾', '大還金丹', '大還金丹']);
-    // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
+    // 武松和武龙一样用手套（负责人 2026-11-15）；哨棒只在景阳冈开场临时拿着，战后还回手套
     const ws = loadPackFromDisk('mainline', loadGameData(files, tr));
     const u = compileStage(ws, ws.stages.find((s) => s.id === 'jingyanggang')!, files).units.find((x) => x.side === 'player')!;
-    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '青紗衫子', '黑頭巾']);
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['精鋼刺拳', '青紗衫子', '黑頭巾']);
   });
 
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
@@ -957,6 +957,24 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
+  it('第一次出场的人自带武器；武松用手套，哨棒、解腕刀只是本场临时拿着（负责人 2026-11-15）', () => {
+    const glove = (id: number) => rt.data.items[id - 1]?.type === 0;
+    for (const id of ['kuaihuolin', 'feiyunpu', 'yuanyanglou']) {
+      const b = new Battle(compileStage(rt, stage(id), files, { seed: 1 }));
+      for (const u of b.units.filter((u) => u.side === 'player' && u.classId !== cid('huarong'))) expect(u.slots[0], `${id} ${u.name}`).toBeGreaterThan(0);
+    }
+    for (const [id, story] of [['jingyanggang', '哨棒'], ['shizilou', '解腕尖刀']] as const) {
+      const b = new Battle(compileStage(rt, stage(id), files, { seed: 1 }));
+      b.begin();
+      const ws = b.units.find((u) => u.classId === cid('wusong'))!;
+      expect(rt.data.items[ws.slots[0] - 1].name).toBe(story);
+      b.status = 'won';
+      const next = recordPackResult({ version: 1, stage: 1, gold: 0, members: [] }, b, rt);
+      const kept = next.companions!['mainline/wusong'].slots[0];
+      expect(typeof kept === 'number' && glove(kept), `${id} 战后 ${kept}`).toBe(true);
+    }
+  });
+
   it('动态等级确定后才发默认药品，低等级不会拿到剧本高等级药品', () => {
     for (const [level, names] of [[5, ['跌打藥', '跌打藥']], [30, ['天山雪蓮', '天山雪蓮', '天山雪蓮']]] as const) {
       const input = compileStage(rt, { ...stage('kuaihuolin'), gearAt: undefined }, files, { joinLevel: level });

@@ -167,10 +167,12 @@ export function levelKit(data: GameData, cls: ClassDef, level: number, slots: nu
   // 默认武器优先遵照出场武器的类型（阮小五等职业表和初始武器不一致）。
   const weaponType = HERO_KITS[cls.id]?.weapon ?? itemOf(data, cls.defaultItems[0])?.type ?? cls.weaponType;
   const names = [WEAPON_TABLE[weaponType]?.[band], GEAR_TABLE[profile.armor]?.[band], GEAR_TABLE[profile.head]?.[band]];
+  // 剧本（或职业默认）给的装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比防御
+  const score = (id: number, k: number) => { const it = itemOf(data, id); return it ? (k === 0 ? it.attack : it.defense) : -1; };
   names.forEach((name, k) => {
-    if (keep(slots[k])) return;
+    if (!name || keep(slots[k])) return; // 弓手类（11、12）表里没有武器，别误配到无名的空道具
     const id = data.items.findIndex((it) => it.name === name) + 1;
-    if (id) slots[k] = id;
+    if (id && score(slots[k], k) <= score(id, k)) slots[k] = id;
   });
   // 清掉旧药品（含解毒、抗性、增益药），重新发本档药；非药品剧情物品保留。
   for (let k = 3; k < slots.length; k++) {
