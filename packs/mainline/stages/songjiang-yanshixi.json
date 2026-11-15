@@ -1,0 +1,128 @@
+{
+  "id": "songjiang-yanshixi",
+  "title": "宋江杀惜",
+  "after": "N14",
+  "map": {
+    "base": "Act5-2"
+  },
+  "bgm": "story",
+  "units": [
+    {
+      "id": "songjiang",
+      "class": 6,
+      "side": "player",
+      "x": 10,
+      "y": 11,
+      "facing": 2,
+      "level": 28
+    },
+    {
+      "id": "liutang",
+      "class": 61,
+      "side": "ally",
+      "x": 8,
+      "y": 13,
+      "facing": 1,
+      "level": 28,
+      "name": "刘唐"
+    },
+    {
+      "id": "yanpoxishi",
+      "class": 31,
+      "side": "ally",
+      "x": 9,
+      "y": 12,
+      "facing": 0,
+      "level": 28,
+      "name": "阎婆惜"
+    },
+    {
+      "id": "yanpo",
+      "class": 18,
+      "side": "ally",
+      "x": 10,
+      "y": 13,
+      "facing": 0,
+      "level": 28,
+      "hidden": true,
+      "name": "阎婆"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "数日后，宋江回到郓城。托塔天王晁盖念他通风报信、救了众人性命，特命刘唐送来谢金。"
+        ],
+        [
+          "say",
+          "liutang",
+          "晁保正命我送来些金子，谢哥哥救命之恩。请哥哥收下。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我当日只是尽了本分，怎能收这谢礼？烦请兄弟原样带回，叫晁保正不必挂怀。"
+        ],
+        [
+          "narrate",
+          "刘唐见宋江坚辞，只得收起金子，告辞回梁山去了。"
+        ],
+        [
+          "leave",
+          "liutang"
+        ],
+        [
+          "narrate",
+          "回到家中，宋江与阎婆惜起了争执。阎婆惜已看过晁盖的书信，知道宋江曾私放晁盖，便拿此事要挟他。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "把那封书信还我，此事与你无干。"
+        ],
+        [
+          "say",
+          "yanpoxishi",
+          "你私放晁盖，书信在我手里。若不依我，我便告到官府去！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我平日待你不薄，你何苦拿这事逼我？"
+        ],
+        [
+          "narrate",
+          "二人争执愈烈。阎婆惜不肯交出书信，宋江一怒之下拔刀，杀了阎婆惜。"
+        ],
+        [
+          "appear",
+          "yanpo"
+        ],
+        [
+          "narrate",
+          "阎婆回来，见女儿倒在血泊之中，顿时哭喊起来。邻里听见动静，纷纷赶来。"
+        ],
+        [
+          "say",
+          "yanpo",
+          "我的女儿！宋江杀了人，快来拿他！"
+        ],
+        [
+          "narrate",
+          "宋江自知再不能留在郓城，只得连夜逃走。"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "victory",
+          "宋江杀惜后逃离郓城。"
+        ]
+      ]
+    }
+  ]
+}

@@ -539,13 +539,25 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   };
 
   it('两关都插在主线某关前面，开场后都在进行，在场单位都站在可通行格上', () => {
-    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([['wawasi', 'N-add06', false], ['sanruan', 'Act10-1', true]]);
-    for (const s of rt.stages) {
+    expect(rt.stages.map((s) => [s.id, s.before, !!s.pov])).toEqual([['wawasi', 'N-add06', false], ['sanruan', 'Act10-1', true], ['songjiang-yanshixi', undefined, false]]);
+    for (const s of rt.stages.slice(0, 2)) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((x) => x.present)) expect(b.board.passable(u.x, u.y), `${s.id} ${u.name} (${u.x},${u.y})`).toBe(true);
     }
+  });
+
+  it('终章之后的纯剧情播放辞金、杀惜与逃亡，演完即通关', () => {
+    const stage = stageOf('songjiang-yanshixi');
+    expect(stage.after).toBe('N14');
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
+    const ev = b.begin();
+    expect(b.status).toBe('won');
+    const lines = ev.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => e.text).join('\n');
+    expect(lines).toMatch(/收下/);
+    expect(lines).toMatch(/阎婆惜/);
+    expect(lines).toMatch(/逃走/);
   });
 
   it('瓦罐寺：我方按职业号套用主线进度；过关奖励用关卡里写的银子', () => {
