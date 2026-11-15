@@ -65,21 +65,22 @@
       "id": "zhang",
       "class": 36,
       "side": "enemy",
-      "x": 16,
-      "y": 12,
+      "x": 23,
+      "y": 14,
       "facing": 0,
-      "level": 26,
+      "level": 28,
       "name": "张文远",
-      "hidden": true
+      "hidden": true,
+      "ai": 8
     },
     {
       "id": "thug1",
       "class": 19,
       "side": "enemy",
-      "x": 15,
-      "y": 13,
+      "x": 16,
+      "y": 12,
       "facing": 0,
-      "level": 25,
+      "level": 26,
       "name": "张家打手",
       "hidden": true
     },
@@ -90,7 +91,7 @@
       "x": 17,
       "y": 11,
       "facing": 0,
-      "level": 25,
+      "level": 26,
       "name": "张家打手",
       "hidden": true
     },
@@ -99,9 +100,9 @@
       "class": 19,
       "side": "enemy",
       "x": 18,
-      "y": 12,
+      "y": 13,
       "facing": 0,
-      "level": 25,
+      "level": 26,
       "name": "张家打手",
       "hidden": true
     },
@@ -109,33 +110,110 @@
       "id": "thug4",
       "class": 20,
       "side": "enemy",
-      "x": 0,
+      "x": 15,
       "y": 13,
       "facing": 0,
-      "level": 25,
+      "level": 26,
       "name": "张家打手",
       "hidden": true
     },
     {
-      "id": "thug5",
-      "class": 19,
+      "id": "jiading1",
+      "class": 37,
+      "side": "enemy",
+      "x": 0,
+      "y": 12,
+      "facing": 0,
+      "level": 25,
+      "name": "张家家丁",
+      "hidden": true
+    },
+    {
+      "id": "jiading2",
+      "class": 37,
+      "side": "enemy",
+      "x": 0,
+      "y": 13,
+      "facing": 0,
+      "level": 25,
+      "name": "张家家丁",
+      "hidden": true
+    },
+    {
+      "id": "jiading3",
+      "class": 37,
       "side": "enemy",
       "x": 1,
       "y": 14,
       "facing": 0,
       "level": 25,
-      "name": "张家打手",
+      "name": "张家家丁",
       "hidden": true
     },
     {
-      "id": "thug6",
-      "class": 20,
+      "id": "jiading4",
+      "class": 37,
       "side": "enemy",
       "x": 2,
-      "y": 14,
+      "y": 13,
       "facing": 0,
       "level": 25,
-      "name": "张家打手",
+      "name": "张家家丁",
+      "hidden": true
+    },
+    {
+      "id": "gongren1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 14,
+      "facing": 0,
+      "level": 26,
+      "name": "做公的",
+      "hidden": true
+    },
+    {
+      "id": "gongren2",
+      "class": 33,
+      "side": "enemy",
+      "x": 23,
+      "y": 13,
+      "facing": 0,
+      "level": 26,
+      "name": "做公的",
+      "hidden": true
+    },
+    {
+      "id": "gongren3",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 13,
+      "facing": 0,
+      "level": 26,
+      "name": "做公的",
+      "hidden": true
+    },
+    {
+      "id": "gongshou1",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 14,
+      "facing": 0,
+      "level": 26,
+      "name": "做公的弓手",
+      "hidden": true
+    },
+    {
+      "id": "gongshou2",
+      "class": 34,
+      "side": "enemy",
+      "x": 23,
+      "y": 12,
+      "facing": 0,
+      "level": 26,
+      "name": "做公的弓手",
       "hidden": true
     }
   ],
@@ -241,7 +319,7 @@
         ],
         [
           "narrate",
-          "话音未落，庄门外一阵喧嚷。张文远放心不下两个都头，自带了一伙泼皮打手赶来，前后堵住了去路。"
+          "话音未落，庄门外一阵喧嚷。张文远放心不下两个都头，自带了几个泼皮打手闯进庄来，自己却只站在东边墙根下吆喝。"
         ],
         [
           "say",
@@ -278,17 +356,9 @@
           "thug4"
         ],
         [
-          "appear",
-          "thug5"
-        ],
-        [
-          "appear",
-          "thug6"
-        ],
-        [
           "say",
           "zhang",
-          "好哇！我便料你两个和宋江交好，必然卖放！凶身就在眼前，你们不拿，我自拿！给我围住，一个也休放走！"
+          "好哇！我便料你两个和宋江交好，必然卖放！凶身就在眼前，你们不拿，我自拿！我家里人随后便到，看你们往哪里走！"
         ],
         [
           "say",
@@ -306,12 +376,20 @@
           "二位贤弟手下留情，莫伤人命。打退他们便罢！"
         ],
         [
+          "narrate",
+          "张文远见三人动了兵刃，慌忙退出庄门外，只叫打手们上前。"
+        ],
+        [
+          "leave",
+          "zhang"
+        ],
+        [
           "objective",
           "限制回合数 --- 30"
         ],
         [
           "objective",
-          "胜利条件   --- 打退张文远及全部打手"
+          "胜利条件   --- 打倒张文远（他躲在庄外，第3回合带人回来）"
         ],
         [
           "objective",
@@ -324,11 +402,128 @@
       ]
     },
     {
-      "on": "enemiesDefeated",
+      "on": {
+        "turn": 2
+      },
       "do": [
         [
           "narrate",
-          "张文远挨了几下，丢了棍棒，抱着头逃出庄门；打手们也一哄而散。三人收住兵刃，并未追赶。"
+          "西南边墙外又是一阵脚步声，张文远家里的几个家丁拿着棍棒赶到了。"
+        ],
+        [
+          "appear",
+          "jiading1"
+        ],
+        [
+          "appear",
+          "jiading2"
+        ],
+        [
+          "appear",
+          "jiading3"
+        ],
+        [
+          "appear",
+          "jiading4"
+        ],
+        [
+          "say",
+          "jiading1",
+          "三郎莫慌，我们来了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "后面也来了人……二位贤弟当心，莫教他们前后夹住！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "东南角门外又涌进来一伙做公的，原来是张文远使了钱，买嘱来的县里差役，还带着弓手。张文远躲在他们身后，又回到了庄里。"
+        ],
+        [
+          "appear",
+          "zhang"
+        ],
+        [
+          "buff",
+          "zhang",
+          "defense",
+          {
+            "pct": 200
+          }
+        ],
+        [
+          "appear",
+          "gongren1"
+        ],
+        [
+          "appear",
+          "gongren2"
+        ],
+        [
+          "appear",
+          "gongren3"
+        ],
+        [
+          "appear",
+          "gongshou1"
+        ],
+        [
+          "appear",
+          "gongshou2"
+        ],
+        [
+          "say",
+          "gongren1",
+          "张押司吩咐了，拿住宋江，赏钱少不了大家的！"
+        ],
+        [
+          "say",
+          "zhutong",
+          "你们是县里的公人，倒替张三卖命？擒贼先擒王，先打倒张文远，这伙人自然散了！"
+        ],
+        [
+          "say",
+          "zhang",
+          "给我上！谁拿住宋江，我张三另有重赏！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhang"
+      },
+      "do": [
+        [
+          "say",
+          "zhang",
+          "哎哟……哎哟！反了，反了！两个都头放走杀人凶身，还打伤公人！"
+        ],
+        [
+          "say",
+          "zhang",
+          "宋江，你今日走得脱，明日也走不脱！我便是告到济州府、告到东京，也要告倒你们这一伙！"
+        ],
+        [
+          "say",
+          "leiheng",
+          "你这厮还敢嘴硬？再啰唆一句，教你爬着回县里去！"
+        ],
+        [
+          "say",
+          "zhutong",
+          "雷兄弟，罢了。张三，你私带打手、买嘱公人闯进人家庄院，这事若闹到知县相公跟前，看是谁吃罪不起。还不快滚！"
+        ],
+        [
+          "narrate",
+          "张文远捂着伤处，连滚带爬逃出庄门；打手、家丁和做公的见主人跑了，也一哄而散。三人收住兵刃，并未追赶。"
         ],
         [
           "say",
