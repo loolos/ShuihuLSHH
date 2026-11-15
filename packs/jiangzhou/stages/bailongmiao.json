@@ -313,7 +313,7 @@
    "x": 32,
    "y": 21,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -323,7 +323,7 @@
    "x": 31,
    "y": 22,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -333,7 +333,7 @@
    "x": 33,
    "y": 22,
    "facing": 1,
-   "level": 27
+   "level": 29
   },
   {
    "id": "e4",
@@ -342,7 +342,7 @@
    "x": 32,
    "y": 23,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -352,7 +352,7 @@
    "x": 33,
    "y": 23,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -362,7 +362,7 @@
    "x": 34,
    "y": 23,
    "facing": 1,
-   "level": 27
+   "level": 29
   },
   {
    "id": "e7",
@@ -371,7 +371,7 @@
    "x": 31,
    "y": 24,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -381,7 +381,7 @@
    "x": 33,
    "y": 24,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -391,7 +391,7 @@
    "x": 32,
    "y": 25,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "name": "骑兵"
   },
   {
@@ -401,7 +401,7 @@
    "x": 39,
    "y": 30,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "name": "骑兵"
   },
   {
@@ -411,7 +411,7 @@
    "x": 38,
    "y": 31,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -421,7 +421,7 @@
    "x": 39,
    "y": 32,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -431,7 +431,7 @@
    "x": 44,
    "y": 32,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "name": "骑兵"
   },
   {
@@ -441,7 +441,7 @@
    "x": 45,
    "y": 32,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -451,7 +451,7 @@
    "x": 39,
    "y": 34,
    "facing": 1,
-   "level": 27
+   "level": 29
   },
   {
    "id": "e16",
@@ -460,7 +460,7 @@
    "x": 43,
    "y": 34,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -470,7 +470,7 @@
    "x": 44,
    "y": 34,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "name": "官兵"
   },
   {
@@ -480,7 +480,7 @@
    "x": 45,
    "y": 34,
    "facing": 1,
-   "level": 27
+   "level": 29
   },
   {
    "id": "dujian",
@@ -489,7 +489,7 @@
    "x": 46,
    "y": 47,
    "facing": 1,
-   "level": 32,
+   "level": 34,
    "ai": 8,
    "name": "江州兵马都监"
   },
@@ -500,8 +500,9 @@
    "x": 45,
    "y": 46,
    "facing": 1,
-   "level": 27,
-   "name": "官兵"
+   "level": 29,
+   "name": "官兵",
+   "ai": 2
   },
   {
    "id": "d2",
@@ -510,8 +511,9 @@
    "x": 47,
    "y": 46,
    "facing": 1,
-   "level": 27,
-   "name": "官兵"
+   "level": 29,
+   "name": "官兵",
+   "ai": 2
   },
   {
    "id": "d3",
@@ -520,7 +522,8 @@
    "x": 46,
    "y": 48,
    "facing": 1,
-   "level": 27
+   "level": 29,
+   "ai": 2
   },
   {
    "id": "d4",
@@ -529,7 +532,8 @@
    "x": 44,
    "y": 45,
    "facing": 1,
-   "level": 27
+   "level": 29,
+   "ai": 2
   },
   {
    "id": "d5",
@@ -538,8 +542,9 @@
    "x": 47,
    "y": 48,
    "facing": 1,
-   "level": 27,
-   "name": "官兵"
+   "level": 29,
+   "name": "官兵",
+   "ai": 2
   },
   {
    "id": "w3_1",
@@ -548,7 +553,7 @@
    "x": 26,
    "y": 36,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "hidden": true,
    "name": "骑兵"
   },
@@ -559,7 +564,7 @@
    "x": 28,
    "y": 36,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "hidden": true,
    "name": "骑兵"
   },
@@ -570,7 +575,7 @@
    "x": 26,
    "y": 38,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "官兵"
   },
@@ -581,7 +586,7 @@
    "x": 29,
    "y": 38,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "官兵"
   },
@@ -592,7 +597,7 @@
    "x": 27,
    "y": 40,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true
   },
   {
@@ -602,7 +607,7 @@
    "x": 28,
    "y": 40,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "官兵"
   },
@@ -613,7 +618,7 @@
    "x": 30,
    "y": 30,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "hidden": true,
    "name": "骑兵"
   },
@@ -624,7 +629,7 @@
    "x": 31,
    "y": 31,
    "facing": 1,
-   "level": 28,
+   "level": 30,
    "hidden": true,
    "name": "骑兵"
   },
@@ -635,7 +640,7 @@
    "x": 30,
    "y": 31,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "官兵"
   },
@@ -646,7 +651,7 @@
    "x": 29,
    "y": 33,
    "facing": 1,
-   "level": 27,
+   "level": 29,
    "hidden": true
   },
   {
@@ -656,7 +661,7 @@
    "x": 50,
    "y": 0,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -667,7 +672,7 @@
    "x": 50,
    "y": 2,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
@@ -677,7 +682,7 @@
    "x": 49,
    "y": 2,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -685,10 +690,10 @@
    "id": "r3_1",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 5,
+   "x": 27,
+   "y": 37,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -696,10 +701,10 @@
    "id": "r3_2",
    "class": 33,
    "side": "enemy",
-   "x": 52,
-   "y": 6,
+   "x": 28,
+   "y": 38,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -707,20 +712,20 @@
    "id": "r3_3",
    "class": 34,
    "side": "enemy",
-   "x": 51,
-   "y": 7,
+   "x": 26,
+   "y": 37,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r4_1",
    "class": 32,
    "side": "enemy",
-   "x": 45,
-   "y": 1,
+   "x": 53,
+   "y": 5,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -728,10 +733,10 @@
    "id": "r4_2",
    "class": 43,
    "side": "enemy",
-   "x": 46,
-   "y": 2,
+   "x": 52,
+   "y": 6,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -739,10 +744,10 @@
    "id": "r4_3",
    "class": 33,
    "side": "enemy",
-   "x": 44,
-   "y": 1,
+   "x": 51,
+   "y": 7,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -750,20 +755,20 @@
    "id": "r5_1",
    "class": 34,
    "side": "enemy",
-   "x": 52,
-   "y": 9,
+   "x": 6,
+   "y": 27,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r5_2",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 10,
+   "x": 7,
+   "y": 29,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -771,10 +776,10 @@
    "id": "r5_3",
    "class": 32,
    "side": "enemy",
-   "x": 51,
-   "y": 11,
+   "x": 6,
+   "y": 29,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -782,10 +787,10 @@
    "id": "r6_1",
    "class": 43,
    "side": "enemy",
-   "x": 49,
-   "y": 0,
+   "x": 45,
+   "y": 1,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -793,20 +798,20 @@
    "id": "r6_2",
    "class": 34,
    "side": "enemy",
-   "x": 51,
-   "y": 0,
+   "x": 46,
+   "y": 2,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r6_3",
    "class": 32,
    "side": "enemy",
-   "x": 48,
+   "x": 44,
    "y": 1,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -814,10 +819,10 @@
    "id": "r7_1",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 4,
+   "x": 40,
+   "y": 50,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -825,10 +830,10 @@
    "id": "r7_2",
    "class": 33,
    "side": "enemy",
-   "x": 53,
-   "y": 7,
+   "x": 41,
+   "y": 51,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -836,20 +841,20 @@
    "id": "r7_3",
    "class": 34,
    "side": "enemy",
-   "x": 49,
-   "y": 6,
+   "x": 39,
+   "y": 51,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r8_1",
    "class": 32,
    "side": "enemy",
-   "x": 45,
-   "y": 0,
+   "x": 52,
+   "y": 9,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -857,10 +862,10 @@
    "id": "r8_2",
    "class": 43,
    "side": "enemy",
-   "x": 46,
-   "y": 1,
+   "x": 53,
+   "y": 10,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -868,10 +873,10 @@
    "id": "r8_3",
    "class": 33,
    "side": "enemy",
-   "x": 45,
-   "y": 2,
+   "x": 51,
+   "y": 11,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -879,20 +884,20 @@
    "id": "r9_1",
    "class": 34,
    "side": "enemy",
-   "x": 51,
-   "y": 10,
+   "x": 29,
+   "y": 30,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r9_2",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 12,
+   "x": 29,
+   "y": 31,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -900,10 +905,10 @@
    "id": "r9_3",
    "class": 32,
    "side": "enemy",
-   "x": 50,
-   "y": 11,
+   "x": 28,
+   "y": 31,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -911,10 +916,10 @@
    "id": "r10_1",
    "class": 43,
    "side": "enemy",
-   "x": 47,
-   "y": 1,
+   "x": 10,
+   "y": 2,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -922,20 +927,20 @@
    "id": "r10_2",
    "class": 34,
    "side": "enemy",
-   "x": 47,
-   "y": 2,
+   "x": 11,
+   "y": 3,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r10_3",
    "class": 32,
    "side": "enemy",
-   "x": 49,
-   "y": 4,
+   "x": 9,
+   "y": 3,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -943,10 +948,10 @@
    "id": "r11_1",
    "class": 43,
    "side": "enemy",
-   "x": 53,
-   "y": 9,
+   "x": 25,
+   "y": 50,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -954,10 +959,10 @@
    "id": "r11_2",
    "class": 33,
    "side": "enemy",
-   "x": 50,
-   "y": 7,
+   "x": 26,
+   "y": 51,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -965,20 +970,20 @@
    "id": "r11_3",
    "class": 34,
    "side": "enemy",
-   "x": 51,
-   "y": 8,
+   "x": 24,
+   "y": 51,
    "facing": 2,
-   "level": 25,
+   "level": 27,
    "hidden": true
   },
   {
    "id": "r12_1",
    "class": 32,
    "side": "enemy",
-   "x": 44,
-   "y": 0,
+   "x": 45,
+   "y": 26,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
   },
@@ -986,10 +991,10 @@
    "id": "r12_2",
    "class": 43,
    "side": "enemy",
-   "x": 46,
-   "y": 3,
+   "x": 49,
+   "y": 27,
    "facing": 2,
-   "level": 27,
+   "level": 29,
    "hidden": true,
    "name": "骑兵"
   },
@@ -997,12 +1002,96 @@
    "id": "r12_3",
    "class": 33,
    "side": "enemy",
-   "x": 41,
-   "y": 2,
+   "x": 45,
+   "y": 27,
    "facing": 2,
-   "level": 26,
+   "level": 28,
    "hidden": true,
    "name": "官兵"
+  },
+  {
+   "id": "g1",
+   "class": 43,
+   "side": "enemy",
+   "x": 43,
+   "y": 45,
+   "facing": 1,
+   "level": 30,
+   "ai": 2,
+   "name": "骑兵"
+  },
+  {
+   "id": "g2",
+   "class": 43,
+   "side": "enemy",
+   "x": 47,
+   "y": 45,
+   "facing": 1,
+   "level": 30,
+   "ai": 2,
+   "name": "骑兵"
+  },
+  {
+   "id": "g3",
+   "class": 43,
+   "side": "enemy",
+   "x": 44,
+   "y": 49,
+   "facing": 1,
+   "level": 30,
+   "ai": 2,
+   "name": "骑兵"
+  },
+  {
+   "id": "g4",
+   "class": 43,
+   "side": "enemy",
+   "x": 48,
+   "y": 49,
+   "facing": 1,
+   "level": 30,
+   "ai": 2,
+   "name": "骑兵"
+  },
+  {
+   "id": "g5",
+   "class": 34,
+   "side": "enemy",
+   "x": 42,
+   "y": 47,
+   "facing": 1,
+   "level": 29,
+   "ai": 2
+  },
+  {
+   "id": "g6",
+   "class": 34,
+   "side": "enemy",
+   "x": 49,
+   "y": 47,
+   "facing": 1,
+   "level": 29,
+   "ai": 2
+  },
+  {
+   "id": "g7",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 44,
+   "facing": 1,
+   "level": 29,
+   "ai": 2
+  },
+  {
+   "id": "g8",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 50,
+   "facing": 1,
+   "level": 29,
+   "ai": 2
   }
  ],
  "script": [
@@ -1101,7 +1190,7 @@
     ],
     [
      "narrate",
-     "背后的路上来了一队官军！"
+     "西南面又涌来一队官军！"
     ],
     [
      "appear",
@@ -1174,7 +1263,7 @@
     ],
     [
      "narrate",
-     "官兵从庙后包抄过来！"
+     "庙后江边也上来一队官兵！"
     ],
     [
      "appear",
@@ -1197,7 +1286,7 @@
    "do": [
     [
      "narrate",
-     "后面又冒出一队官兵！"
+     "西边的芦苇里钻出一队官兵！"
     ],
     [
      "appear",
@@ -1229,7 +1318,7 @@
     ],
     [
      "narrate",
-     "庙后又有官兵杀来！"
+     "官兵从庙后包抄过来！"
     ],
     [
      "appear",
@@ -1272,7 +1361,7 @@
     ],
     [
      "narrate",
-     "背后的路上来了一队官军！"
+     "南面渡口杀来一队官军！"
     ],
     [
      "appear",
@@ -1295,7 +1384,7 @@
    "do": [
     [
      "narrate",
-     "官兵从庙后包抄过来！"
+     "背后的路上来了一队官军！"
     ],
     [
      "appear",
@@ -1318,7 +1407,7 @@
    "do": [
     [
      "narrate",
-     "后面又冒出一队官兵！"
+     "林子那边又来了官兵！"
     ],
     [
      "appear",
@@ -1341,7 +1430,7 @@
    "do": [
     [
      "narrate",
-     "庙后又有官兵杀来！"
+     "北面的小路上来了官军！"
     ],
     [
      "appear",
@@ -1364,7 +1453,7 @@
    "do": [
     [
      "narrate",
-     "背后的路上来了一队官军！"
+     "南边又有一队官兵赶到！"
     ],
     [
      "appear",
@@ -1387,7 +1476,7 @@
    "do": [
     [
      "narrate",
-     "官兵从庙后包抄过来！"
+     "庙东的路上又来了官兵！"
     ],
     [
      "appear",
