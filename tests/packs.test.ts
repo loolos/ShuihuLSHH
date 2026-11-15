@@ -619,7 +619,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('义释宋公明：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
+  it('义释宋公明：三人可操作、前三回合敌人分三拨来、30回合，所有人能沿地形互相到达', () => {
     const stage = stageOf('songjiazhuang');
     expect(stage.after).toBe('N14');
     expect(stage.pov).toBe(true);
@@ -631,15 +631,22 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect([b.board.width, b.board.height]).toEqual([24, 15]);
     expect(b.active().filter((u) => u.side === 'player').map((u) => [u.name, u.x, u.y])).toEqual([['宋江', 10, 5], ['朱仝', 9, 5], ['雷横', 8, 6]]);
     expect(b.active().some((u) => u.name === '宋太公')).toBe(false);
-    expect(b.active().filter((u) => u.side === 'enemy')).toHaveLength(7);
+    const enemyCount = () => b.active().filter((u) => u.side === 'enemy').length;
+    expect(enemyCount()).toBe(4);
+    expect(b.units.filter((u) => u.side === 'enemy')).toHaveLength(14);
     const distances = b.board.distanceField([b.units[0]]);
     const cells = new Set<string>();
-    for (const u of b.active()) {
+    for (const u of b.units.filter((x) => x.name !== '宋太公')) {
       expect(b.board.passable(u.x, u.y)).toBe(true);
       expect(Number.isFinite(distances[u.y * b.board.width + u.x])).toBe(true);
       expect(cells.has(`${u.x},${u.y}`)).toBe(false);
       cells.add(`${u.x},${u.y}`);
     }
+    for (const u of b.units.filter((x) => x.side === 'player')) u.hp = 999999;
+    advance(b, 2);
+    expect(enemyCount()).toBe(8);
+    advance(b, 3);
+    expect(enemyCount()).toBe(14);
   });
 
   it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
@@ -662,7 +669,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('义释宋公明：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
+  it('义释宋公明：打倒张文远即过关（他有对白），任一主角战败即失败，超时也失败', () => {
     const start = () => {
       const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
       b.begin();
@@ -670,11 +677,15 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     };
     const check = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
     const b = start();
+    const kill = (u: Unit) => {
+      u.hp = 0; u.alive = false; u.present = false;
+      (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(u.classId);
+    };
     const enemies = b.units.filter((u) => u.side === 'enemy');
-    enemies[0].hp = 0; enemies[0].alive = false; enemies[0].present = false;
+    kill(enemies.find((u) => u.name === '张家打手')!);
     check(b);
     expect(b.status).toBe('playing');
-    enemies.forEach((u) => { u.hp = 0; u.alive = false; u.present = false; });
+    kill(enemies.find((u) => u.name === '张文远')!);
     check(b);
     expect(b.status).toBe('won');
     for (const id of ['sj-fugitive', 'zhutong', 'leiheng']) {

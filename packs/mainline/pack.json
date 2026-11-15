@@ -283,6 +283,7 @@
           "name": "千里流光",
           "from": 151,
           "anim": 0,
+          "effect": 32,
           "area": 3,
           "power": 40,
           "mpCost": 45,
