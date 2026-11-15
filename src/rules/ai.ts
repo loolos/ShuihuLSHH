@@ -41,8 +41,8 @@ export function primaryFoe(b: Battle, u: Unit): Unit | undefined {
  * 这里【新】：在普通攻击和气力够用的攻击技能里挑——先打主要目标（primaryFoe），其次击倒人数多的，
  * 再次少走路，最后期望伤害高的（技能按"期望伤害 − 气力消耗 / 2"折算，免得为一点伤害耗光气力）。
  */
-function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
-  const reach = b.reachOf(u, u.stats.move);
+function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiPlan | null {
+  const reach = b.reachOf(u, budget);
   const basic = attackSkill(u, b.data);
   const skills = [basic, ...learnedSkills(u, b.data).filter((s) => !isSupportSkill(s) && s.mpCost <= u.mp)];
   const main = primaryFoe(b, u);
@@ -202,6 +202,8 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       const fEnd = forced.path?.at(-1) ?? u;
       return field[fEnd.y * b.board.width + fEnd.x] < field[end.y * b.board.width + end.x] ? forced : plan;
     }
+    case 11: // 【新】驻守戒备：仅从原位攻击射程内目标，不移动追击
+      return bestAttack(b, u, undefined, 0) ?? {};
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
