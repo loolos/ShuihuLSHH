@@ -113,6 +113,21 @@
     "frames": 8,
     "ms": 167
    }
+  },
+  "axe-four": {
+   "source": "Sword_Attack × 4",
+   "front": {
+    "file": "sword-attack-front.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+   },
+   "back": {
+    "file": "sword-attack-back.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+   }
   }
  }
 }

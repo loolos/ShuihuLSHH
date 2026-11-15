@@ -20,6 +20,8 @@ export interface SpriteStrip {
   file: string;
   frames: number;
   ms: number;
+  /** 一次出手内连续播放这套动作的次数，默认 1 */
+  cycles?: number;
 }
 
 /** 一个扩展包职业在画面上的样子 */
@@ -211,7 +213,7 @@ function packClass(c: PackClassJson, id: number, skills: SkillDef[], itemRef: (v
 
 /** 命中位置（动画的 0–1）→ 原版帧号：按 45 ms 一帧换算，BattleScene 按这个时间点结算受击 */
 function hitFrame(at: number, strip: SpriteStrip) {
-  return Math.max(1, Math.round((at * strip.frames * strip.ms) / ORIGINAL_FRAME_MS) + 1);
+  return Math.max(1, Math.round((at * strip.frames * strip.ms * (strip.cycles ?? 1)) / ORIGINAL_FRAME_MS) + 1);
 }
 
 function packSkill(s: PackSkillJson, skillId: number, group: number | null, templates: Map<number, SkillDef>, sheet: SpriteSheetJson | null, pack: string): SkillDef {
