@@ -240,6 +240,8 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 .goods-group { border: 1px solid #5a4832; border-radius: 4px; overflow: hidden; }
 .goods-group summary { cursor: pointer; padding: 10px; min-height: 44px; box-sizing: border-box; color: var(--accent); background: var(--panel); }
 .goods-group summary:hover, .goods-group summary:focus-visible { background: #3a2e20; }
+.goods-subgroups { display: flex; flex-direction: column; gap: 6px; padding: 6px; }
+.goods-subgroups > .goods-group > summary { background: #1f1912; }
 .goods-count { float: right; color: var(--muted); font-size: 13px; margin-left: 8px; }
 #town .goods-group .goods { padding: 6px; }
 .town-party { display: flex; flex-direction: column; gap: 8px; }
