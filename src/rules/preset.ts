@@ -91,7 +91,7 @@ export function foeLevel(count: number, pos: number, units: (i: number) => ActUn
 export const JUMP_LEVEL_GAP = 2;
 
 /**
- * 第 pos 关 2 级以上敌人（修正后）的平均等级，不取整；全是 1 级摆设的过场关看后面第一场真正的战斗；后面都没有战斗时为 0。
+ * 第 pos 关 2 级以上敌人（自有配置的）的平均等级，不取整；全是 1 级摆设的过场关看后面第一场真正的战斗；后面都没有战斗时为 0。
  */
 export function foeAverage(count: number, pos: number, units: (i: number) => ActUnit[]): number {
   for (let i = pos; i < count; i++) {

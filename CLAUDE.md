@@ -27,10 +27,10 @@
 | `npm run typecheck` | 只做类型检查 |
 | `npm run gen:docs` | 重新生成 `docs/reference/` |
 | `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256）和 `src/data/frame-alias.json`（重复帧表） |
-| `npm run gen:enemy-levels` | 用原版经验规则沿主线模拟（8 个种子，约 4 分钟），重新生成每关敌人等级修正 `src/data/enemy-levels.json`（要在 `gen:levels` 之前跑） |
+| `npm run check:enemy-levels` | 校验自有敌方绝对等级配置的完整性、职业身份和等级值；`gen:enemy-levels` 为兼容别名，不再生成修正 |
 | `npm run gen:levels` | 按期望值估算主线（不到 1 秒），重新生成跳关用的入场等级表 `src/data/entry-levels.json`（改了经验规则或敌人等级后要跑） |
 | `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
-| `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 修正后敌人平均 + 1） |
+| `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 自有敌人基础等级平均 + 1） |
 | `node tools/gen-sound.ts <原版 Sound 目录>` | 把原版音效压成 MP3（去重）写到 `gamedata/sound/`（需要 ffmpeg；负责人 2026-11-12 同意入库） |
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版每关下载量、重复文件和重复帧 |
 | `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
