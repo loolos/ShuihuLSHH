@@ -22,7 +22,7 @@ import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
-import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
+import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -220,14 +220,14 @@ function startGame(assets: Assets) {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('itown:')) {
       const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
-      if (e?.townAfter) return { ...c, finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
+      if (e?.townAfter) return { ...c, inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
     }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
       const anchor = e?.before ?? e?.after;
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
-        const done = (c.inserts ?? []).filter((r) => r !== e.ref);
+        const done = replayInsertProgress(c, inserts, e.ref);
         return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, inserts: done, finished: undefined };
       }
     }

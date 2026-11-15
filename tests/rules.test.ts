@@ -1252,6 +1252,25 @@ describe('主线插关的排队（campaign.ts pendingInsert）', () => {
     expect(pendingInsert({ ...c, inserts: ['mainline/chifagui'] }, list, 'Act10-1', 'before', 'mainline/chifagui')).toBe('mainline/sanruan');
     expect(pendingInsert({ ...c, inserts: ['mainline/sanruan'] }, list, 'Act10-1', 'before', 'mainline/sanruan')).toBeUndefined();
   });
+  it('第十七章重玩时不因旧通关标记跳过安平寨和快活林，刷新存档也按顺序', async () => {
+    const { pendingInsert, replayInsertProgress, newCampaign, parseCampaign } = await import('../src/rules/campaign.ts');
+    const { insertPlaces } = await import('../src/rules/chapters.ts');
+    const list = insertPlaces();
+    const refs = ['shizipo', 'anpingzhai', 'kuaihuolin', 'zhangfu', 'feiyunpu', 'yuanyanglou'].map(id => `mainline/${id}`);
+    const old = { ...newCampaign(75), gold: 4321, inserts: [...list.slice(0, list.findIndex(e => e.ref === refs[0])).map(e => e.ref), ...refs.filter(r => r !== 'mainline/zhangfu')] };
+    // 已在十字坡的旧存档也必须进入紧邻的安平寨。
+    expect(pendingInsert(old, list, 'N14', 'after', refs[0])).toBe(refs[1]);
+    const replay = { ...old, inserts: replayInsertProgress(old, list, refs[0]) };
+    expect(replay.inserts).toEqual(list.slice(0, list.findIndex(e => e.ref === refs[0])).map(e => e.ref));
+    expect(replay.gold).toBe(4321);
+    for (let i = 0; i < refs.length; i++) {
+      replay.inserts.push(refs[i]);
+      const loaded = parseCampaign(JSON.stringify(replay))!;
+      expect(pendingInsert(loaded, list, 'N14', 'after', refs[i])).toBe(refs[i + 1]);
+      expect(pendingInsert(loaded, list, 'N14', 'after')).toBe(refs[i + 1]);
+    }
+    expect(replayInsertProgress({ ...old, inserts: refs }, list, refs[3])).toEqual(refs.slice(0, 3));
+  });
   it('终章之后的续篇只排一次，且不会当作 before 插关', async () => {
     const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');
     const list = [{ ref: 'mainline/songjiang-yanshixi', after: 'N14' }, { ref: 'mainline/songjiazhuang', after: 'N14' }];
