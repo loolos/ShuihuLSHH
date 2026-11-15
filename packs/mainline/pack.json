@@ -29,18 +29,6 @@
       "description": "山中獵戶常用的木弓，弓力不大。"
     },
     {
-      "id": "jiaogong",
-      "name": "角弓",
-      "from": 14,
-      "type": 11,
-      "attack": 18,
-      "hit": 0,
-      "buyPrice": 900,
-      "shop": [11],
-      "icon": "icons/jiaogong.png",
-      "description": "牛角、筋膠合製的軍中常用弓。"
-    },
-    {
       "id": "quehuagong",
       "name": "鵲畫弓",
       "from": 14,
@@ -51,18 +39,6 @@
       "shop": [11],
       "icon": "icons/quehuagong.png",
       "description": "弓背描著喜鵲的好弓，花榮慣用。"
-    },
-    {
-      "id": "tietaigong",
-      "name": "鐵胎弓",
-      "from": 14,
-      "type": 11,
-      "attack": 32,
-      "hit": 5,
-      "buyPrice": 3200,
-      "shop": [11],
-      "icon": "icons/tietaigong.png",
-      "description": "鐵胎硬弓，非臂力過人拉不開。"
     },
     {
       "id": "baodiaogong",
