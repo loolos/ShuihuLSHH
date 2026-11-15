@@ -265,10 +265,10 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     };
     // 试手 22 级 ≈ 主线到过城镇 7：碧雲箬笠、大還金丹 ×2；戴宗默认是布衣、一字巾、狗皮膏藥 ×2
     expect(names('shishou', 'daizong')).toEqual(['鋼刺拳', '綠羅花戰袍', '碧雲箬笠', '狗皮膏藥', '狗皮膏藥', '大還金丹', '大還金丹']);
-    // 武松打虎按设计的难度，不配（gearAt: none）
+    // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
     const ws = loadPackFromDisk('wusong', rt.data);
     const u = compileStage(ws, ws.stages[0], files).units.find((x) => x.side === 'player')!;
-    expect(u.items.filter(Boolean).map((id) => ws.data.items[id - 1].name)).not.toContain('綠羅花戰袍');
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '紅纓氈笠']);
   });
 
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
