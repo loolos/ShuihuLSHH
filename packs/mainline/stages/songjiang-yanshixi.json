@@ -1,6 +1,6 @@
 {
   "id": "songjiang-yanshixi",
-  "title": "乌龙院",
+  "title": "坐楼杀惜",
   "after": "N14",
   "map": {
     "base": "Act5-2"
@@ -9,7 +9,7 @@
   "units": [
     {
       "id": "songjiang",
-      "class": 6,
+      "class": "sj-fugitive",
       "side": "player",
       "x": 10,
       "y": 11,

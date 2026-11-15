@@ -143,7 +143,8 @@ export interface PackStageJson {
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
   /** 地图：借原版地图（地表、地上物、通行都照原版） */
-  map: { base: string };
+  /** base：借用的原版地图；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块） */
+  map: { base: string; crop?: [number, number, number, number] };
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   units: PackUnitJson[];

@@ -1,7 +1,7 @@
 {
   "id": "mainline",
   "name": "主线插关",
-  "description": "主线插关与后续剧情，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
+  "description": "主线插关与终章续篇，呼应《水浒传》原著情节（docs/game-design.md §15.8、§15.10、§15.11）。",
   "entry": "mainline",
   "classes": [
     {
@@ -34,10 +34,54 @@
           "anim": 0
         },
         {
+          "id": "escape-sj-sihai",
+          "name": "四海归心",
+          "from": 225,
+          "anim": 3,
+          "power": 20,
+          "mpCost": 30,
+          "hits": [
+            {
+              "frame": 10,
+              "percent": 100,
+              "dir": 2
+            },
+            {
+              "frame": 11,
+              "percent": 100,
+              "dir": 1
+            },
+            {
+              "frame": 13,
+              "percent": 100,
+              "dir": 0
+            },
+            {
+              "frame": 14,
+              "percent": 100,
+              "dir": 3
+            }
+          ]
+        },
+        {
           "id": "escape-sj-wohu",
           "name": "卧虎藏锋",
           "from": 199,
           "anim": 5
+        },
+        {
+          "id": "escape-sj-xueran",
+          "name": "血染浔阳",
+          "from": 197,
+          "anim": 6,
+          "type": 14,
+          "area": 6,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 35,
+          "mpCost": 60,
+          "effect": 46,
+          "learnLevel": 20
         },
         {
           "id": "escape-sj-jishiyu",
@@ -385,6 +429,6 @@
     "stages/sanruan.json",
     "stages/zhizhulin.json",
     "stages/songjiang-yanshixi.json",
-    "stages/songjiang-tavern.json"
+    "stages/songjiazhuang.json"
   ]
 }

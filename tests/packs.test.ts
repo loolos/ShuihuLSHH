@@ -44,6 +44,17 @@ describe('宋江杀惜剧本', () => {
   });
 });
 
+describe('宋江职业', () => {
+  it('主线续篇的宋江和江州外传的宋江用同一套属性、技能和形象（只有随身道具和技能 id 不同）', () => {
+    const cls = (pack: string, id: string) => JSON.parse(fs.readFileSync(`packs/${pack}/pack.json`, 'utf8')).classes.find((c: { id: string }) => c.id === id);
+    const strip = (c: Record<string, unknown>) => {
+      const { id: _id, items: _items, skills, ...rest } = c;
+      return { ...rest, skills: (skills as { id: string }[]).map(({ id: _sid, ...s }) => s) };
+    };
+    expect(strip(cls('mainline', 'sj-fugitive'))).toEqual(strip(cls('jiangzhou', 'songjiang')));
+  });
+});
+
 describe.skipIf(!has)('扩展包：武松打虎', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
@@ -597,7 +608,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],
       ['songjiang-yanshixi', undefined, false],
-      ['songjiang-tavern', undefined, true],
+      ['songjiazhuang', undefined, true],
     ]);
     for (const s of rt.stages.filter((x) => x.id !== 'songjiang-yanshixi')) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
@@ -607,15 +618,18 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('酒肆：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
-    const stage = stageOf('songjiang-tavern');
+  it('义释宋公明：三人可操作、七名敌人、30回合，所有人能沿地形互相到达', () => {
+    const stage = stageOf('songjiazhuang');
     expect(stage.after).toBe('N14');
     expect(stage.pov).toBe(true);
     const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
     b.begin();
     expect(b.status).toBe('playing');
     expect(b.turnLimit).toBe(30);
-    expect(b.active().filter((u) => u.side === 'player').map((u) => u.name)).toEqual(['宋江', '朱仝', '雷横']);
+    expect(stage.map).toEqual({ base: 'N05', crop: [8, 0, 24, 15] });
+    expect([b.board.width, b.board.height]).toEqual([24, 15]);
+    expect(b.active().filter((u) => u.side === 'player').map((u) => [u.name, u.x, u.y])).toEqual([['宋江', 10, 5], ['朱仝', 9, 5], ['雷横', 8, 6]]);
+    expect(b.active().some((u) => u.name === '宋太公')).toBe(false);
     expect(b.active().filter((u) => u.side === 'enemy')).toHaveLength(7);
     const distances = b.board.distanceField([b.units[0]]);
     const cells = new Set<string>();
@@ -627,8 +641,8 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('酒肆：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
-    const b = new Battle(compileStage(rt, stageOf('songjiang-tavern'), files, { seed: 1, text: tr }));
+  it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
+    const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
     b.begin();
     const zt = b.units.find((u) => u.classId === rt.classIds.get('zhutong'))!;
     const lh = b.units.find((u) => u.classId === rt.classIds.get('leiheng'))!;
@@ -647,9 +661,9 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     }
   });
 
-  it('酒肆：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
+  it('义释宋公明：击退全部敌人才过关，任一主角战败即失败，超时也失败', () => {
     const start = () => {
-      const b = new Battle(compileStage(rt, stageOf('songjiang-tavern'), files, { seed: 1, text: tr }));
+      const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
       b.begin();
       return b;
     };
@@ -693,7 +707,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(lines).toMatch(/收下/);
     expect(lines).toMatch(/阎婆惜/);
     expect(lines).toMatch(/逃走/);
-    const song = b.units.find((u) => u.classId === 6)!;
+    const song = b.units.find((u) => u.name === '宋江')!;
     const liu = b.units.find((u) => u.name === '刘唐')!;
     const yan = b.units.find((u) => u.name === '阎婆惜')!;
     const eventIndex = (type: 'leave' | 'appear', uid: number) => ev.findIndex((e) => e.type === type && e.uid === uid);

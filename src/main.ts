@@ -15,7 +15,7 @@ import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
 import { parsePasHeader } from './formats/pas.ts';
-import { findStageFile } from './rules/load.ts';
+import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
@@ -135,9 +135,14 @@ function startGame(assets: Assets) {
   }
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：按 before / after 关联原版关卡 */
-  const inserts: (InsertEntry & { pov: boolean; title: string })[] = listPacks()
+  // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
+  const inserts: (InsertEntry & { pov: boolean; title: string; kind: string })[] = listPacks()
     .filter((e) => e.pack.entry === 'mainline')
-    .flatMap((e) => e.stages.filter((s) => s.before || s.after).map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title })));
+    .flatMap((e) =>
+      e.stages
+        .filter((s) => s.before || s.after)
+        .map((s) => ({ ref: `${e.pack.id}/${s.id}`, before: s.before, after: s.after, pov: !!s.pov, title: s.title, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' })),
+    );
   const insValue = (ref: string) => `ins:${ref}`;
   // 按章分组：组名"第N章 章名"，组内"战役一 关名""剧情 关名""城镇 地名"（顶栏下拉框和标题画面的选关共用）
   const chapters: { label: string; items: TitleStageItem[] }[] = [];
@@ -146,17 +151,33 @@ function startGame(assets: Assets) {
     const label = l.chapterLabel || '其它';
     if (chapters.at(-1)?.label !== label) chapters.push({ label, items: [] });
     const items = chapters.at(-1)!.items;
-    // 插在这一关前面的主线遭遇战（不占原版的战役编号）
+    // 插在这一关前面的主线插关
     for (const e of inserts.filter((x) => x.before?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `遭遇战 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 遭遇战 · ${e.title}${e.pov ? '（视角关）' : ''}` });
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
     items.push({ label: l.short, value: String(s.index), title: l.full });
     for (const e of inserts.filter((x) => x.after?.toLowerCase() === s.mapName.toLowerCase()))
-      items.push({ label: `后续剧情 ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} 后续剧情 · ${e.title}` });
+      items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${l.chapterLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
     // 每个城镇也能直接进（列在它前面那一关后面）
     const t = towns.get(s.index);
     if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${l.chapterLabel} 城镇 ${townName(t.town)}` });
   }
-  for (const ch of chapters) {
+  // 最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）。顶栏下拉框和标题画面的选关共用
+  const sideItems = (): TitleStageItem[] =>
+    listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
+      ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description })),
+    );
+  const stageGroups = () => {
+    const side = sideItems();
+    return side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters;
+  };
+  /** 外传通关后给下拉框里的那一项补上 ✓ */
+  const refreshSideOptions = () => {
+    for (const it of sideItems()) {
+      const o = [...sel.options].find((x) => x.value === it.value);
+      if (o) o.text = it.label;
+    }
+  };
+  for (const ch of stageGroups()) {
     const group = document.createElement('optgroup');
     group.label = ch.label;
     for (const it of ch.items) {
@@ -384,21 +405,22 @@ function startGame(assets: Assets) {
     try {
       setupEl.hidden = false;
       progress('载入外传…', 0);
-      sel.hidden = true; // 顶栏的选关下拉框是主线的，外传里不显示
+      sel.hidden = false;
+      sel.value = value;
       if (pack?.rt.id !== ref.pack) pack = await openPack(assets, ref.pack);
       const rt = pack.rt;
       const stage = rt.stages.find((s) => s.id === ref.stage);
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
       const classes = stageClasses(rt, stage);
-      await preloadStage(pa, stage.map.base, progress, classes);
+      await preloadStage(pa, stageMapName(stage.map), progress, classes);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
         makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
@@ -421,6 +443,7 @@ function startGame(assets: Assets) {
     }
     const ref = parsePackValue(value)!;
     markPackCleared(ref.pack, ref.stage);
+    refreshSideOptions();
     void music.play('victory');
     const credits = pack?.rt.credits.length ? `\n\n素材：${pack.rt.credits.join('；')}` : '';
     const next = pack?.rt.stages.find((s) => s.id === ref.stage)?.next;
@@ -445,7 +468,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      await preloadStage(pa, stage.map.base, progress, stageClasses(rt, stage));
+      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage));
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
@@ -454,7 +477,7 @@ function startGame(assets: Assets) {
       const party = e.pov ? undefined : partyOf(campaign);
       const join = e.pov ? undefined : joinLevel(campaign);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stage.map.base, ui, seed,
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), ui, seed,
         makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr }), party, joinLevel: join }),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };
@@ -552,7 +575,8 @@ function startGame(assets: Assets) {
     history.replaceState(null, '', u);
   };
   sel.onchange = () => {
-    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空
+    // 从下拉框跳关：人物按那一关重新配等级和装备（不沿用之前的状态）；选"新游戏"则清空；外传不碰主线存档
+    if (isPackValue(sel.value)) return void runPack(sel.value);
     goTo(sel.value === 'new' ? newCampaign(stages[0].index) : jump(sel.value, campaign));
   };
   $('zoom-in').onclick = () => scene()?.zoomBy(1.25);
@@ -598,15 +622,11 @@ function startGame(assets: Assets) {
   if (asked && isPackValue(asked)) return beginPack(asked);
   // asked 以 ins: 开头时 campaign 已经排好了插关
   if (asked) return begin(campaign);
-  // 选关最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）
-  const side = listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
-    ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: `pack:${p.id}/${s.id}`, title: p.description })),
-  );
   const save = loadSave() ? campaign : null;
   void music.play(['title', 'liangshan']);
   title.show({
     save: save && stages.some((s) => s.index === save.stage) ? saveSummary(save) : null,
-    chapters: side.length ? [...chapters, { label: '外传（独立进度，等级固定）', items: side }] : chapters,
+    chapters: stageGroups(),
     portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
     version: versionLabel(BUILD),
     buttons: [$('sound'), $('music')],
@@ -620,7 +640,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} 遭遇战 · ${ins.title}` : l.full;
+    const where = c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))

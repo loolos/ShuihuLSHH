@@ -1126,11 +1126,11 @@ describe('主线插关的排队（campaign.ts pendingInsert）', () => {
   });
   it('终章之后的续篇只排一次，且不会当作 before 插关', async () => {
     const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');
-    const list = [{ ref: 'mainline/songjiang-yanshixi', after: 'N14' }, { ref: 'mainline/songjiang-tavern', after: 'N14' }];
+    const list = [{ ref: 'mainline/songjiang-yanshixi', after: 'N14' }, { ref: 'mainline/songjiazhuang', after: 'N14' }];
     const c = newCampaign(75);
     expect(pendingInsert(c, list, 'n14', 'after')).toBe('mainline/songjiang-yanshixi');
     expect(pendingInsert(c, list, 'N14')).toBeUndefined();
-    expect(pendingInsert({ ...c, inserts: ['mainline/songjiang-yanshixi'] }, list, 'N14', 'after')).toBe('mainline/songjiang-tavern');
+    expect(pendingInsert({ ...c, inserts: ['mainline/songjiang-yanshixi'] }, list, 'N14', 'after')).toBe('mainline/songjiazhuang');
     expect(pendingInsert({ ...c, inserts: list.map((x) => x.ref) }, list, 'N14', 'after')).toBeUndefined();
   });
 });
