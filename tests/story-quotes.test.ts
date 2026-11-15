@@ -77,6 +77,11 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(sentence).toBeGreaterThan(confession);
     expect(reveal).toBeGreaterThan(sentence);
     expect(challenge).toBeGreaterThan(reveal);
+    expect(find('你竟不在草料场里')).toBeGreaterThan(challenge);
+    expect(find('他身后还有人')).toBeGreaterThan(find('你竟不在草料场里'));
+    expect(find('今日不杀你们')).toBe(challenge);
+    expect(find('还敢来攀旧日情分')).toBeGreaterThan(find('何必闹到这般田地'));
+    expect(find('众人一起上')).toBeGreaterThan(find('还敢来攀旧日情分'));
     expect(lines.join()).not.toMatch(/挑战书|不赴约|把你叫到这里/);
     expect(ev.some((e) => e.type === 'attack')).toBe(false);
     // 纯文字调整不改原版战斗触发、增援与胜负条件指令。
@@ -84,6 +89,35 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     const raw = parsePasBlocks(files.get(findStageFile(files, 'N09', '.pab')!), 'big5');
     const gameplay = (blocks: typeof raw) => blocks.map((b) => ({ trigger: b.trigger, ops: b.ops.filter((o) => o.op !== 12 && o.op !== 13) }));
     expect(gameplay(input.blocks)).toEqual(gameplay(raw));
+  });
+
+  it('草料场战后：陆谦求饶与林冲对峙在前，伏诛后才商议去向并结算', () => {
+    const { b, ev: opening } = play('N09');
+    expect(says(opening).join()).not.toContain('放我这一遭');
+    for (const u of b.units.filter((u) => u.side === 'enemy')) {
+      u.hp = 0;
+      u.alive = false;
+    }
+    const player = b.units.find((u) => u.side === 'player' && b.canMove(u) && b.moveRange(u).green.length)!;
+    const step = b.moveRange(player).green[0];
+    const ev = b.move(player, step.x, step.y);
+    expect(b.status).toBe('won');
+    const lines = ev.flatMap((e) => e.type === 'say' || e.type === 'narrate' ? [e.text] : []);
+    const at = (text: string) => lines.findIndex((l) => l.includes(text));
+    const sequence = ['尚有一口气', '不干小人事', '放我这一遭', '你骗我去你家', '我必报答', '也要拿失守草料场', '太尉岂肯罢休', '还拿高俅来压我', '今日这一刀', '结果了陆谦', '沧州也不能待下去了', '过关了'];
+    let previous = -1;
+    for (const text of sequence) {
+      expect(at(text), text).toBeGreaterThan(previous);
+      previous = at(text);
+    }
+    expect(says(ev).find((l) => l.includes('不干小人事'))).toMatch(/^陆谦：/);
+    expect(says(ev).find((l) => l.includes('今日这一刀'))).toMatch(/^林冲：/);
+    expect(ev.find((e) => e.type === 'say' && e.text.includes('沧州也不能待下去了'))).toMatchObject({
+      type: 'say', uid: b.units.find((u) => u.classId === 0)!.uid,
+    });
+    expect(ev.some((e) => e.type === 'appear')).toBe(false);
+    // 已触发的胜利区块不会再次执行或重复处决陆谦。
+    expect(b.endPlayerPhase()).toEqual([]);
   });
 
   it('黄泥冈：白胜先唱歌后登场，原来的对白照常接上', () => {
