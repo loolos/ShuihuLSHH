@@ -397,7 +397,7 @@ export function basicAttack(c: ClassDef): SkillDef | undefined {
 export const isUsable = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 22;
 
 export type BuffStat = 'attack' | 'defense' | 'hit' | 'agility' | 'crit' | 'move' | 'poison' | 'stun' | 'resistPoison' | 'resistStun';
-/** 限时效果：value 加到对应属性上，持续 turns 回合（每回合开始 −1，到 0 消失） */
+/** 属性效果：value 加到对应属性；turns > 0 按回合倒计时，turns = 0 表示持续到本关结束。 */
 export interface Buff {
   stat: BuffStat;
   value: number;
@@ -432,6 +432,14 @@ const STAT_NAME: Record<BuffStat, string> = {
   attack: '攻击', defense: '防御', hit: '命中', agility: '敏捷', crit: '必杀', move: '移动', poison: '攻击带毒', stun: '攻击致昏', resistPoison: '抗毒', resistStun: '抗昏',
 };
 export const buffName = (s: BuffStat) => STAT_NAME[s];
+
+/** 单位面板的状态说明，区分属性加值与持续时间。 */
+export function buffLabel(b: Buff): string {
+  const value = b.value ? ` ${b.value > 0 ? '+' : ''}${b.value}` : '';
+  const duration = b.turns === 0 ? '本关有效' : `剩余${b.turns}回合`;
+  return `${buffName(b.stat)}${value}（${duration}）`;
+}
+
 
 /** 道具效果的简短说明（简体）：装备列攻防等加成（含打铁 n 次），消耗品列效果 */
 export function itemSummary(it: Item, n = 0): string {

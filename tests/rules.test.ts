@@ -4,7 +4,7 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { buffLabel, buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
@@ -43,6 +43,12 @@ function unit(o: Partial<Unit>): Unit {
 }
 
 describe('属性', () => {
+  it('状态面板区分加值和持续时间，减益不显示多余加号', () => {
+    expect(buffLabel({ stat: 'attack', value: 19, turns: 0 })).toBe('攻击 +19（本关有效）');
+    expect(buffLabel({ stat: 'hit', value: -12, turns: 0 })).toBe('命中 -12（本关有效）');
+    expect(buffLabel({ stat: 'defense', value: 7, turns: 2 })).toBe('防御 +7（剩余2回合）');
+  });
+
   it('己方等级移动力：5 级 +1，20 级累计 +2；同职业敌方、友军均不增加', () => {
     for (const [level, bonus] of [[1, 0], [4, 0], [5, 1], [19, 1], [20, 2], [30, 2], [99, 2]]) {
       for (const side of ['player', 'enemy', 'ally'] as const) {

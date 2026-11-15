@@ -978,6 +978,37 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   const start = (id: string, c?: CampaignState) => {
     const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
   };
+
+  it('快活林三次酒劲各结算一次，本关持续与有限回合增益互不混淆', () => {
+    const original = stage('kuaihuolin');
+    const s = { ...original, script: [...original.script, {
+      on: 'start' as const, do: [['buff', 'wusong', 'defense', { add: 7, turns: 3 }]] as [string, ...unknown[]][],
+    }] };
+    const b = new Battle(compileStage(rt, s, files, { seed: 1 })); b.begin();
+    const wu = b.units.find(u => u.classId === cid('wusong'))!;
+    const startingDefense = wu.stats.defense;
+    expect(wu.buffs.find(buff => buff.stat === 'defense')?.turns).toBe(2); // 开局已过一次回合开始结算。
+    expect(wu.stats.attack).toBe(189);
+    const attacks = [208, 229, 252], hits = [229, 218, 207];
+    for (let i = 0; i < 3; i++) {
+      const npc = s.units.find(u => u.id === `wine-${i + 1}`)!;
+      wu.x = npc.x + 1; wu.y = npc.y;
+      (b as unknown as { afterAction: () => void }).afterAction();
+      expect(wu.stats.attack).toBe(attacks[i]);
+      expect(wu.stats.hit).toBe(hits[i]);
+    }
+    (b as unknown as { afterAction: () => void }).afterAction();
+    expect(wu.buffs.filter(buff => buff.turns === 0)).toHaveLength(6);
+    b.endPlayerPhase();
+    expect(wu.buffs.find(buff => buff.stat === 'defense')?.turns).toBe(1);
+    b.endPlayerPhase();
+    expect(wu.buffs.some(buff => buff.stat === 'defense')).toBe(false);
+    expect(wu.stats.defense).toBe(startingDefense - 7);
+    expect(wu.buffs).toHaveLength(6);
+    expect(wu.stats.attack).toBe(252);
+    expect(wu.stats.hit).toBe(207);
+  });
+
   it('快活林第4回合只有戴宗、花荣、李逵来援，史进不在本关出场', () => {
     const s = stage('kuaihuolin'), b = start('kuaihuolin');
     expect(s.units.some(u => u.id === 'shijin' || u.class === 3)).toBe(false);
