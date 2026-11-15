@@ -274,17 +274,17 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
   const tr = has ? buildT2S(files) : (s: string) => s;
   const rt = has ? loadPackFromDisk('jiangzhou', loadGameData(files, tr)) : (null as never);
 
-  it('我方装备、药按对应的主线进度配（负责人 2026-11-15，和跳关同一套规则）', () => {
+  it('我方按个人等级配装，保留包自带剧情武器', () => {
     const names = (stageId: string, cls: string) => {
       const u = compileStage(rt, rt.stages.find((s) => s.id === stageId)!, files).units.find((x) => x.side === 'player' && x.type === rt.classIds.get(cls))!;
       return u.items.filter(Boolean).map((id) => rt.data.items[id - 1].name);
     };
-    // 试手 22 级 ≈ 主线到过城镇 7：碧雲箬笠、大還金丹 ×2；戴宗默认是布衣、一字巾、狗皮膏藥 ×2
-    expect(names('shishou', 'daizong')).toEqual(['鋼刺拳', '綠羅花戰袍', '碧雲箬笠', '狗皮膏藥', '狗皮膏藥', '大還金丹', '大還金丹']);
+    // 戴宗 22 级：常服／头巾；剧本旧药清理后发两颗大还金丹
+    expect(names('shishou', 'daizong')).toEqual(['精鋼拳', '麻布寬衫', '萬字巾', '大還金丹', '大還金丹']);
     // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
     const ws = loadPackFromDisk('mainline', loadGameData(files, tr));
     const u = compileStage(ws, ws.stages.find((s) => s.id === 'jingyanggang')!, files).units.find((x) => x.side === 'player')!;
-    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '碧雲箬笠']);
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '青紗衫子', '黑頭巾']);
   });
 
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
@@ -533,7 +533,7 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     for (const n of ['晁盖', '阮小二', '阮小五', '阮小七', '白胜']) expect(here(n)?.side, n).toBe('player');
     for (const n of ['小李广花荣', '镇三山黄信', '小温侯吕方', '赛仁贵郭盛']) expect(here(n)?.side, n).toBe('ally');
     expect(by('晁盖').classId).toBe(12);
-    expect(b.units.filter((u) => (u.name === '推车客商' || u.name === '弄蛇丐者') && u.present)).toEqual([]);
+    expect(b.units.filter((u) => (u.name === '推车客商' || u.name === '弄蛇丐者') && u.present && u.alive)).toEqual([]);
     expect(b.units.filter((u) => u.name === '使枪棒卖药的' && u.present).length).toBe(4);
     expect(here('刘唐')).toBeUndefined();
     expect(here('蔡九知府')).toBeUndefined(); // 逃命去了
@@ -546,8 +546,8 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     advance(b, 4, log);
     for (const n of ['旱地忽律朱贵', '矮脚虎王英', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
     // 换回真身后兵器也是自己的
-    // 换回真身后兵器也是自己的（关卡写的魚叉 / 白勝的刀，按主线进度换成同类更好的：鋼叉 / 腰刀，§15 外传装备）
-    expect(b.data.items[by('阮小二').slots[0] - 1].name).toBe('鋼叉');
+    // 换回真身后按个人等级配自己的武器类型
+    expect(b.data.items[by('阮小二').slots[0] - 1].name).toBe('飛魚叉');
     expect(b.data.items[by('白胜').slots[0] - 1].type).toBe(b.data.items[56 - 1].type);
   });
 
@@ -948,6 +948,16 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
+  it('动态等级确定后才发默认药品，低等级不会拿到剧本高等级药品', () => {
+    for (const [level, names] of [[5, ['跌打藥', '跌打藥']], [30, ['天山雪蓮', '天山雪蓮', '天山雪蓮']]] as const) {
+      const input = compileStage(rt, { ...stage('kuaihuolin'), gearAt: undefined }, files, { joinLevel: level });
+      const hero = input.units.find(u => u.side === 'player' && u.type === 0)!;
+      expect(hero.level).toBe(level);
+      const medicines = hero.items.slice(3).filter(id => id && rt.data.items[id - 1].type >= 15 && rt.data.items[id - 1].type <= 22);
+      expect(medicines.map(id => rt.data.items[id - 1].name)).toEqual(names);
+    }
+  });
+
   it('已有装备、空槽、锻造、经验优先；敌友随实际队伍等级变化，资产不变',()=> {
     for(const level of [12,39]) {
       const c:CampaignState={version:1,stage:1,gold:1234,members:[{classId:0,level,exp:17,slots:[0,84,0,156,0],forge:[0,3,0,0,0]}],companions:{'mainline/wusong':{level,exp:23,slots:[56,84,0,156,0],forge:[4,2,0,0,0]}}};
