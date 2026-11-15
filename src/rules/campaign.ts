@@ -28,6 +28,8 @@ export interface CampaignState {
   insert?: string;
   /** 已经打过的插关（<包>/<关卡>），读档、重进不再重复 */
   inserts?: string[];
+  /** 主线已经通关；重载时显示通关画面而不是重打最后一关 */
+  finished?: boolean;
 }
 
 export interface StageEntry {
@@ -127,13 +129,14 @@ export function recordResult(c: CampaignState, battle: Battle, opts: { keepActiv
 /** 主线插关的登记：ref = <包>/<关卡>，before = 插在哪一关（原版地图名）前面 */
 export interface InsertEntry {
   ref: string;
-  before: string;
+  before?: string;
+  after?: string;
 }
 
-/** 要进 mapName 这一关时，还没打过的插关（同一关前面有几个时按登记顺序一个一个来） */
-export function pendingInsert(c: CampaignState, list: InsertEntry[], mapName: string): string | undefined {
+/** 要进 mapName 这一关前 / 之后，还没打过的插关（同一位置有多个时按登记顺序来） */
+export function pendingInsert(c: CampaignState, list: InsertEntry[], mapName: string, position: 'before' | 'after' = 'before'): string | undefined {
   const done = new Set(c.inserts ?? []);
-  return list.find((e) => e.before.toLowerCase() === mapName.toLowerCase() && !done.has(e.ref))?.ref;
+  return list.find((e) => e[position]?.toLowerCase() === mapName.toLowerCase() && !done.has(e.ref))?.ref;
 }
 
 /** 读取存档（坏档返回 null） */
