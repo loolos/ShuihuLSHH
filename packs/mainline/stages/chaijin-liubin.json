@@ -9,7 +9,7 @@
  "map": {
   "base": "Act8-1"
  },
- "bgm": "story",
+ "bgm": ["brothers", "story"],
  "units": [
   {
    "id": "songjiang",
