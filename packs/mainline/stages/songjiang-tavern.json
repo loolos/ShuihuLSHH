@@ -1,0 +1,316 @@
+{
+  "id": "songjiang-tavern",
+  "title": "酒肆义释宋公明",
+  "after": "N14",
+  "pov": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act5-2"
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 10,
+      "y": 11,
+      "facing": 0,
+      "level": 28
+    },
+    {
+      "id": "zhutong",
+      "class": "zhutong",
+      "side": "player",
+      "x": 9,
+      "y": 11,
+      "facing": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "leiheng",
+      "class": "leiheng",
+      "side": "player",
+      "x": 10,
+      "y": 12,
+      "facing": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "zhang",
+      "class": 36,
+      "side": "enemy",
+      "x": 10,
+      "y": 5,
+      "facing": 2,
+      "level": 26,
+      "name": "张文远",
+      "hidden": true
+    },
+    {
+      "id": "thug1",
+      "class": 19,
+      "side": "enemy",
+      "x": 9,
+      "y": 7,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    },
+    {
+      "id": "thug2",
+      "class": 20,
+      "side": "enemy",
+      "x": 10,
+      "y": 7,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    },
+    {
+      "id": "thug3",
+      "class": 19,
+      "side": "enemy",
+      "x": 11,
+      "y": 7,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    },
+    {
+      "id": "thug4",
+      "class": 20,
+      "side": "enemy",
+      "x": 12,
+      "y": 9,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    },
+    {
+      "id": "thug5",
+      "class": 19,
+      "side": "enemy",
+      "x": 13,
+      "y": 11,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    },
+    {
+      "id": "thug6",
+      "class": 20,
+      "side": "enemy",
+      "x": 10,
+      "y": 15,
+      "facing": 2,
+      "level": 25,
+      "name": "张家打手",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "narrate",
+          "宋江杀惜后逃出郓城，暂在城郊一家村酒肆歇脚。不料门外脚步声响，美髯公朱仝、插翅虎雷横持着公文寻来。"
+        ],
+        [
+          "appear",
+          "zhutong"
+        ],
+        [
+          "appear",
+          "leiheng"
+        ],
+        [
+          "say",
+          "songjiang",
+          "二位贤弟奉命来拿我么？宋江一时失手，如今已是有家难奔、有国难投。"
+        ],
+        [
+          "say",
+          "zhutong",
+          "公明哥哥，休怪小弟今来捉你。上司差遣，盖不由己；小弟今日来，却是要与哥哥商量去路。"
+        ],
+        [
+          "say",
+          "zhutong",
+          "知县本有周全哥哥的意思，只是张三和阎婆屡次告闹，声言要到州里告状，不得已才差我两个出来。此地也不是安身之处，倘被旁人认出，如何是好？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "小可思量有三处可投：沧州柴大官人庄上，清风寨花荣处，或白虎山孔太公庄上。一时还未拿定主意。"
+        ],
+        [
+          "say",
+          "zhutong",
+          "兄长可以作急寻思，当行即行。今晚便可动身，切勿迟延自误。"
+        ],
+        [
+          "say",
+          "leiheng",
+          "哥哥平日待人仗义，我雷横岂肯落井下石？太公那里有各户另籍的执凭，我们自会抄去回话。哥哥只管安排去路。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "若不是二位贤弟如此周全，宋江定遭缧绁之厄。上下官司之事，还望维持。"
+        ],
+        [
+          "say",
+          "zhutong",
+          "这事放心，都在我身上。兄长只顾安排去路。"
+        ],
+        [
+          "narrate",
+          "话音未落，张文远领着几个打手闯入酒肆，分头堵住前后通路。"
+        ],
+        [
+          "appear",
+          "zhang"
+        ],
+        [
+          "appear",
+          "thug1"
+        ],
+        [
+          "appear",
+          "thug2"
+        ],
+        [
+          "appear",
+          "thug3"
+        ],
+        [
+          "appear",
+          "thug4"
+        ],
+        [
+          "appear",
+          "thug5"
+        ],
+        [
+          "appear",
+          "thug6"
+        ],
+        [
+          "say",
+          "zhang",
+          "好哇！凶身宋江果然藏在这里！你两个领了公文，不拿人，倒在此叙旧？给我围住，一个也休放走！"
+        ],
+        [
+          "say",
+          "zhutong",
+          "张押司，我们奉公查案，自有分寸。你带私家打手来此逞凶，却是何道理？"
+        ],
+        [
+          "say",
+          "leiheng",
+          "这厮偏要逼人太甚！哥哥且护住自己，待我与朱都头打开一条路！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "莫伤无辜，也莫恋战。打退他们，咱们便走！"
+        ],
+        [
+          "objective",
+          "限制回合数 --- 30"
+        ],
+        [
+          "objective",
+          "胜利条件   --- 打退张文远及全部打手"
+        ],
+        [
+          "objective",
+          "失败条件   --- 宋江、朱仝、雷横任一人战败，或超过30回合"
+        ],
+        [
+          "turnLimit",
+          30
+        ]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "张文远与打手被打得立足不住，丢下棍棒，踉踉跄跄逃出酒肆。三人收住兵刃，并未追赶。"
+        ],
+        [
+          "say",
+          "leiheng",
+          "这几个泼皮总算散了。哥哥趁此时走，迟了恐又生变！"
+        ],
+        [
+          "say",
+          "zhutong",
+          "今日之事，我二人自去回话。兄长先接应宋清，投柴大官人庄上避一避，沿途千万留心。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "二位贤弟今日之情，宋江铭记在心。他日有缘，容我再报！"
+        ],
+        [
+          "narrate",
+          "宋江辞别二人，循小路离去，准备与宋清一道投奔沧州柴进。朱仝、雷横收拾公文，另寻说辞回县复命。"
+        ],
+        [
+          "victory",
+          "酒肆解围，宋江脱身！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江在酒肆中战败，三人未能一同脱身……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhutong"
+      },
+      "do": [
+        [
+          "defeat",
+          "朱仝在酒肆中战败，三人未能一同脱身……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "leiheng"
+      },
+      "do": [
+        [
+          "defeat",
+          "雷横在酒肆中战败，三人未能一同脱身……"
+        ]
+      ]
+    }
+  ]
+}
