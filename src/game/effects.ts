@@ -37,7 +37,7 @@ export interface SkillFx {
  * - 类型 11 的回复技 +6 不为 0 才播，播的也是第 17 组（不是 +6 那组）；
  * - 其它技能 +6 为 0 时不播，否则 +6 → +24 → +26 三段接力。
  */
-export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3'>): SkillFx | null {
+export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage'>): SkillFx | null {
   const base = { then: null, onTarget: null, directional: false, projectile: false };
   if (s.type === 8) return { ...base, first: FX_CHARGE, atEnd: true };
   if (s.type === 9) return { ...base, first: FX_HEAL, atEnd: true };
@@ -47,8 +47,8 @@ export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effec
     first: s.effect - 1,
     then: s.effect2 > 0 ? s.effect2 - 1 : null,
     onTarget: s.effect3 > 0 ? s.effect3 - 1 : null,
-    directional: s.type === 10,
-    projectile: s.type === 10,
+    directional: s.type === 10 || !!s.rangedDamage,
+    projectile: s.type === 10 || !!s.rangedDamage,
     atEnd: false,
   };
 }
@@ -82,7 +82,8 @@ export function fxSpots(s: Pick<SkillDef, 'type'>, from: Cell, at: Cell, area: C
   const dir = DIRS[d];
   return cells.map((c) => {
     const ox = c.x - at.x, oy = c.y - at.y;
-    const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 14 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
+    if (s.type === 14) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
     return { cell: c, ring };
   });
 }
@@ -122,7 +123,7 @@ export function fxChain(fx: SkillFx, dir: number, hasTarget: boolean, triggers: 
 }
 
 /** 这个技能可能用到的全部组（按需下载用） */
-export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3'>): number[] {
+export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage'>): number[] {
   const fx = skillFx(s);
   if (!fx) return [];
   const out = fx.directional ? [0, 1, 2, 3].map((d) => fx.first + d) : [fx.first];

@@ -18,7 +18,7 @@ import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
-import { castPlayMs } from './cast-timing.ts';
+import { actionMs, castPlayMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 
@@ -1144,12 +1144,12 @@ export class BattleScene extends Phaser.Scene {
   }
 
   /** 播一次动作；durationMs 给了就按比例加快到这么长播完（集气技，见 cast-timing.ts castPlayMs） */
-  private async playOnce(u: Unit, action: number, facing: number, maxMs = 800, durationMs: number | null = null) {
+  private async playOnce(u: Unit, action: number, facing: number, maxMs = 800, durationMs: number | null = null, cycles = 1) {
     const s = this.sprites.get(u.uid);
     const key = s && animFor(this, this.assets, this.vs(u).cls, action, facing, 0);
     if (!s || !key) return wait(this, 250);
     const n = durationMs ? (this.anims.get(key)?.getTotalFrames() ?? 0) : 0;
-    s.spr.play(n ? { key, frameRate: n / (durationMs! / 1000) } : key);
+    s.spr.play(n ? { key, frameRate: n / (durationMs! / 1000) } : cycles > 1 ? { key, repeat: cycles - 1 } : key);
     await new Promise<void>((r) => {
       const done = () => r();
       s.spr.once('animationcomplete', done);
@@ -1350,7 +1350,10 @@ export class BattleScene extends Phaser.Scene {
         sound.cast(skill.soundId ?? skill.skillId, skill.type, basic);
         // 集气技的出手动作压到 CHARGE_CAST_MAX_MS 内（武松、李逵借的蹲姿循环原本要近 3 秒）
         const castMs = castPlayMs(this.assets, uv.cls, skill, e.facing);
-        const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, castMs ? castMs + 300 : 2500, castMs);
+        const cycles = Math.max(1, skill.castCycles ?? 1);
+        const naturalMs = actionMs(this.assets, uv.cls, ACTION.firstSkill + skill.group, e.facing) ?? 0;
+        const maxCastMs = cycles > 1 ? Math.max(2500, naturalMs * cycles + 300) : 2500;
+        const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, castMs ? castMs + 300 : maxCastMs, castMs, cycles);
         if (fx?.atEnd) waves.push(cast.then(fxWave));
         await Promise.all([cast, ...waves, ...impacts]);
         area?.destroy();
