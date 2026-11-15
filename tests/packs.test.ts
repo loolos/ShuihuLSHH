@@ -977,6 +977,15 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   const start = (id: string, c?: CampaignState) => {
     const b = new Battle(compileStage(rt,stage(id),files,{seed:1,party:c ? packParty(c,rt):undefined})); b.begin(); return b;
   };
+  it('快活林蒋门神的八名手下使用喽啰职业，保留两名徒弟', () => {
+    const s = stage('kuaihuolin');
+    const guards = s.units.filter(u => u.id.startsWith('guard-'));
+    expect(guards).toHaveLength(8);
+    expect(guards.every(u => [22, 23].includes(Number(u.class)) && u.side === 'enemy' && u.hidden)).toBe(true);
+    expect(s.units.filter(u => u.id.startsWith('disciple-'))).toHaveLength(2);
+    expect(s.units.some(u => u.side === 'enemy' && [32, 33, 34, 36, 38, 39, 42, 43].includes(Number(u.class)))).toBe(false);
+  });
+
   it('快活林三店逐一由武松靠近喝酒，施恩可以移动帮忙', () => {
     const s = stage('kuaihuolin'), b = start('kuaihuolin');
     const wu = b.units.find(u => u.classId === cid('wusong'))!;
