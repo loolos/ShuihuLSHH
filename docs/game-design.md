@@ -1352,6 +1352,8 @@ packs/wusong/
 
 **头像（黑底）**：负责人用图像工具出黑底半身像（提示词要加轮廓光，免得黑发、黑须和底色粘连），`tools/make-portrait.py 原图 输出 --black 10 --box ...` 抠掉和图边连通的近黑色，裁成 140×187、缩到 `Default.pal`。框图让头占上半、带到胸口，和武松的头像比例一致。戴宗、李逵的头像就是这样做的（原图在项目文件 `shuihu-design/portraits/`）。
 
+**自拼动作**（`--poses 动作.json`）：模型里没有的动作（如 UAL1 没有踢腿）用关键帧拼。每个关键帧从某个已有动作的某一帧出发，按世界坐标轴转动骨骼（人物正面朝 −Y、右手在 −X、Z 向上；绕 X 转负角 = 往前抬），`move` 可整体平移骨骼（起跳、压低重心）。武松的右脚 / 左脚正踢在 `packs/mainline/sprites/src/poses-wusong.json`，拼成左右交替 4 脚给「玉环鸳鸯脚」用（2026-11-15，负责人选定）。左脚是前脚，静止时大腿已经前倾，所以抬腿角度比右脚少 25°。
+
 **道具模型**：outfit JSON 的 `props` 除了球体，还可以写 `"shape": "box"`（单位立方体，按 `scale` 定长宽高）、`"shape": "cylinder"`（`radius`、`depth`），`rot` 是角度。挂到骨骼（如 `hand_r`）上。李逵的两把板斧 = 圆柱斧柄 + 扁盒斧刃（`packs/jiangzhou/sprites/src/outfit-likui.json`）。
 
 **已知问题**

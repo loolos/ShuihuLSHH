@@ -143,6 +143,16 @@
     "cycles": 3
   }
 },
+"kick": {
+  "source": "Kick_R（--poses 自拼）",
+  "front": {"file": "kick-r-front.png", "frames": 8, "ms": 80},
+  "back": {"file": "kick-r-back.png", "frames": 8, "ms": 80}
+},
+"kick-four": {
+  "source": "Kick_R + Kick_L（--poses 自拼）× 2，左右交替 4 脚",
+  "front": {"file": "kick-rl-front.png", "frames": 16, "ms": 65, "cycles": 2},
+  "back": {"file": "kick-rl-back.png", "frames": 16, "ms": 65, "cycles": 2}
+},
 "punch-four": {
   "source": "Punch_Cross × 4",
   "front": {
