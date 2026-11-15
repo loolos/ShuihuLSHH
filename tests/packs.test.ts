@@ -1074,6 +1074,30 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(planAi(b, shien).target?.side).toBe('enemy');
   });
 
+  it('十字坡不让武龙宋江出场，两公人先中药再获救，缺席好汉资产保留', () => {
+    const s = stage('shizipo');
+    expect(s.units.some(u => u.id === 'hero' || u.id === 'songjiang')).toBe(false);
+    const b = new Battle(compileStage(rt, s, files));
+    const events = b.begin();
+    const speech = events.filter((e): e is Extract<BattleEvent, {type:'say'}> => e.type === 'say');
+    const index = (text: string) => speech.findIndex(e => e.text.includes(text));
+    const refuse = index('我若为自己脱身害了他们');
+    expect(refuse).toBeGreaterThan(index('两个公人行路口渴'));
+    expect(index('夫妻俩将两个公人救醒')).toBeGreaterThan(refuse);
+    expect(index('我们领的是押解文书')).toBeGreaterThan(index('夫妻俩将两个公人救醒'));
+    for (const id of ['escort-a', 'escort-b']) {
+      const uid = s.units.findIndex(u => u.id === id);
+      expect(speech.filter(e => e.uid === uid).length).toBeGreaterThanOrEqual(4);
+      expect(b.unit(uid)!.alive).toBe(true);
+    }
+    expect(speech.some(e => e.speaker.includes('宋江') || e.speaker.includes('武龍'))).toBe(false);
+    expect(b.status).toBe('won');
+    const c: CampaignState = {version:1,stage:75,gold:4321,members:[{classId:0,level:29,exp:7,slots:[1,84,0],forge:[2,1,0]}],companions:{'mainline/sj-fugitive':{level:28,exp:9,slots:[2,85,0],forge:[3,0,0]}}};
+    const after = recordPackResult(c, b, rt);
+    expect(after.members.find(m => m.classId === 0)).toMatchObject(c.members[0]);
+    expect(after.companions!['mainline/sj-fugitive']).toMatchObject(c.companions!['mainline/sj-fugitive']);
+    expect(after.gold).toBe(4321);
+  });
   it('六关全体含隐藏单位及move落点可通行、不重格，三剧情显式胜利',()=> {
     for (const id of ['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']) {
       const s=stage(id), b = new Battle(compileStage(rt,s,files));
