@@ -214,9 +214,9 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
   ],
   // 晁蓋（24 级左右入队）：回旋技，借天王舉鼎式的旋身腾跃动作（第 1 组，原版三个击打帧 8/12/18），拆三段 30/30/40%；
-  // 第 34 组蓝色旋风特效（原版没有技能用）；数值按林沖 風雪交加（13 级：威力 30 / 气 50，约攻击 26%、气条 28%）折算到 24 级
+  // 第 43 组白色打击火花（小、9 帧；负责人 2026-11-15 嫌第 34 组旋风太复杂）；数值按林沖 風雪交加（13 级：威力 30 / 气 50，约攻击 26%、气条 28%）折算到 24 级
   12: [
-    extraSkill({ name: '天王八荒式', skillId: 1008, type: 12, group: 1, learnLevel: 22, mpCost: 70, power: 40, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, effect: 35, soundId: 106, hits: hitsAt([8, 12, 18], [30, 30, 40]) }),
+    extraSkill({ name: '天王八荒式', skillId: 1008, type: 12, group: 1, learnLevel: 22, mpCost: 70, power: 40, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, effect: 44, soundId: 106, hits: hitsAt([8, 12, 18], [30, 30, 40]) }),
   ],
   // 陳達：借黑虎偷心的动作（第 1 组）、第 19 组弧形扫击特效（原版没有技能用）
   13: [
