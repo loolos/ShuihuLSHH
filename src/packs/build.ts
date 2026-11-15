@@ -412,6 +412,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'appear':
         select(a[0]);
         break;
+      case 'show':
+        // ['show', 谁, 站在谁身边（可省）] 剧情临时出镜：已倒下或退场的人回到地图上说话，只放画面，不复活、不改胜负（战后对话用）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'show', ...(a[1] !== undefined ? { near: r.charOf(String(a[1])) } : {}) } });
+        break;
+      case 'hide':
+        // ['hide', 谁] 收起 show 叫出来的人（只放画面）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'hide' } });
+        break;
       case 'leave':
         // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
         select(a[0]);

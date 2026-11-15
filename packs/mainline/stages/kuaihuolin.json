@@ -691,6 +691,41 @@
       "on": "allEnemiesDefeated",
       "do": [
         [
+          "show",
+          "hero",
+          "wusong"
+        ],
+        [
+          "show",
+          "songjiang",
+          "wusong"
+        ],
+        [
+          "show",
+          "daizong",
+          "wusong"
+        ],
+        [
+          "show",
+          "huarong",
+          "wusong"
+        ],
+        [
+          "show",
+          "likui",
+          "wusong"
+        ],
+        [
+          "show",
+          "jiangmenshen",
+          "wusong"
+        ],
+        [
+          "show",
+          "zhangtuanlian",
+          "wusong"
+        ],
+        [
           "say",
           "wusong",
           "若要我饶你性命，只要依我三件事。"
@@ -718,6 +753,14 @@
         [
           "narrate",
           "张团练不敢再战，招呼还能走动的手下，扶起蒋门神，带着伤者狼狈逃走。众人只将他们打败赶走，并未取他们性命。"
+        ],
+        [
+          "hide",
+          "jiangmenshen"
+        ],
+        [
+          "hide",
+          "zhangtuanlian"
         ],
         [
           "say",

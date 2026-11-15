@@ -329,6 +329,8 @@ export class Battle {
   foesOf(u: Unit) {
     return this.active().filter((t) => isFoe(u.side, t.side));
   }
+  /** 剧情临时出镜（show）的人占的格子：只是画面，不算在场，但几个人别叫到同一格 */
+  private shown = new Map<number, Cell>();
   occupied(except?: Unit) {
     return new Set(this.active().filter((u) => u !== except).map((u) => key(u.x, u.y)));
   }
@@ -1399,11 +1401,18 @@ export class Battle {
           else sel = undefined; // 0xFFFFFFFF：旁白
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
           if (sel && op.actor?.action === 'show') {
+            if (sel.present && sel.alive) break; // 本来就在场：不挪位置
             const near = this.active().find(u => u.classId === op.actor!.near) ?? sel;
-            const at = this.board.nearestFree(near.x, near.y, this.occupied()) ?? sel;
+            const taken = this.occupied();
+            for (const c of this.shown.values()) taken.add(key(c.x, c.y));
+            const at = this.board.nearestFree(near.x, near.y, taken) ?? sel;
+            this.shown.set(sel.uid, { x: at.x, y: at.y });
             // 只发画面事件：不改alive/present/体力、掉落或经验，战败不会被撤销。
             this.emit({ type: 'appear', uid: sel.uid, x: at.x, y: at.y, ambush: false });
-          } else if (sel && op.actor?.action === 'hide') this.emit({ type: 'leave', uid: sel.uid });
+          } else if (sel && op.actor?.action === 'hide') {
+            this.shown.delete(sel.uid);
+            this.emit({ type: 'leave', uid: sel.uid });
+          }
           // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
           if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
           break;
