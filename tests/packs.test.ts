@@ -1072,6 +1072,17 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     check(); expect(b.status).toBe('playing');
     kill(troops.at(-1)!); check(); expect(b.status).toBe('won');
     expect((b as unknown as { out: BattleEvent[] }).out.some(e => e.type === 'say' && e.text.includes('狼狈逃走'))).toBe(true);
+    // 战后对话：倒下的蒋门神、张团练临时回到武松身边（只放画面，不复活），说完收起
+    const out = (b as unknown as { out: BattleEvent[] }).out;
+    for (const id of ['jiangmenshen', 'zhangtuanlian']) {
+      const u = get(id), shown = out.find((e): e is Extract<BattleEvent, {type:'appear'}> => e.type === 'appear' && e.uid === u.uid);
+      expect(shown, id).toBeDefined();
+      expect(Math.abs(shown!.x - get('wusong').x) + Math.abs(shown!.y - get('wusong').y)).toBeLessThanOrEqual(3);
+      expect(out.some(e => e.type === 'leave' && e.uid === u.uid)).toBe(true);
+      expect(u.alive).toBe(false);
+    }
+    const cells = out.filter((e): e is Extract<BattleEvent, {type:'appear'}> => e.type === 'appear').map(e => `${e.x},${e.y}`);
+    expect(new Set(cells).size).toBe(cells.length);
     expect(b.units.filter(u => u.side === 'enemy').every(u => !u.alive)).toBe(true);
     const later = start('yuanyanglou');
     for (const id of ['jiangmenshen', 'zhangtuanlian']) expect(later.units.find(u => u.classId === cid(id))!.alive).toBe(true);
