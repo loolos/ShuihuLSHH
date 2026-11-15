@@ -635,7 +635,7 @@
      }
     ]
    },
-   "face": null
+   "face": { "file": "faces/huarong.png" }
   },
   {
    "id": "huangxin",
