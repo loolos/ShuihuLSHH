@@ -298,7 +298,12 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
     expect(look.recolor?.length).toBeGreaterThan(0);
     const mine = rt.data.classes[id].skills;
     const src = rt.data.classes[38].skills;
-    expect(mine.map((s) => s.group)).toEqual([0, 1, 2]);
+    expect(mine.map((s) => s.group)).toEqual([0, 1, 2, 2, 1, 1, 1]);
+    expect(mine[3]).toMatchObject({ name: '神行渡气', type: 8, chargeTarget: 'ally', group: 2, hits: [] });
+    expect(mine.slice(4).map((s) => [s.name, s.type, s.learnLevel])).toEqual([
+      ['疾风踏阵LV1', 15, 12], ['疾风踏阵LV2', 15, 20], ['疾风踏阵LV3', 15, 28],
+    ]);
+    for (const skill of mine.slice(4)) expect(skill.hits).toEqual([{ frame: 14, percent: 100, dir: 0 }]);
     expect(mine[0].hits).toEqual(src[0].hits);
     expect(mine[1].name).toBe('旋风腿');
     expect(rt.data.classes[id].move).toBe(8);

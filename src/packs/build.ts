@@ -248,6 +248,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     group: group ?? 0,
     hidden: false,
     targetShape: s.targetShape,
+    chargeTarget: s.chargeTarget,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,

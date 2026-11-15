@@ -97,6 +97,8 @@ export interface PackSkillJson {
   learnLevel?: number;
   /** 可在距离内的整个菱形选点，不限四条直线。 */
   targetShape?: 'diamond';
+  /** 类型 8 的回气技作用于队友，而非自己。 */
+  chargeTarget?: 'ally';
   rangeMin?: number;
   rangeMax?: number;
   area?: number;
@@ -104,7 +106,7 @@ export interface PackSkillJson {
   poison?: number;
   hitMod?: number;
   critMod?: number;
-  /** 范围类型（同原版技能类型；14 = 身前宽 3、长 area 格的长方形【新】） */
+  /** 范围类型：14 = 前方长方形；15 = 正前、前两格及左右前方，共四格【新】。 */
   type?: number;
   /** 特效：Effect.lib 组号 + 1 */
   effect?: number;

@@ -45,6 +45,94 @@
      "name": "甲马聚气",
      "from": 227,
      "anim": 2
+    },
+    {
+     "id": "dz-duqi",
+     "name": "神行渡气",
+     "from": 227,
+     "anim": 2,
+     "learnLevel": 8,
+     "mpCost": 30,
+     "power": 2,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 0,
+     "chargeTarget": "ally"
+    },
+    {
+     "id": "dz-tazhen1",
+     "name": "疾风踏阵LV1",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 12,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 25,
+     "mpCost": 30,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "dz-tazhen2",
+     "name": "疾风踏阵LV2",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 20,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 40,
+     "mpCost": 40,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "dz-tazhen3",
+     "name": "疾风踏阵LV3",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 28,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 55,
+     "mpCost": 50,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
     }
    ],
    "sprite": {
