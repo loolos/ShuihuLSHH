@@ -53,7 +53,8 @@ describe('属性', () => {
     for (const [level, bonus] of [[1, 0], [4, 0], [5, 1], [19, 1], [20, 2], [30, 2], [99, 2]]) {
       for (const side of ['player', 'enemy', 'ally'] as const) {
         const stats = computeStats(data.classes[0], level, [], data, false, [], [], side);
-        expect(stats.move, `${side} Lv${level}`).toBe(4 + (side === 'player' ? bonus : 0));
+        // 敌方 16 级起基础移动力至少 5（负责人 2026-11-15）
+        expect(stats.move, `${side} Lv${level}`).toBe(side === 'player' ? 4 + bonus : side === 'enemy' && level >= 16 ? 5 : 4);
       }
     }
     // 外传职业也只按所在阵营生效，不以原版职业编号为限制。
@@ -69,7 +70,7 @@ describe('属性', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units, blocks: [], data, seed: 1 });
     expect(b.unit(0)!.stats.move).toBe(6);
     expect(b.unit(0)!.movementRemaining).toBe(6);
-    expect(b.unit(1)!.stats.move).toBe(4);
+    expect(b.unit(1)!.stats.move).toBe(5); // 敌方 16 级起基础移动力至少 5
     expect(b.unit(2)!.stats.move).toBe(4);
   });
 
@@ -85,6 +86,9 @@ describe('属性', () => {
     refreshStats(u, data);
     expect(u.stats.move).toBe(6);
     u.side = 'enemy';
+    refreshStats(u, data);
+    expect(u.stats.move).toBe(5); // 敌方 16 级起基础移动力至少 5，无等级加成
+    u.level = 15;
     refreshStats(u, data);
     expect(u.stats.move).toBe(4);
   });

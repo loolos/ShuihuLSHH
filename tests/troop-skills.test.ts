@@ -99,3 +99,16 @@ describe('远射技耗气（负责人 2026-11-15）', () => {
     }
   });
 });
+
+describe('敌方 16 级起基础移动力至少 5（负责人 2026-11-15）', () => {
+  it('低于 5 的提到 5，本来 ≥ 5 的不变，15 级和我方不受影响', async () => {
+    const { baseMove } = await import('../src/rules/unit.ts');
+    const cls = (move: number) => ({ move }) as never;
+    expect(baseMove(cls(3), 16, 'enemy')).toBe(5);
+    expect(baseMove(cls(4), 20, 'enemy')).toBe(5);
+    expect(baseMove(cls(7), 16, 'enemy')).toBe(7);
+    expect(baseMove(cls(3), 15, 'enemy')).toBe(3);
+    expect(baseMove(cls(3), 16, 'player')).toBe(3);
+    expect(baseMove(cls(4), 16, 'ally')).toBe(4);
+  });
+});
