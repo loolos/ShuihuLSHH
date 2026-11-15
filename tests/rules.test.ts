@@ -110,9 +110,9 @@ describe('属性', () => {
     const d2: GameData = { ...data, classes: [soldier] };
     expect(computeStats(soldier, 0, [1], d2).attack).toBe(GRUNT.attack + GRUNT_GEAR.attack!); // 皮手套 +7 不算
   });
-  it('全部模板职业必杀固定为杂兵 2、小头目 5，升级刷新与装备不增加必杀', () => {
+  it('全部模板职业必杀固定为杂兵 10、小头目 15，升级刷新与装备不增加必杀', () => {
     const gear = { ...glove, crit: 80 };
-    for (const [ids, expected] of [[GRUNT_CLASSES, 2], [OFFICER_CLASSES, 5]] as const) {
+    for (const [ids, expected] of [[GRUNT_CLASSES, 10], [OFFICER_CLASSES, 15]] as const) {
       for (const id of ids) {
         const c = cls(id, { crit: g(90) });
         const d = { ...data, classes: [...data.classes], items: [gear] };
@@ -762,10 +762,10 @@ describe('技能', () => {
       const [c] = buildClasses([record(id)], [], []);
       expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual(mods);
     }
-    const soldier = { ...unit({}), classId: 32, side: 'enemy' as const, stats: { ...unit({}).stats, crit: 2 } };
-    const officer = { ...soldier, classId: 66, stats: { ...soldier.stats, crit: 5 } };
-    expect(critChance(soldier, { ...punch, critMod: 5 })).toBe(0);
-    expect(critChance(officer, { ...punch, critMod: 5 })).toBe(2);
+    const soldier = { ...unit({}), classId: 32, side: 'enemy' as const, stats: { ...unit({}).stats, crit: 10 } };
+    const officer = { ...soldier, classId: 66, stats: { ...soldier.stats, crit: 15 } };
+    expect(critChance(soldier, { ...punch, critMod: 5 })).toBe(4);
+    expect(critChance(officer, { ...punch, critMod: 5 })).toBe(7);
   });
 
   it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
