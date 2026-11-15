@@ -114,6 +114,14 @@ function loadSave(): CampaignState | null {
     return null;
   }
 }
+/** 主菜单「清空存档」：主线存档、存档时间和外传进度（shuihu.pack.*）；音量等设置不动 */
+function clearSaves() {
+  try {
+    for (const k of Object.keys(localStorage)) if (k === SAVE_KEY || k === SAVE_AT_KEY || k.startsWith('shuihu.pack.')) localStorage.removeItem(k);
+  } catch {
+    /* 隐私模式等：本来就没有存档 */
+  }
+}
 function writeSave(c: CampaignState) {
   try {
     localStorage.setItem(SAVE_KEY, JSON.stringify(c));
@@ -704,6 +712,10 @@ function startGame(assets: Assets) {
       buttons: [$('sound'), $('music')],
       onNew: () => begin(newCampaign(stages[0].index)),
       onLoad: () => begin(ok!),
+      onClear: () => {
+        clearSaves();
+        location.href = location.pathname;
+      },
       onJump: enter,
       onBack: current === null ? undefined : leaveTitleOnly,
     };

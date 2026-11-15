@@ -22,6 +22,8 @@ export interface TitleOptions {
   buttons: HTMLElement[];
   onNew: () => void;
   onLoad: () => void;
+  /** 清空存档（主线存档和外传进度），之后回到标题画面 */
+  onClear: () => void;
   onJump: (value: string) => void;
   /** 从游戏顶栏直接打开选关页时：「返回」/ Esc 回到游戏，不经过标题主菜单 */
   onBack?: () => void;
@@ -123,7 +125,9 @@ export class TitleScreen {
     const load = this.button('读取存档', () => this.o.onLoad(), save ? [save.where, save.detail.split('\n')[0]].filter(Boolean).join('\n') : '还没有存档', !!save);
     load.disabled = !save;
     const jump = this.button('选　　关', () => this.stages(), '直接进入任意一关（按那一关的难度配等级和装备）');
-    nav.append(start, load, jump);
+    const clear = this.button('清空存档', () => this.confirmClear(), save ? '删掉主线存档和外传进度，之后选关按新存档配装' : '还没有存档');
+    clear.disabled = !save;
+    nav.append(start, load, jump, clear);
     this.frame('menu', nav);
     (save ? load : start).focus();
   }
@@ -140,12 +144,24 @@ export class TitleScreen {
     ok.focus();
   }
 
+  /** 清空存档前先确认 */
+  private confirmClear() {
+    const box = el('div', 'title-confirm');
+    box.append(el('p', undefined, '清空后不能恢复，要删掉的存档：'), el('p', 'title-save', `${this.o.save!.where}\n${this.o.save!.detail}`), el('p', undefined, '外传的通关记录也一起清掉。'));
+    const nav = el('nav', 'title-nav');
+    const back = this.button('返回', () => this.menu());
+    nav.append(this.button('清空存档', () => this.o.onClear(), undefined, true), back);
+    box.append(nav);
+    this.frame('confirm', box);
+    back.focus();
+  }
+
   /** 选关：按章分组 */
   private stages() {
     const box = el('div', 'title-stages');
     const top = el('div', 'title-stages-top');
     const back = this.button(this.o.onBack ? '‹ 返回游戏' : '‹ 返回', () => this.back());
-    top.append(back, el('span', 'hint', `人物等级和装备按所选关卡的难度配好${this.o.save ? '，主线关会覆盖现有的存档' : ''}；外传另算进度，不动主线存档。`));
+    top.append(back, el('span', 'hint', `人物等级按所选关卡的难度配好，装备按等级配${this.o.save ? '；存档里已有的人沿用存档的装备和银子（主菜单可清空存档）' : ''}；外传另算进度，不动主线存档。`));
     const list = el('div', 'title-stage-list');
     let here: HTMLButtonElement | null = null;
     for (const ch of this.o.chapters) {
