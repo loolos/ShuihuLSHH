@@ -236,6 +236,12 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 .town-shops, .town-actions, #town .ops { display: flex; flex-wrap: wrap; gap: 6px; }
 .town-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px; align-items: start; }
 .town-shop, .town-party { background: rgba(20, 17, 13, 0.85); border: 1px solid #4a3b29; border-radius: 6px; padding: 10px; }
+.goods-groups { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.goods-group { border: 1px solid #5a4832; border-radius: 4px; overflow: hidden; }
+.goods-group summary { cursor: pointer; padding: 10px; min-height: 44px; box-sizing: border-box; color: var(--accent); background: var(--panel); }
+.goods-group summary:hover, .goods-group summary:focus-visible { background: #3a2e20; }
+.goods-count { float: right; color: var(--muted); font-size: 13px; margin-left: 8px; }
+#town .goods-group .goods { padding: 6px; }
 .town-party { display: flex; flex-direction: column; gap: 8px; }
 .town-line { margin: 10px 0; padding: 10px 14px; background: #000; border: 1px solid var(--accent); border-radius: 6px; line-height: 1.7; white-space: pre-line; }
 #town .hint { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 8px 0; }
