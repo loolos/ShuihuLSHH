@@ -46,12 +46,16 @@ function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiP
   const basic = attackSkill(u, b.data);
   const skills = [basic, ...learnedSkills(u, b.data).filter((s) => !isSupportSkill(s) && s.mpCost <= u.mp)];
   const main = primaryFoe(b, u);
-  let best: Option | null = null;
+  const foes = b.foesOf(u);
+  // 敌兵远射技（§6.6）：先只考虑能打到 2 人以上的放法；完全没有别的攻击可用时才单打一人
+  let best: Option | null = null, lone: Option | null = null;
   for (const n of reach.values()) {
     const at = { x: n.x, y: n.y };
     const self = { ...u, x: n.x, y: n.y };
     for (const skill of skills)
       for (const cell of b.skillCells(u, skill, at)) {
+        // 远射技选点多：落点附近（范围大小 + 1 以内）没有敌人就跳过
+        if (skill.volley && !foes.some((t) => dist(t, cell) <= Math.max(1, skill.area) + 1)) continue;
         const hit = b.affected(u, skill, cell, at);
         if (!hit.length || (only && !hit.includes(only))) continue;
         let expected = 0, kills = 0;
@@ -63,9 +67,14 @@ function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiP
         if (skill !== basic) expected -= skill.mpCost / 2;
         const target = b.unitAt(cell.x, cell.y) && hit.includes(b.unitAt(cell.x, cell.y)!) ? b.unitAt(cell.x, cell.y)! : hit[0];
         const o: Option = { cell, cost: n.cost, skill, at, target, primary: !!main && hit.includes(main), pref: b.prefers(u, skill), kills, expected };
+        if (skill.volley && hit.length < 2) {
+          if (!lone || better(o, lone)) lone = o;
+          continue;
+        }
         if (!best || better(o, best)) best = o;
       }
   }
+  best ??= lone;
   return best ? { path: b.pathOf(reach, best.at), target: best.target, skill: best.skill, cell: best.cell } : null;
 }
 
@@ -155,7 +164,7 @@ function foesWithin(b: Battle, u: Unit, radius: number) {
  */
 export function alertRadius(b: Battle, u: Unit): number {
   const skills = [attackSkill(u, b.data), ...learnedSkills(u, b.data)].filter(
-    (s): s is SkillDef => !!s && !isSupportSkill(s) && s.mpCost <= u.mp,
+    (s): s is SkillDef => !!s && !isSupportSkill(s) && !s.volley && s.mpCost <= u.mp,
   );
   const reach = Math.max(0, ...skills.map((s) => castRange(u, s, b.data)[1] + s.area));
   return u.stats.move + reach;

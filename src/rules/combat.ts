@@ -76,6 +76,8 @@ export const RANGED_MAX = 0.5;
 export const RANGED_MIN = 0.1;
 
 export function rangedFactor(att: Unit, def: Unit, skill: SkillDef): number {
+  // 敌兵远射技：固定系数，不再按距离打折（§6.6）
+  if (skill.damageScale !== undefined) return skill.damageScale;
   if (skill.type !== 10 && !skill.rangedDamage) return 1;
   const hi = Math.max(1, skill.rangeMax + att.stats.rangeBonus);
   const [near, far] = skill.rangedDamage ?? [RANGED_MAX, RANGED_MIN];

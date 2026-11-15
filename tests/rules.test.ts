@@ -829,7 +829,7 @@ describe('技能', () => {
     }) as unknown as ClassRecord;
     for (const id of [...GRUNT_CLASSES, ...OFFICER_CLASSES]) {
       const [c] = buildClasses([record(id)], [], []);
-      expect(c.skills.map((s) => s.critMod), `职业 ${id}`).toEqual([id === 66 ? 5 : 0, 5, 5, 5, 0, -10]);
+      expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual([id === 66 ? 5 : 0, 5, 5, 5, 0, -10]);
     }
     for (const id of [0, 16, 56, 64, 71]) {
       const [c] = buildClasses([record(id)], [], []);
