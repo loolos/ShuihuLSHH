@@ -338,7 +338,7 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
     x: u.x,
     y: u.y,
     level: u.level,
-    flags: (ai << 8) | (u.hidden ? 1 : 0),
+    flags: (ai << 8) | (u.hidden || u.offstage ? 1 : 0),
     extra: [0, 0, 0],
     items,
     raw: [],
@@ -387,7 +387,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(13, 0, { text: String(a[0]) });
         break;
       case 'say':
-        select(a[0]);
+        if (r.unitRef(a[0]).json.offstage) op(12, 1000 + r.unitRef(a[0]).act.group, { quiet: true });
+        else select(a[0]);
         op(13, 0, { text: String(a[1]) });
         break;
       case 'appear':
