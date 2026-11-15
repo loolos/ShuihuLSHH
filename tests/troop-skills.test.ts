@@ -86,3 +86,14 @@ describe('远射技调整（负责人 2026-11-15）', () => {
     expect(classes[67].skills.find((s) => s.volley)).toMatchObject({ rangeMin: 2, rangeMax: 4 });
   });
 });
+
+describe('远射技耗气（负责人 2026-11-15）', () => {
+  it('耗气等于学会那一级的最大气', async () => {
+    const { statAt, tierGear } = await import('../src/rules/growth.ts');
+    for (const id of [...GRUNT_CLASSES, ...OFFICER_CLASSES]) {
+      const v = classes[id].skills.find((s) => s.volley)!;
+      expect(v.mpCost, `职业 ${id}`).toBe(statAt(classes[id], 'mp', v.learnLevel) + (tierGear(classes[id])?.mp ?? 0));
+      expect(v.mpCost).toBeGreaterThan(60);
+    }
+  });
+});
