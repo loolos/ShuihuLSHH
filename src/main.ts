@@ -723,7 +723,7 @@ function startGame(assets: Assets) {
       current: current ?? (ok ? placeOf(ok) : undefined),
       portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
       version: versionLabel(BUILD),
-      buttons: [$('sound'), $('music')],
+      buttons: [$('sound'), $('music'), $('update')],
       onNew: () => begin(newCampaign(stages[0].index)),
       onLoad: () => begin(ok!),
       onClear: () => {

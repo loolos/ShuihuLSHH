@@ -18,7 +18,7 @@ export interface TitleOptions {
   /** 封面上排的几张半身头像（data URL） */
   portraits: string[];
   version: string;
-  /** 音效 / 音乐按钮：标题画面借用顶栏的这两个按钮 */
+  /** 音效 / 音乐 / 检查更新按钮：标题画面借用顶栏按钮，保留原有事件与状态 */
   buttons: HTMLElement[];
   onNew: () => void;
   onLoad: () => void;
@@ -83,7 +83,8 @@ export class TitleScreen {
   hide() {
     this.root.hidden = true;
     document.body.classList.remove('at-title');
-    for (const h of this.homes) h.parent.insertBefore(h.node, h.next);
+    // 相邻按钮按从后往前放回，确保 next 已回到原父节点。
+    for (const h of [...this.homes].reverse()) h.parent.insertBefore(h.node, h.next);
     this.homes = [];
   }
 
