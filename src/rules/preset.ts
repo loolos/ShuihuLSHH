@@ -5,7 +5,7 @@ import { parseAct, type ActUnit } from '../formats/act.ts';
 import { parsePasHeader } from '../formats/pas.ts';
 import { adjustEnemies } from './enemy-level.ts';
 import { ROUTES, startingParty, type CampaignState, type Member } from './campaign.ts';
-import { canEquip, equipSlotOf, itemOf, SLOT_COUNT, type GameData } from './data.ts';
+import { canEquip, equipSlotOf, itemOf, SLOT_COUNT, type ClassDef, type GameData } from './data.ts';
 import { findStageFile, type FileSource } from './load.ts';
 import { stock } from './town.ts';
 import { goldBase, stageClearGold } from './gold.ts';
@@ -63,7 +63,6 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     const i = stages.findIndex((s) => s.mapName.toLowerCase() === map);
     return i >= 0 && pos >= i;
   };
-  const shop = shopIds.map((id) => itemOf(data, id)!);
   const potions = potionsFor(data, town);
 
   const members = new Map<number, Member>();
@@ -81,19 +80,7 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     u.items.forEach((id, k) => id && (slots[k] = id));
     while (slots.length < SLOT_COUNT) slots.push(0);
     const forge = slots.map(() => 0);
-    // 衣服、头饰按固定的阶梯配（负责人 2026-11-14），武器仍取武器店里最好的
-    for (let k = 1; k < 3; k++) {
-      const id = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k], reached);
-      if (id !== slots[k]) (slots[k] = id), (forge[k] = 0);
-    }
-    const atk = (id: number) => itemOf(data, id)?.attack ?? -1;
-    const weapon = shop.filter((it) => equipSlotOf(it) === 0 && canEquip(cls, it, data)).sort((a, b) => b.attack - a.attack)[0];
-    const wid = weapon ? data.items.indexOf(weapon) + 1 : 0;
-    if (wid && atk(wid) > atk(slots[0])) (slots[0] = wid), (forge[0] = 0);
-    for (const [potion, want] of potions) {
-      let n = slots.filter((id, k) => k >= 3 && id === potion).length;
-      for (let k = 3; k < SLOT_COUNT && n < want; k++) if (!slots[k]) (slots[k] = potion), (forge[k] = 0), n++;
-    }
+    outfit(data, cls, slots, shopIds, potions, reached);
     members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
     script.set(u.type, u.level);
   }
@@ -198,6 +185,50 @@ export function balanceLevels(members: Member[], script: Map<number, number>, fo
     }
     if (!moved) return;
   }
+}
+
+/**
+ * 按进度配一个人的装备和药（跳关、外传共用），直接改 slots：
+ * - 衣服、头饰按 ARMOR_LINE / HEAD_LINE 阶梯（gearFromLine）；武器取武器店 shopIds 里本职业能用的攻击最高的，比现有的好才换；
+ * - 药按 potions 补到个数（只往空的随身格放，原有的药留着）；
+ * - keep(id) 为真的装备不换（外传包自带的道具，如武松的哨棒）。
+ */
+export function outfit(data: GameData, cls: ClassDef, slots: number[], shopIds: number[], potions: [number, number][], reached: (map: string) => boolean, keep: (id: number) => boolean = () => false): void {
+  for (let k = 1; k < 3; k++) if (!keep(slots[k])) slots[k] = gearFromLine(data, k === 1 ? ARMOR_LINE : HEAD_LINE, shopIds, slots[k], reached);
+  const atk = (id: number) => itemOf(data, id)?.attack ?? -1;
+  const weapon = shopIds.map((id) => itemOf(data, id)!).filter((it) => equipSlotOf(it) === 0 && canEquip(cls, it, data)).sort((a, b) => b.attack - a.attack)[0];
+  const wid = weapon ? data.items.indexOf(weapon) + 1 : 0;
+  if (wid && !keep(slots[0]) && atk(wid) > atk(slots[0])) slots[0] = wid;
+  for (const [potion, want] of potions) {
+    let n = slots.filter((id, k) => k >= 3 && id === potion).length;
+    for (let k = 3; k < slots.length && n < want; k++) if (!slots[k]) (slots[k] = potion), n++;
+  }
+}
+
+/**
+ * 外传、视角插关的「对应主线进度」（负责人 2026-11-15：跳关的装备、药品规则也用于外传）：
+ * 外传等级是固定的，按我方平均等级 level 找主线上入场平均等级（entry-levels.json）第一次到 level 的那一关，
+ * 装备按跳到那一关配（gearAt 可以直接写主线关卡名）。训练关不算。返回最后去过的城镇和 reached。
+ */
+export function storyPoint(files: FileSource, stages: Stage[], level: number, gearAt?: string): { town: number; map: string; reached: (map: string) => boolean } {
+  const main = stages.filter((s) => !/^train/i.test(s.mapName));
+  let pos = gearAt ? main.findIndex((s) => s.mapName.toLowerCase() === gearAt.toLowerCase()) : -1;
+  if (pos < 0) {
+    const avg = (s: Stage) => {
+      const v = Object.values(ENTRY_LEVELS[s.mapName.toLowerCase()] ?? {});
+      return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0;
+    };
+    pos = main.findIndex((s) => avg(s) >= level - 0.5);
+    if (pos < 0) pos = main.length - 1;
+  }
+  let town = 0;
+  for (let i = 0; i < pos; i++) {
+    const t = readStage(files, main[i]).town;
+    if (t && TOWN_ORDER.indexOf(t) > TOWN_ORDER.indexOf(town)) town = t;
+  }
+  const at = main[pos];
+  const all = stages.findIndex((s) => s === at);
+  return { town, map: at.mapName, reached: (map) => { const i = stages.findIndex((s) => s.mapName.toLowerCase() === map); return i >= 0 && all >= i; } };
 }
 
 /** 第 i 关的 ACT 单位（生成入场等级表用） */

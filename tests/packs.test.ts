@@ -269,6 +269,19 @@ describe.skipIf(!has)('扩展包：江州好汉（戴宗借原版动画换色、
   const tr = has ? buildT2S(files) : (s: string) => s;
   const rt = has ? loadPackFromDisk('jiangzhou', loadGameData(files, tr)) : (null as never);
 
+  it('我方装备、药按对应的主线进度配（负责人 2026-11-15，和跳关同一套规则）', () => {
+    const names = (stageId: string, cls: string) => {
+      const u = compileStage(rt, rt.stages.find((s) => s.id === stageId)!, files).units.find((x) => x.side === 'player' && x.type === rt.classIds.get(cls))!;
+      return u.items.filter(Boolean).map((id) => rt.data.items[id - 1].name);
+    };
+    // 试手 22 级 ≈ 主线到过城镇 7：碧雲箬笠、大還金丹 ×2；戴宗默认是布衣、一字巾、狗皮膏藥 ×2
+    expect(names('shishou', 'daizong')).toEqual(['鋼刺拳', '綠羅花戰袍', '碧雲箬笠', '狗皮膏藥', '狗皮膏藥', '大還金丹', '大還金丹']);
+    // 武松打虎也配（负责人 2026-11-15，老虎不动）；哨棒是包自带的，不换
+    const ws = loadPackFromDisk('wusong', rt.data);
+    const u = compileStage(ws, ws.stages[0], files).units.find((x) => x.side === 'player')!;
+    expect(u.items.slice(0, 3).map((id) => ws.data.items[id - 1].name)).toEqual(['哨棒', '綠羅花戰袍', '紅纓氈笠']);
+  });
+
   it('戴宗借都頭（38）的动画和出手动作，命中帧沿用原版技能，有换色表', () => {
     const id = rt.classIds.get('daizong')!;
     const look = rt.looks.get(id)!;
@@ -528,8 +541,9 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     advance(b, 4, log);
     for (const n of ['旱地忽律朱贵', '矮脚虎王英', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
     // 换回真身后兵器也是自己的
-    expect(by('阮小二').slots[0]).toBe(73);
-    expect(by('白胜').slots[0]).toBe(56);
+    // 换回真身后兵器也是自己的（关卡写的魚叉 / 白勝的刀，按主线进度换成同类更好的：鋼叉 / 腰刀，§15 外传装备）
+    expect(b.data.items[by('阮小二').slots[0] - 1].name).toBe('鋼叉');
+    expect(b.data.items[by('白胜').slots[0] - 1].type).toBe(b.data.items[56 - 1].type);
   });
 
   it('法场：走到宋江身边松绑、还他剑；两人都到出口过关；宋江倒下判负', () => {
