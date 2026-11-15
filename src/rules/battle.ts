@@ -12,6 +12,7 @@ import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf,
 import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { enemyFloor } from './enemy-level.ts';
+import { stageTune, type StageTune } from './stage-tune.ts';
 import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
@@ -200,6 +201,9 @@ export class Battle {
   /** 扩展包剧本的标志（指令 103 设上，条件 100 / 101 判断有没有）【新】 */
   private flags = new Set<number>();
   private pendingDeaths: number[] = [];
+  /** 提前了的回合增援区块：区块序号 → 新的回合参数（stage-tune 的 rushOnDeath）【新】 */
+  private turnAt: Record<number, number> = {};
+  private readonly tune?: StageTune;
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
   /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
@@ -233,6 +237,7 @@ export class Battle {
     this.display = input.displayBlocks?.length === input.blocks.length ? input.displayBlocks : undefined;
     this.tr = input.text ?? ((s) => s);
     this.aiPrefer = input.aiPrefer ?? {};
+    this.tune = stageTune(input.name);
     // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
     const playerLevel = (a: ActUnit) => {
       const kept = input.party?.get(a.type);
@@ -522,7 +527,7 @@ export class Battle {
       units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
-      expBySource: this.expBySource, benched: [...this.benched], used: this.used,
+      expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt,
     });
   }
 
@@ -568,6 +573,7 @@ export class Battle {
     this.turnParam = s.turnParam;
     this.flags = new Set(s.flags ?? []);
     this.pendingDeaths = s.pendingDeaths;
+    this.turnAt = s.turnAt ?? {};
     this.teamExp = s.teamExp;
     this.clearGold = s.clearGold;
     this.ambushers = new Set(s.ambushers);
@@ -1179,9 +1185,12 @@ export class Battle {
       );
       if (b) this.runBlock(b);
       if (this.status !== 'playing') return;
+      if (c === this.tune?.rushOnDeath) this.rushWaves();
+      if (this.status !== 'playing') return;
     }
-    // 角色号 255：敌方全灭（推测：只在全灭时出现，如 N-add01 的胜利区块）
-    if (!this.units.some((u) => u.side === 'enemy' && u.alive && u.present))
+    // 角色号 255：敌方全灭（推测：只在全灭时出现，如 N-add01 的胜利区块）。
+    // clearAllWaves 的关卡【新】：还没登场的回合增援也要打倒，增援没出完不算全灭（N14）
+    if (!this.units.some((u) => u.side === 'enemy' && u.alive && u.present) && !(this.tune?.clearAllWaves && this.pendingWaves().length))
       for (const b of this.blocks) if (b.trigger.kind === 'death' && b.trigger.char === 255) this.runBlock(b);
     if (this.status !== 'playing') return;
     // 扩展包：出手之后的触发（用过某几招 / 出手满几次）
@@ -1225,8 +1234,31 @@ export class Battle {
 
   private runTurnTriggers(param: number) {
     this.turnParam = param;
-    for (const b of this.blocks) if (b.trigger.kind === 'turn' && b.trigger.turn === param) this.runBlock(b);
+    for (const b of this.blocks) if (b.trigger.kind === 'turn' && (this.turnAt[b.index] ?? b.trigger.turn) === param) this.runBlock(b);
     this.runCondBlocks();
+  }
+
+  /** 还没执行的回合增援区块（回合触发、点名放人、不判胜负），按（可能提前了的）回合先后排 */
+  private pendingWaves(): PasBlock[] {
+    const at = (b: PasBlock) => this.turnAt[b.index] ?? (b.trigger.kind === 'turn' ? b.trigger.turn : 0);
+    return this.blocks
+      .filter((b) => b.trigger.kind === 'turn' && b.trigger.turn > 0 && !this.fired.has(b.index))
+      .filter((b) => b.ops.some((o) => o.op === 12) && !b.ops.some((o) => o.op === 29 || o.op === 30))
+      .sort((a, b) => at(a) - at(b) || a.index - b.index);
+  }
+
+  /**
+   * stage-tune 的 rushOnDeath【新】（负责人 2026-11-15，N14 王倫）：那人倒下时下一波增援马上登场，
+   * 再下一波在下一回合开始时登场，依此类推；本来就更早的不推后。
+   */
+  private rushWaves() {
+    const [first, ...rest] = this.pendingWaves();
+    if (!first) return;
+    rest.forEach((b, i) => {
+      const at = this.turnAt[b.index] ?? (b.trigger.kind === 'turn' ? b.trigger.turn : 0);
+      this.turnAt[b.index] = Math.min(at, this.turn + i);
+    });
+    this.runBlock(first);
   }
 
   /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
@@ -1321,7 +1353,10 @@ export class Battle {
     const shown = this.display?.[b.index];
     const textOf = (i: number) => {
       const d = shown?.ops[i];
-      const t = d && d.op === b.ops[i].op && d.text ? d.text : (b.ops[i].text ?? '');
+      let t = d && d.op === b.ops[i].op && d.text ? d.text : (b.ops[i].text ?? '');
+      // rushOnDeath 那人已倒下才来的增援：换掉喊"谁敢动我大哥"之类的对白
+      const rt = this.tune?.rushText;
+      if (rt && this.units.some((u) => u.classId === this.tune!.rushOnDeath && !u.alive)) t = rt[this.tr(t)] ?? t;
       // EXE 0x4106b4：%N、%X = 主角名（名字表第 0 项），%M = 主角绰号（绰号表第 0 项）
       return t.replace(/%[NX]/g, this.data.heroName).replace(/%M/g, this.data.heroNickname ?? '');
     };

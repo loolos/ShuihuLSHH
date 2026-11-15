@@ -25,6 +25,15 @@ export interface StageTune {
   add?: TuneGroup[];
   /** 原版回合区块提前：原第几回合 → 新第几回合（玩家看到的回合数） */
   earlier?: Record<number, number>;
+  /**
+   * 这个角色（角色号）倒下时，还没来的回合增援提前【新】：第一波马上登场，之后每回合开始时再来一波
+   * （只会提前，不会推后）。由 Battle 执行，见 docs/game-design.md §9.3。
+   */
+  rushOnDeath?: number;
+  /** "敌方全灭"要连还没登场的回合增援一起算：增援没出完不判胜【新】 */
+  clearAllWaves?: boolean;
+  /** rushOnDeath 那人倒下以后才登场的增援，区块里这几句对白换掉（简体原文 → 替换） */
+  rushText?: Record<string, string>;
 }
 
 const SOLDIER = 32, ARCHER = 34, CAVALRY = 43, CAPTAIN = 38, SOLDIER_B = 33;
@@ -53,8 +62,14 @@ export const STAGE_TUNE: Record<string, StageTune> = {
       { turn: 5, at: [28, 32], units: [{ like: CHIEF, n: 1 }, { like: LOULUO_A, n: 1 }, { like: LOULUO_B, n: 4 }] },
     ],
   },
-  // 火并王倫：两波增援提前（第 6 回合 → 第 4 回合，第 11 回合 → 第 8 回合）
-  n14: { earlier: { 6: 4, 11: 8 } },
+  // 火并王倫：两波增援提前（第 6 回合 → 第 4 回合，第 11 回合 → 第 8 回合）。
+  // 负责人 2026-11-15：王倫（68）一死，下一波增援马上来、再下一波下一回合来；增援全部出完、全部打倒才过关
+  n14: {
+    earlier: { 6: 4, 11: 8 },
+    rushOnDeath: 68,
+    clearAllWaves: true,
+    rushText: { '『云里金刚』宋万在此！谁敢动我大哥！': '『云里金刚』宋万在此！你们竟敢害我大哥，拿命来！' },
+  },
 };
 
 export const stageTune = (stage: string): StageTune | undefined => STAGE_TUNE[stage.toLowerCase()];
