@@ -1265,6 +1265,36 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'say' && e.text.includes('正是打了小弟的'))).toBe(true);
     expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('倒撞下溪里去'))).toBe(true);
   });
+  it('林间截囚使用反劫剪径贼原图，全体落点互不重叠且与囚车道路连通，近旁援手可走到宋江身边', () => {
+    const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
+    expect(s.map).toEqual({base:'N-add07'});
+    expect([b.board.width,b.board.height]).toEqual([36,36]);
+    const prisoner = s.units.find(u=>u.id==='songjiang')!;
+    const field = b.board.distanceField([prisoner]);
+    const seen = new Set<string>();
+    for(const u of s.units) {
+      expect(b.board.passable(u.x,u.y),u.id).toBe(true);
+      expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);
+      expect(seen.has(`${u.x},${u.y}`),u.id).toBe(false);seen.add(`${u.x},${u.y}`);
+    }
+    for(const id of ['wusong','luzhishen','yangzhi']) {
+      const u=s.units.find(u=>u.id===id)!;
+      expect(field[u.y*b.board.width+u.x],id).toBeLessThanOrEqual(4);
+    }
+    b.begin();
+    // 用真实移动触发near：清空护卫仅为核对新落点的通路与开车触发，不改变生产关卡。
+    const hero=b.units.find(u=>u.classId===0)!,sj=b.units[s.units.findIndex(u=>u.id==='songjiang')];
+    for(const u of b.units)if(u!==hero&&u!==sj)u.present=false;
+    for(let step=0;step<10&&b.isBound(sj);step++) {
+      const moves=b.moveRange(hero).green;
+      const next=moves.reduce((best,c)=>field[c.y*b.board.width+c.x]<field[best.y*b.board.width+best.x]?c:best,hero);
+      if(next.x===hero.x&&next.y===hero.y)break;
+      b.move(hero,next.x,next.y);
+      hero.movementRemaining=hero.stats.move;hero.forcedMarch=false;hero.turnStart=null;hero.acted=false;hero.ended=false;
+    }
+    expect(b.isBound(sj)).toBe(false);
+  });
+
   it('大闹清风寨（第十九章）：六关单位与 move 落点可通行不重格；三场剧情演完过关；清风山撑满 8 回合被擒；抢人打光才救出宋江；劫囚车花荣、二龙山、青州援军按回合到', () => {
     const ids = ['qingfengshan', 'xingjiutang', 'yuanxiao', 'qianghuarong', 'zhizhan', 'jieqiuche'];
     for (const id of ids) {
