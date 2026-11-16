@@ -2798,7 +2798,7 @@
   },
   {
     "id": "huarong-mei",
-    "name": "花玉英",
+    "name": "花婉清",
     "base": {
       "hp": 40,
       "mp": 20,
@@ -2986,6 +2986,116 @@
     "face": {
       "file": "faces/huangxin.png"
     }
+  },
+  {
+    "id": "lvfang",
+    "name": "吕方",
+    "base": {
+      "hp": 70,
+      "mp": 60,
+      "attack": 60,
+      "defense": 23,
+      "hit": 100,
+      "agility": 30,
+      "crit": 12
+    },
+    "move": 5,
+    "weaponType": 1,
+    "items": [
+      18,
+      96,
+      113
+    ],
+    "skills": [
+      {
+        "id": "lf-ji",
+        "name": "方天画戟",
+        "from": 221,
+        "anim": 0
+      },
+      {
+        "id": "lf-tiao",
+        "name": "画戟挑",
+        "from": 222,
+        "anim": 1
+      }
+    ],
+    "sprite": {
+      "fromClass": 67,
+      "recolor": [
+        {
+          "src": [
+            [
+              120,
+              127
+            ]
+          ],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 1
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 67
+    }
+  },
+  {
+    "id": "guosheng",
+    "name": "郭盛",
+    "base": {
+      "hp": 70,
+      "mp": 60,
+      "attack": 60,
+      "defense": 23,
+      "hit": 100,
+      "agility": 30,
+      "crit": 12
+    },
+    "move": 5,
+    "weaponType": 1,
+    "items": [
+      18,
+      96,
+      113
+    ],
+    "skills": [
+      {
+        "id": "gs-ji",
+        "name": "方天画戟",
+        "from": 221,
+        "anim": 0
+      },
+      {
+        "id": "gs-tiao",
+        "name": "画戟挑",
+        "from": 222,
+        "anim": 1
+      }
+    ],
+    "sprite": {
+      "fromClass": 67,
+      "recolor": [
+        {
+          "src": [
+            [
+              120,
+              127
+            ]
+          ],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 1.4
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 67
+    }
   }
 ],
   "stages": [
@@ -3014,6 +3124,11 @@
     "stages/yuanxiao.json",
     "stages/qianghuarong.json",
     "stages/zhizhan.json",
-    "stages/jieqiuche.json"
+    "stages/jieqiuche.json",
+    "stages/yekun.json",
+    "stages/yeshuo.json",
+    "stages/gongpo.json",
+    "stages/duiyingshan.json",
+    "stages/shiyong.json"
   ]
 }

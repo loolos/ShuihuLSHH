@@ -1,0 +1,350 @@
+{
+  "id": "yeshuo",
+  "title": "夜说秦明",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act3-2"
+  },
+  "tint": "night",
+  "bgm": [
+    "sad",
+    "brothers"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 10,
+      "y": 10,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 8,
+      "y": 10,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 12,
+      "y": 10,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 13,
+      "y": 11,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "player",
+      "x": 11,
+      "y": 9,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 9,
+      "y": 9,
+      "level": 5,
+      "ai": 8,
+      "name": "燕顺"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 12,
+      "y": 9,
+      "level": 5,
+      "ai": 8,
+      "name": "郑天寿"
+    },
+    {
+      "id": "qinming",
+      "class": "qinming",
+      "side": "ally",
+      "x": 10,
+      "y": 13,
+      "level": 5,
+      "ai": 8,
+      "facing": 1,
+      "name": "秦明"
+    },
+    {
+      "id": "soldier",
+      "class": 32,
+      "side": "ally",
+      "x": 11,
+      "y": 16,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "逃出城的小兵"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风山 · 聚义厅"
+        ],
+        [
+          "bind",
+          "qinming"
+        ],
+        [
+          "narrate",
+          "众人把秦明解上山来，推到聚义厅前。宋江见了，连忙跳下厅来，亲解其缚，扶上厅来，纳头便拜。"
+        ],
+        [
+          "move",
+          "songjiang",
+          10,
+          12
+        ],
+        [
+          "face",
+          "songjiang",
+          "qinming"
+        ],
+        [
+          "cleanse",
+          "qinming"
+        ],
+        [
+          "face",
+          "qinming",
+          "songjiang"
+        ],
+        [
+          "say",
+          "qinming",
+          "我是被擒之人，由你们碎尸万段，何故却来拜我？"
+        ],
+        [
+          "say",
+          "yanshun",
+          "总管且息怒。不如权在荒山草寨住几时。"
+        ],
+        [
+          "say",
+          "qinming",
+          "秦明生是大宋人，死为大宋鬼。你们众位要杀时便杀了我，休想我随顺你们！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "总管且宽心住一夜，明日再作商量。"
+        ],
+        [
+          "narrate",
+          "宋江再三相劝，留秦明吃了一夜酒。次日天明，秦明讨了衣甲马匹、狼牙棒，一骑马径回青州去了。"
+        ],
+        [
+          "leave",
+          "qinming"
+        ],
+        [
+          "title",
+          "青州城外"
+        ],
+        [
+          "narrate",
+          "秦明奔到青州城外，只见遍地都是瓦砾，烧得一片白地，死尸横七竖八。到得城下，城门紧闭，吊桥高拽，城上只是放箭，不放他进去。"
+        ],
+        [
+          "narrate",
+          "秦明回马走不多路，背后一个人气喘吁吁，赶将上来。"
+        ],
+        [
+          "appear",
+          "qinming"
+        ],
+        [
+          "appear",
+          "soldier"
+        ],
+        [
+          "move",
+          "soldier",
+          10,
+          14
+        ],
+        [
+          "face",
+          "qinming",
+          "soldier"
+        ],
+        [
+          "face",
+          "soldier",
+          "qinming"
+        ],
+        [
+          "say",
+          "soldier",
+          "总管！总管快走！昨夜一个穿总管衣甲、骑总管马、横着狼牙棒的人，引着人马来打城子，把城外好百姓杀了，房屋都烧了。知府相公认定是总管反了。"
+        ],
+        [
+          "say",
+          "soldier",
+          "知府把夫人和一家老小都斩了，首级挑在城头上！小人是营里的伴当，偷着跑出城来报信。"
+        ],
+        [
+          "say",
+          "qinming",
+          "啊呀！我几曾来打城子？这是谁人害我！"
+        ],
+        [
+          "narrate",
+          "秦明气破胸脯，分说不得，只叫得苦屈。寻思半晌，没有一个去处，只得回马，又投清风山来。"
+        ],
+        [
+          "leave",
+          "soldier"
+        ],
+        [
+          "title",
+          "清风山 · 聚义厅"
+        ],
+        [
+          "face",
+          "qinming",
+          "songjiang"
+        ],
+        [
+          "say",
+          "songjiang",
+          "总管休怪。昨日因留总管在山，坚意不肯。却是宋江定出这条计来，叫小卒似总管模样的，穿了总管的衣甲，骑着那匹马，去青州城外杀人放火，断了总管的归路。"
+        ],
+        [
+          "say",
+          "qinming",
+          "你们弟兄虽是好意要留秦明，只是害得我忒毒些个，断送了我妻小一家人口！"
+        ],
+        [
+          "move",
+          "hero",
+          11,
+          12
+        ],
+        [
+          "face",
+          "hero",
+          "songjiang"
+        ],
+        [
+          "say",
+          "hero",
+          "公明哥哥，叫人扮作秦总管的模样去青州城外杀人放火，城外那些百姓又有何罪？这一招，未免太毒辣了。"
+        ],
+        [
+          "face",
+          "songjiang",
+          "hero"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟骂得是。宋江一时只顾留住总管，没想到连累了这许多性命，又害了总管一家。这桩罪过，宋江认了。"
+        ],
+        [
+          "face",
+          "songjiang",
+          "qinming"
+        ],
+        [
+          "say",
+          "qinming",
+          "罢了。事已至此，秦明也无路可回。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "虽然没了嫂嫂夫人，宋江恰知得花知寨有一妹，甚是贤慧。宋江情愿主婚，陪备财礼，与总管为室，若何？"
+        ],
+        [
+          "move",
+          "huarong",
+          9,
+          12
+        ],
+        [
+          "face",
+          "huarong",
+          "qinming"
+        ],
+        [
+          "face",
+          "qinming",
+          "huarong"
+        ],
+        [
+          "say",
+          "huarong",
+          "舍妹尚未许人。总管若不嫌弃，花荣愿将舍妹许配总管，从此便是一家骨肉。"
+        ],
+        [
+          "say",
+          "qinming",
+          "既蒙众位如此重义，秦明敢不从命！"
+        ],
+        [
+          "act",
+          "qinming",
+          "defend"
+        ],
+        [
+          "narrate",
+          "秦明见众人如此相待，方才放心归顺。众人都来贺喜，宰牛杀马，又吃了一日酒。"
+        ],
+        [
+          "say",
+          "likui",
+          "好也！又多一个吃酒的兄弟！"
+        ],
+        [
+          "say",
+          "qinming",
+          "清风寨还有黄信，他是我的徒弟，又无老小，也是个直汉。秦明明日亲去清风寨叫开栅门，劝他也来入伙。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "只有刘高那个妇人不曾拿得，出那口怨气！"
+        ],
+        [
+          "say",
+          "wangying",
+          "哥哥放心，我明日自下山去拿那妇人，今番还我受用。"
+        ],
+        [
+          "victory",
+          "秦明被宋江之计断了归路，妻小被慕容知府所杀，只得归顺清风山。宋江作主，把花荣之妹许配秦明。秦明要去清风寨劝黄信入伙。"
+        ]
+      ]
+    }
+  ]
+}

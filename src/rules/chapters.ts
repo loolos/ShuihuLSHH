@@ -46,6 +46,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '醉打孔亮', stages: ['mainline/kongliang', 'mainline/kongjiazhuang'] },
   // 负责人 2026-11-16：清风寨上半（原著第 32–34 回）：清风山被擒相认、元宵被诬、花荣抢人、掷盏为号、劫囚车（二龙山三人来援）
   { name: '大闹清风寨', stages: ['mainline/qingfengshan', 'mainline/xingjiutang', 'mainline/yuanxiao', 'mainline/qianghuarong', 'mainline/zhizhan', 'mainline/jieqiuche'] },
+  // 负责人 2026-11-16：清风寨下半（原著第 34–35 回）：夜困秦明、夜说秦明与许婚、攻破清风寨（秦明劝降黄信，新）、对影山射戟、石勇送信与梁山聚义
+  { name: '霹雳火秦明', stages: ['mainline/yekun', 'mainline/yeshuo', 'mainline/gongpo', 'mainline/duiyingshan', 'mainline/shiyong'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';

@@ -91,7 +91,9 @@ export type PasTrigger =
    */
   | { kind: 'used'; char: number; skills?: number[]; count?: number }
   /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
-  | { kind: 'near'; char: number; uid?: number; by?: number };
+  | { kind: 'near'; char: number; uid?: number; by?: number }
+  /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
+  | { kind: 'hp'; char: number; uid?: number; below: number };
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
