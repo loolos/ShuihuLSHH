@@ -52,7 +52,7 @@
       "class": "wangdaoren",
       "side": "enemy",
       "x": 19,
-      "y": 3,
+      "y": 5,
       "level": 28,
       "levelOffset": 0,
       "ai": 12,
@@ -177,8 +177,8 @@
       "id": "woman",
       "class": 31,
       "side": "ally",
-      "x": 20,
-      "y": 2,
+      "x": 21,
+      "y": 6,
       "level": 1,
       "ai": 8,
       "hidden": true,
@@ -503,8 +503,8 @@
         [
           "move",
           "wusong",
-          18,
-          3
+          19,
+          6
         ],
         [
           "say",
