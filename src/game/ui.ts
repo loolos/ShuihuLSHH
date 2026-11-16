@@ -3,6 +3,7 @@ import { expToNext } from '../rules/exp.ts';
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
 import { buffLabel } from '../rules/data.ts';
+import { splitNickname } from '../rules/nicknames.ts';
 import { sound } from './sound.ts';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -34,6 +35,14 @@ export class BattleUI {
   faceOverride = new Map<number, string>();
   /** 文字转换（繁→简） */
   tr: (s: string) => string = (s) => s;
+  /** 运行时补充的绰号（主角名 → EXE 绰号表第 0 项），见 src/rules/nicknames.ts */
+  extraNicknames: Record<string, string> = {};
+
+  /** 名字前加原著绰号（小一号、颜色淡一些）：「行者 武松」；没有绰号就只有名字 */
+  private nameHtml(name: string): string {
+    const [nick, bare] = splitNickname(this.tr(name), this.extraNicknames);
+    return nick ? `<span class="nick">${esc(nick)}</span>${esc(bare)}` : esc(bare);
+  }
 
   constructor() {
     this.face.id = 'dialog-face';
@@ -142,7 +151,7 @@ export class BattleUI {
     this.panel.innerHTML = `
       ${face ? `<img class="face" alt="" src="${face}">` : ''}
       <div class="info">
-      <div class="name side-${u.side}">${esc(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}</small></div>
+      <div class="name side-${u.side}">${this.nameHtml(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}</small></div>
       <div class="bars">
         <div>体力 <span class="bar2"><i style="width:${pct(u.hp, s.maxHp)}"></i></span> ${u.hp}/${s.maxHp}</div>
         <div>气力 <span class="bar2 mp"><i style="width:${pct(u.mp, s.maxMp)}"></i></span> ${u.mp}/${s.maxMp}</div>
@@ -232,7 +241,7 @@ export class BattleUI {
     this.face.hidden = !face;
     if (face) this.face.src = face;
     this.dialog.classList.toggle('has-face', !!face);
-    $('dialog-who').textContent = this.tr(speaker);
+    $('dialog-who').innerHTML = speaker ? this.nameHtml(speaker) : '';
     $('dialog-text').textContent = this.tr(text);
     this.dialog.hidden = false;
     return new Promise((r) => (this.dialogNext = r));
