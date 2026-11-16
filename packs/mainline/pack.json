@@ -2274,7 +2274,7 @@
       ]
     },
     "face": {
-      "fromHead": 62
+      "file": "faces/kongliang.png"
     }
   },
   {
@@ -2339,7 +2339,7 @@
       ]
     },
     "face": {
-      "fromHead": 63
+      "file": "faces/kongming.png"
     }
   }
 ],
