@@ -10,6 +10,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import type { SkillDef } from '../src/rules/data.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA } from '../tools/sim-lib.ts';
+import { FX_EXPLOSION, fxGroups } from '../src/game/effects.ts';
 
 const available = fs.existsSync(path.join(DATA, 'Data/Human.hum'));
 describe.skipIf(!available)('武松、李逵技能重做', () => {
@@ -102,6 +103,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     for(let tier=1;tier<=4;tier++) {
       const s=skill('likui',`狂澜裂岳LV${tier}`),b=battle('likui');b.begin();const u=b.units[0],t=b.units[1];
       expect(s).toMatchObject({area:2,rangeMax:tier+2,power:(tier-1)*20,mpCost:[60,80,100,120][tier-1],stun:20,critMod:20});
+      expect(s.hitFx).toBe('explosion');expect(fxGroups(s)).toEqual([FX_EXPLOSION]); // 只在命中的人身上炸，不铺满范围
       expect(areaCells(board,from,s,{x:16,y:15})).toHaveLength(5);
       expect(attackParts(s)).toHaveLength(tier+2);expect(s.hits.reduce((a,h)=>a+h.percent,0)).toBe(100);
       u.stats.poison=0;u.stats.stun=0;u.stats.crit=0;

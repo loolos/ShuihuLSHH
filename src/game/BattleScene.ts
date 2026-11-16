@@ -15,7 +15,7 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
-import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, FX_EXPLOSION, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
@@ -1151,6 +1151,24 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /** 命中特效（技能 hitFx）：在受击者格子上放一组特效，压在人物前面；放完自己消失 */
+  private hitEffect(cell: Cell, group: number, audible: boolean): Promise<void> {
+    const anim = effectAnim(this, this.assets, group);
+    if (audible) sound.effect(group);
+    if (!anim) return Promise.resolve();
+    const p = cellToWorld(cell.x, cell.y);
+    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 11));
+    s.play(anim);
+    return new Promise<void>((r) => {
+      const done = () => {
+        if (s.active) s.destroy();
+        r();
+      };
+      s.once('animationcomplete', done);
+      this.time.delayedCall(3000, done);
+    });
+  }
+
   /** 在格子上放一组固定特效（EXE 0x403860：直接指定组号），同时播特效音 <组号+1>（0x403880）；放完才返回 */
   private fixedFx(cell: Cell, group: number): Promise<void> {
     const anim = effectAnim(this, this.assets, group);
@@ -1366,6 +1384,8 @@ export class BattleScene extends Phaser.Scene {
                   const lead = frames.findIndex((g, j) => g === f && (!perPart || res.partHit[j])) === i;
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
                   if (dmg !== null && dmg > 0 && skill.hitFx === 'blood') this.bloodSplash(tv.x, tv.y, crit);
+                  // 爆炸：每段命中都在受击者身上炸一次，不等它放完（声音只在受击动作那段出）
+                  if (dmg !== null && dmg > 0 && skill.hitFx === 'explosion') void this.hitEffect(tv, FX_EXPLOSION, lead);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
                     this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
