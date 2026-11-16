@@ -45,6 +45,94 @@
      "name": "甲马聚气",
      "from": 227,
      "anim": 2
+    },
+    {
+     "id": "dz-duqi",
+     "name": "神行渡气",
+     "from": 227,
+     "anim": 2,
+     "learnLevel": 8,
+     "mpCost": 30,
+     "power": 2,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 0,
+     "chargeTarget": "ally"
+    },
+    {
+     "id": "dz-tazhen1",
+     "name": "疾风踏阵LV1",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 12,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 25,
+     "mpCost": 30,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "dz-tazhen2",
+     "name": "疾风踏阵LV2",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 20,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 40,
+     "mpCost": 40,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "dz-tazhen3",
+     "name": "疾风踏阵LV3",
+     "from": 225,
+     "anim": 1,
+     "learnLevel": 28,
+     "type": 15,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 2,
+     "power": 55,
+     "mpCost": 50,
+     "hitMod": 10,
+     "critMod": 5,
+     "stun": 0,
+     "poison": 0,
+     "effect": 20,
+     "hits": [
+      {
+       "frame": 14,
+       "percent": 100,
+       "dir": 0
+      }
+     ]
     }
    ],
    "sprite": {
@@ -159,7 +247,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-lianpi",
@@ -214,7 +303,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-xuanfeng",
@@ -258,7 +348,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-kuanglan-lv4",
@@ -284,7 +375,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     }
 ],
    "sprite": {
@@ -597,12 +689,200 @@
     124
    ],
    "skills": [
-    {
-     "id": "hr-shen",
-     "name": "百步穿杨",
-     "from": 222,
-     "anim": 0
-    }
+     {
+       "id": "hr-shen",
+       "name": "百步穿杨",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 1,
+       "rangedDamage": [
+         1,
+         0.6
+       ]
+     },
+     {
+       "id": "hr-cloud-1",
+       "name": "穿云贯日LV1",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 4,
+       "mpCost": 30,
+       "area": 8,
+       "pierce": true,
+       "power": 20,
+       "hitMod": 20,
+       "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
+       "castCycles": 2,
+       "rangedDamage": [
+         1,
+         0.6
+       ],
+       "hits": [
+         {
+           "frame": 20,
+           "percent": 50,
+           "dir": 0
+         },
+         {
+           "frame": 46,
+           "percent": 50,
+           "dir": 0
+         }
+       ]
+     },
+     {
+       "id": "hr-geese",
+       "name": "雁落平沙",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 8,
+       "mpCost": 35,
+       "power": 10,
+       "type": 7,
+       "area": 2,
+       "rangeMin": 1,
+       "rangeMax": 6,
+       "critMod": 0,
+       "rangedDamage": [
+         1,
+         0.6
+       ]
+     },
+     {
+       "id": "hr-calm",
+       "name": "澄心引弦",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 12,
+       "mpCost": 0,
+       "power": 2,
+       "type": 8,
+       "area": 0,
+       "rangeMin": 0,
+       "rangeMax": 0,
+       "effect": 0,
+       "hitMod": 0,
+       "critMod": 0,
+       "hits": []
+     },
+     {
+       "id": "hr-stars",
+       "name": "连珠飞星",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 16,
+       "mpCost": 35,
+       "power": 30,
+       "type": 14,
+       "area": 8,
+       "rangeMin": 1,
+       "rangeMax": 8,
+       "critMod": 0,
+       "castCycles": 3,
+        "castSpeed": 1.8,
+       "rangedDamage": [
+         1,
+         0.6
+       ],
+       "hits": [
+         {
+           "frame": 20,
+           "percent": 33,
+           "dir": 0
+         },
+         {
+           "frame": 46,
+           "percent": 33,
+           "dir": 0
+         },
+         {
+           "frame": 72,
+           "percent": 34,
+           "dir": 0
+         }
+       ]
+     },
+     {
+       "id": "hr-cloud-2",
+       "name": "穿云贯日LV2",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 20,
+       "mpCost": 40,
+       "area": 8,
+       "pierce": true,
+       "power": 40,
+       "hitMod": 20,
+       "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
+       "castCycles": 3,
+       "rangedDamage": [
+         1,
+         0.6
+       ],
+       "hits": [
+         {
+           "frame": 20,
+           "percent": 33,
+           "dir": 0
+         },
+         {
+           "frame": 46,
+           "percent": 33,
+           "dir": 0
+         },
+         {
+           "frame": 72,
+           "percent": 34,
+           "dir": 0
+         }
+       ]
+     },
+     {
+       "id": "hr-cloud-3",
+       "name": "穿云贯日LV3",
+       "from": 222,
+       "anim": 0,
+       "learnLevel": 24,
+       "mpCost": 50,
+       "area": 8,
+       "pierce": true,
+       "power": 60,
+       "hitMod": 20,
+       "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
+       "castCycles": 4,
+       "rangedDamage": [
+         1,
+         0.6
+       ],
+       "hits": [
+         {
+           "frame": 20,
+           "percent": 25,
+           "dir": 0
+         },
+         {
+           "frame": 46,
+           "percent": 25,
+           "dir": 0
+         },
+         {
+           "frame": 72,
+           "percent": 25,
+           "dir": 0
+         },
+         {
+           "frame": 98,
+           "percent": 25,
+           "dir": 0
+         }
+       ]
+     }
    ],
    "sprite": {
     "fromClass": 34,
@@ -707,7 +987,7 @@
      }
     ]
    },
-   "face": null
+   "face": { "file": "faces/huangxin.png" }
   },
   {
    "id": "lvfang",
@@ -1084,9 +1364,7 @@
      }
     ]
    },
-   "face": {
-    "fromHead": 65
-   }
+   "face": { "file": "faces/yanshun.png" }
   },
   {
    "id": "huangwenbing",

@@ -1,0 +1,860 @@
+{
+  "id": "qingfengshan",
+  "title": "清风夜擒",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N-add12",
+    "crop": [
+      12,
+      16,
+      24,
+      20
+    ]
+  },
+  "tint": "night",
+  "bgm": [
+    "night",
+    "battle"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 13,
+      "y": 17,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 12,
+      "y": 16,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 14,
+      "y": 18,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "enemy",
+      "x": 12,
+      "y": 4,
+      "level": 29,
+      "levelOffset": 1,
+      "facing": 3,
+      "name": "王英"
+    },
+    {
+      "id": "lolo-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 10,
+      "y": 5,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 11,
+      "y": 6,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 13,
+      "y": 6,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 14,
+      "y": 5,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 8,
+      "y": 8,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 16,
+      "y": 8,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-7",
+      "class": 22,
+      "side": "enemy",
+      "x": 6,
+      "y": 9,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-8",
+      "class": 23,
+      "side": "enemy",
+      "x": 18,
+      "y": 9,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-9",
+      "class": 44,
+      "side": "enemy",
+      "x": 11,
+      "y": 9,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "lolo-10",
+      "class": 45,
+      "side": "enemy",
+      "x": 14,
+      "y": 9,
+      "level": 29,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "enemy",
+      "x": 4,
+      "y": 2,
+      "level": 29,
+      "levelOffset": 1,
+      "hidden": true,
+      "name": "燕顺"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "enemy",
+      "x": 19,
+      "y": 2,
+      "level": 29,
+      "levelOffset": 1,
+      "hidden": true,
+      "name": "郑天寿"
+    },
+    {
+      "id": "wave-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 3,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 5,
+      "y": 2,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 18,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 20,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 2,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 7,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-7",
+      "class": 22,
+      "side": "enemy",
+      "x": 16,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-8",
+      "class": 23,
+      "side": "enemy",
+      "x": 22,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 0,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 1,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 3,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 9,
+      "y": 2,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 14,
+      "y": 2,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 19,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-7",
+      "class": 22,
+      "side": "enemy",
+      "x": 5,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-8",
+      "class": 23,
+      "side": "enemy",
+      "x": 7,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 0,
+      "y": 9,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 0,
+      "y": 10,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 22,
+      "y": 9,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 10,
+      "y": 19,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "trap-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 12,
+      "y": 19,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰",
+      "levelOffset": 0
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "青州地面 · 清风山下"
+        ],
+        [
+          "narrate",
+          "宋江、武龙、李逵别了武松，取路投清风寨来。行了几日，来到清风山下，贪看山景，错过了宿头，天色早晚了。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "这山生得古怪，树木稠密，只怕有歹人。天色已晚，快寻个宿处。"
+        ],
+        [
+          "say",
+          "likui",
+          "怕甚鸟！有铁牛两把板斧在此。"
+        ],
+        [
+          "narrate",
+          "走到二更时分，只听得一声锣响，林子里钻出二三十个小喽啰来。当先一个头领，五短身材，一双光眼。"
+        ],
+        [
+          "focus",
+          "wangying"
+        ],
+        [
+          "say",
+          "wangying",
+          "兀那三个鸟人，留下包裹行李，饶你们性命！"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥退后，小弟和铁牛挡他一阵！"
+        ],
+        [
+          "objective",
+          "胜利：撑过 8 回合，或打退全部喽啰\n失败：宋江或武龙倒下"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "山上又是一声锣响，两个头领引着一伙喽啰，从两边山坡上抢将下来。"
+        ],
+        [
+          "appear",
+          "yanshun"
+        ],
+        [
+          "appear",
+          "zhengtianshou"
+        ],
+        [
+          "appear",
+          "wave-1"
+        ],
+        [
+          "appear",
+          "wave-2"
+        ],
+        [
+          "appear",
+          "wave-3"
+        ],
+        [
+          "appear",
+          "wave-4"
+        ],
+        [
+          "appear",
+          "wave-5"
+        ],
+        [
+          "appear",
+          "wave-6"
+        ],
+        [
+          "appear",
+          "wave-7"
+        ],
+        [
+          "appear",
+          "wave-8"
+        ],
+        [
+          "say",
+          "yanshun",
+          "哪里来的鸟人，敢在清风山撒野！孩儿们，拿了解上山去！"
+        ],
+        [
+          "say",
+          "zhengtianshou",
+          "王英哥哥休慌，兄弟来也！"
+        ],
+        [
+          "flag",
+          "wave"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "山上锣声又响，又一伙喽啰打着火把抢下山来。"
+        ],
+        [
+          "appear",
+          "wave2-1"
+        ],
+        [
+          "appear",
+          "wave2-2"
+        ],
+        [
+          "appear",
+          "wave2-3"
+        ],
+        [
+          "appear",
+          "wave2-4"
+        ],
+        [
+          "appear",
+          "wave2-5"
+        ],
+        [
+          "appear",
+          "wave2-6"
+        ],
+        [
+          "appear",
+          "wave2-7"
+        ],
+        [
+          "appear",
+          "wave2-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "wangying"
+      },
+      "do": [
+        [
+          "narrate",
+          "王英抵敌不住，拖着枪往林子里便走。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "这三个好生了得！孩儿们，把绊脚索都扯起来！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "do": [
+        [
+          "narrate",
+          "厮杀了半夜，喽啰越来越多，三个且战且走，望山路上退去——"
+        ],
+        [
+          "narrate",
+          "众人正杀得性起，不提防路边草里拽起一条绊脚索，又兜头撒下几把挠钩来。宋江、武龙先绊翻在地，李逵吃一索绊倒，七八个喽啰一齐上，都捉翻了。"
+        ],
+        [
+          "act",
+          "songjiang",
+          "hurt"
+        ],
+        [
+          "act",
+          "hero",
+          "hurt"
+        ],
+        [
+          "act",
+          "likui",
+          "hurt"
+        ],
+        [
+          "appear",
+          "trap-1"
+        ],
+        [
+          "appear",
+          "trap-2"
+        ],
+        [
+          "appear",
+          "trap-3"
+        ],
+        [
+          "appear",
+          "trap-4"
+        ],
+        [
+          "appear",
+          "trap-5"
+        ],
+        [
+          "appear",
+          "trap-6"
+        ],
+        [
+          "approach",
+          "trap-1",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-2",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-3",
+          "likui"
+        ],
+        [
+          "approach",
+          "trap-4",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-5",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-6",
+          "likui"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "likui"
+        ],
+        [
+          "say",
+          "likui",
+          "鸟人使绊子！放俺起来，一个个都砍了！"
+        ],
+        [
+          "narrate",
+          "喽啰把三个都缚了，点起火把，一步步解上山寨来。"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "victory",
+          "宋江、武龙、李逵在清风山下吃绊脚索绊翻，被喽啰拿上山寨去了。"
+        ]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "if": "wave",
+      "do": [
+        [
+          "narrate",
+          "喽啰都打散了。三个正要寻路下山——"
+        ],
+        [
+          "narrate",
+          "众人正杀得性起，不提防路边草里拽起一条绊脚索，又兜头撒下几把挠钩来。宋江、武龙先绊翻在地，李逵吃一索绊倒，七八个喽啰一齐上，都捉翻了。"
+        ],
+        [
+          "act",
+          "songjiang",
+          "hurt"
+        ],
+        [
+          "act",
+          "hero",
+          "hurt"
+        ],
+        [
+          "act",
+          "likui",
+          "hurt"
+        ],
+        [
+          "appear",
+          "trap-1"
+        ],
+        [
+          "appear",
+          "trap-2"
+        ],
+        [
+          "appear",
+          "trap-3"
+        ],
+        [
+          "appear",
+          "trap-4"
+        ],
+        [
+          "appear",
+          "trap-5"
+        ],
+        [
+          "appear",
+          "trap-6"
+        ],
+        [
+          "approach",
+          "trap-1",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-2",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-3",
+          "likui"
+        ],
+        [
+          "approach",
+          "trap-4",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-5",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-6",
+          "likui"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "likui"
+        ],
+        [
+          "say",
+          "likui",
+          "鸟人使绊子！放俺起来，一个个都砍了！"
+        ],
+        [
+          "narrate",
+          "喽啰把三个都缚了，点起火把，一步步解上山寨来。"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "victory",
+          "宋江、武龙、李逵在清风山下吃绊脚索绊翻，被喽啰拿上山寨去了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江死在清风山下。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒在清风山下。"
+        ]
+      ]
+    }
+  ]
+}

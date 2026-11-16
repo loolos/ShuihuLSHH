@@ -1,0 +1,311 @@
+{
+  "id": "xingzhe",
+  "title": "十字坡·扮行者",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act5-2"
+  },
+  "bgm": [
+    "inn",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 12,
+      "y": 11,
+      "level": 29
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 10,
+      "y": 11,
+      "level": 29
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 10,
+      "y": 12,
+      "level": 29
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 13,
+      "y": 12,
+      "level": 29
+    },
+    {
+      "id": "zhangqing",
+      "class": "zhangqing",
+      "side": "ally",
+      "x": 12,
+      "y": 9,
+      "level": 1,
+      "ai": 8
+    },
+    {
+      "id": "sunerniang",
+      "class": "sunerniang",
+      "side": "ally",
+      "x": 11,
+      "y": 10,
+      "level": 1,
+      "ai": 8
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "数日后 · 十字坡"
+        ],
+        [
+          "narrate",
+          "且说众好汉杀出孟州，各自分路：史进引林冲、杜迁、宋万回梁山复命，宋江、戴宗另投去处。只有武龙、李逵、花荣三个护着武松，连夜奔回十字坡，在张青店里藏身将养。"
+        ],
+        [
+          "narrate",
+          "孟州官府「写了武松乡贯年甲，貌相模样，画影图形，出三千贯信赏钱」，四下里差人缉捕。"
+        ],
+        [
+          "face",
+          "zhangqing",
+          "wusong"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "贤弟，如今官司搜捕得紧，各处关隘都挂了你的图形。我这里终不是长久安身之处。"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "青州二龙山宝珠寺，花和尚鲁智深与青面兽杨志在那里聚众打劫，官军不敢正眼觑他。贤弟只除去那里安身立命，方才免得这罪犯。"
+        ],
+        [
+          "face",
+          "hero",
+          "zhangqing"
+        ],
+        [
+          "say",
+          "hero",
+          "鲁大哥在二龙山？狮子楼一别，正好去投奔他！"
+        ],
+        [
+          "face",
+          "wusong",
+          "zhangqing"
+        ],
+        [
+          "say",
+          "wusong",
+          "我也正是这般思量。只是脸上刺着金印，一路上如何躲得过盘查？"
+        ],
+        [
+          "move",
+          "sunerniang",
+          12,
+          10
+        ],
+        [
+          "face",
+          "sunerniang",
+          "wusong"
+        ],
+        [
+          "say",
+          "sunerniang",
+          "二年前，有个头陀打从这里过，吃我放翻了，留下一个铁戒箍、一身衣服、一领皂布直裰、一本度牒、一串数珠、两把戒刀。"
+        ],
+        [
+          "say",
+          "sunerniang",
+          "叔叔要逃难，只除非把头发剪了，做个行者，须遮得额上金印，又且得这本度牒做护身符。"
+        ],
+        [
+          "say",
+          "wusong",
+          "这个也使得，只恐我不象出家人模样。"
+        ],
+        [
+          "move",
+          "sunerniang",
+          7,
+          12
+        ],
+        [
+          "narrate",
+          "孙二娘去房里取出包裹，替武松剪了头发、披下来，额上箍起戒箍，穿了皂布直裰，挂了数珠，腰里插着两把雪花镔铁戒刀。"
+        ],
+        [
+          "portrait",
+          "wusong",
+          "faces/wusong-xingzhe.png"
+        ],
+        [
+          "move",
+          "sunerniang",
+          11,
+          10
+        ],
+        [
+          "face",
+          "sunerniang",
+          "wusong"
+        ],
+        [
+          "act",
+          "wusong",
+          "defend"
+        ],
+        [
+          "say",
+          "sunerniang",
+          "却不是前生注定！"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "果然好个行者！"
+        ],
+        [
+          "face",
+          "likui",
+          "wusong"
+        ],
+        [
+          "say",
+          "likui",
+          "哈哈！二哥这般打扮，倒像个吃斋念佛的，只是那双眼睛还是要吃人。铁牛跟着你去二龙山！"
+        ],
+        [
+          "face",
+          "huarong",
+          "wusong"
+        ],
+        [
+          "say",
+          "huarong",
+          "二龙山、清风寨都在青州地面。花荣正好同路，一路上替二哥看着冷箭。"
+        ],
+        [
+          "say",
+          "wusong",
+          "有三位兄弟同行，武松还怕甚么关隘！"
+        ],
+        [
+          "narrate",
+          "张青写了一封书信，叫武松带去二龙山。四人辞别张青夫妻，出了十字坡，望青州便走。"
+        ],
+        [
+          "move",
+          "zhangqing",
+          13,
+          13
+        ],
+        [
+          "move",
+          "sunerniang",
+          14,
+          13
+        ],
+        [
+          "move",
+          "wusong",
+          12,
+          15
+        ],
+        [
+          "move",
+          "hero",
+          10,
+          15
+        ],
+        [
+          "move",
+          "likui",
+          12,
+          16
+        ],
+        [
+          "move",
+          "huarong",
+          13,
+          15
+        ],
+        [
+          "face",
+          "wusong",
+          "zhangqing"
+        ],
+        [
+          "face",
+          "zhangqing",
+          "wusong"
+        ],
+        [
+          "say",
+          "zhangqing",
+          "二哥，保重，保重！千万拜上鲁、杨二头领。"
+        ],
+        [
+          "say",
+          "wusong",
+          "哥嫂保重，武松去了。"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "move",
+          "hero",
+          12,
+          16
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "move",
+          "huarong",
+          12,
+          16
+        ],
+        [
+          "leave",
+          "huarong"
+        ],
+        [
+          "move",
+          "wusong",
+          12,
+          16
+        ],
+        [
+          "leave",
+          "wusong"
+        ],
+        [
+          "victory",
+          "武松改扮行者，与武龙、李逵、花荣辞了十字坡，同往青州二龙山。"
+        ]
+      ]
+    }
+  ]
+}

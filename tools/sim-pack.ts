@@ -26,7 +26,10 @@ export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(D
 const dist = (a: { x: number; y: number }, c: { x: number; y: number }) => Math.abs(a.x - c.x) + Math.abs(a.y - c.y);
 /** 走到离 (x, y) 最近的能到的格子；走不动就原地防御 */
 function walkTo(b: Battle, u: Battle['units'][number], x: number, y: number, ev: unknown[]) {
-  const c = b.moveRange(u).green.reduce((a, g) => (dist(g, { x, y }) < dist(a, { x, y }) ? g : a), { x: u.x, y: u.y });
+  // 按地形距离（绕开墙）挑最近的一格，不用直线距离，免得隔着墙卡住
+  const field = b.board.distanceField([{ x, y }]);
+  const d = (c: { x: number; y: number }) => field[c.y * b.board.width + c.x];
+  const c = b.moveRange(u).green.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
   if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
   if (b.canAct(u)) ev.push(...b.defend(u));
 }

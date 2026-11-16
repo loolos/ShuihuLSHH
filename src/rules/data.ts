@@ -2,6 +2,7 @@
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
+import { GRUNT_CLASSES, OFFICER_CLASSES, statAt, tierGear } from './growth.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
@@ -9,6 +10,26 @@ export interface SkillDef extends ClassSkill {
   soundId?: number;
   /** 指定技能可在曼哈顿距离内选点；默认保持原版四向直线。 */
   targetShape?: 'diamond';
+  /** 集气技可指定一名同阵营队友为目标；不含施放者本人。 */
+  chargeTarget?: 'ally';
+  /** 远程技能的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
+  rangedDamage?: [number, number];
+  /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
+  castCycles?: number;
+  /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
+  castSpeed?: number;
+  /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；只是画面 */
+  hitFx?: 'blood' | 'explosion' | 'impact';
+  /** 遠程技飞行中的箭加画面效果【新】：fire = 火箭（箭头染成橙红、拖一串火苗，命中处冒一小团火；花荣 穿云贯日，负责人 2026-11-16）；只是画面 */
+  arrowFx?: 'fire';
+  /** 穿透【新】（遠程技，花荣 穿云贯日，负责人 2026-11-16）：施放点只定方向，从施放者身前一格起整条直线都受击，长 max(area, 到施放点的距离)；箭一路飞到线尾，不停在第一个目标 */
+  pierce?: boolean;
+  /** 固定伤害系数（取代远程距离系数）：敌兵远射技伤害 = 正常公式 × 此值（§6.6） */
+  damageScale?: number;
+  /** 最远打到第几格（含线形范围的延伸），装备射程加上去也不超过（杂兵「遠程攻擊」为 3，§6.6） */
+  reachCap?: number;
+  /** 敌兵远射技（§6.6）：AI 只在能打到 2 人以上、或没有别的攻击可用时才放；不计入迎击警戒半径 */
+  volley?: boolean;
 }
 
 export interface ClassDef {
@@ -111,6 +132,7 @@ const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) =
  * 依据：按期望伤害折成"几次普通攻击"，回气一回合回半条气，单体技原来要 50–100% 气条却只有 1.5–2.2 次普攻。
  */
 export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
+  86: { critMod: 10 }, // 吳用普攻「暗度陳倉」必杀修正 +20 → +10；敌方版吴用保留原值。
   // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
   26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
   27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
@@ -231,6 +253,66 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
 };
 
 /**
+ * 敌兵远射技【新】（负责人 2026-11-15，game-design §6.6）：中后期敌兵每个兵种一招远射范围技，
+ * 必杀低（必杀修正 −10）、伤害低（正常公式 × damageScale，不按距离再打折），但能从 2 格外打到我方。
+ * 杂兵 15 级、小头目 13 级学会。出手动作借本职业原有技能（borrow = 职业技能表的序号，取其动作组、最后一个命中帧和音效），
+ * 特效用原版没有技能用的 Effect.lib 组（effect = 组号 + 1）。技能号 1100 起。
+ */
+export const TROOP_GRUNT_LEVEL = 15;
+export const TROOP_OFFICER_LEVEL = 13;
+interface TroopSkill {
+  classes: number[];
+  borrow: number;
+  skill: Partial<SkillDef> & Pick<SkillDef, 'name' | 'type' | 'mpCost' | 'rangeMin' | 'rangeMax' | 'area' | 'damageScale' | 'effect'>;
+}
+const DIAMOND = { targetShape: 'diamond' as const };
+export const TROOP_SKILLS: TroopSkill[] = [
+  // 杂兵（伤害 35%）
+  { classes: [19, 20, 40, 41], borrow: 0, skill: { name: '亂石飛投', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 44, ...DIAMOND } }, // 莊客：从落点往前一线 3 格，第 43 组白色火花
+  { classes: [22, 23, 44, 45], borrow: 0, skill: { name: '滾木擂石', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 44, ...DIAMOND } }, // 囉嘍：从落点往前一线 3 格
+  { classes: [21], borrow: 1, skill: { name: '撒網', type: 3, area: 2, rangeMin: 2, rangeMax: 3, mpCost: 25, damageScale: 0.35, stun: 10, effect: 49, ...DIAMOND } }, // 漁人：十字 5 格，第 48 组蓝环
+  { classes: [32, 33], borrow: 0, skill: { name: '擲槍', type: 10, area: 2, rangeMin: 2, rangeMax: 5, mpCost: 25, damageScale: 0.35, effect: 57 } }, // 士兵：直线飞枪，贯穿 2 格（飞刀弹道 56–59）
+  { classes: [34], borrow: 0, skill: { name: '火箭齊發', type: 0, area: 3, rangeMin: 3, rangeMax: 7, mpCost: 30, damageScale: 0.35, effect: 42, ...DIAMOND } }, // 弓箭手：从落点往前一线 3 格，第 41 组火焰
+  { classes: [36], borrow: 1, skill: { name: '飛鏈鎖拿', type: 0, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, stun: 15, effect: 49, ...DIAMOND } }, // 官吏：一线 2 格
+  { classes: [37], borrow: 1, skill: { name: '石灰包', type: 3, area: 2, rangeMin: 2, rangeMax: 3, mpCost: 25, damageScale: 0.35, stun: 15, effect: 32, ...DIAMOND } }, // 家人：十字 5 格，第 31 组白粉星光
+  { classes: [67], borrow: 1, skill: { name: '連環飛鏢', type: 10, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 25, damageScale: 0.35, effect: 57 } }, // 徒弟：直线飞镖，贯穿 2 格
+  // 小头目（伤害 40%，頭領 30%）
+  { classes: [38], borrow: 0, skill: { name: '震地拳風', type: 3, area: 2, rangeMin: 2, rangeMax: 4, mpCost: 35, damageScale: 0.4, effect: 38, ...DIAMOND } }, // 都頭：十字 5 格，第 37 组蓝色冲击
+  { classes: [39], borrow: 0, skill: { name: '劈空掌', type: 0, area: 3, rangeMin: 2, rangeMax: 4, mpCost: 35, damageScale: 0.4, effect: 44, ...DIAMOND } }, // 教頭：一线 3 格
+  { classes: [42], borrow: 0, skill: { name: '火攻令', type: 3, area: 3, rangeMin: 3, rangeMax: 6, mpCost: 45, damageScale: 0.4, effect: 22, ...DIAMOND } }, // 縣尉：菱形 13 格，第 21 组火旋
+  { classes: [43], borrow: 0, skill: { name: '騎射', type: 10, area: 2, rangeMin: 2, rangeMax: 6, mpCost: 35, damageScale: 0.4, effect: 53 } }, // 騎兵：直线箭矢，贯穿 2 格（弓箭弹道 52–55）
+  { classes: [65], borrow: 0, skill: { name: '號令投石', type: 3, area: 3, rangeMin: 3, rangeMax: 5, mpCost: 45, damageScale: 0.3, effect: 44, ...DIAMOND } }, // 頭領：菱形 13 格
+  { classes: [66], borrow: 0, skill: { name: '毒煙彈', type: 3, area: 2, rangeMin: 2, rangeMax: 5, mpCost: 35, damageScale: 0.4, poison: 25, effect: 35, ...DIAMOND } }, // 刺客：十字 5 格，第 34 组旋风烟
+];
+/** 有「遠程攻擊」（射程 2）的兵 15 级起射程 +1（负责人 2026-11-15）；技能号 222，同名高等级版本取代原版 */
+export const TROOP_REACH_CLASSES = new Set([20, 21, 33, 36, 37, 41, 67]);
+
+/** 远射技耗气 = 学会那一级的最大气（模板气力 + 档次装备加成）向下取整到 10：刚学会时满气能放一次（负责人 2026-11-15） */
+export function troopMp(id: number, level: number): number {
+  const cls = { id } as ClassDef;
+  return Math.floor((statAt(cls, 'mp', level) + (tierGear(cls)?.mp ?? 0)) / 10) * 10;
+}
+
+function troopSkills(id: number, own: SkillDef[]): SkillDef[] {
+  const tier = GRUNT_CLASSES.has(id) ? TROOP_GRUNT_LEVEL : OFFICER_CLASSES.has(id) ? TROOP_OFFICER_LEVEL : 0;
+  if (!tier) return [];
+  const out: SkillDef[] = [];
+  const reach = TROOP_REACH_CLASSES.has(id) ? own.find((s) => s.skillId === 222 && s.type === 6) : undefined;
+  if (reach) out.push({ ...reach, learnLevel: TROOP_GRUNT_LEVEL, rangeMax: reach.rangeMax + 1, hits: reach.hits.map((h) => ({ ...h })) });
+  TROOP_SKILLS.forEach((t, i) => {
+    if (!t.classes.includes(id)) return;
+    const b = own[t.borrow] ?? own[0];
+    const last = b?.hits.at(-1)?.frame ?? 1;
+    out.push(extraSkill({ skillId: 1100 + i, group: b?.group ?? 0, learnLevel: tier, power: 0, critMod: -10, soundId: b?.soundId ?? b?.skillId, volley: true, hits: [{ frame: last, percent: 100, dir: 0 }], ...t.skill, mpCost: troopMp(id, tier) }));
+  });
+  return out;
+}
+
+/** 杂兵「遠程攻擊」（棍棒、叉等，技能 222 类型 6；不含弓箭手）最远打到第 3 格，装备射程也不超过（负责人 2026-11-15） */
+export const TROOP_REACH_CAP = 3;
+const capTroopReach = (id: number, s: SkillDef): SkillDef => (GRUNT_CLASSES.has(id) && s.skillId === 222 && s.type === 6 ? { ...s, reachCap: TROOP_REACH_CAP } : s);
+
+/**
  * 隐藏技（原版要古武術祕笈，HUM 技能子项 +5 = 1）改为好汉自带技能，随等级领悟【新】（负责人 2026-11-13）：
  * LV2、LV3 的习得等级照原版；LV1 原版是 1 级，改为 LV2 的习得等级 − 4（不低于 1）。如楊春 靈蛇出洞 LV2 10 级 → LV1 6 级。
  */
@@ -250,6 +332,15 @@ export function unlockHiddenSkills(skills: SkillDef[]): SkillDef[] {
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
+    const own: SkillDef[] = r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
+      ...s,
+      ...SKILL_OVERRIDES[s.skillId],
+      ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
+      // 模板普攻默认无必杀修正，仅刺客保留最多 +5；特殊技仍封顶 +5，其他职业不受影响。
+      ...(GRUNT_CLASSES.has(r.id) || OFFICER_CLASSES.has(r.id) ? { critMod: i === 0 && r.id !== 66 ? 0 : Math.min(5, SKILL_OVERRIDES[s.skillId]?.critMod ?? s.critMod) } : {}),
+      name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
+      ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
+    })));
     return {
       id: r.id,
       name: names[r.id] ?? `#${r.id}`,
@@ -265,13 +356,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
       skills: unlockHiddenSkills([
-        ...r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
-          ...s,
-          ...SKILL_OVERRIDES[s.skillId],
-          ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
-          name: SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
-          ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
-        }))),
+        ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
       ]),
     };
@@ -394,7 +479,7 @@ export function basicAttack(c: ClassDef): SkillDef | undefined {
 export const isUsable = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 22;
 
 export type BuffStat = 'attack' | 'defense' | 'hit' | 'agility' | 'crit' | 'move' | 'poison' | 'stun' | 'resistPoison' | 'resistStun';
-/** 限时效果：value 加到对应属性上，持续 turns 回合（每回合开始 −1，到 0 消失） */
+/** 属性效果：value 加到对应属性；turns > 0 按回合倒计时，turns = 0 表示持续到本关结束。 */
 export interface Buff {
   stat: BuffStat;
   value: number;
@@ -429,6 +514,14 @@ const STAT_NAME: Record<BuffStat, string> = {
   attack: '攻击', defense: '防御', hit: '命中', agility: '敏捷', crit: '必杀', move: '移动', poison: '攻击带毒', stun: '攻击致昏', resistPoison: '抗毒', resistStun: '抗昏',
 };
 export const buffName = (s: BuffStat) => STAT_NAME[s];
+
+/** 单位面板的状态说明，区分属性加值与持续时间。 */
+export function buffLabel(b: Buff): string {
+  const value = b.value ? ` ${b.value > 0 ? '+' : ''}${b.value}` : '';
+  const duration = b.turns === 0 ? '本关有效' : `剩余${b.turns}回合`;
+  return `${buffName(b.stat)}${value}（${duration}）`;
+}
+
 
 /** 道具效果的简短说明（简体）：装备列攻防等加成（含打铁 n 次），消耗品列效果 */
 export function itemSummary(it: Item, n = 0): string {

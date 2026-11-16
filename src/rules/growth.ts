@@ -19,9 +19,9 @@ export const GROWTH: Record<StatKey, [number, number]> = {
 };
 
 /** 杂兵模板（初始值）。同档同等级的兵属性完全一样，兵种之间只有移动力、武器和技能不同 */
-export const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 0 };
+export const GRUNT: Record<StatKey, number> = { hp: 55, mp: 45, attack: 50, defense: 20, hit: 55, agility: 22, crit: 10 };
 /** 小头目模板：比杂兵硬一档（负责人 2026-11-12：我方约 3–3.5 下打倒一个） */
-export const OFFICER: Record<StatKey, number> = { hp: 95, mp: 80, attack: 66, defense: 28, hit: 70, agility: 30, crit: 12 };
+export const OFFICER: Record<StatKey, number> = { hp: 95, mp: 80, attack: 66, defense: 28, hit: 70, agility: 30, crit: 15 };
 /** 模板兵的装备不加属性，改为每档固定加成（各关原版配装的平均值），不随等级成长 */
 export const GRUNT_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 5, attack: 15, defense: 13, agility: 5 };
 export const OFFICER_GEAR: Partial<Record<StatKey, number>> = { hp: 3, mp: 8, attack: 6, defense: 16, agility: 8 };
@@ -37,6 +37,11 @@ export const tierOf = (cls: ClassDef): Tier => (GRUNT_CLASSES.has(cls.id) ? 'gru
 /** 个别职业的初始值调整（职业号 → 属性），覆盖职业表原值 */
 export const CLASS_OVERRIDES: Record<number, Partial<Record<StatKey, number>>> = {
   1: { attack: 80 }, // 王進：原版 70。改成新成长后前期显弱，负责人 2026-11-12 要求前期打兵伤害约 +15%
+  5: { crit: 8 }, // 朱武
+  9: { crit: 8 }, // 阮小七
+  10: { crit: 10 }, // 吳用
+  12: { crit: 10 }, // 晁蓋
+  16: { crit: 8 }, // 魯智深
 };
 
 /**
@@ -49,11 +54,11 @@ export interface Tweak {
 }
 export const CLASS_TWEAKS: Record<number, Tweak> = {
   // 小头目：都頭 38 是标准，不动
-  39: { pct: { attack: 8, hit: 5 }, add: { crit: 5 } }, // 教頭
+  39: { pct: { attack: 8, hit: 5 } }, // 教頭
   42: { pct: { hit: 10, mp: 30, defense: -5 } }, // 縣尉
   43: { pct: { attack: 8, defense: -8, agility: 10 } }, // 騎兵
   65: { pct: { hp: 15, defense: 5 } }, // 頭領
-  66: { pct: { agility: 25, hp: -15, defense: -10 }, add: { crit: 8 } }, // 刺客
+  66: { pct: { agility: 25, hp: -15, defense: -10 } }, // 刺客
   // 名将
   59: { pct: { attack: -30 } }, // 陳達：第 2 章约 2.2 下就能打倒我方（技能威力还在，-15% 不够）
   49: { pct: { hp: 25 } }, // 李吉
@@ -76,6 +81,8 @@ export function baseStat(cls: ClassDef, k: StatKey): number {
 
 /** 每级加多少（可以是小数，累计后取整） */
 export function perLevel(cls: ClassDef, k: StatKey): number {
+  // 模板兵必杀固定：杂兵 10、小头目 15，不随等级增加。
+  if (k === 'crit' && tierOf(cls)) return 0;
   const [fixed, pct] = GROWTH[k];
   return fixed + (baseStat(cls, k) * pct) / 100;
 }

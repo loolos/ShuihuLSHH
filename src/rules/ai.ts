@@ -3,7 +3,7 @@ import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
-import { castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { castRange, isAllyChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
 export interface AiPlan {
@@ -34,7 +34,7 @@ export const LEGACY_ATTACK_PERCENT = 30;
 
 /** 打不到人时仍按脚本模式追击单位表中的首个敌对单位。 */
 export function primaryFoe(b: Battle, u: Unit): Unit | undefined {
-  return b.foesOf(u)[0];
+  return b.aiFoesOf(u)[0];
 }
 
 interface Choice { best: Option | null; ties: number }
@@ -52,11 +52,13 @@ function consider(b: Battle, choice: Choice, option: Option, compare: (a: Option
  * 70%：范围攻击覆盖人数 → 期望总伤害，同分随机；仅单体可用时先等概率抽目标，再选高伤招式。
  * 治疗、跟随、警戒及脚本指定目标等约束仍由外层模式控制。
  */
-function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
+function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiPlan | null {
   const legacy = b.rng.chance(LEGACY_ATTACK_PERCENT);
-  const reach = b.reachOf(u, u.stats.move);
+  const reach = b.reachOf(u, budget);
   const basic = attackSkill(u, b.data);
   const skills = [basic, ...learnedSkills(u, b.data).filter(s => !isSupportSkill(s) && s.mpCost <= u.mp)];
+  const foes = b.aiFoesOf(u);
+  const loneVolley: Choice = { best: null, ties: 0 };
   let bestLegacy: Option | null = null;
   const bestArea: Choice = { best: null, ties: 0 };
   const singles = new Map<number, Choice>();
@@ -65,13 +67,17 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
   const byArea = (a: Option, c: Option) => a.count - c.count || byDamage(a, c);
   const byLegacy = (a: Option, c: Option) => a.kills - c.kills || byDamage(a, c)
     || c.target.hp - a.target.hp || dist(u, c.target) - dist(u, a.target) || Number(a.pref) - Number(c.pref);
+
   for (const n of reach.values()) {
     const at = { x: n.x, y: n.y };
     const self = { ...u, x: n.x, y: n.y };
     for (const skill of skills)
       for (const cell of b.skillCells(u, skill, at)) {
+        // 远射技选点多：落点附近（范围大小 + 1 以内）没有敌人就跳过
+        if (skill.volley && !foes.some((t) => dist(t, cell) <= Math.max(1, skill.area) + 1)) continue;
         const hit = b.affected(u, skill, cell, at);
-        if (!hit.length || (only && !hit.includes(only))) continue;
+        // 绑住的人一律不碰：落点会波及被绑的人就不选【新】
+        if (!hit.length || (only && !hit.includes(only)) || hit.some((t) => b.isBound(t))) continue;
         let expected = 0, kills = 0;
         for (const t of hit) {
           const p = previewAttack(self, t, skill);
@@ -83,6 +89,11 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
         const target = onCell && hit.includes(onCell) ? onCell : hit[0];
         const area = !legacy && b.skillArea(u, skill, cell, at).length > 1;
         const o: Option = { cell, skill, at, target, count: hit.length, pref: b.prefers(u, skill), kills, expected };
+        // 主线§6.6：远射技只打一个人时，必须没有其他可用攻击才采用。
+        if (skill.volley && hit.length < 2) {
+          consider(b, loneVolley, o, legacy ? byLegacy : byArea);
+          continue;
+        }
         if (legacy) {
           if (!bestLegacy || byLegacy(o, bestLegacy) > 0) bestLegacy = o;
         } else {
@@ -101,6 +112,8 @@ function bestAttack(b: Battle, u: Unit, only?: Unit): AiPlan | null {
     // 按角色去重后再抽，站位多、可用技能多不会提高该目标被选中的概率。
     best = hasArea ? bestArea.best : singles.size ? [...singles.values()][b.rng.int(singles.size)].best : null;
   }
+
+  best ??= loneVolley.best;
   return best ? { path: b.pathOf(reach, best.at), target: best.target, skill: best.skill, cell: best.cell } : null;
 }
 
@@ -140,7 +153,7 @@ function healSkill(b: Battle, u: Unit): AiPlan | null {
 /** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
 function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
   if (plan.skill || u.mp >= u.stats.maxMp / 2) return plan;
-  const s = learnedSkills(u, b.data).find(isChargeSkill);
+  const s = learnedSkills(u, b.data).find(isSelfChargeSkill);
   if (!s) return plan;
   const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
   return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
@@ -149,14 +162,30 @@ function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
 function defaultPlan(b: Battle, u: Unit): AiPlan {
   const heal = healIfLow(b, u) ?? healSkill(b, u);
   if (heal) return heal;
+  // 相邻队友严重缺气时先援气；自身回气仍只选择自身集气技能。
+  const aid = allyChargePlan(b, u);
+  if (aid) return aid;
   const atk = bestAttack(b, u);
   if (atk) return atk;
   const main = primaryFoe(b, u);
   return withCharge(b, u, approach(b, u, main ? [main] : []));
 }
 
+function allyChargePlan(b: Battle, u: Unit): AiPlan | null {
+  let best: { skill: SkillDef; cell: Cell; restored: number } | null = null;
+  for (const skill of learnedSkills(u, b.data).filter((s) => isAllyChargeSkill(s) && s.mpCost <= u.mp)) {
+    for (const cell of b.skillTargets(u, skill)) {
+      const t = b.affected(u, skill, cell)[0];
+      if (!t || t.mp >= t.stats.maxMp / 3) continue;
+      const restored = Math.min(t.stats.maxMp - t.mp, Math.floor(t.stats.maxMp / Math.max(1, skill.power)));
+      if (restored > 0 && (!best || restored > best.restored)) best = { skill, cell, restored };
+    }
+  }
+  return best ? { skill: best.skill, cell: best.cell } : null;
+}
+
 function foesWithin(b: Battle, u: Unit, radius: number) {
-  return b.foesOf(u).filter((t) => dist(u, t) <= radius);
+  return b.aiFoesOf(u).filter((t) => dist(u, t) <= radius);
 }
 
 /**
@@ -166,7 +195,7 @@ function foesWithin(b: Battle, u: Unit, radius: number) {
  */
 export function alertRadius(b: Battle, u: Unit): number {
   const skills = [attackSkill(u, b.data), ...learnedSkills(u, b.data)].filter(
-    (s): s is SkillDef => !!s && !isSupportSkill(s) && s.mpCost <= u.mp,
+    (s): s is SkillDef => !!s && !isSupportSkill(s) && !s.volley && s.mpCost <= u.mp,
   );
   const reach = Math.max(0, ...skills.map((s) => castRange(u, s, b.data)[1] + s.area));
   return u.stats.move + reach;
@@ -213,11 +242,28 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       const fEnd = forced.path?.at(-1) ?? u;
       return field[fEnd.y * b.board.width + fEnd.x] < field[end.y * b.board.width + end.x] ? forced : plan;
     }
+    case 11: // 【新】驻守戒备：仅从原位攻击射程内目标，不移动追击
+      return bestAttack(b, u, undefined, 0) ?? {};
+    case 12: {
+      // 【新】守屋：屋子（范围存在目标 / 目标点字段，见 guardRoom）里没有敌人时同模式 11；有敌人进来就转为模式 0 出战，之后一直出战
+      if (!b.aiFoesOf(u).some((t) => inGuardRoom(u, t))) return bestAttack(b, u, undefined, 0) ?? {};
+      u.ai.mode = 0;
+      return defaultPlan(b, u);
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
       return defaultPlan(b, u);
   }
+}
+
+/** AI 12 的屋子范围：目标点 = 左上 (x1, y1)，目标 = x2 << 8 | y2（含边界） */
+export function guardRoom(u: Unit) {
+  return { x1: u.ai.point.x, y1: u.ai.point.y, x2: u.ai.target >> 8, y2: u.ai.target & 0xff };
+}
+export function inGuardRoom(u: Unit, c: Cell): boolean {
+  const r = guardRoom(u);
+  return c.x >= r.x1 && c.x <= r.x2 && c.y >= r.y1 && c.y <= r.y2;
 }
 
 export const cellKey = (c: Cell) => key(c.x, c.y);

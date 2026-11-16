@@ -3,8 +3,11 @@ import type { Board, Cell } from './board.ts';
 import type { GameData, SkillDef } from './data.ts';
 import { attackRange, attackSkill, DIRS, facingTowards, type Unit } from './unit.ts';
 
-/** 集气技：回复自己的气力 */
+/** 集气 / 援气：回复自身或指定队友的气力。 */
 export const isChargeSkill = (s: SkillDef) => s.type === 8;
+/** 援助回气与自身集气分开，避免回合终了或 AI 把援助当成给自己回气。 */
+export const isAllyChargeSkill = (s: SkillDef) => isChargeSkill(s) && s.chargeTarget === 'ally';
+export const isSelfChargeSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s);
 /** 回复技：回复范围内我方的体力（类型 9 与 11 的区别还没解开，都按回复体力处理【待核】） */
 export const isHealSkill = (s: SkillDef) => s.type === 9 || s.type === 11;
 /** 不造成伤害的技能 */
@@ -14,9 +17,9 @@ export const isSupportSkill = (s: SkillDef) => isChargeSkill(s) || isHealSkill(s
 export const HERO_CLASSES = 18;
 
 /**
- * 出手时是否在出手者身上弹出技能名：技能都弹；普通攻击只有好汉弹（如林沖「一寸丹心」），杂兵的普攻不弹【新】（负责人 2026-11-13）。
+ * 出手时是否在出手者身上弹出技能名：技能都弹；普通攻击对我方、友军与原版好汉弹（如林沖「一寸丹心」）；敌方杂兵普攻不弹【新】（负责人 2026-11-13）。
  */
-export const announcesSkill = (u: Unit, skill: SkillDef, data: GameData) => skill !== attackSkill(u, data) || u.classId < HERO_CLASSES;
+export const announcesSkill = (u: Unit, skill: SkillDef, data: GameData) => skill !== attackSkill(u, data) || u.side !== 'enemy' || u.classId < HERO_CLASSES;
 
 /** "千軍萬馬LV2" → "千軍萬馬" */
 export const skillBaseName = (name: string) => name.replace(/\s*LV\s*\d+$/i, '');
@@ -46,8 +49,13 @@ export function skillsLearnedAt(u: Unit, data: GameData, level: number): SkillDe
 /** 施放距离 [下限, 上限]。普通攻击沿用 attackRange；其它技能读子项 +12/+13，射程大于 0 的再加装备射程（原版 0x408ae0 加 unit+0x88） */
 export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number] {
   if (s === attackSkill(u, data)) return attackRange(u, data);
-  const lo = s.rangeMin, hi = s.rangeMax;
-  return [lo, hi > 0 ? Math.max(lo, hi + u.stats.rangeBonus) : hi];
+  // 援气固定相邻一格；四格前冲技只选相邻方向，不由武器射程扩大施放点。
+  if (isAllyChargeSkill(s) || s.type === 15) return [s.rangeMin, s.rangeMax];
+  const lo = s.rangeMin;
+  let hi = s.rangeMax > 0 ? Math.max(lo, s.rangeMax + u.stats.rangeBonus) : s.rangeMax;
+  // 上限按「施放点 + 线形范围延伸」算：一线 2 格的技能施放点最远到第 reachCap − 1 格
+  if (s.reachCap) hi = Math.max(lo, Math.min(hi, s.reachCap - Math.max(0, s.area - 1)));
+  return [lo, hi];
 }
 
 /**
@@ -72,12 +80,17 @@ export function castCells(board: Board, at: Cell, [lo, hi]: [number, number], sh
   return out;
 }
 
+/** 穿透技（SkillDef.pierce）的直线长度：至少 area 格；装备射程让施放点更远时延长到施放点 */
+export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): number {
+  return Math.max(1, s.area, Math.abs(at.x - from.x) + Math.abs(at.y - from.y));
+}
+
 /**
  * 技能的作用范围（原版 0x408b10 按类型分派，跳转表 0x408b94）：
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
  * - 1：从施放点沿施放方向展开的扇形，第 i 行（从 0 数）向两侧各 floor(i/2) 格，共 size 行（0x40d330）
  * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）
- * - 12 周身技【新】：施放点（自己）周围一圈 8 格；13 横扫技【新】：施放点和它左右两侧（垂直于施放方向）共 3 格；14 前方长方形【新】：施放者身前宽 3 格、长 size 格
+ * - 12 周身技：周围 8 格；13 横扫：面前三格；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格【新】
  * - 其余（3、4、7、8、9、11）：以施放点为中心的菱形，曼哈顿距离 < size；size 0 只含施放点（0x40cde0）
  */
 export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell[] {
@@ -85,6 +98,10 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
   const out: Cell[] = [];
   const add = (x: number, y: number) => board.inBounds(x, y) && out.push({ x, y });
   const size = Math.max(1, s.area);
+  if (s.pierce) {
+    for (let i = 1; i <= pierceLength(from, s, at); i++) add(from.x + dir.x * i, from.y + dir.y * i);
+    return out;
+  }
   switch (s.type) {
     case 0:
     case 5:
@@ -112,6 +129,12 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
       for (let i = 1; i <= size; i++)
         for (let j = -1; j <= 1; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
       break;
+    case 15:
+      // 正前、前两格，以及第一排的左前和右前；不含自己、身后或更远处。
+      add(from.x + dir.x, from.y + dir.y);
+      add(from.x + dir.x * 2, from.y + dir.y * 2);
+      for (const j of [-1, 1]) add(from.x + dir.x + dir.y * j, from.y + dir.y + dir.x * j);
+      break;
     default: {
       const r = s.area;
       if (r <= 0) add(at.x, at.y);
@@ -131,7 +154,7 @@ export function skillBonusText(s: SkillDef): string {
   const sign = (n: number) => (n > 0 ? `+${n}` : `${n}`);
   const parts: string[] = [];
   if (isSupportSkill(s)) {
-    if (s.power > 0) parts.push(`${isChargeSkill(s) ? '回气' : '回体'}1/${s.power}`);
+    if (s.power > 0) parts.push(`${isAllyChargeSkill(s) ? '友方回气' : isChargeSkill(s) ? '回气' : '回体'}1/${s.power}`);
   } else if (s.power) parts.push(`威${sign(s.power)}`);
   if (s.hitMod) parts.push(`命${sign(s.hitMod)}`);
   if (s.critMod) parts.push(`必${sign(s.critMod)}`);

@@ -1,0 +1,582 @@
+{
+  "id": "yekun",
+  "title": "夜困霹雳",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N-add12"
+  },
+  "tint": "dusk",
+  "bgm": [
+    "night",
+    "tense"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 32,
+      "y": 3,
+      "level": 29,
+      "facing": 2
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 32,
+      "y": 5,
+      "level": 29,
+      "facing": 2
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 28,
+      "y": 6,
+      "level": 29,
+      "facing": 2
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 27,
+      "y": 7,
+      "level": 29,
+      "facing": 2
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "player",
+      "x": 30,
+      "y": 6,
+      "level": 29,
+      "facing": 2
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 33,
+      "y": 7,
+      "level": 29,
+      "name": "燕顺"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 34,
+      "y": 4,
+      "level": 29,
+      "name": "郑天寿"
+    },
+    {
+      "id": "ally-1",
+      "class": 44,
+      "side": "ally",
+      "x": 33,
+      "y": 5,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-2",
+      "class": 45,
+      "side": "ally",
+      "x": 34,
+      "y": 6,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-3",
+      "class": 44,
+      "side": "ally",
+      "x": 31,
+      "y": 4,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "qinming",
+      "class": "qinming",
+      "side": "enemy",
+      "x": 9,
+      "y": 29,
+      "level": 29,
+      "levelOffset": 2,
+      "facing": 0,
+      "name": "秦明"
+    },
+    {
+      "id": "qz-1",
+      "class": 43,
+      "side": "enemy",
+      "x": 10,
+      "y": 30,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州马军"
+    },
+    {
+      "id": "qz-2",
+      "class": 43,
+      "side": "enemy",
+      "x": 8,
+      "y": 30,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州马军"
+    },
+    {
+      "id": "qz-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 11,
+      "y": 28,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 28,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 27,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 26,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 12,
+      "y": 26,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-8",
+      "class": 33,
+      "side": "enemy",
+      "x": 6,
+      "y": 27,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-9",
+      "class": 34,
+      "side": "enemy",
+      "x": 5,
+      "y": 25,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-10",
+      "class": 34,
+      "side": "enemy",
+      "x": 9,
+      "y": 25,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "qz-11",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 25,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "青州军"
+    },
+    {
+      "id": "wave-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 2,
+      "y": 33,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 4,
+      "y": 34,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 33,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-4",
+      "class": 34,
+      "side": "enemy",
+      "x": 8,
+      "y": 34,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 2,
+      "y": 35,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 4,
+      "y": 35,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 35,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-8",
+      "class": 43,
+      "side": "enemy",
+      "x": 8,
+      "y": 35,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-9",
+      "class": 33,
+      "side": "enemy",
+      "x": 1,
+      "y": 33,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-10",
+      "class": 34,
+      "side": "enemy",
+      "x": 3,
+      "y": 33,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-11",
+      "class": 32,
+      "side": "enemy",
+      "x": 7,
+      "y": 33,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave-12",
+      "class": 33,
+      "side": "enemy",
+      "x": 5,
+      "y": 34,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军",
+      "levelOffset": 0
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风山 · 上山路"
+        ],
+        [
+          "narrate",
+          "黄信逃回青州，申报清风山反了花荣。慕容知府差本州兵马总管秦明，领一百马军、四百步军，杀奔清风山来。"
+        ],
+        [
+          "narrate",
+          "那秦明性格急躁，声若雷霆，人都叫他做霹雳火。使一条狼牙棒，有万夫不当之勇。"
+        ],
+        [
+          "focus",
+          "qinming"
+        ],
+        [
+          "say",
+          "qinming",
+          "反贼花荣！你祖代是将门之子，朝廷命官，教你做个知寨，掌握一境地方，食禄于国，有何亏你处，却去结连贼寇，反背朝廷！"
+        ],
+        [
+          "focus",
+          "huarong"
+        ],
+        [
+          "say",
+          "huarong",
+          "秦明，你这厮原来不识好人饶让。我念你是个上司官，你道俺真个怕你！"
+        ],
+        [
+          "act",
+          "huarong",
+          "attack",
+          "qinming"
+        ],
+        [
+          "narrate",
+          "花荣拈弓搭箭，望秦明盔顶上只一箭，正中盔上，射落斗来大那颗红缨，却似报个信与他。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "那秦明性如烈火，只消引他上山。半山里已掘下陷坑，诱他来，便好拿他。"
+        ],
+        [
+          "say",
+          "hero",
+          "小弟和铁牛在前面撩拨他，引那厮往坑边来！"
+        ],
+        [
+          "buff",
+          "qinming",
+          "defense",
+          {
+            "pct": 800
+          }
+        ],
+        [
+          "objective",
+          "胜利：把秦明引进半山的陷坑（图上标出的地方），或打倒他（秦明铠甲坚厚，很难打倒）\n失败：宋江或武龙倒下；超过 20 回合"
+        ],
+        [
+          "turnLimit",
+          20
+        ],
+        [
+          "tint",
+          "dusk"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "tint",
+          "night"
+        ],
+        [
+          "narrate",
+          "天色渐渐黑了。山上只是放冷箭、丢擂木，秦明越发焦躁。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "山下又有一伙青州步军赶上山来接应。"
+        ],
+        [
+          "appear",
+          "wave-1"
+        ],
+        [
+          "appear",
+          "wave-2"
+        ],
+        [
+          "appear",
+          "wave-3"
+        ],
+        [
+          "appear",
+          "wave-4"
+        ],
+        [
+          "appear",
+          "wave-5"
+        ],
+        [
+          "appear",
+          "wave-6"
+        ],
+        [
+          "appear",
+          "wave-7"
+        ],
+        [
+          "appear",
+          "wave-8"
+        ],
+        [
+          "appear",
+          "wave-9"
+        ],
+        [
+          "appear",
+          "wave-10"
+        ],
+        [
+          "appear",
+          "wave-11"
+        ],
+        [
+          "appear",
+          "wave-12"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "qinming",
+        "area": [
+          21,
+          7,
+          26,
+          11
+        ]
+      },
+      "do": [
+        [
+          "narrate",
+          "秦明怒气冲天，拍马舞棒，只顾往山上赶。赶到半山里，黑地里只听得一声响——走不到三五十步，和人连马攧下陷坑里去。"
+        ],
+        [
+          "narrate",
+          "两边埋伏下五十个挠钩手，把秦明搭将起来，剥了衣甲、头盔、军器，拿条绳索绑了，把马也救起来，都解上山来。"
+        ],
+        [
+          "victory",
+          "秦明夜里追上清风山，连人带马攧下陷坑，被挠钩手拿了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "qinming"
+      },
+      "do": [
+        [
+          "narrate",
+          "秦明力乏，马也跑得困了，却还不肯退。"
+        ],
+        [
+          "narrate",
+          "秦明怒气冲天，拍马舞棒，只顾往山上赶。赶到半山里，黑地里只听得一声响——走不到三五十步，和人连马攧下陷坑里去。"
+        ],
+        [
+          "narrate",
+          "两边埋伏下五十个挠钩手，把秦明搭将起来，剥了衣甲、头盔、军器，拿条绳索绑了，把马也救起来，都解上山来。"
+        ],
+        [
+          "victory",
+          "秦明夜里追上清风山，连人带马攧下陷坑，被挠钩手拿了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江倒下，清风山失守。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下，清风山失守。"
+        ]
+      ]
+    }
+  ]
+}

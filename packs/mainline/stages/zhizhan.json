@@ -1,0 +1,308 @@
+{
+  "id": "zhizhan",
+  "title": "杯落兵起",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "guanfu"
+  },
+  "bgm": [
+    "eerie",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 13,
+      "y": 12,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "huangxin",
+      "class": "huangxin",
+      "side": "enemy",
+      "x": 16,
+      "y": 4,
+      "level": 5,
+      "ai": 8,
+      "facing": 3,
+      "name": "黄信",
+      "levelOffset": -1
+    },
+    {
+      "id": "liugao",
+      "class": "liugao",
+      "side": "enemy",
+      "x": 18,
+      "y": 4,
+      "level": 5,
+      "ai": 8,
+      "facing": 2,
+      "name": "刘高",
+      "levelOffset": -1
+    },
+    {
+      "id": "amb-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 5,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "伏兵",
+      "levelOffset": -1
+    },
+    {
+      "id": "amb-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 19,
+      "y": 5,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "伏兵",
+      "levelOffset": -1
+    },
+    {
+      "id": "amb-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 8,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "伏兵",
+      "levelOffset": -1
+    },
+    {
+      "id": "amb-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 18,
+      "y": 8,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "伏兵",
+      "levelOffset": -1
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风寨 · 大寨公厅"
+        ],
+        [
+          "narrate",
+          "宋江当夜投清风山去，不想刘高料着这一着，差二三十军汉在半路上埋伏。武龙拼死杀开一条路，宋江却吃挠钩搭住，又被拿了回来。武龙只得连夜奔清风山报信去了。"
+        ],
+        [
+          "narrate",
+          "刘高连夜写了申状，飞报青州慕容知府。知府差本州兵马都监黄信，领五十个壮健军汉，星夜来到清风寨。"
+        ],
+        [
+          "focus",
+          "huangxin"
+        ],
+        [
+          "say",
+          "huangxin",
+          "下官黄信，青州兵马都监。夸口要捉尽清风山、二龙山、桃花山三处强人，人称镇三山，惯使一口丧门剑。"
+        ],
+        [
+          "face",
+          "huangxin",
+          "liugao"
+        ],
+        [
+          "say",
+          "huangxin",
+          "你拿得张三时，花荣知也不知？"
+        ],
+        [
+          "say",
+          "liugao",
+          "小人夜来二更拿了他，那花荣怎肯干休，必来厮闹。"
+        ],
+        [
+          "say",
+          "huangxin",
+          "这个不必问了。连夜合个囚车，把这厮盛在里面。明日下官只做个讲和的筵席，请花荣来赴，席上掷盏为号，就那里拿了。"
+        ],
+        [
+          "say",
+          "liugao",
+          "既是恁地，却容易。"
+        ],
+        [
+          "narrate",
+          "刘高在公厅两边帐幕里，埋伏下三五十个壮健军汉。次日，黄信差人去请花荣。"
+        ],
+        [
+          "focus",
+          "huarong"
+        ],
+        [
+          "move",
+          "huarong",
+          16,
+          7
+        ],
+        [
+          "face",
+          "huarong",
+          "huangxin"
+        ],
+        [
+          "face",
+          "huangxin",
+          "huarong"
+        ],
+        [
+          "say",
+          "huangxin",
+          "花知寨，知府只为足下和刘知寨文武不和，特差黄信来与二位讲和。"
+        ],
+        [
+          "say",
+          "huarong",
+          "花荣如何敢欺罔刘高，他又是个正知寨。只是本官累累要寻花荣的过失，不想惊动知府相公。"
+        ],
+        [
+          "narrate",
+          "黄信教取酒来，先劝了花荣一盏，又劝刘高。三个饮了一巡，黄信把酒盏望地下一掷。"
+        ],
+        [
+          "appear",
+          "amb-1"
+        ],
+        [
+          "appear",
+          "amb-2"
+        ],
+        [
+          "appear",
+          "amb-3"
+        ],
+        [
+          "appear",
+          "amb-4"
+        ],
+        [
+          "move",
+          "amb-1",
+          15,
+          7
+        ],
+        [
+          "move",
+          "amb-2",
+          17,
+          7
+        ],
+        [
+          "move",
+          "amb-3",
+          16,
+          8
+        ],
+        [
+          "move",
+          "amb-4",
+          16,
+          6
+        ],
+        [
+          "narrate",
+          "只听得后堂一声喊起，两边帐幕里走出三五十个壮健军汉，一发上，把花荣拿倒在厅前。"
+        ],
+        [
+          "act",
+          "huarong",
+          "hurt"
+        ],
+        [
+          "bind",
+          "huarong"
+        ],
+        [
+          "say",
+          "huarong",
+          "我得何罪？"
+        ],
+        [
+          "say",
+          "huangxin",
+          "你结连清风山强贼，一同背反朝廷，当得何罪？"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "narrate",
+          "众军汉把宋江推出来，也打了个囚车。"
+        ],
+        [
+          "say",
+          "huarong",
+          "这是我的亲眷，他自是郓城县人。你们要屈害他，只问花荣。"
+        ],
+        [
+          "say",
+          "huangxin",
+          "你两个都休分辩。就要你同去，便解投青州。"
+        ],
+        [
+          "say",
+          "huarong",
+          "休去我衣服，容我坐在囚车里。"
+        ],
+        [
+          "narrate",
+          "黄信点起一百军汉，刘高也带了一百余人，护送两辆囚车，取路奔青州府来。"
+        ],
+        [
+          "title",
+          "清风山 · 山寨"
+        ],
+        [
+          "narrate",
+          "那边武龙奔上清风山，把前事都说了。燕顺、王英、郑天寿、李逵听罢，当下点起五百小喽啰，要去半路截住囚车。"
+        ],
+        [
+          "narrate",
+          "武龙又写了一封书，差个快脚喽啰连夜投二龙山，报与武松、鲁智深、杨志知道。"
+        ],
+        [
+          "victory",
+          "黄信在公厅掷盏为号，拿了花荣，与宋江一同上囚车解往青州。武龙逃上清风山，约下二龙山的好汉半路劫囚车。"
+        ]
+      ]
+    }
+  ]
+}

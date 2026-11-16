@@ -1,0 +1,608 @@
+{
+  "id": "wugongling",
+  "title": "蜈蚣岭",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "wugongling"
+  },
+  "tint": "night",
+  "bgm": [
+    "night",
+    "eerie",
+    "nightduel"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 11,
+      "y": 23,
+      "level": 29
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 13,
+      "y": 23,
+      "level": 29
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 10,
+      "y": 22,
+      "level": 29
+    },
+    {
+      "id": "wangdaoren",
+      "class": "wangdaoren",
+      "side": "enemy",
+      "x": 19,
+      "y": 5,
+      "level": 28,
+      "levelOffset": 0,
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        15,
+        0,
+        25,
+        7
+      ],
+      "name": "飞天蜈蚣王道人"
+    },
+    {
+      "id": "daotong",
+      "class": 67,
+      "side": "enemy",
+      "x": 17,
+      "y": 5,
+      "level": 28,
+      "name": "道童"
+    },
+    {
+      "id": "bandit-0",
+      "class": 22,
+      "side": "enemy",
+      "x": 16,
+      "y": 3,
+      "level": 28,
+      "name": "守庵强人"
+    },
+    {
+      "id": "bandit-1",
+      "class": 22,
+      "side": "enemy",
+      "x": 14,
+      "y": 9,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 10,
+      "y": 11,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 20,
+      "y": 12,
+      "level": 28,
+      "name": "放哨强人"
+    },
+    {
+      "id": "bandit-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 6,
+      "y": 13,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-5",
+      "class": 45,
+      "side": "enemy",
+      "x": 22,
+      "y": 8,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-6",
+      "class": 22,
+      "side": "enemy",
+      "x": 15,
+      "y": 14,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-7",
+      "class": 65,
+      "side": "enemy",
+      "x": 18,
+      "y": 7,
+      "level": 28,
+      "name": "强人头目"
+    },
+    {
+      "id": "bandit-8",
+      "class": 66,
+      "side": "enemy",
+      "x": 13,
+      "y": 5,
+      "level": 28,
+      "name": "放冷箭的强人"
+    },
+    {
+      "id": "bandit-9",
+      "class": 45,
+      "side": "enemy",
+      "x": 3,
+      "y": 9,
+      "level": 28,
+      "name": "剪径强人"
+    },
+    {
+      "id": "bandit-10",
+      "class": 65,
+      "side": "enemy",
+      "x": 25,
+      "y": 14,
+      "level": 28,
+      "name": "强人头目"
+    },
+    {
+      "id": "woman",
+      "class": 31,
+      "side": "ally",
+      "x": 21,
+      "y": 6,
+      "level": 1,
+      "ai": 8,
+      "hidden": true,
+      "name": "张太公女儿"
+    },
+    {
+      "id": "wave-1",
+      "class": 22,
+      "side": "enemy",
+      "x": 0,
+      "y": 1,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 2,
+      "y": 0,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 6,
+      "y": 1,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave-4",
+      "class": 65,
+      "side": "enemy",
+      "x": 1,
+      "y": 3,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave-5",
+      "class": 22,
+      "side": "enemy",
+      "x": 29,
+      "y": 13,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 28,
+      "y": 15,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-1",
+      "class": 22,
+      "side": "enemy",
+      "x": 1,
+      "y": 22,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 1,
+      "y": 24,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-3",
+      "class": 66,
+      "side": "enemy",
+      "x": 3,
+      "y": 25,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-4",
+      "class": 65,
+      "side": "enemy",
+      "x": 24,
+      "y": 21,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-5",
+      "class": 22,
+      "side": "enemy",
+      "x": 24,
+      "y": 24,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    },
+    {
+      "id": "wave5-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 23,
+      "level": 28,
+      "name": "岭后强人",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "portrait",
+          "wusong",
+          "faces/wusong-xingzhe.png"
+        ],
+        [
+          "title",
+          "初更 · 蜈蚣岭"
+        ],
+        [
+          "narrate",
+          "此时是十月间天气，日正短，转眼便晚了。四人约行不到五十里，早望见一座高岭。"
+        ],
+        [
+          "narrate",
+          "武行者趁着月明，一步步上岭来，料道只是初更天色。"
+        ],
+        [
+          "say",
+          "likui",
+          "这岭恁地陡，月亮倒好。铁牛走得肚里又饿了。"
+        ],
+        [
+          "focus",
+          "wangdaoren"
+        ],
+        [
+          "narrate",
+          "只见松树林中，傍山一座坟庵，窗里透出灯光，有男女嘻嘻笑声。"
+        ],
+        [
+          "say",
+          "wangdaoren",
+          "小娘子，这条岭好风水，又有你相伴，便是神仙也不过如此！"
+        ],
+        [
+          "focus",
+          "wusong"
+        ],
+        [
+          "say",
+          "wusong",
+          "这是山间林下出家人，却做这等勾当！"
+        ],
+        [
+          "say",
+          "huarong",
+          "二哥看那林子里，还有几个拿刀的强人放哨，想是和这道人一伙。"
+        ],
+        [
+          "say",
+          "hero",
+          "深更半夜在坟庵里藏着妇人，又养着剪径的贼，必定不是好人。"
+        ],
+        [
+          "say",
+          "daotong",
+          "甚么人，半夜三更在岭上走动？"
+        ],
+        [
+          "say",
+          "wusong",
+          "先把这鸟道童祭刀！"
+        ],
+        [
+          "objective",
+          "击败飞天蜈蚣王道人与岭上全部强人（第3回合有增援）。武松倒下或超过20回合失败。"
+        ],
+        [
+          "turnLimit",
+          20
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "daotong"
+      },
+      "do": [
+        [
+          "say",
+          "wangdaoren",
+          "谁敢杀了我道童！"
+        ],
+        [
+          "narrate",
+          "那先生提着两口剑，从坟庵里抢将出来。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "岭后林子里、山脚两头一齐钻出一大伙强人，打着火把，前后围将上来！"
+        ],
+        [
+          "appear",
+          "wave-1"
+        ],
+        [
+          "appear",
+          "wave-2"
+        ],
+        [
+          "appear",
+          "wave-3"
+        ],
+        [
+          "appear",
+          "wave-4"
+        ],
+        [
+          "appear",
+          "wave-5"
+        ],
+        [
+          "appear",
+          "wave-6"
+        ],
+        [
+          "appear",
+          "wave5-1"
+        ],
+        [
+          "appear",
+          "wave5-2"
+        ],
+        [
+          "appear",
+          "wave5-3"
+        ],
+        [
+          "appear",
+          "wave5-4"
+        ],
+        [
+          "appear",
+          "wave5-5"
+        ],
+        [
+          "appear",
+          "wave5-6"
+        ],
+        [
+          "flag",
+          "wave-arrived"
+        ],
+        [
+          "narrate",
+          "强人已尽数出来。除了王道人与这伙强人，便好下岭。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "wangdaoren"
+      },
+      "do": [
+        [
+          "say",
+          "wangdaoren",
+          "好个凶头陀……贫道这条岭的好风水……"
+        ],
+        [
+          "narrate",
+          "当时斗了十数合，那先生撒手倒在石上，再也挣扎不起。"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "岭上强人死的死、逃的逃。武行者提着戒刀，来到坟庵门前。"
+        ],
+        [
+          "move",
+          "wusong",
+          19,
+          6
+        ],
+        [
+          "say",
+          "wusong",
+          "庵里婆娘出来！我不杀你，只问你个缘故。"
+        ],
+        [
+          "appear",
+          "woman"
+        ],
+        [
+          "face",
+          "woman",
+          "wusong"
+        ],
+        [
+          "face",
+          "wusong",
+          "woman"
+        ],
+        [
+          "narrate",
+          "那妇人走出来，便拜。"
+        ],
+        [
+          "say",
+          "wusong",
+          "你休拜我。你且说这里是甚么去处？那先生却是你的甚么人？"
+        ],
+        [
+          "say",
+          "woman",
+          "奴是这岭下张太公家女儿。这庵是奴家祖上坟庵。"
+        ],
+        [
+          "say",
+          "woman",
+          "这先生不知是那里人，来我家里投宿，言说善习阴阳，能识风水。"
+        ],
+        [
+          "say",
+          "woman",
+          "住了三两个月，把奴家爹娘哥嫂都害了性命，却把奴家强骗在此坟庵里住。"
+        ],
+        [
+          "say",
+          "woman",
+          "这岭唤做蜈蚣岭。这先生见了这条岭好风水，以此他便自号飞天蜈蚣王道人。"
+        ],
+        [
+          "say",
+          "wusong",
+          "这厮有些财帛么？"
+        ],
+        [
+          "say",
+          "woman",
+          "他已积蓄得一二百两金银。"
+        ],
+        [
+          "say",
+          "wusong",
+          "有时，你快去收拾，我便要放火烧庵也。"
+        ],
+        [
+          "narrate",
+          "那妇人收拾了金银，要分一半与武松。"
+        ],
+        [
+          "say",
+          "wusong",
+          "我不要你的，你自将去养身。快走，快走！"
+        ],
+        [
+          "say",
+          "likui",
+          "二哥倒是好心肠。这些金银拿去，好好过日子罢！"
+        ],
+        [
+          "move",
+          "woman",
+          17,
+          6
+        ],
+        [
+          "leave",
+          "woman"
+        ],
+        [
+          "narrate",
+          "武行者便就里面放起火来。那坟庵烧作一片，四人趁着月色下岭，望青州去了。"
+        ],
+        [
+          "victory",
+          "蜈蚣岭上除了飞天蜈蚣王道人，救出张太公女儿。"
+        ]
+      ],
+      "if": "wave-arrived"
+    },
+    {
+      "on": {
+        "dead": "wusong"
+      },
+      "do": [
+        [
+          "defeat",
+          "武行者倒在蜈蚣岭上。"
+        ]
+      ]
+    }
+  ]
+}

@@ -44,20 +44,11 @@
       "level": 29
     },
     {
-      "id": "shijin",
-      "class": 3,
-      "side": "player",
-      "x": 20,
-      "y": 18,
-      "level": 29,
-      "hidden": true
-    },
-    {
       "id": "daizong",
       "class": "daizong",
       "side": "player",
-      "x": 19,
-      "y": 18,
+      "x": 15,
+      "y": 3,
       "level": 29,
       "hidden": true
     },
@@ -65,8 +56,8 @@
       "id": "huarong",
       "class": "huarong",
       "side": "player",
-      "x": 20,
-      "y": 19,
+      "x": 16,
+      "y": 3,
       "level": 29,
       "hidden": true
     },
@@ -74,8 +65,8 @@
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 19,
-      "y": 19,
+      "x": 15,
+      "y": 4,
       "level": 29,
       "hidden": true
     },
@@ -86,34 +77,37 @@
       "x": 14,
       "y": 23,
       "level": 27,
-      "ai": 8
+      "ai": 0
     },
     {
       "id": "wine-1",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 20,
+      "x": 7,
+      "y": 23,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-2",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 14,
+      "x": 8,
+      "y": 18,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "wine-3",
       "class": 35,
       "side": "ally",
-      "x": 11,
-      "y": 8,
+      "x": 7,
+      "y": 14,
       "level": 1,
-      "ai": 8
+      "ai": 8,
+      "facing": 2
     },
     {
       "id": "jiangmenshen",
@@ -137,75 +131,83 @@
     },
     {
       "id": "guard-1",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 10,
       "y": 7,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-2",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 13,
       "y": 7,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-3",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 10,
       "y": 4,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-4",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 13,
       "y": 5,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-5",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 19,
       "y": 4,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-6",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 20,
       "y": 6,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "guard-7",
-      "class": 32,
+      "class": 22,
       "side": "enemy",
       "x": 20,
       "y": 8,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋家打手"
     },
     {
       "id": "guard-8",
-      "class": 33,
+      "class": 23,
       "side": "enemy",
       "x": 19,
       "y": 9,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "持棍打手"
     },
     {
       "id": "disciple-a",
@@ -224,6 +226,76 @@
       "y": 3,
       "level": 28,
       "hidden": true
+    },
+    {
+      "id": "zhangtuanlian",
+      "class": "zhangtuanlian",
+      "side": "enemy",
+      "x": 22,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "zhang-rescue-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 1,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 23,
+      "y": 2,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 3,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练军汉"
+    },
+    {
+      "id": "zhang-rescue-5",
+      "class": 38,
+      "side": "enemy",
+      "x": 22,
+      "y": 0,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练头目"
+    },
+    {
+      "id": "zhang-rescue-6",
+      "class": 65,
+      "side": "enemy",
+      "x": 21,
+      "y": 1,
+      "level": 28,
+      "hidden": true,
+      "name": "张团练头目"
     }
   ],
   "script": [
@@ -231,8 +303,12 @@
       "on": "start",
       "do": [
         [
+          "title",
+          "孟州东门外 · 快活林道上"
+        ],
+        [
           "narrate",
-          "武松认了施恩这位兄弟，宋江、武龙陪他出了孟州东门，沿路见酒旗便停。"
+          "次日武松与施恩出了孟州东门，宋江、武龙同行。出城之前，武松先与施恩约下一个规矩。"
         ],
         [
           "say",
@@ -247,7 +323,22 @@
         [
           "say",
           "wusong",
-          "但遇着一个酒店便请我吃三碗酒。若无三碗时，便不过望子去。"
+          "但遇着一个酒店，便请我吃三碗酒。若无三碗时，便不过望子去。"
+        ],
+        [
+          "say",
+          "shien",
+          "这里去快活林，一路卖酒的人家也有十来家，每店三碗，恐哥哥醉也，如何使得！"
+        ],
+        [
+          "say",
+          "wusong",
+          "你怕我醉了没本事？我却是没酒没本事，带一分酒便有一分本事，五分酒五分的本事！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "二郎既有这话，便依他。我与武龙兄弟在后照应，施小管营跟紧些。"
         ],
         [
           "borrowEquip",
@@ -257,7 +348,7 @@
         ],
         [
           "objective",
-          "击败蒋门神；武松或施恩倒下、超过20回合失败。"
+          "武松可逐家喝酒助兴；击败所有敌人（包括第4回合张团练带来的增援）。武松或施恩倒下、超过20回合失败。"
         ],
         [
           "turnLimit",
@@ -267,13 +358,8 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          19,
-          13,
-          21
-        ]
+        "near": "wine-1",
+        "by": "wusong"
       },
       "do": [
         [
@@ -305,19 +391,14 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          13,
-          13,
-          15
-        ]
+        "near": "wine-2",
+        "by": "wusong"
       },
       "do": [
         [
           "say",
           "wine-2",
-          "客官，三碗好酒，请！"
+          "客官里面请，新开的透瓶香，先筛三碗！"
         ],
         [
           "narrate",
@@ -343,19 +424,14 @@
     },
     {
       "on": {
-        "enter": "wusong",
-        "area": [
-          10,
-          7,
-          13,
-          9
-        ]
+        "near": "wine-3",
+        "by": "wusong"
       },
       "do": [
         [
           "say",
           "wine-3",
-          "客官，三碗好酒，请！"
+          "前面便是快活林了。客官再吃三碗，好壮行色！"
         ],
         [
           "narrate",
@@ -403,23 +479,51 @@
           "wine-3"
         ],
         [
+          "narrate",
+          "只见绿槐树下一张交椅，坐着个长大汉子乘凉。武松进了酒店，连声叫「不好，不好！换将来！」把酒泼了一地，又要柜上那妇人来陪酒。"
+        ],
+        [
           "say",
           "jiang-wife",
-          "甚么人在此撒野？"
+          "杀才！该死的贼！这酒吃不得便走，在这里撒甚么野？"
         ],
         [
           "leave",
           "jiang-wife"
         ],
         [
+          "narrate",
+          "武松托地从柜台边抢入，把那妇人提起来，望大酒缸里只一丢。绿槐树下那汉子听得，大踏步赶来。"
+        ],
+        [
           "say",
           "jiangmenshen",
-          "敢来快活林寻事，先问问蒋门神的拳头！"
+          "敢来快活林寻事，先问问蒋门神的拳头！你是何人？"
         ],
         [
           "say",
           "wusong",
-          "你这店却是哪里来的？今日还给施恩，免得吃打！"
+          "俺便是武松。施恩的酒店，怎地落到了你的手里？"
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "施恩打不过我，自然让给我。怎么，你要替他出头？"
+        ],
+        [
+          "say",
+          "wusong",
+          "他在牢城里待俺有恩，俺应下替他讨个公道。你仗势夺店，又打伤人，今日把酒店还来！"
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "这快活林有张团练照看！你一个配军，也敢来管我的事？"
+        ],
+        [
+          "say",
+          "wusong",
+          "休拿张团练吓人！你既凭拳头夺店，俺便凭这双拳头，教你还给施恩！"
         ],
         [
           "appear",
@@ -473,8 +577,46 @@
       },
       "do": [
         [
+          "narrate",
+          "张团练听闻快活林起了争斗，带着军汉和头目从侧街赶来，为蒋门神助阵。"
+        ],
+        [
           "appear",
-          "shijin"
+          "zhangtuanlian"
+        ],
+        [
+          "appear",
+          "zhang-rescue-1"
+        ],
+        [
+          "appear",
+          "zhang-rescue-2"
+        ],
+        [
+          "appear",
+          "zhang-rescue-3"
+        ],
+        [
+          "appear",
+          "zhang-rescue-4"
+        ],
+        [
+          "appear",
+          "zhang-rescue-5"
+        ],
+        [
+          "appear",
+          "zhang-rescue-6"
+        ],
+        [
+          "say",
+          "zhangtuanlian",
+          "蒋兄莫慌，我带人来了！谁敢在快活林撒野？"
+        ],
+        [
+          "say",
+          "wusong",
+          "你纵容蒋门神夺店伤人，如今还要带兵帮凶？来多少，俺便打退多少！"
         ],
         [
           "appear",
@@ -490,18 +632,13 @@
         ],
         [
           "say",
-          "shijin",
-          "我自山寨来寻你们，路上恰遇三位好汉，都在寻宋三哥！"
+          "daizong",
+          "宋三哥！我同花荣、李逵一路寻到孟州，听说哥哥来了快活林，便赶来相会。"
         ],
         [
           "say",
           "huarong",
-          "兄长久无音信，我等循路寻到孟州，今日总算见着了。"
-        ],
-        [
-          "say",
-          "daizong",
-          "正赶上兄长在此，我等来助一臂之力。"
+          "兄长久无音信，今日总算见着了。眼前这伙人欺压好汉，我等岂能袖手！"
         ],
         [
           "say",
@@ -510,7 +647,7 @@
         ],
         [
           "narrate",
-          "宋江招呼众人相助，嘱咐不可伤了店家客人。"
+          "宋江招呼三人相助，嘱咐不可伤了店家客人。"
         ]
       ]
     },
@@ -524,7 +661,7 @@
       "do": [
         [
           "narrate",
-          "武松虚影一晃，玉环步转身，鸳鸯脚连出；众人替他挡住围上来的军汉。"
+          "武松虚影一晃，玉环步转身，鸳鸯脚连出；众人替他挡住围上来的打手。"
         ]
       ]
     },
@@ -534,21 +671,110 @@
       },
       "do": [
         [
+          "narrate",
+          "蒋门神被武松打得站立不住，退到路旁求饶；其余敌人仍在，众人继续迎战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangtuanlian"
+      },
+      "do": [
+        [
+          "narrate",
+          "张团练败下阵来，手下仍在抵抗；先打退其余敌人，休叫他们再伤店家！"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "show",
+          "hero",
+          "wusong"
+        ],
+        [
+          "show",
+          "songjiang",
+          "wusong"
+        ],
+        [
+          "show",
+          "daizong",
+          "wusong"
+        ],
+        [
+          "show",
+          "huarong",
+          "wusong"
+        ],
+        [
+          "show",
+          "likui",
+          "wusong"
+        ],
+        [
+          "show",
+          "jiangmenshen",
+          "wusong"
+        ],
+        [
+          "show",
+          "zhangtuanlian",
+          "wusong"
+        ],
+        [
           "say",
           "wusong",
           "若要我饶你性命，只要依我三件事。"
         ],
         [
-          "narrate",
-          "蒋门神败服，答应归还酒店什物，请人赔话，离开孟州。快活林一时重归施恩，宋江等也与赶来的好汉相认。"
+          "say",
+          "jiangmenshen",
+          "好汉饶我！休说三件，便是三百件，我也依得。"
+        ],
+        [
+          "say",
+          "wusong",
+          "第一件，离了快活林，将一应家火什物随即交还施恩。第二件，央请快活林为头为脑的英雄豪杰，都来与施恩陪话。"
+        ],
+        [
+          "say",
+          "wusong",
+          "第三件，你交割了便连夜回乡去，不许你在孟州住！"
+        ],
+        [
+          "say",
+          "jiangmenshen",
+          "小人都依，都依！"
         ],
         [
           "narrate",
-          "史进见官面与恶霸勾连，便辞了众人回梁山请援。戴宗、花荣、李逵留在宋江身边照应。"
+          "张团练不敢再战，招呼还能走动的手下，扶起蒋门神，带着伤者狼狈逃走。众人只将他们打败赶走，并未取他们性命。"
+        ],
+        [
+          "hide",
+          "jiangmenshen"
+        ],
+        [
+          "hide",
+          "zhangtuanlian"
+        ],
+        [
+          "say",
+          "shien",
+          "兄长这一顿拳脚，快活林又回到小弟手里了！诸位好汉的恩情，施恩终身不忘。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "小管营安心养伤，往后买卖公道些，莫再与蒋门神私下争斗。"
         ],
         [
           "victory",
-          "醉打蒋门神，史进回山请援。"
+          "击退蒋门神与张团练众人，快活林重归施恩。"
         ]
       ]
     },

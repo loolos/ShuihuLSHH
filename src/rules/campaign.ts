@@ -146,12 +146,20 @@ export interface InsertEntry {
 
 /**
  * 要进 mapName 这一关前 / 之后，还没打过的插关（同一位置有多个时按登记顺序来）。
- * from = 刚打完的插关：只往它后面找，用来把同一位置的几段接起来（选关直接跳进后一段时，不会回头补前一段）。
+ * from = 刚打完的插关：严格接它后面的下一段，不受旧通关标记影响（不回头补前一段）。
  */
 export function pendingInsert(c: CampaignState, list: InsertEntry[], mapName: string, position: 'before' | 'after' = 'before', from?: string): string | undefined {
   const done = new Set(c.inserts ?? []);
   const start = from === undefined ? 0 : list.findIndex((e) => e.ref === from) + 1;
-  return list.slice(start).find((e) => e[position]?.toLowerCase() === mapName.toLowerCase() && !done.has(e.ref))?.ref;
+  return list.slice(start).find((e) => e[position]?.toLowerCase() === mapName.toLowerCase() && (from !== undefined || !done.has(e.ref)))?.ref;
+}
+
+/** 选关重玩时重置本段及后续插关标记，保留此前进度和所有人物资产。 */
+export function replayInsertProgress(c: CampaignState, list: InsertEntry[], ref: string): string[] {
+  const index = list.findIndex((e) => e.ref === ref);
+  if (index < 0) return c.inserts ?? [];
+  const replay = new Set(list.slice(index).map((e) => e.ref));
+  return (c.inserts ?? []).filter((r) => !replay.has(r));
 }
 
 /** 读取存档（坏档返回 null） */

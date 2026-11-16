@@ -1,27 +1,29 @@
-// 敌人等级修正【新】（负责人 2026-11-13：敌人平均等级偏高，调到和主角团差不多）。
-// 原版 ACT 里写的敌人等级中后期比按原版节奏升级的我方高 1–4 级（终章 N14 敌均 34，我方约 30）。
-// 做法：每场战役一个修正值（只降不升），整关敌人一起平移，头目和小兵的相对差距不变；1 级的过场摆设不动，最低降到 2 级。
-// 修正值由 tools/gen-enemy-levels.ts 生成（src/data/enemy-levels.json）：按原版经验规则沿主线模拟，
-// 取我方进关和出关平均等级的中点作为「主角团等级」，敌人平均等级高出多少就降多少。
+// 自有敌方等级系统：按关卡和单位索引配置绝对等级，与 ACT 的 level 无关。
+// ACT 只提供单位身份、位置、装备和事件；扩展包沿用自己的关卡 JSON。
 import type { ActUnit } from '../formats/act.ts';
 import table from '../data/enemy-levels.json' with { type: 'json' };
 
-const SHIFT: Record<string, number> = table.shift;
+interface EnemyEntry {
+  classId: number;
+  level: number;
+}
+const STAGES: Record<string, Record<string, EnemyEntry>> = table.stages;
 
-/** 生成工具关掉修正，好用 ACT 原值做模拟 */
-export const ENEMY_LEVEL = { enabled: true, /** 估算工具（tools/est-exp.ts）可关掉保底做对比 */ floor: true };
+/** 估算工具可关闭动态保底，基础等级始终读取自有配置。 */
+export const ENEMY_LEVEL = { floor: true };
 
-export const enemyShift = (stage: string): number => (ENEMY_LEVEL.enabled ? (SHIFT[stage.toLowerCase()] ?? 0) : 0);
-
-/** 第 stage 关修正后的敌人等级 */
-export function enemyLevel(stage: string, level: number): number {
-  const d = enemyShift(stage);
-  return level > 1 && d ? Math.max(2, level + d) : level;
+/** 单位 index 是关卡 ACT 的稳定索引，不是敌人顺序号或职业号。 */
+export function enemyLevel(stage: string, index: number, classId: number): number {
+  const entry = STAGES[stage.toLowerCase()]?.[index];
+  if (!entry) throw new Error(`${stage}: 敌方单位 ${index} 缺少自有等级配置`);
+  if (entry.classId !== classId) throw new Error(`${stage}: 敌方单位 ${index} 职业与等级配置不符`);
+  if (!Number.isInteger(entry.level) || entry.level < 1) throw new Error(`${stage}: 敌方单位 ${index} 等级必须为正整数`);
+  return entry.level;
 }
 
-/** 修正一关的 ACT 单位（不改原数组） */
+/** 所有敌人都覆盖，包括 1 级剧情单位；缺配置时报错，不回退原剧本等级。 */
 export const adjustEnemies = (stage: string, units: ActUnit[]): ActUnit[] =>
-  enemyShift(stage) ? units.map((u) => (u.side === 'enemy' ? { ...u, level: enemyLevel(stage, u.level) } : u)) : units;
+  units.map((u) => u.side === 'enemy' ? { ...u, level: enemyLevel(stage, u.index, u.type) } : u);
 
 /** 敌人等级保底比我方平均等级低几级（负责人 2026-11-13） */
 export const FLOOR_GAP = 5;
@@ -29,9 +31,8 @@ export const FLOOR_GAP = 5;
 /**
  * 敌人等级保底【新】（负责人 2026-11-13）：每关开场时看我方（这一关出场的人）的平均等级，
  * 2 级以上的敌人不低于「平均 − FLOOR_GAP」，免得我方练得高时敌人太弱。没有我方人物时为 0。
- * 生成工具关掉修正时也不保底。
  */
 export function enemyFloor(playerLevels: number[]): number {
-  if (!ENEMY_LEVEL.enabled || !ENEMY_LEVEL.floor || !playerLevels.length) return 0;
+  if (!ENEMY_LEVEL.floor || !playerLevels.length) return 0;
   return Math.round(playerLevels.reduce((a, b) => a + b, 0) / playerLevels.length) - FLOOR_GAP;
 }
