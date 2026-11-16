@@ -273,6 +273,87 @@
       "name": "巡夜官差"
     },
     {
+      "id": "guard-13",
+      "class": 33,
+      "side": "enemy",
+      "x": 2,
+      "y": 17,
+      "level": 28,
+      "name": "西厢军汉"
+    },
+    {
+      "id": "guard-14",
+      "class": 32,
+      "side": "enemy",
+      "x": 20,
+      "y": 13,
+      "level": 28,
+      "name": "东厢军汉"
+    },
+    {
+      "id": "guard-15",
+      "class": 67,
+      "side": "enemy",
+      "x": 6,
+      "y": 9,
+      "level": 28,
+      "name": "北廊徒弟"
+    },
+    {
+      "id": "guard-16",
+      "class": 34,
+      "side": "enemy",
+      "x": 18,
+      "y": 21,
+      "level": 28,
+      "name": "门前弓手"
+    },
+    {
+      "id": "guard-17",
+      "class": 32,
+      "side": "enemy",
+      "x": 3,
+      "y": 9,
+      "level": 28,
+      "name": "北廊军汉"
+    },
+    {
+      "id": "guard-18",
+      "class": 33,
+      "side": "enemy",
+      "x": 6,
+      "y": 20,
+      "level": 28,
+      "name": "西厢军汉"
+    },
+    {
+      "id": "guard-19",
+      "class": 36,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 28,
+      "name": "巡夜官差"
+    },
+    {
+      "id": "guard-20",
+      "class": 32,
+      "side": "enemy",
+      "x": 17,
+      "y": 20,
+      "level": 28,
+      "name": "门前军汉"
+    },
+    {
+      "id": "guard-21",
+      "class": 67,
+      "side": "enemy",
+      "x": 22,
+      "y": 4,
+      "level": 28,
+      "name": "东厢徒弟"
+    },
+    {
       "id": "wave2-1",
       "class": 32,
       "side": "enemy",
@@ -328,6 +409,36 @@
       "side": "enemy",
       "x": 22,
       "y": 19,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 1,
+      "y": 14,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-8",
+      "class": 67,
+      "side": "enemy",
+      "x": 4,
+      "y": 13,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave2-9",
+      "class": 32,
+      "side": "enemy",
+      "x": 20,
+      "y": 12,
       "level": 28,
       "hidden": true,
       "name": "张府援兵"
@@ -393,6 +504,36 @@
       "name": "巡夜官差"
     },
     {
+      "id": "wave4-7",
+      "class": 33,
+      "side": "enemy",
+      "x": 9,
+      "y": 6,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-8",
+      "class": 32,
+      "side": "enemy",
+      "x": 11,
+      "y": 22,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave4-9",
+      "class": 34,
+      "side": "enemy",
+      "x": 10,
+      "y": 5,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
       "id": "wave6-1",
       "class": 32,
       "side": "enemy",
@@ -451,6 +592,36 @@
       "level": 28,
       "hidden": true,
       "name": "巡夜官差"
+    },
+    {
+      "id": "wave6-7",
+      "class": 33,
+      "side": "enemy",
+      "x": 1,
+      "y": 20,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-8",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 22,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
+    },
+    {
+      "id": "wave6-9",
+      "class": 67,
+      "side": "enemy",
+      "x": 21,
+      "y": 9,
+      "level": 28,
+      "hidden": true,
+      "name": "张府援兵"
     }
   ],
   "script": [
@@ -733,6 +904,18 @@
         [
           "appear",
           "wave2-6"
+        ],
+        [
+          "appear",
+          "wave2-7"
+        ],
+        [
+          "appear",
+          "wave2-8"
+        ],
+        [
+          "appear",
+          "wave2-9"
         ]
       ]
     },
@@ -768,6 +951,18 @@
         [
           "appear",
           "wave4-6"
+        ],
+        [
+          "appear",
+          "wave4-7"
+        ],
+        [
+          "appear",
+          "wave4-8"
+        ],
+        [
+          "appear",
+          "wave4-9"
         ]
       ]
     },
@@ -803,6 +998,18 @@
         [
           "appear",
           "wave6-6"
+        ],
+        [
+          "appear",
+          "wave6-7"
+        ],
+        [
+          "appear",
+          "wave6-8"
+        ],
+        [
+          "appear",
+          "wave6-9"
         ],
         [
           "flag",
