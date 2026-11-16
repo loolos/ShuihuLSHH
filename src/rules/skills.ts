@@ -51,8 +51,11 @@ export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number
   if (s === attackSkill(u, data)) return attackRange(u, data);
   // 援气固定相邻一格；四格前冲技只选相邻方向，不由武器射程扩大施放点。
   if (isAllyChargeSkill(s) || s.type === 15) return [s.rangeMin, s.rangeMax];
-  const lo = s.rangeMin, hi = s.rangeMax;
-  return [lo, hi > 0 ? Math.max(lo, hi + u.stats.rangeBonus) : hi];
+  const lo = s.rangeMin;
+  let hi = s.rangeMax > 0 ? Math.max(lo, s.rangeMax + u.stats.rangeBonus) : s.rangeMax;
+  // 上限按「施放点 + 线形范围延伸」算：一线 2 格的技能施放点最远到第 reachCap − 1 格
+  if (s.reachCap) hi = Math.max(lo, Math.min(hi, s.reachCap - Math.max(0, s.area - 1)));
+  return [lo, hi];
 }
 
 /**
