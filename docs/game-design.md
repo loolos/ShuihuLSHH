@@ -2631,6 +2631,7 @@ npm test
 #### 15.18.3 新东西
 
 - 新职业 `kongliang`（孔亮，独火星）：借邓龙 62 的动作和头像，灰袍（16–31）换大红（32–47，k 0.8），绿头巾压黑；招式「独火拳」（179）、「火星乱迸」（181，威力 20、耗气 30）、「聚火」（182）。`kongming`（孔明，毛头星）：借富安 63 的动作和头像，黄绿袍（48–63、96–111）换赭红（176–191，k 0.8）；「毛头拳」（183）、「扫星腿」（185）。两人这一章都不当主将打第二场，属性按施恩一档。
+- 专属头像（负责人 2026-11-16 AI 生成，提示词在项目文件 `shuihu-design/prompts/portraits-kong-brothers.md`）：`packs/mainline/faces/kongliang.png`（`tools/make-portrait.py --black 10 --box 230,0,1070,1122`）、`kongming.png`（`--box 260,0,1100,1122`），原图在 `faces/src/`；替换原先借的邓龙、富安头像。
 - 地图配方 `tools/map-recipes/baihu-cundian.json` → `packs/maps/baihu-cundian.json`（§15.15.7 表）。
 - 测试：两段全部单位与 move 落点可通行、不重格；孔家庄每个 move 都走到、先相认后分路、演完过关；村店只有武松、开场三条酒劲、第 3 回合 6 名庄客、全灭才胜、战后孔明出场和落溪旁白。
 
