@@ -117,4 +117,25 @@ describe('AI 30%传统 / 70%人数优先',()=>{
     expect(planAi(b,u).skill).toBe(heal);expect(chance).not.toHaveBeenCalled();
     u.ai.mode=5;u.ai.target=1;const p=planAi(b,u);expect(p.skill).toBeUndefined();expect(p.rest).toBe(true);
   });
+  it.each([true,false])('兼容最新主线：策略%s避开被绑人物及会波及被绑人的范围', legacy=>{
+    const {b,u}=setup([skill(1,{rangeMax:4}),area],[[5,3],[7,5],[8,5]],{move:1});
+    b.units[2].stunTurns=99999;branch(b,legacy);
+    const p=planAi(b,u);expect(p.skill).toBeTruthy();
+    expect(b.affected(u,p.skill!,p.cell!,end(p,u)).some(t=>b.isBound(t))).toBe(false);
+    b.units[1].stunTurns=99999;b.units[3].stunTurns=99999;
+    expect(planAi(b,u).skill).toBeUndefined();
+  });
+  it.each([true,false])('兼容最新主线：策略%s驻守模式保留零移动预算', legacy=>{
+    const {b,u}=setup([basic],[[5,2]],{move:5,mode:11});branch(b,legacy);
+    expect(planAi(b,u)).toEqual({});
+    b.units[1].y=4;const p=planAi(b,u);
+    expect(p.target?.uid).toBe(1);expect(end(p,u)).toMatchObject({x:5,y:5});
+  });
+  it.each([true,false])('兼容最新主线：策略%s仅在无其他攻击时用远射技单打一人', legacy=>{
+    const volley={...area,volley:true,power:500};
+    const {b,u}=setup([basic,volley],[[5,4]],{move:0});branch(b,legacy);
+    expect(planAi(b,u).skill).toBe(basic);
+    b.units[1].y=2;expect(planAi(b,u).skill).toBe(volley);
+  });
+
 });
