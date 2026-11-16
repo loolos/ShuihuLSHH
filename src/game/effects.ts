@@ -16,6 +16,10 @@ export const FX_COUNTER = 37;
 export const FIXED_FX = [FX_DEFEND, FX_COUNTER];
 /** 技能 hitFx: 'explosion'：命中的人身上炸开的火团（Effect.lib 第 40 组：白光 → 橙色火球 → 黑烟）【新】 */
 export const FX_EXPLOSION = 40;
+/** 技能 hitFx: 'impact'：命中的人身上迸开白色打击火花（第 43 组，9 帧；武松 横江断浪，负责人 2026-11-16）【新】 */
+export const FX_IMPACT = 43;
+/** hitFx → 命中时在受击者格子上播的特效组 */
+export const HIT_FX_GROUP: Partial<Record<NonNullable<SkillDef['hitFx']>, number>> = { explosion: FX_EXPLOSION, impact: FX_IMPACT };
 
 export interface SkillFx {
   /** 第一段的组号；directional 时还要加上方向 0–3 */
@@ -126,7 +130,8 @@ export function fxChain(fx: SkillFx, dir: number, hasTarget: boolean, triggers: 
 
 /** 这个技能可能用到的全部组（按需下载用） */
 export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage' | 'hitFx'>): number[] {
-  const hit = s.hitFx === 'explosion' ? [FX_EXPLOSION] : [];
+  const g = s.hitFx ? HIT_FX_GROUP[s.hitFx] : undefined;
+  const hit = g === undefined ? [] : [g];
   const fx = skillFx(s);
   if (!fx) return hit;
   const out = fx.directional ? [0, 1, 2, 3].map((d) => fx.first + d) : [fx.first];

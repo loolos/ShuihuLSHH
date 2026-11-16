@@ -15,7 +15,7 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
-import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, FX_EXPLOSION, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
@@ -1385,7 +1385,8 @@ export class BattleScene extends Phaser.Scene {
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
                   if (dmg !== null && dmg > 0 && skill.hitFx === 'blood') this.bloodSplash(tv.x, tv.y, crit);
                   // 爆炸：每段命中都在受击者身上炸一次，不等它放完（声音只在受击动作那段出）
-                  if (dmg !== null && dmg > 0 && skill.hitFx === 'explosion') void this.hitEffect(tv, FX_EXPLOSION, lead);
+                  const hg = skill.hitFx ? HIT_FX_GROUP[skill.hitFx] : undefined;
+                  if (dmg !== null && dmg > 0 && hg !== undefined) void this.hitEffect(tv, hg, lead);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
                     this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);

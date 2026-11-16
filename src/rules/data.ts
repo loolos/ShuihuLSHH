@@ -19,7 +19,7 @@ export interface SkillDef extends ClassSkill {
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；只是画面 */
-  hitFx?: 'blood' | 'explosion';
+  hitFx?: 'blood' | 'explosion' | 'impact';
   /** 固定伤害系数（取代远程距离系数）：敌兵远射技伤害 = 正常公式 × 此值（§6.6） */
   damageScale?: number;
   /** 最远打到第几格（含线形范围的延伸），装备射程加上去也不超过（杂兵「遠程攻擊」为 3，§6.6） */

@@ -536,7 +536,8 @@
         "area": 3,
         "hitMod": 0,
         "critMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "impact"
     },
     {
         "id": "antou",
@@ -587,7 +588,8 @@
         "area": 4,
         "hitMod": 0,
         "critMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "impact"
     },
     {
         "id": "yuanyang-jiao",
@@ -633,7 +635,8 @@
         "area": 5,
         "hitMod": 0,
         "critMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "impact"
     },
     {
         "id": "hengjiang-lv4",
@@ -655,7 +658,8 @@
         "area": 6,
         "hitMod": 0,
         "critMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "impact"
     }
 ],
       "sprite": {
