@@ -67,7 +67,9 @@ describe('章节表', () => {
     expect(chapterOf('mainline/yuanyanglou')).toBe(17);
     expect(chapterOf('mainline/xingzhe')).toBe(18);
     expect(chapterOf('mainline/wugongling')).toBe(18);
-    expect(CHAPTERS).toHaveLength(18);
+    expect(chapterOf('mainline/kongliang')).toBe(19);
+    expect(chapterOf('mainline/kongjiazhuang')).toBe(19);
+    expect(CHAPTERS).toHaveLength(19);
   });
 });
 
