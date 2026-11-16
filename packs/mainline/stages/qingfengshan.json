@@ -54,7 +54,7 @@
       "x": 12,
       "y": 4,
       "level": 29,
-      "levelOffset": 0,
+      "levelOffset": 6,
       "facing": 3,
       "name": "王英"
     },
@@ -65,7 +65,8 @@
       "x": 10,
       "y": 5,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-2",
@@ -74,7 +75,8 @@
       "x": 11,
       "y": 6,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-3",
@@ -83,7 +85,8 @@
       "x": 13,
       "y": 6,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-4",
@@ -92,7 +95,8 @@
       "x": 14,
       "y": 5,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-5",
@@ -101,7 +105,8 @@
       "x": 8,
       "y": 8,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-6",
@@ -110,7 +115,8 @@
       "x": 16,
       "y": 8,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-7",
@@ -119,7 +125,8 @@
       "x": 6,
       "y": 9,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-8",
@@ -128,7 +135,8 @@
       "x": 18,
       "y": 9,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-9",
@@ -137,7 +145,8 @@
       "x": 11,
       "y": 9,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "lolo-10",
@@ -146,7 +155,8 @@
       "x": 14,
       "y": 9,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "yanshun",
@@ -155,7 +165,7 @@
       "x": 4,
       "y": 2,
       "level": 29,
-      "levelOffset": 0,
+      "levelOffset": 6,
       "hidden": true,
       "name": "燕顺"
     },
@@ -166,7 +176,7 @@
       "x": 19,
       "y": 2,
       "level": 29,
-      "levelOffset": 0,
+      "levelOffset": 6,
       "hidden": true,
       "name": "郑天寿"
     },
@@ -178,7 +188,8 @@
       "y": 3,
       "level": 29,
       "hidden": true,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "wave-2",
@@ -188,7 +199,8 @@
       "y": 2,
       "level": 29,
       "hidden": true,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "wave-3",
@@ -198,7 +210,8 @@
       "y": 3,
       "level": 29,
       "hidden": true,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "wave-4",
@@ -208,7 +221,52 @@
       "y": 3,
       "level": 29,
       "hidden": true,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "levelOffset": 5
+    },
+    {
+      "id": "wave-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 2,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 5
+    },
+    {
+      "id": "wave-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 7,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 5
+    },
+    {
+      "id": "wave-7",
+      "class": 22,
+      "side": "enemy",
+      "x": 16,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 5
+    },
+    {
+      "id": "wave-8",
+      "class": 23,
+      "side": "enemy",
+      "x": 22,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-1",
@@ -218,7 +276,8 @@
       "y": 9,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-2",
@@ -228,7 +287,8 @@
       "y": 10,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-3",
@@ -238,7 +298,8 @@
       "y": 9,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-4",
@@ -248,7 +309,8 @@
       "y": 10,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-5",
@@ -258,7 +320,8 @@
       "y": 19,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     },
     {
       "id": "trap-6",
@@ -268,7 +331,8 @@
       "y": 19,
       "level": 29,
       "hidden": true,
-      "name": "埋伏的喽啰"
+      "name": "埋伏的喽啰",
+      "levelOffset": 5
     }
   ],
   "script": [
@@ -313,7 +377,7 @@
         ],
         [
           "objective",
-          "胜利：撑过 6 回合，或打退全部喽啰\n失败：宋江或武龙倒下"
+          "胜利：撑过 8 回合，或打退全部喽啰\n失败：宋江或武龙倒下"
         ]
       ]
     },
@@ -351,6 +415,22 @@
           "wave-4"
         ],
         [
+          "appear",
+          "wave-5"
+        ],
+        [
+          "appear",
+          "wave-6"
+        ],
+        [
+          "appear",
+          "wave-7"
+        ],
+        [
+          "appear",
+          "wave-8"
+        ],
+        [
           "say",
           "yanshun",
           "哪里来的鸟人，敢在清风山撒野！孩儿们，拿了解上山去！"
@@ -384,7 +464,7 @@
     },
     {
       "on": {
-        "turn": 7
+        "turn": 9
       },
       "do": [
         [

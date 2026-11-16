@@ -110,7 +110,7 @@
       "x": 16,
       "y": 5,
       "level": 29,
-      "levelOffset": 3,
+      "levelOffset": 10,
       "facing": 2,
       "name": "黄信"
     },
@@ -121,7 +121,7 @@
       "x": 12,
       "y": 13,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -131,7 +131,7 @@
       "x": 5,
       "y": 13,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -141,7 +141,7 @@
       "x": 18,
       "y": 13,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -151,7 +151,7 @@
       "x": 9,
       "y": 15,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -161,7 +161,7 @@
       "x": 15,
       "y": 15,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -171,7 +171,7 @@
       "x": 7,
       "y": 12,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -181,7 +181,7 @@
       "x": 16,
       "y": 12,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -191,7 +191,7 @@
       "x": 15,
       "y": 6,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -201,7 +201,7 @@
       "x": 19,
       "y": 6,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 9,
       "name": "清风寨兵"
     },
     {
@@ -211,7 +211,7 @@
       "x": 3,
       "y": 3,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -221,7 +221,7 @@
       "x": 4,
       "y": 3,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -231,7 +231,7 @@
       "x": 5,
       "y": 4,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -241,7 +241,7 @@
       "x": 4,
       "y": 5,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -251,7 +251,7 @@
       "x": 18,
       "y": 5,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -261,7 +261,7 @@
       "x": 3,
       "y": 2,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -271,7 +271,7 @@
       "x": 5,
       "y": 2,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -281,7 +281,47 @@
       "x": 17,
       "y": 3,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 8,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-9",
+      "class": 37,
+      "side": "enemy",
+      "x": 6,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 8,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-10",
+      "class": 37,
+      "side": "enemy",
+      "x": 3,
+      "y": 5,
+      "level": 29,
+      "levelOffset": 8,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-11",
+      "class": 37,
+      "side": "enemy",
+      "x": 20,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 8,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-12",
+      "class": 37,
+      "side": "enemy",
+      "x": 19,
+      "y": 4,
+      "level": 29,
+      "levelOffset": 8,
       "name": "刘高家丁"
     },
     {
@@ -337,7 +377,7 @@
           "huangxin",
           "defense",
           {
-            "pct": 100
+            "pct": 200
           }
         ],
         [

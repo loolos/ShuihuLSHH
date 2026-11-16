@@ -58,7 +58,7 @@
       "x": 12,
       "y": 13,
       "level": 29,
-      "levelOffset": 2,
+      "levelOffset": 4,
       "facing": 2,
       "name": "穿白的教头"
     },
@@ -69,7 +69,8 @@
       "x": 5,
       "y": 13,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "soldier-2",
@@ -78,7 +79,8 @@
       "x": 18,
       "y": 13,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "soldier-3",
@@ -87,7 +89,8 @@
       "x": 9,
       "y": 15,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "soldier-4",
@@ -96,7 +99,8 @@
       "x": 15,
       "y": 15,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "soldier-5",
@@ -105,7 +109,8 @@
       "x": 7,
       "y": 12,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "soldier-6",
@@ -114,7 +119,8 @@
       "x": 16,
       "y": 12,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "archer-1",
@@ -123,7 +129,8 @@
       "x": 15,
       "y": 6,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "archer-2",
@@ -132,7 +139,8 @@
       "x": 19,
       "y": 6,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "guard-1",
@@ -141,7 +149,8 @@
       "x": 16,
       "y": 5,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "guard-2",
@@ -150,7 +159,8 @@
       "x": 18,
       "y": 5,
       "level": 29,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "wave-1",
@@ -160,7 +170,8 @@
       "y": 3,
       "level": 29,
       "hidden": true,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "wave-2",
@@ -170,7 +181,8 @@
       "y": 3,
       "level": 29,
       "hidden": true,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "wave-3",
@@ -180,7 +192,8 @@
       "y": 4,
       "level": 29,
       "hidden": true,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "wave-4",
@@ -190,7 +203,8 @@
       "y": 5,
       "level": 29,
       "hidden": true,
-      "name": "刘高军汉"
+      "name": "刘高军汉",
+      "levelOffset": 1
     },
     {
       "id": "songjiang",
