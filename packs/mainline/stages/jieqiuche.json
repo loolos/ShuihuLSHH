@@ -18,8 +18,8 @@
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 10,
-      "y": 15,
+      "x": 17,
+      "y": 16,
       "level": 29,
       "facing": 2
     },
@@ -27,8 +27,8 @@
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 11,
-      "y": 15,
+      "x": 16,
+      "y": 16,
       "level": 29,
       "facing": 2
     },
@@ -36,7 +36,7 @@
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 11,
+      "x": 18,
       "y": 16,
       "level": 29,
       "facing": 2
@@ -98,7 +98,7 @@
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 19,
+      "x": 20,
       "y": 17,
       "level": 29,
       "name": "郑天寿"
@@ -126,7 +126,7 @@
       "class": 44,
       "side": "ally",
       "x": 20,
-      "y": 17,
+      "y": 16,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -134,7 +134,7 @@
       "id": "ally-4",
       "class": 45,
       "side": "ally",
-      "x": 19,
+      "x": 20,
       "y": 18,
       "level": 29,
       "name": "清风山喽啰"
