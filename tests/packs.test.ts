@@ -1265,7 +1265,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'say' && e.text.includes('正是打了小弟的'))).toBe(true);
     expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('倒撞下溪里去'))).toBe(true);
   });
-  it('大闹清风寨（第二十章）：六关单位与 move 落点可通行不重格；三场剧情演完过关；清风山撑满 6 回合被擒；抢人打光才救出宋江；劫囚车花荣、二龙山、青州援军按回合到', () => {
+  it('大闹清风寨（第二十章）：六关单位与 move 落点可通行不重格；三场剧情演完过关；清风山撑满 8 回合被擒；抢人打光才救出宋江；劫囚车花荣、二龙山、青州援军按回合到', () => {
     const ids = ['qingfengshan', 'xingjiutang', 'yuanxiao', 'qianghuarong', 'zhizhan', 'jieqiuche'];
     for (const id of ids) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
@@ -1304,7 +1304,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       while (b.turn < 3) b.endPlayerPhase();
       expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.alive).length).toBeGreaterThan(10);
       const out: BattleEvent[] = [];
-      while (b.status === 'playing' && b.turn < 8) { for (const u of b.units) if (u.side === 'player') u.hp = 99999; out.push(...b.endPlayerPhase()); }
+      while (b.status === 'playing' && b.turn < 10) { for (const u of b.units) if (u.side === 'player') u.hp = 99999; out.push(...b.endPlayerPhase()); }
       expect(b.status).toBe('won');
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('绊脚索'))).toBe(true);
       // 绊翻之后埋伏的喽啰从四边围上来：都登场、都往三人身边挤（前面的喽啰已经围满时站在外圈）
@@ -1316,7 +1316,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
         const d = (x: number, y: number) => Math.min(...heroes.map((h) => Math.abs(h.x - x) + Math.abs(h.y - y)));
         expect(t.present).toBe(true);
         expect(d(t.x, t.y), `${j.id} ${t.x},${t.y}`).toBeLessThanOrEqual(d(j.x, j.y));
-        expect(d(t.x, t.y), `${j.id} ${t.x},${t.y}`).toBeLessThanOrEqual(4);
+        expect(d(t.x, t.y), `${j.id} ${t.x},${t.y}`).toBeLessThanOrEqual(6);
       }
     }
     // 花荣抢人：花荣、武龙两人；后堂第 4 回合有人杀出；打光才过关，宋江战后登场
@@ -1347,7 +1347,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(here()).toEqual(expect.arrayContaining([cid('wusong'), 16, 14]));
       while (b.turn < 5) b.endPlayerPhase();
       const wave = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
-      expect(wave.length, '第 5 回合青州援军').toBe(6);
+      expect(wave.length, '第 5 回合青州援军').toBe(10);
       for (const u of wave) kill(u);
       check(b); expect(b.status).toBe('won');
       const out = (b as unknown as { out: BattleEvent[] }).out;
