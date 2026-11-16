@@ -710,6 +710,8 @@
        "power": 20,
        "hitMod": 20,
        "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
        "castCycles": 2,
        "rangedDamage": [
          1,
@@ -777,7 +779,7 @@
        "rangeMax": 8,
        "critMod": 0,
        "castCycles": 3,
-        "castSpeed": 1.2,
+        "castSpeed": 1.8,
        "rangedDamage": [
          1,
          0.6
@@ -810,6 +812,8 @@
        "power": 40,
        "hitMod": 20,
        "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
        "castCycles": 3,
        "rangedDamage": [
          1,
@@ -843,6 +847,8 @@
        "power": 60,
        "hitMod": 20,
        "critMod": 10,
+       "castSpeed": 2,
+       "arrowFx": "fire",
        "castCycles": 4,
        "rangedDamage": [
          1,
