@@ -1364,9 +1364,7 @@
      }
     ]
    },
-   "face": {
-    "fromHead": 65
-   }
+   "face": { "file": "faces/yanshun.png" }
   },
   {
    "id": "huangwenbing",

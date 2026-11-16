@@ -1910,7 +1910,7 @@ packs/wusong/
 
 - 已有专属头像：武松（2026-11-15 重做；行者装 `faces/wusong-xingzhe.png` 从第十八章扮行者起用，§15.17）、王婆、武大郎、花荣（mainline、江州两包共用）、蒋门神、孙二娘、张青、张都监、施恩（2026-11-15；张都监衣帽近黑，抠图用 `--black 3`）、戴宗、李逵、蔡九、阎婆惜、西门庆、潘金莲。
 - 燕青：头像已做好，放在 `packs/mainline/faces/yanqing.png`（2026-11-15，按第 61 回原文的外貌描写改过提示词）。他还没有关卡和职业，目前没有地方用到；以后加燕青职业时写 `"face": {"file": "faces/yanqing.png"}` 即可。燕顺的提示词留在 `portraits-batch2.md` 里备用。
-- 清风寨一段（2026-11-16）：这一批共用一种画风（巴洛克荷兰风俗画，纯黑底），提示词在 `shuihu-design/prompts/portraits-qingfengzhai.md`。已做秦明 `faces/qinming.png`、王英 `faces/wangying.png`、黄信 `faces/huangxin.png`（黄信两包共用，江州包已改用；秦明、王英等清风寨关卡开工时接上职业）。刘高、燕顺、刘高妻待出图。
+- 清风寨一段（2026-11-16）：这一批共用一种画风（巴洛克荷兰风俗画，纯黑底），提示词在 `shuihu-design/prompts/portraits-qingfengzhai.md`。已做秦明 `faces/qinming.png`、王英 `faces/wangying.png`、黄信 `faces/huangxin.png`、燕顺 `faces/yanshun.png`（黄信、燕顺两包共用，江州包已改用）、刘高 `faces/liugao.png`、刘高妻 `faces/liugao-qi.png`（秦明、王英、刘高、刘高妻等清风寨关卡开工时接上职业）。
 - 后续候选：张团练；江州吕方 / 郭盛 / 郑天寿同借 67。
 
 > 以下为早期策划与讨论记录；与上面的实现记录不一致时，以实现记录为准。未落地的候选不因此转为已实现。
