@@ -1205,7 +1205,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(ev.filter((e) => e.type === 'move').length).toBe(moves.length);
     const face = ev.findIndex((e) => e.type === 'portrait' && e.classId === cid('wusong') && e.file.includes('xingzhe'));
     expect(face).toBeGreaterThan(ev.findIndex((e) => e.type === 'say' && e.text.includes('出家人模样')));
-    // 蜈蚣岭：只有武松、武龙、李逵、花荣四人；第 3、5 回合增援；王道人和全部强人倒下才胜
+    // 蜈蚣岭：只有武松、武龙、李逵、花荣四人；第 3 回合一波增援；王道人和全部强人倒下才胜
     const s = stage('wugongling'), b = start('wugongling');
     expect(s.tint).toBe('night');
     const heroes = b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.classId);
@@ -1216,13 +1216,12 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     for (const u of b.units) if (u.side === 'player') u.hp = 99999;
     for (const u of b.units.filter((u) => u.side === 'enemy' && u.present)) kill(u);
     check(); expect(b.status).toBe('playing');
-    for (const turn of [3, 5]) {
-      while (b.turn < turn) b.endPlayerPhase();
-      const wave = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
-      expect(wave.length, `第 ${turn} 回合增援`).toBe(6);
-      for (const u of wave) kill(u);
-      check(); expect(b.status).toBe(turn === 5 ? 'won' : 'playing');
-    }
+    while (b.turn < 3) b.endPlayerPhase();
+    const wave = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
+    expect(wave.length, '第 3 回合增援').toBe(12);
+    expect(b.units.some((u) => u.side === 'enemy' && u.alive && !u.present)).toBe(false);
+    for (const u of wave) kill(u);
+    check(); expect(b.status).toBe('won');
     const out = (b as unknown as { out: BattleEvent[] }).out;
     expect(out.some((e) => e.type === 'appear' && e.uid === get('woman').uid)).toBe(true);
     expect(out.some((e) => e.type === 'say' && e.text.includes('张太公家女儿'))).toBe(true);
