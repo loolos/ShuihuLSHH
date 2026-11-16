@@ -71,7 +71,9 @@ describe('章节表', () => {
     expect(chapterOf('mainline/kongjiazhuang')).toBe(19);
     expect(chapterOf('mainline/qingfengshan')).toBe(20);
     expect(chapterOf('mainline/jieqiuche')).toBe(20);
-    expect(CHAPTERS).toHaveLength(20);
+    expect(chapterOf('mainline/yekun')).toBe(21);
+    expect(chapterOf('mainline/shiyong')).toBe(21);
+    expect(CHAPTERS).toHaveLength(21);
   });
 });
 

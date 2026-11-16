@@ -1238,7 +1238,15 @@ export class Battle {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && dist(u, who) === 1)) this.runBlock(b);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
+      if (this.status !== 'playing') return;
+    }
+    // 扩展包：某人生命低于一定比例【新】
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'hp' || this.fired.has(b.index)) continue;
+      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
+      if (who && who.hp * 100 < who.stats.maxHp * t.below && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     this.runCondBlocks();
@@ -1278,6 +1286,14 @@ export class Battle {
   }
 
   /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
+  /** near / hp 区块的 if / unless 标志（没写时条件是默认的 {type 0}，不判） */
+  private flagsOk(b: PasBlock): boolean {
+    const c = b.cond;
+    if (!('op' in c) && c.type !== 100 && c.type !== 101) return true;
+    let sel: Unit | undefined;
+    return this.evalCond(c, (u) => (sel = u), () => sel);
+  }
+
   private runCondBlocks() {
     for (const b of this.blocks) {
       if (this.status !== 'playing') return;
@@ -1577,6 +1593,15 @@ export class Battle {
           this.emit({ type: 'look', uid: sel.uid, classId: op.value });
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
           break;
+        // 115 换阵营（扩展包【新】，黄信归降）：text = player / ally / enemy；换了以后本回合不再行动，血条换色
+        case 115: {
+          if (!sel || !op.text) break;
+          sel.side = op.text as Unit['side'];
+          sel.ended = true;
+          this.emit({ type: 'status', uid: sel.uid, text: sel.side === 'enemy' ? '倒戈' : '歸順' });
+          this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          break;
+        }
         // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）
         case 101: {
           if (!sel || !op.args?.stat) break;

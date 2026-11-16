@@ -1,7 +1,7 @@
 // 扩展包载入（docs/game-design.md §15.2）：把包的职业、技能、道具接到原版数据后面，把关卡 JSON 编译成 StageInput。
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock, PasOp, PasTrigger } from '../formats/pas.ts';
+import type { PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
@@ -387,7 +387,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated`);
+  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
@@ -397,8 +397,18 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}) };
+  } else if ('hp' in on) {
+    const target = r.unitRef(on.hp).act;
+    trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
   }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
+  if (trigger.kind === 'near' || trigger.kind === 'hp') {
+    // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
+    const conds: PasCond[] = [];
+    if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
+    if (b.unless !== undefined) conds.push({ type: 101, arg: r.flagRef(b.unless) });
+    if (conds.length) cond = conds.length === 1 ? conds[0] : { op: 'and', a: conds[0], b: conds[1] };
+  }
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
   const select = (id: unknown) => op(12, 1000 + r.unitRef(id).act.group);
@@ -470,6 +480,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         select(a[0]);
         op(106);
         break;
+      case 'defect': {
+        // ['defect', 谁, 'player' | 'ally' | 'enemy'] 换阵营（黄信归降）【新】
+        const side = String(a[1] ?? 'ally');
+        if (!['player', 'ally', 'enemy'].includes(side)) fail(`第 ${index} 个区块：defect 的阵营只能是 player / ally / enemy`);
+        select(a[0]);
+        op(115, 0, { text: side });
+        break;
+      }
       case 'buff': {
         select(a[0]);
         const o = (a[2] ?? {}) as { pct?: number; add?: number; turns?: number };
