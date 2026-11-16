@@ -1187,7 +1187,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
-  it('夜走蜈蚣岭：十字坡扮行者演完就过关、途中换上行者头像；蜈蚣岭四人夜战，增援到齐且全灭才胜', () => {
+  it('行者武松（第十八章）夜走蜈蚣岭：十字坡扮行者演完就过关、途中换上行者头像；蜈蚣岭四人夜战，增援到齐且全灭才胜', () => {
     for (const id of ['xingzhe', 'wugongling']) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
       const cells = new Set<string>();
@@ -1226,7 +1226,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'appear' && e.uid === get('woman').uid)).toBe(true);
     expect(out.some((e) => e.type === 'say' && e.text.includes('张太公家女儿'))).toBe(true);
   });
-  it('醉打孔亮：村店里武松一人带酒劲；孔亮倒下丢进溪里；庄客到齐且全灭才胜，战后落溪被擒；孔家庄相认、瑞龙镇分路演完过关', () => {
+  it('行者武松（第十八章）醉打孔亮：村店里武松一人带酒劲；孔亮倒下丢进溪里；庄客到齐且全灭才胜，战后落溪被擒；孔家庄相认、瑞龙镇分路演完过关', () => {
     for (const id of ['kongliang', 'kongjiazhuang']) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
       const cells = new Set<string>();
@@ -1265,7 +1265,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'say' && e.text.includes('正是打了小弟的'))).toBe(true);
     expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('倒撞下溪里去'))).toBe(true);
   });
-  it('大闹清风寨（第二十章）：六关单位与 move 落点可通行不重格；三场剧情演完过关；清风山撑满 8 回合被擒；抢人打光才救出宋江；劫囚车花荣、二龙山、青州援军按回合到', () => {
+  it('大闹清风寨（第十九章）：六关单位与 move 落点可通行不重格；三场剧情演完过关；清风山撑满 8 回合被擒；抢人打光才救出宋江；劫囚车花荣、二龙山、青州援军按回合到', () => {
     const ids = ['qingfengshan', 'xingjiutang', 'yuanxiao', 'qianghuarong', 'zhizhan', 'jieqiuche'];
     for (const id of ids) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
@@ -1366,7 +1366,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('斩了'))).toBe(true);
     }
   });
-  it('霹雳火秦明（第二十一章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
+  it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
     const ids = ['yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'];
     for (const id of ids) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
