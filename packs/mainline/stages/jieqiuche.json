@@ -153,7 +153,7 @@
       "x": 19,
       "y": 27,
       "level": 29,
-      "levelOffset": 1,
+      "levelOffset": 2,
       "facing": 0,
       "name": "黄信"
     },
@@ -301,6 +301,7 @@
       "x": 8,
       "y": 27,
       "level": 29,
+      "levelOffset": 1,
       "name": "青州马军"
     },
     {
@@ -310,6 +311,7 @@
       "x": 9,
       "y": 26,
       "level": 29,
+      "levelOffset": 1,
       "name": "青州马军"
     },
     {
@@ -319,6 +321,7 @@
       "x": 7,
       "y": 28,
       "level": 29,
+      "levelOffset": 1,
       "name": "青州马军"
     },
     {
@@ -462,6 +465,15 @@
         [
           "appear",
           "huarong"
+        ],
+        [
+          "buff",
+          "huarong",
+          "defense",
+          {
+            "pct": 100,
+            "turns": 2
+          }
         ],
         [
           "say",
