@@ -1419,7 +1419,49 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(tints.every(tint => tint === 'night')).toBe(true);
   });
 
-  it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
+  it.each(['trap', 'defeat'] as const)('夜困霹雳：%s擒秦明后伏兵才出现，隐蔽增援出完且最后一敌战败才胜', (route) => {
+    const s = stage('yekun'), b = start('yekun');
+    const get = (id: string) => b.unit(s.units.findIndex(u => u.id === id))!;
+    const friends = s.units.filter(u => u.side === 'ally').map(u => get(u.id));
+    const check = () => (b as unknown as { afterAction: () => void }).afterAction();
+    const kill = (u: Unit) => (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(get('hero'), u);
+    expect(friends).toHaveLength(5);
+    expect(friends.every(u => !u.present && u.alive)).toBe(true);
+    const qm = get('qinming');
+    if (route === 'trap') Object.assign(qm, { x: 15, y: 10 });
+    else kill(qm);
+    check();
+    expect(b.status).toBe('playing');
+    expect(friends.every(u => u.present && u.alive)).toBe(true);
+    expect(qm.side).toBe('ally');
+    expect(b.isBound(qm)).toBe(true);
+    expect(b.objectiveZones().some(z => z.kind === 'goal')).toBe(false);
+    expect(qm.alive).toBe(route === 'trap'); // 擒获不复活战败者。
+    if (route === 'trap') expect(qm.present).toBe(false);
+    const out = (b as unknown as { out: BattleEvent[] }).out;
+    expect(out.some(e => e.type === 'status' && e.uid === qm.uid && e.text === '被擒')).toBe(true);
+    expect(out.some(e => e.type === 'status' && e.uid === qm.uid && e.text === '歸順')).toBe(false);
+    for (const u of b.units.filter(u => u.side === 'enemy' && u.present)) kill(u);
+    check();
+    expect(b.status).toBe('playing'); // 第4回合的12名援兵仍隐藏，不能漏算。
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(3);
+    const wave = b.units.filter(u => u.side === 'enemy' && u.present && u.alive);
+    expect(wave).toHaveLength(12);
+    for (const u of wave.slice(0, -1)) kill(u);
+    check(); expect(b.status).toBe('playing');
+    kill(wave.at(-1)!); check(); expect(b.status).toBe('won');
+    expect(b.units.filter(u => u.side === 'enemy').every(u => !u.alive)).toBe(true);
+  });
+
+  it('夜困霹雳的友军不会随第4回合敌援提前出现', () => {
+    const s = stage('yekun'), b = start('yekun');
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(3);
+    expect(b.units.filter(u => u.side === 'enemy' && u.present)).toHaveLength(24);
+    expect(s.units.filter(u => u.side === 'ally').every(u => !b.unit(s.units.indexOf(u))!.present)).toBe(true);
+    expect(b.status).toBe('playing');
+  });
+
+  it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都只触发擒获，清敌才过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
     const ids = ['yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'];
     for (const id of ids) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
@@ -1442,7 +1484,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(rt.data.classes[cid('huarong-mei')].name).toBe('花婉清');
     const check = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
     const get = (b: Battle, s: ReturnType<typeof stage>, id: string) => b.unit(s.units.findIndex((u) => u.id === id))!;
-    // 夜困秦明：秦明敌方、防御大加；走进陷坑过关
+    // 夜困秦明：秦明敌方、防御大加；走进陷坑只擒获，仍需清敌
     {
       const s = stage('yekun'), b = start('yekun'), qm = get(b, s, 'qinming');
       expect(qm.side).toBe('enemy');
@@ -1451,12 +1493,14 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       check(b); expect(b.status).toBe('playing');
       const trap = s.script.find(blk => typeof blk.on === 'object' && 'enter' in blk.on && blk.on.enter === 'qinming')!.on as { area: number[] };
       Object.assign(qm, { x: trap.area[0] + 1, y: trap.area[1] + 1 }); check(b);
-      expect(b.status).toBe('won');
+      expect(b.status).toBe('playing');
+      expect(b.units.filter(u => u.side === 'ally' && u.present && u.alive)).toHaveLength(5);
     }
     {
       const s = stage('yekun'), b = start('yekun');
       (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(get(b, s, 'hero'), get(b, s, 'qinming')); check(b);
-      expect(b.status).toBe('won');
+      expect(b.status).toBe('playing');
+      expect(b.units.filter(u => u.side === 'ally' && u.present && u.alive)).toHaveLength(5);
     }
     // 攻破清风寨
     {

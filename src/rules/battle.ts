@@ -456,7 +456,7 @@ export class Battle {
     const W = this.board.width, H = this.board.height;
     for (const b of this.blocks) {
       if (this.fired.has(b.index)) continue;
-      const kind = b.ops.some((o) => o.op === 29) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      const kind = b.ops.some((o) => o.op === 29 || (o.op === 115 && o.value === 1)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
       const rects =
@@ -1626,7 +1626,7 @@ export class Battle {
           if (!sel || !op.text) break;
           sel.side = op.text as Unit['side'];
           sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: sel.side === 'enemy' ? '倒戈' : '歸順' });
+          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : sel.side === 'enemy' ? '倒戈' : '歸順' });
           this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
         }
