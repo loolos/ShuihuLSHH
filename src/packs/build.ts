@@ -1,7 +1,7 @@
 // 扩展包载入（docs/game-design.md §15.2）：把包的职业、技能、道具接到原版数据后面，把关卡 JSON 编译成 StageInput。
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock, PasOp, PasTrigger } from '../formats/pas.ts';
+import type { PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
@@ -248,6 +248,13 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     group: group ?? 0,
     hidden: false,
     targetShape: s.targetShape,
+    chargeTarget: s.chargeTarget,
+    rangedDamage: s.rangedDamage,
+    castCycles: s.castCycles,
+    castSpeed: s.castSpeed,
+    hitFx: s.hitFx,
+    arrowFx: s.arrowFx,
+    pierce: s.pierce,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,
@@ -350,7 +357,8 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
     y: u.y,
     level: u.level,
     flags: (ai << 8) | (u.hidden || u.offstage ? 1 : 0),
-    extra: [0, 0, 0],
+    // AI 12 守屋：屋子范围借 ACT 的目标 / 目标点字段存（目标 = x2 << 8 | y2，目标点 = x1, y1）
+    extra: u.guardArea ? [(u.guardArea[2] << 8) | u.guardArea[3], u.guardArea[0], u.guardArea[1]] : [0, 0, 0],
     items,
     raw: [],
   };
@@ -372,22 +380,35 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   let trigger: PasTrigger;
   let cond: PasBlock['cond'] = { type: 0, arg: 0 };
   if (on === 'start') trigger = { kind: 'turn', turn: 0 };
-  else if (on === 'enemiesDefeated') {
+  else if (on === 'enemiesDefeated' || on === 'allEnemiesDefeated') {
     trigger = { kind: 'cond' };
-    cond = { type: 1, arg: 0xff }; // 原版条件 1、参数 0xFF：敌方全灭
+    cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated`);
+  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
     const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
-  } else if ('near' in on) trigger = { kind: 'near', char: r.charOf(on.near) };
+  } else if ('near' in on) {
+    const target = r.unitRef(on.near).act;
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}) };
+  } else if ('hp' in on) {
+    const target = r.unitRef(on.hp).act;
+    trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
+  }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
+  if (trigger.kind === 'near' || trigger.kind === 'hp') {
+    // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
+    const conds: PasCond[] = [];
+    if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
+    if (b.unless !== undefined) conds.push({ type: 101, arg: r.flagRef(b.unless) });
+    if (conds.length) cond = conds.length === 1 ? conds[0] : { op: 'and', a: conds[0], b: conds[1] };
+  }
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
   const select = (id: unknown) => op(12, 1000 + r.unitRef(id).act.group);
@@ -404,6 +425,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       case 'appear':
         select(a[0]);
+        break;
+      case 'show':
+        // ['show', 谁, 站在谁身边（可省）] 剧情临时出镜：已倒下或退场的人回到地图上说话，只放画面，不复活、不改胜负（战后对话用）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'show', ...(a[1] !== undefined ? { near: r.charOf(String(a[1])) } : {}) } });
+        break;
+      case 'hide':
+        // ['hide', 谁] 收起 show 叫出来的人（只放画面）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'hide' } });
         break;
       case 'leave':
         // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
@@ -451,6 +480,19 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         select(a[0]);
         op(106);
         break;
+      case 'approach':
+        // ['approach', 谁, 走到谁身边] 自动挑一格相邻的空格走过去（目标位置事先不知道时用）【新】
+        select(a[0]);
+        ops.push({ op: 116, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
+        break;
+      case 'defect': {
+        // ['defect', 谁, 'player' | 'ally' | 'enemy'] 换阵营（黄信归降）【新】
+        const side = String(a[1] ?? 'ally');
+        if (!['player', 'ally', 'enemy'].includes(side)) fail(`第 ${index} 个区块：defect 的阵营只能是 player / ally / enemy`);
+        select(a[0]);
+        op(115, 0, { text: side });
+        break;
+      }
       case 'buff': {
         select(a[0]);
         const o = (a[2] ?? {}) as { pct?: number; add?: number; turns?: number };
@@ -490,6 +532,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       }
       case 'wait':
         op(113, Math.max(0, Math.min(5000, Number(a[0]) || 0)));
+        break;
+      case 'portrait':
+        // ['portrait', 职业, 头像文件（包内路径，空 = 恢复职业自己的头像）] 本关之后的对白、面板换这张头像（如武松改扮行者）
+        op(114, r.classRef(a[0]), { text: String(a[1] ?? '') });
         break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);

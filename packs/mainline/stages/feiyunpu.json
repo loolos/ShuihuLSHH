@@ -2,17 +2,12 @@
   "id": "feiyunpu",
   "title": "飞云浦",
   "dynamicLevels": true,
+  "townAfter": 11,
   "rewards": {
     "gold": 0
   },
   "map": {
-    "base": "N13",
-    "crop": [
-      18,
-      20,
-      20,
-      20
-    ]
+    "custom": "dukou"
   },
   "bgm": [
     "battle",
@@ -23,90 +18,99 @@
       "id": "wusong",
       "class": "wusong",
       "side": "player",
-      "x": 9,
+      "x": 21,
       "y": 10,
       "level": 29
     },
     {
       "id": "escort-a",
-      "class": "fy-escort",
+      "class": 36,
       "side": "enemy",
-      "x": 7,
-      "y": 9,
-      "level": 28
+      "x": 22,
+      "y": 10,
+      "level": 28,
+      "name": "押送公人"
     },
     {
       "id": "escort-b",
-      "class": "fy-escort",
+      "class": 36,
       "side": "enemy",
-      "x": 9,
-      "y": 3,
-      "level": 28
+      "x": 20,
+      "y": 10,
+      "level": 28,
+      "name": "押送公人"
     },
     {
       "id": "disciple-a",
-      "class": "fy-disciple",
+      "class": 67,
       "side": "enemy",
-      "x": 15,
-      "y": 5,
+      "x": 26,
+      "y": 10,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋门神徒弟"
     },
     {
       "id": "disciple-b",
-      "class": "fy-disciple",
+      "class": 67,
       "side": "enemy",
-      "x": 17,
-      "y": 6,
+      "x": 26,
+      "y": 11,
       "level": 28,
-      "hidden": true
+      "hidden": true,
+      "name": "蒋门神徒弟"
     },
     {
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 5,
-      "y": 12,
-      "level": 29
+      "x": 12,
+      "y": 10,
+      "level": 29,
+      "hidden": true
     },
     {
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
-      "x": 4,
-      "y": 12,
-      "level": 29
+      "x": 12,
+      "y": 11,
+      "level": 29,
+      "hidden": true
     },
     {
       "id": "daizong",
       "class": "daizong",
       "side": "player",
-      "x": 5,
-      "y": 13,
-      "level": 29
+      "x": 18,
+      "y": 7,
+      "level": 29,
+      "hidden": true
     },
     {
       "id": "huarong",
       "class": "huarong",
       "side": "player",
-      "x": 4,
-      "y": 13,
-      "level": 29
+      "x": 18,
+      "y": 15,
+      "level": 29,
+      "hidden": true
     },
     {
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 6,
-      "y": 13,
-      "level": 29
+      "x": 17,
+      "y": 6,
+      "level": 29,
+      "hidden": true
     },
     {
       "id": "shijin",
       "class": 3,
       "side": "player",
-      "x": 3,
-      "y": 15,
+      "x": 10,
+      "y": 10,
       "level": 29,
       "hidden": true
     },
@@ -114,8 +118,8 @@
       "id": "linchong",
       "class": 11,
       "side": "player",
-      "x": 4,
-      "y": 15,
+      "x": 10,
+      "y": 11,
       "level": 29,
       "hidden": true
     },
@@ -123,8 +127,8 @@
       "id": "duqian",
       "class": 69,
       "side": "player",
-      "x": 5,
-      "y": 15,
+      "x": 9,
+      "y": 10,
       "level": 29,
       "hidden": true
     },
@@ -132,9 +136,401 @@
       "id": "songwan",
       "class": 70,
       "side": "player",
-      "x": 6,
-      "y": 15,
+      "x": 9,
+      "y": 11,
       "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "guard-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 17,
+      "y": 10,
+      "level": 28
+    },
+    {
+      "id": "guard-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 17,
+      "y": 11,
+      "level": 28
+    },
+    {
+      "id": "guard-3",
+      "class": 65,
+      "side": "enemy",
+      "x": 16,
+      "y": 9,
+      "level": 28
+    },
+    {
+      "id": "guard-4",
+      "class": 38,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 28
+    },
+    {
+      "id": "wave2-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 27,
+      "y": 10,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave2-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 27,
+      "y": 11,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave2-3",
+      "class": 65,
+      "side": "enemy",
+      "x": 28,
+      "y": 9,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave2-4",
+      "class": 38,
+      "side": "enemy",
+      "x": 28,
+      "y": 12,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1se-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 26,
+      "y": 20,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1se-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1se-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 29,
+      "y": 19,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 12,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 15,
+      "y": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1n-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 12,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 16,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1s-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 26,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave1ne-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 27,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 28,
+      "y": 20,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 27,
+      "y": 20,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 20,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 28,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-5",
+      "class": 65,
+      "side": "enemy",
+      "x": 28,
+      "y": 18,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave3-6",
+      "class": 38,
+      "side": "enemy",
+      "x": 27,
+      "y": 19,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 14,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 14,
+      "y": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 13,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 1,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-5",
+      "class": 65,
+      "side": "enemy",
+      "x": 14,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave4-6",
+      "class": 38,
+      "side": "enemy",
+      "x": 13,
+      "y": 0,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 15,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 14,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 16,
+      "y": 21,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-5",
+      "class": 65,
+      "side": "enemy",
+      "x": 15,
+      "y": 22,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave5-6",
+      "class": 38,
+      "side": "enemy",
+      "x": 14,
+      "y": 23,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-1",
+      "class": 67,
+      "side": "enemy",
+      "x": 27,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-2",
+      "class": 67,
+      "side": "enemy",
+      "x": 29,
+      "y": 4,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-3",
+      "class": 67,
+      "side": "enemy",
+      "x": 28,
+      "y": 5,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 28,
+      "y": 2,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-5",
+      "class": 65,
+      "side": "enemy",
+      "x": 28,
+      "y": 3,
+      "level": 28,
+      "hidden": true
+    },
+    {
+      "id": "wave6-6",
+      "class": 38,
+      "side": "enemy",
+      "x": 28,
+      "y": 4,
+      "level": 28,
       "hidden": true
     }
   ],
@@ -144,7 +540,25 @@
       "do": [
         [
           "narrate",
-          "到得飞云浦，武松见四人挤眉弄眼，已知八分尴尬。宋江等从后路追赶，武松在桥畔停步。"
+          "且说武松被张都监诬作盗贼，改配恩州。孟州另派两个差人押送，施恩送行时叮嘱他提防途中暗算。宋江等人分作几路远远照应，却被差人借口官差不许闲人紧跟拦在后头，张团练手下几个军汉又一路缀着，专挡跟来的人。"
+        ],
+        [
+          "narrate",
+          "出城八九里，路边早有两个提朴刀的汉子等候，搭伴同行，常与差人挤眉弄眼。将到飞云浦，那两人先抢过桥去了。武松看在眼里，到得桥上，便停了脚步。"
+        ],
+        [
+          "focus",
+          "wusong"
+        ],
+        [
+          "face",
+          "escort-a",
+          "wusong"
+        ],
+        [
+          "face",
+          "escort-b",
+          "wusong"
         ],
         [
           "say",
@@ -162,6 +576,106 @@
           "我要净手则个。"
         ],
         [
+          "narrate",
+          "两个差人不答，互相使个眼色，一个堵在前头，一个横身拦住归路，手都按在了刀柄上。"
+        ],
+        [
+          "say",
+          "wusong",
+          "你两个舍了大路，专拣这僻静去处；那两个提朴刀的先过桥去，后头又有人跟着，却是做甚么勾当？"
+        ],
+        [
+          "say",
+          "escort-a",
+          "事到如今，也不怕你知道！张都监府里早有分付，张团练又替蒋门神出了银子，要我们在路上结果你。"
+        ],
+        [
+          "say",
+          "escort-b",
+          "那两个是蒋门神的徒弟，在桥那头封着路；后面是张团练的人，断住来路。杀了你，只报失脚落水，谁还来追问！"
+        ],
+        [
+          "say",
+          "wusong",
+          "原来张都监假意抬举我，却和蒋门神做一路来害我性命！"
+        ],
+        [
+          "narrate",
+          "两个差人见话已说破，一前一后拔刀逼上，要趁他戴枷一齐下手。"
+        ],
+        [
+          "act",
+          "escort-a",
+          "attack",
+          "wusong"
+        ],
+        [
+          "act",
+          "wusong",
+          "attack",
+          "escort-a"
+        ],
+        [
+          "act",
+          "escort-a",
+          "hurt",
+          "wusong"
+        ],
+        [
+          "narrate",
+          "武松叫声“下去！”飞起一脚，踢得那差人踉跄倒退，险些翻下桥去。几乎同时，四下小路上一齐有人大喝，直奔浦边而来。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "say",
+          "hero",
+          "住手！口口声声公差不许人跟，原来是要把武二哥骗到这里下毒手！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "武二郎愿依法服刑，我等才不拦押解；如今你们受人买嘱谋害性命，宋江怎能袖手！"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "say",
+          "daizong",
+          "我见你们舍了大路越走越偏，便带铁牛从北边小路抄过来。方才那番杀人灭口的话，听得明明白白！"
+        ],
+        [
+          "say",
+          "likui",
+          "拿了贼人的银子，还敢装作官差害好汉！吃俺一斧！"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "say",
+          "huarong",
+          "二郎留心身后！南边我已占住了，谁敢上桥，先吃我一箭。"
+        ],
+        [
+          "say",
+          "wusong",
+          "多谢诸位赶来！这木枷困不住武松，待我挣开，再问他们一问！"
+        ],
+        [
           "borrowEquip",
           "wusong",
           0,
@@ -177,7 +691,7 @@
         ],
         [
           "objective",
-          "四名杀手全败；武松倒下或超过15回合失败。"
+          "击败所有敌人（含增援）；第2至第6回合每回合有一波增援。武松倒下或超过15回合失败。"
         ],
         [
           "turnLimit",
@@ -191,12 +705,24 @@
       },
       "do": [
         [
+          "focus",
+          "wusong"
+        ],
+        [
           "narrate",
           "武松把枷只一扭，折做两半个，扯开封皮，将来撇在水里。"
         ],
         [
           "cleanse",
           "wusong"
+        ],
+        [
+          "focus",
+          "disciple-a"
+        ],
+        [
+          "narrate",
+          "桥东前路上，蒋门神那两个徒弟见事不谐，提着朴刀，引一伙打手抢回桥头来！"
         ],
         [
           "appear",
@@ -207,8 +733,80 @@
           "disciple-b"
         ],
         [
-          "flag",
-          "four-present"
+          "appear",
+          "wave2-1"
+        ],
+        [
+          "appear",
+          "wave2-2"
+        ],
+        [
+          "appear",
+          "wave2-3"
+        ],
+        [
+          "appear",
+          "wave2-4"
+        ],
+        [
+          "narrate",
+          "与此同时，东南芦苇荡、北面小路、南边码头和东北岸上，各有三个张团练的人手听得动静，一齐围拢过来！"
+        ],
+        [
+          "appear",
+          "wave1se-1"
+        ],
+        [
+          "appear",
+          "wave1se-2"
+        ],
+        [
+          "appear",
+          "wave1se-3"
+        ],
+        [
+          "appear",
+          "wave1n-1"
+        ],
+        [
+          "appear",
+          "wave1n-2"
+        ],
+        [
+          "appear",
+          "wave1n-3"
+        ],
+        [
+          "appear",
+          "wave1s-1"
+        ],
+        [
+          "appear",
+          "wave1s-2"
+        ],
+        [
+          "appear",
+          "wave1s-3"
+        ],
+        [
+          "appear",
+          "wave1ne-1"
+        ],
+        [
+          "appear",
+          "wave1ne-2"
+        ],
+        [
+          "appear",
+          "wave1ne-3"
+        ],
+        [
+          "focus",
+          "shijin"
+        ],
+        [
+          "narrate",
+          "西边浦口，一只船撑近岸来，船上几条好汉跳上岸。"
         ],
         [
           "appear",
@@ -229,16 +827,17 @@
         [
           "say",
           "shijin",
-          "宋三哥！我请得林教头、杜迁、宋万，听说你们出了城，便沿路追来！"
+          "宋三哥，武二哥！我回山禀过晁天王，请来林教头、杜迁、宋万相助。打听得押送的往这条路来，便雇船沿河赶来了！"
         ],
         [
           "say",
           "linchong",
-          "我也受过这般押解暗害，岂容他们再伤好汉！"
+          "我也受过这般押解暗害，野猪林险些送了性命，岂容他们再伤好汉！"
         ],
         [
-          "narrate",
-          "宋江招呼众人先救武松。"
+          "say",
+          "songjiang",
+          "来得正好！众位先护住二郎，莫教贼人前后夹攻。"
         ]
       ]
     },
@@ -247,23 +846,37 @@
       "do": [
         [
           "narrate",
-          "徒弟临死招认：小人两个是蒋门神徒弟。今被师父和张团练定计，使小人两个来相帮防送公人，一处来害好汉。三名主谋此刻正在鸳鸯楼饮酒。"
+          "武松赶上一个徒弟，只一拳打翻，夺过朴刀来揪住喝问。那人只得招道：“小人两个是蒋门神徒弟。今被师父和张团练定计，使小人两个来相帮防送公人，一处来害好汉。”"
         ],
         [
           "say",
           "wusong",
-          "不杀得张都监，如何出得这口恨气！"
+          "你师父蒋门神今在何处？"
         ],
         [
           "narrate",
-          "众人带武松回孟州，查明主谋；林冲、杜迁、宋万自此一同接应。"
+          "“小人临来时，和张团练都在张都监家里后堂鸳鸯楼上吃酒，专等小人回报。”"
+        ],
+        [
+          "say",
+          "wusong",
+          "不杀得张都监、张团练、蒋门神，如何出得这口恨气！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "本想依律求个公道，不想他们竟要沿路害命。二郎既要回去，我等一同护你走这一遭。"
+        ],
+        [
+          "narrate",
+          "武松提了朴刀，同众人折回孟州，先在城中买齐药品、整顿兵器，再去鸳鸯楼寻那三人；林冲、杜迁、宋万自此一同接应。"
         ],
         [
           "victory",
           "脱险飞云浦，回城辨主谋。"
         ]
       ],
-      "if": "four-present"
+      "if": "all-waves-arrived"
     },
     {
       "on": {
@@ -273,6 +886,170 @@
         [
           "defeat",
           "武松倒下，众人未能脱险。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "focus",
+          "wave3-1"
+        ],
+        [
+          "narrate",
+          "东岸南边芦苇荡里一声呼哨，又钻出一伙张团练的军汉！"
+        ],
+        [
+          "appear",
+          "wave3-1"
+        ],
+        [
+          "appear",
+          "wave3-2"
+        ],
+        [
+          "appear",
+          "wave3-3"
+        ],
+        [
+          "appear",
+          "wave3-4"
+        ],
+        [
+          "appear",
+          "wave3-5"
+        ],
+        [
+          "appear",
+          "wave3-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "focus",
+          "wave4-1"
+        ],
+        [
+          "narrate",
+          "北面小路上尘头大起，蒋门神又差一伙徒弟赶来！"
+        ],
+        [
+          "appear",
+          "wave4-1"
+        ],
+        [
+          "appear",
+          "wave4-2"
+        ],
+        [
+          "appear",
+          "wave4-3"
+        ],
+        [
+          "appear",
+          "wave4-4"
+        ],
+        [
+          "appear",
+          "wave4-5"
+        ],
+        [
+          "appear",
+          "wave4-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "do": [
+        [
+          "focus",
+          "wave5-1"
+        ],
+        [
+          "narrate",
+          "南边码头背后转出一伙人，要截住众人的退路！"
+        ],
+        [
+          "appear",
+          "wave5-1"
+        ],
+        [
+          "appear",
+          "wave5-2"
+        ],
+        [
+          "appear",
+          "wave5-3"
+        ],
+        [
+          "appear",
+          "wave5-4"
+        ],
+        [
+          "appear",
+          "wave5-5"
+        ],
+        [
+          "appear",
+          "wave5-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "focus",
+          "wave6-1"
+        ],
+        [
+          "narrate",
+          "东北岸上又来一伙，看来是张团练手里最后一批人手。"
+        ],
+        [
+          "appear",
+          "wave6-1"
+        ],
+        [
+          "appear",
+          "wave6-2"
+        ],
+        [
+          "appear",
+          "wave6-3"
+        ],
+        [
+          "appear",
+          "wave6-4"
+        ],
+        [
+          "appear",
+          "wave6-5"
+        ],
+        [
+          "appear",
+          "wave6-6"
+        ],
+        [
+          "flag",
+          "all-waves-arrived"
+        ],
+        [
+          "narrate",
+          "四面八方的追兵都已现身，击败所有敌人便可脱险！"
         ]
       ]
     }

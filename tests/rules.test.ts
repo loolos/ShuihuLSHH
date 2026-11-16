@@ -1,20 +1,20 @@
 // 规则引擎单元测试：使用手写的小数据，不依赖原版文件。
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { buffLabel, buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
-import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_GEAR, OFFICER, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
+import { attackSkill, computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
+import { CLASS_OVERRIDES, CLASS_TWEAKS, GRUNT, GRUNT_CLASSES, GRUNT_GEAR, OFFICER, OFFICER_CLASSES, baseStat, perLevel, statAt } from '../src/rules/growth.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { capSkillCosts } from '../src/rules/load.ts';
 import { balanceLevels } from '../src/rules/preset.ts';
 import { announcesSkill, areaCells, HERO_CLASSES, learnedSkills, skillBonusText } from '../src/rules/skills.ts';
-import { adjustEnemies, enemyFloor, enemyLevel, enemyShift } from '../src/rules/enemy-level.ts';
+import { adjustEnemies, enemyFloor, enemyLevel } from '../src/rules/enemy-level.ts';
 import { joinLevel, newCampaign, nextStages, partyOf, recordResult } from '../src/rules/campaign.ts';
 import { goldBase, goldRange, killGold, stageClearGold, STAGE_CLEAR_GOLD } from '../src/rules/gold.ts';
 import type { PasBlock } from '../src/formats/pas.ts';
@@ -44,11 +44,18 @@ function unit(o: Partial<Unit>): Unit {
 }
 
 describe('属性', () => {
+  it('状态面板区分加值和持续时间，减益不显示多余加号', () => {
+    expect(buffLabel({ stat: 'attack', value: 19, turns: 0 })).toBe('攻击 +19（本关有效）');
+    expect(buffLabel({ stat: 'hit', value: -12, turns: 0 })).toBe('命中 -12（本关有效）');
+    expect(buffLabel({ stat: 'defense', value: 7, turns: 2 })).toBe('防御 +7（剩余2回合）');
+  });
+
   it('己方等级移动力：5 级 +1，20 级累计 +2；同职业敌方、友军均不增加', () => {
     for (const [level, bonus] of [[1, 0], [4, 0], [5, 1], [19, 1], [20, 2], [30, 2], [99, 2]]) {
       for (const side of ['player', 'enemy', 'ally'] as const) {
         const stats = computeStats(data.classes[0], level, [], data, false, [], [], side);
-        expect(stats.move, `${side} Lv${level}`).toBe(4 + (side === 'player' ? bonus : 0));
+        // 敌方 16 级起基础移动力至少 5（负责人 2026-11-15）
+        expect(stats.move, `${side} Lv${level}`).toBe(side === 'player' ? 4 + bonus : side === 'enemy' && level >= 16 ? 5 : 4);
       }
     }
     // 外传职业也只按所在阵营生效，不以原版职业编号为限制。
@@ -64,7 +71,7 @@ describe('属性', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units, blocks: [], data, seed: 1 });
     expect(b.unit(0)!.stats.move).toBe(6);
     expect(b.unit(0)!.movementRemaining).toBe(6);
-    expect(b.unit(1)!.stats.move).toBe(4);
+    expect(b.unit(1)!.stats.move).toBe(5); // 敌方 16 级起基础移动力至少 5
     expect(b.unit(2)!.stats.move).toBe(4);
   });
 
@@ -81,6 +88,9 @@ describe('属性', () => {
     expect(u.stats.move).toBe(6);
     u.side = 'enemy';
     refreshStats(u, data);
+    expect(u.stats.move).toBe(5); // 敌方 16 级起基础移动力至少 5，无等级加成
+    u.level = 15;
+    refreshStats(u, data);
     expect(u.stats.move).toBe(4);
   });
 
@@ -95,12 +105,30 @@ describe('属性', () => {
   it('个别职业的初始值调整（王進攻击 80）', () => {
     expect(statAt(cls(1, { attack: g(70, 104) }), 'attack', 0)).toBe(CLASS_OVERRIDES[1].attack);
   });
+  it('五位我方好汉必杀基础调整并正常成长，吴用只降低普攻必杀修正', () => {
+    const rec = (id: number) => ({
+      id, hp: 100, mp: 100, hpGrowth: 100, mpGrowth: 100, move: 5, weaponType: 0, goldCap: 0,
+      stats: Array(5).fill({ base: 5, growth: 100 }), defaultItems: [],
+      skills: [{ ...punch, skillId: 86, critMod: 20 }, { ...punch, skillId: 999, critMod: 25 }],
+    }) as unknown as ClassRecord;
+    const ids = [5, 9, 10, 12, 16, 53, 58];
+    const built = buildClasses(ids.map(rec), [], []);
+    for (const [i, initial] of [8, 8, 10, 10, 8, 5, 5].entries()) {
+      expect(baseStat(built[i], 'crit'), `职业 ${ids[i]}`).toBe(initial);
+      expect(statAt(built[i], 'crit', 20)).toBe(initial === 10 ? 25 : initial === 8 ? 21 : 16);
+      expect(perLevel(built[i], 'crit')).toBeGreaterThan(0);
+    }
+    const wu = built[2], enemyWu = built[5];
+    expect(wu.skills[0]).toMatchObject({ skillId: 86, critMod: 10, stun: 10, power: punch.power, mpCost: punch.mpCost });
+    expect(wu.skills[1].critMod).toBe(25);
+    expect(enemyWu.skills[0].critMod).toBe(20);
+  });
   it('按职业的偏移：百分比和加点数', () => {
     expect(CLASS_TWEAKS[66].pct!.hp).toBe(-15);
     const assassin = cls(66), captain = cls(65), constable = cls(38);
     expect(baseStat(constable, 'hp')).toBe(OFFICER.hp); // 都頭是标准
     expect(baseStat(assassin, 'hp')).toBe(Math.round(OFFICER.hp * 0.85));
-    expect(baseStat(assassin, 'crit')).toBe(OFFICER.crit + 8);
+    expect(baseStat(assassin, 'crit')).toBe(OFFICER.crit);
     expect(baseStat(captain, 'hp')).toBe(Math.round(OFFICER.hp * 1.15));
     expect(baseStat(cls(59, { attack: g(100) }), 'attack')).toBe(70); // 陳達 −30%
   });
@@ -110,6 +138,29 @@ describe('属性', () => {
     expect(statAt(soldier, 'hit', 0)).toBe(GRUNT.hit);
     const d2: GameData = { ...data, classes: [soldier] };
     expect(computeStats(soldier, 0, [1], d2).attack).toBe(GRUNT.attack + GRUNT_GEAR.attack!); // 皮手套 +7 不算
+  });
+  it('全部模板职业必杀固定为杂兵 10、小头目 15，升级刷新与装备不增加必杀', () => {
+    const gear = { ...glove, crit: 80 };
+    for (const [ids, expected] of [[GRUNT_CLASSES, 10], [OFFICER_CLASSES, 15]] as const) {
+      for (const id of ids) {
+        const c = cls(id, { crit: g(90) });
+        const d = { ...data, classes: [...data.classes], items: [gear] };
+        d.classes[id] = c;
+        expect(baseStat(c, 'crit')).toBe(expected);
+        expect(perLevel(c, 'crit')).toBe(0);
+        for (const level of [0, 1, 5, 20, 50, 99]) {
+          expect(statAt(c, 'crit', level), `${id} Lv${level}`).toBe(expected);
+          expect(computeStats(c, level, [1], d).crit).toBe(expected);
+        }
+        const u = { ...unit({}), classId: id, side: 'enemy' as const, level: 1, slots: [1] };
+        u.level = 50;
+        refreshStats(u, d);
+        refreshStats(u, d);
+        expect(u.stats.crit).toBe(expected);
+      }
+    }
+    // 好汉、有名有姓的首领仍保留各自必杀成长。
+    for (const id of [0, 16, 56, 64, 71]) expect(perLevel(cls(id), 'crit')).toBeGreaterThan(0);
   });
   it('装备加成按道具编号（从 1 开始）计算', () => {
     expect(computeStats(data.classes[0], 0, [1], data).attack).toBe(67);
@@ -246,20 +297,49 @@ describe('命中与伤害', () => {
     expect(hitChance(e, p, { ...punch, hitMod: 10 })).toBe(85); // 120 / 140
     expect(hitChance(e, unit({ stats: { ...p.stats, agility: 200 }, x: 0, y: 0, facing: 2 }), punch)).toBe(44);
   });
-  it('伤害 = A² / (A + 2 防)，A = 攻 + 威力；必杀把 A 翻倍', () => {
+  it('普通伤害不变，必杀加上与实际必杀率有关的独立伤害项', () => {
     const d = unit({ side: 'enemy', facing: 2 }); // 正面
-    expect(baseDamage(a, d, punch)).toEqual([36, 90]); // 60² / 100，120² / 160
+    expect(baseDamage(a, d, punch)[0]).toBe(36);
+    expect(baseDamage(a, d, punch)[1]).toBeCloseTo(36 + 1.02 * 3600 / 120);
     const tough = unit({ facing: 2, stats: { ...d.stats, defense: 240 } });
     const [n, c] = baseDamage(a, tough, punch);
     expect(n).toBeCloseTo(3600 / 540);
-    expect(c).toBe(24); // 120² / 600
+    expect(c).toBeCloseTo(n + 1.02 * 3600 / 780);
     const rng = new Rng(1);
     for (let i = 0; i < 50; i++) {
       const r = rollAttack(a, tough, punch, rng, true);
-      expect(r.damage).toBeGreaterThanOrEqual(r.crit ? 21 : 6);
-      expect(r.damage).toBeLessThanOrEqual(r.crit ? 26 : 7);
+      expect(r.damage).toBeGreaterThanOrEqual(Math.floor((r.crit ? c : n) * 0.9));
+      expect(r.damage).toBeLessThanOrEqual(Math.floor((r.crit ? c : n) * 1.1));
     }
     expect(critChance(a, { ...punch, critMod: 10 })).toBe(7); // x = 20：400 / 5300
+  });
+  it('技能威力计入 A，技能修正与敌方名将折扣计入最终必杀率', () => {
+    const att = unit({ stats: { ...a.stats, attack: 80, crit: 50 } });
+    const def = unit({ side: 'enemy', facing: 2, stats: { ...a.stats, defense: 50 } });
+    const skill = { ...punch, power: 20, critMod: 20 };
+    expect(critChance(att, skill)).toBe(50);
+    expect(baseDamage(att, def, skill)).toEqual([50, 110]);
+    const enemy = { ...att, side: 'enemy' as const, classId: 68 };
+    expect(critChance(enemy, skill)).toBe(39);
+    expect(baseDamage(enemy, def, skill)[1]).toBeCloseTo(105.6);
+    expect(baseDamage(att, def, { ...skill, critMod: 0 })[1]).toBeCloseTo(103.2);
+  });
+  it('多段必杀沿用每段概率，并拆分总伤害而不重复附加伤害项', () => {
+    const att = unit({ stats: { ...a.stats, attack: 100, crit: 70 } });
+    const def = unit({ side: 'enemy', facing: 2, stats: { ...a.stats, defense: 50 } });
+    const skill = { ...punch, hits: [25, 25, 25, 25].map((percent, i) => ({ frame: i + 1, percent, dir: 0 })) };
+    const rng = new Rng(1);
+    const chance = vi.spyOn(rng, 'chance').mockReturnValue(true);
+    vi.spyOn(rng, 'next').mockReturnValue(0.5);
+    const result = rollAttack(att, def, skill, rng, true);
+    expect(result.damage).toBe(110);
+    expect(chance.mock.calls.slice(0, 4)).toEqual([[50], [50], [50], [50]]);
+  });
+  it('非正攻击不产生伤害，负防御按零计算', () => {
+    const def = unit({ facing: 2, stats: { ...a.stats, defense: -10 } });
+    for (const attack of [0, -10]) expect(baseDamage({ ...a, stats: { ...a.stats, attack } }, def, punch)).toEqual([0, 0]);
+    const att = { ...a, stats: { ...a.stats, attack: 100, crit: 70 } };
+    expect(baseDamage(att, def, punch)).toEqual([100, 250]);
   });
   it('必杀率 = x² / (x² + 70²)，越高越接近 100% 但不到', () => {
     const a = unit({ side: 'player', x: 0, y: 0, facing: 0 });
@@ -292,19 +372,39 @@ describe('命中与伤害', () => {
         const defense = defending ? 0.7 : 1;
         const [normal, critical] = baseDamage(att, def, punch);
         expect(normal).toBeCloseTo(36 * f);
-        expect(critical).toBeCloseTo(90 * f);
+        expect(critical).toBeCloseTo((36 + (1 + critChance(att, punch) / 100) * 30) * f);
         const preview = previewAttack(att, def, punch);
         expect(preview.damage).toBe(Math.floor(normal * defense));
         expect(preview.critDamage).toBe(Math.floor(critical * defense));
         const rng = new Rng(17);
-        rng.chance(crit / 2); // forceHit跳过命中随机，只消耗必杀判定
+        const isCritical = rng.chance(critChance(att, punch)); // forceHit跳过命中随机
         const variation = 0.9 + rng.next() * 0.2;
         const result = rollAttack(att, def, punch, new Rng(17), true);
-        expect(result.damage).toBe(Math.floor((crit ? critical : normal) * (defense * variation)));
+        expect(result.damage).toBe(Math.floor((isCritical ? critical : normal) * (defense * variation)));
       }
     }
   });
 
+  it('花荣专属远程系数为100%到60%，预览和实战共用；其他远程不受影响', () => {
+    const bow: SkillDef = { ...punch, type: 10, rangeMax: 8, rangedDamage: [1, 0.6] };
+    const target = unit({ side: 'enemy', x: 0, y: 0, facing: 2 });
+    for (const [distance, factor] of [[1, 1], [4, 1 - 0.4 * 3 / 7], [8, 0.6]]) {
+      const att = unit({ x: 0, y: distance });
+      expect(rangedFactor(att, target, bow)).toBeCloseTo(factor);
+      const [n, c] = baseDamage(att, target, punch);
+      const preview = previewAttack(att, target, bow);
+      expect(preview.damage).toBe(Math.floor(n * factor));
+      expect(preview.critDamage).toBe(Math.floor(c * factor));
+      const rng = new Rng(7);
+      const crit = rng.chance(critChance(att, bow));
+      const variation = 0.9 + rng.next() * 0.2;
+      expect(rollAttack(att, target, bow, new Rng(7), true).damage).toBe(Math.floor((crit ? c : n) * factor * variation));
+      expect(rangedFactor(att, target, { ...bow, rangedDamage: undefined })).toBeCloseTo(factor - 0.5);
+    }
+    const att = unit({ x: 0, y: 10, stats: { ...a.stats, rangeBonus: 2 } });
+    expect(rangedFactor(att, target, bow)).toBeCloseTo(0.6);
+    expect(rangedFactor(att, target, { ...bow, rangeMax: 1 })).toBeCloseTo(0.6);
+  });
   it('远程攻击按距离打折：距离 1 为 50%，最远射程为 10%', () => {
     const bow = { ...punch, type: 10, rangeMin: 1, rangeMax: 8 };
     const d = unit({ side: 'enemy', x: 0, y: 0 });
@@ -754,15 +854,50 @@ describe('技能', () => {
     expect(plan.cell).toEqual({ x: 5, y: 5 });
   });
 
+  it('模板普攻默认无必杀修正、刺客保留上限 5，特殊技与其他职业保持约定', () => {
+    const mods = [40, 55, 25, 5, 0, -10];
+    const record = (id: number) => ({
+      id, hp: 100, mp: 100, hpGrowth: 100, mpGrowth: 100, move: 5, weaponType: 0, goldCap: 0,
+      stats: Array(5).fill({ base: 50, growth: 100 }), defaultItems: [],
+      skills: mods.map((critMod, i) => ({ ...punch, skillId: i === 0 ? 221 : 222, type: i === 0 ? 5 : 10, critMod })),
+    }) as unknown as ClassRecord;
+    for (const id of [...GRUNT_CLASSES, ...OFFICER_CLASSES]) {
+      const [c] = buildClasses([record(id)], [], []);
+      expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual([id === 66 ? 5 : 0, 5, 5, 5, 0, -10]);
+    }
+    for (const id of [0, 16, 56, 64, 71]) {
+      const [c] = buildClasses([record(id)], [], []);
+      expect(c.skills.slice(0, mods.length).map((s) => s.critMod), `职业 ${id}`).toEqual(mods);
+    }
+    const soldier = { ...unit({}), classId: 32, side: 'enemy' as const, stats: { ...unit({}).stats, crit: 10 } };
+    const officer = { ...soldier, classId: 38, stats: { ...soldier.stats, crit: 15 } };
+    expect(critChance(soldier, { ...punch, critMod: 0 })).toBe(2);
+    expect(critChance(officer, { ...punch, critMod: 0 })).toBe(4);
+    expect(critChance({ ...officer, classId: 66 }, { ...punch, critMod: 5 })).toBe(7);
+  });
+
   it('好汉的普通攻击也弹技能名，杂兵普攻不弹，技能都弹', () => {
     const skill = { ...punch, name: '技能', mpCost: 10 };
     const d: GameData = { ...data, classes: [...data.classes] };
     d.classes[HERO_CLASSES] = cls(HERO_CLASSES);
     const hero = unit({ classId: 1 });
-    const grunt = { ...unit({ classId: 1 }), classId: HERO_CLASSES };
+    const grunt = { ...unit({ classId: 1, side: 'enemy' }), classId: HERO_CLASSES };
     expect(announcesSkill(hero, punch, d)).toBe(true);
     expect(announcesSkill(grunt, punch, d)).toBe(false);
     expect(announcesSkill(grunt, skill, d)).toBe(true);
+  });
+
+  it.each([18, 69, 70, 80, 100])('我方和友军职业%s普攻均显示招式名，不受原版好汉编号限制', (classId) => {
+    const d: GameData = { ...data, classes: [...data.classes] };
+    const basic = { ...punch, name: '好汉拳法' };
+    d.classes[classId] = { ...cls(classId), skills: [basic] };
+    for (const side of ['player', 'ally'] as const) {
+      const hero = { ...unit({ classId: 1, side }), classId };
+      expect(announcesSkill(hero, attackSkill(hero, d), d)).toBe(true);
+    }
+    const enemy = { ...unit({ classId: 1, side: 'enemy' }), classId };
+    expect(announcesSkill(enemy, attackSkill(enemy, d), d)).toBe(false);
+    expect(announcesSkill(enemy, { ...basic, name: '特殊技能' }, d)).toBe(true);
   });
 
   const sk = (o: Partial<SkillDef>): SkillDef => ({ ...punch, hits: [{ frame: 5, percent: 100, dir: 0 }], ...o });
@@ -1007,16 +1142,19 @@ describe('关卡串联', () => {
     expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
   });
 
-  it('敌人等级修正：整关平移、只降不升、1 级摆设不动、最低 2 级', () => {
-    expect(enemyShift('N14')).toBeLessThan(0);
-    expect(enemyShift('n14')).toBe(enemyShift('N14'));
-    expect(enemyShift('Train1')).toBe(0);
-    const d = enemyShift('N14');
-    expect(enemyLevel('N14', 42)).toBe(42 + d);
-    expect(enemyLevel('N14', 1)).toBe(1);
-    expect(enemyLevel('N14', 3)).toBe(Math.max(2, 3 + d));
-    const units = adjustEnemies('N14', [{ ...act(0, 0, 'enemy', 20, 0), level: 30 }, { ...act(1, 1, 'player', 0, 0), level: 30 }]);
-    expect(units.map((u) => u.level)).toEqual([30 + d, 30]);
+  it('敌方基础等级来自自有配置，不受原剧本等级影响；缺配置或身份不符时报错', () => {
+    const index = 7; // N01 都头的自有基础等级为 2，输入剧本等级即使改成 1 也不影响
+    const level = enemyLevel('N01', index, 38);
+    expect(level).toBe(2);
+    expect(enemyLevel('N01', 3, 32)).toBe(1);
+    expect(enemyLevel('n01', index, 38)).toBe(level);
+    const input = [{ ...act(index, 38, 'enemy', 2, 0), level: 99 }, { ...act(1, 1, 'player', 0, 0), level: 30 }];
+    expect(adjustEnemies('N01', input).map(u => u.level)).toEqual([level, 30]);
+    expect(input[0].level).toBe(99);
+    expect(adjustEnemies('N01', [{ ...input[0], level: 1 }])[0].level).toBe(level);
+    expect(() => enemyLevel('missing', index, 38)).toThrow('缺少自有等级配置');
+    expect(() => enemyLevel('N01', 9999, 38)).toThrow('缺少自有等级配置');
+    expect(() => enemyLevel('N01', index, 9999)).toThrow('职业与等级配置不符');
   });
 
   it('击倒掉落：职业上限的一半 ±15%，上限为 0 的不掉', () => {
@@ -1204,6 +1342,25 @@ describe('主线插关的排队（campaign.ts pendingInsert）', () => {
     expect(pendingInsert(c, list, 'Act10-1')).toBe('mainline/chifagui');
     expect(pendingInsert({ ...c, inserts: ['mainline/chifagui'] }, list, 'Act10-1', 'before', 'mainline/chifagui')).toBe('mainline/sanruan');
     expect(pendingInsert({ ...c, inserts: ['mainline/sanruan'] }, list, 'Act10-1', 'before', 'mainline/sanruan')).toBeUndefined();
+  });
+  it('第十七章重玩时不因旧通关标记跳过安平寨和快活林，刷新存档也按顺序', async () => {
+    const { pendingInsert, replayInsertProgress, newCampaign, parseCampaign } = await import('../src/rules/campaign.ts');
+    const { insertPlaces } = await import('../src/rules/chapters.ts');
+    const list = insertPlaces();
+    const refs = ['shizipo', 'anpingzhai', 'kuaihuolin', 'zhangfu', 'feiyunpu', 'yuanyanglou', 'xingzhe', 'wugongling', 'kongliang', 'kongjiazhuang', 'qingfengshan', 'xingjiutang', 'yuanxiao', 'qianghuarong', 'zhizhan', 'jieqiuche', 'yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'].map(id => `mainline/${id}`);
+    const old = { ...newCampaign(75), gold: 4321, inserts: [...list.slice(0, list.findIndex(e => e.ref === refs[0])).map(e => e.ref), ...refs.filter(r => r !== 'mainline/zhangfu')] };
+    // 已在十字坡的旧存档也必须进入紧邻的安平寨。
+    expect(pendingInsert(old, list, 'N14', 'after', refs[0])).toBe(refs[1]);
+    const replay = { ...old, inserts: replayInsertProgress(old, list, refs[0]) };
+    expect(replay.inserts).toEqual(list.slice(0, list.findIndex(e => e.ref === refs[0])).map(e => e.ref));
+    expect(replay.gold).toBe(4321);
+    for (let i = 0; i < refs.length; i++) {
+      replay.inserts.push(refs[i]);
+      const loaded = parseCampaign(JSON.stringify(replay))!;
+      expect(pendingInsert(loaded, list, 'N14', 'after', refs[i])).toBe(refs[i + 1]);
+      expect(pendingInsert(loaded, list, 'N14', 'after')).toBe(refs[i + 1]);
+    }
+    expect(replayInsertProgress({ ...old, inserts: refs }, list, refs[3])).toEqual(refs.slice(0, 3));
   });
   it('终章之后的续篇只排一次，且不会当作 before 插关', async () => {
     const { pendingInsert, newCampaign } = await import('../src/rules/campaign.ts');

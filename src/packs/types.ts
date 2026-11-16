@@ -97,6 +97,20 @@ export interface PackSkillJson {
   learnLevel?: number;
   /** 可在距离内的整个菱形选点，不限四条直线。 */
   targetShape?: 'diamond';
+  /** 类型 8 的回气技作用于队友，而非自己。 */
+  chargeTarget?: 'ally';
+  /** 远程技能的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
+  rangedDamage?: [number, number];
+  /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
+  castCycles?: number;
+  /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
+  castSpeed?: number;
+  /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
+  hitFx?: 'blood' | 'explosion' | 'impact';
+  /** 遠程技飞行中的箭的画面效果：fire = 火箭（只是画面） */
+  arrowFx?: 'fire';
+  /** 穿透：从施放者身前一格起整条直线都受击（长 max(area, 到施放点的距离)） */
+  pierce?: boolean;
   rangeMin?: number;
   rangeMax?: number;
   area?: number;
@@ -104,7 +118,7 @@ export interface PackSkillJson {
   poison?: number;
   hitMod?: number;
   critMod?: number;
-  /** 范围类型（同原版技能类型；14 = 身前宽 3、长 area 格的长方形【新】） */
+  /** 范围类型：14 = 前方长方形；15 = 正前、前两格及左右前方，共四格【新】。 */
   type?: number;
   /** 特效：Effect.lib 组号 + 1 */
   effect?: number;
@@ -186,6 +200,8 @@ export interface PackUnitJson {
   offstage?: boolean;
   /** AI 模式（§8），默认 0 */
   ai?: number;
+  /** AI 12（守屋）的屋子范围 [x1, y1, x2, y2]（含边界）：有敌人进来之前原地驻守，进来后转为模式 0 出战 */
+  guardArea?: [number, number, number, number];
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
@@ -196,12 +212,16 @@ export type PackTrigger =
   | 'start'
   /** 在场的敌人全部倒下（还没登场的隐藏单位不算，要等他们登场后也倒下） */
   | 'enemiesDefeated'
+  /** 本关全部敌人战败，包含尚未登场的隐藏增援。 */
+  | 'allEnemiesDefeated'
   | { turn: number }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   | { enter: string | string[]; area: [number, number, number, number] }
-  /** 任一在场的我方单位走到这个人身边（相邻一格） */
-  | { near: string }
+  /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
+  | { near: string; by?: string }
+  /** 目标生命低于最大值的 below%（可配 if / unless） */
+  | { hp: string; below: number }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number };
 
@@ -210,13 +230,17 @@ export type PackTrigger =
  * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
  * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]；["flag", 名字] 设剧本标志（配合区块的 if / unless）；
+ * ["show", 单位, 站在谁身边（可省）] 已倒下 / 退场的人临时回到地图上（只放画面，不复活，战后对话用）；["hide", 单位] 收起；
+ * ["portrait", 职业, 头像文件] 本关里这个职业改用包里另一张头像（空串恢复，只放画面，如武松扮行者）；
+ * ["approach", 单位, 目标] 走到目标身边一格（自动挑空格，走不到就不动）；
+ * ["defect", 单位, 阵营] 换阵营（player / ally / enemy，如黄信归降）；
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  */
 export type PackOpJson = [string, ...unknown[]];
 
 export interface PackBlockJson {
   on: PackTrigger;
-  /** 只对 enemiesDefeated 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
+  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
   if?: string;
   unless?: string;
   do: PackOpJson[];

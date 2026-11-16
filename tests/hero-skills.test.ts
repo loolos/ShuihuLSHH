@@ -10,6 +10,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import type { SkillDef } from '../src/rules/data.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA } from '../tools/sim-lib.ts';
+import { FX_EXPLOSION, FX_IMPACT, fxGroups } from '../src/game/effects.ts';
 
 const available = fs.existsSync(path.join(DATA, 'Data/Human.hum'));
 describe.skipIf(!available)('武松、李逵技能重做', () => {
@@ -56,11 +57,12 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
       expect(attackParts(s)).toHaveLength(cycles);expect(s).toMatchObject({power,mpCost:cost});
       expect(s.hits.reduce((a,h)=>a+h.percent,0)).toBe(100);
       for(const strip of [action.front,action.back]) {
-        expect(strip.cycles).toBe(cycles);
-        const cycleMs=strip.frames*strip.ms;
+        // 一段 = 一次出拳 / 一脚：鸳鸯脚的图条一轮是右脚 + 左脚两脚，循环 2 次
+        const totalMs=strip.frames*strip.ms*(strip.cycles??1),cycleMs=totalMs/cycles;
+        expect(Number.isInteger(strip.frames*(strip.cycles??1)/cycles)).toBe(true);
         s.hits.forEach((h,i)=>expect((h.frame-1)*45).toBeGreaterThanOrEqual(i*cycleMs-22.5));
         s.hits.forEach((h,i)=>expect((h.frame-1)*45).toBeLessThan((i+1)*cycleMs));
-        expect(cycleMs*cycles).toBeLessThan(2500);
+        expect(totalMs).toBeLessThan(2500);
       }
     }
     expect(skill('wusong','擒虎镇岳').stun).toBe(30);
@@ -70,6 +72,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
       const s=skill('wusong',`横江断浪LV${tier}`);
       expect(s).toMatchObject({power:20,area:tier+2,rangeMin:1,rangeMax:1,mpCost:[50,65,80,95][tier-1],type:1});
       expect(attackParts(s)).toHaveLength(2);
+      expect(s.hitFx).toBe('impact');expect(fxGroups(s)).toEqual([FX_IMPACT]); // 命中的人身上迸白色打击火花
       for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
         const cells=areaCells(board,from,s,{x:from.x+dx,y:from.y+dy});
         expect(cells).toHaveLength([5,8,13,18][tier-1]);
@@ -101,6 +104,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     for(let tier=1;tier<=4;tier++) {
       const s=skill('likui',`狂澜裂岳LV${tier}`),b=battle('likui');b.begin();const u=b.units[0],t=b.units[1];
       expect(s).toMatchObject({area:2,rangeMax:tier+2,power:(tier-1)*20,mpCost:[60,80,100,120][tier-1],stun:20,critMod:20});
+      expect(s.hitFx).toBe('explosion');expect(fxGroups(s)).toEqual([FX_EXPLOSION]); // 只在命中的人身上炸，不铺满范围
       expect(areaCells(board,from,s,{x:16,y:15})).toHaveLength(5);
       expect(attackParts(s)).toHaveLength(tier+2);expect(s.hits.reduce((a,h)=>a+h.percent,0)).toBe(100);
       u.stats.poison=0;u.stats.stun=0;u.stats.crit=0;

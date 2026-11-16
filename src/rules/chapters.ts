@@ -40,6 +40,14 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '景阳冈打虎', stages: ['mainline/chaijin-liubin', 'mainline/jingyanggang', 'mainline/tiaolian', 'mainline/shizilou'] },
   // 负责人 2026-11-15：十字坡到鸳鸯楼合成一章（原第十七章 孟州风雨、第十八章 血溅鸳鸯楼）
   { name: '血溅鸳鸯楼', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu', 'mainline/feiyunpu', 'mainline/yuanyanglou'] },
+  // 负责人 2026-11-16：鸳鸯楼后众人散去，武龙、李逵、花荣随武松；十字坡扮行者为开场剧情（原著第 31–32 回）
+  { name: '夜走蜈蚣岭', stages: ['mainline/xingzhe', 'mainline/wugongling'] },
+  // 负责人 2026-11-16（方案 A）：村店醉打孔亮一场仗，落溪被擒、孔家庄相认、瑞龙镇分路为剧情（原著第 32 回）
+  { name: '醉打孔亮', stages: ['mainline/kongliang', 'mainline/kongjiazhuang'] },
+  // 负责人 2026-11-16：清风寨上半（原著第 32–34 回）：清风山被擒相认、元宵被诬、花荣抢人、掷盏为号、劫囚车（二龙山三人来援）
+  { name: '大闹清风寨', stages: ['mainline/qingfengshan', 'mainline/xingjiutang', 'mainline/yuanxiao', 'mainline/qianghuarong', 'mainline/zhizhan', 'mainline/jieqiuche'] },
+  // 负责人 2026-11-16：清风寨下半（原著第 34–35 回）：夜困秦明、夜说秦明与许婚、攻破清风寨（秦明劝降黄信，新）、对影山射戟、石勇送信与梁山聚义
+  { name: '霹雳火秦明', stages: ['mainline/yekun', 'mainline/yeshuo', 'mainline/gongpo', 'mainline/duiyingshan', 'mainline/shiyong'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';

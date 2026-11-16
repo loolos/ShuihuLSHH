@@ -20,9 +20,10 @@ import { findStageFile, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
+import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
-import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
+import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -144,7 +145,7 @@ function startGame(assets: Assets) {
   }
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：位置和先后都按章节表（src/rules/chapters.ts） */
-  // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
+  // kind：有真正要打的敌人（不是 ai 8 演员）叫「战役」，纯剧情过场叫「剧情」（元宵看灯、掷盏为号里的敌人只是演员）（和原版关一样；插关不占原版的战役编号）
   const packStages = new Map(
     listPacks()
       .filter((e) => e.pack.entry === 'mainline')
@@ -154,7 +155,7 @@ function startGame(assets: Assets) {
   if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
   const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; townAfter?: number })[] = insertPlaces().flatMap((p) => {
     const s = packStages.get(p.ref.toLowerCase());
-    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' }] : [];
+    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy' && u.ai !== 8) ? '战役' : '剧情' }] : [];
   });
   const insValue = (ref: string) => `ins:${ref}`;
   /** 续篇城镇（townAfter）之后接哪一段：章节表里紧跟它的插关 */
@@ -178,7 +179,10 @@ function startGame(assets: Assets) {
         if (!e) continue;
         insChapter.set(e.ref, chLabel);
         items.push({ label: `${e.kind} ${e.title}`, value: insValue(e.ref), title: `${chLabel} ${e.kind} · ${e.title}${e.pov ? '（视角关）' : ''}` });
-        if (e.townAfter) items.push({ label: '城镇 阳谷整备', value: `itown:${e.ref}`, title: `${chLabel} 城镇 阳谷整备` });
+        if (e.townAfter) {
+          const name = insertTownName(insertAfter(e.ref) ?? '');
+          items.push({ label: `城镇 ${name}`, value: `itown:${e.ref}`, title: `${chLabel} 城镇 ${name}` });
+        }
         continue;
       }
       const s = stageByMap.get(key.toLowerCase());
@@ -220,14 +224,14 @@ function startGame(assets: Assets) {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('itown:')) {
       const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
-      if (e?.townAfter) return { ...c, finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
+      if (e?.townAfter) return { ...c, inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
     }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
       const anchor = e?.before ?? e?.after;
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
-        const done = (c.inserts ?? []).filter((r) => r !== e.ref);
+        const done = replayInsertProgress(c, inserts, e.ref);
         return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, inserts: done, finished: undefined };
       }
     }
@@ -237,7 +241,7 @@ function startGame(assets: Assets) {
   };
   const asked = params.get('stage')?.toLowerCase();
   if (asked?.startsWith('itown:')) {
-    if (!campaign.insertTown) campaign = jump(asked,campaign);
+    if (!campaign.insertTown || insertTownOf(campaign.insertTown.next) !== asked) campaign = jump(asked,campaign);
   } else if (asked?.startsWith('ins:')) {
     if (campaign.insert !== asked.slice(4)) campaign = jump(asked, campaign);
   } else if (asked) {
@@ -261,6 +265,7 @@ function startGame(assets: Assets) {
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
   ui.tr = assets.tr;
+  if (assets.data.heroNickname) ui.extraNicknames = { [assets.data.heroName]: assets.data.heroNickname };
   const faces = new Map<number, string | null>();
   const headUrl = (i: number) => {
     if (!faces.has(i)) faces.set(i, i >= 0 && i < assets.heads.count ? frameToCanvas(assets.heads.frame(i), assets.palette).toDataURL() : null);
@@ -269,6 +274,8 @@ function startGame(assets: Assets) {
   /** 正在玩的扩展包（外传）；它的职业接在原版职业后面，头像按包里写的借哪张 */
   let pack: PackAssets | null = null;
   ui.portrait = (cls) => {
+    const over = ui.faceOverride.get(cls);
+    if (over) return over;
     const look = pack?.rt.looks.get(cls);
     if (look) return look.face === null ? null : typeof look.face === 'string' ? (packFaceUrl(pack!.rt.id, look.face) ?? null) : headUrl(look.face);
     return headUrl(cls);
@@ -584,33 +591,27 @@ function startGame(assets: Assets) {
     if (pack?.rt.id !== stop.pack) pack = await openPack(assets, stop.pack);
     if (ticket !== loading) return;
     const rt = pack.rt, pa: Assets = { ...assets, data: rt.data, items: rt.data.items, pack };
-    const ids = [rt.classIds.get('sj-fugitive')!, rt.classIds.get('wusong')!, 0];
-    let view = townParty(campaign, rt);
-    // Old saves that never recorded package actors initialize once, not on every town visit.
-    for (const classId of ids) if (!view.members.some(m=>m.classId===classId)) {
-      const level = joinLevel(campaign) || 28;
-      view.members.push({ classId, level, exp: 0, slots: [...rt.data.classes[classId].defaultItems], forge: [] });
-    }
-    view = { ...view, active: ids };
+    const view = prepareInsertTown(campaign, rt, stop.next);
+    const ids = view.active!;
     campaign = saveTownParty(view, rt);
     writeSave(campaign);
     const spot = insertTownOf(stop.next) ?? 'itown:mainline/shizilou';
     setHere(spot);
     const u = new URL(location.href); u.searchParams.set('stage', spot); history.replaceState(null,'',u);
     if (!stop.seen) {
-      await ui.say('宋江', '二郎，你既要依文投营，哥哥不拦。只是孟州路远，我与武龙陪你走一程，也好从中照应。', ids[0]);
-      if (ticket !== loading) return;
-      await ui.say('武松', '哥哥肯这般相待，武松感激不尽。只是不可坏了公人的差事。', ids[1]);
-      if (ticket !== loading) return;
-      await ui.say('宋江', '只照应盘缠行李，不劫官差。且在城中置办些衣药，再一同上路。', ids[0]);
-      if (ticket !== loading) return;
+      for (const line of insertTownIntro(stop.next)) {
+        const actor = rt.classIds.get(line.actor)!;
+        await ui.say(rt.data.classes[actor].name, line.text, actor);
+        if (ticket !== loading) return;
+      }
       ui.endSkip();
       campaign = { ...campaign, insertTown: { ...stop, seen: true } };
       writeSave(campaign);
     }
     town.setAssets(pa);
     town.show({ ...townParty(campaign,rt), active: ids }, {
-      town: stop.town, title: '城镇 · 阳谷整备',
+      town: stop.town, title: `城镇 · ${insertTownName(stop.next)}`,
+      leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
       onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
     });
@@ -751,7 +752,7 @@ function startGame(assets: Assets) {
     const s = stageOf(c.stage);
     const l = stageLabel(s.title, s.mapName);
     const ins = c.insert ? inserts.find((x) => x.ref === c.insert) : undefined;
-    const where = c.insertTown ? "城镇 · 阳谷整备" : c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
+    const where = c.insertTown ? `城镇 · ${insertTownName(c.insertTown.next)}` : c.town ? `${l.chapterLabel} · 城镇 ${townName(c.town)}` : ins ? `${insChapter.get(ins.ref) ?? l.chapterLabel} ${ins.kind} · ${ins.title}` : l.full;
     const active = new Set(c.active ?? c.members.map((m) => m.classId));
     const team = c.members
       .filter((m) => active.has(m.classId))

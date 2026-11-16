@@ -65,7 +65,15 @@ describe('章节表', () => {
     expect(chapterOf('mainline/shizipo')).toBe(17);
     expect(chapterOf('mainline/zhangfu')).toBe(17);
     expect(chapterOf('mainline/yuanyanglou')).toBe(17);
-    expect(CHAPTERS).toHaveLength(17);
+    expect(chapterOf('mainline/xingzhe')).toBe(18);
+    expect(chapterOf('mainline/wugongling')).toBe(18);
+    expect(chapterOf('mainline/kongliang')).toBe(19);
+    expect(chapterOf('mainline/kongjiazhuang')).toBe(19);
+    expect(chapterOf('mainline/qingfengshan')).toBe(20);
+    expect(chapterOf('mainline/jieqiuche')).toBe(20);
+    expect(chapterOf('mainline/yekun')).toBe(21);
+    expect(chapterOf('mainline/shiyong')).toBe(21);
+    expect(CHAPTERS).toHaveLength(21);
   });
 });
 

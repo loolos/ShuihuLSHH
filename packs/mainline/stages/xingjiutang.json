@@ -1,0 +1,471 @@
+{
+  "id": "xingjiutang",
+  "title": "汤前相认",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act3-2"
+  },
+  "bgm": [
+    "eerie",
+    "brothers"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 8,
+      "y": 8,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 10,
+      "y": 8,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 12,
+      "y": 8,
+      "level": 29,
+      "facing": 3
+    },
+    {
+      "id": "lolo-1",
+      "class": 44,
+      "side": "ally",
+      "x": 7,
+      "y": 10,
+      "level": 5,
+      "ai": 8,
+      "name": "小喽啰"
+    },
+    {
+      "id": "lolo-2",
+      "class": 45,
+      "side": "ally",
+      "x": 13,
+      "y": 10,
+      "level": 5,
+      "ai": 8,
+      "name": "小喽啰"
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 10,
+      "y": 16,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "燕顺"
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "ally",
+      "x": 11,
+      "y": 16,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "王英"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 9,
+      "y": 16,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "郑天寿"
+    },
+    {
+      "id": "liugao-qi",
+      "class": "liugao-qi",
+      "side": "ally",
+      "x": 10,
+      "y": 17,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "刘高妻"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风山 · 山寨"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "likui"
+        ],
+        [
+          "narrate",
+          "小喽啰把三个绑在将军柱上。只听得有人说道：「大王方才睡，且等大王酒醒时，却请起来，剖这三个牛子的心肝，做醒酒汤。」"
+        ],
+        [
+          "say",
+          "likui",
+          "铁牛这身肉又粗又糙，做不得醒酒汤！快放俺下来厮杀！"
+        ],
+        [
+          "say",
+          "hero",
+          "铁牛莫嚷。哥哥，这番却怎生是好？"
+        ],
+        [
+          "narrate",
+          "约有三更时分，厅背后走出三五个小喽啰来，叫道：「大王起来了。」"
+        ],
+        [
+          "appear",
+          "yanshun"
+        ],
+        [
+          "move",
+          "yanshun",
+          10,
+          11
+        ],
+        [
+          "appear",
+          "wangying"
+        ],
+        [
+          "move",
+          "wangying",
+          12,
+          11
+        ],
+        [
+          "appear",
+          "zhengtianshou"
+        ],
+        [
+          "move",
+          "zhengtianshou",
+          8,
+          11
+        ],
+        [
+          "face",
+          "yanshun",
+          1
+        ],
+        [
+          "face",
+          "wangying",
+          1
+        ],
+        [
+          "face",
+          "zhengtianshou",
+          1
+        ],
+        [
+          "narrate",
+          "当中虎皮交椅上坐着一个大王：赤发黄须，双睛圆小，身上披着一领枣红纻丝衲袄。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "孩儿们，正好做醒酒汤。快动手，取下这三个牛子的心肝来，造三分酸辣汤。"
+        ],
+        [
+          "move",
+          "lolo-1",
+          8,
+          9
+        ],
+        [
+          "face",
+          "lolo-1",
+          "songjiang"
+        ],
+        [
+          "narrate",
+          "一个小喽啰掇一大铜盆水来，放在宋江面前；又一个小喽啰卷起袖子，手中明晃晃拿着一把剜心尖刀。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "可惜宋江死在这里！"
+        ],
+        [
+          "say",
+          "yanshun",
+          "住着！这厮却说甚么宋江？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我是济州郓城县做押司的宋江。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "你莫不是山东及时雨宋公明，杀了阎婆惜，逃出在江湖上的宋江么？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "小人便是。"
+        ],
+        [
+          "narrate",
+          "燕顺吃了一惊，便夺过小喽啰手内尖刀，把麻索都割断了，把自身上披的枣红纻丝衲袄脱下来，裹在宋江身上，纳头便拜。"
+        ],
+        [
+          "move",
+          "lolo-1",
+          7,
+          10
+        ],
+        [
+          "move",
+          "yanshun",
+          9,
+          9
+        ],
+        [
+          "face",
+          "yanshun",
+          "songjiang"
+        ],
+        [
+          "cleanse",
+          "songjiang"
+        ],
+        [
+          "cleanse",
+          "hero"
+        ],
+        [
+          "cleanse",
+          "likui"
+        ],
+        [
+          "say",
+          "yanshun",
+          "我弟兄们只把来剜心了，却不是误了天下好汉！若非天幸，使令仁兄自说出大名来，我等如何得知仔细。"
+        ],
+        [
+          "move",
+          "wangying",
+          11,
+          10
+        ],
+        [
+          "move",
+          "zhengtianshou",
+          8,
+          10
+        ],
+        [
+          "say",
+          "wangying",
+          "俺们只闻得哥哥大名，今日幸得拜识尊颜！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "量宋江有何德能，教足下如此挂心。这两个是我的兄弟武龙、李逵。"
+        ],
+        [
+          "say",
+          "likui",
+          "原来是自家人。早说时，铁牛也不嚷了这半夜。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "小弟原贯山东莱州人氏，姓燕名顺，别号锦毛虎。原是贩羊马客人出身，因消折了本钱，流落在绿林丛中打劫。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "这个兄弟姓王名英，为他五短身材，江湖上叫他做矮脚虎；那个姓郑名天寿，为他生得白净俊俏，人都号他做白面郎君。"
+        ],
+        [
+          "narrate",
+          "宋江说起杀了阎婆惜、投奔柴进和孔太公、如今要往清风寨寻小李广花荣。三个头领听了大喜，连夜宰牛杀马，筵席管待。"
+        ],
+        [
+          "title",
+          "数日之后"
+        ],
+        [
+          "narrate",
+          "时值腊月初旬，山东人年例，腊日上坟。小喽啰报上山来：「大路上一乘轿子，七八个人跟着，去坟头化纸。」"
+        ],
+        [
+          "say",
+          "wangying",
+          "这轿子里必是个妇人。"
+        ],
+        [
+          "narrate",
+          "王矮虎是个好色之徒，点起三五十小喽啰，便下山去了。"
+        ],
+        [
+          "leave",
+          "wangying"
+        ],
+        [
+          "narrate",
+          "不多时，王矮虎抢得那妇人，一径抢到山后房中。宋江听得，便同燕顺、郑天寿来看。"
+        ],
+        [
+          "appear",
+          "wangying"
+        ],
+        [
+          "move",
+          "wangying",
+          11,
+          13
+        ],
+        [
+          "appear",
+          "liugao-qi"
+        ],
+        [
+          "move",
+          "liugao-qi",
+          10,
+          13
+        ],
+        [
+          "move",
+          "songjiang",
+          10,
+          10
+        ],
+        [
+          "face",
+          "songjiang",
+          "liugao-qi"
+        ],
+        [
+          "say",
+          "songjiang",
+          "娘子，你是谁家宅眷？这般时节出来闲走，有甚么要紧？"
+        ],
+        [
+          "face",
+          "liugao-qi",
+          "songjiang"
+        ],
+        [
+          "say",
+          "liugao-qi",
+          "侍儿是清风寨知寨的浑家。为因母亲弃世，今得周年，特来坟前化纸。那里敢无事出来闲走。告大王垂救性命！"
+        ],
+        [
+          "narrate",
+          "宋江寻思：「花荣是清风寨武知寨，这妇人却是他同僚的浑家。我若不救时，日后花荣面上须不好看。」"
+        ],
+        [
+          "face",
+          "songjiang",
+          "wangying"
+        ],
+        [
+          "say",
+          "songjiang",
+          "王英兄弟，怎生看在下薄面并江湖上大义两字，放他下山，教他夫妻完聚如何？"
+        ],
+        [
+          "say",
+          "wangying",
+          "哥哥听禀：王英自来没个压寨夫人做伴。况兼如今世上，都是那大头巾弄得歹了，哥哥管他则甚！胡乱容小弟这些个。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "贤弟若要压寨夫人时，日后宋江拣一个停当好的，在下纳财进礼，娶一个伏侍贤弟。只是这个娘子是小人友人同僚正官之妻，怎地做个人情，放了他则个。"
+        ],
+        [
+          "narrate",
+          "燕顺、郑天寿便叫轿夫扶那妇人下山去。王矮虎又羞又闷，只不做声。"
+        ],
+        [
+          "say",
+          "liugao-qi",
+          "谢大王！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我不是山寨里大王，我自是郓城县客人。"
+        ],
+        [
+          "leave",
+          "liugao-qi"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥这一番好心。只是那妇人眼珠乱转，未必记得哥哥的恩。"
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥，那花荣有甚好处？俺在这山上吃酒吃肉，快活得紧，不去了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "铁牛，你性子躁，到那官府寨里，只怕惹出事来。你且在山上与三位头领作伴，我和武龙兄弟去去便回。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "李大哥只管住着，山寨里酒肉尽有。"
+        ],
+        [
+          "narrate",
+          "宋江又住了几日，辞别三位头领，和武龙两个背上包裹，下山投清风寨来。"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "victory",
+          "宋江在清风山说出名姓，与燕顺、王英、郑天寿相认；又劝王英放了清风寨刘知寨的浑家。李逵留在山寨，宋江与武龙投清风寨去。"
+        ]
+      ]
+    }
+  ]
+}

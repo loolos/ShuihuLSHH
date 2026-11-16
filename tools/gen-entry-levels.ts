@@ -5,7 +5,7 @@
 // 以前用 AI 对打模拟（tools/sim-lib.ts），但 AI 不会放技能、常在护送 / 限时关提前判负（N-add08、N08、N11、N13 等开打几回合就输），
 // 后期我方比正常游玩低 5 级左右（N14 平均 22，敌人平均 26），所以改用估算。
 // 再夹在两条线之间：不低于「这一关敌人平均等级 + MARGIN」（跳关时我方不比敌人弱，负责人 2026-11-13），
-// 不超过「到这一关为止原版敌人平均等级的最高值 + CAP」；不低于剧本里写的等级。
+// 不超过「到这一关为止自有敌人平均等级的最高值 + CAP」；不低于剧本里写的等级。
 // 小径的关（N-add04b、N-add09b）估算不到，照抄同一标题的大道关。改了经验规则或敌人等级后要重新生成。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -32,7 +32,7 @@ stages.forEach((s, pos) => {
   const r = rows.get(s.mapName.toLowerCase());
   if (!r) return;
   const cap = hardest + CAP;
-  // 战役关（有 2 级以上敌人、不是陪练）：我方不低于修正后敌人平均 + MARGIN；第一关（新游戏）照剧本
+  // 战役关（有 2 级以上敌人、不是陪练）：我方不低于自有配置的敌人平均 + MARGIN；第一关（新游戏）照剧本
   const floor = pos > 0 && r.design && r.foes && r.foeAvg > 1 ? Math.ceil(r.foeAvg) + MARGIN : 0;
   const row: Record<string, number> = {};
   for (const [id, lv] of [...r.entry].sort((a, b) => a[0] - b[0])) {
@@ -49,5 +49,5 @@ for (const { alt } of Object.values(ROUTES)) {
 
 const out = path.resolve(import.meta.dirname, '../src/data/entry-levels.json');
 const body = Object.entries(levels).map(([k, v]) => `    ${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(',\n');
-fs.writeFileSync(out, `{\n  "note": "tools/gen-entry-levels.ts 生成：主线期望值估算（tools/est-exp.ts）的入场等级，不低于该关敌人平均 + ${MARGIN}，不超过到该关为止原版敌人平均等级的最高值 + ${CAP}，不低于剧本等级",\n  "levels": {\n${body}\n  }\n}\n`);
+fs.writeFileSync(out, `{\n  "note": "tools/gen-entry-levels.ts 生成：主线期望值估算（tools/est-exp.ts）的入场等级，不低于该关敌人平均 + ${MARGIN}，不超过到该关为止自有敌人平均等级的最高值 + ${CAP}，不低于剧本等级",\n  "levels": {\n${body}\n  }\n}\n`);
 console.error(`写入 ${out}（${Object.keys(levels).length} 关）`);
