@@ -98,8 +98,8 @@
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 20,
-      "y": 17,
+      "x": 19,
+      "y": 15,
       "level": 29,
       "name": "郑天寿"
     },
@@ -125,8 +125,8 @@
       "id": "ally-3",
       "class": 44,
       "side": "ally",
-      "x": 20,
-      "y": 16,
+      "x": 19,
+      "y": 14,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -135,7 +135,7 @@
       "class": 45,
       "side": "ally",
       "x": 20,
-      "y": 18,
+      "y": 15,
       "level": 29,
       "name": "清风山喽啰"
     },
