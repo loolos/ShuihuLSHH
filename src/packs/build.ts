@@ -485,6 +485,13 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         select(a[0]);
         ops.push({ op: 116, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
         break;
+      case 'capture':
+        // 擒获：从敌军中移除、绑住并退场；不是归顺，也不复活或额外结算经验。
+        select(a[0]);
+        op(115, 1, { text: 'ally' });
+        op(105);
+        op(17, 2);
+        break;
       case 'defect': {
         // ['defect', 谁, 'player' | 'ally' | 'enemy'] 换阵营（黄信归降）【新】
         const side = String(a[1] ?? 'ally');
