@@ -2341,6 +2341,651 @@
     "face": {
       "file": "faces/kongming.png"
     }
+  },
+  {
+    "id": "qinming",
+    "name": "秦明",
+    "base": {
+      "hp": 110,
+      "mp": 90,
+      "attack": 70,
+      "defense": 28,
+      "hit": 85,
+      "agility": 28,
+      "crit": 15
+    },
+    "move": 6,
+    "weaponType": 1,
+    "items": [
+      0,
+      84,
+      113
+    ],
+    "skills": [
+      {
+        "id": "qm-bang",
+        "name": "狼牙棒",
+        "from": 221,
+        "anim": 0,
+        "learnLevel": 1,
+        "hits": [
+          {
+            "frame": 11,
+            "percent": 30,
+            "dir": 0
+          },
+          {
+            "frame": 14,
+            "percent": 30,
+            "dir": 0
+          },
+          {
+            "frame": 17,
+            "percent": 40,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-dangtou",
+        "name": "当头一棒",
+        "from": 221,
+        "anim": 0,
+        "learnLevel": 3,
+        "power": 30,
+        "mpCost": 25,
+        "stun": 30,
+        "hits": [
+          {
+            "frame": 11,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-pili-1",
+        "name": "霹雳火LV1",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 6,
+        "type": 14,
+        "area": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 20,
+        "mpCost": 30,
+        "effect": 42,
+        "hits": [
+          {
+            "frame": 12,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 17,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-nuhuo",
+        "name": "怒火攻心",
+        "from": 227,
+        "anim": 3,
+        "learnLevel": 10
+      },
+      {
+        "id": "qm-hengsao",
+        "name": "横扫千军",
+        "from": 226,
+        "anim": 2,
+        "learnLevel": 14,
+        "type": 12,
+        "area": 2,
+        "rangeMin": 0,
+        "rangeMax": 0,
+        "power": 30,
+        "mpCost": 45,
+        "hits": [
+          {
+            "frame": 11,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 16,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-pili-2",
+        "name": "霹雳火LV2",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 18,
+        "type": 14,
+        "area": 2,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 35,
+        "mpCost": 40,
+        "effect": 42,
+        "hits": [
+          {
+            "frame": 12,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 17,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-pili-3",
+        "name": "霹雳火LV3",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 25,
+        "type": 14,
+        "area": 3,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 50,
+        "mpCost": 50,
+        "effect": 42,
+        "hits": [
+          {
+            "frame": 12,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 17,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      }
+    ],
+    "sprite": {
+      "fromClass": 42,
+      "recolor": [
+        {
+          "src": [
+            [
+              224,
+              239
+            ],
+            [
+              160,
+              175
+            ]
+          ],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.8
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/qinming.png"
+    }
+  },
+  {
+    "id": "wangying",
+    "name": "王英",
+    "base": {
+      "hp": 85,
+      "mp": 70,
+      "attack": 56,
+      "defense": 22,
+      "hit": 95,
+      "agility": 42,
+      "crit": 15
+    },
+    "move": 7,
+    "weaponType": 4,
+    "items": [
+      0,
+      84,
+      113
+    ],
+    "skills": [
+      {
+        "id": "wy-qiang",
+        "name": "矮脚枪",
+        "from": 221,
+        "anim": 0,
+        "learnLevel": 1,
+        "hits": [
+          {
+            "frame": 9,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "wy-tiaojian",
+        "name": "虎跳涧",
+        "from": 221,
+        "anim": 0,
+        "learnLevel": 4,
+        "rangeMin": 1,
+        "rangeMax": 2,
+        "power": 25,
+        "mpCost": 20,
+        "hits": [
+          {
+            "frame": 9,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 13,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "wy-jianjing-1",
+        "name": "剪径枪LV1",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 8,
+        "pierce": true,
+        "area": 3,
+        "rangeMin": 1,
+        "rangeMax": 3,
+        "power": 20,
+        "mpCost": 30,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "wy-xiema",
+        "name": "歇马",
+        "from": 221,
+        "anim": 0,
+        "learnLevel": 12,
+        "mpCost": 0,
+        "power": 2,
+        "type": 8,
+        "area": 0,
+        "rangeMin": 0,
+        "rangeMax": 0,
+        "effect": 0,
+        "hitMod": 0,
+        "critMod": 0,
+        "hits": []
+      },
+      {
+        "id": "wy-jianjing-2",
+        "name": "剪径枪LV2",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 17,
+        "pierce": true,
+        "area": 4,
+        "rangeMin": 1,
+        "rangeMax": 4,
+        "power": 30,
+        "mpCost": 40,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "wy-jianjing-3",
+        "name": "剪径枪LV3",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 24,
+        "pierce": true,
+        "area": 5,
+        "rangeMin": 1,
+        "rangeMax": 5,
+        "power": 40,
+        "mpCost": 50,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      }
+    ],
+    "sprite": {
+      "fromClass": 43,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            160,
+            175
+          ],
+          "k": 1.0
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/wangying.png"
+    }
+  },
+  {
+    "id": "liugao",
+    "name": "刘高",
+    "base": {
+      "hp": 90,
+      "mp": 80,
+      "attack": 52,
+      "defense": 22,
+      "hit": 80,
+      "agility": 26,
+      "crit": 8
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      84,
+      0
+    ],
+    "skills": [
+      {
+        "id": "lg-bi",
+        "name": "刀笔",
+        "from": 194,
+        "anim": 0
+      },
+      {
+        "id": "lg-wugao",
+        "name": "罗织罪名",
+        "from": 196,
+        "anim": 1,
+        "power": 20,
+        "mpCost": 40
+      }
+    ],
+    "sprite": {
+      "fromClass": 68,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            144,
+            156
+          ],
+          "k": 0.35
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/liugao.png"
+    }
+  },
+  {
+    "id": "liugao-qi",
+    "name": "刘高妻",
+    "base": {
+      "hp": 40,
+      "mp": 20,
+      "attack": 10,
+      "defense": 8,
+      "hit": 50,
+      "agility": 20,
+      "crit": 0
+    },
+    "move": 4,
+    "weaponType": 0,
+    "items": [
+      0,
+      0,
+      0
+    ],
+    "skills": [],
+    "sprite": {
+      "fromClass": 30,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            64,
+            79
+          ],
+          "k": 1.0
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/liugao-qi.png"
+    }
+  },
+  {
+    "id": "huarong-mei",
+    "name": "花玉英",
+    "base": {
+      "hp": 40,
+      "mp": 20,
+      "attack": 10,
+      "defense": 8,
+      "hit": 50,
+      "agility": 20,
+      "crit": 0
+    },
+    "move": 4,
+    "weaponType": 0,
+    "items": [
+      0,
+      0,
+      0
+    ],
+    "skills": [],
+    "sprite": {
+      "fromClass": 31,
+      "recolor": [
+        {
+          "src": [
+            [
+              32,
+              47
+            ]
+          ],
+          "dst": [
+            120,
+            127
+          ],
+          "k": 1.2
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/huarong-mei.png"
+    }
+  },
+  {
+    "id": "yanshun",
+    "name": "燕顺",
+    "base": {
+      "hp": 100,
+      "mp": 100,
+      "attack": 60,
+      "defense": 25,
+      "hit": 65,
+      "agility": 35,
+      "crit": 15
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      96,
+      115
+    ],
+    "skills": [
+      {
+        "id": "ys-quan",
+        "name": "朴刀",
+        "from": 221,
+        "anim": 0
+      },
+      {
+        "id": "ys-lian",
+        "name": "连斩",
+        "from": 224,
+        "anim": 1
+      },
+      {
+        "id": "ys-xuan",
+        "name": "回旋斩",
+        "from": 225,
+        "anim": 2
+      },
+      {
+        "id": "ys-qi",
+        "name": "聚气",
+        "from": 227,
+        "anim": 3
+      }
+    ],
+    "sprite": {
+      "fromClass": 65,
+      "recolor": [
+        {
+          "src": [
+            [
+              240,
+              255
+            ],
+            [
+              144,
+              156
+            ],
+            [
+              80,
+              95
+            ]
+          ],
+          "dst": [
+            176,
+            191
+          ],
+          "k": 1
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/yanshun.png"
+    }
+  },
+  {
+    "id": "huangxin",
+    "name": "黄信",
+    "base": {
+      "hp": 95,
+      "mp": 80,
+      "attack": 64,
+      "defense": 26,
+      "hit": 90,
+      "agility": 32,
+      "crit": 12
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      85,
+      0
+    ],
+    "skills": [
+      {
+        "id": "hx-jian",
+        "name": "丧门剑",
+        "from": 221,
+        "anim": 0
+      },
+      {
+        "id": "hx-xuan",
+        "name": "镇三山",
+        "from": 225,
+        "anim": 1
+      },
+      {
+        "id": "hx-qi",
+        "name": "聚气",
+        "from": 227,
+        "anim": 2
+      }
+    ],
+    "sprite": {
+      "fromClass": 38,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.45
+        },
+        {
+          "src": [
+            [
+              224,
+              239
+            ]
+          ],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 1.0
+        }
+      ]
+    },
+    "face": {
+      "file": "faces/huangxin.png"
+    }
   }
 ],
   "stages": [
@@ -2363,6 +3008,12 @@
     "stages/xingzhe.json",
     "stages/wugongling.json",
     "stages/kongliang.json",
-    "stages/kongjiazhuang.json"
+    "stages/kongjiazhuang.json",
+    "stages/qingfengshan.json",
+    "stages/xingjiutang.json",
+    "stages/yuanxiao.json",
+    "stages/qianghuarong.json",
+    "stages/zhizhan.json",
+    "stages/jieqiuche.json"
   ]
 }

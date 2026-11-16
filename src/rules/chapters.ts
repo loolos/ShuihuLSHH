@@ -44,6 +44,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '夜走蜈蚣岭', stages: ['mainline/xingzhe', 'mainline/wugongling'] },
   // 负责人 2026-11-16（方案 A）：村店醉打孔亮一场仗，落溪被擒、孔家庄相认、瑞龙镇分路为剧情（原著第 32 回）
   { name: '醉打孔亮', stages: ['mainline/kongliang', 'mainline/kongjiazhuang'] },
+  // 负责人 2026-11-16：清风寨上半（原著第 32–34 回）：清风山被擒相认、元宵被诬、花荣抢人、掷盏为号、劫囚车（二龙山三人来援）
+  { name: '大闹清风寨', stages: ['mainline/qingfengshan', 'mainline/xingjiutang', 'mainline/yuanxiao', 'mainline/qianghuarong', 'mainline/zhizhan', 'mainline/jieqiuche'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
