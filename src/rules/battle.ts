@@ -331,6 +331,14 @@ export class Battle {
   foesOf(u: Unit) {
     return this.active().filter((t) => isFoe(u.side, t.side));
   }
+  /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，林间截囚的宋江）【新】 */
+  isBound(u: Unit) {
+    return u.stunTurns >= BOUND_TURNS - 1000; // 每回合照常减 1，留足余量
+  }
+  /** AI 眼里的敌人：去掉被绑住的 */
+  aiFoesOf(u: Unit) {
+    return this.foesOf(u).filter((t) => !this.isBound(t));
+  }
   /** 剧情临时出镜（show）的人占的格子：只是画面，不算在场，但几个人别叫到同一格 */
   private shown = new Map<number, Cell>();
   occupied(except?: Unit) {
@@ -1135,7 +1143,7 @@ export class Battle {
   private ambushTurn(u: Unit) {
     if (u.ai.mode !== 6) return void (u.ended = true);
     const r = alertRadius(this, u);
-    if (!this.foesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= r)) return void (u.ended = true);
+    if (!this.aiFoesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= r)) return void (u.ended = true);
     u.ai.mode = 0;
     this.appear(u);
     u.ended = false;
@@ -1238,7 +1246,7 @@ export class Battle {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     // 扩展包：某人生命低于一定比例【新】

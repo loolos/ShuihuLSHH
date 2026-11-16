@@ -1332,24 +1332,36 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       const sj = b.unit(s.units.findIndex((u) => u.id === 'songjiang'))!;
       expect(sj.present).toBe(true);
     }
-    // 劫囚车：开场武龙、李逵、王英；燕顺等是友军；第 2 回合花荣挣脱，第 3 回合二龙山三人，第 5 回合青州援军；全灭才胜
+    // 劫囚车：开场花荣、宋江绑在押送队里，敌人 AI 跳过被绑的人；第 2 回合花荣挣脱（不加防御），第 3 回合二龙山三人与 4 个官军，第 5 回合青州援军；
+    // 打光官军后还得有人走到宋江身边打开囚车才过关
     {
       const s = stage('jieqiuche'), b = start('jieqiuche'), kill = killer(b, s, 'hero');
+      const byId = (id: string) => b.unit(s.units.findIndex((u) => u.id === id))!;
       const here = () => b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.classId).sort();
-      expect(here()).toEqual([0, cid('likui'), cid('wangying')].sort());
-      expect(b.unit(s.units.findIndex((u) => u.id === 'yanshun'))!.side).toBe('ally');
+      expect(here()).toEqual([0, cid('likui'), cid('wangying'), cid('huarong'), cid('sj-fugitive')].sort());
+      const hr = byId('huarong'), sj = byId('songjiang'), hx = byId('huangxin');
+      expect(b.isBound(hr) && b.isBound(sj)).toBe(true);
+      expect(b.aiFoesOf(hx)).not.toContain(sj);
+      expect(byId('yanshun').side).toBe('ally');
       for (const u of b.units) if (u.side === 'player') u.hp = 99999;
       for (const u of b.units.filter((u) => u.side === 'enemy' && u.present)) kill(u);
       check(b); expect(b.status).toBe('playing');
       while (b.turn < 2) b.endPlayerPhase();
-      expect(here()).toContain(cid('huarong'));
+      expect(b.isBound(hr)).toBe(false);
+      expect(hr.buffs.length, '花荣挣脱不加防御').toBe(0);
+      expect(b.isBound(sj)).toBe(true);
       while (b.turn < 3) b.endPlayerPhase();
       expect(here()).toEqual(expect.arrayContaining([cid('wusong'), 16, 14]));
+      const early = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
+      expect(early.length, '第 3 回合少量官军').toBe(4);
+      for (const u of early) kill(u);
       while (b.turn < 5) b.endPlayerPhase();
       const wave = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
-      expect(wave.length, '第 5 回合青州援军').toBe(10);
+      expect(wave.length, '第 5 回合青州援军').toBe(18);
       for (const u of wave) kill(u);
-      check(b); expect(b.status).toBe('won');
+      check(b); expect(b.status, '宋江还没松绑').toBe('playing');
+      const w = byId('hero'); w.x = sj.x - 1; w.y = sj.y;
+      check(b); expect(b.isBound(sj)).toBe(false); expect(b.status).toBe('won');
       const out = (b as unknown as { out: BattleEvent[] }).out;
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('斩了'))).toBe(true);
     }
