@@ -54,7 +54,7 @@
       "x": 12,
       "y": 4,
       "level": 29,
-      "levelOffset": 6,
+      "levelOffset": 1,
       "facing": 3,
       "name": "王英"
     },
@@ -66,7 +66,7 @@
       "y": 5,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-2",
@@ -76,7 +76,7 @@
       "y": 6,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-3",
@@ -86,7 +86,7 @@
       "y": 6,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-4",
@@ -96,7 +96,7 @@
       "y": 5,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-5",
@@ -106,7 +106,7 @@
       "y": 8,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-6",
@@ -116,7 +116,7 @@
       "y": 8,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-7",
@@ -126,7 +126,7 @@
       "y": 9,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-8",
@@ -136,7 +136,7 @@
       "y": 9,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-9",
@@ -146,7 +146,7 @@
       "y": 9,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "lolo-10",
@@ -156,7 +156,7 @@
       "y": 9,
       "level": 29,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "yanshun",
@@ -165,7 +165,7 @@
       "x": 4,
       "y": 2,
       "level": 29,
-      "levelOffset": 6,
+      "levelOffset": 1,
       "hidden": true,
       "name": "燕顺"
     },
@@ -176,7 +176,7 @@
       "x": 19,
       "y": 2,
       "level": 29,
-      "levelOffset": 6,
+      "levelOffset": 1,
       "hidden": true,
       "name": "郑天寿"
     },
@@ -189,7 +189,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-2",
@@ -200,7 +200,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-3",
@@ -211,7 +211,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-4",
@@ -222,7 +222,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-5",
@@ -233,7 +233,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-6",
@@ -244,7 +244,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-7",
@@ -255,7 +255,7 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "wave-8",
@@ -266,7 +266,95 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 0,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 1,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 3,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 9,
+      "y": 2,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 14,
+      "y": 2,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 19,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-7",
+      "class": 22,
+      "side": "enemy",
+      "x": 5,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
+    },
+    {
+      "id": "wave2-8",
+      "class": 23,
+      "side": "enemy",
+      "x": 7,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "清风山喽啰",
+      "levelOffset": 0
     },
     {
       "id": "trap-1",
@@ -277,7 +365,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "trap-2",
@@ -288,7 +376,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "trap-3",
@@ -299,7 +387,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "trap-4",
@@ -310,7 +398,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "trap-5",
@@ -321,7 +409,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     },
     {
       "id": "trap-6",
@@ -332,7 +420,7 @@
       "level": 29,
       "hidden": true,
       "name": "埋伏的喽啰",
-      "levelOffset": 5
+      "levelOffset": 0
     }
   ],
   "script": [
@@ -443,6 +531,49 @@
         [
           "flag",
           "wave"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "山上锣声又响，又一伙喽啰打着火把抢下山来。"
+        ],
+        [
+          "appear",
+          "wave2-1"
+        ],
+        [
+          "appear",
+          "wave2-2"
+        ],
+        [
+          "appear",
+          "wave2-3"
+        ],
+        [
+          "appear",
+          "wave2-4"
+        ],
+        [
+          "appear",
+          "wave2-5"
+        ],
+        [
+          "appear",
+          "wave2-6"
+        ],
+        [
+          "appear",
+          "wave2-7"
+        ],
+        [
+          "appear",
+          "wave2-8"
         ]
       ]
     },

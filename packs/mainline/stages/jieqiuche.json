@@ -153,7 +153,7 @@
       "x": 19,
       "y": 27,
       "level": 29,
-      "levelOffset": 5,
+      "levelOffset": 2,
       "facing": 0,
       "name": "黄信"
     },
@@ -164,7 +164,7 @@
       "x": 15,
       "y": 27,
       "level": 29,
-      "levelOffset": 3,
+      "levelOffset": 1,
       "facing": 0,
       "name": "刘高"
     },
@@ -176,7 +176,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-2",
@@ -186,7 +186,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-3",
@@ -196,7 +196,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-4",
@@ -206,7 +206,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-5",
@@ -216,7 +216,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-6",
@@ -226,7 +226,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-7",
@@ -236,7 +236,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-8",
@@ -246,7 +246,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-9",
@@ -256,7 +256,7 @@
       "y": 27,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "soldier-10",
@@ -266,7 +266,7 @@
       "y": 27,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "archer-1",
@@ -276,7 +276,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "archer-2",
@@ -286,7 +286,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "archer-3",
@@ -296,7 +296,7 @@
       "y": 26,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "archer-4",
@@ -306,7 +306,7 @@
       "y": 28,
       "level": 29,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "cav-1",
@@ -315,7 +315,7 @@
       "x": 8,
       "y": 27,
       "level": 29,
-      "levelOffset": 4,
+      "levelOffset": 2,
       "name": "青州马军"
     },
     {
@@ -325,7 +325,7 @@
       "x": 9,
       "y": 26,
       "level": 29,
-      "levelOffset": 4,
+      "levelOffset": 2,
       "name": "青州马军"
     },
     {
@@ -335,7 +335,7 @@
       "x": 7,
       "y": 28,
       "level": 29,
-      "levelOffset": 4,
+      "levelOffset": 2,
       "name": "青州马军"
     },
     {
@@ -347,7 +347,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-2",
@@ -358,7 +358,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-3",
@@ -369,7 +369,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-4",
@@ -380,7 +380,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州马军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-5",
@@ -391,7 +391,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-6",
@@ -402,7 +402,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-7",
@@ -413,7 +413,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-8",
@@ -424,7 +424,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-9",
@@ -435,7 +435,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州军",
-      "levelOffset": 2
+      "levelOffset": 0
     },
     {
       "id": "wave-10",
@@ -446,7 +446,7 @@
       "level": 29,
       "hidden": true,
       "name": "青州马军",
-      "levelOffset": 2
+      "levelOffset": 0
     }
   ],
   "script": [

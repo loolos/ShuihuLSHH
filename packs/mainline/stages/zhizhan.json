@@ -40,7 +40,8 @@
       "level": 5,
       "ai": 8,
       "facing": 3,
-      "name": "黄信"
+      "name": "黄信",
+      "levelOffset": -1
     },
     {
       "id": "liugao",
@@ -51,7 +52,8 @@
       "level": 5,
       "ai": 8,
       "facing": 2,
-      "name": "刘高"
+      "name": "刘高",
+      "levelOffset": -1
     },
     {
       "id": "amb-1",
@@ -62,7 +64,8 @@
       "level": 5,
       "ai": 8,
       "hidden": true,
-      "name": "伏兵"
+      "name": "伏兵",
+      "levelOffset": -1
     },
     {
       "id": "amb-2",
@@ -73,7 +76,8 @@
       "level": 5,
       "ai": 8,
       "hidden": true,
-      "name": "伏兵"
+      "name": "伏兵",
+      "levelOffset": -1
     },
     {
       "id": "amb-3",
@@ -84,7 +88,8 @@
       "level": 5,
       "ai": 8,
       "hidden": true,
-      "name": "伏兵"
+      "name": "伏兵",
+      "levelOffset": -1
     },
     {
       "id": "amb-4",
@@ -95,7 +100,8 @@
       "level": 5,
       "ai": 8,
       "hidden": true,
-      "name": "伏兵"
+      "name": "伏兵",
+      "levelOffset": -1
     }
   ],
   "script": [
