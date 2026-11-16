@@ -6,9 +6,9 @@
     "gold": 0
   },
   "map": {
-    "base": "N-add12"
+    "base": "N-add04a"
   },
-  "tint": "dusk",
+  "tint": "night",
   "bgm": [
     "night",
     "tense"
@@ -18,8 +18,8 @@
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
-      "x": 32,
-      "y": 3,
+      "x": 17,
+      "y": 5,
       "level": 29,
       "facing": 2
     },
@@ -27,8 +27,8 @@
       "id": "huarong",
       "class": "huarong",
       "side": "player",
-      "x": 32,
-      "y": 5,
+      "x": 20,
+      "y": 7,
       "level": 29,
       "facing": 2
     },
@@ -36,8 +36,8 @@
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 28,
-      "y": 6,
+      "x": 16,
+      "y": 14,
       "level": 29,
       "facing": 2
     },
@@ -45,8 +45,8 @@
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 27,
-      "y": 7,
+      "x": 18,
+      "y": 15,
       "level": 29,
       "facing": 2
     },
@@ -54,8 +54,8 @@
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 30,
-      "y": 6,
+      "x": 20,
+      "y": 12,
       "level": 29,
       "facing": 2
     },
@@ -63,8 +63,8 @@
       "id": "yanshun",
       "class": "yanshun",
       "side": "ally",
-      "x": 33,
-      "y": 7,
+      "x": 11,
+      "y": 10,
       "level": 29,
       "name": "燕顺"
     },
@@ -72,8 +72,8 @@
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 34,
-      "y": 4,
+      "x": 23,
+      "y": 12,
       "level": 29,
       "name": "郑天寿"
     },
@@ -81,8 +81,8 @@
       "id": "ally-1",
       "class": 44,
       "side": "ally",
-      "x": 33,
-      "y": 5,
+      "x": 12,
+      "y": 11,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -90,8 +90,8 @@
       "id": "ally-2",
       "class": 45,
       "side": "ally",
-      "x": 34,
-      "y": 6,
+      "x": 23,
+      "y": 13,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -99,8 +99,8 @@
       "id": "ally-3",
       "class": 44,
       "side": "ally",
-      "x": 31,
-      "y": 4,
+      "x": 11,
+      "y": 12,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -108,8 +108,8 @@
       "id": "qinming",
       "class": "qinming",
       "side": "enemy",
-      "x": 9,
-      "y": 29,
+      "x": 18,
+      "y": 24,
       "level": 29,
       "levelOffset": 2,
       "facing": 0,
@@ -119,8 +119,8 @@
       "id": "qz-1",
       "class": 43,
       "side": "enemy",
-      "x": 10,
-      "y": 30,
+      "x": 17,
+      "y": 25,
       "level": 29,
       "levelOffset": 2,
       "name": "青州马军"
@@ -129,8 +129,8 @@
       "id": "qz-2",
       "class": 43,
       "side": "enemy",
-      "x": 8,
-      "y": 30,
+      "x": 19,
+      "y": 25,
       "level": 29,
       "levelOffset": 2,
       "name": "青州马军"
@@ -139,8 +139,8 @@
       "id": "qz-3",
       "class": 32,
       "side": "enemy",
-      "x": 11,
-      "y": 28,
+      "x": 15,
+      "y": 26,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -149,8 +149,8 @@
       "id": "qz-4",
       "class": 33,
       "side": "enemy",
-      "x": 7,
-      "y": 28,
+      "x": 17,
+      "y": 26,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -159,8 +159,8 @@
       "id": "qz-5",
       "class": 32,
       "side": "enemy",
-      "x": 10,
-      "y": 27,
+      "x": 20,
+      "y": 26,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -169,8 +169,8 @@
       "id": "qz-6",
       "class": 33,
       "side": "enemy",
-      "x": 8,
-      "y": 26,
+      "x": 18,
+      "y": 27,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -179,8 +179,8 @@
       "id": "qz-7",
       "class": 32,
       "side": "enemy",
-      "x": 12,
-      "y": 26,
+      "x": 15,
+      "y": 28,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -189,8 +189,8 @@
       "id": "qz-8",
       "class": 33,
       "side": "enemy",
-      "x": 6,
-      "y": 27,
+      "x": 20,
+      "y": 28,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -199,8 +199,8 @@
       "id": "qz-9",
       "class": 34,
       "side": "enemy",
-      "x": 5,
-      "y": 25,
+      "x": 16,
+      "y": 29,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -209,8 +209,8 @@
       "id": "qz-10",
       "class": 34,
       "side": "enemy",
-      "x": 9,
-      "y": 25,
+      "x": 18,
+      "y": 29,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -219,8 +219,8 @@
       "id": "qz-11",
       "class": 34,
       "side": "enemy",
-      "x": 13,
-      "y": 25,
+      "x": 20,
+      "y": 29,
       "level": 29,
       "levelOffset": 2,
       "name": "青州军"
@@ -229,7 +229,7 @@
       "id": "wave-1",
       "class": 32,
       "side": "enemy",
-      "x": 2,
+      "x": 17,
       "y": 33,
       "level": 29,
       "hidden": true,
@@ -240,8 +240,8 @@
       "id": "wave-2",
       "class": 33,
       "side": "enemy",
-      "x": 4,
-      "y": 34,
+      "x": 17,
+      "y": 32,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -251,7 +251,7 @@
       "id": "wave-3",
       "class": 32,
       "side": "enemy",
-      "x": 6,
+      "x": 16,
       "y": 33,
       "level": 29,
       "hidden": true,
@@ -262,8 +262,8 @@
       "id": "wave-4",
       "class": 34,
       "side": "enemy",
-      "x": 8,
-      "y": 34,
+      "x": 18,
+      "y": 33,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -273,8 +273,8 @@
       "id": "wave-5",
       "class": 32,
       "side": "enemy",
-      "x": 2,
-      "y": 35,
+      "x": 17,
+      "y": 34,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -284,8 +284,8 @@
       "id": "wave-6",
       "class": 33,
       "side": "enemy",
-      "x": 4,
-      "y": 35,
+      "x": 17,
+      "y": 31,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -295,8 +295,8 @@
       "id": "wave-7",
       "class": 32,
       "side": "enemy",
-      "x": 6,
-      "y": 35,
+      "x": 16,
+      "y": 32,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -306,8 +306,8 @@
       "id": "wave-8",
       "class": 43,
       "side": "enemy",
-      "x": 8,
-      "y": 35,
+      "x": 18,
+      "y": 32,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -317,7 +317,7 @@
       "id": "wave-9",
       "class": 33,
       "side": "enemy",
-      "x": 1,
+      "x": 15,
       "y": 33,
       "level": 29,
       "hidden": true,
@@ -328,7 +328,7 @@
       "id": "wave-10",
       "class": 34,
       "side": "enemy",
-      "x": 3,
+      "x": 19,
       "y": 33,
       "level": 29,
       "hidden": true,
@@ -339,8 +339,8 @@
       "id": "wave-11",
       "class": 32,
       "side": "enemy",
-      "x": 7,
-      "y": 33,
+      "x": 16,
+      "y": 34,
       "level": 29,
       "hidden": true,
       "name": "青州军",
@@ -350,7 +350,7 @@
       "id": "wave-12",
       "class": 33,
       "side": "enemy",
-      "x": 5,
+      "x": 18,
       "y": 34,
       "level": 29,
       "hidden": true,
@@ -364,7 +364,7 @@
       "do": [
         [
           "title",
-          "清风山 · 上山路"
+          "清风山 · 夜伏官道"
         ],
         [
           "narrate",
@@ -405,12 +405,12 @@
         [
           "say",
           "songjiang",
-          "那秦明性如烈火，只消引他上山。半山里已掘下陷坑，诱他来，便好拿他。"
+          "那秦明性如烈火，只消沿这官道引他上来。前方路中已掘下陷坑，两边又伏着人，诱他来，便好拿他。"
         ],
         [
           "say",
           "hero",
-          "小弟和铁牛在前面撩拨他，引那厮往坑边来！"
+          "小弟和铁牛在路中撩拨他，待他追近便往北退，引那厮从两边伏兵中间冲进坑里！"
         ],
         [
           "buff",
@@ -422,7 +422,7 @@
         ],
         [
           "objective",
-          "胜利：把秦明引进半山的陷坑（图上标出的地方），或打倒他（秦明铠甲坚厚，很难打倒）\n失败：宋江或武龙倒下；超过 20 回合"
+          "胜利：把秦明引进官道北段的陷坑（图上标出的地方），或打倒他（秦明铠甲坚厚，很难打倒）\n失败：宋江或武龙倒下；超过 20 回合"
         ],
         [
           "turnLimit",
@@ -430,7 +430,7 @@
         ],
         [
           "tint",
-          "dusk"
+          "night"
         ]
       ]
     },
@@ -445,7 +445,7 @@
         ],
         [
           "narrate",
-          "天色渐渐黑了。山上只是放冷箭、丢擂木，秦明越发焦躁。"
+          "夜色渐深。官道两侧伏着的喽啰只是放冷箭、丢擂木，秦明越发焦躁。"
         ]
       ]
     },
@@ -512,10 +512,10 @@
       "on": {
         "enter": "qinming",
         "area": [
-          21,
-          7,
-          26,
-          11
+          14,
+          9,
+          19,
+          12
         ]
       },
       "do": [
