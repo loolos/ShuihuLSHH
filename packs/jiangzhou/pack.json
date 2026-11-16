@@ -987,7 +987,7 @@
      }
     ]
    },
-   "face": null
+   "face": { "file": "faces/huangxin.png" }
   },
   {
    "id": "lvfang",
