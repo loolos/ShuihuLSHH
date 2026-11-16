@@ -265,6 +265,7 @@ function startGame(assets: Assets) {
   const seed = params.has('seed') ? Number(params.get('seed')) : undefined;
   const ui = new BattleUI();
   ui.tr = assets.tr;
+  if (assets.data.heroNickname) ui.extraNicknames = { [assets.data.heroName]: assets.data.heroNickname };
   const faces = new Map<number, string | null>();
   const headUrl = (i: number) => {
     if (!faces.has(i)) faces.set(i, i >= 0 && i < assets.heads.count ? frameToCanvas(assets.heads.frame(i), assets.palette).toDataURL() : null);

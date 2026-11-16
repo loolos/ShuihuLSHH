@@ -165,6 +165,8 @@ code { color: var(--ink); }
 #unit-panel .info { flex: 1 1 auto; min-width: 0; }
 #dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
 #dialog-who:empty { display: none; }
+/* 原著绰号：名字前小一号、淡一些（src/rules/nicknames.ts） */
+#dialog-who .nick, #unit-panel .name .nick { font-size: 0.82em; color: var(--muted); margin-right: 0.3em; }
 #dialog-text { color: #fff; font-size: 17px; line-height: 1.7; white-space: pre-line; }
 #dialog-skip { position: absolute; top: -17px; right: 12px; font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; cursor: pointer; }
 #dialog-hint { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--muted); }
