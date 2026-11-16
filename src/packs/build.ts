@@ -254,6 +254,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     castSpeed: s.castSpeed,
     hitFx: s.hitFx,
     arrowFx: s.arrowFx,
+    pierce: s.pierce,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,

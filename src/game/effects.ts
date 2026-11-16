@@ -73,7 +73,12 @@ export interface FxSpot {
  * - 遠程（10）：从施放者脚下沿直线飞到施放点（0x404080），碰到目标就停。
  * 集气技、范围为 0 的技能只有施放点一格。
  */
-export function fxSpots(s: Pick<SkillDef, 'type'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
+export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
+  if (s.type === 10 && s.pierce) {
+    // 穿透：箭从施放者脚下一路飞到线尾，不在第一个目标处停下
+    const line = area.length ? area : [at];
+    return [{ cell: from, ring: 0 }, ...line.map((c) => ({ cell: c, ring: Math.abs(c.x - from.x) + Math.abs(c.y - from.y) }))];
+  }
   if (s.type === 10) {
     const dx = Math.sign(at.x - from.x), dy = Math.sign(at.y - from.y);
     const out: FxSpot[] = [];

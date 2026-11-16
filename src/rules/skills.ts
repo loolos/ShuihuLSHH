@@ -80,6 +80,11 @@ export function castCells(board: Board, at: Cell, [lo, hi]: [number, number], sh
   return out;
 }
 
+/** 穿透技（SkillDef.pierce）的直线长度：至少 area 格；装备射程让施放点更远时延长到施放点 */
+export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): number {
+  return Math.max(1, s.area, Math.abs(at.x - from.x) + Math.abs(at.y - from.y));
+}
+
 /**
  * 技能的作用范围（原版 0x408b10 按类型分派，跳转表 0x408b94）：
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
@@ -93,6 +98,10 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
   const out: Cell[] = [];
   const add = (x: number, y: number) => board.inBounds(x, y) && out.push({ x, y });
   const size = Math.max(1, s.area);
+  if (s.pierce) {
+    for (let i = 1; i <= pierceLength(from, s, at); i++) add(from.x + dir.x * i, from.y + dir.y * i);
+    return out;
+  }
   switch (s.type) {
     case 0:
     case 5:
