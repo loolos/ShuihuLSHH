@@ -1366,6 +1366,29 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('斩了'))).toBe(true);
     }
   });
+  it('夜困霹雳使用官道遇伏兵地图与明亮夜色，陷坑和两侧伏兵全部连通，南路第4回合增援', () => {
+    const s = stage('yekun'), input = compileStage(rt, s, files), b = new Battle(input);
+    expect(s.map).toEqual({ base: 'N-add04a' });
+    expect(s.tint).toBe('night');
+    const trap = s.script.find(blk => typeof blk.on === 'object' && 'enter' in blk.on && blk.on.enter === 'qinming')!.on as { area: number[] };
+    const [x1, y1, x2, y2] = trap.area;
+    const reachable = new Set([...b.board.reach({ x: 18, y: 24 }, 1000, new Set()).values()].map(c => `${c.x},${c.y}`));
+    for (const u of s.units) expect(reachable.has(`${u.x},${u.y}`), u.id).toBe(true);
+    for (let y = y1; y <= y2; y++) for (let x = x1; x <= x2; x++) expect(b.board.passable(x, y), `陷坑 ${x},${y}`).toBe(true);
+    expect(s.units.filter(u => u.side === 'ally').some(u => u.x < x1)).toBe(true);
+    expect(s.units.filter(u => u.side === 'ally').some(u => u.x > x2)).toBe(true);
+    b.begin();
+    expect(b.units.filter(u => u.side === 'enemy' && u.present)).toHaveLength(12);
+    // 只推进回合事件，避免自动对打干扰增援时点。
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(2);
+    expect(b.units.filter(u => u.side === 'enemy' && u.present)).toHaveLength(12);
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(3);
+    expect(b.units.filter(u => u.side === 'enemy' && u.present)).toHaveLength(24);
+    expect(s.units.filter(u => u.id.startsWith('wave-')).every(u => u.y >= 30)).toBe(true);
+    const tints = s.script.flatMap(blk => blk.do.filter(op => op[0] === 'tint').map(op => op[1]));
+    expect(tints.every(tint => tint === 'night')).toBe(true);
+  });
+
   it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
     const ids = ['yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'];
     for (const id of ids) {
@@ -1396,7 +1419,8 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(qm.buffs.some((x) => x.stat === 'defense' && x.value > 0)).toBe(true);
       expect(b.objectiveZones().some((z) => z.kind === 'goal')).toBe(true);
       check(b); expect(b.status).toBe('playing');
-      Object.assign(qm, { x: 23, y: 9 }); check(b);
+      const trap = s.script.find(blk => typeof blk.on === 'object' && 'enter' in blk.on && blk.on.enter === 'qinming')!.on as { area: number[] };
+      Object.assign(qm, { x: trap.area[0] + 1, y: trap.area[1] + 1 }); check(b);
       expect(b.status).toBe('won');
     }
     {
