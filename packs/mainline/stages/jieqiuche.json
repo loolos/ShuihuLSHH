@@ -62,8 +62,8 @@
       "id": "wusong",
       "class": "wusong",
       "side": "player",
-      "x": 20,
-      "y": 25,
+      "x": 14,
+      "y": 26,
       "level": 29,
       "hidden": true
     },
@@ -71,7 +71,7 @@
       "id": "luzhishen",
       "class": 16,
       "side": "player",
-      "x": 20,
+      "x": 13,
       "y": 26,
       "level": 29,
       "hidden": true
@@ -80,7 +80,7 @@
       "id": "yangzhi",
       "class": 14,
       "side": "player",
-      "x": 20,
+      "x": 14,
       "y": 27,
       "level": 29,
       "hidden": true
@@ -89,7 +89,7 @@
       "id": "yanshun",
       "class": "yanshun",
       "side": "ally",
-      "x": 14,
+      "x": 15,
       "y": 16,
       "level": 29,
       "name": "燕顺"
@@ -98,8 +98,8 @@
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 20,
-      "y": 20,
+      "x": 19,
+      "y": 17,
       "level": 29,
       "name": "郑天寿"
     },
@@ -107,8 +107,8 @@
       "id": "ally-1",
       "class": 44,
       "side": "ally",
-      "x": 13,
-      "y": 16,
+      "x": 15,
+      "y": 15,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -116,7 +116,7 @@
       "id": "ally-2",
       "class": 45,
       "side": "ally",
-      "x": 14,
+      "x": 15,
       "y": 17,
       "level": 29,
       "name": "清风山喽啰"
@@ -125,8 +125,8 @@
       "id": "ally-3",
       "class": 44,
       "side": "ally",
-      "x": 21,
-      "y": 20,
+      "x": 20,
+      "y": 17,
       "level": 29,
       "name": "清风山喽啰"
     },
@@ -134,8 +134,8 @@
       "id": "ally-4",
       "class": 45,
       "side": "ally",
-      "x": 22,
-      "y": 20,
+      "x": 19,
+      "y": 18,
       "level": 29,
       "name": "清风山喽啰"
     },
