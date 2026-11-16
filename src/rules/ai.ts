@@ -33,7 +33,7 @@ interface Option {
 
 /** 原版默认 AI 追的是单位表里第一个敌对单位（EXE 0x40d930），即 ACT 中排在最前的敌人 */
 export function primaryFoe(b: Battle, u: Unit): Unit | undefined {
-  return b.foesOf(u)[0];
+  return b.aiFoesOf(u)[0];
 }
 
 /**
@@ -46,7 +46,7 @@ function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiP
   const basic = attackSkill(u, b.data);
   const skills = [basic, ...learnedSkills(u, b.data).filter((s) => !isSupportSkill(s) && s.mpCost <= u.mp)];
   const main = primaryFoe(b, u);
-  const foes = b.foesOf(u);
+  const foes = b.aiFoesOf(u);
   // 敌兵远射技（§6.6）：先只考虑能打到 2 人以上的放法；完全没有别的攻击可用时才单打一人
   let best: Option | null = null, lone: Option | null = null;
   for (const n of reach.values()) {
@@ -57,7 +57,8 @@ function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiP
         // 远射技选点多：落点附近（范围大小 + 1 以内）没有敌人就跳过
         if (skill.volley && !foes.some((t) => dist(t, cell) <= Math.max(1, skill.area) + 1)) continue;
         const hit = b.affected(u, skill, cell, at);
-        if (!hit.length || (only && !hit.includes(only))) continue;
+        // 绑住的人一律不碰：落点会波及被绑的人就不选【新】
+        if (!hit.length || (only && !hit.includes(only)) || hit.some((t) => b.isBound(t))) continue;
         let expected = 0, kills = 0;
         for (const t of hit) {
           const p = previewAttack(self, t, skill);
@@ -154,7 +155,7 @@ function allyChargePlan(b: Battle, u: Unit): AiPlan | null {
 }
 
 function foesWithin(b: Battle, u: Unit, radius: number) {
-  return b.foesOf(u).filter((t) => dist(u, t) <= radius);
+  return b.aiFoesOf(u).filter((t) => dist(u, t) <= radius);
 }
 
 /**
@@ -215,7 +216,7 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       return bestAttack(b, u, undefined, 0) ?? {};
     case 12: {
       // 【新】守屋：屋子（范围存在目标 / 目标点字段，见 guardRoom）里没有敌人时同模式 11；有敌人进来就转为模式 0 出战，之后一直出战
-      if (!b.foesOf(u).some((t) => inGuardRoom(u, t))) return bestAttack(b, u, undefined, 0) ?? {};
+      if (!b.aiFoesOf(u).some((t) => inGuardRoom(u, t))) return bestAttack(b, u, undefined, 0) ?? {};
       u.ai.mode = 0;
       return defaultPlan(b, u);
     }
