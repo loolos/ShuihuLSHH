@@ -1307,6 +1307,17 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       while (b.status === 'playing' && b.turn < 8) { for (const u of b.units) if (u.side === 'player') u.hp = 99999; out.push(...b.endPlayerPhase()); }
       expect(b.status).toBe('won');
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('绊脚索'))).toBe(true);
+      // 绊翻之后埋伏的喽啰从四边围上来：都登场、都往三人身边挤（前面的喽啰已经围满时站在外圈）
+      const heroes = ['songjiang', 'hero', 'likui'].map((id) => b.unit(s.units.findIndex((u) => u.id === id))!);
+      const traps = s.units.filter((u) => u.id.startsWith('trap-'));
+      expect(traps.length).toBe(6);
+      for (const j of traps) {
+        const t = b.unit(s.units.findIndex((x) => x.id === j.id))!;
+        const d = (x: number, y: number) => Math.min(...heroes.map((h) => Math.abs(h.x - x) + Math.abs(h.y - y)));
+        expect(t.present).toBe(true);
+        expect(d(t.x, t.y), `${j.id} ${t.x},${t.y}`).toBeLessThanOrEqual(d(j.x, j.y));
+        expect(d(t.x, t.y), `${j.id} ${t.x},${t.y}`).toBeLessThanOrEqual(4);
+      }
     }
     // 花荣抢人：花荣、武龙两人；后堂第 4 回合有人杀出；打光才过关，宋江战后登场
     {

@@ -209,6 +209,66 @@
       "level": 29,
       "hidden": true,
       "name": "清风山喽啰"
+    },
+    {
+      "id": "trap-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 0,
+      "y": 9,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
+    },
+    {
+      "id": "trap-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 0,
+      "y": 10,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
+    },
+    {
+      "id": "trap-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 22,
+      "y": 9,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
+    },
+    {
+      "id": "trap-4",
+      "class": 23,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
+    },
+    {
+      "id": "trap-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 10,
+      "y": 19,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
+    },
+    {
+      "id": "trap-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 12,
+      "y": 19,
+      "level": 29,
+      "hidden": true,
+      "name": "埋伏的喽啰"
     }
   ],
   "script": [
@@ -299,6 +359,10 @@
           "say",
           "zhengtianshou",
           "王英哥哥休慌，兄弟来也！"
+        ],
+        [
+          "flag",
+          "wave"
         ]
       ]
     },
@@ -337,6 +401,82 @@
           "hurt"
         ],
         [
+          "act",
+          "hero",
+          "hurt"
+        ],
+        [
+          "act",
+          "likui",
+          "hurt"
+        ],
+        [
+          "appear",
+          "trap-1"
+        ],
+        [
+          "appear",
+          "trap-2"
+        ],
+        [
+          "appear",
+          "trap-3"
+        ],
+        [
+          "appear",
+          "trap-4"
+        ],
+        [
+          "appear",
+          "trap-5"
+        ],
+        [
+          "appear",
+          "trap-6"
+        ],
+        [
+          "approach",
+          "trap-1",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-2",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-3",
+          "likui"
+        ],
+        [
+          "approach",
+          "trap-4",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-5",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-6",
+          "likui"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "likui"
+        ],
+        [
           "say",
           "likui",
           "鸟人使绊子！放俺起来，一个个都砍了！"
@@ -364,7 +504,8 @@
       ]
     },
     {
-      "on": "allEnemiesDefeated",
+      "on": "enemiesDefeated",
+      "if": "wave",
       "do": [
         [
           "narrate",
@@ -378,6 +519,82 @@
           "act",
           "songjiang",
           "hurt"
+        ],
+        [
+          "act",
+          "hero",
+          "hurt"
+        ],
+        [
+          "act",
+          "likui",
+          "hurt"
+        ],
+        [
+          "appear",
+          "trap-1"
+        ],
+        [
+          "appear",
+          "trap-2"
+        ],
+        [
+          "appear",
+          "trap-3"
+        ],
+        [
+          "appear",
+          "trap-4"
+        ],
+        [
+          "appear",
+          "trap-5"
+        ],
+        [
+          "appear",
+          "trap-6"
+        ],
+        [
+          "approach",
+          "trap-1",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-2",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-3",
+          "likui"
+        ],
+        [
+          "approach",
+          "trap-4",
+          "songjiang"
+        ],
+        [
+          "approach",
+          "trap-5",
+          "hero"
+        ],
+        [
+          "approach",
+          "trap-6",
+          "likui"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "likui"
         ],
         [
           "say",
