@@ -36,8 +36,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     const man=openLib(fs.readFileSync(path.join(DATA,'Data/Man.lib')));
     for (let tier=1;tier<=3;tier++) {
       const s=skill(`穿云贯日LV${tier}`);
-      expect(s).toMatchObject({power:tier*20,critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8});
+      expect(s).toMatchObject({power:tier*20,critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8,castSpeed:2,arrowFx:'fire'});
       expect(attackParts(s)).toHaveLength(tier+1);
+      expect(skillFx(s)?.projectile).toBe(true); // 箭逐格飞出，arrowFx 火苗跟着箭走
       expect(s.hits.reduce((n,h)=>n+h.percent,0)).toBe(100);
       for (let dir=0;dir<4;dir++) {
         const r=man.actions[man.classes[34].first+3*4+dir];
@@ -45,6 +46,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
         expect(s.hits.map(h=>h.frame)).toEqual(Array.from({length:tier+1},(_,i)=>20+26*i));
       }
     }
+  });
+  it('出手播放倍率：穿云贯日2倍、连珠飞星1.8倍（负责人 2026-11-16），其余原速', () => {
+    expect(skill('连珠飞星').castSpeed).toBe(1.8);
+    expect(skill('连珠飞星').arrowFx).toBeUndefined();
+    for (const n of ['百步穿杨','雁落平沙','澄心引弦']) expect(skill(n).castSpeed).toBeUndefined();
   });
   it('连珠飞星四向均为自身前方3×8，共24格，不包含自身与背后，边缘自动截断', () => {
     const s=skill('连珠飞星');

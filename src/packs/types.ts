@@ -107,6 +107,8 @@ export interface PackSkillJson {
   castSpeed?: number;
   /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
   hitFx?: 'blood' | 'explosion' | 'impact';
+  /** 遠程技飞行中的箭的画面效果：fire = 火箭（只是画面） */
+  arrowFx?: 'fire';
   rangeMin?: number;
   rangeMax?: number;
   area?: number;

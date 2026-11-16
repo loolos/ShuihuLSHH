@@ -1086,6 +1086,28 @@ export class BattleScene extends Phaser.Scene {
 
   /** 地图上的飘字：照原版用调色板色（伤害红、回血绿、回气黄，见 float-text.ts），加黑描边保证在地图上看得清【新】。
    *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
+  /** 火苗（技能 arrowFx: 'fire'）：在 (wx, wy) 附近冒 n 个橙黄色小火团，往上飘、缩小、淡出；big = 命中处那一团【新】 */
+  private flames(wx: number, wy: number, depth: number, n: number, big = false) {
+    const colors = [0xfff0a0, 0xffc040, 0xff7a18, 0xe03a08];
+    for (let i = 0; i < n; i++) {
+      const r = (big ? 3.5 : 2.2) + Math.random() * (big ? 3 : 2);
+      const x0 = wx + (Math.random() - 0.5) * (big ? 22 : 8);
+      const y0 = wy + (Math.random() - 0.5) * (big ? 14 : 6);
+      const f = this.add.circle(x0, y0, r, colors[Math.floor(Math.random() * colors.length)]).setDepth(depth).setBlendMode(Phaser.BlendModes.ADD);
+      this.tweens.add({
+        targets: f,
+        x: x0 + (Math.random() - 0.5) * 8,
+        y: y0 - (big ? 18 + Math.random() * 18 : 6 + Math.random() * 10),
+        scale: 0.25,
+        alpha: 0,
+        delay: big ? Math.random() * 160 : 0,
+        duration: (big ? 420 : 260) + Math.random() * 160,
+        ease: 'Quad.easeOut',
+        onComplete: () => f.destroy(),
+      });
+    }
+  }
+
   /** 溅血（技能 hitFx: 'blood'）：受击者胸口迸出几滴红点，抛物线落下后淡出；必杀多溅几滴 */
   private bloodSplash(x: number, y: number, crit = false) {
     const p = cellToWorld(x, y);
@@ -1341,6 +1363,12 @@ export class BattleScene extends Phaser.Scene {
                     const p = cellToWorld(sp.cell.x, sp.cell.y);
                     const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(sp.cell.x, sp.cell.y, 10));
                     s.play(anim);
+                    // 火箭：飞行中的箭（遠程技第一段）染成橙红，每到一格在箭身上冒几簇火苗
+                    if (pi === 0 && fx?.projectile && skill.arrowFx === 'fire') {
+                      s.setTint(0xffa060);
+                      const c = s.getCenter();
+                      this.flames(c.x ?? p.x, c.y ?? p.y - 30, depthOf(sp.cell.x, sp.cell.y, 10.5), 4);
+                    }
                     const done = () => {
                       if (s.active) s.destroy();
                       r();
@@ -1389,6 +1417,7 @@ export class BattleScene extends Phaser.Scene {
                   // 爆炸：每段命中都在受击者身上炸一次，不等它放完（声音只在受击动作那段出）
                   const hg = skill.hitFx ? HIT_FX_GROUP[skill.hitFx] : undefined;
                   if (dmg !== null && dmg > 0 && hg !== undefined) void this.hitEffect(tv, hg, lead);
+                  if (dmg !== null && dmg > 0 && skill.arrowFx === 'fire') this.flames(cellToWorld(tv.x, tv.y).x, cellToWorld(tv.x, tv.y).y - 34, depthOf(tv.x, tv.y, 11), crit ? 16 : 10, true);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
                     this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
