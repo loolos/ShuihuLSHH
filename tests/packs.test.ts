@@ -1269,6 +1269,15 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
     expect(s.map).toEqual({base:'N-add07'});
     expect([b.board.width,b.board.height]).toEqual([36,36]);
+    const left = s.units.find(u=>u.id==='yanshun')!, right=s.units.find(u=>u.id==='zhengtianshou')!;
+    for(const id of ['hero','likui','wangying']) {
+      const u=s.units.find(u=>u.id===id)!;
+      // 等距画面的左右由x-y决定：三名可控好汉在两位头领之间，并保持近距离。
+      expect(u.x-u.y,id).toBeGreaterThan(left.x-left.y);
+      expect(u.x-u.y,id).toBeLessThan(right.x-right.y);
+      expect(Math.abs(u.x-left.x)+Math.abs(u.y-left.y),id).toBeLessThanOrEqual(5);
+      expect(Math.abs(u.x-right.x)+Math.abs(u.y-right.y),id).toBeLessThanOrEqual(5);
+    }
     const prisoner = s.units.find(u=>u.id==='songjiang')!;
     const field = b.board.distanceField([prisoner]);
     const seen = new Set<string>();
