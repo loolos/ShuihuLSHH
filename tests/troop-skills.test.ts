@@ -112,3 +112,16 @@ describe('敌方 16 级起基础移动力至少 5（负责人 2026-11-15）', ()
     expect(baseMove(cls(4), 16, 'ally')).toBe(4);
   });
 });
+
+describe('杂兵「遠程攻擊」最远打到第 3 格（负责人 2026-11-15）', () => {
+  it('带装备射程也不超过 3 格；士兵一线 2 格的施放点最远第 2 格；弓箭手不受影响', () => {
+    const u = (id: number, level: number, rangeBonus: number) => ({ classId: id, level, stats: { rangeBonus } }) as never;
+    for (const id of TROOP_REACH_CLASSES) {
+      const s = learnedSkills(u(id, 20, 0), data).find((k) => k.skillId === 222)!;
+      const reach = (bonus: number) => castRange(u(id, 20, bonus), s, data)[1] + Math.max(0, s.area - 1);
+      expect(reach(0), `职业 ${id}`).toBe(3);
+      expect(reach(2), `职业 ${id}`).toBe(3);
+    }
+    expect(classes[34].skills[0].reachCap).toBeUndefined();
+  });
+});

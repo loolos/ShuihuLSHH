@@ -22,6 +22,8 @@ export interface SkillDef extends ClassSkill {
   hitFx?: 'blood' | 'explosion';
   /** 固定伤害系数（取代远程距离系数）：敌兵远射技伤害 = 正常公式 × 此值（§6.6） */
   damageScale?: number;
+  /** 最远打到第几格（含线形范围的延伸），装备射程加上去也不超过（杂兵「遠程攻擊」为 3，§6.6） */
+  reachCap?: number;
   /** 敌兵远射技（§6.6）：AI 只在能打到 2 人以上、或没有别的攻击可用时才放；不计入迎击警戒半径 */
   volley?: boolean;
 }
@@ -302,6 +304,10 @@ function troopSkills(id: number, own: SkillDef[]): SkillDef[] {
   return out;
 }
 
+/** 杂兵「遠程攻擊」（棍棒、叉等，技能 222 类型 6；不含弓箭手）最远打到第 3 格，装备射程也不超过（负责人 2026-11-15） */
+export const TROOP_REACH_CAP = 3;
+const capTroopReach = (id: number, s: SkillDef): SkillDef => (GRUNT_CLASSES.has(id) && s.skillId === 222 && s.type === 6 ? { ...s, reachCap: TROOP_REACH_CAP } : s);
+
 /**
  * 隐藏技（原版要古武術祕笈，HUM 技能子项 +5 = 1）改为好汉自带技能，随等级领悟【新】（负责人 2026-11-13）：
  * LV2、LV3 的习得等级照原版；LV1 原版是 1 级，改为 LV2 的习得等级 − 4（不低于 1）。如楊春 靈蛇出洞 LV2 10 级 → LV1 6 级。
@@ -346,8 +352,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       goldCap: r.goldCap,
       defaultItems: r.defaultItems,
       skills: unlockHiddenSkills([
-        ...own,
-        ...troopSkills(r.id, own),
+        ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
       ]),
     };
