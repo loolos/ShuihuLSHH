@@ -355,7 +355,8 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
     y: u.y,
     level: u.level,
     flags: (ai << 8) | (u.hidden || u.offstage ? 1 : 0),
-    extra: [0, 0, 0],
+    // AI 12 守屋：屋子范围借 ACT 的目标 / 目标点字段存（目标 = x2 << 8 | y2，目标点 = x1, y1）
+    extra: u.guardArea ? [(u.guardArea[2] << 8) | u.guardArea[3], u.guardArea[0], u.guardArea[1]] : [0, 0, 0],
     items,
     raw: [],
   };

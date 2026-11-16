@@ -29,8 +29,14 @@
       "y": 5,
       "level": 28,
       "levelOffset": 0,
-      "ai": 11,
-      "facing": 2
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        13,
+        1,
+        22,
+        11
+      ]
     },
     {
       "id": "zhangtuanlian",
@@ -40,8 +46,14 @@
       "y": 5,
       "level": 28,
       "levelOffset": 0,
-      "ai": 11,
-      "facing": 2
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        13,
+        1,
+        22,
+        11
+      ]
     },
     {
       "id": "jiangmenshen",
@@ -51,8 +63,14 @@
       "y": 7,
       "level": 28,
       "levelOffset": 0,
-      "ai": 11,
-      "facing": 2
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        13,
+        1,
+        22,
+        11
+      ]
     },
     {
       "id": "attendant",
@@ -579,6 +597,69 @@
         [
           "turnLimit",
           20
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "jiangmenshen"
+      },
+      "do": [
+        [
+          "say",
+          "jiangmenshen",
+          "武二郎……快活林那顿打还未消，今夜又撞在你手里！"
+        ],
+        [
+          "say",
+          "wusong",
+          "你这厮夺人买卖、设计害我。快活林饶你一命，今夜却饶你不得！"
+        ],
+        [
+          "narrate",
+          "蒋门神急要挣扎时，武松早落一刀，劈脸剁着，和那交椅都砍翻了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangdujian"
+      },
+      "do": [
+        [
+          "say",
+          "zhangdujian",
+          "武松！我抬举你做亲随，待你不薄，你怎敢……"
+        ],
+        [
+          "say",
+          "wusong",
+          "你抬举我，原来是要我的性命！恩将仇报的是你，不是武松！"
+        ],
+        [
+          "narrate",
+          "张都监方才伸得脚动，被武松当时一刀，齐耳根连脖子砍着，扑地倒在楼板上。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangtuanlian"
+      },
+      "do": [
+        [
+          "say",
+          "zhangtuanlian",
+          "反了！一个配军也敢杀朝廷命官！"
+        ],
+        [
+          "say",
+          "wusong",
+          "你替蒋门神出头，买嘱公人在飞云浦害我，还说甚么命官！"
+        ],
+        [
+          "narrate",
+          "张团练终是武官出身，虽然酒醉，还有些气力，提起一把交椅抡将来；武松早接个住，就势一推，赶入去一刀砍翻。"
         ]
       ]
     },

@@ -1342,7 +1342,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     b.endPlayerPhase();expect(b.status).toBe('playing');expect(b.turn).toBe(2);
     expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(18);
     const y=start('yuanyanglou'), foes=y.units.filter(u=>u.side==='enemy');
-    const bosses=foes.filter(u=>u.ai.mode===11);
+    const bosses=foes.filter(u=>u.ai.mode===12);
     for(const u of y.units)if(u.side==='player')u.hp=99999;
     const kill=(u:Unit)=>{u.hp=0;u.alive=false;u.present=false;};
     for(const u of bosses.slice(0,2))kill(u);
