@@ -1470,7 +1470,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-lianpi",
@@ -1525,7 +1526,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-xuanfeng",
@@ -1569,7 +1571,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     },
     {
         "id": "lk-kuanglan-lv4",
@@ -1595,7 +1598,8 @@
         "area": 2,
         "critMod": 20,
         "hitMod": 0,
-        "effect": 0
+        "effect": 0,
+        "hitFx": "explosion"
     }
 ],
     "sprite": {

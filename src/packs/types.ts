@@ -105,8 +105,8 @@ export interface PackSkillJson {
   castCycles?: number;
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
-  /** 命中时受击者身上的简单画面效果：blood = 溅血（只是画面） */
-  hitFx?: 'blood';
+  /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
+  hitFx?: 'blood' | 'explosion';
   rangeMin?: number;
   rangeMax?: number;
   area?: number;
