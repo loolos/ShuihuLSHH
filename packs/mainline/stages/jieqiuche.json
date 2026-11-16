@@ -1,0 +1,653 @@
+{
+  "id": "jieqiuche",
+  "title": "劫囚车",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 300
+  },
+  "map": {
+    "base": "N07",
+    "crop": [
+      16,
+      16,
+      38,
+      38
+    ]
+  },
+  "bgm": [
+    "rescue",
+    "army",
+    "battle2"
+  ],
+  "units": [
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 30,
+      "y": 27,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 29,
+      "y": 26,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "player",
+      "x": 29,
+      "y": 28,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 17,
+      "y": 27,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 17,
+      "y": 28,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 1,
+      "y": 26,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "luzhishen",
+      "class": 16,
+      "side": "player",
+      "x": 0,
+      "y": 27,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "yangzhi",
+      "class": 14,
+      "side": "player",
+      "x": 1,
+      "y": 28,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 24,
+      "y": 23,
+      "level": 29,
+      "name": "燕顺"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 23,
+      "y": 30,
+      "level": 29,
+      "name": "郑天寿"
+    },
+    {
+      "id": "ally-1",
+      "class": 44,
+      "side": "ally",
+      "x": 25,
+      "y": 23,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-2",
+      "class": 45,
+      "side": "ally",
+      "x": 23,
+      "y": 23,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-3",
+      "class": 44,
+      "side": "ally",
+      "x": 22,
+      "y": 31,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-4",
+      "class": 45,
+      "side": "ally",
+      "x": 23,
+      "y": 31,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "huangxin",
+      "class": "huangxin",
+      "side": "enemy",
+      "x": 19,
+      "y": 27,
+      "level": 29,
+      "levelOffset": 1,
+      "facing": 0,
+      "name": "黄信"
+    },
+    {
+      "id": "liugao",
+      "class": "liugao",
+      "side": "enemy",
+      "x": 15,
+      "y": 27,
+      "level": 29,
+      "levelOffset": 0,
+      "facing": 0,
+      "name": "刘高"
+    },
+    {
+      "id": "soldier-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 18,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-3",
+      "class": 33,
+      "side": "enemy",
+      "x": 16,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 20,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-8",
+      "class": 33,
+      "side": "enemy",
+      "x": 20,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-9",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 27,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "soldier-10",
+      "class": 33,
+      "side": "enemy",
+      "x": 21,
+      "y": 27,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "archer-1",
+      "class": 34,
+      "side": "enemy",
+      "x": 12,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "archer-2",
+      "class": 34,
+      "side": "enemy",
+      "x": 12,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "archer-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 26,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "archer-4",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 28,
+      "level": 29,
+      "name": "青州军"
+    },
+    {
+      "id": "cav-1",
+      "class": 43,
+      "side": "enemy",
+      "x": 8,
+      "y": 27,
+      "level": 29,
+      "name": "青州马军"
+    },
+    {
+      "id": "cav-2",
+      "class": 43,
+      "side": "enemy",
+      "x": 9,
+      "y": 26,
+      "level": 29,
+      "name": "青州马军"
+    },
+    {
+      "id": "cav-3",
+      "class": 43,
+      "side": "enemy",
+      "x": 7,
+      "y": 28,
+      "level": 29,
+      "name": "青州马军"
+    },
+    {
+      "id": "wave-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军"
+    },
+    {
+      "id": "wave-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军"
+    },
+    {
+      "id": "wave-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 15,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军"
+    },
+    {
+      "id": "wave-4",
+      "class": 43,
+      "side": "enemy",
+      "x": 3,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "青州马军"
+    },
+    {
+      "id": "wave-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 4,
+      "y": 1,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军"
+    },
+    {
+      "id": "wave-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 5,
+      "y": 0,
+      "level": 29,
+      "hidden": true,
+      "name": "青州军"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "portrait",
+          "wusong",
+          "faces/wusong-xingzhe.png"
+        ],
+        [
+          "title",
+          "清风山下 · 青州大路"
+        ],
+        [
+          "narrate",
+          "黄信、刘高押着两辆囚车，离了清风寨，行不过三四十里，前面望见一座大林子。"
+        ],
+        [
+          "narrate",
+          "只听得山坡上锣声响处，一伙喽啰抢将出来，拦住去路。"
+        ],
+        [
+          "focus",
+          "yanshun"
+        ],
+        [
+          "say",
+          "yanshun",
+          "来往的到此当住脚！留下三千两买路黄金，任从过去。"
+        ],
+        [
+          "focus",
+          "huangxin"
+        ],
+        [
+          "say",
+          "huangxin",
+          "你那厮们不得无礼，镇三山在此！"
+        ],
+        [
+          "focus",
+          "wangying"
+        ],
+        [
+          "say",
+          "wangying",
+          "你便是镇万山，也要三千两买路黄金！"
+        ],
+        [
+          "say",
+          "likui",
+          "少废话！把公明哥哥放下来，饶你们鸟命！"
+        ],
+        [
+          "say",
+          "hero",
+          "囚车里是宋江哥哥和花荣兄弟，杀过去！"
+        ],
+        [
+          "objective",
+          "胜利：打倒黄信、刘高和全部官军（第 5 回合青州还有接应人马）\n失败：武龙或花荣倒下；超过 25 回合"
+        ],
+        [
+          "turnLimit",
+          25
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "囚车里的花荣见了，把囚车掀开，便跳出来，将这缚索都挣断了，就军汉手里夺过一张弓、一壶箭。"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "say",
+          "huarong",
+          "黄信！你那掷盏的手段，今番须还你！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "西边大路上尘头起处，三筹好汉杀将过来——却是二龙山的武行者、花和尚鲁智深、青面兽杨志，得了武龙的书，连夜赶来！"
+        ],
+        [
+          "appear",
+          "wusong"
+        ],
+        [
+          "appear",
+          "luzhishen"
+        ],
+        [
+          "appear",
+          "yangzhi"
+        ],
+        [
+          "say",
+          "luzhishen",
+          "洒家来也！哪个撮鸟敢押宋三郎？"
+        ],
+        [
+          "say",
+          "wusong",
+          "哥哥！兄弟来了！"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "官军休走，杨志在此！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "do": [
+        [
+          "narrate",
+          "青州方向又来了一彪官军——是黄信先差人去调的接应人马！"
+        ],
+        [
+          "appear",
+          "wave-1"
+        ],
+        [
+          "appear",
+          "wave-2"
+        ],
+        [
+          "appear",
+          "wave-3"
+        ],
+        [
+          "appear",
+          "wave-4"
+        ],
+        [
+          "appear",
+          "wave-5"
+        ],
+        [
+          "appear",
+          "wave-6"
+        ],
+        [
+          "flag",
+          "wave"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huangxin"
+      },
+      "do": [
+        [
+          "narrate",
+          "黄信见势头不好，拨回马，独自飞马奔回清风镇去了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "liugao"
+      },
+      "do": [
+        [
+          "narrate",
+          "刘高见头势不好，拨转马头便走，却被喽啰拽翻，横拖倒拽，绑在一边。"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "if": "wave",
+      "do": [
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "narrate",
+          "官军都杀散了。众好汉打开囚车，救出宋江。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "若不是众位兄弟舍命，宋江今番必死！"
+        ],
+        [
+          "say",
+          "huarong",
+          "刘高这厮恩将仇报，今番须饶他不得！"
+        ],
+        [
+          "narrate",
+          "花荣亲手把刘高斩了，替宋江出了这口恶气。"
+        ],
+        [
+          "say",
+          "luzhishen",
+          "宋三郎，洒家和武二郎、杨制使先回二龙山去。日后有用着洒家处，只消一封书来！"
+        ],
+        [
+          "say",
+          "wusong",
+          "哥哥保重。兄弟在二龙山专等哥哥消息。"
+        ],
+        [
+          "narrate",
+          "二龙山三位好汉辞别众人，自回山去了。众人拥着宋江、花荣，都上清风山来。"
+        ],
+        [
+          "leave",
+          "wusong"
+        ],
+        [
+          "leave",
+          "luzhishen"
+        ],
+        [
+          "leave",
+          "yangzhi"
+        ],
+        [
+          "victory",
+          "众好汉在清风山下劫了囚车，救出宋江、花荣。黄信逃回清风镇，刘高被花荣所杀。二龙山三位好汉回山，众人都上清风山。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下，劫囚车失败。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huarong"
+      },
+      "do": [
+        [
+          "defeat",
+          "花荣又被官军拿住了。"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,412 @@
+{
+  "id": "qianghuarong",
+  "title": "花荣抢人",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "guanfu"
+  },
+  "bgm": [
+    "rescue",
+    "battle"
+  ],
+  "units": [
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 11,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hj-1",
+      "class": 32,
+      "side": "ally",
+      "x": 9,
+      "y": 21,
+      "level": 29,
+      "name": "花家军汉",
+      "levelOffset": -2
+    },
+    {
+      "id": "hj-2",
+      "class": 33,
+      "side": "ally",
+      "x": 14,
+      "y": 21,
+      "level": 29,
+      "name": "花家军汉",
+      "levelOffset": -2
+    },
+    {
+      "id": "hj-3",
+      "class": 32,
+      "side": "ally",
+      "x": 10,
+      "y": 21,
+      "level": 29,
+      "name": "花家军汉",
+      "levelOffset": -2
+    },
+    {
+      "id": "hj-4",
+      "class": 33,
+      "side": "ally",
+      "x": 13,
+      "y": 21,
+      "level": 29,
+      "name": "花家军汉",
+      "levelOffset": -2
+    },
+    {
+      "id": "jiaotou",
+      "class": 39,
+      "side": "enemy",
+      "x": 12,
+      "y": 13,
+      "level": 29,
+      "levelOffset": 0,
+      "facing": 2,
+      "name": "穿白的教头"
+    },
+    {
+      "id": "soldier-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 13,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "soldier-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 18,
+      "y": 13,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "soldier-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 15,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "soldier-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 15,
+      "y": 15,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "soldier-5",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 12,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "soldier-6",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "archer-1",
+      "class": 34,
+      "side": "enemy",
+      "x": 15,
+      "y": 6,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "archer-2",
+      "class": 34,
+      "side": "enemy",
+      "x": 19,
+      "y": 6,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "guard-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 5,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "guard-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 18,
+      "y": 5,
+      "level": 29,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "wave-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 3,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "wave-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 4,
+      "y": 3,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "wave-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 4,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "wave-4",
+      "class": 34,
+      "side": "enemy",
+      "x": 4,
+      "y": 5,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高军汉"
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 18,
+      "y": 3,
+      "level": 29,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风寨 · 刘知寨衙门"
+        ],
+        [
+          "narrate",
+          "花荣披挂，拴束了弓箭，绰枪上马，带了三五十名军汉，都拖枪拽棒，直奔到刘高寨里来。"
+        ],
+        [
+          "say",
+          "huarong",
+          "刘知寨！你便是个正知寨，待怎的奈何了花荣！"
+        ],
+        [
+          "narrate",
+          "把门军人见花荣头势不好，尽皆吃惊，都四散走了。厅前却还有刘高手下一伙军汉，一个穿白的教头拦在当院。"
+        ],
+        [
+          "say",
+          "jiaotou",
+          "花知寨，这是刘知寨衙门，你怎敢带人打进来！"
+        ],
+        [
+          "say",
+          "huarong",
+          "你这军士们，冤各有头，债各有主。看我先射大门上左边门神的骨朵头！"
+        ],
+        [
+          "narrate",
+          "搭上箭，拽满弓，只一箭，正中左边门神的骨朵头。"
+        ],
+        [
+          "say",
+          "huarong",
+          "再看我第二枝箭，要射右边门神这头盔上朱缨！"
+        ],
+        [
+          "narrate",
+          "飕的一箭，不偏不斜，正中缨头上。"
+        ],
+        [
+          "say",
+          "huarong",
+          "你们众人再看我第三枝箭，要射你那队里穿白的教头心窝！"
+        ],
+        [
+          "narrate",
+          "那教头吃了一惊，却硬着头皮，喝众军汉向前。"
+        ],
+        [
+          "say",
+          "hero",
+          "公明哥哥必被锁在后面廊下，打将进去！"
+        ],
+        [
+          "objective",
+          "胜利：武龙冲进后衙找到宋江，并打退刘高的军汉（第 4 回合后堂还有人杀出）\n失败：花荣或武龙倒下；超过 20 回合"
+        ],
+        [
+          "turnLimit",
+          20
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "后堂又抢出一伙军汉来！"
+        ],
+        [
+          "appear",
+          "wave-1"
+        ],
+        [
+          "appear",
+          "wave-2"
+        ],
+        [
+          "appear",
+          "wave-3"
+        ],
+        [
+          "appear",
+          "wave-4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "hero",
+        "area": [
+          13,
+          1,
+          22,
+          10
+        ]
+      },
+      "do": [
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "narrate",
+          "武龙抢进廊下，只见宋江被铁锁锁在那里，两腿都打烂了。武龙一刀劈开锁，扶起宋江。"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥，小弟来迟了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟！刘高那厮还有军汉，休放走了一个去报信！"
+        ],
+        [
+          "flag",
+          "found"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "if": "found",
+      "do": [
+        [
+          "narrate",
+          "刘高的军汉都四散走了。刘高躲在后堂，不敢出来。"
+        ],
+        [
+          "say",
+          "huarong",
+          "哥哥受苦了！小弟扶哥哥回寨去。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "贤弟，我这番出来，那刘高夫妻岂肯干休，必然连夜申状去州里。吃饭防噎，行路防跌。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "今晚我先走上清风山去躲避，你明日却和他白赖，终久只是文武不和相殴的官司。"
+        ],
+        [
+          "say",
+          "hero",
+          "小弟陪哥哥去，路上也有个照应。"
+        ],
+        [
+          "victory",
+          "花荣、武龙打进刘高衙门，救出宋江。宋江连夜投清风山去躲避。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huarong"
+      },
+      "do": [
+        [
+          "defeat",
+          "花荣倒下，抢不出宋江。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下，抢不出宋江。"
+        ]
+      ]
+    }
+  ]
+}
