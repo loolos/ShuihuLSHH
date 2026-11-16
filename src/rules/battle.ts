@@ -1593,6 +1593,26 @@ export class Battle {
           this.emit({ type: 'look', uid: sel.uid, classId: op.value });
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
           break;
+        // 116 走到某人身边（扩展包【新】，夜过清风山喽啰围上来）：args.toward = 目标编组；挑走得到、没人占、离目标最近的格子（同样近取路短的）；
+        // 已经挨着就不动，走不近也不动（不在场或已倒下的人跳过）
+        case 116: {
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          if (!sel || !t || !sel.present || !sel.alive || !t.present || dist(sel, t) === 1) break;
+          const reach = this.reachOf(sel, 99);
+          const taken = this.occupied(sel);
+          // 身边四格都被占了（已经围满）就挤到离目标最近的空格
+          let best: Cell[] = [], bestD = dist(sel, t);
+          for (const k of reach.keys()) {
+            if (taken.has(k)) continue;
+            const [x, y] = k.split(',').map(Number);
+            const d = Math.abs(x - t.x) + Math.abs(y - t.y);
+            if (d === 0 || d > bestD) continue;
+            const path = pathTo(reach, x, y);
+            if (path.length > 1 && (d < bestD || path.length < best.length)) { best = path; bestD = d; }
+          }
+          if (best.length) this.walk(sel, best);
+          break;
+        }
         // 115 换阵营（扩展包【新】，黄信归降）：text = player / ally / enemy；换了以后本回合不再行动，血条换色
         case 115: {
           if (!sel || !op.text) break;

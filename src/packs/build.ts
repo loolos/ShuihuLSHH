@@ -480,6 +480,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         select(a[0]);
         op(106);
         break;
+      case 'approach':
+        // ['approach', 谁, 走到谁身边] 自动挑一格相邻的空格走过去（目标位置事先不知道时用）【新】
+        select(a[0]);
+        ops.push({ op: 116, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
+        break;
       case 'defect': {
         // ['defect', 谁, 'player' | 'ally' | 'enemy'] 换阵营（黄信归降）【新】
         const side = String(a[1] ?? 'ally');
