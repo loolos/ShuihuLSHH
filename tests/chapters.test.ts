@@ -67,13 +67,15 @@ describe('章节表', () => {
     expect(chapterOf('mainline/yuanyanglou')).toBe(17);
     expect(chapterOf('mainline/xingzhe')).toBe(18);
     expect(chapterOf('mainline/wugongling')).toBe(18);
-    expect(chapterOf('mainline/kongliang')).toBe(19);
-    expect(chapterOf('mainline/kongjiazhuang')).toBe(19);
-    expect(chapterOf('mainline/qingfengshan')).toBe(20);
-    expect(chapterOf('mainline/jieqiuche')).toBe(20);
-    expect(chapterOf('mainline/yekun')).toBe(21);
-    expect(chapterOf('mainline/shiyong')).toBe(21);
-    expect(CHAPTERS).toHaveLength(21);
+    // 负责人 2026-11-16：蜈蚣岭、孔亮两章合成第十八章「行者武松」，后面各章减一
+    expect(chapterOf('mainline/kongliang')).toBe(18);
+    expect(chapterOf('mainline/kongjiazhuang')).toBe(18);
+    expect(chapterLabel(18)).toBe('第十八章 行者武松');
+    expect(chapterOf('mainline/qingfengshan')).toBe(19);
+    expect(chapterOf('mainline/jieqiuche')).toBe(19);
+    expect(chapterOf('mainline/yekun')).toBe(20);
+    expect(chapterOf('mainline/shiyong')).toBe(20);
+    expect(CHAPTERS).toHaveLength(20);
   });
 });
 
