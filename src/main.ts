@@ -145,7 +145,7 @@ function startGame(assets: Assets) {
   }
   const townValue = (i: number) => `town:${i}`;
   /** 主线插关与续篇（docs/game-design.md §15.8、§15.10）：位置和先后都按章节表（src/rules/chapters.ts） */
-  // kind：有敌人的叫「战役」，纯剧情过场叫「剧情」（和原版关一样；插关不占原版的战役编号）
+  // kind：有真正要打的敌人（不是 ai 8 演员）叫「战役」，纯剧情过场叫「剧情」（元宵看灯、掷盏为号里的敌人只是演员）（和原版关一样；插关不占原版的战役编号）
   const packStages = new Map(
     listPacks()
       .filter((e) => e.pack.entry === 'mainline')
@@ -155,7 +155,7 @@ function startGame(assets: Assets) {
   if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
   const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; townAfter?: number })[] = insertPlaces().flatMap((p) => {
     const s = packStages.get(p.ref.toLowerCase());
-    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy') ? '战役' : '剧情' }] : [];
+    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy' && u.ai !== 8) ? '战役' : '剧情' }] : [];
   });
   const insValue = (ref: string) => `ins:${ref}`;
   /** 续篇城镇（townAfter）之后接哪一段：章节表里紧跟它的插关 */
