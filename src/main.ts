@@ -273,6 +273,8 @@ function startGame(assets: Assets) {
   /** 正在玩的扩展包（外传）；它的职业接在原版职业后面，头像按包里写的借哪张 */
   let pack: PackAssets | null = null;
   ui.portrait = (cls) => {
+    const over = ui.faceOverride.get(cls);
+    if (over) return over;
     const look = pack?.rt.looks.get(cls);
     if (look) return look.face === null ? null : typeof look.face === 'string' ? (packFaceUrl(pack!.rt.id, look.face) ?? null) : headUrl(look.face);
     return headUrl(cls);

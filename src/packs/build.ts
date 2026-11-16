@@ -508,6 +508,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'wait':
         op(113, Math.max(0, Math.min(5000, Number(a[0]) || 0)));
         break;
+      case 'portrait':
+        // ['portrait', 职业, 头像文件（包内路径，空 = 恢复职业自己的头像）] 本关之后的对白、面板换这张头像（如武松改扮行者）
+        op(114, r.classRef(a[0]), { text: String(a[1] ?? '') });
+        break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
     }

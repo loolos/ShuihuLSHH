@@ -30,6 +30,8 @@ export class BattleUI {
   private face = document.createElement('img');
   /** 职业 → 头像图片地址；没有头像时返回 null */
   portrait: (classId: number) => string | null = () => null;
+  /** 本关剧本换过的头像（扩展包指令 114）：职业号 → 图片地址；main.ts 的 portrait 先查这里，换关时清空 */
+  faceOverride = new Map<number, string>();
   /** 文字转换（繁→简） */
   tr: (s: string) => string = (s) => s;
 
