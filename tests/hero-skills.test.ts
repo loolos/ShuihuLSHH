@@ -10,7 +10,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import type { SkillDef } from '../src/rules/data.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA } from '../tools/sim-lib.ts';
-import { FX_EXPLOSION, fxGroups } from '../src/game/effects.ts';
+import { FX_EXPLOSION, FX_IMPACT, fxGroups } from '../src/game/effects.ts';
 
 const available = fs.existsSync(path.join(DATA, 'Data/Human.hum'));
 describe.skipIf(!available)('武松、李逵技能重做', () => {
@@ -72,6 +72,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
       const s=skill('wusong',`横江断浪LV${tier}`);
       expect(s).toMatchObject({power:20,area:tier+2,rangeMin:1,rangeMax:1,mpCost:[50,65,80,95][tier-1],type:1});
       expect(attackParts(s)).toHaveLength(2);
+      expect(s.hitFx).toBe('impact');expect(fxGroups(s)).toEqual([FX_IMPACT]); // 命中的人身上迸白色打击火花
       for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
         const cells=areaCells(board,from,s,{x:from.x+dx,y:from.y+dy});
         expect(cells).toHaveLength([5,8,13,18][tier-1]);
