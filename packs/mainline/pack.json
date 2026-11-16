@@ -2196,6 +2196,151 @@
     "face": {
       "fromHead": 28
     }
+  },
+  {
+    "id": "kongliang",
+    "name": "孔亮",
+    "base": {
+      "hp": 150,
+      "mp": 120,
+      "attack": 66,
+      "defense": 26,
+      "hit": 80,
+      "agility": 40,
+      "crit": 15
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      98,
+      116,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "kl-0",
+        "name": "独火拳",
+        "from": 179,
+        "anim": 0
+      },
+      {
+        "id": "kl-1",
+        "name": "火星乱迸",
+        "from": 181,
+        "anim": 1,
+        "power": 20,
+        "mpCost": 30
+      },
+      {
+        "id": "kl-2",
+        "name": "聚火",
+        "from": 182,
+        "anim": 2
+      }
+    ],
+    "sprite": {
+      "fromClass": 62,
+      "recolor": [
+        {
+          "src": [
+            [
+              16,
+              31
+            ]
+          ],
+          "dst": [
+            32,
+            47
+          ],
+          "k": 0.8
+        },
+        {
+          "src": [
+            [
+              64,
+              79
+            ]
+          ],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.5
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 62
+    }
+  },
+  {
+    "id": "kongming",
+    "name": "孔明",
+    "base": {
+      "hp": 160,
+      "mp": 110,
+      "attack": 64,
+      "defense": 28,
+      "hit": 78,
+      "agility": 36,
+      "crit": 10
+    },
+    "move": 5,
+    "weaponType": 0,
+    "items": [
+      0,
+      98,
+      116,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "km-0",
+        "name": "毛头拳",
+        "from": 183,
+        "anim": 0
+      },
+      {
+        "id": "km-1",
+        "name": "扫星腿",
+        "from": 185,
+        "anim": 1,
+        "power": 20,
+        "mpCost": 30
+      }
+    ],
+    "sprite": {
+      "fromClass": 63,
+      "recolor": [
+        {
+          "src": [
+            [
+              48,
+              63
+            ],
+            [
+              96,
+              111
+            ]
+          ],
+          "dst": [
+            176,
+            191
+          ],
+          "k": 0.8
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 63
+    }
   }
 ],
   "stages": [
@@ -2216,6 +2361,8 @@
     "stages/feiyunpu.json",
     "stages/yuanyanglou.json",
     "stages/xingzhe.json",
-    "stages/wugongling.json"
+    "stages/wugongling.json",
+    "stages/kongliang.json",
+    "stages/kongjiazhuang.json"
   ]
 }

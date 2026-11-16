@@ -1,0 +1,448 @@
+{
+  "id": "kongjiazhuang",
+  "title": "孔家庄·兄弟相认",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act4-2"
+  },
+  "bgm": [
+    "brothers",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 11,
+      "y": 14,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 10,
+      "y": 17,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 11,
+      "y": 17,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 10,
+      "y": 16,
+      "level": 29,
+      "hidden": true
+    },
+    {
+      "id": "kongming",
+      "class": "kongming",
+      "side": "ally",
+      "x": 10,
+      "y": 13,
+      "level": 5,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "kongliang",
+      "class": "kongliang",
+      "side": "ally",
+      "x": 12,
+      "y": 13,
+      "level": 5,
+      "ai": 8,
+      "facing": 3
+    },
+    {
+      "id": "zk-1",
+      "class": 40,
+      "side": "ally",
+      "x": 9,
+      "y": 14,
+      "level": 5,
+      "ai": 8,
+      "name": "孔家庄客"
+    },
+    {
+      "id": "zk-2",
+      "class": 41,
+      "side": "ally",
+      "x": 8,
+      "y": 15,
+      "level": 5,
+      "ai": 8,
+      "name": "孔家庄客"
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "ally",
+      "x": 8,
+      "y": 12,
+      "level": 5,
+      "ai": 8,
+      "hidden": true
+    },
+    {
+      "id": "taigong",
+      "class": 27,
+      "side": "ally",
+      "x": 7,
+      "y": 12,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "孔太公"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "portrait",
+          "wusong",
+          "faces/wusong-xingzhe.png"
+        ],
+        [
+          "title",
+          "白虎山 · 孔太公庄上"
+        ],
+        [
+          "narrate",
+          "原来宋江自孟州与众人分手，同戴宗投白虎山孔太公庄上来住。戴宗住不多时，另有公干先去了；宋江便在庄上点拨孔太公两个儿子些枪棒。"
+        ],
+        [
+          "narrate",
+          "庄客把武行者剥了衣裳，夺了戒刀、包裹，揪过来绑在大柳树上，教取一束藤条来，细细的打那厮。"
+        ],
+        [
+          "act",
+          "kongliang",
+          "attack",
+          "wusong"
+        ],
+        [
+          "act",
+          "wusong",
+          "hurt"
+        ],
+        [
+          "say",
+          "kongliang",
+          "打这贼头陀！看你还敢在村店里撒野！"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "move",
+          "songjiang",
+          10,
+          12
+        ],
+        [
+          "face",
+          "songjiang",
+          "kongming"
+        ],
+        [
+          "say",
+          "songjiang",
+          "你兄弟两个又打甚么人？"
+        ],
+        [
+          "face",
+          "kongliang",
+          "songjiang"
+        ],
+        [
+          "face",
+          "kongming",
+          "songjiang"
+        ],
+        [
+          "say",
+          "kongliang",
+          "师父，这秃贼打得我一身伤损，不着一两个月将息不起。"
+        ],
+        [
+          "say",
+          "kongming",
+          "这贼却把头发披下来遮了，必是个避罪在逃的囚徒。"
+        ],
+        [
+          "move",
+          "songjiang",
+          11,
+          13
+        ],
+        [
+          "face",
+          "songjiang",
+          "wusong"
+        ],
+        [
+          "narrate",
+          "宋江走近树下，拨开那行者披着的头发看时，额上隐隐两行金印；再看那面貌身材，好生面熟。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "这个不是我兄弟武二郎？"
+        ],
+        [
+          "face",
+          "wusong",
+          "songjiang"
+        ],
+        [
+          "say",
+          "wusong",
+          "你不是我哥哥？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "快解了绳索！这是我的兄弟！"
+        ],
+        [
+          "narrate",
+          "孔明、孔亮吃了一惊，慌忙叫庄客解了绳索，取几件干衣服来与武行者穿了。"
+        ],
+        [
+          "face",
+          "songjiang",
+          "kongming"
+        ],
+        [
+          "say",
+          "songjiang",
+          "他便是我时常和你们说的，那景阳冈上打虎的武松。"
+        ],
+        [
+          "say",
+          "kongming",
+          "我弟兄两个有眼不识泰山，万望恕罪！"
+        ],
+        [
+          "say",
+          "kongliang",
+          "原来是打虎的武都头！挨这一顿拳头，倒也不冤。"
+        ],
+        [
+          "face",
+          "wusong",
+          "kongliang"
+        ],
+        [
+          "say",
+          "wusong",
+          "武松吃醉了酒，先自无礼，也是武松的不是。两位休怪。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "二郎，这位大的，人都叫他做毛头星孔明；这位小的性急，到处叫他做独火星孔亮。"
+        ],
+        [
+          "appear",
+          "taigong"
+        ],
+        [
+          "move",
+          "taigong",
+          9,
+          12
+        ],
+        [
+          "face",
+          "taigong",
+          "wusong"
+        ],
+        [
+          "say",
+          "taigong",
+          "既是宋押司的兄弟，便是我家的贵客。且请到后堂换了衣服，安排酒食压惊。"
+        ],
+        [
+          "narrate",
+          "次日，武龙、李逵、花荣料理完张太公家的事，赶到镇上不见武松，一路打听，寻到村店。店主人说那行者吃孔家庄的人捉去了，三个慌忙寻到庄前来。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "move",
+          "likui",
+          12,
+          14
+        ],
+        [
+          "face",
+          "likui",
+          "kongliang"
+        ],
+        [
+          "say",
+          "likui",
+          "哪个鸟人绑了俺二哥？铁牛一斧一个，劈了这鸟庄子！"
+        ],
+        [
+          "face",
+          "songjiang",
+          "likui"
+        ],
+        [
+          "say",
+          "songjiang",
+          "铁牛休得无礼！都是自家兄弟，误会已说开了。"
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥！你怎地也在这里？"
+        ],
+        [
+          "say",
+          "kongliang",
+          "又来一个比头陀还凶的……"
+        ],
+        [
+          "face",
+          "huarong",
+          "songjiang"
+        ],
+        [
+          "say",
+          "huarong",
+          "公明哥哥！小弟屡次寄书，请哥哥来清风寨住些时，不想在这里撞见。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "贤弟来得正好。我住了些时，正要投清风寨去寻你。"
+        ],
+        [
+          "face",
+          "hero",
+          "wusong"
+        ],
+        [
+          "say",
+          "hero",
+          "二哥没事便好。听说你醉了掉进溪里，可吃了些苦头。"
+        ],
+        [
+          "say",
+          "wusong",
+          "酒是好东西，误事也是它。"
+        ],
+        [
+          "narrate",
+          "众人在孔太公庄上住了十数日，每日好酒好食管待。宋江与武行者商量了去处，辞别孔太公、孔明、孔亮，一同上路。"
+        ],
+        [
+          "title",
+          "瑞龙镇 · 三岔路口"
+        ],
+        [
+          "move",
+          "songjiang",
+          11,
+          16
+        ],
+        [
+          "move",
+          "wusong",
+          10,
+          15
+        ],
+        [
+          "face",
+          "songjiang",
+          "wusong"
+        ],
+        [
+          "face",
+          "wusong",
+          "songjiang"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟，二龙山有鲁智深、杨志在那里，你去最好，官司也不敢寻你。我和花荣贤弟往清风寨去。"
+        ],
+        [
+          "say",
+          "hero",
+          "我随二哥去二龙山，正好再见鲁大哥。"
+        ],
+        [
+          "say",
+          "likui",
+          "铁牛跟着哥哥！哥哥去哪里，铁牛去哪里。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟，休忘愚兄之言，少戒酒性。保重，保重！"
+        ],
+        [
+          "narrate",
+          "武行者下了四拜，与武龙自投西去；宋江同花荣、李逵，取路投东，望清风寨来。"
+        ],
+        [
+          "leave",
+          "wusong"
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "leave",
+          "huarong"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "victory",
+          "武松与宋江在孔太公庄上相认。瑞龙镇分路：武松、武龙投二龙山，宋江、花荣、李逵往清风寨。"
+        ]
+      ]
+    }
+  ]
+}

@@ -42,6 +42,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '血溅鸳鸯楼', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu', 'mainline/feiyunpu', 'mainline/yuanyanglou'] },
   // 负责人 2026-11-16：鸳鸯楼后众人散去，武龙、李逵、花荣随武松；十字坡扮行者为开场剧情（原著第 31–32 回）
   { name: '夜走蜈蚣岭', stages: ['mainline/xingzhe', 'mainline/wugongling'] },
+  // 负责人 2026-11-16（方案 A）：村店醉打孔亮一场仗，落溪被擒、孔家庄相认、瑞龙镇分路为剧情（原著第 32 回）
+  { name: '醉打孔亮', stages: ['mainline/kongliang', 'mainline/kongjiazhuang'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
