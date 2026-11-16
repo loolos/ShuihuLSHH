@@ -109,6 +109,8 @@ export interface PackSkillJson {
   hitFx?: 'blood' | 'explosion' | 'impact';
   /** 遠程技飞行中的箭的画面效果：fire = 火箭（只是画面） */
   arrowFx?: 'fire';
+  /** 穿透：从施放者身前一格起整条直线都受击（长 max(area, 到施放点的距离)） */
+  pierce?: boolean;
   rangeMin?: number;
   rangeMax?: number;
   area?: number;

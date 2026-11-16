@@ -36,7 +36,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     const man=openLib(fs.readFileSync(path.join(DATA,'Data/Man.lib')));
     for (let tier=1;tier<=3;tier++) {
       const s=skill(`穿云贯日LV${tier}`);
-      expect(s).toMatchObject({power:tier*20,critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8,castSpeed:2,arrowFx:'fire'});
+      expect(s).toMatchObject({power:tier*20,mpCost:20+10*tier,critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8,area:8,pierce:true,castSpeed:2,arrowFx:'fire'});
       expect(attackParts(s)).toHaveLength(tier+1);
       expect(skillFx(s)?.projectile).toBe(true); // 箭逐格飞出，arrowFx 火苗跟着箭走
       expect(s.hits.reduce((n,h)=>n+h.percent,0)).toBe(100);
@@ -46,6 +46,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
         expect(s.hits.map(h=>h.frame)).toEqual(Array.from({length:tier+1},(_,i)=>20+26*i));
       }
     }
+  });
+  it('穿云贯日穿透：从身前一格起整条直线8格都受击，施放点只定方向；箭一路飞到线尾', () => {
+    const s=skill('穿云贯日LV1');
+    for (const at of [{x:15,y:14},{x:15,y:11},{x:15,y:7}]) {
+      const cells=areaCells(board,from,s,at);
+      expect(cells).toEqual(Array.from({length:8},(_,i)=>({x:15,y:14-i})));
+      const spots=fxSpots(s,from,at,cells,()=>true);
+      expect(spots.map(sp=>sp.ring)).toEqual([0,1,2,3,4,5,6,7,8]); // 碰到目标也不停
+    }
+    expect(areaCells(board,from,s,{x:15,y:6})).toHaveLength(9); // 装备射程让施放点更远时线跟着延长
+    expect(areaCells(board,{x:15,y:3},s,{x:15,y:2})).toHaveLength(3); // 边缘截断
+    const b=battle();b.begin();const u=b.units[0];
+    b.units.find(t=>t.x===15&&t.y===6)!.x=16; // 第 9 格那人挪开
+    const near={x:15,y:13};
+    b.units.find(t=>t.x===14&&t.y===14)!.x=15; b.units.find(t=>t.x===15&&t.y===14)!.y=near.y;
+    expect(b.affected(u,s,{x:15,y:14}).map(t=>`${t.x},${t.y}`).sort()).toEqual(['15,11','15,13']);
   });
   it('出手播放倍率：穿云贯日2倍、连珠飞星1.8倍（负责人 2026-11-16），其余原速', () => {
     expect(skill('连珠飞星').castSpeed).toBe(1.8);
