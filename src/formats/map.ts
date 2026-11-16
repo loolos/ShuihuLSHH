@@ -43,3 +43,32 @@ export function cropMap(map: MapData, x0: number, y0: number, width: number, hei
       cells.push(x >= 0 && y >= 0 && x < map.width && y < map.height ? map.cells[y * map.width + x] : [{ tile: 0, flags: 0 }]);
   return { width, height, cells };
 }
+
+/**
+ * 重制版自拼地图的 JSON（packs/maps/*.json，由 tools/compose-map.ts 按配方生成，只存图块号，不含原版图像）：
+ * cells[y * width + x] 是数字（只有地表）或数组 [地表, 地上物, 高度, 地上物, 高度, …]；高度同 MAP 的 flags（像素）。
+ */
+export interface MapJson {
+  width: number;
+  height: number;
+  cells: (number | number[])[];
+}
+
+export function mapFromJson(j: MapJson, file = 'map.json'): MapData {
+  if (j.cells.length !== j.width * j.height) throw new Error(`${file}: 格子数 ${j.cells.length} ≠ ${j.width}×${j.height}`);
+  const cells = j.cells.map((c) => {
+    if (typeof c === 'number') return [{ tile: c, flags: 0 }];
+    const layers: MapLayer[] = [{ tile: c[0], flags: 0 }];
+    for (let i = 1; i + 1 < c.length; i += 2) layers.push({ tile: c[i], flags: c[i + 1] });
+    return layers;
+  });
+  return { width: j.width, height: j.height, cells };
+}
+
+export function mapToJson(m: MapData): MapJson {
+  return {
+    width: m.width,
+    height: m.height,
+    cells: m.cells.map((c) => (c.length === 1 ? c[0].tile : [c[0].tile, ...c.slice(1).flatMap((l) => [l.tile, l.flags])])),
+  };
+}

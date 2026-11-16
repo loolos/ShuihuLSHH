@@ -9,7 +9,7 @@ import { BattleScene } from '../src/game/BattleScene.ts';
 
 it('回合播放中重开场景后，第一回合仍能结束', async () => {
   const scene = new BattleScene();
-  const data = { assets: {}, ui: {}, stage: 'pack:wusong/jingyanggang' } as BattleSceneData;
+  const data = { assets: {}, ui: {}, stage: 'pack:mainline/jingyanggang' } as BattleSceneData;
   scene.init(data);
   const s = scene as unknown as {
     busy: boolean; ending: boolean; fast: boolean; playingSide: string;

@@ -3,7 +3,7 @@
 // 环境变量：NA/NB（在 expToNext 上再加 NA×(等级−1) + NB×(等级−1)²，试公式用）、KB/KP（击倒经验参数），SCALE=整体经验乘数（试调用），ATT=每个敌人平均出手几次的系数（默认见 ENEMY_ATTACKS）
 //
 // 模型（每关）：
-// - 用 loadStage + new Battle 构造这一关（我方带着上一关估出来的等级，敌人用修正后的等级和保底），不 begin、不跑 AI。
+// - 用 loadStage + new Battle 构造这一关（我方带着上一关估出来的等级，敌人用自有配置等级和保底），不 begin、不跑 AI。
 // - 只算 2 级以上的敌人（1 级是过场摆设），假定全部由我方击倒。
 // - 我方对某个敌人的一次攻击：期望伤害 = 命中率 × (普通 × (1 − 必杀率) + 必杀 × 必杀率)，按我方所有人取平均（正面、普通攻击）。
 //   打倒它的出手次数 N = 生命 / 期望伤害；伤害经验总量 ≈ (生命 + 击倒溢出) / 10 + 1.5 × 命中次数（击倒那一下也算，溢出最多算 20% 生命）。
@@ -57,7 +57,7 @@ export function estimate(limit = 99): EstRow[] {
     const battle = !/^(act|train)/i.test(map);
     // 战役关的敌人全算（N01 的莊客是 1 级）；过场、陪练关不算
     const foes = battle ? b.units.filter((u) => u.side === 'enemy') : [];
-    // 设计等级：ACT 敌人等级（含每关修正，不含保底）的平均 + 1，即按原版节奏的主角团等级（enemy-levels.json 的来源）
+    // 设计等级：自有敌人基础等级（不含保底）的平均 + 1，作为选关推荐等级的参考
     const lv = input.units.filter((a) => a.side === 'enemy' && data.classes[a.type]).map((a) => a.level);
     const design = avg(lv.some((x) => x > 1) ? lv.filter((x) => x > 1) : lv) + 1;
     const enter = avg(mine.map((u) => u.level));

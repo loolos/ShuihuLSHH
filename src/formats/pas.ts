@@ -90,8 +90,10 @@ export type PasTrigger =
    * 原版剧本没有这种触发，只由扩展包关卡（src/packs/）生成。
    */
   | { kind: 'used'; char: number; skills?: number[]; count?: number }
-  /** 扩展包【新】：任一在场的我方单位走到角色号 char 的单位身边（相邻一格）。劫法场"走过去松绑"用 */
-  | { kind: 'near'; char: number };
+  /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
+  | { kind: 'near'; char: number; uid?: number; by?: number }
+  /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
+  | { kind: 'hp'; char: number; uid?: number; below: number };
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，
@@ -108,9 +110,11 @@ export interface PasOp {
   /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容；扩展包指令 102 是新名字 */
   text?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
-  args?: { stat?: string; pct?: number; add?: number; turns?: number };
+  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 112 镜头：格子坐标 */ x?: number; y?: number };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
   quiet?: boolean;
+  /** 剧情点名：已战败角色仅供演出，不复活、不改变战斗状态。near为显示时靠近的职业号。 */
+  actor?: { action: 'show' | 'speak' | 'hide'; near?: number };
 }
 
 export interface PasBlock {

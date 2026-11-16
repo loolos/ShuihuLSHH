@@ -1,0 +1,334 @@
+{
+  "id": "duiyingshan",
+  "title": "一箭解斗",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "wugongling"
+  },
+  "bgm": [
+    "brothers",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 10,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "qinming",
+      "class": "qinming",
+      "side": "player",
+      "x": 12,
+      "y": 23,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 11,
+      "y": 23,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 13,
+      "y": 23,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 9,
+      "y": 23,
+      "level": 5,
+      "ai": 8,
+      "name": "燕顺"
+    },
+    {
+      "id": "lvfang",
+      "class": "lvfang",
+      "side": "ally",
+      "x": 5,
+      "y": 12,
+      "level": 5,
+      "ai": 8,
+      "facing": 3,
+      "name": "吕方"
+    },
+    {
+      "id": "guosheng",
+      "class": "guosheng",
+      "side": "ally",
+      "x": 20,
+      "y": 12,
+      "level": 5,
+      "ai": 8,
+      "facing": 2,
+      "name": "郭盛"
+    },
+    {
+      "id": "lf-1",
+      "class": 44,
+      "side": "ally",
+      "x": 4,
+      "y": 11,
+      "level": 5,
+      "ai": 8,
+      "name": "吕方部下"
+    },
+    {
+      "id": "lf-2",
+      "class": 45,
+      "side": "ally",
+      "x": 4,
+      "y": 13,
+      "level": 5,
+      "ai": 8,
+      "name": "吕方部下"
+    },
+    {
+      "id": "gs-1",
+      "class": 44,
+      "side": "ally",
+      "x": 21,
+      "y": 11,
+      "level": 5,
+      "ai": 8,
+      "name": "郭盛部下"
+    },
+    {
+      "id": "gs-2",
+      "class": 45,
+      "side": "ally",
+      "x": 21,
+      "y": 13,
+      "level": 5,
+      "ai": 8,
+      "name": "郭盛部下"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "对影山"
+        ],
+        [
+          "narrate",
+          "宋江等众人怕官军大至，商量了投梁山泊去，分作三起下山。行了几日，到一个去处，地名对影山，两边两座高山，一般形势，中间却是一条大阔驿路。"
+        ],
+        [
+          "narrate",
+          "只听得前面山上锣鸣鼓响。左边山坡闪出一队人马，都是红衣红甲，簇拥着一个年少壮士，手中横着一枝方天画戟；右边山冈上一队，都是白衣白甲，为头的也使一枝方天画戟。"
+        ],
+        [
+          "move",
+          "songjiang",
+          12,
+          15
+        ],
+        [
+          "move",
+          "huarong",
+          11,
+          15
+        ],
+        [
+          "say",
+          "lvfang",
+          "这对影山容不得两个大王！今日和你比试，分个输赢，输的让山！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "正要和你见个高低！"
+        ],
+        [
+          "move",
+          "lvfang",
+          11,
+          11
+        ],
+        [
+          "move",
+          "guosheng",
+          12,
+          11
+        ],
+        [
+          "face",
+          "lvfang",
+          "guosheng"
+        ],
+        [
+          "face",
+          "guosheng",
+          "lvfang"
+        ],
+        [
+          "act",
+          "lvfang",
+          "attack",
+          "guosheng"
+        ],
+        [
+          "act",
+          "guosheng",
+          "defend"
+        ],
+        [
+          "act",
+          "guosheng",
+          "attack",
+          "lvfang"
+        ],
+        [
+          "act",
+          "lvfang",
+          "defend"
+        ],
+        [
+          "act",
+          "lvfang",
+          "attack",
+          "guosheng"
+        ],
+        [
+          "act",
+          "guosheng",
+          "defend"
+        ],
+        [
+          "act",
+          "guosheng",
+          "attack",
+          "lvfang"
+        ],
+        [
+          "act",
+          "lvfang",
+          "defend"
+        ],
+        [
+          "narrate",
+          "两个各使方天画戟，斗了三十余合，不分胜败。那两枝戟上，一枝是金钱豹子尾，一枝是金钱五色幡，却搅做一团，上面绒绦结住了，那里分拆得开。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "两位壮士好手段，只可惜戟绦缠住了。"
+        ],
+        [
+          "face",
+          "huarong",
+          "lvfang"
+        ],
+        [
+          "act",
+          "huarong",
+          "attack",
+          "lvfang"
+        ],
+        [
+          "narrate",
+          "花荣在马上看见了，便把马带住，左手去飞鱼袋内取弓，右手向走兽壶中拔箭，搭上箭，拽满弓，觑着豹尾绒绦较亲处，飕的一箭，恰好正把绒绦射断。"
+        ],
+        [
+          "say",
+          "lvfang",
+          "好箭！是那一位好汉？"
+        ],
+        [
+          "move",
+          "lvfang",
+          10,
+          14
+        ],
+        [
+          "move",
+          "guosheng",
+          11,
+          14
+        ],
+        [
+          "face",
+          "lvfang",
+          "songjiang"
+        ],
+        [
+          "face",
+          "guosheng",
+          "songjiang"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我这兄弟，乃是清风寨知寨小李广花荣。我是郓城县宋江。"
+        ],
+        [
+          "narrate",
+          "两个壮士听了，都撇了戟，翻身下马，推金山，倒玉柱，都拜道：「闻名久矣！」"
+        ],
+        [
+          "say",
+          "lvfang",
+          "小人姓吕名方，祖贯潭州人氏。平昔爱学吕布为人，因此习学这枝方天画戟，人都唤小人做小温侯吕方。"
+        ],
+        [
+          "say",
+          "guosheng",
+          "小人姓郭名盛，祖贯西川嘉陵人氏。也学使方天画戟，人都称小人做赛仁贵郭盛。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "就与二位劝和如何？"
+        ],
+        [
+          "narrate",
+          "二位壮士大喜，都依允了，便邀众人上山，杀牛宰马筵席，收拾了人马，一同投梁山泊去。"
+        ],
+        [
+          "say",
+          "hero",
+          "花荣兄弟这一箭，比射门神那两箭还要漂亮！"
+        ],
+        [
+          "say",
+          "likui",
+          "射甚么绒绦，射那两个鸟人的戟也一般射得断！"
+        ],
+        [
+          "victory",
+          "对影山下吕方、郭盛比戟，戟绦绞住，花荣一箭射断。小温侯、赛仁贵拜见宋江，一同投梁山泊。"
+        ]
+      ]
+    }
+  ]
+}

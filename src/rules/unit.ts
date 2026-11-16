@@ -43,6 +43,8 @@ export interface Unit {
   slots: number[];
   /** 每格道具打铁的次数（随道具移动） */
   forge: number[];
+  /** 剧情临时借装：原装备随倒流一起保存，结算时恢复。 */
+  storyGear?: Record<number, { item: number; forge: number }>;
   gold: number;
   ai: AiState;
   present: boolean; // 是否在场（未登场或已战败为 false）
@@ -67,7 +69,19 @@ export const DIRS = [
   { x: 1, y: 0 },
 ] as const;
 
-export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = []): Stats {
+/** 己方队员等级移动加成：5 级 +1，20 级累计 +2；按阵营判断，外传队员同样适用。 */
+export function levelMoveBonus(level: number, side: Side): number {
+  return side === 'player' ? Number(level >= 5) + Number(level >= 20) : 0;
+}
+
+/** 敌方 16 级起基础移动力至少 5（负责人 2026-11-15）：本来就 ≥ 5 的不变；只看阵营为敌方。 */
+export const ENEMY_MOVE_LEVEL = 16;
+export const ENEMY_MIN_MOVE = 5;
+export function baseMove(cls: ClassDef, level: number, side: Side): number {
+  return side === 'enemy' && level >= ENEMY_MOVE_LEVEL ? Math.max(cls.move, ENEMY_MIN_MOVE) : cls.move;
+}
+
+export function computeStats(cls: ClassDef, level: number, slots: number[], data: GameData, poisoned = false, forge: number[] = [], buffs: Buff[] = [], side: Side = 'enemy'): Stats {
   const st: Stats = {
     maxHp: statAt(cls, 'hp', level),
     maxMp: statAt(cls, 'mp', level),
@@ -76,7 +90,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     hit: statAt(cls, 'hit', level),
     agility: statAt(cls, 'agility', level),
     crit: statAt(cls, 'crit', level),
-    move: cls.move,
+    move: baseMove(cls, level, side) + levelMoveBonus(level, side),
     rangeBonus: 0,
     poison: 0,
     stun: 0,
@@ -128,7 +142,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 }
 
 export function refreshStats(u: Unit, data: GameData) {
-  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs);
+  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs, u.side);
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);
 }

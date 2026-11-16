@@ -12,7 +12,8 @@
 
 ## 文档约定
 
-- 设计改动只写进 `docs/game-design.md`，不要新开设计文档。
+- 设计改动只写进 `docs/game-design.md`，不要新开设计文档。先读文首导航与当前状态；修改所属主题的当前规范，并同步状态，不在文末追加重复规则。
+- 保留现有章节编号与引用。候选、历史方案和已实现记录须明确区分；方案落地后回填实际差异，避免标题“未实现”而正文已完成。
 - 文件格式和字段写进 `docs/binary-formats.md`。
 - `docs/reference/` 由 `npm run gen:docs` 生成，不要手改。
 
@@ -26,14 +27,16 @@
 | `npm run typecheck` | 只做类型检查 |
 | `npm run gen:docs` | 重新生成 `docs/reference/` |
 | `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256）和 `src/data/frame-alias.json`（重复帧表） |
-| `npm run gen:enemy-levels` | 用原版经验规则沿主线模拟（8 个种子，约 4 分钟），重新生成每关敌人等级修正 `src/data/enemy-levels.json`（要在 `gen:levels` 之前跑） |
+| `npm run check:enemy-levels` | 校验自有敌方绝对等级配置的完整性、职业身份和等级值；`gen:enemy-levels` 为兼容别名，不再生成修正 |
 | `npm run gen:levels` | 按期望值估算主线（不到 1 秒），重新生成跳关用的入场等级表 `src/data/entry-levels.json`（改了经验规则或敌人等级后要跑） |
 | `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
-| `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 修正后敌人平均 + 1） |
+| `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 自有敌人基础等级平均 + 1） |
 | `node tools/gen-sound.ts <原版 Sound 目录>` | 把原版音效压成 MP3（去重）写到 `gamedata/sound/`（需要 ffmpeg；负责人 2026-11-12 同意入库） |
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版每关下载量、重复文件和重复帧 |
 | `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
+| `node --experimental-transform-types tools/charge-anim.ts [--all]` | 列出所有职业（原版 + 扩展包）集气技的施放时长（默认只列被加快的） |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
+| `node --experimental-transform-types tools/compose-map.ts [名字]` | 按 `tools/map-recipes/` 的配方拼新地图，写 `packs/maps/*.json`（§15.15，见配方目录的 README） |
 
 Node 22 可以直接运行 `.ts`（类型剥离），`tools/` 下的脚本不需要编译。
 

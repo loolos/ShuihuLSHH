@@ -1,0 +1,461 @@
+{
+  "id": "kongliang",
+  "title": "醉打孔亮",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "baihu-cundian"
+  },
+  "tint": "dusk",
+  "bgm": [
+    "comic",
+    "battle"
+  ],
+  "units": [
+    {
+      "id": "wusong",
+      "class": "wusong",
+      "side": "player",
+      "x": 13,
+      "y": 15,
+      "level": 29,
+      "facing": 0
+    },
+    {
+      "id": "innkeeper",
+      "class": 35,
+      "side": "ally",
+      "x": 12,
+      "y": 14,
+      "level": 5,
+      "ai": 8,
+      "offstage": true,
+      "name": "店主人"
+    },
+    {
+      "id": "kongliang",
+      "class": "kongliang",
+      "side": "enemy",
+      "x": 17,
+      "y": 11,
+      "level": 28,
+      "levelOffset": 0,
+      "facing": 2,
+      "name": "孔亮"
+    },
+    {
+      "id": "bandang-1",
+      "class": 19,
+      "side": "enemy",
+      "x": 18,
+      "y": 10,
+      "level": 28,
+      "name": "孔家伴当"
+    },
+    {
+      "id": "bandang-2",
+      "class": 20,
+      "side": "enemy",
+      "x": 18,
+      "y": 12,
+      "level": 28,
+      "name": "孔家伴当"
+    },
+    {
+      "id": "bandang-3",
+      "class": 19,
+      "side": "enemy",
+      "x": 19,
+      "y": 11,
+      "level": 28,
+      "name": "孔家伴当"
+    },
+    {
+      "id": "zhuangke-1",
+      "class": 40,
+      "side": "enemy",
+      "x": 26,
+      "y": 11,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-2",
+      "class": 41,
+      "side": "enemy",
+      "x": 27,
+      "y": 12,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-3",
+      "class": 40,
+      "side": "enemy",
+      "x": 28,
+      "y": 11,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-4",
+      "class": 41,
+      "side": "enemy",
+      "x": 29,
+      "y": 12,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-5",
+      "class": 40,
+      "side": "enemy",
+      "x": 10,
+      "y": 0,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-6",
+      "class": 41,
+      "side": "enemy",
+      "x": 11,
+      "y": 1,
+      "level": 28,
+      "name": "孔家庄客",
+      "hidden": true
+    },
+    {
+      "id": "kongming-a",
+      "class": "kongming",
+      "side": "ally",
+      "x": 20,
+      "y": 19,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "孔明"
+    },
+    {
+      "id": "zk-a1",
+      "class": 40,
+      "side": "ally",
+      "x": 20,
+      "y": 18,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "孔家庄客"
+    },
+    {
+      "id": "zk-a2",
+      "class": 41,
+      "side": "ally",
+      "x": 22,
+      "y": 19,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "孔家庄客"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "portrait",
+          "wusong",
+          "faces/wusong-xingzhe.png"
+        ],
+        [
+          "title",
+          "十一月间 · 白虎山下村店"
+        ],
+        [
+          "narrate",
+          "武行者烧了蜈蚣岭坟庵，武龙、李逵、花荣三个留在岭下，替张太公女儿料理爹娘后事，约定前面镇上相会。武行者先自一个望青州地面来。"
+        ],
+        [
+          "narrate",
+          "时遇十一月间，天色好生严寒。上得一条土冈，早望见前面有一座高山。冈下一个村落酒店，门前一道清溪，屋后都是颠石乱山。"
+        ],
+        [
+          "say",
+          "wusong",
+          "酒店主人家，先打两角酒来，肉便买些来吃。"
+        ],
+        [
+          "say",
+          "innkeeper",
+          "实不瞒师父说，酒却有些茅柴白酒，肉却都卖没了。"
+        ],
+        [
+          "say",
+          "wusong",
+          "且把酒来挡寒。"
+        ],
+        [
+          "narrate",
+          "武行者把几角白酒吃了，身上渐渐热将起来，已有七八分醉。只见外面走入一条大汉，引着三四人入店里来。"
+        ],
+        [
+          "focus",
+          "kongliang"
+        ],
+        [
+          "narrate",
+          "店主人却捧出一尊青花瓮酒来，又去厨下把盘子托出一对熟鸡、一大盘精肉来，放在那汉面前。"
+        ],
+        [
+          "focus",
+          "wusong"
+        ],
+        [
+          "say",
+          "wusong",
+          "主人家！你来！你这厮好欺负客人！岂我不还你钱！"
+        ],
+        [
+          "say",
+          "innkeeper",
+          "师父休要焦躁，要酒便好说。"
+        ],
+        [
+          "say",
+          "wusong",
+          "你这厮好不晓道理！这青花瓮酒和鸡肉，都不是卖的？"
+        ],
+        [
+          "say",
+          "innkeeper",
+          "青花瓮酒和鸡肉都是那大郎家里自将来的，只借我店里坐地吃酒。"
+        ],
+        [
+          "narrate",
+          "武行者心中要吃，那里听他分说，便把桌子推开，喝那店主人。"
+        ],
+        [
+          "say",
+          "kongliang",
+          "你这个鸟头陀好不依本分，却怎地便动手动脚的！却不道是出家人勿起嗔心！"
+        ],
+        [
+          "say",
+          "wusong",
+          "我自打他，干你甚事！"
+        ],
+        [
+          "say",
+          "kongliang",
+          "我好意劝你，你这鸟头陀敢把言语伤我！伴当们，与我打这贼头陀！"
+        ],
+        [
+          "buff",
+          "wusong",
+          "attack",
+          {
+            "pct": 20
+          }
+        ],
+        [
+          "buff",
+          "wusong",
+          "hit",
+          {
+            "pct": -15
+          }
+        ],
+        [
+          "buff",
+          "wusong",
+          "agility",
+          {
+            "pct": -20
+          }
+        ],
+        [
+          "narrate",
+          "武行者带着七八分酒，气力倍增，只是脚下踉跄，出手失了准头。"
+        ],
+        [
+          "objective",
+          "打翻孔亮和他手下的伴当、庄客（第3回合庄客赶来）。武松倒下或超过15回合失败。"
+        ],
+        [
+          "turnLimit",
+          15
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "kongliang"
+      },
+      "do": [
+        [
+          "narrate",
+          "武行者打了二三十拳，就地下提起那汉来，望门外溪里只一丢。那汉浑身水湿，被伴当扶起，逃过溪去了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "溪那边、冈子上一片声叫起来：伴当去庄上叫了一伙庄客，拿着木钯白棍，赶来厮打！"
+        ],
+        [
+          "appear",
+          "zhuangke-1"
+        ],
+        [
+          "appear",
+          "zhuangke-2"
+        ],
+        [
+          "appear",
+          "zhuangke-3"
+        ],
+        [
+          "appear",
+          "zhuangke-4"
+        ],
+        [
+          "appear",
+          "zhuangke-5"
+        ],
+        [
+          "appear",
+          "zhuangke-6"
+        ],
+        [
+          "flag",
+          "zhuangke-arrived"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "if": "zhuangke-arrived",
+      "do": [
+        [
+          "narrate",
+          "那伙人都打散了。武行者回到店里，把那鸡肉和青花瓮酒都吃了个醉饱。"
+        ],
+        [
+          "narrate",
+          "武行者醉饱了，把直裰袖结在背上，便出店门，沿溪而走。"
+        ],
+        [
+          "move",
+          "wusong",
+          21,
+          18
+        ],
+        [
+          "narrate",
+          "却被那北风卷将起来，武行者捉脚不住，一路上抢将来。只见旁边土墙里走出一只黄狗，看着武松叫。"
+        ],
+        [
+          "say",
+          "wusong",
+          "这鸟狗也来欺负我！"
+        ],
+        [
+          "narrate",
+          "便将左手鞘里掣出一口戒刀来，大踏步赶。那黄狗绕着溪岸叫，武行者一刀砍将去，却砍个空，使得力猛，头重脚轻，翻筋斗倒撞下溪里去，却起不来。"
+        ],
+        [
+          "act",
+          "wusong",
+          "hurt"
+        ],
+        [
+          "narrate",
+          "冬月天道，溪水正涸，虽是只有一二尺深浅的水，却寒冷的当不得。扒起来，淋淋的一身水，却见那口戒刀浸在溪里。"
+        ],
+        [
+          "appear",
+          "kongming-a"
+        ],
+        [
+          "show",
+          "kongliang",
+          "kongming-a"
+        ],
+        [
+          "appear",
+          "zk-a1"
+        ],
+        [
+          "appear",
+          "zk-a2"
+        ],
+        [
+          "narrate",
+          "岸上侧首墙边转出一伙人来：当先一个大汉，头戴毡笠子，身穿鹅黄纻丝衲袄，手里拿着一条梢棒，背后十数个人跟着，都拿木钯白棍。"
+        ],
+        [
+          "say",
+          "kongliang",
+          "溪里这个贼行者，正是打了小弟的！"
+        ],
+        [
+          "say",
+          "kongming-a",
+          "既是打了兄弟，且拿回庄上去，细细拷问。"
+        ],
+        [
+          "narrate",
+          "众人一齐上，把武行者从溪里拖将起来。可怜武松醉了，挣扎不得，被拿翻了，一直押投庄院里来。"
+        ],
+        [
+          "leave",
+          "wusong"
+        ],
+        [
+          "leave",
+          "zk-a1"
+        ],
+        [
+          "leave",
+          "zk-a2"
+        ],
+        [
+          "hide",
+          "kongliang"
+        ],
+        [
+          "leave",
+          "kongming-a"
+        ],
+        [
+          "victory",
+          "武行者醉打孔亮，却跌下溪里，被孔家庄客拿了，押往庄上。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "wusong"
+      },
+      "do": [
+        [
+          "defeat",
+          "武行者醉倒在村店里，被孔家的人拿了。"
+        ]
+      ]
+    }
+  ]
+}

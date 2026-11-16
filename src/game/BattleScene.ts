@@ -15,10 +15,13 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
-import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
+import { applyTint, isStageTint, type StageTint } from './tint.ts';
+import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
+import { packFaceUrl } from './packs.ts';
 
 export interface BattleSceneData {
   assets: Assets;
@@ -34,6 +37,8 @@ export interface BattleSceneData {
   /** 扩展包关卡：画哪张原版地图，以及每次开打（含重新开始）时生成关卡数据 */
   map?: string;
   makeInput?: () => StageInput;
+  /** 天色滤镜（扩展包关卡的 tint，§15.15） */
+  tint?: StageTint;
 }
 
 type Mode =
@@ -83,6 +88,9 @@ export class BattleScene extends Phaser.Scene {
   private stageName = 'N01';
   /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
   private mapName = 'N01';
+  private tint: StageTint | undefined;
+  /** 当前的天色滤镜（剧情里可以换，扩展包指令 tint） */
+  private tintFilter?: Phaser.Filters.Controller;
   private makeInput?: () => StageInput;
   private seed?: number;
   private party?: Map<number, Member>;
@@ -132,6 +140,7 @@ export class BattleScene extends Phaser.Scene {
   init(data: BattleSceneData) {
     this.assets = data.assets;
     this.ui = data.ui;
+    this.ui.faceOverride.clear();
     this.ui.onSkip = () => this.busy && this.setFast(true);
     this.stageName = data.stage;
     this.seed = data.seed;
@@ -139,6 +148,7 @@ export class BattleScene extends Phaser.Scene {
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
     this.mapName = data.map ?? data.stage;
+    this.tint = data.tint;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
@@ -212,6 +222,7 @@ export class BattleScene extends Phaser.Scene {
     const f = cellToWorld(focus.x, focus.y);
     cam.centerOn(f.x, f.y);
     cam.roundPixels = true;
+    this.tintFilter = applyTint(cam, this.tint);
 
     // 左上角的小地图（原版微缩地图只画地表，见 minimap.ts）
     const board = this.battle.board;
@@ -1079,6 +1090,54 @@ export class BattleScene extends Phaser.Scene {
 
   /** 地图上的飘字：照原版用调色板色（伤害红、回血绿、回气黄，见 float-text.ts），加黑描边保证在地图上看得清【新】。
    *  side：同时弹出的几个字放在中线左边（−1）或右边（1）；lift：往上抬几行（多段攻击的后几段、回气数字） */
+  /** 火苗（技能 arrowFx: 'fire'）：在 (wx, wy) 附近冒 n 个橙黄色小火团，往上飘、缩小、淡出；big = 命中处那一团【新】 */
+  private flames(wx: number, wy: number, depth: number, n: number, big = false) {
+    const colors = [0xfff0a0, 0xffc040, 0xff7a18, 0xe03a08];
+    for (let i = 0; i < n; i++) {
+      const r = (big ? 3.5 : 2.2) + Math.random() * (big ? 3 : 2);
+      const x0 = wx + (Math.random() - 0.5) * (big ? 22 : 8);
+      const y0 = wy + (Math.random() - 0.5) * (big ? 14 : 6);
+      const f = this.add.circle(x0, y0, r, colors[Math.floor(Math.random() * colors.length)]).setDepth(depth).setBlendMode(Phaser.BlendModes.ADD);
+      this.tweens.add({
+        targets: f,
+        x: x0 + (Math.random() - 0.5) * 8,
+        y: y0 - (big ? 18 + Math.random() * 18 : 6 + Math.random() * 10),
+        scale: 0.25,
+        alpha: 0,
+        delay: big ? Math.random() * 160 : 0,
+        duration: (big ? 420 : 260) + Math.random() * 160,
+        ease: 'Quad.easeOut',
+        onComplete: () => f.destroy(),
+      });
+    }
+  }
+
+  /** 溅血（技能 hitFx: 'blood'）：受击者胸口迸出几滴红点，抛物线落下后淡出；必杀多溅几滴 */
+  private bloodSplash(x: number, y: number, crit = false) {
+    const p = cellToWorld(x, y);
+    const cy = p.y - 34; // 大约胸口高度
+    const n = crit ? 14 : 8;
+    for (let i = 0; i < n; i++) {
+      const r = 1.5 + Math.random() * 2;
+      const drop = this.add.circle(p.x, cy, r, Math.random() < 0.3 ? 0x8a0a0a : 0xc81414).setDepth(depthOf(x, y, 11));
+      const vx = (Math.random() - 0.5) * 60;
+      const up = 18 + Math.random() * 22;
+      const t = { k: 0 };
+      this.tweens.add({
+        targets: t,
+        k: 1,
+        duration: 420 + Math.random() * 180,
+        ease: 'Linear',
+        onUpdate: () => {
+          drop.x = p.x + vx * t.k;
+          drop.y = cy - up * t.k + 70 * t.k * t.k;
+          drop.setAlpha(1 - t.k * t.k);
+        },
+        onComplete: () => drop.destroy(),
+      });
+    }
+  }
+
   private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
     const p = cellToWorld(x, y);
     p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
@@ -1120,6 +1179,24 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /** 命中特效（技能 hitFx）：在受击者格子上放一组特效，压在人物前面；放完自己消失 */
+  private hitEffect(cell: Cell, group: number, audible: boolean): Promise<void> {
+    const anim = effectAnim(this, this.assets, group);
+    if (audible) sound.effect(group);
+    if (!anim) return Promise.resolve();
+    const p = cellToWorld(cell.x, cell.y);
+    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 11));
+    s.play(anim);
+    return new Promise<void>((r) => {
+      const done = () => {
+        if (s.active) s.destroy();
+        r();
+      };
+      s.once('animationcomplete', done);
+      this.time.delayedCall(3000, done);
+    });
+  }
+
   /** 在格子上放一组固定特效（EXE 0x403860：直接指定组号），同时播特效音 <组号+1>（0x403880）；放完才返回 */
   private fixedFx(cell: Cell, group: number): Promise<void> {
     const anim = effectAnim(this, this.assets, group);
@@ -1138,11 +1215,16 @@ export class BattleScene extends Phaser.Scene {
     });
   }
 
-  private async playOnce(u: Unit, action: number, facing: number, maxMs = 800) {
+  /** 播一次动作；durationMs 给了就按比例加快到这么长播完（集气技，见 cast-timing.ts castPlayMs） */
+  private async playOnce(u: Unit, action: number, facing: number, maxMs = 800, durationMs: number | null = null, cycles = 1, speed = 1) {
     const s = this.sprites.get(u.uid);
     const key = s && animFor(this, this.assets, this.vs(u).cls, action, facing, 0);
     if (!s || !key) return wait(this, 250);
-    s.spr.play(key);
+    const n = durationMs ? (this.anims.get(key)?.getTotalFrames() ?? 0) : 0;
+    if (n) s.spr.play({ key, frameRate: n / (durationMs! / 1000) });
+    else if (cycles > 1 || speed !== 1) {
+      s.spr.play({ key, repeat: cycles - 1, frameRate: (this.anims.get(key)?.frameRate ?? 1000 / ACTION_FRAME_MS) * speed });
+    } else s.spr.play(key);
     await new Promise<void>((r) => {
       const done = () => r();
       s.spr.once('animationcomplete', done);
@@ -1285,6 +1367,12 @@ export class BattleScene extends Phaser.Scene {
                     const p = cellToWorld(sp.cell.x, sp.cell.y);
                     const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(sp.cell.x, sp.cell.y, 10));
                     s.play(anim);
+                    // 火箭：飞行中的箭（遠程技第一段）染成橙红，每到一格在箭身上冒几簇火苗
+                    if (pi === 0 && fx?.projectile && skill.arrowFx === 'fire') {
+                      s.setTint(0xffa060);
+                      const c = s.getCenter();
+                      this.flames(c.x ?? p.x, c.y ?? p.y - 30, depthOf(sp.cell.x, sp.cell.y, 10.5), 4);
+                    }
                     const done = () => {
                       if (s.active) s.destroy();
                       r();
@@ -1297,7 +1385,7 @@ export class BattleScene extends Phaser.Scene {
             }
           return Promise.all(all).then(() => undefined);
         };
-        const segStart = (f: number) => (f - 1) * ACTION_FRAME_MS;
+        const segStart = (f: number) => castSegmentMs(f, skill);
         const waves: Promise<void>[] = [];
         if (fx && !fx.atEnd) for (const f of new Set(frames)) waves.push(new Promise<void>((r) => this.time.delayedCall(segStart(f), () => fxWave().then(r))));
         // 同一帧的几段同时结算（如武龍的两段普攻）：数字左右错开一起弹出，受击动作和声音只做一次
@@ -1329,6 +1417,11 @@ export class BattleScene extends Phaser.Scene {
                   // 同一帧里第一段命中的负责受击动作和受击声（另一段必杀时再补一声必杀音）
                   const lead = frames.findIndex((g, j) => g === f && (!perPart || res.partHit[j])) === i;
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
+                  if (dmg !== null && dmg > 0 && skill.hitFx === 'blood') this.bloodSplash(tv.x, tv.y, crit);
+                  // 爆炸：每段命中都在受击者身上炸一次，不等它放完（声音只在受击动作那段出）
+                  const hg = skill.hitFx ? HIT_FX_GROUP[skill.hitFx] : undefined;
+                  if (dmg !== null && dmg > 0 && hg !== undefined) void this.hitEffect(tv, hg, lead);
+                  if (dmg !== null && dmg > 0 && skill.arrowFx === 'fire') this.flames(cellToWorld(tv.x, tv.y).x, cellToWorld(tv.x, tv.y).y - 34, depthOf(tv.x, tv.y, 11), crit ? 16 : 10, true);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
                     this.float(tv.x, tv.y, df.text, df.color, side, perPart ? lift : 0);
@@ -1341,7 +1434,13 @@ export class BattleScene extends Phaser.Scene {
         );
         // 集气技、类型 9 的回复技：出手动画放完才放特效（原版 0x407522）
         sound.cast(skill.soundId ?? skill.skillId, skill.type, basic);
-        const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, 2500);
+        // 集气技的出手动作压到 CHARGE_CAST_MAX_MS 内（武松、李逵借的蹲姿循环原本要近 3 秒）
+        const castMs = castPlayMs(this.assets, uv.cls, skill, e.facing);
+        const cycles = Math.max(1, skill.castCycles ?? 1);
+        const speed = castPlaybackRate(skill);
+        const naturalMs = actionMs(this.assets, uv.cls, ACTION.firstSkill + skill.group, e.facing) ?? 0;
+        const maxCastMs = cycles > 1 ? Math.max(2500, naturalMs * cycles / speed + 300) : 2500;
+        const cast = this.playOnce(u, ACTION.firstSkill + skill.group, e.facing, castMs ? castMs + 300 : maxCastMs, castMs, cycles, speed);
         if (fx?.atEnd) waves.push(cast.then(fxWave));
         await Promise.all([cast, ...waves, ...impacts]);
         area?.destroy();
@@ -1399,6 +1498,34 @@ export class BattleScene extends Phaser.Scene {
       case 'subtitle':
         await this.banner(tr(e.text));
         break;
+      // 剧情演出（扩展包指令 109–113）
+      case 'act': {
+        const u = b.unit(e.uid)!;
+        const v = this.vs(u);
+        v.facing = e.facing;
+        await this.focusOn(u, 300);
+        if (e.action === 'hurt') sound.hurt(false);
+        const action = e.action === 'hurt' ? ACTION.hurt : e.action === 'defend' ? ACTION.defend : idleAction(this.assets, v.cls);
+        await this.playOnce(u, action, e.facing, 1200);
+        if (e.action !== 'defend') this.pose(u);
+        break;
+      }
+      case 'tint':
+        this.tintFilter = applyTint(this.cameras.main, isStageTint(e.tint) ? e.tint : undefined, this.tintFilter);
+        await wait(this, 200);
+        break;
+      case 'focus':
+        await this.focus(e.x, e.y, 400);
+        break;
+      case 'wait':
+        await wait(this, this.fast ? 0 : e.ms);
+        break;
+      case 'portrait': {
+        const url = e.file && this.assets.pack ? packFaceUrl(this.assets.pack.rt.id, e.file) : undefined;
+        if (url) this.ui.faceOverride.set(e.classId, url);
+        else this.ui.faceOverride.delete(e.classId);
+        break;
+      }
       case 'sound':
         if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
         sound.sfx(e.name);

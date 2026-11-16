@@ -2,7 +2,8 @@
 import { expToNext } from '../rules/exp.ts';
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
-import { buffName } from '../rules/data.ts';
+import { buffLabel } from '../rules/data.ts';
+import { splitNickname } from '../rules/nicknames.ts';
 import { sound } from './sound.ts';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -30,8 +31,18 @@ export class BattleUI {
   private face = document.createElement('img');
   /** 职业 → 头像图片地址；没有头像时返回 null */
   portrait: (classId: number) => string | null = () => null;
+  /** 本关剧本换过的头像（扩展包指令 114）：职业号 → 图片地址；main.ts 的 portrait 先查这里，换关时清空 */
+  faceOverride = new Map<number, string>();
   /** 文字转换（繁→简） */
   tr: (s: string) => string = (s) => s;
+  /** 运行时补充的绰号（主角名 → EXE 绰号表第 0 项），见 src/rules/nicknames.ts */
+  extraNicknames: Record<string, string> = {};
+
+  /** 名字前加原著绰号（小一号、颜色淡一些）：「行者 武松」；没有绰号就只有名字 */
+  private nameHtml(name: string): string {
+    const [nick, bare] = splitNickname(this.tr(name), this.extraNicknames);
+    return nick ? `<span class="nick">${esc(nick)}</span>${esc(bare)}` : esc(bare);
+  }
 
   constructor() {
     this.face.id = 'dialog-face';
@@ -42,8 +53,8 @@ export class BattleUI {
     // 手机上 Phaser 会对触摸调用 preventDefault，浏览器就不再补发 click，所以用 pointerup 推进；
     // 推进后短时间内的鼠标/触摸/click 事件一并拦下，免得同一下点击又落到地图上。
     let swallowUntil = 0;
-    // 检查更新的按钮和提示条不受对白影响
-    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast, #sound, #music, #minimap');
+    // 检查更新的按钮、提示条、选关按钮和它打开的选关页不受对白影响
+    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast, #sound, #music, #minimap, #stage, #title');
     const guard = (e: Event) => {
       if ((this.dialog.hidden && performance.now() > swallowUntil) || exempt(e)) return;
       e.stopPropagation();
@@ -133,22 +144,21 @@ export class BattleUI {
     }
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
-    const buffs = u.buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''} ${b.turns}`);
+    const buffs = u.buffs.map(buffLabel);
     const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), u.ended && u.side === 'player' && '已行动']
-      .filter(Boolean)
-      .join('　');
+      .filter((state): state is string => typeof state === 'string');
     const face = this.portrait(u.classId);
     this.panel.innerHTML = `
       ${face ? `<img class="face" alt="" src="${face}">` : ''}
       <div class="info">
-      <div class="name side-${u.side}">${esc(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}</small></div>
+      <div class="name side-${u.side}">${this.nameHtml(u.name)}　<small>${SIDE_NAME[u.side]} Lv${u.level}</small></div>
       <div class="bars">
         <div>体力 <span class="bar2"><i style="width:${pct(u.hp, s.maxHp)}"></i></span> ${u.hp}/${s.maxHp}</div>
         <div>气力 <span class="bar2 mp"><i style="width:${pct(u.mp, s.maxMp)}"></i></span> ${u.mp}/${s.maxMp}</div>
         ${u.side === 'player' ? `<div>经验 <span class="bar2 exp"><i style="width:${pct(u.exp, expToNext(u.level))}"></i></span> ${u.exp}/${expToNext(u.level)}</div>` : ''}
       </div>
       <div class="grid"><span>攻 ${s.attack}</span><span>防 ${s.defense}</span><span>移 ${s.move}</span><span>命 ${s.hit}</span><span>敏 ${s.agility}</span><span>必 ${s.crit}</span></div>
-      ${states ? `<div>${states}</div>` : ''}
+      ${states.length ? `<div class="statuses">${states.map(state => `<span>${esc(state)}</span>`).join('')}</div>` : ''}
       ${preview ? `<div class="preview">命中 ${preview.hit}%　伤害 ${preview.damage}${preview.parts > 1 ? `（${preview.parts} 段）` : ''}　必杀 ${preview.crit}%（${preview.critDamage}）</div>` : ''}
       ${hint ? `<div class="preview">${esc(hint)}</div>` : ''}
       ${
@@ -231,7 +241,7 @@ export class BattleUI {
     this.face.hidden = !face;
     if (face) this.face.src = face;
     this.dialog.classList.toggle('has-face', !!face);
-    $('dialog-who').textContent = this.tr(speaker);
+    $('dialog-who').innerHTML = speaker ? this.nameHtml(speaker) : '';
     $('dialog-text').textContent = this.tr(text);
     this.dialog.hidden = false;
     return new Promise((r) => (this.dialogNext = r));

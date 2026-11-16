@@ -9,7 +9,7 @@ import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResu
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
-import { areaCells, castCells, castRange, isChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
+import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { enemyFloor } from './enemy-level.ts';
 import { stageTune, type StageTune } from './stage-tune.ts';
@@ -68,6 +68,13 @@ export type BattleEvent =
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
   | { type: 'subtitle'; text: string }
+  /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
+  | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
+  | { type: 'tint'; tint: string }
+  | { type: 'focus'; x: number; y: number }
+  | { type: 'wait'; ms: number }
+  /** 换头像（扩展包指令 114【新】）：本关里这个职业的对白、面板改用包里的另一张图；file 空 = 恢复 */
+  | { type: 'portrait'; classId: number; file: string }
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
@@ -285,7 +292,7 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const stats = computeStats(cls, level, slots, this.data, false, forge);
+      const stats = computeStats(cls, level, slots, this.data, false, forge, [], a.side);
       this.units.push({
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
@@ -324,6 +331,16 @@ export class Battle {
   foesOf(u: Unit) {
     return this.active().filter((t) => isFoe(u.side, t.side));
   }
+  /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，林间截囚的宋江）【新】 */
+  isBound(u: Unit) {
+    return u.stunTurns >= BOUND_TURNS - 1000; // 每回合照常减 1，留足余量
+  }
+  /** AI 眼里的敌人：去掉被绑住的 */
+  aiFoesOf(u: Unit) {
+    return this.foesOf(u).filter((t) => !this.isBound(t));
+  }
+  /** 剧情临时出镜（show）的人占的格子：只是画面，不算在场，但几个人别叫到同一格 */
+  private shown = new Map<number, Cell>();
   occupied(except?: Unit) {
     return new Set(this.active().filter((u) => u !== except).map((u) => key(u.x, u.y)));
   }
@@ -393,20 +410,22 @@ export class Battle {
   }
   /** 施放距离内的全部格子（显示用）；at 为假设的站位 */
   skillCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
-    return castCells(this.board, at, castRange(u, skill, this.data));
+    return castCells(this.board, at, castRange(u, skill, this.data), skill.targetShape);
   }
   /** 施放点 cell 的作用范围 */
   skillArea(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Cell[] {
     return areaCells(this.board, at, skill, cell);
   }
-  /** 施放点 cell 会影响的单位：攻击技为范围内的敌人，回复技为范围内的己方，集气技为自己 */
+  /** 攻击技只影响敌人；回复与援气只影响同阵营，援气不含自身或满气目标。 */
   affected(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Unit[] {
-    if (isChargeSkill(skill)) return [u];
+    if (isSelfChargeSkill(skill)) return [u];
     const area = new Set(this.skillArea(u, skill, cell, at).map((c) => key(c.x, c.y)));
-    const heal = isHealSkill(skill);
+    const allyCharge = isAllyChargeSkill(skill);
+    const heal = isHealSkill(skill) || allyCharge;
     return this.active().filter((t) => {
       const pos = t === u ? at : t;
-      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side));
+      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side))
+        && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
   }
   /** 能施放的格子（范围内至少有一个可作用的单位） */
@@ -606,8 +625,8 @@ export class Battle {
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
       if (u.buffs.length) {
-        for (const b of u.buffs) b.turns--;
-        u.buffs = u.buffs.filter((b) => b.turns > 0);
+        // 0 表示本关持续；限时效果扣到 0 时立即移除，不转成本关持续。
+        u.buffs = u.buffs.filter((b) => b.turns === 0 || --b.turns > 0);
         refreshStats(u, this.data);
       }
     }
@@ -761,7 +780,7 @@ export class Battle {
     if (!this.canAct(u) || u.acted) return undefined;
     const after = (s: SkillDef) => Math.min(u.stats.maxMp, u.mp - s.mpCost + Math.floor(u.stats.maxMp / Math.max(1, s.power)));
     return learnedSkills(u, this.data)
-      .filter((s) => isChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
+      .filter((s) => isSelfChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
       .filter((s) => this.skillTargets(u, s).some((c) => c.x === u.x && c.y === u.y))
       .sort((a, b) => after(b) - after(a) || a.mpCost - b.mpCost)[0];
   }
@@ -860,6 +879,10 @@ export class Battle {
         return this.flush();
       }
     }
+    if (u.storyGear?.[slot] || u.storyGear?.[to]) {
+      this.emit({ type: 'message', text: '本场暂以拳脚应战，原武器已妥善保管。' });
+      return this.flush();
+    }
     [u.slots[slot], u.slots[to]] = [u.slots[to] ?? 0, u.slots[slot]];
     [u.forge[slot], u.forge[to]] = [u.forge[to] ?? 0, u.forge[slot] ?? 0];
     const before = u.stats.move;
@@ -874,6 +897,7 @@ export class Battle {
   canEquipItem(u: Unit, slot: number): boolean {
     const it = itemOf(this.data, u.slots[slot]);
     if (!it || u.side !== 'player' || !this.canAct(u)) return false;
+    if (u.storyGear?.[slot] || u.storyGear?.[equipSlotOf(it)]) return false;
     if (slot < EQUIP_SLOTS) return freeBagSlot(u.slots) >= 0;
     return equipSlotOf(it) >= 0 && canEquip(this.data.classes[u.classId], it, this.data);
   }
@@ -1119,7 +1143,7 @@ export class Battle {
   private ambushTurn(u: Unit) {
     if (u.ai.mode !== 6) return void (u.ended = true);
     const r = alertRadius(this, u);
-    if (!this.foesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= r)) return void (u.ended = true);
+    if (!this.aiFoesOf(u).some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= r)) return void (u.ended = true);
     u.ai.mode = 0;
     this.appear(u);
     u.ended = false;
@@ -1221,8 +1245,16 @@ export class Battle {
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
-      const who = this.units.find((u) => u.classId === t.char && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && u.alive && u.present && dist(u, who) === 1)) this.runBlock(b);
+      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
+      if (this.status !== 'playing') return;
+    }
+    // 扩展包：某人生命低于一定比例【新】
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'hp' || this.fired.has(b.index)) continue;
+      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
+      if (who && who.hp * 100 < who.stats.maxHp * t.below && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     this.runCondBlocks();
@@ -1262,6 +1294,14 @@ export class Battle {
   }
 
   /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
+  /** near / hp 区块的 if / unless 标志（没写时条件是默认的 {type 0}，不判） */
+  private flagsOk(b: PasBlock): boolean {
+    const c = b.cond;
+    if (!('op' in c) && c.type !== 100 && c.type !== 101) return true;
+    let sel: Unit | undefined;
+    return this.evalCond(c, (u) => (sel = u), () => sel);
+  }
+
   private runCondBlocks() {
     for (const b of this.blocks) {
       if (this.status !== 'playing') return;
@@ -1296,6 +1336,9 @@ export class Battle {
         return this.flags.has(c.arg);
       case 101:
         return !this.flags.has(c.arg);
+      // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
+      case 102:
+        return !this.units.some(u => u.side === 'enemy' && u.alive);
       case 1:
         // 我方全灭（EXE 0x4111d0 → 0x408380）：只数在场的我方，退场（0x20000）、埋伏（0x40000）的不算。
         // 训练关选人后其余人退场，所以出场的人被打倒就是"全灭"，触发"回合 25 或我方全灭"的过关区块
@@ -1380,9 +1423,22 @@ export class Battle {
         case 12:
           // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
           if (op.value > 1000 && op.value < 0x10000) sel = this.unit(this.groups.get(op.value - 1000) ?? -1);
-          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && u.alive);
+          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && (u.alive || !!op.actor));
           else sel = undefined; // 0xFFFFFFFF：旁白
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
+          if (sel && op.actor?.action === 'show') {
+            if (sel.present && sel.alive) break; // 本来就在场：不挪位置
+            const near = this.active().find(u => u.classId === op.actor!.near) ?? sel;
+            const taken = this.occupied();
+            for (const c of this.shown.values()) taken.add(key(c.x, c.y));
+            const at = this.board.nearestFree(near.x, near.y, taken) ?? sel;
+            this.shown.set(sel.uid, { x: at.x, y: at.y });
+            // 只发画面事件：不改alive/present/体力、掉落或经验，战败不会被撤销。
+            this.emit({ type: 'appear', uid: sel.uid, x: at.x, y: at.y, ambush: false });
+          } else if (sel && op.actor?.action === 'hide') {
+            this.shown.delete(sel.uid);
+            this.emit({ type: 'leave', uid: sel.uid });
+          }
           // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
           if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
           break;
@@ -1454,12 +1510,59 @@ export class Battle {
           break;
         // 100 起：扩展包的新指令【新】（src/packs/script.ts）
         // 100 换装备：flag = 格号（0 武器、1 衣服、2 头饰），value = 道具号，0 = 卸掉（武松的哨棒折断）
+        case 107:
+          if (sel) {
+            const slot = op.flag ?? 0;
+            sel.storyGear ??= {};
+            sel.storyGear[slot] ??= { item: sel.slots[slot], forge: sel.forge[slot] ?? 0 };
+          }
+          // fall through: change this battle’s gear, keeping the original for settlement
         case 100:
           if (!sel) break;
           sel.slots[op.flag ?? 0] = op.value;
           sel.forge[op.flag ?? 0] = 0;
           refreshStats(sel, this.data);
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
+          break;
+        // 108–113 剧情演出（扩展包【新】，挑帘裁衣等纯剧情关）：只改朝向或放画面，不动血量、位置和胜负
+        // 108 转身：value = 朝向 0–3，或 args.toward = 朝向某个编组的人
+        case 108: {
+          if (!sel || !sel.present) break;
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          sel.facing = t ? facingTowards(sel, t, sel.facing) : op.value & 3;
+          this.emit({ type: 'face', uid: sel.uid, facing: sel.facing });
+          break;
+        }
+        // 109 做一个动作（出手、受击、防御），args.toward 先转向那人
+        case 109: {
+          if (!sel || !sel.present) break;
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          if (t) sel.facing = facingTowards(sel, t, sel.facing);
+          const action = op.args?.action === 'hurt' || op.args?.action === 'defend' ? op.args.action : 'attack';
+          this.emit({ type: 'act', uid: sel.uid, action, facing: sel.facing });
+          break;
+        }
+        // 110 换天色（text = night / dusk / snow，空 = 恢复白天）
+        case 110:
+          this.emit({ type: 'tint', tint: op.text ?? '' });
+          break;
+        // 111 场景字幕（画面中间的大字，如「次日」「当夜」）
+        case 111:
+          this.emit({ type: 'subtitle', text: op.text ?? '' });
+          break;
+        // 112 镜头移到某格
+        case 112: {
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          this.emit({ type: 'focus', x: t?.x ?? op.args?.x ?? 0, y: t?.y ?? op.args?.y ?? 0 });
+          break;
+        }
+        // 113 停顿（毫秒）
+        case 113:
+          this.emit({ type: 'wait', ms: op.value });
+          break;
+        // 114 换头像（value = 职业号，text = 包内头像文件；只放画面）
+        case 114:
+          this.emit({ type: 'portrait', classId: op.value, file: op.text ?? '' });
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:
@@ -1498,13 +1601,42 @@ export class Battle {
           this.emit({ type: 'look', uid: sel.uid, classId: op.value });
           this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta: 0 });
           break;
+        // 116 走到某人身边（扩展包【新】，夜过清风山喽啰围上来）：args.toward = 目标编组；挑走得到、没人占、离目标最近的格子（同样近取路短的）；
+        // 已经挨着就不动，走不近也不动（不在场或已倒下的人跳过）
+        case 116: {
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          if (!sel || !t || !sel.present || !sel.alive || !t.present || dist(sel, t) === 1) break;
+          const reach = this.reachOf(sel, 99);
+          const taken = this.occupied(sel);
+          // 身边四格都被占了（已经围满）就挤到离目标最近的空格
+          let best: Cell[] = [], bestD = dist(sel, t);
+          for (const k of reach.keys()) {
+            if (taken.has(k)) continue;
+            const [x, y] = k.split(',').map(Number);
+            const d = Math.abs(x - t.x) + Math.abs(y - t.y);
+            if (d === 0 || d > bestD) continue;
+            const path = pathTo(reach, x, y);
+            if (path.length > 1 && (d < bestD || path.length < best.length)) { best = path; bestD = d; }
+          }
+          if (best.length) this.walk(sel, best);
+          break;
+        }
+        // 115 换阵营（扩展包【新】，黄信归降）：text = player / ally / enemy；换了以后本回合不再行动，血条换色
+        case 115: {
+          if (!sel || !op.text) break;
+          sel.side = op.text as Unit['side'];
+          sel.ended = true;
+          this.emit({ type: 'status', uid: sel.uid, text: sel.side === 'enemy' ? '倒戈' : '歸順' });
+          this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          break;
+        }
         // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）
         case 101: {
           if (!sel || !op.args?.stat) break;
           const stat = op.args.stat as BuffStat;
           const cur = (sel.stats as unknown as Record<string, number>)[stat] ?? 0;
           const value = op.args.pct ? Math.round((cur * op.args.pct) / 100) : (op.args.add ?? 0);
-          sel.buffs.push({ stat, value, turns: op.args.turns || 999 });
+          sel.buffs.push({ stat, value, turns: op.args.turns ?? 0 });
           refreshStats(sel, this.data);
           this.emit({ type: 'status', uid: sel.uid, text: `${buffName(stat)}${value > 0 ? '+' : ''}${value}` });
           break;

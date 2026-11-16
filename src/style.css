@@ -24,7 +24,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
   font-size: 14px; z-index: 2;
 }
 #hud[hidden] { display: none; }
-#hud select, #hud button {
+#hud button {
   font: inherit; color: var(--ink); background: var(--panel);
   border: 1px solid #5a4832; border-radius: 4px; padding: 4px 8px; min-height: 32px;
 }
@@ -54,7 +54,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
 
 /* 检查更新的提示条 */
 #toast {
-  position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 6;
+  position: fixed; left: 50%; top: 52px; transform: translateX(-50%); z-index: 9;
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center;
   max-width: calc(100vw - 32px); padding: 8px 14px; border: 1px solid var(--accent); border-radius: 6px;
   background: rgba(42, 34, 25, 0.96); font-size: 14px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
@@ -106,7 +106,7 @@ code { color: var(--ink); }
 }
 #log:empty { display: none; }
 #log div:last-child { color: var(--ink); }
-#unit-panel { flex: 0 0 auto; padding: 8px 12px; font-size: 13px; line-height: 1.5; min-width: 190px; }
+#unit-panel { flex: 0 1 auto; width: 400px; max-width: 100%; min-width: 0; padding: 8px 12px; font-size: 13px; line-height: 1.5; }
 #unit-panel .name { font-size: 16px; color: var(--accent); }
 #unit-panel .side-enemy { color: var(--danger); }
 #unit-panel .side-ally { color: #7fb4d8; }
@@ -117,6 +117,8 @@ code { color: var(--ink); }
 #unit-panel .bar2.exp i { background: #4a8ff0; }
 #unit-panel .grid { display: grid; grid-template-columns: repeat(3, auto); gap: 0 12px; color: var(--muted); }
 #unit-panel .preview { margin-top: 4px; color: var(--ink); }
+#unit-panel .statuses { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 4px; overflow-wrap: anywhere; }
+#unit-panel .statuses span { max-width: 100%; }
 #cmd { flex: 0 0 auto; display: flex; flex-direction: column; gap: 4px; padding: 6px; }
 /* 跟着人物的指令菜单：位置由 BattleUI.placeCommands 用 transform 设置 */
 #cmd-float {
@@ -160,9 +162,11 @@ code { color: var(--ink); }
 #dialog-face[hidden] { display: none; }
 #unit-panel.has-face { display: flex; gap: 10px; align-items: flex-start; }
 #unit-panel .face { flex: 0 0 auto; height: 104px; width: auto; margin-left: -4px; }
-#unit-panel .info { flex: 1 1 auto; min-width: 190px; }
+#unit-panel .info { flex: 1 1 auto; min-width: 0; }
 #dialog-who { color: var(--accent); font-size: 17px; margin-bottom: 4px; }
 #dialog-who:empty { display: none; }
+/* 原著绰号：名字前小一号、淡一些（src/rules/nicknames.ts） */
+#dialog-who .nick, #unit-panel .name .nick { font-size: 0.82em; color: var(--muted); margin-right: 0.3em; }
 #dialog-text { color: #fff; font-size: 17px; line-height: 1.7; white-space: pre-line; }
 #dialog-skip { position: absolute; top: -17px; right: 12px; font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; cursor: pointer; }
 #dialog-hint { position: absolute; right: 12px; bottom: 6px; font-size: 12px; color: var(--muted); }
@@ -215,6 +219,9 @@ code { color: var(--ink); }
   background: radial-gradient(circle at 50% 0%, #3a2c1c, var(--bg) 75%);
 }
 #town[hidden] { display: none; }
+/* 在城镇里顶栏照常显示在上面（选关等），城镇界面从顶栏下面开始；战斗专用的按钮不显示 */
+body.in-town #town { top: var(--hud-h, 0px); }
+body.in-town #hud :is(#turn, #team-exp, #objective-btn, #zoom-out, #zoom-in, #rewind, #end-turn) { display: none; }
 /* 说书时对白框和选项面板盖在城镇界面上 */
 body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 #town button.story { border-color: var(--accent); }
@@ -233,6 +240,14 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 .town-shops, .town-actions, #town .ops { display: flex; flex-wrap: wrap; gap: 6px; }
 .town-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 12px; align-items: start; }
 .town-shop, .town-party { background: rgba(20, 17, 13, 0.85); border: 1px solid #4a3b29; border-radius: 6px; padding: 10px; }
+.goods-groups { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.goods-group { border: 1px solid #5a4832; border-radius: 4px; overflow: hidden; }
+.goods-group summary { cursor: pointer; padding: 10px; min-height: 44px; box-sizing: border-box; color: var(--accent); background: var(--panel); }
+.goods-group summary:hover, .goods-group summary:focus-visible { background: #3a2e20; }
+.goods-subgroups { display: flex; flex-direction: column; gap: 6px; padding: 6px; }
+.goods-subgroups > .goods-group > summary { background: #1f1912; }
+.goods-count { float: right; color: var(--muted); font-size: 13px; margin-left: 8px; }
+#town .goods-group .goods { padding: 6px; }
 .town-party { display: flex; flex-direction: column; gap: 8px; }
 .town-line { margin: 10px 0; padding: 10px 14px; background: #000; border: 1px solid var(--accent); border-radius: 6px; line-height: 1.7; white-space: pre-line; }
 #town .hint { color: var(--muted); font-size: 13px; line-height: 1.6; margin: 8px 0; }
@@ -266,13 +281,13 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 
 @media (max-width: 640px) {
   #hud { font-size: 13px; gap: 4px; padding: 4px 6px; }
-  #hud select { max-width: 40vw; }
-  #hud select, #hud button { padding: 2px 6px; min-height: 30px; }
+  #stage { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #hud button { padding: 2px 6px; min-height: 30px; }
   #reset { display: none; }
   #toast { font-size: 13px; }
   #bottom { flex-direction: column; align-items: stretch; gap: 4px; padding: 4px 6px max(4px, env(safe-area-inset-bottom)); }
   #log { max-height: 42px; font-size: 12px; padding: 3px 8px; }
-  #unit-panel { min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
+  #unit-panel { width: 100%; min-width: 0; padding: 4px 8px; font-size: 12px; line-height: 1.35; }
   #unit-panel .name { font-size: 14px; }
   #unit-panel .bars { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
   #unit-panel .bar2 { min-width: 30px; }
@@ -351,9 +366,10 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 }
 .title-stage-grid button.story { color: var(--muted); }
 .title-stage-grid button.town { color: #9fc48a; }
+.title-stage-grid button.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .title-stage-grid button:hover, .title-stage-grid button:focus-visible { border-color: var(--accent); outline: none; }
-.title-foot { width: min(860px, 100%); display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
-.title-tools { display: flex; gap: 6px; }
+.title-foot { width: min(860px, 100%); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.title-tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .title-tools button {
   font: inherit; font-size: 13px; color: var(--ink); background: var(--panel); cursor: pointer;
   border: 1px solid #5a4832; border-radius: 4px; padding: 4px 10px; min-height: 30px;

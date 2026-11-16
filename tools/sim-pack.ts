@@ -6,9 +6,12 @@ import { Battle } from '../src/rules/battle.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { attackSkill } from '../src/rules/unit.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
+import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
+
+useDiskCustomMaps(); // 自拼地图 packs/maps/*.json（§15.15）
 
 export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(DATA))) {
   const dir = path.resolve(import.meta.dirname, '../packs', id);
@@ -23,13 +26,16 @@ export function loadPackFromDisk(id: string, base = loadGameData(new NodeFiles(D
 const dist = (a: { x: number; y: number }, c: { x: number; y: number }) => Math.abs(a.x - c.x) + Math.abs(a.y - c.y);
 /** 走到离 (x, y) 最近的能到的格子；走不动就原地防御 */
 function walkTo(b: Battle, u: Battle['units'][number], x: number, y: number, ev: unknown[]) {
-  const c = b.moveRange(u).green.reduce((a, g) => (dist(g, { x, y }) < dist(a, { x, y }) ? g : a), { x: u.x, y: u.y });
+  // 按地形距离（绕开墙）挑最近的一格，不用直线距离，免得隔着墙卡住
+  const field = b.board.distanceField([{ x, y }]);
+  const d = (c: { x: number; y: number }) => field[c.y * b.board.width + c.x];
+  const c = b.moveRange(u).green.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
   if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
   if (b.canAct(u)) ev.push(...b.defend(u));
 }
 
 if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
-  const [id = 'wusong', stageId, n = '20'] = process.argv.slice(2);
+  const [id = 'mainline', stageId = 'jingyanggang', n = '20'] = process.argv.slice(2);
   const files = new NodeFiles(DATA);
   const tr = buildT2S(files);
   const rt = loadPackFromDisk(id, loadGameData(files, tr));
@@ -88,7 +94,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const boss = b.units.filter((u) => u.side === 'enemy').sort((a, c) => c.stats.maxHp - a.stats.maxHp)[0];
     const left = b.units.filter((u) => u.side === 'enemy' && u.present && u.hp > 0).length;
     const flags =
-      id === 'wusong' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
+      stage.id === 'jingyanggang' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
     console.log(`种子 ${seed}: ${b.status} 第 ${b.turn} 回合  ${me}  ${boss ? hp(boss) : ''}  敌人剩 ${left}${flags}`);
   }
   console.log(`胜 ${wins}/${n}`);

@@ -1,15 +1,14 @@
 // 扩展包载入（docs/game-design.md §15.2）：把包的职业、技能、道具接到原版数据后面，把关卡 JSON 编译成 StageInput。
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock, PasOp, PasTrigger } from '../formats/pas.ts';
+import type { PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
 import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
-import { readExeTables } from '../formats/exe.ts';
 import { SLOT_COUNT } from '../rules/data.ts';
-import { outfit, potionsFor, storyPoint } from '../rules/preset.ts';
-import { stock } from '../rules/town.ts';
+import { levelKit } from '../rules/equipment.ts';
+import type { Member } from '../rules/campaign.ts';
 import type { RecolorGroup } from './recolor.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
@@ -74,6 +73,8 @@ export interface PackRuntime {
   classIds: Map<string, number>;
   skillIds: Map<string, number>;
   itemIds: Map<string, number>;
+  /** 包里在城镇有卖的道具（运行时道具号）：和原版装备一样按等级表换，不当剧情道具保留 */
+  shopItems: Set<number>;
   /** 运行时职业号 → 画面信息 */
   looks: Map<number, PackClassLook>;
   stages: PackStageJson[];
@@ -94,12 +95,19 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
   const skillIds = new Map<string, number>();
   const itemIds = new Map<string, number>();
   const items = [...base.items];
+  const shopItems = new Set<number>();
   for (const it of pack.items ?? []) {
     const from = base.items[it.from - 1];
     if (!from) throw new Error(`${pack.id}: 道具 ${it.id} 借的原版道具 ${it.from} 不存在`);
     const id = items.length + 1;
-    items.push({ ...from, id, name: it.name, description: it.description ?? from.description, attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility });
+    const sale = it.shop ? { category: 2, seqA: [...it.shop, ...Array(13).fill(0)].slice(0, 13) } : {};
+    const price = it.buyPrice !== undefined ? { buyPrice: it.buyPrice, sellPrice: Math.floor(it.buyPrice / 2) } : {};
+    items.push({
+      ...from, ...sale, ...price, id, name: it.name, type: it.type ?? from.type, description: it.description ?? from.description,
+      attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility, hit: it.hit ?? from.hit,
+    });
     itemIds.set(it.id, id);
+    if (it.shop) shopItems.add(id);
   }
   const itemRef = (v: number | string) => (typeof v === 'number' ? v : (itemIds.get(v) ?? fail(`${pack.id}: 没有道具 ${v}`)));
   const templates = new Map<number, SkillDef>();
@@ -182,6 +190,7 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
     classIds,
     skillIds,
     itemIds,
+    shopItems,
     looks,
     stages,
     sheets,
@@ -238,6 +247,14 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     name: s.name,
     group: group ?? 0,
     hidden: false,
+    targetShape: s.targetShape,
+    chargeTarget: s.chargeTarget,
+    rangedDamage: s.rangedDamage,
+    castCycles: s.castCycles,
+    castSpeed: s.castSpeed,
+    hitFx: s.hitFx,
+    arrowFx: s.arrowFx,
+    pierce: s.pierce,
     power: s.power ?? t.power,
     mpCost: s.mpCost ?? t.mpCost,
     learnLevel: s.learnLevel ?? 1,
@@ -266,11 +283,27 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 }
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
-export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string } = {}): StageInput {
+export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number } = {}): StageInput {
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
+  for (const [x, y] of stage.map.open ?? []) {
+    if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
+    board.blocked[y * board.width + x] = 0;
+  }
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
+  if (stage.dynamicLevels) {
+    const levels = units.filter(u => u.side === 'player').map(u => opts.party?.get(u.type)?.level).filter((n): n is number => n !== undefined);
+    const level = levels.length ? Math.round(levels.reduce((a,b) => a+b,0)/levels.length) : opts.joinLevel || Math.round(units.filter(u=>u.side==='player').reduce((a,u)=>a+u.level,0)/Math.max(1, units.filter(u=>u.side==='player').length));
+    units.forEach((u,i) => {
+      if (u.side === 'player') u.level = opts.party?.get(u.type)?.level ?? level;
+      else if (u.level > 1) u.level = Math.max(1, level + (stage.units[i].levelOffset ?? (u.side === 'enemy' ? -1 : 0)));
+    });
+  } else if (opts.party) {
+    // A story's authored level must not silently promote an existing member or erase experience.
+    for (const u of units) if (u.side === 'player' && opts.party.has(u.type)) u.level = opts.party.get(u.type)!.level;
+  }
+  // 先确定动态等级，再生成默认配装；已有队员装备仍由 party 继承。
   kitPlayers(rt, stage, units, files);
   const byId = new Map(stage.units.map((u, i) => [u.id, { json: u, act: units[i] }]));
   const unitRef = (id: unknown) => byId.get(String(id)) ?? fail(`${stage.id}: 没有单位 ${String(id)}`);
@@ -290,31 +323,21 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, clearGold, party: opts.party, joinLevel: opts.joinLevel };
 }
 
-const exeStages = new WeakMap<FileSource, { index: number; mapName: string }[]>();
-
-/**
- * 外传我方的装备和药按对应的主线进度配，和跳关同一套规则（负责人 2026-11-15，src/rules/preset.ts outfit / storyPoint）：
- * 关卡里写的装备当作剧本装备，比店里的好就留着；包自带的道具（如武松的哨棒）不换。没有原版 EXE（单元测试的假文件）就不配。
- */
+/** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
 function kitPlayers(rt: PackRuntime, stage: PackStageJson, units: ActUnit[], files: FileSource): void {
-  const players = units.filter((u) => u.side === 'player' && rt.data.classes[u.type]);
-  if (!players.length || stage.gearAt === 'none' || !files.has('ShuiHu.exe')) return;
-  let stages = exeStages.get(files);
-  if (!stages) exeStages.set(files, (stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName)));
-  const level = players.reduce((a, u) => a + u.level, 0) / players.length;
-  const sp = storyPoint(files, stages, level, stage.gearAt);
-  const custom = new Set(rt.itemIds.values());
-  const shopIds = sp.town ? stock(rt.data, 1, sp.town).filter((id) => !custom.has(id)) : [];
-  const potions = potionsFor(rt.data, sp.town);
-  for (const u of players) {
+  if (stage.gearAt === 'none') return;
+  const custom = new Set([...rt.itemIds.values()].filter((id) => !rt.shopItems.has(id)));
+  for (const u of units) {
+    if (u.side !== 'player') continue;
     const cls = rt.data.classes[u.type];
-    const slots = cls.defaultItems.slice(0, 7);
+    if (!cls) continue;
+    const slots = cls.defaultItems.slice();
     while (slots.length < SLOT_COUNT) slots.push(0);
     u.items.forEach((id, k) => id && (slots[k] = id));
-    outfit(rt.data, cls, slots, shopIds, potions, sp.reached, (id) => custom.has(id));
+    levelKit(rt.data, cls, u.level, slots, (id) => custom.has(id));
     u.items = slots;
   }
 }
@@ -333,8 +356,9 @@ function actUnit(rt: PackRuntime, u: PackUnitJson, index: number): ActUnit {
     x: u.x,
     y: u.y,
     level: u.level,
-    flags: (ai << 8) | (u.hidden ? 1 : 0),
-    extra: [0, 0, 0],
+    flags: (ai << 8) | (u.hidden || u.offstage ? 1 : 0),
+    // AI 12 守屋：屋子范围借 ACT 的目标 / 目标点字段存（目标 = x2 << 8 | y2，目标点 = x1, y1）
+    extra: u.guardArea ? [(u.guardArea[2] << 8) | u.guardArea[3], u.guardArea[0], u.guardArea[1]] : [0, 0, 0],
     items,
     raw: [],
   };
@@ -356,22 +380,35 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   let trigger: PasTrigger;
   let cond: PasBlock['cond'] = { type: 0, arg: 0 };
   if (on === 'start') trigger = { kind: 'turn', turn: 0 };
-  else if (on === 'enemiesDefeated') {
+  else if (on === 'enemiesDefeated' || on === 'allEnemiesDefeated') {
     trigger = { kind: 'cond' };
-    cond = { type: 1, arg: 0xff }; // 原版条件 1、参数 0xFF：敌方全灭
+    cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if (b.if !== undefined || b.unless !== undefined) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated`);
+  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
     const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
-  } else if ('near' in on) trigger = { kind: 'near', char: r.charOf(on.near) };
+  } else if ('near' in on) {
+    const target = r.unitRef(on.near).act;
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}) };
+  } else if ('hp' in on) {
+    const target = r.unitRef(on.hp).act;
+    trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
+  }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
+  if (trigger.kind === 'near' || trigger.kind === 'hp') {
+    // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
+    const conds: PasCond[] = [];
+    if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
+    if (b.unless !== undefined) conds.push({ type: 101, arg: r.flagRef(b.unless) });
+    if (conds.length) cond = conds.length === 1 ? conds[0] : { op: 'and', a: conds[0], b: conds[1] };
+  }
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
   const select = (id: unknown) => op(12, 1000 + r.unitRef(id).act.group);
@@ -382,11 +419,20 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(13, 0, { text: String(a[0]) });
         break;
       case 'say':
-        select(a[0]);
+        if (r.unitRef(a[0]).json.offstage) op(12, 1000 + r.unitRef(a[0]).act.group, { quiet: true });
+        else select(a[0]);
         op(13, 0, { text: String(a[1]) });
         break;
       case 'appear':
         select(a[0]);
+        break;
+      case 'show':
+        // ['show', 谁, 站在谁身边（可省）] 剧情临时出镜：已倒下或退场的人回到地图上说话，只放画面，不复活、不改胜负（战后对话用）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'show', ...(a[1] !== undefined ? { near: r.charOf(String(a[1])) } : {}) } });
+        break;
+      case 'hide':
+        // ['hide', 谁] 收起 show 叫出来的人（只放画面）
+        ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'hide' } });
         break;
       case 'leave':
         // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
@@ -421,9 +467,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'flag':
         op(103, r.flagRef(a[0]));
         break;
+      case 'borrowEquip':
       case 'setEquip':
         select(a[0]);
-        ops.push({ op: 100, flag: Number(a[1]), value: Number(a[2]) ? r.itemRef(a[2]) : 0 });
+        ops.push({ op: name === 'borrowEquip' ? 107 : 100, flag: Number(a[1]), value: a[2] === 0 ? 0 : r.itemRef(a[2]) });
         break;
       case 'bind':
         select(a[0]);
@@ -433,12 +480,63 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         select(a[0]);
         op(106);
         break;
+      case 'approach':
+        // ['approach', 谁, 走到谁身边] 自动挑一格相邻的空格走过去（目标位置事先不知道时用）【新】
+        select(a[0]);
+        ops.push({ op: 116, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
+        break;
+      case 'defect': {
+        // ['defect', 谁, 'player' | 'ally' | 'enemy'] 换阵营（黄信归降）【新】
+        const side = String(a[1] ?? 'ally');
+        if (!['player', 'ally', 'enemy'].includes(side)) fail(`第 ${index} 个区块：defect 的阵营只能是 player / ally / enemy`);
+        select(a[0]);
+        op(115, 0, { text: side });
+        break;
+      }
       case 'buff': {
         select(a[0]);
         const o = (a[2] ?? {}) as { pct?: number; add?: number; turns?: number };
         ops.push({ op: 101, flag: null, value: 0, args: { stat: String(a[1]), pct: o.pct, add: o.add, turns: o.turns } });
         break;
       }
+      // 剧情演出【新】（battle.ts 指令 108–113）
+      case 'face': {
+        // ['face', 谁, 朝向 0–3 或 另一个人的 id]
+        select(a[0]);
+        if (typeof a[1] === 'string') ops.push({ op: 108, flag: null, value: 0, args: { toward: r.unitRef(a[1]).act.group } });
+        else ops.push({ op: 108, flag: null, value: Number(a[1]) & 3 });
+        break;
+      }
+      case 'act': {
+        // ['act', 谁, 'attack' | 'hurt' | 'defend', 朝向谁（可省）]
+        const action = String(a[1] ?? 'attack');
+        if (!['attack', 'hurt', 'defend'].includes(action)) fail(`第 ${index} 个区块：act 的动作只能是 attack / hurt / defend`);
+        select(a[0]);
+        ops.push({ op: 109, flag: null, value: 0, args: { action, ...(a[2] !== undefined ? { toward: r.unitRef(a[2]).act.group } : {}) } });
+        break;
+      }
+      case 'tint':
+        // ['tint', 'night' | 'dusk' | 'snow' | ''] 换天色，'' 恢复
+        if (a[0] && !['night', 'dusk', 'snow'].includes(String(a[0]))) fail(`第 ${index} 个区块：tint 只能是 night / dusk / snow 或空`);
+        op(110, 0, { text: String(a[0] ?? '') });
+        break;
+      case 'title':
+        op(111, 0, { text: String(a[0]) });
+        break;
+      case 'focus': {
+        // ['focus', x, y] 或 ['focus', 谁]
+        if (typeof a[0] === 'string') {
+          ops.push({ op: 112, flag: null, value: 0, args: { toward: r.unitRef(a[0]).act.group } });
+        } else ops.push({ op: 112, flag: null, value: 0, args: { x: Number(a[0]), y: Number(a[1]) } });
+        break;
+      }
+      case 'wait':
+        op(113, Math.max(0, Math.min(5000, Number(a[0]) || 0)));
+        break;
+      case 'portrait':
+        // ['portrait', 职业, 头像文件（包内路径，空 = 恢复职业自己的头像）] 本关之后的对白、面板换这张头像（如武松改扮行者）
+        op(114, r.classRef(a[0]), { text: String(a[1] ?? '') });
+        break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
     }

@@ -1,6 +1,7 @@
 // 城镇与整备界面（HTML）：顶部是店铺分页，左边是本店的货或传闻，右边是队员和他们的 7 格道具。
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
-import type { Item } from '../formats/goo.ts';
+import { itemTypeName, type Item } from '../formats/goo.ts';
+import { EQUIPMENT_CATEGORIES } from '../rules/equipment.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
 import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
@@ -21,6 +22,8 @@ export interface TownOptions {
   /** 城镇号 1–13；0 = 没有城镇，只整备 */
   town: number;
   title: string;
+  /** 续篇城镇显示明确的下一关名称。 */
+  leaveLabel?: string;
   /** 每次买卖、整理后调用（用来存档） */
   onChange: (c: CampaignState) => void;
   onLeave: (c: CampaignState) => void;
@@ -47,12 +50,20 @@ export class TownUI {
   private rumor = new Map<number, number>();
   private icons = new Map<number, string>();
   private telling = false;
+  private openGoods = new Set<string>();
 
   constructor(
     private assets: Assets,
     private portrait: (classId: number) => string | null,
     private stage?: TownStage,
   ) {
+    this.root.addEventListener('toggle', (e) => {
+      const group = e.target;
+      if (!(group instanceof HTMLDetailsElement) || !group.matches('[data-goods-type]') || !this.root.contains(group)) return;
+      const type = group.dataset.goodsType!;
+      if (group.open) this.openGoods.add(type);
+      else this.openGoods.delete(type);
+    }, true);
     this.root.addEventListener('click', (e) => {
       const el = (e.target as Element).closest<HTMLElement>('[data-do]');
       if (el) this.on(el.dataset.do!, Number(el.dataset.v ?? 0));
@@ -63,6 +74,8 @@ export class TownUI {
     return !this.root.hidden;
   }
 
+  setAssets(assets: Assets) { this.assets = assets; this.icons.clear(); }
+
   show(c: CampaignState, o: TownOptions) {
     this.c = c;
     this.o = o;
@@ -72,10 +85,13 @@ export class TownUI {
     if (o.town) this.enter(0);
     else this.enter(PREP);
     this.root.hidden = false;
+    // 城镇界面让出顶栏（选关、音量、主菜单照常能用），战斗用的按钮先藏起来
+    document.body.classList.add('in-town');
   }
 
   hide() {
     this.root.hidden = true;
+    document.body.classList.remove('in-town');
   }
 
   private tr = (s: string) => this.assets.tr(s);
@@ -85,6 +101,7 @@ export class TownUI {
 
   private enter(shop: number) {
     this.shop = shop;
+    this.openGoods.clear();
     // 酒店放酒馆曲，其他店铺放商店曲，整备放城镇曲【新】；都配第二首轮放（负责人 2026-11-14：每处循环的音乐至少两首）
     void music.play(shop > 0 ? ['shop', 'comic'] : shop === 0 ? ['inn', 'rock'] : ['town', 'march']);
     this.slot = -1;
@@ -102,6 +119,7 @@ export class TownUI {
 
   /** 酒店交谈：依次说出本城的传闻，说完从头再来（EXE 0x4194d1） */
   private talk() {
+    if (this.c.insertTown) { this.line = "诸位可在此置办衣药，整备妥当再上路。"; return; }
     const list = this.assets.exe.town.rumors[this.o.town] ?? [];
     if (!list.length) {
       this.line = '最近没听说什么新鲜事。'; // 原版这些城镇点"交談"没有反应【新】
@@ -213,6 +231,7 @@ export class TownUI {
   }
 
   private icon(it: Item): string {
+    if (it.iconUrl) return `<img class="ico" alt="" src="${it.iconUrl}">`;
     if (!this.icons.has(it.icon)) {
       let url = '';
       try {
@@ -246,12 +265,12 @@ export class TownUI {
         ? ''
         : SHOPS[this.shop].actions
             .map((a) => `<button data-do="action" data-v="${['talk', 'buy', 'items', 'forge', 'pawn'].indexOf(a)}" class="${this.action === a ? 'on' : ''}">${this.tr(ACTION_LABEL[a])}</button>`)
-            .join('') + (this.shop === 0 && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
+            .join('') + (this.shop === 0 && !this.c.insertTown && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
         <span class="gold">银子 <b>${this.c.gold}</b> 两</span>
-        <button class="leave" data-do="leave">${town ? '离开城镇 ▸' : '完成 ▸'}</button>
+        <button class="leave" data-do="leave">${esc(this.o.leaveLabel ?? (this.c.insertTown ? '出发：十字坡 ▸' : town ? '离开城镇 ▸' : '完成 ▸'))}</button>
       </div>
       ${shops ? `<nav class="town-shops">${shops}</nav>` : ''}
       <div class="town-body">
@@ -272,16 +291,42 @@ export class TownUI {
       const who = partyMembers(this.c)
         .map((m) => `<button data-do="member" data-v="${m.classId}" class="${m.classId === this.member ? 'on' : ''}">${esc(this.tr(d.charNames[m.classId] ?? ''))}</button>`)
         .join('');
-      return `<div class="town-actions"><small class="hint">买给</small>${who}</div><ul class="goods">${list
-        .map((id) => {
-          const it = itemOf(d, id)!;
-          const ok = this.c.gold >= it.buyPrice;
-          const fit = equipSlotOf(it) !== 0 || canEquip(d.classes[this.member], it, d);
-          return `<li><button data-do="buy" data-v="${id}" ${ok ? '' : 'disabled'}>
-            ${this.icon(it)}<span class="nm">${esc(this.tr(it.name))}${fit ? '' : '<small class="warn">不合用</small>'}</span>
-            <span class="eff">${esc(this.summary(it))}</span><span class="price">${it.buyPrice} 两</span></button></li>`;
-        })
-        .join('')}</ul>`;
+      const groups = new Map<string, { type: number; name: string; ids: number[] }>();
+      for (const id of list) {
+        const it = itemOf(d, id)!;
+        const type = it.type;
+        const name = type === 13 || type === 14
+          ? Object.keys(EQUIPMENT_CATEGORIES).find((key) => EQUIPMENT_CATEGORIES[key].includes(it.name)) ?? '其他'
+          : type === 11 ? '武器·弓' : itemTypeName(type);
+        const key = `${type}:${name}`;
+        if (!groups.has(key)) groups.set(key, { type, name, ids: [] });
+        groups.get(key)!.ids.push(id);
+      }
+      const sections = new Map<number, { count: number; content: string }>();
+      const detail = (key: string, name: string, count: number, content: string) =>
+        `<details class="goods-group" data-goods-type="${esc(key)}" ${this.openGoods.has(key) ? 'open' : ''}>
+          <summary>${esc(this.tr(name))}<span class="goods-count">${count} 件</span></summary>${content}</details>`;
+      for (const [key, { type, name, ids }] of [...groups].sort(([, a], [, b]) => a.type - b.type)) {
+        const content = `
+          <ul class="goods">${ids.map((id) => {
+            const it = itemOf(d, id)!;
+            const ok = this.c.gold >= it.buyPrice;
+            const fit = equipSlotOf(it) !== 0 || canEquip(d.classes[this.member], it, d);
+            return `<li><button data-do="buy" data-v="${id}" ${ok ? '' : 'disabled'}>
+              ${this.icon(it)}<span class="nm">${esc(this.tr(it.name))}${fit ? '' : '<small class="warn">不合用</small>'}</span>
+              <span class="eff">${esc(this.summary(it))}</span><span class="price">${it.buyPrice} 两</span></button></li>`;
+          }).join('')}</ul>`;
+        // 装备先按槽位折叠，再按既有武器/衣帽类别折叠；非装备保留原有分类。
+        const section = type <= 12 ? 0 : type;
+        const previous = sections.get(section) ?? { count: 0, content: '' };
+        sections.set(section, { count: previous.count + ids.length, content: previous.content + detail(`sub:${key}`, name, ids.length, content) });
+      }
+      const goods = [...sections].map(([type, { count, content }]) => {
+        if (type > 14) return content;
+        const name = type === 0 ? '武器' : type === 13 ? '衣服' : '头饰';
+        return detail(`main:${type}`, name, count, `<div class="goods-subgroups">${content}</div>`);
+      }).join('');
+      return `<div class="town-actions"><small class="hint">买给</small>${who}</div><div class="goods-groups">${goods}</div>`;
     }
     if (this.action === 'pawn') return '<p class="hint">点选右边队员的道具典当，按道具的卖价收钱。</p>';
     if (this.action === 'forge') return '<p class="hint">点选右边队员的装备打铁：点一下就打一次，每次收买价的一半。装备上会标出这次打铁加多少攻、防，还能再打几次；没标的不能在这里打铁。</p>';
@@ -297,7 +342,7 @@ export class TownUI {
   private memberCard(m: Member, open: boolean): string {
     const d = this.data, cls = d.classes[m.classId];
     const forge = m.forge ?? [];
-    const st = computeStats(cls, m.level, m.slots, d, false, forge);
+    const st = computeStats(cls, m.level, m.slots, d, false, forge, [], 'player');
     const face = this.portrait(m.classId);
     const head = `<button class="who" data-do="member" data-v="${m.classId}">
       ${face ? `<img class="face" alt="" src="${face}">` : ''}

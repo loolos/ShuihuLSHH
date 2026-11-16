@@ -3,9 +3,14 @@
 import { buildPack, packStageName, type PackRuntime, type SpriteSheetJson } from '../packs/build.ts';
 import type { PackJson, PackStageJson } from '../packs/types.ts';
 import type { Assets } from './assets.ts';
+import { setCustomMapLoader } from '../rules/load.ts';
+import type { MapJson } from '../formats/map.ts';
 
 const JSONS = import.meta.glob('/packs/**/*.json', { eager: true, import: 'default' }) as Record<string, unknown>;
 const PNGS = import.meta.glob('/packs/**/*.png', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+
+// 自拼地图（§15.15）：packs/maps/<名字>.json，随代码打包
+setCustomMapLoader((name) => JSONS[`/packs/maps/${name}.json`] as MapJson | undefined);
 
 export interface PackAssets {
   rt: PackRuntime;
@@ -57,6 +62,10 @@ export async function openPack(assets: Assets, id: string): Promise<PackAssets> 
     if (j) sheets[c.sprite.sheet] = j;
   }
   const rt = buildPack(assets.data, entry.pack, entry.stages, sheets);
+  for (const it of entry.pack.items ?? []) {
+    const url = it.icon && PNGS[`/packs/${id}/${it.icon}`];
+    if (url) rt.data.items[rt.itemIds.get(it.id)! - 1].iconUrl = url;
+  }
   const images = new Map<string, HTMLImageElement>();
   const jobs: Promise<void>[] = [];
   for (const [sheet, j] of Object.entries(sheets))

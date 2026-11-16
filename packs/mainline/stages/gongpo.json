@@ -1,0 +1,844 @@
+{
+  "id": "gongpo",
+  "title": "清风寨破",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "guanfu"
+  },
+  "bgm": [
+    "battle",
+    "rock"
+  ],
+  "units": [
+    {
+      "id": "qinming",
+      "class": "qinming",
+      "side": "player",
+      "x": 11,
+      "y": 21,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "player",
+      "x": 12,
+      "y": 21,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 10,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 11,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 12,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 13,
+      "y": 22,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 10,
+      "y": 21,
+      "level": 29,
+      "name": "燕顺"
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 13,
+      "y": 21,
+      "level": 29,
+      "name": "郑天寿"
+    },
+    {
+      "id": "ally-1",
+      "class": 44,
+      "side": "ally",
+      "x": 9,
+      "y": 21,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "ally-2",
+      "class": 45,
+      "side": "ally",
+      "x": 14,
+      "y": 21,
+      "level": 29,
+      "name": "清风山喽啰"
+    },
+    {
+      "id": "huangxin",
+      "class": "huangxin",
+      "side": "enemy",
+      "x": 16,
+      "y": 5,
+      "level": 29,
+      "levelOffset": 2,
+      "facing": 2,
+      "name": "黄信"
+    },
+    {
+      "id": "hx-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 12,
+      "y": 13,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 5,
+      "y": 13,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 13,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 9,
+      "y": 15,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 15,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 12,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 15,
+      "y": 6,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "hx-9",
+      "class": 34,
+      "side": "enemy",
+      "x": 19,
+      "y": 6,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵"
+    },
+    {
+      "id": "jd-1",
+      "class": 37,
+      "side": "enemy",
+      "x": 3,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-2",
+      "class": 37,
+      "side": "enemy",
+      "x": 4,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-3",
+      "class": 37,
+      "side": "enemy",
+      "x": 5,
+      "y": 4,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-4",
+      "class": 37,
+      "side": "enemy",
+      "x": 4,
+      "y": 5,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-5",
+      "class": 37,
+      "side": "enemy",
+      "x": 18,
+      "y": 5,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-6",
+      "class": 37,
+      "side": "enemy",
+      "x": 3,
+      "y": 2,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-7",
+      "class": 37,
+      "side": "enemy",
+      "x": 5,
+      "y": 2,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-8",
+      "class": 37,
+      "side": "enemy",
+      "x": 17,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-9",
+      "class": 37,
+      "side": "enemy",
+      "x": 6,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-10",
+      "class": 37,
+      "side": "enemy",
+      "x": 3,
+      "y": 5,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-11",
+      "class": 37,
+      "side": "enemy",
+      "x": 20,
+      "y": 3,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd-12",
+      "class": 37,
+      "side": "enemy",
+      "x": 19,
+      "y": 4,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "刘高家丁"
+    },
+    {
+      "id": "jd2-1",
+      "class": 37,
+      "side": "enemy",
+      "x": 20,
+      "y": 5,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "jd2-2",
+      "class": 37,
+      "side": "enemy",
+      "x": 19,
+      "y": 8,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "jd2-3",
+      "class": 37,
+      "side": "enemy",
+      "x": 21,
+      "y": 8,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "jd2-4",
+      "class": 37,
+      "side": "enemy",
+      "x": 21,
+      "y": 9,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "jd2-5",
+      "class": 37,
+      "side": "enemy",
+      "x": 22,
+      "y": 5,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "jd2-6",
+      "class": 37,
+      "side": "enemy",
+      "x": 22,
+      "y": 4,
+      "level": 29,
+      "hidden": true,
+      "name": "刘高家丁",
+      "levelOffset": 0
+    },
+    {
+      "id": "mei",
+      "class": "huarong-mei",
+      "side": "ally",
+      "x": 12,
+      "y": 17,
+      "level": 5,
+      "ai": 8,
+      "hidden": true,
+      "name": "花荣之妹"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "清风寨 · 寨门"
+        ],
+        [
+          "narrate",
+          "次日，秦明、宋江引着众好汉，带了清风山喽啰，直到清风寨前。黄信闻知，紧闭寨门，摆开人马迎敌。刘高家里还有一伙家丁，也都拿了刀棒守在后院。"
+        ],
+        [
+          "say",
+          "qinming",
+          "黄信贤弟，开门！秦明有话和你说。"
+        ],
+        [
+          "focus",
+          "huangxin"
+        ],
+        [
+          "say",
+          "huangxin",
+          "总管也反了？朝廷不曾亏负你，如何倒引着强人来打寨子！"
+        ],
+        [
+          "say",
+          "qinming",
+          "众兄弟休伤黄信性命，待我近前劝他。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "刘高家里那伙家丁，却一个也休放走！"
+        ],
+        [
+          "buff",
+          "huangxin",
+          "defense",
+          {
+            "pct": 200
+          }
+        ],
+        [
+          "objective",
+          "胜利：秦明走到黄信身边劝降（黄信生命一半以下才肯降；打倒他也算擒住归降），并打退刘高的家丁\n失败：宋江或秦明倒下；超过 20 回合"
+        ],
+        [
+          "turnLimit",
+          20
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "刘高家里又从后门抢出几个家丁来。"
+        ],
+        [
+          "appear",
+          "jd2-1"
+        ],
+        [
+          "appear",
+          "jd2-2"
+        ],
+        [
+          "appear",
+          "jd2-3"
+        ],
+        [
+          "appear",
+          "jd2-4"
+        ],
+        [
+          "appear",
+          "jd2-5"
+        ],
+        [
+          "appear",
+          "jd2-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "huangxin",
+        "by": "qinming"
+      },
+      "unless": "weak",
+      "do": [
+        [
+          "say",
+          "qinming",
+          "贤弟，你又无老小，何不听我言语，也去山寨入伙，免受那文官的气？"
+        ],
+        [
+          "say",
+          "huangxin",
+          "总管休说！黄信食君之禄，岂肯随你落草！看剑！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "huangxin",
+        "below": 50
+      },
+      "do": [
+        [
+          "narrate",
+          "黄信身上带伤，手里的丧门剑渐渐乱了——秦明再到他身边劝一劝，或许肯降。"
+        ],
+        [
+          "flag",
+          "weak"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "huangxin",
+        "by": "qinming"
+      },
+      "if": "weak",
+      "do": [
+        [
+          "say",
+          "qinming",
+          "贤弟，我的妻小都被慕容知府杀了，秦明已是无家可归。山上宋公明哥哥仗义疏财，专一结识天下好汉，你何苦替刘高那厮卖命！"
+        ],
+        [
+          "say",
+          "huangxin",
+          "既然恩官在彼，黄信安敢不从。只是不曾听得说有宋公明在山上。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "黄都监，宋江在此！"
+        ],
+        [
+          "say",
+          "huangxin",
+          "原来及时雨宋公明哥哥也在这里！黄信愿降！"
+        ],
+        [
+          "defect",
+          "huangxin",
+          "ally"
+        ],
+        [
+          "narrate",
+          "黄信弃了剑，喝退手下寨兵，下马拜降。"
+        ],
+        [
+          "defect",
+          "hx-1",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-1"
+        ],
+        [
+          "defect",
+          "hx-2",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-2"
+        ],
+        [
+          "defect",
+          "hx-3",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-3"
+        ],
+        [
+          "defect",
+          "hx-4",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-4"
+        ],
+        [
+          "defect",
+          "hx-5",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-5"
+        ],
+        [
+          "defect",
+          "hx-6",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-6"
+        ],
+        [
+          "defect",
+          "hx-7",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-7"
+        ],
+        [
+          "defect",
+          "hx-8",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-8"
+        ],
+        [
+          "defect",
+          "hx-9",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-9"
+        ],
+        [
+          "flag",
+          "surrendered"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huangxin"
+      },
+      "do": [
+        [
+          "narrate",
+          "黄信被打落马下，众人一齐上前拿住。秦明亲解其缚，再三劝说。黄信道：「既然恩官在彼，黄信安敢不从。」寨兵也都放下了刀枪。"
+        ],
+        [
+          "defect",
+          "hx-1",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-1"
+        ],
+        [
+          "defect",
+          "hx-2",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-2"
+        ],
+        [
+          "defect",
+          "hx-3",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-3"
+        ],
+        [
+          "defect",
+          "hx-4",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-4"
+        ],
+        [
+          "defect",
+          "hx-5",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-5"
+        ],
+        [
+          "defect",
+          "hx-6",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-6"
+        ],
+        [
+          "defect",
+          "hx-7",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-7"
+        ],
+        [
+          "defect",
+          "hx-8",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-8"
+        ],
+        [
+          "defect",
+          "hx-9",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-9"
+        ],
+        [
+          "flag",
+          "surrendered"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "if": "surrendered",
+      "do": [
+        [
+          "narrate",
+          "刘高的家丁都杀散了。众好汉打进清风寨，花荣先去家里接出老小。"
+        ],
+        [
+          "narrate",
+          "王英抢了刘高的妇人，要她做压寨夫人。燕顺跳起身来，把那妇人一刀挥为两段：「这等淫妇，留她何用！」王英大怒，宋江劝住了，许他日后另娶一个好的。"
+        ],
+        [
+          "appear",
+          "mei"
+        ],
+        [
+          "move",
+          "huarong",
+          13,
+          17
+        ],
+        [
+          "move",
+          "qinming",
+          12,
+          16
+        ],
+        [
+          "face",
+          "mei",
+          "qinming"
+        ],
+        [
+          "face",
+          "qinming",
+          "mei"
+        ],
+        [
+          "face",
+          "huarong",
+          "mei"
+        ],
+        [
+          "say",
+          "huarong",
+          "妹子，这位便是秦总管。宋公明哥哥作主，将你许配与他。"
+        ],
+        [
+          "say",
+          "mei",
+          "小妹见过总管。"
+        ],
+        [
+          "say",
+          "qinming",
+          "秦明一介武夫，蒙小姐不弃，此生必不相负。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "择个吉日，就在山寨里成亲！"
+        ],
+        [
+          "narrate",
+          "宋江、黄信主婚，燕顺、王英、郑天寿做媒，众人尽皆欢喜。秦明与花小姐就在清风山成了亲。"
+        ],
+        [
+          "victory",
+          "秦明劝降黄信，众好汉攻破清风寨。花荣接出家眷，花荣之妹与秦明成亲。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江倒下了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "qinming"
+      },
+      "do": [
+        [
+          "defeat",
+          "秦明倒下，劝不得黄信了。"
+        ]
+      ]
+    }
+  ]
+}

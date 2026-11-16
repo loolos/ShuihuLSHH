@@ -4,7 +4,7 @@
 
 export interface TitleStageItem {
   label: string;
-  /** 交给 main.ts 跳关的值：关卡序号，或 town:<关卡序号> */
+  /** 交给 main.ts 跳关的值：关卡序号、town:<关卡序号>、ins:<包>/<关卡>（主线插关）或 pack:<包>/<关卡>（外传） */
   value: string;
   title?: string;
 }
@@ -13,14 +13,20 @@ export interface TitleOptions {
   /** 存档摘要；没有存档时为 null，「读取存档」置灰 */
   save: { where: string; detail: string } | null;
   chapters: { label: string; items: TitleStageItem[] }[];
+  /** 选关列表里高亮的一项：游戏里 = 正在玩的，标题画面 = 存档所在的 */
+  current?: string;
   /** 封面上排的几张半身头像（data URL） */
   portraits: string[];
   version: string;
-  /** 音效 / 音乐按钮：标题画面借用顶栏的这两个按钮 */
+  /** 音效 / 音乐 / 检查更新按钮：标题画面借用顶栏按钮，保留原有事件与状态 */
   buttons: HTMLElement[];
   onNew: () => void;
   onLoad: () => void;
+  /** 清空存档（主线存档和外传进度），之后回到标题画面 */
+  onClear: () => void;
   onJump: (value: string) => void;
+  /** 从游戏顶栏直接打开选关页时：「返回」/ Esc 回到游戏，不经过标题主菜单 */
+  onBack?: () => void;
 }
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string) => {
@@ -37,11 +43,14 @@ export class TitleScreen {
   private homes: { node: HTMLElement; parent: Node; next: Node | null }[] = [];
 
   constructor() {
+    // 捕获阶段先拿到按键，免得游戏里打开选关页时 Esc / 方向键又传给战场
     window.addEventListener('keydown', (e) => {
       if (this.root.hidden) return;
+      // 盖在游戏上面时，按键只给这一页（不让对白翻页、战场响应）；回车 / 空格照常按下聚焦的按钮
+      e.stopPropagation();
       if (e.key === 'Escape' && this.root.dataset.view !== 'menu') {
         e.preventDefault();
-        this.menu();
+        this.back();
       } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         // 上下键在当前一列按钮间移动焦点
         const list = [...this.root.querySelectorAll<HTMLButtonElement>('.title-nav button:not(:disabled)')];
@@ -51,21 +60,31 @@ export class TitleScreen {
         const d = e.key === 'ArrowDown' ? 1 : -1;
         list[i < 0 ? 0 : (i + d + list.length) % list.length].focus();
       }
-    });
+    }, true);
   }
 
-  show(o: TitleOptions) {
+  /** view = 'stages'：直接打开选关页（游戏顶栏的选关按钮用这个） */
+  show(o: TitleOptions, view: 'menu' | 'stages' = 'menu') {
+    if (!this.root.hidden) this.hide();
     this.o = o;
     this.homes = o.buttons.map((node) => ({ node, parent: node.parentNode!, next: node.nextSibling }));
     document.body.classList.add('at-title');
     this.root.hidden = false;
-    this.menu();
+    if (view === 'stages') this.stages();
+    else this.menu();
+  }
+
+  /** 选关页 / 确认页的「返回」 */
+  private back() {
+    if (this.o.onBack && this.root.dataset.view === 'stages') this.o.onBack();
+    else this.menu();
   }
 
   hide() {
     this.root.hidden = true;
     document.body.classList.remove('at-title');
-    for (const h of this.homes) h.parent.insertBefore(h.node, h.next);
+    // 相邻按钮按从后往前放回，确保 next 已回到原父节点。
+    for (const h of [...this.homes].reverse()) h.parent.insertBefore(h.node, h.next);
     this.homes = [];
   }
 
@@ -107,7 +126,9 @@ export class TitleScreen {
     const load = this.button('读取存档', () => this.o.onLoad(), save ? [save.where, save.detail.split('\n')[0]].filter(Boolean).join('\n') : '还没有存档', !!save);
     load.disabled = !save;
     const jump = this.button('选　　关', () => this.stages(), '直接进入任意一关（按那一关的难度配等级和装备）');
-    nav.append(start, load, jump);
+    const clear = this.button('清空存档', () => this.confirmClear(), save ? '删掉主线存档和外传进度，之后选关按新存档配装' : '还没有存档');
+    clear.disabled = !save;
+    nav.append(start, load, jump, clear);
     this.frame('menu', nav);
     (save ? load : start).focus();
   }
@@ -124,13 +145,26 @@ export class TitleScreen {
     ok.focus();
   }
 
+  /** 清空存档前先确认 */
+  private confirmClear() {
+    const box = el('div', 'title-confirm');
+    box.append(el('p', undefined, '清空后不能恢复，要删掉的存档：'), el('p', 'title-save', `${this.o.save!.where}\n${this.o.save!.detail}`), el('p', undefined, '外传的通关记录也一起清掉。'));
+    const nav = el('nav', 'title-nav');
+    const back = this.button('返回', () => this.menu());
+    nav.append(this.button('清空存档', () => this.o.onClear(), undefined, true), back);
+    box.append(nav);
+    this.frame('confirm', box);
+    back.focus();
+  }
+
   /** 选关：按章分组 */
   private stages() {
     const box = el('div', 'title-stages');
     const top = el('div', 'title-stages-top');
-    const back = this.button('‹ 返回', () => this.menu());
-    top.append(back, el('span', 'hint', this.o.save ? '选关会覆盖现有的存档。' : '人物等级和装备按所选关卡的难度配好。'));
+    const back = this.button(this.o.onBack ? '‹ 返回游戏' : '‹ 返回', () => this.back());
+    top.append(back, el('span', 'hint', `人物等级按所选关卡的难度配好，装备按等级配${this.o.save ? '；存档里已有的人沿用存档的装备和银子（主菜单可清空存档）' : ''}；外传另算进度，不动主线存档。`));
     const list = el('div', 'title-stage-list');
+    let here: HTMLButtonElement | null = null;
     for (const ch of this.o.chapters) {
       const sec = el('section');
       sec.append(el('h3', undefined, ch.label));
@@ -139,6 +173,11 @@ export class TitleScreen {
         const b = el('button', /^town:/.test(it.value) ? 'town' : /^剧情/.test(it.label) ? 'story' : undefined, it.label);
         b.type = 'button';
         if (it.title) b.title = it.title;
+        if (it.value === this.o.current) {
+          b.classList.add('current');
+          b.setAttribute('aria-current', 'true');
+          here = b;
+        }
         b.onclick = () => this.o.onJump(it.value);
         grid.append(b);
       }
@@ -147,6 +186,10 @@ export class TitleScreen {
     }
     box.append(top, list);
     this.frame('stages', box);
-    back.focus();
+    // 停在当前这一项上（游戏里正在玩的 / 存档所在的）
+    if (here) {
+      here.scrollIntoView({ block: 'center' });
+      here.focus({ preventScroll: true });
+    } else back.focus();
   }
 }

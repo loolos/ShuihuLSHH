@@ -14,6 +14,12 @@ export const FX_DEFEND = 48;
 export const FX_COUNTER = 37;
 /** 进关就下载的固定特效组 */
 export const FIXED_FX = [FX_DEFEND, FX_COUNTER];
+/** 技能 hitFx: 'explosion'：命中的人身上炸开的火团（Effect.lib 第 40 组：白光 → 橙色火球 → 黑烟）【新】 */
+export const FX_EXPLOSION = 40;
+/** 技能 hitFx: 'impact'：命中的人身上迸开白色打击火花（第 43 组，9 帧；武松 横江断浪，负责人 2026-11-16）【新】 */
+export const FX_IMPACT = 43;
+/** hitFx → 命中时在受击者格子上播的特效组 */
+export const HIT_FX_GROUP: Partial<Record<NonNullable<SkillDef['hitFx']>, number>> = { explosion: FX_EXPLOSION, impact: FX_IMPACT };
 
 export interface SkillFx {
   /** 第一段的组号；directional 时还要加上方向 0–3 */
@@ -37,7 +43,7 @@ export interface SkillFx {
  * - 类型 11 的回复技 +6 不为 0 才播，播的也是第 17 组（不是 +6 那组）；
  * - 其它技能 +6 为 0 时不播，否则 +6 → +24 → +26 三段接力。
  */
-export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3'>): SkillFx | null {
+export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage'>): SkillFx | null {
   const base = { then: null, onTarget: null, directional: false, projectile: false };
   if (s.type === 8) return { ...base, first: FX_CHARGE, atEnd: true };
   if (s.type === 9) return { ...base, first: FX_HEAL, atEnd: true };
@@ -47,8 +53,8 @@ export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effec
     first: s.effect - 1,
     then: s.effect2 > 0 ? s.effect2 - 1 : null,
     onTarget: s.effect3 > 0 ? s.effect3 - 1 : null,
-    directional: s.type === 10,
-    projectile: s.type === 10,
+    directional: s.type === 10 || !!s.rangedDamage,
+    projectile: s.type === 10 || !!s.rangedDamage,
     atEnd: false,
   };
 }
@@ -62,12 +68,17 @@ export interface FxSpot {
 /**
  * 特效出现的格子与先后：
  * - 线形（0、5、6）：从施放点沿方向一格一格往外（0x403bd0）；
- * - 扇形（1）、前方长方形（14，重制版新增）：一行一行往外，同一行同时出现（0x403cf0）；
+ * - 扇形（1）、前方长方形（14）、四格前冲（15）：一行一行往外，同一行同时出现（后两种为重制版新增）；
  * - 菱形（3、4、7、9、11 等）：从施放点按距离一圈一圈往外（0x403f20，按圈推测）；
  * - 遠程（10）：从施放者脚下沿直线飞到施放点（0x404080），碰到目标就停。
  * 集气技、范围为 0 的技能只有施放点一格。
  */
-export function fxSpots(s: Pick<SkillDef, 'type'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
+export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
+  if (s.type === 10 && s.pierce) {
+    // 穿透：箭从施放者脚下一路飞到线尾，不在第一个目标处停下
+    const line = area.length ? area : [at];
+    return [{ cell: from, ring: 0 }, ...line.map((c) => ({ cell: c, ring: Math.abs(c.x - from.x) + Math.abs(c.y - from.y) }))];
+  }
   if (s.type === 10) {
     const dx = Math.sign(at.x - from.x), dy = Math.sign(at.y - from.y);
     const out: FxSpot[] = [];
@@ -82,7 +93,8 @@ export function fxSpots(s: Pick<SkillDef, 'type'>, from: Cell, at: Cell, area: C
   const dir = DIRS[d];
   return cells.map((c) => {
     const ox = c.x - at.x, oy = c.y - at.y;
-    const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 14 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
+    if (s.type === 14) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
     return { cell: c, ring };
   });
 }
@@ -122,11 +134,13 @@ export function fxChain(fx: SkillFx, dir: number, hasTarget: boolean, triggers: 
 }
 
 /** 这个技能可能用到的全部组（按需下载用） */
-export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3'>): number[] {
+export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage' | 'hitFx'>): number[] {
+  const g = s.hitFx ? HIT_FX_GROUP[s.hitFx] : undefined;
+  const hit = g === undefined ? [] : [g];
   const fx = skillFx(s);
-  if (!fx) return [];
+  if (!fx) return hit;
   const out = fx.directional ? [0, 1, 2, 3].map((d) => fx.first + d) : [fx.first];
   if (fx.then !== null) out.push(fx.then);
   if (fx.onTarget !== null) out.push(fx.onTarget);
-  return out;
+  return [...out, ...hit];
 }

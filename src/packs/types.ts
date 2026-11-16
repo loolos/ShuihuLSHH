@@ -11,7 +11,7 @@ export interface PackJson {
   description?: string;
   /**
    * 在游戏流程里的位置：standalone = 外传，从标题「选关」单独进入，等级固定，不碰主线存档；
-   * mainline = 主线插关（docs/game-design.md §15.8），每个关卡用 before 写插在哪一关前面
+   * mainline = 主线插关与续篇（docs/game-design.md §15.8），插在哪里、属于哪一章写在章节表 src/rules/chapters.ts
    */
   entry: 'standalone' | 'mainline';
   /** 素材来源与署名（CC-BY 的必须写） */
@@ -95,6 +95,22 @@ export interface PackSkillJson {
   power?: number;
   mpCost?: number;
   learnLevel?: number;
+  /** 可在距离内的整个菱形选点，不限四条直线。 */
+  targetShape?: 'diamond';
+  /** 类型 8 的回气技作用于队友，而非自己。 */
+  chargeTarget?: 'ally';
+  /** 远程技能的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
+  rangedDamage?: [number, number];
+  /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
+  castCycles?: number;
+  /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
+  castSpeed?: number;
+  /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
+  hitFx?: 'blood' | 'explosion' | 'impact';
+  /** 遠程技飞行中的箭的画面效果：fire = 火箭（只是画面） */
+  arrowFx?: 'fire';
+  /** 穿透：从施放者身前一格起整条直线都受击（长 max(area, 到施放点的距离)） */
+  pierce?: boolean;
   rangeMin?: number;
   rangeMax?: number;
   area?: number;
@@ -102,7 +118,7 @@ export interface PackSkillJson {
   poison?: number;
   hitMod?: number;
   critMod?: number;
-  /** 范围类型（同原版技能类型；14 = 身前宽 3、长 area 格的长方形【新】） */
+  /** 范围类型：14 = 前方长方形；15 = 正前、前两格及左右前方，共四格【新】。 */
   type?: number;
   /** 特效：Effect.lib 组号 + 1 */
   effect?: number;
@@ -119,32 +135,45 @@ export interface PackItemJson {
   attack?: number;
   defense?: number;
   agility?: number;
+  hit?: number;
+  /** 道具类型码（0–12 武器类，如 11 = 弓）；不写沿用 from */
+  type?: number;
+  /** 买价；卖价取一半 */
+  buyPrice?: number;
+  /** 在哪些城镇（原版城镇号）的武器店有卖 */
+  shop?: number[];
+  /** 27×27 图标 PNG（包内路径）；没有这张图时沿用 from 的原版图标 */
+  icon?: string;
 }
 
 /** 剧本里指单位用关卡 units 的 id */
 export interface PackStageJson {
   id: string;
   title: string;
-  /** 主线插关：before 插在指定关卡前；after 插在指定关卡后（只用于 entry = mainline 的包） */
-  before?: string;
-  after?: string;
   /**
-   * 主线插关的视角关：切到还没入伙的人，等级用关卡里写的固定值，打完不写回主线人物和银子。
-   * 不写（主线人物关）时我方单位按职业号套用主线进度（等级、经验、装备），打完写回
+   * 故事视角标签（切到武松等人物）。主线插关仍读写连续存档；独立外传才隔离主线资产。
+   * 主线通过packParty/recordPackResult保存原版及包职业，不再由此字段跳过结算
    */
   pov?: boolean;
+  /** 主线按本场实际队伍平均等级调整敌友，已有队友等级不重置。 */
+  dynamicLevels?: boolean;
+  /** 胜利后进入续篇城镇整备（原版商品表号）。 */
+  townAfter?: number;
   /**
-   * 我方装备、药品按主线哪一关的进度配（主线关卡地图名，如 "N06"）。不写就按我方平均等级找主线上第一次到这个等级的那一关
-   * （负责人 2026-11-15：跳关的装备、药品规则也用于外传，src/rules/preset.ts storyPoint）。写 "none" 不配。
+   * 默认装备、药品按每个人的等级表生成。"none" 禁用自动配装（剧情中装备由关卡指定）。
+   * 旧存档/包中的主线地图名仍可读取，但不再影响配装。
    */
   gearAt?: string;
-  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线同一 after 的续篇按 stages 登记顺序接续 */
+  /** 外传：过关后「下一关」按钮进哪一关（本包关卡 id）；主线插关的先后按章节表 */
   next?: string;
   /** 过关奖励：银子（代替原版关卡的过关奖励表，视角关不给） */
   rewards?: { gold?: number };
-  /** 地图：借原版地图（地表、地上物、通行都照原版） */
-  /** base：借用的原版地图；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块） */
-  map: { base: string; crop?: [number, number, number, number] };
+  /** 地图：借原版地图（地表、地上物、通行都照原版），或用重制版自拼地图 */
+  /** base：借用的原版地图；custom：自拼地图 packs/maps/<名字>.json（§15.15）；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
+   *  open：改成可通行的格子 [[x, y], …]（坐标同单位，例如让人从原版堵死的大门走出来） */
+  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][] };
+  /** 天色滤镜（§15.15）：夜、雪、黄昏；只改画面，不改规则 */
+  tint?: 'night' | 'snow' | 'dusk';
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   units: PackUnitJson[];
@@ -163,10 +192,16 @@ export interface PackUnitJson {
   /** 0 背向右上、1 背向左上、2 面向左下、3 面向右下（同原版） */
   facing?: number;
   level: number;
+  /** 相对本场队伍平均等级的偏移（动态关卡敌人/友军）。 */
+  levelOffset?: number;
   /** 开局不在场，剧本点名（appear / say）时登场 */
   hidden?: boolean;
+  /** 只在对话里出声、不上地图：开局隐藏，say 点名时也不登场（例如景阳冈的酒家） */
+  offstage?: boolean;
   /** AI 模式（§8），默认 0 */
   ai?: number;
+  /** AI 12（守屋）的屋子范围 [x1, y1, x2, y2]（含边界）：有敌人进来之前原地驻守，进来后转为模式 0 出战 */
+  guardArea?: [number, number, number, number];
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
@@ -177,12 +212,16 @@ export type PackTrigger =
   | 'start'
   /** 在场的敌人全部倒下（还没登场的隐藏单位不算，要等他们登场后也倒下） */
   | 'enemiesDefeated'
+  /** 本关全部敌人战败，包含尚未登场的隐藏增援。 */
+  | 'allEnemiesDefeated'
   | { turn: number }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   | { enter: string | string[]; area: [number, number, number, number] }
-  /** 任一在场的我方单位走到这个人身边（相邻一格） */
-  | { near: string }
+  /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
+  | { near: string; by?: string }
+  /** 目标生命低于最大值的 below%（可配 if / unless） */
+  | { hp: string; below: number }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number };
 
@@ -191,13 +230,17 @@ export type PackTrigger =
  * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
  * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]；["flag", 名字] 设剧本标志（配合区块的 if / unless）；
+ * ["show", 单位, 站在谁身边（可省）] 已倒下 / 退场的人临时回到地图上（只放画面，不复活，战后对话用）；["hide", 单位] 收起；
+ * ["portrait", 职业, 头像文件] 本关里这个职业改用包里另一张头像（空串恢复，只放画面，如武松扮行者）；
+ * ["approach", 单位, 目标] 走到目标身边一格（自动挑空格，走不到就不动）；
+ * ["defect", 单位, 阵营] 换阵营（player / ally / enemy，如黄信归降）；
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  */
 export type PackOpJson = [string, ...unknown[]];
 
 export interface PackBlockJson {
   on: PackTrigger;
-  /** 只对 enemiesDefeated 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
+  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
   if?: string;
   unless?: string;
   do: PackOpJson[];

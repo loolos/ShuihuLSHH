@@ -156,7 +156,7 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
 });
 
 describe.skipIf(!has)('测试用跳关', () => {
-  it('按主线估算的入场等级表补等级，换上最后一个城镇能买到的最好装备', async () => {
+  it('按主线估算的入场等级表补等级，按人物类别和最终等级查表配装', async () => {
     const { loadGameData } = await import('../src/rules/load.ts');
     const { jumpTo, expectedGold } = await import('../src/rules/preset.ts');
     const files = {
@@ -203,42 +203,31 @@ describe.skipIf(!has)('测试用跳关', () => {
       const avg = ms.reduce((a, m) => a + m.level, 0) / ms.length;
       expect(Math.abs(avg - foe), `${s.mapName} 我方 ${avg.toFixed(1)} 敌人 ${foe.toFixed(1)}`).toBeLessThanOrEqual(JUMP_LEVEL_GAP);
     }
-    // 最后去过的城镇是 4（N-add07 之后）：主角用拳套类，换上城镇 4 武器店里攻击最高的
-    const hero = c.members.find((m) => m.classId === 0)!;
-    expect(data.items[hero.slots[0] - 1].name).toBe('鐵拳');
-    expect(jumpTo(files, data, stages, 0, newCampaign(0)).members.find((m) => m.classId === 0)!.level).toBe(1);
-    // 衣服、头饰按阶梯配（负责人 2026-11-14）
-    const gear = (map: string, cls: number) => {
-      const s = stages.find((x) => x.mapName.toLowerCase() === map)!;
-      const m = jumpTo(files, data, stages, s.index, newCampaign(0)).members.find((x) => x.classId === cls)!;
-      return [m.slots[1], m.slots[2]].map((id) => data.items[id - 1]?.name);
-    };
-    expect(gear('n-add01', 0)).toEqual(['布衣', '一字巾']); // 还没到过城镇：照剧本
-    expect(gear('n02', 0)).toEqual(['戰袍', '遮日黑箬笠']); // 城镇 1
-    expect(gear('n-add04a', 0)).toEqual(['虎皮戰袍', '遮日黑箬笠']); // 城镇 2
-    expect(gear('n-add06', 0)).toEqual(['金繡綠羅袍', '遮日黑箬笠']); // 城镇 3
-    expect(gear('n05', 0)).toEqual(['綠羅花戰袍', '遮日黑箬笠']); // 城镇 4 起；第五章还是遮日黑箬笠
-    expect(gear('n-add08', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']); // 第六章起紅纓氈笠
-    expect(gear('act9-1', 0)).toEqual(['綠羅花戰袍', '紅纓氈笠']);
-    expect(gear('n-add11', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 到过城镇 7 起碧雲箬笠
-    expect(gear('n12', 0)).toEqual(['綠羅花戰袍', '碧雲箬笠']); // 城镇 5–8 没有更好的衣服
-    expect(gear('n-add15', 0)).toEqual(['梅花榆葉甲', '碧雲箬笠']); // 城镇 9 起梅花榆葉甲（负责人 2026-11-15）
-    expect(gear('n14', 0)).toEqual(['雁翎圈金甲', '碧雲箬笠']); // 城镇 10 起雁翎圈金甲
-    // 药随最后去过的城镇升级（负责人 2026-11-15）；王進随身的狗皮膏藥是剧本给的
-    const bag = (map: string, cls: number) => {
-      const s = stages.find((x) => x.mapName.toLowerCase() === map)!;
-      const m = jumpTo(files, data, stages, s.index, newCampaign(0)).members.find((x) => x.classId === cls)!;
-      return m.slots.slice(3).filter(Boolean).map((id) => data.items[id - 1].name).filter((n) => n !== '狗皮膏藥');
-    };
-    expect(bag('n-add01', 0)).toEqual([]); // 还没到过城镇
-    expect(bag('n02', 0)).toEqual(['跌打藥', '跌打藥']);
-    expect(bag('n05', 0)).toEqual(['銀創藥', '銀創藥']);
-    expect(bag('n07', 0)).toEqual(['大還銀丹', '大還銀丹']);
-    expect(bag('n-add11', 0)).toEqual(['大還金丹', '大還金丹']);
-    expect(bag('n14', 0)).toEqual(['大還金丹', '大還金丹', '天山雪蓮']);
-    expect(gear('n-add04a', 5)[0]).toBe('鑲銀生鐵甲'); // 朱武：剧本衣服防御更高，留着
-    expect(gear('n14', 2)).toEqual(['七星道袍', '碧雲箬笠']); // 公孫勝：七星道袍买不到，留着
-    expect(gear('n14', 12)[1]).toBe('萬字巾'); // 晁蓋：萬字巾买不到，留着
+    // 全关卡以最终人物等级查表；不再依赖经过的城镇。
+    const { GEAR_TABLE, WEAPON_TABLE, MEDICINE_TABLE, kitBand, kitProfile } = await import('../src/rules/equipment.ts');
+    for (const stage of stages) {
+      const state = jumpTo(files, data, stages, stage.index, newCampaign(0));
+      for (const m of state.members) {
+        const cls = data.classes[m.classId], profile = kitProfile(data, cls), band = kitBand(m.level);
+        const type = data.items[cls.defaultItems[0] - 1]?.type ?? cls.weaponType;
+        // 剧本装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比防御
+        const tableOrBetter = (k: number, want: string) => {
+          const got = data.items[m.slots[k] - 1], ref = data.items.find((it) => it.name === want)!;
+          if (got?.name === want) return;
+          expect(k === 0 ? got.attack : got.defense, `${stage.mapName} ${cls.name} ${got?.name} / ${want}`).toBeGreaterThan(k === 0 ? ref.attack : ref.defense);
+        };
+        tableOrBetter(0, WEAPON_TABLE[type][band]);
+        tableOrBetter(1, GEAR_TABLE[profile.armor][band]);
+        tableOrBetter(2, GEAR_TABLE[profile.head][band]);
+        const meds = m.slots.slice(3).filter((id) => id && [15, 16, 17].includes(data.items[id - 1].type)).map((id) => data.items[id - 1].name);
+        expect(meds).toEqual(MEDICINE_TABLE[band]);
+        expect(meds.length).toBeLessThanOrEqual(3);
+        expect(m.forge?.every((n) => n === 0)).toBe(true);
+      }
+    }
+    // 剧本武器比表里这一档好就留着：N03 陳達的白點鋼槍（攻 31）不换成筆管槍
+    const n03 = jumpTo(files, data, stages, stages.find((s) => s.mapName.toLowerCase() === 'n03')!.index, newCampaign(0));
+    expect(data.items[n03.members.find((m) => m.classId === 13)!.slots[0] - 1].name).toBe('白點鋼槍');
     // 先跳到后期再跳回前面：不沿用后期的等级、装备和银子，和直接跳过去一样
     const early = stages.find((s) => s.mapName.toLowerCase() === 'n01')!.index;
     const back = jumpTo(files, data, stages, early, { ...c, gold: 500 });
@@ -256,10 +245,10 @@ describe.skipIf(!has)('测试用跳关', () => {
     const pos25 = stages.findIndex((s) => s.index === 25);
     expect(t.stage).toBe(25);
     expect(t.town).toBe(4);
-    // 等级按下一关配，装备只用城镇 4 之前的店（城镇 4 的鐵拳留给玩家自己买）
+    // 等级、装备都按下一关配，与城镇商店无关
     const at26 = jumpTo(files, data, stages, 26, newCampaign(0));
     expect(t.members.find((m) => m.classId === 0)!.level).toBe(at26.members.find((m) => m.classId === 0)!.level);
-    expect(data.items[t.members.find((m) => m.classId === 0)!.slots[0] - 1].name).not.toBe('鐵拳');
+    expect(t.members.find((m) => m.classId === 0)!.slots).toEqual(at26.members.find((m) => m.classId === 0)!.slots);
     expect(t.gold).toBe(expectedGold(files, data, stages, pos25));
     expect(t.gold).toBeGreaterThan(1000);
     // 不沿用手上的钱
