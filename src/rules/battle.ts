@@ -73,6 +73,8 @@ export type BattleEvent =
   | { type: 'tint'; tint: string }
   | { type: 'focus'; x: number; y: number }
   | { type: 'wait'; ms: number }
+  /** 换头像（扩展包指令 114【新】）：本关里这个职业的对白、面板改用包里的另一张图；file 空 = 恢复 */
+  | { type: 'portrait'; classId: number; file: string }
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
@@ -1533,6 +1535,10 @@ export class Battle {
         // 113 停顿（毫秒）
         case 113:
           this.emit({ type: 'wait', ms: op.value });
+          break;
+        // 114 换头像（value = 职业号，text = 包内头像文件；只放画面）
+        case 114:
+          this.emit({ type: 'portrait', classId: op.value, file: op.text ?? '' });
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:

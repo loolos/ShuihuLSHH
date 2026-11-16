@@ -640,9 +640,9 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['jingyanggang', undefined, true],
       ['tiaolian', undefined, true],
       ['shizilou', undefined, false],
-      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou'].map(id => [id,undefined,false]),
+      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling'].map(id => [id,undefined,false]),
     ]);
-    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu'];
+    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu','xingzhe'];
     for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();
@@ -653,7 +653,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
     const after = insertPlaces().filter((p) => p.after === 'N14').map((p) => p.ref.slice('mainline/'.length));
-    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou']);
+    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
       const stage = stageOf(id);
       const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
@@ -1187,6 +1187,46 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.begin(); if(['shizipo','anpingzhai','zhangfu'].includes(id))expect(b.status).toBe('won');
     }
   });
+  it('夜走蜈蚣岭：十字坡扮行者演完就过关、途中换上行者头像；蜈蚣岭四人夜战，增援到齐且全灭才胜', () => {
+    for (const id of ['xingzhe', 'wugongling']) {
+      const s = stage(id), b = new Battle(compileStage(rt, s, files));
+      const cells = new Set<string>();
+      for (const u of s.units) { expect(b.board.passable(u.x, u.y), `${id}/${u.id}`).toBe(true); expect(cells.has(`${u.x},${u.y}`), `${id}/${u.id}`).toBe(false); cells.add(`${u.x},${u.y}`); }
+      for (const blk of s.script) for (const op of blk.do) {
+        if (op[0] === 'move') expect(b.board.passable(Number(op[2]), Number(op[3])), `${id} move ${op.slice(1).join()}`).toBe(true);
+        if (op[0] === 'portrait') expect(fs.existsSync(`packs/mainline/${op[2]}`), String(op[2])).toBe(true);
+      }
+    }
+    // 扮行者：每个 move 都走到；行者头像在「只恐我不象出家人模样」之后才换
+    const x = new Battle(compileStage(rt, stage('xingzhe'), files));
+    const ev = x.begin();
+    expect(x.status).toBe('won');
+    const moves = stage('xingzhe').script.flatMap((blk) => blk.do.filter((op) => op[0] === 'move'));
+    expect(ev.filter((e) => e.type === 'move').length).toBe(moves.length);
+    const face = ev.findIndex((e) => e.type === 'portrait' && e.classId === cid('wusong') && e.file.includes('xingzhe'));
+    expect(face).toBeGreaterThan(ev.findIndex((e) => e.type === 'say' && e.text.includes('出家人模样')));
+    // 蜈蚣岭：只有武松、武龙、李逵、花荣四人；第 3、5 回合增援；王道人和全部强人倒下才胜
+    const s = stage('wugongling'), b = start('wugongling');
+    expect(s.tint).toBe('night');
+    const heroes = b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.classId);
+    expect(heroes.sort()).toEqual([0, cid('wusong'), cid('likui'), cid('huarong')].sort());
+    const get = (id: string) => b.unit(s.units.findIndex((u) => u.id === id))!;
+    const check = () => (b as unknown as { afterAction: () => void }).afterAction();
+    const kill = (u: Unit) => (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(get('wusong'), u);
+    for (const u of b.units) if (u.side === 'player') u.hp = 99999;
+    for (const u of b.units.filter((u) => u.side === 'enemy' && u.present)) kill(u);
+    check(); expect(b.status).toBe('playing');
+    for (const turn of [3, 5]) {
+      while (b.turn < turn) b.endPlayerPhase();
+      const wave = b.units.filter((u) => u.side === 'enemy' && u.alive && u.present);
+      expect(wave.length, `第 ${turn} 回合增援`).toBe(6);
+      for (const u of wave) kill(u);
+      check(); expect(b.status).toBe(turn === 5 ? 'won' : 'playing');
+    }
+    const out = (b as unknown as { out: BattleEvent[] }).out;
+    expect(out.some((e) => e.type === 'appear' && e.uid === get('woman').uid)).toBe(true);
+    expect(out.some((e) => e.type === 'say' && e.text.includes('张太公家女儿'))).toBe(true);
+  });
   it('阳谷整备的武器店卖三把弓，花荣能装备', async () => {
     const { stock } = await import('../src/rules/town.ts');
     const { canEquip } = await import('../src/rules/data.ts');
@@ -1333,7 +1373,8 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const y=start('yuanyanglou');expect(y.units.filter(u=>u.side==='player'&&u.present)).toHaveLength(10);
     const list=insertPlaces().filter(p=>p.after==='N14');
     for(const id of ['shizilou','shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu'])expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after',`mainline/${id}`)).toBeTruthy();
-    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBeUndefined();
+    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yuanyanglou')).toBe('mainline/xingzhe');
+    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/wugongling')).toBeUndefined();
     expect(stage('shizilou').townAfter).toBe(11);
   });
   it('飞云浦等待后续增援不提前胜；鸳鸯楼三首领与守卫全灭且援兵到齐才胜',()=> {

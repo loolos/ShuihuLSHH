@@ -2086,6 +2086,104 @@
     "face": {
       "fromHead": 71
     }
+  },
+  {
+    "id": "wangdaoren",
+    "name": "王道人",
+    "base": {
+      "hp": 210,
+      "mp": 180,
+      "attack": 72,
+      "defense": 32,
+      "hit": 85,
+      "agility": 42,
+      "crit": 20
+    },
+    "move": 5,
+    "weaponType": 8,
+    "items": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "skills": [
+      {
+        "id": "wdr-0",
+        "name": "蜈蚣双剑",
+        "from": 18,
+        "anim": 0
+      },
+      {
+        "id": "wdr-1",
+        "name": "飞天蜈蚣",
+        "from": 20,
+        "anim": 1,
+        "power": 25,
+        "mpCost": 40
+      },
+      {
+        "id": "wdr-2",
+        "name": "阴阳妖火",
+        "from": 28,
+        "anim": 5,
+        "power": 20,
+        "mpCost": 50
+      },
+      {
+        "id": "wdr-3",
+        "name": "百足缠身",
+        "from": 22,
+        "anim": 3,
+        "power": 15,
+        "mpCost": 60
+      },
+      {
+        "id": "wdr-4",
+        "name": "吐纳调息",
+        "from": 25,
+        "anim": 6,
+        "power": 2,
+        "mpCost": 0
+      }
+    ],
+    "sprite": {
+      "fromClass": 46,
+      "recolor": [
+        {
+          "src": [
+            [
+              240,
+              255
+            ]
+          ],
+          "dst": [
+            176,
+            191
+          ],
+          "k": 0.6
+        },
+        {
+          "src": [
+            [
+              144,
+              156
+            ]
+          ],
+          "dst": [
+            16,
+            31
+          ],
+          "k": 0.45
+        }
+      ]
+    },
+    "face": {
+      "fromHead": 28
+    }
   }
 ],
   "stages": [
@@ -2104,6 +2202,8 @@
     "stages/kuaihuolin.json",
     "stages/zhangfu.json",
     "stages/feiyunpu.json",
-    "stages/yuanyanglou.json"
+    "stages/yuanyanglou.json",
+    "stages/xingzhe.json",
+    "stages/wugongling.json"
   ]
 }

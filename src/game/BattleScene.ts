@@ -21,6 +21,7 @@ import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
+import { packFaceUrl } from './packs.ts';
 
 export interface BattleSceneData {
   assets: Assets;
@@ -139,6 +140,7 @@ export class BattleScene extends Phaser.Scene {
   init(data: BattleSceneData) {
     this.assets = data.assets;
     this.ui = data.ui;
+    this.ui.faceOverride.clear();
     this.ui.onSkip = () => this.busy && this.setFast(true);
     this.stageName = data.stage;
     this.seed = data.seed;
@@ -1485,6 +1487,12 @@ export class BattleScene extends Phaser.Scene {
       case 'wait':
         await wait(this, this.fast ? 0 : e.ms);
         break;
+      case 'portrait': {
+        const url = e.file && this.assets.pack ? packFaceUrl(this.assets.pack.rt.id, e.file) : undefined;
+        if (url) this.ui.faceOverride.set(e.classId, url);
+        else this.ui.faceOverride.delete(e.classId);
+        break;
+      }
       case 'sound':
         if (e.name === 'm12' || e.name === 'm05') this.endSound = true;
         sound.sfx(e.name);

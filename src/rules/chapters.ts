@@ -40,6 +40,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '景阳冈打虎', stages: ['mainline/chaijin-liubin', 'mainline/jingyanggang', 'mainline/tiaolian', 'mainline/shizilou'] },
   // 负责人 2026-11-15：十字坡到鸳鸯楼合成一章（原第十七章 孟州风雨、第十八章 血溅鸳鸯楼）
   { name: '血溅鸳鸯楼', stages: ['mainline/shizipo', 'mainline/anpingzhai', 'mainline/kuaihuolin', 'mainline/zhangfu', 'mainline/feiyunpu', 'mainline/yuanyanglou'] },
+  // 负责人 2026-11-16：鸳鸯楼后众人散去，武龙、李逵、花荣随武松；十字坡扮行者为开场剧情（原著第 31–32 回）
+  { name: '夜走蜈蚣岭', stages: ['mainline/xingzhe', 'mainline/wugongling'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
