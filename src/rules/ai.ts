@@ -213,11 +213,26 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     }
     case 11: // 【新】驻守戒备：仅从原位攻击射程内目标，不移动追击
       return bestAttack(b, u, undefined, 0) ?? {};
+    case 12: {
+      // 【新】守屋：屋子（范围存在目标 / 目标点字段，见 guardRoom）里没有敌人时同模式 11；有敌人进来就转为模式 0 出战，之后一直出战
+      if (!b.foesOf(u).some((t) => inGuardRoom(u, t))) return bestAttack(b, u, undefined, 0) ?? {};
+      u.ai.mode = 0;
+      return defaultPlan(b, u);
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
       return defaultPlan(b, u);
   }
+}
+
+/** AI 12 的屋子范围：目标点 = 左上 (x1, y1)，目标 = x2 << 8 | y2（含边界） */
+export function guardRoom(u: Unit) {
+  return { x1: u.ai.point.x, y1: u.ai.point.y, x2: u.ai.target >> 8, y2: u.ai.target & 0xff };
+}
+export function inGuardRoom(u: Unit, c: Cell): boolean {
+  const r = guardRoom(u);
+  return c.x >= r.x1 && c.x <= r.x2 && c.y >= r.y1 && c.y <= r.y2;
 }
 
 export const cellKey = (c: Cell) => key(c.x, c.y);

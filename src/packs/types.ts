@@ -196,6 +196,8 @@ export interface PackUnitJson {
   offstage?: boolean;
   /** AI 模式（§8），默认 0 */
   ai?: number;
+  /** AI 12（守屋）的屋子范围 [x1, y1, x2, y2]（含边界）：有敌人进来之前原地驻守，进来后转为模式 0 出战 */
+  guardArea?: [number, number, number, number];
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
