@@ -2400,10 +2400,26 @@
         "critMod": 0,
         "castCycles": 4,
         "hits": [
-          { "frame": 11, "percent": 25, "dir": 0 },
-          { "frame": 33, "percent": 25, "dir": 0 },
-          { "frame": 55, "percent": 25, "dir": 0 },
-          { "frame": 77, "percent": 25, "dir": 0 }
+          {
+            "frame": 11,
+            "percent": 25,
+            "dir": 0
+          },
+          {
+            "frame": 33,
+            "percent": 25,
+            "dir": 0
+          },
+          {
+            "frame": 55,
+            "percent": 25,
+            "dir": 0
+          },
+          {
+            "frame": 77,
+            "percent": 25,
+            "dir": 0
+          }
         ]
       },
       {
@@ -2412,8 +2428,8 @@
         "from": 226,
         "anim": 1,
         "learnLevel": 6,
-        "type": 14,
-        "area": 1,
+        "type": 17,
+        "area": 2,
         "rangeMin": 1,
         "rangeMax": 1,
         "power": 20,
@@ -2470,12 +2486,12 @@
         "from": 226,
         "anim": 1,
         "learnLevel": 18,
-        "type": 14,
-        "area": 2,
+        "type": 17,
+        "area": 3,
         "rangeMin": 1,
         "rangeMax": 1,
         "power": 35,
-        "mpCost": 40,
+        "mpCost": 50,
         "effect": 42,
         "hits": [
           {
@@ -2496,12 +2512,38 @@
         "from": 226,
         "anim": 1,
         "learnLevel": 25,
-        "type": 14,
-        "area": 3,
+        "type": 17,
+        "area": 4,
         "rangeMin": 1,
         "rangeMax": 1,
         "power": 50,
-        "mpCost": 50,
+        "mpCost": 75,
+        "effect": 42,
+        "hits": [
+          {
+            "frame": 12,
+            "percent": 50,
+            "dir": 0
+          },
+          {
+            "frame": 17,
+            "percent": 50,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "qm-pili-4",
+        "name": "霹雳火LV4",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 32,
+        "type": 17,
+        "area": 5,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 65,
+        "mpCost": 105,
         "effect": 42,
         "hits": [
           {
