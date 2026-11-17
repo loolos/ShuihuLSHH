@@ -75,7 +75,7 @@ export interface FxSpot {
  * - 遠程（10）：从施放者脚下沿直线飞到施放点（0x404080），碰到目标就停。
  * 集气技、范围为 0 的技能只有施放点一格。
  */
-export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
+export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce' | 'areaOrigin'>, from: Cell, at: Cell, area: Cell[], stopAt: (c: Cell) => boolean = () => false): FxSpot[] {
   if (s.type === 10 && s.pierce) {
     // 穿透：箭从施放者脚下一路飞到线尾，不在第一个目标处停下
     const line = area.length ? area : [at];
@@ -95,7 +95,10 @@ export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Ce
   const dir = DIRS[d];
   return cells.map((c) => {
     const ox = c.x - at.x, oy = c.y - at.y;
-    if (s.type === 14 || s.type === 16 || s.type === 17) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    if (s.type === 14 || s.type === 16 || s.type === 17) {
+      if (s.type === 14 && s.areaOrigin === 'target') return { cell: c, ring: Math.abs(ox * dir.x + oy * dir.y) };
+      return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    }
     const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
     return { cell: c, ring };
   });

@@ -103,6 +103,8 @@ export interface PackSkillJson {
   rangedDamage?: [number, number];
   /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
   castCycles?: number;
+  /** 长方形范围以选中格为第一排中心；不填仍从施放者身前开始。 */
+  areaOrigin?: 'target';
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
@@ -122,6 +124,9 @@ export interface PackSkillJson {
   type?: number;
   /** 特效：Effect.lib 组号 + 1 */
   effect?: number;
+  /** 后续两段特效：组号+1；显式0禁用借用技能的后续段。 */
+  effect2?: number;
+  effect3?: number;
   /** 命中段（借原版动画时用）：原版帧号、伤害百分比、方向（迴旋技 0–3 四个方向） */
   hits?: { frame: number; percent: number; dir: number }[];
 }
