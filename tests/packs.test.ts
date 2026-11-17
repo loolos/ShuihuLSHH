@@ -1463,6 +1463,12 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   it('解甲留锋串接在射戟与家书之间，三将断后、1/3/5回合分波且全敌败退才胜', () => {
     const s=stage('liufeng'),b=new Battle(compileStage(rt,s,files,{seed:1}));
     expect(s.map).toEqual({base:'N03',crop:[10,14,16,20]});
+    const defenders=s.units.filter(u=>['huarong','huangxin','qinming'].includes(u.id));
+    for(const u of s.units.filter(u=>u.side==='enemy')){
+      // 等距投影：x-y越大越靠右，x+y较小越靠上。
+      expect(u.x-u.y,u.id).toBeGreaterThanOrEqual(7);expect(u.y,u.id).toBeLessThanOrEqual(4);
+      expect(Math.min(...defenders.map(d=>Math.abs(u.x-d.x)+Math.abs(u.y-d.y))),u.id).toBeGreaterThanOrEqual(8);
+    }
     expect([...new Set(s.units.filter(u=>u.side==='enemy').map(u=>u.class))].sort()).toEqual([32,33,34,38,43]);
     expect([b.board.width,b.board.height]).toEqual([16,20]);
     const seen=new Set<string>(),field=b.board.distanceField([{x:7,y:10}]);
