@@ -1265,6 +1265,33 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'say' && e.text.includes('正是打了小弟的'))).toBe(true);
     expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('倒撞下溪里去'))).toBe(true);
   });
+  it('三箭夺人开场依次演三箭，只演出而不扣血、耗气或占用行动', () => {
+    const s = stage('qianghuarong'), b = new Battle(compileStage(rt, s, files));
+    const before = b.units.map(u => ({ hp:u.hp, mp:u.mp, exp:u.exp, x:u.x, y:u.y }));
+    const events = b.begin();
+    const shots = events.filter(e => e.type === 'shot');
+    const archer = b.units[s.units.findIndex(u => u.id === 'huarong')];
+    const target = b.units[s.units.findIndex(u => u.id === 'jiaotou')];
+    expect(shots).toMatchObject([
+      {uid:archer.uid,x:11,y:11,text:'第一箭 · 骨朵头'},
+      {uid:archer.uid,x:12,y:11,text:'第二箭 · 朱缨'},
+      {uid:archer.uid,x:target.x,y:target.y,target:target.uid,text:'第三箭 · 白襟穿透'},
+    ]);
+    expect(b.units.map(u => ({ hp:u.hp, mp:u.mp, exp:u.exp, x:u.x, y:u.y }))).toEqual(before);
+    expect(archer.acted).toBe(false);
+    expect(archer.ended).toBe(false);
+    expect(target.alive && target.present).toBe(true);
+    expect(b.turn).toBe(1);
+    expect(b.status).toBe('playing');
+    expect(events.some(e => e.type === 'attack' || e.type === 'hp' || e.type === 'die')).toBe(false);
+    const said = (word:string) => events.findIndex(e => e.type === 'say' && e.text.includes(word));
+    expect(said('再看我第二')).toBeGreaterThan(events.indexOf(shots[0]));
+    expect(said('你们众人再看')).toBeGreaterThan(events.indexOf(shots[1]));
+    expect(said('护住后堂')).toBeGreaterThan(events.indexOf(shots[2]));
+    const invalid = structuredClone(s);
+    invalid.script[0].do.unshift(['shoot','huarong',-1,11,'越界']);
+    expect(() => compileStage(rt,invalid,files)).toThrow(/shoot/);
+  });
   it('林间截囚先押车行进，再让九名伏兵现身，保留两辆囚车及后续回合救援', () => {
     const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
     const get = (id: string) => b.units[s.units.findIndex(u => u.id === id)];

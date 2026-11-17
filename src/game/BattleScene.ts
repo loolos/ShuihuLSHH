@@ -957,6 +957,11 @@ export class BattleScene extends Phaser.Scene {
         this.sprites.delete(e.uid);
         break;
       }
+      case 'shot': {
+        const u = this.battle.unit(e.uid);
+        if (u) { this.vs(u).facing = e.facing; this.pose(u); }
+        break;
+      }
       case 'look': {
         const u = this.battle.unit(e.uid)!;
         this.vs(u).cls = e.classId;
@@ -1514,6 +1519,51 @@ export class BattleScene extends Phaser.Scene {
         await this.banner(tr(e.text));
         break;
       // 剧情演出（扩展包指令 109–113）
+      case 'shot': {
+        const u = b.unit(e.uid)!;
+        const v = this.vs(u);
+        v.facing = e.facing;
+        const skill = attackSkill(u, this.assets.data);
+        await ensureSkill(this.assets, v.cls, skill);
+        await this.focusOn(u, 250);
+        const action = ACTION.firstSkill + skill.group;
+        const duration = actionMs(this.assets, v.cls, action, e.facing) ?? 1200;
+        const release = Math.min(duration - 1, Math.max(0, ((skill.hits.find(h => h.frame > 0)?.frame ?? 12) - 1) * ACTION_FRAME_MS));
+        const cast = this.playOnce(u, action, e.facing, duration + 100);
+        await wait(this, release);
+        sound.cast(skill.soundId ?? skill.skillId, skill.type, true);
+        const from = cellToWorld(v.x, v.y), to = cellToWorld(e.x, e.y);
+        // 简洁箭影，箭头、箭杆、尾羽沿真实起点到落点飞行；高层绘制避免被屋檐遮掉。
+        const arrow = this.add.graphics().setDepth(100000);
+        arrow.lineStyle(2, 0xe8d4a0).lineBetween(-24, 0, 7, 0);
+        arrow.fillStyle(0xd9e2eb).fillTriangle(11, 0, 3, -4, 3, 4);
+        arrow.lineStyle(2, 0xf2eee0).lineBetween(-23, -4, -17, 0).lineBetween(-23, 4, -17, 0);
+        arrow.setPosition(from.x, from.y - 40).setRotation(Math.atan2(to.y - from.y, to.x - from.x));
+        try {
+          // 镜头随箭向目标移动，手机也能看到落点。
+          const flight = this.focus(e.x, e.y, 500);
+          await new Promise<void>(resolve => {
+            this.tweens.add({ targets: arrow, x: to.x, y: to.y - 40, duration: 500, onComplete: () => resolve() });
+          });
+          await flight;
+          sound.hurt(false);
+          this.float(e.x, e.y, e.text, '#ffe6a3');
+          const spark = this.add.graphics().setPosition(to.x, to.y - 40).setDepth(100001);
+          spark.lineStyle(2, 0xffe6a3);
+          for (let i = 0; i < 6; i++) {
+            const a = i * Math.PI / 3;
+            spark.lineBetween(Math.cos(a) * 4, Math.sin(a) * 4, Math.cos(a) * 15, Math.sin(a) * 15);
+          }
+          this.tweens.add({ targets: spark, alpha: 0, duration: 250, onComplete: () => spark.destroy() });
+          if (e.target !== undefined) {
+            const target = b.unit(e.target)!;
+            await this.playOnce(target, ACTION.hurt, this.vs(target).facing, 450);
+            this.pose(target);
+          } else await wait(this, 250);
+          await cast;
+        } finally { arrow.destroy(); this.pose(u); }
+        break;
+      }
       case 'act': {
         const u = b.unit(e.uid)!;
         const v = this.vs(u);
