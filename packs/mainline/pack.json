@@ -2598,6 +2598,31 @@
         ]
       },
       {
+        "id": "wy-dulong-1",
+        "name": "三岔毒龙枪LV1",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 6,
+        "type": 16,
+        "area": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 20,
+        "mpCost": 40,
+        "hitMod": 30,
+        "critMod": 0,
+        "poison": 20,
+        "stun": 0,
+        "effect": 35,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
         "id": "wy-jianjing-1",
         "name": "剪径枪LV1",
         "from": 226,
@@ -2635,6 +2660,31 @@
         "hits": []
       },
       {
+        "id": "wy-dulong-2",
+        "name": "三岔毒龙枪LV2",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 14,
+        "type": 16,
+        "area": 2,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 20,
+        "mpCost": 50,
+        "hitMod": 30,
+        "critMod": 0,
+        "poison": 20,
+        "stun": 0,
+        "effect": 35,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
         "id": "wy-jianjing-2",
         "name": "剪径枪LV2",
         "from": 226,
@@ -2655,6 +2705,31 @@
         ]
       },
       {
+        "id": "wy-dulong-3",
+        "name": "三岔毒龙枪LV3",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 22,
+        "type": 16,
+        "area": 3,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 20,
+        "mpCost": 60,
+        "hitMod": 30,
+        "critMod": 0,
+        "poison": 20,
+        "stun": 0,
+        "effect": 35,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
         "id": "wy-jianjing-3",
         "name": "剪径枪LV3",
         "from": 226,
@@ -2666,6 +2741,31 @@
         "rangeMax": 5,
         "power": 40,
         "mpCost": 50,
+        "hits": [
+          {
+            "frame": 7,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "wy-dulong-4",
+        "name": "三岔毒龙枪LV4",
+        "from": 226,
+        "anim": 1,
+        "learnLevel": 30,
+        "type": 16,
+        "area": 4,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 20,
+        "mpCost": 70,
+        "hitMod": 30,
+        "critMod": 0,
+        "poison": 20,
+        "stun": 0,
+        "effect": 35,
         "hits": [
           {
             "frame": 7,

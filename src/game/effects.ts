@@ -68,7 +68,7 @@ export interface FxSpot {
 /**
  * 特效出现的格子与先后：
  * - 线形（0、5、6）：从施放点沿方向一格一格往外（0x403bd0）；
- * - 扇形（1）、前方长方形（14）、四格前冲（15）：一行一行往外，同一行同时出现（后两种为重制版新增）；
+ * - 扇形（1）、前方长方形（14）、四格前冲（15）、三岔枪（16）：一行一行往外，同一行同时出现（后两种为重制版新增）；
  * - 菱形（3、4、7、9、11 等）：从施放点按距离一圈一圈往外（0x403f20，按圈推测）；
  * - 遠程（10）：从施放者脚下沿直线飞到施放点（0x404080），碰到目标就停。
  * 集气技、范围为 0 的技能只有施放点一格。
@@ -93,7 +93,7 @@ export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Ce
   const dir = DIRS[d];
   return cells.map((c) => {
     const ox = c.x - at.x, oy = c.y - at.y;
-    if (s.type === 14) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    if (s.type === 14 || s.type === 16) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
     const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
     return { cell: c, ring };
   });
