@@ -1254,6 +1254,7 @@
         "rangeMin": 1,
         "rangeMax": 6,
         "critMod": 0,
+        "hitFx": "fire",
         "rangedDamage": [
           1,
           0.6

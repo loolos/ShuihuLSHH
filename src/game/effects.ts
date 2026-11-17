@@ -18,8 +18,10 @@ export const FIXED_FX = [FX_DEFEND, FX_COUNTER];
 export const FX_EXPLOSION = 40;
 /** 技能 hitFx: 'impact'：命中的人身上迸开白色打击火花（第 43 组，9 帧；武松 横江断浪，负责人 2026-11-16）【新】 */
 export const FX_IMPACT = 43;
+/** 石破天惊的目标火焰：王进技能（HUM skillId 16）effect3=17，转为零起始第16组；声音沿用17。 */
+export const FX_FIRE = 16;
 /** hitFx → 命中时在受击者格子上播的特效组 */
-export const HIT_FX_GROUP: Partial<Record<NonNullable<SkillDef['hitFx']>, number>> = { explosion: FX_EXPLOSION, impact: FX_IMPACT };
+export const HIT_FX_GROUP: Partial<Record<NonNullable<SkillDef['hitFx']>, number>> = { explosion: FX_EXPLOSION, impact: FX_IMPACT, fire: FX_FIRE };
 
 export interface SkillFx {
   /** 第一段的组号；directional 时还要加上方向 0–3 */
