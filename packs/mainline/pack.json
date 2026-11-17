@@ -2389,18 +2389,20 @@
       {
         "id": "qm-dangtou",
         "name": "当头一棒",
-        "from": 221,
+        "from": 123,
         "anim": 0,
         "learnLevel": 3,
-        "power": 30,
+        "power": 50,
         "mpCost": 25,
         "stun": 30,
+        "hitMod": 0,
+        "critMod": 0,
+        "castCycles": 4,
         "hits": [
-          {
-            "frame": 11,
-            "percent": 100,
-            "dir": 0
-          }
+          { "frame": 11, "percent": 25, "dir": 0 },
+          { "frame": 33, "percent": 25, "dir": 0 },
+          { "frame": 55, "percent": 25, "dir": 0 },
+          { "frame": 77, "percent": 25, "dir": 0 }
         ]
       },
       {
