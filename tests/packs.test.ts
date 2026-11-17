@@ -1265,6 +1265,34 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(out.some((e) => e.type === 'say' && e.text.includes('正是打了小弟的'))).toBe(true);
     expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('倒撞下溪里去'))).toBe(true);
   });
+  it('林间截囚先押车行进，再让九名伏兵现身，保留两辆囚车及后续回合救援', () => {
+    const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
+    const get = (id: string) => b.units[s.units.findIndex(u => u.id === id)];
+    const ambushers = ['hero', 'likui', 'wangying', 'yanshun', 'zhengtianshou', 'ally-1', 'ally-2', 'ally-3', 'ally-4'];
+    for (const id of ambushers) expect(get(id).present, id).toBe(false);
+    expect([...b.prisonCarts]).toEqual(['huarong', 'songjiang'].map(id => s.units.findIndex(u => u.id === id)));
+    const ev = b.begin();
+    const moves = ev.filter(e => e.type === 'move');
+    expect(moves).toHaveLength(4);
+    for (const id of ['huangxin', 'huarong', 'liugao', 'songjiang']) {
+      const op = s.script[0].do.find(op => op[0] === 'move' && op[1] === id)!;
+      expect({x: get(id).x, y: get(id).y}, id).toEqual({x: op[2], y: op[3]});
+      expect(moves.some(e => e.uid === get(id).uid && e.path.length > 1), id).toBe(true);
+    }
+    const lastMove = ev.reduce((last, e, i) => e.type === 'move' ? i : last, -1);
+    const firstAppear = ev.findIndex(e => e.type === 'appear');
+    expect(firstAppear).toBeGreaterThan(lastMove);
+    expect(ev.findIndex(e => e.type === 'say' && e.text.includes('三千两'))).toBeGreaterThan(firstAppear);
+    for (const id of ambushers) expect(get(id).present, id).toBe(true);
+    for (const id of ['wusong', 'luzhishen', 'yangzhi']) expect(get(id).present, id).toBe(false);
+    expect(b.isBound(get('huarong'))).toBe(true);
+    expect(b.isBound(get('songjiang'))).toBe(true);
+    expect(b.status).toBe('playing');
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
+    expect(b.isBound(get('huarong'))).toBe(false);
+    expect(b.isBound(get('songjiang'))).toBe(true);
+  });
+
   it('林间截囚使用反劫剪径贼原图，全体落点互不重叠且与囚车道路连通，近旁援手可走到宋江身边', () => {
     const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
     expect(s.map).toEqual({base:'N-add07'});
@@ -1278,7 +1306,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(Math.abs(u.x-left.x)+Math.abs(u.y-left.y),id).toBeLessThanOrEqual(5);
       expect(Math.abs(u.x-right.x)+Math.abs(u.y-right.y),id).toBeLessThanOrEqual(5);
     }
-    const prisoner = s.units.find(u=>u.id==='songjiang')!;
+    const prisoner = { x: 17, y: 26 }; // 押送过场结束后的囚车位置
     const field = b.board.distanceField([prisoner]);
     const seen = new Set<string>();
     for(const u of s.units) {

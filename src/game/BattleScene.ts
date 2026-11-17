@@ -21,6 +21,7 @@ import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
+import { prisonCartCanvas } from './prison-cart.ts';
 import { packFaceUrl } from './packs.ts';
 
 export interface BattleSceneData {
@@ -98,7 +99,7 @@ export class BattleScene extends Phaser.Scene {
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   /** head：头顶高度（世界像素，见 classHead），状态条和飘字放在它上面 */
-  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; head: number }>();
+  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; cart?: Phaser.GameObjects.Image; head: number }>();
   /**
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
    * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
@@ -288,7 +289,8 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(v.x, v.y);
     const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
     const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
-    this.sprites.set(u.uid, { spr, bar, head: classHead(this.assets, v.cls) });
+    const cart = this.battle.prisonCarts.has(u.uid) ? this.add.image(p.x, p.y, textureFor(this, 'prison-cart', prisonCartCanvas)).setOrigin(0.5, 0.85).setDepth(depthOf(v.x, v.y, 8) + 0.1) : undefined;
+    this.sprites.set(u.uid, { spr, bar, cart, head: classHead(this.assets, v.cls) });
     this.pose(u);
     return spr;
   }
@@ -306,6 +308,7 @@ export class BattleScene extends Phaser.Scene {
     }
     const p = cellToWorld(v.x, v.y);
     s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
+    s.cart?.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8) + 0.1);
     if (this.actedDone(u)) s.spr.setTint(0x808080);
     else s.spr.clearTint();
     this.drawBar(u);
@@ -762,6 +765,7 @@ export class BattleScene extends Phaser.Scene {
     for (const s of this.sprites.values()) {
       s.spr.destroy();
       s.bar.destroy();
+      s.cart?.destroy();
     }
     this.sprites.clear();
     this.view.clear();
@@ -948,6 +952,7 @@ export class BattleScene extends Phaser.Scene {
       case 'leave': {
         const s = this.sprites.get(e.uid);
         s?.bar.destroy();
+        s?.cart?.destroy();
         s?.spr.destroy();
         this.sprites.delete(e.uid);
         break;
@@ -1025,6 +1030,7 @@ export class BattleScene extends Phaser.Scene {
       this.ui.endSkip();
       this.syncView();
       this.refreshAll();
+      for (const [uid, s] of this.sprites) s.cart?.setVisible(this.battle.isBound(this.battle.unit(uid)!));
       const b = this.battle;
       this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
       this.ui.setTeamExp(b.teamExp);
@@ -1064,7 +1070,10 @@ export class BattleScene extends Phaser.Scene {
   /** 剧情退场：几个人同时淡出 */
   private async leaveAll(group: LeaveEvent[]) {
     const gone = group.map((e) => this.sprites.get(e.uid)).filter((s) => !!s);
-    for (const s of gone) s.bar.destroy();
+    for (const s of gone) {
+      s.bar.destroy();
+      s.cart?.destroy();
+    }
     if (gone.length) await this.fade(gone.map((s) => s.spr), 0, LEAVE_MS);
     for (const e of group) {
       this.sprites.get(e.uid)?.spr.destroy();
@@ -1175,6 +1184,10 @@ export class BattleScene extends Phaser.Scene {
       const p = cellToWorld(c.x, c.y);
       s.spr.setDepth(depthOf(Math.max(a.x, c.x), Math.max(a.y, c.y), 8));
       s.bar.clear();
+      if (s.cart) {
+        s.cart.setDepth(depthOf(Math.max(a.x, c.x), Math.max(a.y, c.y), 8) + 0.1);
+        this.tweens.add({ targets: s.cart, x: p.x, y: p.y, duration: fast ? 110 : 150 });
+      }
       await new Promise<void>((r) => this.tweens.add({ targets: s.spr, x: p.x, y: p.y, duration: fast ? 110 : 150, onComplete: () => r() }));
     }
   }
@@ -1462,6 +1475,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       }
       case 'status': {
+        if (e.text === '解開') this.sprites.get(e.uid)?.cart?.setVisible(false);
         const v = this.vs(b.unit(e.uid)!);
         this.float(v.x, v.y, tr(e.text), '#c080ff');
         await wait(this, 300);
@@ -1486,6 +1500,7 @@ export class BattleScene extends Phaser.Scene {
         const s = this.sprites.get(e.uid);
         if (s) {
           s.bar.destroy();
+          s.cart?.destroy();
           await this.fade(s.spr, 0, e.type === 'die' ? 500 : LEAVE_MS);
           s.spr.destroy();
           this.sprites.delete(e.uid);
