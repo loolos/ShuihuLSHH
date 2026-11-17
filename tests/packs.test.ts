@@ -667,6 +667,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
     expect(rt.stages.map((s) => [s.id, placeOf(s.id)?.before, !!s.pov])).toEqual([
       ['wawasi', 'N-add06', false],
+      ['daming-duel', 'Act10-1', true],
       ['chifagui', 'Act10-1', true],
       ['sanruan', 'Act10-1', true],
       ['zhizhulin', 'Act7-1a', false],

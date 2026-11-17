@@ -326,7 +326,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, party: opts.party, joinLevel: opts.joinLevel };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, party: opts.party, joinLevel: opts.joinLevel };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */

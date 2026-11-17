@@ -128,6 +128,8 @@ export function condZones(c: PasCond): { char: number; x1: number; y1: number; x
 }
 
 export interface StageInput {
+  /** 观战演员的ACT索引，不参与战斗。 */
+  spectators?: number[];
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
   name: string;
@@ -184,6 +186,7 @@ export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' 
 const BOUND_TURNS = 9999;
 
 export class Battle {
+  readonly spectators: ReadonlySet<number>;
   readonly prisonCarts: ReadonlySet<number>;
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
@@ -238,6 +241,7 @@ export class Battle {
   private readonly aiPrefer: Record<number, number[]>;
 
   constructor(input: StageInput) {
+    this.spectators = new Set(input.spectators ?? []);
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     this.name = input.name;
     this.clearGoldOverride = input.clearGold;
@@ -334,7 +338,7 @@ export class Battle {
     return this.active().find((u) => u.x === x && u.y === y);
   }
   foesOf(u: Unit) {
-    return this.active().filter((t) => isFoe(u.side, t.side));
+    return this.active().filter((t) => !this.spectators.has(t.uid) && isFoe(u.side, t.side));
   }
   /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，林间截囚的宋江）【新】 */
   isBound(u: Unit) {
@@ -377,10 +381,10 @@ export class Battle {
     return { green, yellow };
   }
   canMove(u: Unit) {
-    return this.status === 'playing' && u.side === this.phase && !u.ended && !u.acted && u.alive && u.present;
+    return this.status === 'playing' && !this.spectators.has(u.uid) && u.side === this.phase && !u.ended && !u.acted && u.alive && u.present;
   }
   canAct(u: Unit) {
-    return this.status === 'playing' && u.side === this.phase && !u.ended && u.alive && u.present;
+    return this.status === 'playing' && !this.spectators.has(u.uid) && u.side === this.phase && !u.ended && u.alive && u.present;
   }
   /** 我方回合里已经没有能行动的我方人物（死亡、未登场、昏迷、行动完毕的都不算） */
   playerPhaseDone() {
@@ -428,6 +432,7 @@ export class Battle {
     const allyCharge = isAllyChargeSkill(skill);
     const heal = isHealSkill(skill) || allyCharge;
     return this.active().filter((t) => {
+      if (this.spectators.has(t.uid)) return false;
       const pos = t === u ? at : t;
       return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side))
         && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
