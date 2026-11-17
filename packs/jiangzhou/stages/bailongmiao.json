@@ -120,7 +120,7 @@
   {
    "id": "huarong",
    "class": "huarong",
-   "side": "ally",
+   "side": "player",
    "x": 45,
    "y": 13,
    "facing": 2,
@@ -130,7 +130,7 @@
   {
    "id": "huangxin",
    "class": "huangxin",
-   "side": "ally",
+   "side": "player",
    "x": 45,
    "y": 15,
    "facing": 2,
@@ -140,7 +140,7 @@
   {
    "id": "lufang",
    "class": "lvfang",
-   "side": "ally",
+   "side": "player",
    "x": 46,
    "y": 16,
    "facing": 2,
@@ -150,7 +150,7 @@
   {
    "id": "guosheng",
    "class": "guosheng",
-   "side": "ally",
+   "side": "player",
    "x": 46,
    "y": 17,
    "facing": 2,
@@ -160,7 +160,7 @@
   {
    "id": "yanshun",
    "class": "yanshun",
-   "side": "ally",
+   "side": "player",
    "x": 45,
    "y": 18,
    "facing": 2,
@@ -179,8 +179,8 @@
   },
   {
    "id": "wangying",
-   "class": 44,
-   "side": "ally",
+   "class": "wangying",
+   "side": "player",
    "x": 46,
    "y": 14,
    "facing": 2,
@@ -210,7 +210,7 @@
   {
    "id": "zhangshun",
    "class": "zhangshun",
-   "side": "ally",
+   "side": "player",
    "x": 52,
    "y": 7,
    "facing": 1,
@@ -221,7 +221,7 @@
   {
    "id": "zhangheng",
    "class": "zhangheng",
-   "side": "ally",
+   "side": "player",
    "x": 53,
    "y": 8,
    "facing": 1,
@@ -232,7 +232,7 @@
   {
    "id": "lijun",
    "class": "lijun",
-   "side": "ally",
+   "side": "player",
    "x": 52,
    "y": 8,
    "facing": 1,
@@ -658,8 +658,8 @@
    "id": "r2_1",
    "class": 43,
    "side": "enemy",
-   "x": 50,
-   "y": 0,
+   "x": 45,
+   "y": 21,
    "facing": 2,
    "level": 29,
    "hidden": true,
@@ -669,8 +669,8 @@
    "id": "r2_2",
    "class": 34,
    "side": "enemy",
-   "x": 50,
-   "y": 2,
+   "x": 45,
+   "y": 20,
    "facing": 2,
    "level": 27,
    "hidden": true
@@ -679,8 +679,8 @@
    "id": "r2_3",
    "class": 32,
    "side": "enemy",
-   "x": 49,
-   "y": 2,
+   "x": 44,
+   "y": 21,
    "facing": 2,
    "level": 28,
    "hidden": true,
@@ -1092,6 +1092,394 @@
    "facing": 1,
    "level": 29,
    "ai": 2
+  },
+  {
+   "id": "dense-west-1",
+   "class": 32,
+   "side": "enemy",
+   "x": 32,
+   "y": 22,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-west-2",
+   "class": 33,
+   "side": "enemy",
+   "x": 31,
+   "y": 23,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-west-3",
+   "class": 43,
+   "side": "enemy",
+   "x": 32,
+   "y": 24,
+   "level": 28,
+   "name": "江州马军"
+  },
+  {
+   "id": "dense-west-4",
+   "class": 34,
+   "side": "enemy",
+   "x": 32,
+   "y": 20,
+   "level": 28,
+   "name": "江州弓手"
+  },
+  {
+   "id": "dense-west-5",
+   "class": 32,
+   "side": "enemy",
+   "x": 31,
+   "y": 21,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-west-6",
+   "class": 43,
+   "side": "enemy",
+   "x": 33,
+   "y": 21,
+   "level": 28,
+   "name": "江州马军"
+  },
+  {
+   "id": "dense-south-1",
+   "class": 32,
+   "side": "enemy",
+   "x": 39,
+   "y": 31,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-south-2",
+   "class": 33,
+   "side": "enemy",
+   "x": 38,
+   "y": 32,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-south-3",
+   "class": 43,
+   "side": "enemy",
+   "x": 40,
+   "y": 32,
+   "level": 28,
+   "name": "江州马军"
+  },
+  {
+   "id": "dense-south-4",
+   "class": 34,
+   "side": "enemy",
+   "x": 39,
+   "y": 33,
+   "level": 28,
+   "name": "江州弓手"
+  },
+  {
+   "id": "dense-south-5",
+   "class": 32,
+   "side": "enemy",
+   "x": 40,
+   "y": 31,
+   "level": 28,
+   "name": "江州官兵"
+  },
+  {
+   "id": "dense-south-6",
+   "class": 43,
+   "side": "enemy",
+   "x": 37,
+   "y": 32,
+   "level": 28,
+   "name": "江州马军"
+  },
+  {
+   "id": "dense-guard-1",
+   "class": 32,
+   "side": "enemy",
+   "x": 46,
+   "y": 46,
+   "level": 29,
+   "name": "江州官兵",
+   "ai": 2
+  },
+  {
+   "id": "dense-guard-2",
+   "class": 33,
+   "side": "enemy",
+   "x": 45,
+   "y": 47,
+   "level": 29,
+   "name": "江州官兵",
+   "ai": 2
+  },
+  {
+   "id": "dense-guard-3",
+   "class": 43,
+   "side": "enemy",
+   "x": 47,
+   "y": 47,
+   "level": 29,
+   "name": "江州马军",
+   "ai": 2
+  },
+  {
+   "id": "dense-guard-4",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 45,
+   "level": 29,
+   "name": "江州弓手",
+   "ai": 2
+  },
+  {
+   "id": "dense-guard-5",
+   "class": 32,
+   "side": "enemy",
+   "x": 44,
+   "y": 47,
+   "level": 29,
+   "name": "江州官兵",
+   "ai": 2
+  },
+  {
+   "id": "dense-guard-6",
+   "class": 43,
+   "side": "enemy",
+   "x": 48,
+   "y": 47,
+   "level": 29,
+   "name": "江州马军",
+   "ai": 2
+  },
+  {
+   "id": "r2_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 46,
+   "y": 21,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r2_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 45,
+   "y": 22,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r3_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 32,
+   "y": 28,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r3_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 33,
+   "y": 28,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r4_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 44,
+   "y": 24,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r4_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 23,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r5_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 35,
+   "y": 26,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r5_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 35,
+   "y": 25,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r6_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 19,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r6_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 20,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r7_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 43,
+   "y": 35,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r7_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 42,
+   "y": 35,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r8_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 45,
+   "y": 25,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r8_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 25,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r9_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 36,
+   "y": 30,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r9_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 36,
+   "y": 29,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r10_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 36,
+   "y": 23,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r10_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 36,
+   "y": 22,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r11_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 42,
+   "y": 34,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r11_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 41,
+   "y": 35,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
+  },
+  {
+   "id": "r12_4",
+   "class": 32,
+   "side": "enemy",
+   "x": 44,
+   "y": 26,
+   "level": 28,
+   "name": "江州官兵",
+   "hidden": true
+  },
+  {
+   "id": "r12_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 43,
+   "y": 26,
+   "level": 28,
+   "name": "江州弓手",
+   "hidden": true
   }
  ],
  "script": [
@@ -1152,6 +1540,14 @@
     [
      "appear",
      "r2_3"
+    ],
+    [
+     "appear",
+     "r2_4"
+    ],
+    [
+     "appear",
+     "r2_5"
     ]
    ]
   },
@@ -1203,6 +1599,14 @@
     [
      "appear",
      "r3_3"
+    ],
+    [
+     "appear",
+     "r3_4"
+    ],
+    [
+     "appear",
+     "r3_5"
     ]
    ]
   },
@@ -1276,6 +1680,14 @@
     [
      "appear",
      "r4_3"
+    ],
+    [
+     "appear",
+     "r4_4"
+    ],
+    [
+     "appear",
+     "r4_5"
     ]
    ]
   },
@@ -1299,6 +1711,14 @@
     [
      "appear",
      "r5_3"
+    ],
+    [
+     "appear",
+     "r5_4"
+    ],
+    [
+     "appear",
+     "r5_5"
     ]
    ]
   },
@@ -1331,6 +1751,14 @@
     [
      "appear",
      "r6_3"
+    ],
+    [
+     "appear",
+     "r6_4"
+    ],
+    [
+     "appear",
+     "r6_5"
     ]
    ]
   },
@@ -1374,6 +1802,14 @@
     [
      "appear",
      "r7_3"
+    ],
+    [
+     "appear",
+     "r7_4"
+    ],
+    [
+     "appear",
+     "r7_5"
     ]
    ]
   },
@@ -1397,6 +1833,14 @@
     [
      "appear",
      "r8_3"
+    ],
+    [
+     "appear",
+     "r8_4"
+    ],
+    [
+     "appear",
+     "r8_5"
     ]
    ]
   },
@@ -1420,6 +1864,14 @@
     [
      "appear",
      "r9_3"
+    ],
+    [
+     "appear",
+     "r9_4"
+    ],
+    [
+     "appear",
+     "r9_5"
     ]
    ]
   },
@@ -1443,6 +1895,14 @@
     [
      "appear",
      "r10_3"
+    ],
+    [
+     "appear",
+     "r10_4"
+    ],
+    [
+     "appear",
+     "r10_5"
     ]
    ]
   },
@@ -1466,6 +1926,14 @@
     [
      "appear",
      "r11_3"
+    ],
+    [
+     "appear",
+     "r11_4"
+    ],
+    [
+     "appear",
+     "r11_5"
     ]
    ]
   },
@@ -1489,6 +1957,14 @@
     [
      "appear",
      "r12_3"
+    ],
+    [
+     "appear",
+     "r12_4"
+    ],
+    [
+     "appear",
+     "r12_5"
     ]
    ]
   },

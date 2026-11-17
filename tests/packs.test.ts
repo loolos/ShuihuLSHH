@@ -588,7 +588,7 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     advance(b, 2, log);
     expect(said.some((t) => t.includes('小锣'))).toBe(true);
     for (const n of ['晁盖', '阮小二', '阮小五', '阮小七', '白胜']) expect(here(n)?.side, n).toBe('player');
-    for (const n of ['小李广花荣', '镇三山黄信', '小温侯吕方', '赛仁贵郭盛']) expect(here(n)?.side, n).toBe('ally');
+    for (const n of ['小李广花荣', '镇三山黄信', '小温侯吕方', '赛仁贵郭盛']) expect(here(n)?.side, n).toBe('player');
     expect(by('晁盖').classId).toBe(12);
     expect(b.units.filter((u) => (u.name === '推车客商' || u.name === '弄蛇丐者') && u.present && u.alive)).toEqual([]);
     expect(b.units.filter((u) => u.name === '使枪棒卖药的' && u.present).length).toBe(4);
@@ -598,10 +598,11 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     for (const n of ['刘唐', '摸着天杜迁', '云里金刚宋万']) expect(here(n)?.side, n).toBe('player');
     expect(by('云里金刚宋万').classId).toBe(70);
     expect(b.data.classes[70].skills.map((s) => s.name)).toEqual(['金剛拳', '金剛連環', '金剛轉輪', '雲裡雷音', '金剛入定', '雲開見日']);
-    expect(here('锦毛虎燕顺')?.side).toBe('ally');
+    expect(here('锦毛虎燕顺')?.side).toBe('player');
     expect(here('旱地忽律朱贵')).toBeUndefined();
     advance(b, 4, log);
-    for (const n of ['旱地忽律朱贵', '矮脚虎王英', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
+    expect(here('矮脚虎王英')?.side).toBe('player');
+    for (const n of ['旱地忽律朱贵', '白面郎君郑天寿', '石将军石勇']) expect(here(n)?.side, n).toBe('ally');
     // 换回真身后兵器也是自己的
     // 换回真身后按个人等级配自己的武器类型
     expect(b.data.items[by('阮小二').slots[0] - 1].name).toBe('飛魚叉');
@@ -629,12 +630,12 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(c.b.status).toBe('lost');
   });
 
-  it('白龙庙：第 4 回合水军九人坐船赶到当友军；打倒兵马都监过关', () => {
+  it('白龙庙：第 4 回合水军九人坐船赶到，专属三人可控；打倒兵马都监过关', () => {
     const { b, said, log, by } = open('bailongmiao');
     const boats = ['浪里白条张顺', '船火儿张横', '混江龙李俊', '催命判官李立', '没遮拦穆弘', '小遮拦穆春', '出洞蛟童威', '翻江蜃童猛', '病大虫薛永'];
     expect(boats.every((n) => !by(n).present)).toBe(true);
     advance(b, 4, log);
-    for (const n of boats) expect(by(n).present && by(n).side, n).toBe('ally');
+    for (const [i,n] of boats.entries()) expect(by(n).present && by(n).side, n).toBe(i<3?'player':'ally');
     expect(said.some((t) => t.includes('三只大船'))).toBe(true);
     kill(b, by('晁盖'), by('江州兵马都监'));
     expect(b.status).toBe('won');

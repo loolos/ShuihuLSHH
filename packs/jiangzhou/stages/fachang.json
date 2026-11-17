@@ -77,7 +77,7 @@
   {
    "id": "huarong",
    "class": "huarong",
-   "side": "ally",
+   "side": "player",
    "x": 43,
    "y": 7,
    "facing": 2,
@@ -100,7 +100,7 @@
   {
    "id": "huangxin",
    "class": "huangxin",
-   "side": "ally",
+   "side": "player",
    "x": 44,
    "y": 7,
    "facing": 2,
@@ -123,7 +123,7 @@
   {
    "id": "lufang",
    "class": "lvfang",
-   "side": "ally",
+   "side": "player",
    "x": 43,
    "y": 6,
    "facing": 2,
@@ -146,7 +146,7 @@
   {
    "id": "guosheng",
    "class": "guosheng",
-   "side": "ally",
+   "side": "player",
    "x": 44,
    "y": 6,
    "facing": 2,
@@ -355,7 +355,7 @@
   {
    "id": "yanshun",
    "class": "yanshun",
-   "side": "ally",
+   "side": "player",
    "x": 33,
    "y": 13,
    "facing": 3,
@@ -400,8 +400,8 @@
   },
   {
    "id": "wangying",
-   "class": 44,
-   "side": "ally",
+   "class": "wangying",
+   "side": "player",
    "x": 43,
    "y": 19,
    "facing": 1,
