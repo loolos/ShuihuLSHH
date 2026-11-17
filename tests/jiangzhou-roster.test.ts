@@ -47,7 +47,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     expect(friends.map(u=>u.id).sort()).toEqual(['songjiang','daizong','likui','chaogai','huarong','liutang'].sort());
     for(const u of friends){expect(u.y-u.x,u.id).toBeGreaterThanOrEqual(14);expect(Math.abs(u.x-24)+Math.abs(u.y-42),u.id).toBeLessThanOrEqual(5);}
     const foes=s.units.filter(u=>u.side==='enemy'&&!u.hidden);
-    expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(10);
+    expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(12);
     expect(s.units.find(u=>u.id==='dujian')).toMatchObject({x:28,y:28});
     const field=b.board.distanceField([s.units.find(u=>u.id==='dujian')!]);const used=new Set<string>();
     for(const u of s.units.filter(u=>!u.id.startsWith('boss-cav-'))){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);expect(used.has(`${u.x},${u.y}`),u.id).toBe(false);used.add(`${u.x},${u.y}`);}
@@ -61,6 +61,27 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
       trigger(b,turn-1);for(const id of expected[turn])expect(get(id).present,id).toBe(true);
       for(const [later,ids]of Object.entries(expected))if(Number(later)>turn)for(const id of ids)expect(get(id).present,id).toBe(false);
     }
+  });
+  it('初始军队隔格成阵，4名护卫守在都监近旁，其余45人主动进攻并有移动空间', () => {
+    const {s,b,get}=open('bailongmiao'),army=s.units.filter(u=>u.side==='enemy'&&!u.hidden),boss=get('dujian');
+    expect(army).toHaveLength(50);
+    for(const u of army){expect(u.x%2,u.id).toBe(0);expect(u.y%2,u.id).toBe(0);}
+    for(const u of army)expect(army.some(v=>v!==u&&Math.abs(u.x-v.x)+Math.abs(u.y-v.y)===1),u.id).toBe(false);
+    const guards=army.filter(u=>u.ai===2);expect(guards).toHaveLength(4);
+    for(const u of guards)expect(Math.abs(u.x-boss.x)+Math.abs(u.y-boss.y),u.id).toBeLessThanOrEqual(4);
+    const attackers=army.filter(u=>u.id!=='dujian'&&u.ai!==2);expect(attackers).toHaveLength(45);
+    b.phase='enemy';for(const u of attackers){expect(get(u.id).ai.mode,u.id).toBe(0);expect(b.moveRange(get(u.id)).green.length,u.id).toBeGreaterThan(0);}
+    const archers=army.filter(u=>u.class===34),foot=army.filter(u=>u.class===32||u.class===33);
+    const mean=(a:typeof army)=>a.reduce((sum,u)=>sum+u.y-u.x,0)/a.length;
+    expect(mean(archers)).toBeLessThan(mean(foot));
+  });
+  it('开场都监点名捉拿宋江并威胁阻拦者，好汉回应并明确背水一战的两条胜路', () => {
+    const ops=stage('bailongmiao').script.find(b=>b.on==='start')!.do;
+    const threat=ops.findIndex(op=>op[0]==='say'&&op[1]==='dujian'&&String(op[2]).includes('捉拿反贼宋江'));
+    const response=ops.findIndex((op,i)=>i>threat&&op[0]==='say'&&op[1]==='songjiang');
+    const stand=ops.findIndex((op,i)=>i>response&&op[0]==='say'&&String(op[2]).includes('背水一战'));
+    expect(threat).toBeGreaterThan(-1);expect(String(ops[threat][2])).toContain('一律格杀');expect(response).toBeGreaterThan(threat);expect(stand).toBeGreaterThan(response);
+    expect(String(ops[stand][2])).toContain('二十回合');expect(String(ops[stand][2])).toContain('打倒那都监');
   });
   it('都监体力始终为普通模板四倍，每回合2名亲随骑兵在身边出现并主动进攻', () => {
     const {s,b,get}=open('bailongmiao'),boss=get('dujian');
