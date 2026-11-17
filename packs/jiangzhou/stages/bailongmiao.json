@@ -324,177 +324,195 @@
    "id": "e1",
    "class": 33,
    "side": "enemy",
-   "x": 30,
-   "y": 26,
+   "x": 20,
+   "y": 28,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e2",
    "class": 32,
    "side": "enemy",
-   "x": 29,
-   "y": 26,
+   "x": 22,
+   "y": 30,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e3",
    "class": 34,
    "side": "enemy",
-   "x": 31,
-   "y": 26,
+   "x": 30,
+   "y": 16,
    "facing": 1,
-   "level": 29
+   "level": 29,
+   "ai": 0
   },
   {
    "id": "e4",
    "class": 32,
    "side": "enemy",
-   "x": 29,
-   "y": 25,
+   "x": 24,
+   "y": 32,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e5",
    "class": 33,
    "side": "enemy",
-   "x": 28,
-   "y": 26,
+   "x": 26,
+   "y": 34,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e6",
    "class": 34,
    "side": "enemy",
    "x": 32,
-   "y": 26,
+   "y": 20,
    "facing": 1,
-   "level": 29
+   "level": 29,
+   "ai": 0
   },
   {
    "id": "e7",
    "class": 32,
    "side": "enemy",
-   "x": 29,
-   "y": 27,
+   "x": 22,
+   "y": 28,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e8",
    "class": 33,
    "side": "enemy",
-   "x": 29,
-   "y": 24,
+   "x": 24,
+   "y": 30,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e9",
    "class": 43,
    "side": "enemy",
-   "x": 31,
-   "y": 24,
+   "x": 38,
+   "y": 30,
    "facing": 1,
    "level": 30,
-   "name": "骑兵"
+   "name": "骑兵",
+   "ai": 0
   },
   {
    "id": "e10",
    "class": 43,
    "side": "enemy",
-   "x": 28,
-   "y": 25,
+   "x": 36,
+   "y": 32,
    "facing": 1,
    "level": 30,
-   "name": "骑兵"
+   "name": "骑兵",
+   "ai": 0
   },
   {
    "id": "e11",
    "class": 32,
    "side": "enemy",
-   "x": 32,
-   "y": 25,
+   "x": 26,
+   "y": 32,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e12",
    "class": 33,
    "side": "enemy",
-   "x": 27,
-   "y": 26,
+   "x": 28,
+   "y": 34,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e13",
    "class": 43,
    "side": "enemy",
-   "x": 33,
-   "y": 26,
+   "x": 36,
+   "y": 30,
    "facing": 1,
    "level": 30,
-   "name": "骑兵"
+   "name": "骑兵",
+   "ai": 0
   },
   {
    "id": "e14",
    "class": 32,
    "side": "enemy",
-   "x": 28,
-   "y": 27,
+   "x": 30,
+   "y": 36,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e15",
    "class": 34,
    "side": "enemy",
-   "x": 30,
+   "x": 34,
    "y": 22,
    "facing": 1,
-   "level": 29
+   "level": 29,
+   "ai": 0
   },
   {
    "id": "e16",
    "class": 32,
    "side": "enemy",
-   "x": 29,
-   "y": 23,
+   "x": 22,
+   "y": 26,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e17",
    "class": 33,
    "side": "enemy",
-   "x": 31,
-   "y": 23,
+   "x": 24,
+   "y": 28,
    "facing": 1,
    "level": 29,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 0
   },
   {
    "id": "e18",
    "class": 34,
    "side": "enemy",
-   "x": 28,
-   "y": 24,
+   "x": 38,
+   "y": 26,
    "facing": 1,
-   "level": 29
+   "level": 29,
+   "ai": 0
   },
   {
    "id": "dujian",
@@ -512,8 +530,8 @@
    "id": "d1",
    "class": 32,
    "side": "enemy",
-   "x": 29,
-   "y": 31,
+   "x": 26,
+   "y": 28,
    "facing": 1,
    "level": 29,
    "name": "官兵",
@@ -524,7 +542,7 @@
    "class": 33,
    "side": "enemy",
    "x": 28,
-   "y": 32,
+   "y": 26,
    "facing": 1,
    "level": 29,
    "name": "官兵",
@@ -534,8 +552,8 @@
    "id": "d3",
    "class": 34,
    "side": "enemy",
-   "x": 27,
-   "y": 27,
+   "x": 28,
+   "y": 30,
    "facing": 1,
    "level": 29,
    "ai": 2
@@ -544,8 +562,8 @@
    "id": "d4",
    "class": 43,
    "side": "enemy",
-   "x": 26,
-   "y": 28,
+   "x": 30,
+   "y": 30,
    "facing": 1,
    "level": 29,
    "ai": 2
@@ -554,12 +572,12 @@
    "id": "d5",
    "class": 32,
    "side": "enemy",
-   "x": 27,
-   "y": 29,
+   "x": 26,
+   "y": 30,
    "facing": 1,
    "level": 29,
    "name": "官兵",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "w3_1",
@@ -1028,253 +1046,265 @@
    "id": "g1",
    "class": 43,
    "side": "enemy",
-   "x": 29,
-   "y": 29,
+   "x": 36,
+   "y": 28,
    "facing": 1,
    "level": 30,
-   "ai": 2,
+   "ai": 0,
    "name": "骑兵"
   },
   {
    "id": "g2",
    "class": 43,
    "side": "enemy",
-   "x": 28,
-   "y": 30,
+   "x": 34,
+   "y": 34,
    "facing": 1,
    "level": 30,
-   "ai": 2,
+   "ai": 0,
    "name": "骑兵"
   },
   {
    "id": "g3",
    "class": 43,
    "side": "enemy",
-   "x": 26,
-   "y": 27,
+   "x": 34,
+   "y": 30,
    "facing": 1,
    "level": 30,
-   "ai": 2,
+   "ai": 0,
    "name": "骑兵"
   },
   {
    "id": "g4",
    "class": 43,
    "side": "enemy",
-   "x": 25,
+   "x": 34,
    "y": 28,
    "facing": 1,
    "level": 30,
-   "ai": 2,
+   "ai": 0,
    "name": "骑兵"
   },
   {
    "id": "g5",
    "class": 34,
    "side": "enemy",
-   "x": 26,
-   "y": 29,
+   "x": 40,
+   "y": 28,
    "facing": 1,
    "level": 29,
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "g6",
    "class": 34,
    "side": "enemy",
-   "x": 27,
-   "y": 30,
+   "x": 30,
+   "y": 20,
    "facing": 1,
    "level": 29,
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "g7",
    "class": 34,
    "side": "enemy",
-   "x": 29,
-   "y": 30,
+   "x": 32,
+   "y": 22,
    "facing": 1,
    "level": 29,
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "g8",
    "class": 34,
    "side": "enemy",
-   "x": 28,
-   "y": 31,
+   "x": 34,
+   "y": 24,
    "facing": 1,
    "level": 29,
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-west-1",
    "class": 32,
    "side": "enemy",
-   "x": 32,
-   "y": 24,
+   "x": 28,
+   "y": 32,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-west-2",
    "class": 33,
    "side": "enemy",
-   "x": 27,
-   "y": 25,
+   "x": 24,
+   "y": 26,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-west-3",
    "class": 43,
    "side": "enemy",
-   "x": 33,
-   "y": 25,
+   "x": 34,
+   "y": 26,
    "level": 28,
-   "name": "江州马军"
+   "name": "江州马军",
+   "ai": 0
   },
   {
    "id": "dense-west-4",
    "class": 34,
    "side": "enemy",
-   "x": 26,
+   "x": 36,
    "y": 26,
    "level": 28,
-   "name": "江州弓手"
+   "name": "江州弓手",
+   "ai": 0
   },
   {
    "id": "dense-west-5",
    "class": 32,
    "side": "enemy",
-   "x": 34,
-   "y": 26,
+   "x": 24,
+   "y": 24,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-west-6",
    "class": 43,
    "side": "enemy",
-   "x": 33,
-   "y": 27,
+   "x": 32,
+   "y": 36,
    "level": 28,
-   "name": "江州马军"
+   "name": "江州马军",
+   "ai": 0
   },
   {
    "id": "dense-south-1",
    "class": 32,
    "side": "enemy",
-   "x": 31,
-   "y": 31,
+   "x": 26,
+   "y": 26,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-south-2",
    "class": 33,
    "side": "enemy",
-   "x": 30,
-   "y": 31,
+   "x": 26,
+   "y": 24,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-south-3",
    "class": 43,
    "side": "enemy",
-   "x": 29,
-   "y": 32,
+   "x": 32,
+   "y": 28,
    "level": 28,
-   "name": "江州马军"
+   "name": "江州马军",
+   "ai": 0
   },
   {
    "id": "dense-south-4",
    "class": 34,
    "side": "enemy",
-   "x": 35,
-   "y": 32,
+   "x": 38,
+   "y": 28,
    "level": 28,
-   "name": "江州弓手"
+   "name": "江州弓手",
+   "ai": 0
   },
   {
    "id": "dense-south-5",
    "class": 32,
    "side": "enemy",
-   "x": 30,
-   "y": 33,
+   "x": 26,
+   "y": 22,
    "level": 28,
-   "name": "江州官兵"
+   "name": "江州官兵",
+   "ai": 0
   },
   {
    "id": "dense-south-6",
    "class": 43,
    "side": "enemy",
    "x": 32,
-   "y": 28,
+   "y": 26,
    "level": 28,
-   "name": "江州马军"
+   "name": "江州马军",
+   "ai": 0
   },
   {
    "id": "dense-guard-1",
    "class": 32,
    "side": "enemy",
-   "x": 25,
-   "y": 27,
+   "x": 28,
+   "y": 24,
    "level": 29,
    "name": "江州官兵",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-guard-2",
    "class": 33,
    "side": "enemy",
-   "x": 24,
-   "y": 28,
+   "x": 30,
+   "y": 26,
    "level": 29,
    "name": "江州官兵",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-guard-3",
    "class": 43,
    "side": "enemy",
-   "x": 25,
-   "y": 29,
+   "x": 32,
+   "y": 24,
    "level": 29,
    "name": "江州马军",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-guard-4",
    "class": 34,
    "side": "enemy",
-   "x": 26,
-   "y": 30,
+   "x": 30,
+   "y": 22,
    "level": 29,
    "name": "江州弓手",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-guard-5",
    "class": 32,
    "side": "enemy",
-   "x": 30,
-   "y": 30,
+   "x": 28,
+   "y": 22,
    "level": 29,
    "name": "江州官兵",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "dense-guard-6",
    "class": 43,
    "side": "enemy",
-   "x": 27,
-   "y": 31,
+   "x": 30,
+   "y": 38,
    "level": 29,
    "name": "江州马军",
-   "ai": 2
+   "ai": 0
   },
   {
    "id": "r2_4",
@@ -2406,7 +2436,34 @@
     [
      "say",
      "dujian",
-     "反贼都在那庙里！封住去路，一个也休放走！"
+     "奉蔡知府将令，捉拿反贼宋江！其余人若敢阻拦，一律格杀！"
+    ],
+    [
+     "focus",
+     "songjiang"
+    ],
+    [
+     "say",
+     "songjiang",
+     "宋江在此！此事与众兄弟无干，休伤他们！"
+    ],
+    [
+     "focus",
+     "dujian"
+    ],
+    [
+     "say",
+     "dujian",
+     "劫法场的都是同党！一个也休想走！"
+    ],
+    [
+     "focus",
+     "chaogai"
+    ],
+    [
+     "say",
+     "chaogai",
+     "背后是大江，已无退路！兄弟们只得背水一战：守住白龙庙撑过二十回合，或先打倒那都监，冲散官军！"
     ],
     [
      "appear",
