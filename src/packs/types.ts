@@ -197,6 +197,8 @@ export interface PackUnitJson {
   /** 0 背向右上、1 背向左上、2 面向左下、3 面向右下（同原版） */
   facing?: number;
   level: number;
+  /** 本关最大体力倍率，含模板与装备；不改变其他属性，默认1。 */
+  hpMultiplier?: number;
   /** 相对本场队伍平均等级的偏移（动态关卡敌人/友军）。 */
   levelOffset?: number;
   /** 开局不在场，剧本点名（appear / say）时登场 */

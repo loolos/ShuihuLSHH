@@ -128,6 +128,8 @@ export function condZones(c: PasCond): { char: number; x1: number; y1: number; x
 }
 
 export interface StageInput {
+  /** 本关单位体力倍率：ACT索引→倍率。 */
+  hpMultipliers?: Record<number, number>;
   /** 观战演员的ACT索引，不参与战斗。 */
   spectators?: number[];
   /** 囚车外观的 ACT 序号，只影响表现。 */
@@ -302,9 +304,13 @@ export class Battle {
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
       const stats = computeStats(cls, level, slots, this.data, false, forge, [], a.side);
+      const hpMultiplier = input.hpMultipliers?.[a.index] ?? 1;
+      if (!Number.isFinite(hpMultiplier) || hpMultiplier <= 0) throw new Error(`单位 ${a.index} 的体力倍率必须为正数`);
+      stats.maxHp = Math.max(1, Math.round(stats.maxHp * hpMultiplier));
       this.units.push({
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
+        ...(hpMultiplier !== 1 ? { hpMultiplier } : {}),
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,

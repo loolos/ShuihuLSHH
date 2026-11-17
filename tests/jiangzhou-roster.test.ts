@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { computeStats, refreshStats } from '../src/rules/unit.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
@@ -39,19 +40,49 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     for(const id of ['zhangshun','zhangheng','lijun']){expect(get(id).side).toBe('player');expect(get(id).present).toBe(true);}
     for(const id of ['lili','muhong','muchun','tongwei','tongmeng','xueyong']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);}
   });
-  it('115名敌人、50名开场敌军，密集增兵及第2回合修复援军均可接战，11波各增加2人', () => {
+  it('开场好汉在画面左下与右下两拨各10人，50名敌军及都监集中地图中部', () => {
+    const {s,b}=open('bailongmiao'),friends=s.units.filter(u=>u.side!=='enemy'&&!u.hidden);
+    expect(friends.filter(u=>u.y-u.x>=10&&u.x+u.y>=64)).toHaveLength(10);
+    expect(friends.filter(u=>u.x-u.y>=10&&u.x+u.y>=68)).toHaveLength(10);
+    const foes=s.units.filter(u=>u.side==='enemy'&&!u.hidden);
+    expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(10);
+    expect(s.units.find(u=>u.id==='dujian')).toMatchObject({x:28,y:28});
+    const field=b.board.distanceField([s.units.find(u=>u.id==='dujian')!]);const used=new Set<string>();
+    for(const u of s.units.filter(u=>!u.id.startsWith('boss-cav-'))){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);expect(used.has(`${u.x},${u.y}`),u.id).toBe(false);used.add(`${u.x},${u.y}`);}
+  });
+  it('都监体力始终为普通模板四倍，每回合2名亲随骑兵在身边出现并主动进攻', () => {
+    const {s,b,get}=open('bailongmiao'),boss=get('dujian');
+    const normal=computeStats(b.data.classes[boss.classId],boss.level,boss.slots,b.data,false,boss.forge,[],boss.side);
+    expect(boss.hp).toBe(normal.maxHp*4);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
+    refreshStats(boss,b.data);refreshStats(boss,b.data);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
+    const rewind=open('bailongmiao');(rewind.b as unknown as {startTurn:(n:number)=>void}).startTurn(2);rewind.get('dujian').hp=1;rewind.b.rewind();refreshStats(rewind.get('dujian'),rewind.b.data);expect(rewind.get('dujian').stats.maxHp).toBe(normal.maxHp*4);expect(rewind.get('dujian').hp).toBe(normal.maxHp*4);
+    const cavalry=s.units.filter(u=>u.id.startsWith('boss-cav-'));expect(cavalry).toHaveLength(40);
+    for(let turn=1;turn<=20;turn++) {
+      if(turn>1)trigger(b,turn-1);
+      const pair=cavalry.filter(u=>u.id.startsWith(`boss-cav-${turn}-`));expect(pair).toHaveLength(2);
+      for(const u of pair){const actual=get(u.id);expect(actual.present&&actual.alive,u.id).toBe(true);expect(actual.ai.mode).toBe(0);expect(Math.abs(actual.x-boss.x)+Math.abs(actual.y-boss.y),u.id).toBeLessThanOrEqual(12);}
+      const live=b.active();expect(new Set(live.map(u=>`${u.x},${u.y}`)).size).toBe(live.length);
+      expect(b.active().filter(u=>u.name==='都监亲随马军')).toHaveLength(turn*2);
+    }
+  });
+  it('195名敌人、52名开场敌军，19波从下方右方交替进入，守满20回合判胜', () => {
     const {s,b}=open('bailongmiao'),enemies=s.units.filter(u=>u.side==='enemy');
-    expect(enemies).toHaveLength(115);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(50);
-    const additions=enemies.filter(u=>u.id.startsWith('dense-')||/^r\d+_[45]$/.test(u.id));expect(additions).toHaveLength(40);
+    expect(enemies).toHaveLength(195);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(52);
+    const additions=enemies.filter(u=>u.id.startsWith('dense-')||/^r\d+_[45]$/.test(u.id));expect(additions).toHaveLength(56);
     const field=b.board.distanceField([s.units.find(u=>u.id==='songjiang')!]);
     for(const u of [...additions,...enemies.filter(u=>/^r2_[123]$/.test(u.id))]) {
       expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);
       expect(s.units.filter(v=>u.x===v.x&&u.y===v.y),u.id).toHaveLength(1);
     }
-    for(let turn=2;turn<=12;turn++) {
+    for(let turn=2;turn<=20;turn++) {
       const wave=enemies.filter(u=>u.id.startsWith(`r${turn}_`));expect(wave,`turn${turn}`).toHaveLength(5);
+      const block=s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===turn)!;
+      const arrivals=block.do.filter(op=>op[0]==='appear').map(op=>s.units.find(u=>u.id===op[1])!).filter(u=>u.side==='enemy'&&!u.id.startsWith('boss-cav-'));
+      expect(arrivals).toHaveLength(turn===3?11:turn===7?9:5);
+      for(const u of arrivals) expect(turn%2===0?u.x+u.y>=86:u.x-u.y>=18,`${turn}/${u.id}`).toBe(true);
       trigger(b,turn-1);for(const u of wave)expect(b.units[s.units.indexOf(u)].present,u.id).toBe(true);
     }
-    expect(b.status).toBe('playing');trigger(b,12);expect(b.status).toBe('won');
+    expect(b.status).toBe('playing');expect(b.turnLimit).toBe(20);
+    (b as unknown as {startTurn:(n:number)=>void}).startTurn(21);expect(b.status).toBe('won');
   });
 });
