@@ -1709,7 +1709,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(result.ok).toBe(true);
     const saved=JSON.parse(JSON.stringify(saveTownParty(result.c,rt))) as CampaignState;
     const reopened=prepareInsertTown(saved,rt,next),qm=reopened.members.find(m=>m.classId===cid('qinming'))!;
-    expect(qm.slots).toContain(medicine);expect(qm.forge.slice(0,2)).toEqual([3,2]);expect([qm.level,qm.exp]).toEqual([27,23]);
+    expect(qm.slots).toContain(medicine);expect(qm.forge?.slice(0,2)).toEqual([3,2]);expect([qm.level,qm.exp]).toEqual([27,23]);
     expect(reopened.gold).toBe(c.gold-rt.data.items[medicine-1].buyPrice);expect(reopened.active).toEqual(view.active);expect(saved.insertTown).toEqual(c.insertTown);
     for(const member of result.c.members)expect(reopened.members.find(m=>m.classId===member.classId)).toMatchObject(member);
   });
