@@ -32,13 +32,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     const skills=rt.data.classes[rt.classIds.get('wangying')!].skills.filter(s=>s.name.startsWith('三岔毒龙枪'));
     expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
   });
-  it('白龙庙吴用随宋江等七人守庙，第5回合15人可控', () => {
+  it('白龙庙吴用随宋江等七人守庙，第5回合26人可控', () => {
     const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(7);
     expect(get('wuyong')).toMatchObject({side:'player',present:true,classId:10,x:24,y:41});expect(b.canAct(get('wuyong'))).toBe(true);
     for(const id of ['zhangshun','zhangheng','lijun'])expect(get(id).present).toBe(false);
     for(let n=2;n<=4;n++)(b as unknown as {startTurn:(n:number)=>void}).startTurn(n);
-    expect(b.active().filter(u=>u.side==='player')).toHaveLength(15);
-    (b as unknown as {startTurn:(n:number)=>void}).startTurn(5);expect(b.active().filter(u=>u.side==='player')).toHaveLength(15);
+    expect(b.active().filter(u=>u.side==='player')).toHaveLength(16);
+    (b as unknown as {startTurn:(n:number)=>void}).startTurn(5);expect(b.active().filter(u=>u.side==='player')).toHaveLength(26);
     for(const id of ['yanshun','zhangshun','lijun','lufang','guosheng','zhangheng']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);expect(b.canAct(get(id)),id).toBe(false);expect(b.autoActUnits()).not.toContain(get(id));}
     (b as unknown as {startPhase:(side:'ally')=>void}).startPhase('ally');
     for(const id of ['yanshun','zhangshun','lijun','lufang','guosheng','zhangheng'])expect(b.canAct(get(id)),id).toBe(true);
@@ -53,10 +53,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(12);
     expect(s.units.find(u=>u.id==='dujian')).toMatchObject({x:28,y:20,facing:2});
     const field=b.board.distanceField([s.units.find(u=>u.id==='dujian')!]);const used=new Set<string>();
-    for(const u of s.units.filter(u=>!u.id.startsWith('boss-cav-'))){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);expect(used.has(`${u.x},${u.y}`),u.id).toBe(false);used.add(`${u.x},${u.y}`);}
+    for(const u of s.units.filter(u=>!u.id.startsWith('boss-'))){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);expect(used.has(`${u.x},${u.y}`),u.id).toBe(false);used.add(`${u.x},${u.y}`);}
   });
-  it('其余23人开场隐藏，四批援军每批都有接应对白，未到回合不提前登场', () => {
-    const {s,b,get}=open('bailongmiao');const expected:Record<number,string[]>={2:['ruanxiaoer','ruanxiaowu','ruanxiaoqi','baisheng','duqian','songwan'],3:['yanshun','huangxin','wangying','zhugui','zhengtianshou','shiyong'],4:['zhangshun','zhangheng','lijun','lili','muhong','muchun','tongwei','tongmeng','xueyong'],5:['lufang','guosheng']};
+  it('其余34人开场隐藏，四批援军每批都有接应对白，未到回合不提前登场', () => {
+    const {s,b,get}=open('bailongmiao');const expected:Record<number,string[]>={2:['ruanxiaoer','ruanxiaowu','ruanxiaoqi','baisheng','duqian','songwan'],3:['yanshun','huangxin','wangying','zhugui','zhengtianshou','shiyong'],4:['gongsunsheng','zhangshun','zhangheng','lijun','lili','muhong','muchun','tongwei','tongmeng','xueyong'],5:['lufang','guosheng','zhuwu','chenda','yangchun','shijin','luzhishen','wulong','wusong','linchong','yangzhi','qinming']};
     for(const id of Object.values(expected).flat())expect(get(id).present,id).toBe(false);
     for(let turn=2;turn<=5;turn++) {
       const block=s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===turn)!;
@@ -92,24 +92,24 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     expect(threat).toBeGreaterThan(-1);expect(String(ops[threat][2])).toContain('一律格杀');expect(response).toBeGreaterThan(threat);expect(stand).toBeGreaterThan(response);
     expect(String(ops[stand][2])).toContain('二十回合');expect(String(ops[stand][2])).toContain('打倒那都监');
   });
-  it('都监体力始终为普通模板四倍，每回合2名亲随骑兵在身边出现并主动进攻', () => {
+  it('都监体力始终为普通模板四倍，每回合两骑兵两官吏一都头在身边出现并主动进攻', () => {
     const {s,b,get}=open('bailongmiao'),boss=get('dujian');
     const normal=computeStats(b.data.classes[boss.classId],boss.level,boss.slots,b.data,false,boss.forge,[],boss.side);
     expect(boss.hp).toBe(normal.maxHp*4);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
     refreshStats(boss,b.data);refreshStats(boss,b.data);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
     const rewind=open('bailongmiao');(rewind.b as unknown as {startTurn:(n:number)=>void}).startTurn(2);rewind.get('dujian').hp=1;rewind.b.rewind();refreshStats(rewind.get('dujian'),rewind.b.data);expect(rewind.get('dujian').stats.maxHp).toBe(normal.maxHp*4);expect(rewind.get('dujian').hp).toBe(normal.maxHp*4);
-    const cavalry=s.units.filter(u=>u.id.startsWith('boss-cav-'));expect(cavalry).toHaveLength(40);
+    const cavalry=s.units.filter(u=>u.id.startsWith('boss-'));expect(cavalry).toHaveLength(100);
     for(let turn=1;turn<=20;turn++) {
       if(turn>1)trigger(b,turn-1);
-      const pair=cavalry.filter(u=>u.id.startsWith(`boss-cav-${turn}-`));expect(pair).toHaveLength(2);
+      const pair=cavalry.filter(u=>u.id.startsWith(`boss-cav-${turn}-`)||u.id.startsWith(`boss-support-${turn}-`));expect(pair).toHaveLength(5);expect(pair.map(u=>u.class).sort()).toEqual([36,36,38,43,43]);
       for(const u of pair){const actual=get(u.id);expect(actual.present&&actual.alive,u.id).toBe(true);expect(actual.ai.mode).toBe(0);expect(Math.abs(actual.x-boss.x)+Math.abs(actual.y-boss.y),u.id).toBeLessThanOrEqual(12);}
       const live=b.active();expect(new Set(live.map(u=>`${u.x},${u.y}`)).size).toBe(live.length);
       expect(b.active().filter(u=>u.name==='都监亲随马军')).toHaveLength(turn*2);
     }
   });
-  it('222名敌人、52名开场敌军，19波每波6人以2×3从下方右方交替进入，守满20回合判胜', () => {
+  it('282名敌人、55名开场敌军，19波每波6人以2×3从下方右方交替进入，守满20回合判胜', () => {
     const {s,b}=open('bailongmiao'),enemies=s.units.filter(u=>u.side==='enemy');
-    expect(enemies).toHaveLength(222);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(52);
+    expect(enemies).toHaveLength(282);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(55);
     const additions=enemies.filter(u=>u.id.startsWith('dense-')||/^r\d+_[45]$/.test(u.id));expect(additions).toHaveLength(56);
     const field=b.board.distanceField([s.units.find(u=>u.id==='songjiang')!]);
     for(const u of [...additions,...enemies.filter(u=>/^r2_[123]$/.test(u.id))]) {
@@ -119,7 +119,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     for(let turn=2;turn<=20;turn++) {
       const wave=enemies.filter(u=>u.id.startsWith(`r${turn}_`));expect(wave,`turn${turn}`).toHaveLength(6);
       const block=s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===turn)!;
-      const arrivals=block.do.filter(op=>op[0]==='appear').map(op=>s.units.find(u=>u.id===op[1])!).filter(u=>u.side==='enemy'&&!u.id.startsWith('boss-cav-'));
+      const arrivals=block.do.filter(op=>op[0]==='appear').map(op=>s.units.find(u=>u.id===op[1])!).filter(u=>u.side==='enemy'&&!u.id.startsWith('boss-'));
       const spike=arrivals.filter(u=>u.id.startsWith('spike'));
       expect(spike).toHaveLength([3,7,11].includes(turn)?6:0);
       expect(arrivals).toHaveLength([3,7,11].includes(turn)?12:6);
@@ -136,4 +136,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     expect(b.status).toBe('playing');expect(b.turnLimit).toBe(20);
     (b as unknown as {startTurn:(n:number)=>void}).startTurn(21);expect(b.status).toBe('won');
   });
+});
+
+
+it('白龙庙扩展聚义共41人，武龙武松不同角色，武松秦明沿用主线技能', () => {
+  const rt=loadPackFromDisk('jiangzhou'),s=rt.stages.find(s=>s.id==='bailongmiao')!;
+  expect(s.units.filter(u=>u.side!=='enemy')).toHaveLength(41);
+  expect(s.units.find(u=>u.id==='wulong')!.class).toBe(0);expect(s.units.find(u=>u.id==='wusong')!.class).toBe('wusong');
+  for(const id of ['wusong','qinming']) {
+    const original=JSON.parse(fs.readFileSync('packs/mainline/pack.json','utf8')).classes.find((c:{id:string})=>c.id===id);
+    const copied=JSON.parse(fs.readFileSync('packs/jiangzhou/pack.json','utf8')).classes.find((c:{id:string})=>c.id===id);
+    expect(copied).toEqual(original);
+  }
+  expect(s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===6)!.do.some(o=>o[0]==='say'&&String(o[2]).includes('四十一个'))).toBe(true);
 });

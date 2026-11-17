@@ -2927,6 +2927,847 @@
    "hidden": true,
    "ai": 0,
    "facing": 2
+  },
+  {
+   "id": "boss-support-1-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-1-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-1-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-2-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-2-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-2-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-3-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-3-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-3-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-4-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-4-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-4-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-5-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-5-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-5-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-6-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-6-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-6-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-7-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-7-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-7-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-8-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-8-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-8-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-9-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-9-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-9-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-10-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-10-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-10-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-11-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-11-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-11-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-12-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-12-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-12-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-13-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-13-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-13-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-14-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-14-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-14-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-15-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-15-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-15-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-16-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-16-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-16-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-17-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-17-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-17-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-18-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-18-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-18-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-19-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-19-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-19-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "boss-support-20-1",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 19,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-20-2",
+   "class": 36,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随官吏"
+  },
+  {
+   "id": "boss-support-20-3",
+   "class": 38,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "facing": 2,
+   "level": 28,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随都头"
+  },
+  {
+   "id": "gongsunsheng",
+   "class": 2,
+   "name": "入云龙公孙胜",
+   "side": "player",
+   "x": 28,
+   "y": 45,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "zhuwu",
+   "class": 5,
+   "name": "神机军师朱武",
+   "side": "player",
+   "x": 38,
+   "y": 39,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "chenda",
+   "class": 13,
+   "name": "跳涧虎陈达",
+   "side": "player",
+   "x": 43,
+   "y": 40,
+   "facing": 2,
+   "level": 27,
+   "hidden": true
+  },
+  {
+   "id": "yangchun",
+   "class": 15,
+   "name": "锦花蛇杨春",
+   "side": "player",
+   "x": 42,
+   "y": 41,
+   "facing": 2,
+   "level": 27,
+   "hidden": true
+  },
+  {
+   "id": "shijin",
+   "class": 3,
+   "name": "九纹龙史进",
+   "side": "player",
+   "x": 40,
+   "y": 36,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "luzhishen",
+   "class": 16,
+   "name": "花和尚鲁智深",
+   "side": "player",
+   "x": 37,
+   "y": 39,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "wulong",
+   "class": 0,
+   "name": "武龙",
+   "side": "player",
+   "x": 44,
+   "y": 40,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "name": "行者武松",
+   "side": "player",
+   "x": 37,
+   "y": 41,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "name": "豹子头林冲",
+   "side": "player",
+   "x": 43,
+   "y": 41,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "yangzhi",
+   "class": 14,
+   "name": "青面兽杨志",
+   "side": "player",
+   "x": 40,
+   "y": 35,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "name": "霹雳火秦明",
+   "side": "player",
+   "x": 39,
+   "y": 36,
+   "facing": 2,
+   "level": 28,
+   "hidden": true
   }
  ],
  "script": [
@@ -2939,7 +3780,7 @@
     ],
     [
      "objective",
-     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、吴用、戴宗等七人开场守在左侧白龙庙旁，其余好汉第2–5回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名进攻骑兵。"
+     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、吴用、戴宗等七人开场守在左侧白龙庙旁，其余好汉第2–5回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名骑兵、2名官吏、1名都头主动进攻。"
     ],
     [
      "turnLimit",
@@ -3041,6 +3882,18 @@
      "boss-cav-1-2"
     ],
     [
+     "appear",
+     "boss-support-1-1"
+    ],
+    [
+     "appear",
+     "boss-support-1-2"
+    ],
+    [
+     "appear",
+     "boss-support-1-3"
+    ],
+    [
      "focus",
      "songjiang"
     ]
@@ -3132,6 +3985,18 @@
     [
      "appear",
      "boss-cav-2-2"
+    ],
+    [
+     "appear",
+     "boss-support-2-1"
+    ],
+    [
+     "appear",
+     "boss-support-2-2"
+    ],
+    [
+     "appear",
+     "boss-support-2-3"
     ]
    ]
   },
@@ -3228,6 +4093,18 @@
      "boss-cav-3-2"
     ],
     [
+     "appear",
+     "boss-support-3-1"
+    ],
+    [
+     "appear",
+     "boss-support-3-2"
+    ],
+    [
+     "appear",
+     "boss-support-3-3"
+    ],
+    [
      "narrate",
      "右方又涌来一队官军，都头、官吏带着马步军一齐压上！"
     ],
@@ -3303,6 +4180,19 @@
      "xueyong"
     ],
     [
+     "narrate",
+     "公孙胜循着庙前喊杀声赶到，仗剑来接应众人。"
+    ],
+    [
+     "appear",
+     "gongsunsheng"
+    ],
+    [
+     "say",
+     "gongsunsheng",
+     "贫道公孙胜来也！军师，公明哥哥，且合兵守住庙前，待众兄弟赶齐！"
+    ],
+    [
      "focus",
      "zhangshun"
     ],
@@ -3360,6 +4250,18 @@
     [
      "appear",
      "boss-cav-4-2"
+    ],
+    [
+     "appear",
+     "boss-support-4-1"
+    ],
+    [
+     "appear",
+     "boss-support-4-2"
+    ],
+    [
+     "appear",
+     "boss-support-4-3"
     ]
    ]
   },
@@ -3379,6 +4281,70 @@
     [
      "appear",
      "guosheng"
+    ],
+    [
+     "narrate",
+     "少华山朱武、陈达、杨春会同史进、鲁智深、武龙、武松、林冲、杨志、秦明，沿右下通路杀到白龙庙外。"
+    ],
+    [
+     "appear",
+     "zhuwu"
+    ],
+    [
+     "appear",
+     "chenda"
+    ],
+    [
+     "appear",
+     "yangchun"
+    ],
+    [
+     "appear",
+     "shijin"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wulong"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "appear",
+     "qinming"
+    ],
+    [
+     "say",
+     "zhuwu",
+     "少华山兄弟与各位好汉来迟了！官军虽众，诸位且守住阵脚，我等从侧面接应。"
+    ],
+    [
+     "say",
+     "linchong",
+     "林冲与鲁提辖、杨制使都在这里！众兄弟并力向前，先解庙前之围！"
+    ],
+    [
+     "say",
+     "wulong",
+     "武龙、武松也赶到了！公明哥哥休慌，咱们同进同退！"
+    ],
+    [
+     "say",
+     "qinming",
+     "秦明在此！待俺们杀开这条通路，与众兄弟会合！"
     ],
     [
      "focus",
@@ -3438,6 +4404,18 @@
     [
      "appear",
      "boss-cav-5-2"
+    ],
+    [
+     "appear",
+     "boss-support-5-1"
+    ],
+    [
+     "appear",
+     "boss-support-5-2"
+    ],
+    [
+     "appear",
+     "boss-support-5-3"
     ]
    ]
   },
@@ -3453,7 +4431,7 @@
     [
      "say",
      "songjiang",
-     "今日二十九个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
+     "今日四十一个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
     ],
     [
      "narrate",
@@ -3494,6 +4472,18 @@
     [
      "appear",
      "boss-cav-6-2"
+    ],
+    [
+     "appear",
+     "boss-support-6-1"
+    ],
+    [
+     "appear",
+     "boss-support-6-2"
+    ],
+    [
+     "appear",
+     "boss-support-6-3"
     ]
    ]
   },
@@ -3541,6 +4531,18 @@
     [
      "appear",
      "boss-cav-7-2"
+    ],
+    [
+     "appear",
+     "boss-support-7-1"
+    ],
+    [
+     "appear",
+     "boss-support-7-2"
+    ],
+    [
+     "appear",
+     "boss-support-7-3"
     ],
     [
      "narrate",
@@ -3616,6 +4618,18 @@
     [
      "appear",
      "boss-cav-8-2"
+    ],
+    [
+     "appear",
+     "boss-support-8-1"
+    ],
+    [
+     "appear",
+     "boss-support-8-2"
+    ],
+    [
+     "appear",
+     "boss-support-8-3"
     ]
    ]
   },
@@ -3663,6 +4677,18 @@
     [
      "appear",
      "boss-cav-9-2"
+    ],
+    [
+     "appear",
+     "boss-support-9-1"
+    ],
+    [
+     "appear",
+     "boss-support-9-2"
+    ],
+    [
+     "appear",
+     "boss-support-9-3"
     ]
    ]
   },
@@ -3710,6 +4736,18 @@
     [
      "appear",
      "boss-cav-10-2"
+    ],
+    [
+     "appear",
+     "boss-support-10-1"
+    ],
+    [
+     "appear",
+     "boss-support-10-2"
+    ],
+    [
+     "appear",
+     "boss-support-10-3"
     ]
    ]
   },
@@ -3757,6 +4795,18 @@
     [
      "appear",
      "boss-cav-11-2"
+    ],
+    [
+     "appear",
+     "boss-support-11-1"
+    ],
+    [
+     "appear",
+     "boss-support-11-2"
+    ],
+    [
+     "appear",
+     "boss-support-11-3"
     ],
     [
      "narrate",
@@ -3832,6 +4882,18 @@
     [
      "appear",
      "boss-cav-12-2"
+    ],
+    [
+     "appear",
+     "boss-support-12-1"
+    ],
+    [
+     "appear",
+     "boss-support-12-2"
+    ],
+    [
+     "appear",
+     "boss-support-12-3"
     ]
    ]
   },
@@ -3879,6 +4941,18 @@
     [
      "appear",
      "boss-cav-13-2"
+    ],
+    [
+     "appear",
+     "boss-support-13-1"
+    ],
+    [
+     "appear",
+     "boss-support-13-2"
+    ],
+    [
+     "appear",
+     "boss-support-13-3"
     ]
    ]
   },
@@ -3926,6 +5000,18 @@
     [
      "appear",
      "boss-cav-14-2"
+    ],
+    [
+     "appear",
+     "boss-support-14-1"
+    ],
+    [
+     "appear",
+     "boss-support-14-2"
+    ],
+    [
+     "appear",
+     "boss-support-14-3"
     ]
    ]
   },
@@ -3973,6 +5059,18 @@
     [
      "appear",
      "boss-cav-15-2"
+    ],
+    [
+     "appear",
+     "boss-support-15-1"
+    ],
+    [
+     "appear",
+     "boss-support-15-2"
+    ],
+    [
+     "appear",
+     "boss-support-15-3"
     ]
    ]
   },
@@ -4020,6 +5118,18 @@
     [
      "appear",
      "boss-cav-16-2"
+    ],
+    [
+     "appear",
+     "boss-support-16-1"
+    ],
+    [
+     "appear",
+     "boss-support-16-2"
+    ],
+    [
+     "appear",
+     "boss-support-16-3"
     ]
    ]
   },
@@ -4067,6 +5177,18 @@
     [
      "appear",
      "boss-cav-17-2"
+    ],
+    [
+     "appear",
+     "boss-support-17-1"
+    ],
+    [
+     "appear",
+     "boss-support-17-2"
+    ],
+    [
+     "appear",
+     "boss-support-17-3"
     ]
    ]
   },
@@ -4114,6 +5236,18 @@
     [
      "appear",
      "boss-cav-18-2"
+    ],
+    [
+     "appear",
+     "boss-support-18-1"
+    ],
+    [
+     "appear",
+     "boss-support-18-2"
+    ],
+    [
+     "appear",
+     "boss-support-18-3"
     ]
    ]
   },
@@ -4161,6 +5295,18 @@
     [
      "appear",
      "boss-cav-19-2"
+    ],
+    [
+     "appear",
+     "boss-support-19-1"
+    ],
+    [
+     "appear",
+     "boss-support-19-2"
+    ],
+    [
+     "appear",
+     "boss-support-19-3"
     ]
    ]
   },
@@ -4208,6 +5354,18 @@
     [
      "appear",
      "boss-cav-20-2"
+    ],
+    [
+     "appear",
+     "boss-support-20-1"
+    ],
+    [
+     "appear",
+     "boss-support-20-2"
+    ],
+    [
+     "appear",
+     "boss-support-20-3"
     ]
    ]
   },

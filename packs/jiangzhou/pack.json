@@ -1809,6 +1809,446 @@
    "face": {
     "file": "faces/wangying.png"
    }
+  },
+  {
+   "id": "wusong",
+   "name": "武松",
+   "base": {
+    "hp": 130,
+    "mp": 90,
+    "attack": 78,
+    "defense": 30,
+    "hit": 85,
+    "agility": 40,
+    "crit": 18
+   },
+   "move": 5,
+   "weaponType": 0,
+   "items": [
+    1,
+    84,
+    0,
+    157,
+    157
+   ],
+   "skills": [
+    {
+     "id": "quan",
+     "name": "伏虎拳",
+     "from": 201,
+     "anim": "punch-two",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.275,
+      0.775
+     ],
+     "power": 0,
+     "mpCost": 0,
+     "learnLevel": 1,
+     "type": 5,
+     "area": 1,
+     "rangeMin": 1,
+     "rangeMax": 1
+    },
+    {
+     "id": "hengjiang-lv1",
+     "name": "横江断浪LV1",
+     "from": 210,
+     "anim": "punch-wave",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.275,
+      0.775
+     ],
+     "power": 20,
+     "mpCost": 50,
+     "learnLevel": 4,
+     "type": 1,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 3,
+     "hitMod": 0,
+     "critMod": 0,
+     "effect": 0,
+     "hitFx": "impact"
+    },
+    {
+     "id": "antou",
+     "name": "擒虎镇岳",
+     "from": 154,
+     "anim": "punch-three",
+     "poison": 0,
+     "stun": 30,
+     "hitAt": [
+      0.183333,
+      0.516667,
+      0.85
+     ],
+     "power": 60,
+     "mpCost": 60,
+     "learnLevel": 8,
+     "area": 1,
+     "effect": 0
+    },
+    {
+     "id": "yunqi",
+     "name": "抱元归息",
+     "from": 206,
+     "anim": "crouch-idle",
+     "poison": 0,
+     "stun": 0,
+     "power": 2,
+     "mpCost": 0,
+     "learnLevel": 12
+    },
+    {
+     "id": "hengjiang-lv2",
+     "name": "横江断浪LV2",
+     "from": 210,
+     "anim": "punch-wave",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.275,
+      0.775
+     ],
+     "power": 20,
+     "mpCost": 65,
+     "learnLevel": 16,
+     "type": 1,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 4,
+     "hitMod": 0,
+     "critMod": 0,
+     "effect": 0,
+     "hitFx": "impact"
+    },
+    {
+     "id": "yuanyang-jiao",
+     "name": "玉环鸳鸯脚",
+     "from": 210,
+     "anim": "kick-four",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.1375,
+      0.3875,
+      0.6375,
+      0.8875
+     ],
+     "power": 40,
+     "mpCost": 40,
+     "learnLevel": 20,
+     "type": 3,
+     "rangeMin": 1,
+     "rangeMax": 4,
+     "area": 2,
+     "targetShape": "diamond",
+     "hitFx": "blood",
+     "effect": 0
+    },
+    {
+     "id": "hengjiang-lv3",
+     "name": "横江断浪LV3",
+     "from": 210,
+     "anim": "punch-wave",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.275,
+      0.775
+     ],
+     "power": 20,
+     "mpCost": 80,
+     "learnLevel": 24,
+     "type": 1,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 5,
+     "hitMod": 0,
+     "critMod": 0,
+     "effect": 0,
+     "hitFx": "impact"
+    },
+    {
+     "id": "hengjiang-lv4",
+     "name": "横江断浪LV4",
+     "from": 210,
+     "anim": "punch-wave",
+     "poison": 0,
+     "stun": 0,
+     "hitAt": [
+      0.275,
+      0.775
+     ],
+     "power": 20,
+     "mpCost": 95,
+     "learnLevel": 28,
+     "type": 1,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "area": 6,
+     "hitMod": 0,
+     "critMod": 0,
+     "effect": 0,
+     "hitFx": "impact"
+    }
+   ],
+   "sprite": {
+    "sheet": "sprites/wusong",
+    "idle": "idle",
+    "walk": "walk",
+    "hurt": "hit-chest",
+    "defend": "crouch-idle"
+   },
+   "face": {
+    "file": "faces/wusong.png"
+   }
+  },
+  {
+   "id": "qinming",
+   "name": "秦明",
+   "base": {
+    "hp": 110,
+    "mp": 90,
+    "attack": 70,
+    "defense": 28,
+    "hit": 85,
+    "agility": 28,
+    "crit": 15
+   },
+   "move": 6,
+   "weaponType": 1,
+   "items": [
+    0,
+    84,
+    113
+   ],
+   "skills": [
+    {
+     "id": "qm-bang",
+     "name": "狼牙棒",
+     "from": 221,
+     "anim": 0,
+     "learnLevel": 1,
+     "hits": [
+      {
+       "frame": 11,
+       "percent": 30,
+       "dir": 0
+      },
+      {
+       "frame": 14,
+       "percent": 30,
+       "dir": 0
+      },
+      {
+       "frame": 17,
+       "percent": 40,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-dangtou",
+     "name": "当头一棒",
+     "from": 123,
+     "anim": 0,
+     "learnLevel": 3,
+     "power": 50,
+     "mpCost": 25,
+     "stun": 30,
+     "hitMod": 0,
+     "critMod": 0,
+     "castCycles": 4,
+     "hits": [
+      {
+       "frame": 11,
+       "percent": 25,
+       "dir": 0
+      },
+      {
+       "frame": 33,
+       "percent": 25,
+       "dir": 0
+      },
+      {
+       "frame": 55,
+       "percent": 25,
+       "dir": 0
+      },
+      {
+       "frame": 77,
+       "percent": 25,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-pili-1",
+     "name": "霹雳火LV1",
+     "from": 226,
+     "anim": 1,
+     "learnLevel": 6,
+     "type": 17,
+     "area": 2,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "power": 20,
+     "mpCost": 30,
+     "effect": 42,
+     "hits": [
+      {
+       "frame": 12,
+       "percent": 50,
+       "dir": 0
+      },
+      {
+       "frame": 17,
+       "percent": 50,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-nuhuo",
+     "name": "怒火攻心",
+     "from": 227,
+     "anim": 3,
+     "learnLevel": 10
+    },
+    {
+     "id": "qm-hengsao",
+     "name": "横扫千军",
+     "from": 226,
+     "anim": 2,
+     "learnLevel": 14,
+     "type": 12,
+     "area": 2,
+     "rangeMin": 0,
+     "rangeMax": 0,
+     "power": 30,
+     "mpCost": 45,
+     "hits": [
+      {
+       "frame": 11,
+       "percent": 50,
+       "dir": 0
+      },
+      {
+       "frame": 16,
+       "percent": 50,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-pili-2",
+     "name": "霹雳火LV2",
+     "from": 226,
+     "anim": 1,
+     "learnLevel": 18,
+     "type": 17,
+     "area": 3,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "power": 35,
+     "mpCost": 50,
+     "effect": 42,
+     "hits": [
+      {
+       "frame": 12,
+       "percent": 50,
+       "dir": 0
+      },
+      {
+       "frame": 17,
+       "percent": 50,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-pili-3",
+     "name": "霹雳火LV3",
+     "from": 226,
+     "anim": 1,
+     "learnLevel": 25,
+     "type": 17,
+     "area": 4,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "power": 50,
+     "mpCost": 75,
+     "effect": 42,
+     "hits": [
+      {
+       "frame": 12,
+       "percent": 50,
+       "dir": 0
+      },
+      {
+       "frame": 17,
+       "percent": 50,
+       "dir": 0
+      }
+     ]
+    },
+    {
+     "id": "qm-pili-4",
+     "name": "霹雳火LV4",
+     "from": 226,
+     "anim": 1,
+     "learnLevel": 32,
+     "type": 17,
+     "area": 5,
+     "rangeMin": 1,
+     "rangeMax": 1,
+     "power": 65,
+     "mpCost": 105,
+     "effect": 42,
+     "hits": [
+      {
+       "frame": 12,
+       "percent": 50,
+       "dir": 0
+      },
+      {
+       "frame": 17,
+       "percent": 50,
+       "dir": 0
+      }
+     ]
+    }
+   ],
+   "sprite": {
+    "fromClass": 42,
+    "recolor": [
+     {
+      "src": [
+       [
+        224,
+        239
+       ],
+       [
+        160,
+        175
+       ]
+      ],
+      "dst": [
+       32,
+       47
+      ],
+      "k": 0.8
+     }
+    ]
+   },
+   "face": {
+    "file": "faces/qinming.png"
+   }
   }
  ],
  "stages": [
