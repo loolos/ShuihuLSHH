@@ -324,6 +324,7 @@ export class BattleScene extends Phaser.Scene {
    * 我方好汉再加一条经验（蓝，满了就升级）。
    */
   private drawBar(u: Unit) {
+    if (this.battle.spectators.has(u.uid)) { this.sprites.get(u.uid)?.bar.clear(); return; }
     const s = this.sprites.get(u.uid);
     if (!s) return;
     const v = this.vs(u);

@@ -3233,6 +3233,7 @@
 ],
   "stages": [
     "stages/wawasi.json",
+    "stages/daming-duel.json",
     "stages/chifagui.json",
     "stages/sanruan.json",
     "stages/zhizhulin.json",
