@@ -32,17 +32,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     const skills=rt.data.classes[rt.classIds.get('wangying')!].skills.filter(s=>s.name.startsWith('三岔毒龙枪'));
     expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
   });
-  it('白龙庙吴用随宋江等七人守庙，第5回合18人可控', () => {
+  it('白龙庙吴用随宋江等七人守庙，第5回合15人可控', () => {
     const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(7);
     expect(get('wuyong')).toMatchObject({side:'player',present:true,classId:10,x:24,y:41});expect(b.canAct(get('wuyong'))).toBe(true);
     for(const id of ['zhangshun','zhangheng','lijun'])expect(get(id).present).toBe(false);
     for(let n=2;n<=4;n++)(b as unknown as {startTurn:(n:number)=>void}).startTurn(n);
-    expect(b.active().filter(u=>u.side==='player')).toHaveLength(16);
-    (b as unknown as {startTurn:(n:number)=>void}).startTurn(5);expect(b.active().filter(u=>u.side==='player')).toHaveLength(18);
-    for(const id of ['yanshun','zhangshun','lijun']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);expect(b.canAct(get(id)),id).toBe(false);expect(b.autoActUnits()).not.toContain(get(id));}
-    expect(get('zhangheng').side).toBe('player');expect(b.canAct(get('zhangheng'))).toBe(true);
+    expect(b.active().filter(u=>u.side==='player')).toHaveLength(15);
+    (b as unknown as {startTurn:(n:number)=>void}).startTurn(5);expect(b.active().filter(u=>u.side==='player')).toHaveLength(15);
+    for(const id of ['yanshun','zhangshun','lijun','lufang','guosheng','zhangheng']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);expect(b.canAct(get(id)),id).toBe(false);expect(b.autoActUnits()).not.toContain(get(id));}
     (b as unknown as {startPhase:(side:'ally')=>void}).startPhase('ally');
-    for(const id of ['yanshun','zhangshun','lijun'])expect(b.canAct(get(id)),id).toBe(true);
+    for(const id of ['yanshun','zhangshun','lijun','lufang','guosheng','zhangheng'])expect(b.canAct(get(id)),id).toBe(true);
     for(const id of ['lili','muhong','muchun','tongwei','tongmeng','xueyong']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);}
   });
   it('左侧白龙庙为自拼地图，七名守庙者在院前，敌军仍集中中部，所有落点连通', () => {

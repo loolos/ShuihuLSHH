@@ -640,12 +640,12 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     expect(c.b.status).toBe('lost');
   });
 
-  it('白龙庙：第 4 回合水军九人坐船赶到，张横可控、张顺李俊为友军；打倒兵马都监过关', () => {
+  it('白龙庙：第 4 回合水军九人坐船赶到，九人均为友军；打倒兵马都监过关', () => {
     const { b, said, log, by } = open('bailongmiao');
     const boats = ['浪里白条张顺', '船火儿张横', '混江龙李俊', '催命判官李立', '没遮拦穆弘', '小遮拦穆春', '出洞蛟童威', '翻江蜃童猛', '病大虫薛永'];
     expect(boats.every((n) => !by(n).present)).toBe(true);
     advance(b, 4, log);
-    for (const [i,n] of boats.entries()) expect(by(n).present && by(n).side, n).toBe(i===1?'player':'ally');
+    for (const n of boats) expect(by(n).present && by(n).side, n).toBe('ally');
     expect(said.some((t) => t.includes('三只大船'))).toBe(true);
     kill(b, by('晁盖'), by('江州兵马都监'));
     expect(b.status).toBe('won');
