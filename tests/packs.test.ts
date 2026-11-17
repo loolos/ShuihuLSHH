@@ -4,6 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { announcesSkill, areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { planAi } from '../src/rules/ai.ts';
+import { rangedFactor } from '../src/rules/combat.ts';
 import { Board } from '../src/rules/board.ts';
 import { fxSpots, skillFx } from '../src/game/effects.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
@@ -57,13 +58,20 @@ describe.skipIf(!has)('黄信镇三山与寒锋五叠',()=>{
 });
 
 
-describe.skipIf(!has)('花荣专属远程衰减', () => {
-  it.each(['mainline', 'jiangzhou'])('%s仅花荣拥有100%到60%的距离伤害系数', (pack) => {
+describe.skipIf(!has)('花荣与白胜监守自盗远程衰减', () => {
+  it.each(['mainline', 'jiangzhou'])('%s花荣与白胜监守自盗使用100%到60%，其他远程不变', (pack) => {
     const rt = loadPackFromDisk(pack);
     const id = rt.classIds.get('huarong')!;
     expect(rt.data.classes[id].skills[0].rangedDamage).toEqual([1, 0.6]);
+    expect(rt.data.classes.filter(c=>c.id<18).flatMap(c=>c.skills).filter(s=>[48,49,50].includes(s.skillId))).toHaveLength(3);
     for (const c of rt.data.classes) for (const skill of c.skills) {
-      if (c.id !== id) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
+      if(c.id<18&&[48,49,50].includes(skill.skillId)){
+        expect(skill.rangedDamage).toEqual([1,0.6]);
+        const actor={x:0,y:0,stats:{rangeBonus:0}} as Unit;
+        expect(rangedFactor(actor,{x:0,y:1} as Unit,skill)).toBeCloseTo(1);
+        expect(rangedFactor(actor,{x:0,y:skill.rangeMax} as Unit,skill)).toBeCloseTo(0.6);
+        actor.stats.rangeBonus=2;expect(rangedFactor(actor,{x:0,y:skill.rangeMax+2} as Unit,skill)).toBeCloseTo(0.6);
+      }else if (c.id !== id) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
     }
   });
 });

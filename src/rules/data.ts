@@ -99,7 +99,7 @@ export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
  * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
  * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
  */
-type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area'>>;
+type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area' | 'rangedDamage'>>;
 export const SKILL_OVERRIDES: Record<number, SkillOverride> = {
   33: { power: 25, critMod: 15 }, // 原版 10 / 10
   34: { power: 45, critMod: 20 }, // 原版 30 / 15
@@ -138,10 +138,10 @@ export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
   26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
   27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
-  // 白勝 監守自盜LV1–3：原版威力 15、命中 −5/−10/−15（换算后 10/5/1，加上远程衰减只有普攻一半）
-  48: { mpCost: 5, power: 40, hitMod: 0 },
-  49: { mpCost: 5, power: 50, hitMod: 0 },
-  50: { mpCost: 5, power: 60, hitMod: 0 },
+  // 白勝 監守自盜LV1–3：仅此三阶沿用花荣100%→60%的距离缩放；已有耗气、威力、命中不变。
+  48: { mpCost: 5, power: 40, hitMod: 0, rangedDamage: [1, 0.6] },
+  49: { mpCost: 5, power: 50, hitMod: 0, rangedDamage: [1, 0.6] },
+  50: { mpCost: 5, power: 60, hitMod: 0, rangedDamage: [1, 0.6] },
   47: { mpCost: 15 }, // 白勝 窮鼠噬貓 50 → 15（原版已是三段 20/20/60%）
   // 陳達 黑虎偷心：威力 +20（原版 30、命中 −10 → 实际 20 → 40），耗气 20 不变；
   // 两段：跃起挥枪（第 12 帧）40% + 落地突刺（第 23 帧，原版命中帧）60%
