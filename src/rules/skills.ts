@@ -124,11 +124,14 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
     case 13:
       for (let j = -1; j <= 1; j++) add(at.x + dir.y * j, at.y + dir.x * j);
       break;
-    case 14:
-      // 前方长方形：从施放者身前一格起往前 size 行，每行宽 3 格
-      for (let i = 1; i <= size; i++)
-        for (let j = -1; j <= 1; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
+    case 14: {
+      // 默认从身前一格开始；指定target时，选中格是第一排中心，向前延伸。
+      const origin = s.areaOrigin === 'target' ? at : from;
+      const first = s.areaOrigin === 'target' ? 0 : 1;
+      for (let i = first; i < first + size; i++)
+        for (let j = -1; j <= 1; j++) add(origin.x + dir.x * i + dir.y * j, origin.y + dir.y * i + dir.x * j);
       break;
+    }
     case 17:
       // 倒锥形：从身前第一排起，半宽为 size - depth，逐排收窄到一点。
       for (let i = 1; i <= size; i++)

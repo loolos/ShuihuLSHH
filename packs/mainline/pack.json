@@ -3070,19 +3070,148 @@
         "id": "hx-jian",
         "name": "丧门剑",
         "from": 221,
-        "anim": 0
+        "anim": 0,
+        "learnLevel": 1
       },
       {
         "id": "hx-xuan",
-        "name": "镇三山",
-        "from": 225,
-        "anim": 1
+        "name": "镇三山LV1",
+        "from": 28,
+        "anim": 1,
+        "learnLevel": 4,
+        "type": 14,
+        "areaOrigin": "target",
+        "area": 1,
+        "rangeMin": 1,
+        "rangeMax": 3,
+        "power": 20,
+        "mpCost": 35,
+        "hitMod": 0,
+        "critMod": 0,
+        "poison": 0,
+        "stun": 0,
+        "effect": 15,
+        "effect2": 0,
+        "effect3": 0,
+        "hits": [
+          {
+            "frame": 14,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "hx-xuan-2",
+        "name": "镇三山LV2",
+        "from": 28,
+        "anim": 1,
+        "learnLevel": 16,
+        "type": 14,
+        "areaOrigin": "target",
+        "area": 2,
+        "rangeMin": 1,
+        "rangeMax": 4,
+        "power": 35,
+        "mpCost": 50,
+        "hitMod": 0,
+        "critMod": 0,
+        "poison": 0,
+        "stun": 0,
+        "effect": 15,
+        "effect2": 0,
+        "effect3": 0,
+        "hits": [
+          {
+            "frame": 14,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "hx-xuan-3",
+        "name": "镇三山LV3",
+        "from": 28,
+        "anim": 1,
+        "learnLevel": 20,
+        "type": 14,
+        "areaOrigin": "target",
+        "area": 3,
+        "rangeMin": 1,
+        "rangeMax": 5,
+        "power": 50,
+        "mpCost": 65,
+        "hitMod": 0,
+        "critMod": 0,
+        "poison": 0,
+        "stun": 0,
+        "effect": 15,
+        "effect2": 0,
+        "effect3": 0,
+        "hits": [
+          {
+            "frame": 14,
+            "percent": 100,
+            "dir": 0
+          }
+        ]
+      },
+      {
+        "id": "hx-five",
+        "name": "寒锋五叠",
+        "from": 224,
+        "anim": 0,
+        "learnLevel": 8,
+        "type": 7,
+        "area": 1,
+        "rangeMin": 1,
+        "rangeMax": 1,
+        "power": 50,
+        "hitMod": 20,
+        "critMod": 0,
+        "poison": 0,
+        "stun": 0,
+        "mpCost": 45,
+        "effect": 0,
+        "effect2": 0,
+        "effect3": 0,
+        "castCycles": 5,
+        "castSpeed": 4,
+        "hits": [
+          {
+            "frame": 11,
+            "percent": 20,
+            "dir": 0
+          },
+          {
+            "frame": 40,
+            "percent": 20,
+            "dir": 0
+          },
+          {
+            "frame": 69,
+            "percent": 20,
+            "dir": 0
+          },
+          {
+            "frame": 98,
+            "percent": 20,
+            "dir": 0
+          },
+          {
+            "frame": 127,
+            "percent": 20,
+            "dir": 0
+          }
+        ]
       },
       {
         "id": "hx-qi",
         "name": "聚气",
         "from": 227,
-        "anim": 2
+        "anim": 2,
+        "learnLevel": 12
       }
     ],
     "sprite": {

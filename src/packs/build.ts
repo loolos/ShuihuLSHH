@@ -251,6 +251,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     chargeTarget: s.chargeTarget,
     rangedDamage: s.rangedDamage,
     castCycles: s.castCycles,
+    areaOrigin: s.areaOrigin,
     castSpeed: s.castSpeed,
     hitFx: s.hitFx,
     arrowFx: s.arrowFx,
@@ -267,6 +268,8 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     critMod: s.critMod ?? t.critMod,
     type: s.type ?? t.type,
     effect: s.effect ?? t.effect,
+    effect2: s.effect2 ?? t.effect2,
+    effect3: s.effect3 ?? t.effect3,
     hits: s.hits ?? hits,
   };
 }

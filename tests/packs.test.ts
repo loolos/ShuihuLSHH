@@ -2,13 +2,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { announcesSkill, areaCells } from '../src/rules/skills.ts';
+import { announcesSkill, areaCells, learnedSkills } from '../src/rules/skills.ts';
 import { planAi } from '../src/rules/ai.ts';
+import { Board } from '../src/rules/board.ts';
+import { fxSpots, skillFx } from '../src/game/effects.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
-import { attackSkill, type Unit } from '../src/rules/unit.ts';
+import { DIRS, attackSkill, type Unit } from '../src/rules/unit.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
 import { buy, pawn, stock } from '../src/rules/town.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro } from '../src/packs/towns.ts';
@@ -20,6 +22,40 @@ import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
+describe.skipIf(!has)('黄信镇三山与寒锋五叠',()=>{
+  it.each(['mainline','jiangzhou'])('%s三级范围按选点起算，射程与落剑特效正确',pack=>{
+    const rt=loadPackFromDisk(pack),cls=rt.data.classes[rt.classIds.get('huangxin')!],board=new Board(30,30),from={x:15,y:15};
+    const aoe=cls.skills.filter(s=>s.name.startsWith('镇三山'));
+    expect(aoe).toHaveLength(3);
+    for(const [i,s]of aoe.entries()){
+      expect([s.rangeMin,s.rangeMax,s.area,s.mpCost,s.learnLevel]).toEqual([1,i+3,i+1,[35,50,65][i],[4,16,20][i]]);
+      expect(s.areaOrigin).toBe('target');expect(skillFx(s)).toMatchObject({first:14,then:null,onTarget:null});
+      for(const dir of DIRS){
+        const at={x:from.x+dir.x*3,y:from.y+dir.y*3},cells=areaCells(board,from,s,at);
+        expect(cells).toHaveLength(3*(i+1));
+        expect(cells).toContainEqual(at);expect(cells).not.toContainEqual(from);
+        for(const c of cells){const dx=c.x-at.x,dy=c.y-at.y;expect(dx*dir.x+dy*dir.y).toBeGreaterThanOrEqual(0);expect(dx*dir.x+dy*dir.y).toBeLessThan(i+1);expect(Math.abs(dx*dir.y+dy*dir.x)).toBeLessThanOrEqual(1);}
+        expect(fxSpots(s,from,at,cells).map(x=>x.ring).sort()).toEqual(Array.from({length:i+1},(_,depth)=>[depth,depth,depth]).flat());
+      }
+    }
+    for(const [level,rank] of [[3,0],[4,1],[15,1],[16,2],[20,3]]){const learned=learnedSkills({classId:cls.id,level} as Unit,rt.data).filter(s=>s.name.startsWith('镇三山'));expect(learned.map(s=>s.name)).toEqual(rank?[`镇三山LV${rank}`]:[]);}
+    const five=cls.skills.find(s=>s.name==='寒锋五叠')!;
+    expect([five.power,five.hitMod,five.mpCost,five.rangeMax,five.area,five.castCycles,five.castSpeed]).toEqual([50,20,45,1,1,5,4]);
+    expect(five.hits.map(h=>h.frame)).toEqual([11,40,69,98,127]);expect(five.hits.map(h=>h.percent)).toEqual([20,20,20,20,20]);
+    expect(cls.skills.map(s=>[s.name,s.learnLevel])).toContainEqual(['聚气',12]);
+    const s=aoe[2],edge=areaCells(board,{x:0,y:3},s,{x:0,y:0});expect(edge).toHaveLength(2);expect(edge.every(c=>board.inBounds(c.x,c.y))).toBe(true);
+    // 默认的前方矩形不受新选点模式影响。
+    expect(areaCells(board,from,{...aoe[0],areaOrigin:undefined},{x:15,y:12})).toContainEqual({x:15,y:14});
+  });
+  it('寒锋五叠实际只打一个目标，扣一次耗气，五段合计为总伤害',()=>{
+    const rt=loadPackFromDisk('mainline'),stage=rt.stages.find(s=>s.id==='liufeng')!,b=new Battle(compileStage(rt,stage,new NodeFiles(DATA),{seed:7}));b.begin();
+    const u=b.units.find(u=>u.classId===rt.classIds.get('huangxin'))!,target=b.active().find(u=>u.side==='enemy')!,s=rt.data.classes[u.classId].skills.find(s=>s.name==='寒锋五叠')!;
+    u.x=7;u.y=10;target.x=7;target.y=9;u.stats.hit=10000;const mp=u.mp;
+    const attack=b.useSkill(u,s,target).find(e=>e.type==='attack');expect(attack?.type).toBe('attack');
+    if(attack?.type!=='attack')throw Error('技能未施放');expect(attack.hits).toHaveLength(1);const r=attack.hits[0].result;expect(r.parts).toHaveLength(5);expect(r.parts.reduce((a,b)=>a+b,0)).toBe(r.damage);expect(u.mp).toBe(mp-45);
+  });
+});
+
 
 describe.skipIf(!has)('花荣专属远程衰减', () => {
   it.each(['mainline', 'jiangzhou'])('%s仅花荣拥有100%到60%的距离伤害系数', (pack) => {

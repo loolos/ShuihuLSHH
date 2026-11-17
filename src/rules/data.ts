@@ -16,6 +16,8 @@ export interface SkillDef extends ClassSkill {
   rangedDamage?: [number, number];
   /** 一次施放连续重复出手动作的次数；默认1，命中帧按完整动作周期配置。 */
   castCycles?: number;
+  /** 长方形范围以选中格为第一排中心；不填仍从施放者身前开始。 */
+  areaOrigin?: 'target';
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；只是画面 */
