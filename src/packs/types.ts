@@ -118,7 +118,7 @@ export interface PackSkillJson {
   poison?: number;
   hitMod?: number;
   critMod?: number;
-  /** 范围类型：14 = 前方长方形；15 = 正前、前两格及左右前方，共四格【新】。 */
+  /** 范围类型：14 = 前方长方形；15 = 正前、前两格及左右前方，共四格；16 = 正前及左右斜前各 area 格的三条射线【新】。 */
   type?: number;
   /** 特效：Effect.lib 组号 + 1 */
   effect?: number;
