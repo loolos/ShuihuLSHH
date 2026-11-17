@@ -2,6 +2,7 @@
   "id": "liufeng",
   "title": "解甲留锋",
   "dynamicLevels": true,
+  "townAfter": 11,
   "rewards": {
     "gold": 0
   },
@@ -341,6 +342,54 @@
       "hidden": true,
       "name": "青州追兵",
       "facing": 2
+    },
+    {
+      "id": "w3-13",
+      "class": 33,
+      "side": "enemy",
+      "x": 12,
+      "y": 0,
+      "level": 29,
+      "levelOffset": -3,
+      "facing": 2,
+      "hidden": true,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w2-8",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 0,
+      "level": 29,
+      "levelOffset": -3,
+      "facing": 2,
+      "hidden": true,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-14",
+      "class": 33,
+      "side": "enemy",
+      "x": 11,
+      "y": 0,
+      "level": 29,
+      "levelOffset": -3,
+      "facing": 2,
+      "hidden": true,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-11",
+      "class": 43,
+      "side": "enemy",
+      "x": 14,
+      "y": 1,
+      "level": 29,
+      "levelOffset": -3,
+      "facing": 2,
+      "hidden": true,
+      "name": "青州马军"
     }
   ],
   "script": [
@@ -494,6 +543,10 @@
           "w2-7"
         ],
         [
+          "appear",
+          "w2-8"
+        ],
+        [
           "say",
           "w2-1",
           "花荣、秦明、黄信！你三个原是朝廷命官，如今劫掠百姓，强抢民女，又害了刘知寨性命！还敢称甚么好汉？快下马受缚！"
@@ -585,6 +638,18 @@
         [
           "appear",
           "w3-10"
+        ],
+        [
+          "appear",
+          "w3-11"
+        ],
+        [
+          "appear",
+          "w3-13"
+        ],
+        [
+          "appear",
+          "w3-14"
         ],
         [
           "say",

@@ -1463,6 +1463,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   it('解甲留锋串接在射戟与家书之间，三将断后、1/3/5回合分波且全敌败退才胜', () => {
     const s=stage('liufeng'),b=new Battle(compileStage(rt,s,files,{seed:1}));
     expect(s.map).toEqual({base:'N03',crop:[10,14,16,20]});
+    expect([...new Set(s.units.filter(u=>u.side==='enemy').map(u=>u.class))].sort()).toEqual([32,33,34,38,43]);
     expect([b.board.width,b.board.height]).toEqual([16,20]);
     const seen=new Set<string>(),field=b.board.distanceField([{x:7,y:10}]);
     for(const u of s.units){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(seen.has(`${u.x},${u.y}`),u.id).toBe(false);seen.add(`${u.x},${u.y}`);expect(Number.isFinite(field[u.y*16+u.x]),u.id).toBe(true);}
@@ -1474,9 +1475,9 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const trigger=(turn:number)=>{b.turn=turn;(b as unknown as {runTurnTriggers:(n:number)=>void}).runTurnTriggers(turn-1);};
     const enemies=()=>b.active().filter(u=>u.side==='enemy');
     expect(enemies()).toHaveLength(6);enemies().forEach(kill);check();expect(b.status).toBe('playing');
-    trigger(2);expect(enemies()).toHaveLength(0);trigger(3);expect(enemies()).toHaveLength(7);
+    trigger(2);expect(enemies()).toHaveLength(0);trigger(3);expect(enemies()).toHaveLength(8);
     enemies().forEach(kill);check();expect(b.status).toBe('playing');trigger(4);expect(enemies()).toHaveLength(0);
-    trigger(5);expect(enemies()).toHaveLength(10);trigger(6);trigger(7);enemies().forEach(kill);check();expect(b.status).toBe('won');
+    trigger(5);expect(enemies()).toHaveLength(13);trigger(6);trigger(7);enemies().forEach(kill);check();expect(b.status).toBe('won');
     const text=s.script.flatMap(x=>x.do).filter(op=>op[0]==='say').map(op=>String(op[2])).join('');
     for(const phrase of ['高俅','城下之盟','压寨夫人','强抢民女','杀人放火','刘知寨'])expect(text).toContain(phrase);
     expect(text).not.toContain('【改写】');
@@ -1695,6 +1696,22 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       expect(next.companions!['mainline/likui']).toBeUndefined(); // hidden, never arrived
       expect(next.members.find(m=>m.classId===0)!.slots[0]).toBe(0);
     }
+  });
+  it('解甲留锋后接村镇整备再进家书，三将可购物且资产读档不重置',()=>{
+    expect(stage('liufeng').townAfter).toBe(11);
+    const next='mainline/shiyong';expect(insertTownName(next)).toBe('村镇整备');
+    expect(insertTownIntro(next).map(l=>l.actor)).toEqual(['huarong','huangxin','qinming']);
+    const c:CampaignState={version:1,stage:75,gold:12345,members:[{classId:0,level:29,exp:17,slots:[2,84,113,0,0,0,0],forge:[2,3,0,0,0,0,0]}],companions:{'mainline/qinming':{level:27,exp:23,slots:[1,84,113,0,0,0,0],forge:[3,2,0,0,0,0,0]}},insertTown:{pack:'mainline',next,town:11,seen:true}};
+    const view=prepareInsertTown(c,rt,next);
+    expect(view.active).toEqual([0,...['sj-fugitive','huarong','huangxin','qinming','likui','wangying'].map(cid)]);
+    expect(view.gold).toBe(c.gold);expect(view.members.find(m=>m.classId===0)).toMatchObject(c.members[0]);
+    const medicine=stock(rt.data,3,11)[0],result=buy(view,rt.data,cid('qinming'),medicine);
+    expect(result.ok).toBe(true);
+    const saved=JSON.parse(JSON.stringify(saveTownParty(result.c,rt))) as CampaignState;
+    const reopened=prepareInsertTown(saved,rt,next),qm=reopened.members.find(m=>m.classId===cid('qinming'))!;
+    expect(qm.slots).toContain(medicine);expect(qm.forge.slice(0,2)).toEqual([3,2]);expect([qm.level,qm.exp]).toEqual([27,23]);
+    expect(reopened.gold).toBe(c.gold-rt.data.items[medicine-1].buyPrice);expect(reopened.active).toEqual(view.active);expect(saved.insertTown).toEqual(c.insertTown);
+    for(const member of result.c.members)expect(reopened.members.find(m=>m.classId===member.classId)).toMatchObject(member);
   });
   it('飞云浦后接孟州整备再进鸳鸯楼，全部十名好汉可购物且读档不重置资产', () => {
     const sequence = insertPlaces().map(p => p.ref);

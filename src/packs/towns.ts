@@ -4,12 +4,15 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-export const insertTownName = (next: string): string => next === 'mainline/yuanyanglou' ? '孟州整备' : '阳谷整备';
+export const insertTownName = (next: string): string => next === 'mainline/shiyong' ? '村镇整备' : next === 'mainline/yuanyanglou' ? '孟州整备' : '阳谷整备';
 
-/** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。只初始化缺失人物，不覆盖已有资产。 */
+/** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
 export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: string): CampaignState {
   const mengzhou = next === 'mainline/yuanyanglou';
-  const ids = mengzhou
+  const roadside = next === 'mainline/shiyong';
+  const ids = roadside
+    ? [0, ...['sj-fugitive','huarong','huangxin','qinming','likui','wangying'].map(id => rt.classIds.get(id)!)]
+    : mengzhou
     ? rt.stages.find(s => `${rt.id}/${s.id}` === next)!.units.filter(u => u.side === 'player').map(u => typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!)
     : [rt.classIds.get('sj-fugitive')!, rt.classIds.get('wusong')!, 0];
   const active = [...new Set(ids)];
@@ -18,13 +21,18 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
   for (const classId of active) if (!view.members.some(m => m.classId === classId)) {
     const cls = rt.data.classes[classId];
     const slots = [...cls.defaultItems];
-    if (mengzhou) levelKit(rt.data, cls, level, slots);
+    if (mengzhou || roadside) levelKit(rt.data, cls, level, slots);
     view.members.push({ classId, level, exp: 0, slots, forge: [] });
   }
   return { ...view, active };
 }
 
 export function insertTownIntro(next: string): { actor: string; text: string }[] {
+  if (next === 'mainline/shiyong') return [
+    { actor: 'huarong', text: '前面便是村镇。两位且补些衣药，整顿兵刃，再同大队上路。' },
+    { actor: 'huangxin', text: '也罢。眼前所需，先置办齐了。' },
+    { actor: 'qinming', text: '买齐便走，休在此处耽搁。' },
+  ];
   return next === 'mainline/yuanyanglou' ? [
     { actor: 'sj-fugitive', text: '前面便是孟州城。诸位先到街边补齐药品，整顿兵器，再去寻那三个主谋。' },
     { actor: 'wusong', text: '好！买齐所需，便去鸳鸯楼问个明白，休叫那伙贼人又害旁人！' },
