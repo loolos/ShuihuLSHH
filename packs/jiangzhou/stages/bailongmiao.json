@@ -2,7 +2,7 @@
  "id": "bailongmiao",
  "title": "白龙庙聚义",
  "map": {
-  "base": "N13"
+  "custom": "bailongmiao"
  },
  "bgm": [
   "escape",
@@ -14,8 +14,8 @@
    "id": "likui",
    "class": "likui",
    "side": "player",
-   "x": 28,
-   "y": 43,
+   "x": 26,
+   "y": 41,
    "facing": 2,
    "level": 28
   },
@@ -23,8 +23,8 @@
    "id": "songjiang",
    "class": "songjiang",
    "side": "player",
-   "x": 44,
-   "y": 31,
+   "x": 23,
+   "y": 41,
    "facing": 2,
    "level": 26
   },
@@ -32,8 +32,8 @@
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 44,
-   "y": 30,
+   "x": 24,
+   "y": 42,
    "facing": 2,
    "level": 27
   },
@@ -41,8 +41,8 @@
    "id": "chaogai",
    "class": 12,
    "side": "player",
-   "x": 28,
-   "y": 42,
+   "x": 25,
+   "y": 43,
    "facing": 2,
    "level": 30,
    "name": "晁盖"
@@ -51,8 +51,8 @@
    "id": "liutang",
    "class": 17,
    "side": "player",
-   "x": 27,
-   "y": 43,
+   "x": 26,
+   "y": 44,
    "facing": 2,
    "level": 28,
    "name": "刘唐"
@@ -61,68 +61,74 @@
    "id": "ruanxiaoer",
    "class": 7,
    "side": "player",
-   "x": 29,
-   "y": 43,
+   "x": 30,
+   "y": 44,
    "facing": 2,
    "level": 27,
-   "name": "阮小二"
+   "name": "阮小二",
+   "hidden": true
   },
   {
    "id": "ruanxiaowu",
    "class": 8,
    "side": "player",
-   "x": 28,
-   "y": 44,
+   "x": 30,
+   "y": 43,
    "facing": 2,
    "level": 27,
-   "name": "阮小五"
+   "name": "阮小五",
+   "hidden": true
   },
   {
    "id": "ruanxiaoqi",
    "class": 9,
    "side": "player",
-   "x": 28,
-   "y": 41,
+   "x": 29,
+   "y": 44,
    "facing": 2,
    "level": 27,
-   "name": "阮小七"
+   "name": "阮小七",
+   "hidden": true
   },
   {
    "id": "baisheng",
    "class": 4,
    "side": "player",
-   "x": 27,
-   "y": 42,
+   "x": 31,
+   "y": 44,
    "facing": 2,
    "level": 26,
-   "name": "白胜"
+   "name": "白胜",
+   "hidden": true
   },
   {
    "id": "duqian",
    "class": 69,
    "side": "player",
-   "x": 29,
-   "y": 42,
+   "x": 30,
+   "y": 45,
    "facing": 2,
    "level": 26,
-   "name": "摸着天杜迁"
+   "name": "摸着天杜迁",
+   "hidden": true
   },
   {
    "id": "songwan",
    "class": 70,
    "side": "player",
    "x": 30,
-   "y": 43,
+   "y": 42,
    "facing": 2,
    "level": 26,
-   "name": "云里金刚宋万"
+   "name": "云里金刚宋万",
+   "hidden": true
   },
   {
    "id": "huarong",
    "class": "huarong",
    "side": "player",
-   "x": 43,
-   "y": 31,
+   "x": 23,
+   "y": 43,
    "facing": 2,
    "level": 27,
    "name": "小李广花荣"
@@ -131,88 +137,96 @@
    "id": "huangxin",
    "class": "huangxin",
    "side": "player",
-   "x": 45,
-   "y": 31,
+   "x": 43,
+   "y": 33,
    "facing": 2,
    "level": 27,
-   "name": "镇三山黄信"
+   "name": "镇三山黄信",
+   "hidden": true
   },
   {
    "id": "lufang",
    "class": "lvfang",
    "side": "player",
    "x": 44,
-   "y": 32,
+   "y": 38,
    "facing": 2,
    "level": 26,
-   "name": "小温侯吕方"
+   "name": "小温侯吕方",
+   "hidden": true
   },
   {
    "id": "guosheng",
    "class": "guosheng",
    "side": "player",
    "x": 44,
-   "y": 29,
+   "y": 37,
    "facing": 2,
    "level": 26,
-   "name": "赛仁贵郭盛"
+   "name": "赛仁贵郭盛",
+   "hidden": true
   },
   {
    "id": "yanshun",
    "class": "yanshun",
    "side": "player",
-   "x": 27,
-   "y": 44,
+   "x": 43,
+   "y": 34,
    "facing": 2,
    "level": 27,
-   "name": "锦毛虎燕顺"
+   "name": "锦毛虎燕顺",
+   "hidden": true
   },
   {
    "id": "zhugui",
    "class": 65,
    "side": "ally",
-   "x": 43,
-   "y": 30,
+   "x": 44,
+   "y": 34,
    "facing": 2,
    "level": 26,
-   "name": "旱地忽律朱贵"
+   "name": "旱地忽律朱贵",
+   "hidden": true
   },
   {
    "id": "wangying",
    "class": "wangying",
    "side": "player",
-   "x": 45,
-   "y": 30,
+   "x": 42,
+   "y": 34,
    "facing": 2,
    "level": 26,
-   "name": "矮脚虎王英"
+   "name": "矮脚虎王英",
+   "hidden": true
   },
   {
    "id": "zhengtianshou",
    "class": 67,
    "side": "ally",
-   "x": 42,
-   "y": 31,
+   "x": 43,
+   "y": 35,
    "facing": 2,
    "level": 26,
-   "name": "白面郎君郑天寿"
+   "name": "白面郎君郑天寿",
+   "hidden": true
   },
   {
    "id": "shiyong",
    "class": 66,
    "side": "ally",
-   "x": 46,
-   "y": 31,
+   "x": 43,
+   "y": 32,
    "facing": 2,
    "level": 26,
-   "name": "石将军石勇"
+   "name": "石将军石勇",
+   "hidden": true
   },
   {
    "id": "zhangshun",
    "class": "zhangshun",
    "side": "player",
-   "x": 29,
-   "y": 46,
+   "x": 31,
+   "y": 47,
    "facing": 1,
    "level": 27,
    "hidden": true,
@@ -222,8 +236,8 @@
    "id": "zhangheng",
    "class": "zhangheng",
    "side": "player",
-   "x": 29,
-   "y": 45,
+   "x": 31,
+   "y": 46,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -233,8 +247,8 @@
    "id": "lijun",
    "class": "lijun",
    "side": "player",
-   "x": 28,
-   "y": 46,
+   "x": 30,
+   "y": 47,
    "facing": 1,
    "level": 27,
    "hidden": true,
@@ -244,8 +258,8 @@
    "id": "lili",
    "class": 45,
    "side": "ally",
-   "x": 30,
-   "y": 46,
+   "x": 31,
+   "y": 48,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -255,8 +269,8 @@
    "id": "muhong",
    "class": 38,
    "side": "ally",
-   "x": 29,
-   "y": 47,
+   "x": 31,
+   "y": 45,
    "facing": 1,
    "level": 27,
    "hidden": true,
@@ -266,8 +280,8 @@
    "id": "muchun",
    "class": 39,
    "side": "ally",
-   "x": 45,
-   "y": 34,
+   "x": 30,
+   "y": 46,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -277,8 +291,8 @@
    "id": "tongwei",
    "class": 21,
    "side": "ally",
-   "x": 45,
-   "y": 33,
+   "x": 32,
+   "y": 46,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -288,8 +302,8 @@
    "id": "tongmeng",
    "class": 21,
    "side": "ally",
-   "x": 44,
-   "y": 34,
+   "x": 29,
+   "y": 47,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -299,8 +313,8 @@
    "id": "xueyong",
    "class": 39,
    "side": "ally",
-   "x": 46,
-   "y": 34,
+   "x": 30,
+   "y": 48,
    "facing": 1,
    "level": 26,
    "hidden": true,
@@ -2328,30 +2342,53 @@
    "on": "start",
    "do": [
     [
+     "title",
+     "江州江岸 · 白龙神庙"
+    ],
+    [
      "objective",
-     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n我方左下、右下两翼集结；敌军第2回合起从下方、右方交替增援，持续至第20回合。\n都监体力为普通模板4倍；其身边每回合另增援2名主动进攻的骑兵。"
+     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、戴宗等六人开场守在左侧白龙庙旁，其余好汉第2–5回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名进攻骑兵。"
     ],
     [
      "turnLimit",
      20
     ],
     [
-     "narrate",
-     "众好汉跟着李逵，一路杀到江边。前面大江拦截，没了去路，众人奔进一座庙里——却是白龙神庙。"
+     "focus",
+     21,
+     39
     ],
     [
      "narrate",
-     "众好汉分作两拨，在左下、右下两侧集结，相互照应。江州兵马都监已在中部通路布下重兵，须合力突破。"
+     "众好汉劫了法场，一路杀到江边。只见左侧芦苇外有一座白龙神庙，香炉石碑犹在，庙前石阶可供暂歇。"
     ],
     [
-     "say",
-     "chaogai",
-     "前面都是大江，又无船只，城里官军早晚追来，如何是好？"
+     "focus",
+     "songjiang"
+    ],
+    [
+     "narrate",
+     "宋江、戴宗惊魂未定，李逵、晁盖、花荣、刘唐先护着二人退到庙旁。其余兄弟各自断后，还未赶齐。"
     ],
     [
      "say",
      "songjiang",
-     "若不是众位兄弟，宋江、戴宗今日必死。只是连累了众位！"
+     "若不是众位兄弟，宋江、戴宗今日必死。只是前面是江，后面又有追兵，却往哪里去？"
+    ],
+    [
+     "say",
+     "daizong",
+     "哥哥且在庙旁少歇。梁山兄弟和清风山的好汉都在后面，想必就到。"
+    ],
+    [
+     "say",
+     "chaogai",
+     "花荣兄弟守住庙前，李逵、刘唐挡住来路！等弟兄们会合，再寻船只过江。"
+    ],
+    [
+     "say",
+     "huarong",
+     "哥哥放心，花荣在此接应！"
     ],
     [
      "say",
@@ -2359,13 +2396,17 @@
      "怕什么！官兵来一个，俺砍一个！"
     ],
     [
+     "focus",
+     "dujian"
+    ],
+    [
      "narrate",
-     "只听得城里鼓响，江州官军约有五七千人马，摇旗呐喊，杀奔江边来。"
+     "江州兵马都监在中部通路列开军阵，见众人退入白龙庙，便叫骑兵包抄。"
     ],
     [
      "say",
      "dujian",
-     "反贼都在白龙庙里，一个也休放走！"
+     "反贼都在那庙里！封住去路，一个也休放走！"
     ],
     [
      "appear",
@@ -2374,6 +2415,10 @@
     [
      "appear",
      "boss-cav-1-2"
+    ],
+    [
+     "focus",
+     "songjiang"
     ]
    ]
   },
@@ -2382,6 +2427,48 @@
     "turn": 2
    },
    "do": [
+    [
+     "narrate",
+     "左下芦苇边一声呼哨，阮氏三雄、白胜、杜迁、宋万摆脱追兵，奔着白龙庙赶来。"
+    ],
+    [
+     "appear",
+     "ruanxiaoer"
+    ],
+    [
+     "appear",
+     "ruanxiaowu"
+    ],
+    [
+     "appear",
+     "ruanxiaoqi"
+    ],
+    [
+     "appear",
+     "baisheng"
+    ],
+    [
+     "appear",
+     "duqian"
+    ],
+    [
+     "appear",
+     "songwan"
+    ],
+    [
+     "focus",
+     "ruanxiaoer"
+    ],
+    [
+     "say",
+     "ruanxiaoer",
+     "晁盖哥哥！宋公明哥哥！俺们断后回来，听见庙前厮杀，特来接应！"
+    ],
+    [
+     "say",
+     "chaogai",
+     "来得正好！宋江、戴宗在庙旁，兄弟们合兵守住通路。"
+    ],
     [
      "narrate",
      "下方通路又有一队官军杀到！"
@@ -2421,6 +2508,53 @@
     "turn": 3
    },
    "do": [
+    [
+     "narrate",
+     "右下通路尘头起处，清风山一伙好汉杀开官军，赶到庙外。"
+    ],
+    [
+     "appear",
+     "yanshun"
+    ],
+    [
+     "appear",
+     "huangxin"
+    ],
+    [
+     "appear",
+     "wangying"
+    ],
+    [
+     "appear",
+     "zhugui"
+    ],
+    [
+     "appear",
+     "zhengtianshou"
+    ],
+    [
+     "appear",
+     "shiyong"
+    ],
+    [
+     "focus",
+     "yanshun"
+    ],
+    [
+     "say",
+     "yanshun",
+     "清风山兄弟都到了！公明哥哥休慌，我们来接应！"
+    ],
+    [
+     "say",
+     "wangying",
+     "官兵休想围住哥哥！兄弟们，一齐向庙前杀！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "又劳动众位兄弟舍命，宋江深感厚义！"
+    ],
     [
      "narrate",
      "右方通路又有一队官军杀到！"
@@ -2486,7 +2620,7 @@
    "do": [
     [
      "narrate",
-     "只见江面上三只大船，飞也似摇将来，船上都是好汉，各执兵器。"
+     "只见江面上三只大船，飞也似摇将来。船上的九位好汉各执兵器，奔白龙庙来。"
     ],
     [
      "appear",
@@ -2525,14 +2659,23 @@
      "xueyong"
     ],
     [
+     "focus",
+     "zhangshun"
+    ],
+    [
      "say",
      "zhangshun",
-     "宋公明哥哥休慌，张顺来也！"
+     "宋公明哥哥休慌，张顺来也！船只已到，弟兄们快往庙边会合！"
     ],
     [
      "say",
      "lijun",
      "我们弟兄在揭阳得了消息，本要来劫法场，特来接应！"
+    ],
+    [
+     "say",
+     "daizong",
+     "江上有了船，众兄弟齐心杀退追兵，便可从庙后脱身！"
     ],
     [
      "narrate",
@@ -2573,6 +2716,37 @@
     "turn": 5
    },
    "do": [
+    [
+     "narrate",
+     "右下路口又冲来两员使戟好汉，正是吕方、郭盛，挥戟截住了追来的骑兵。"
+    ],
+    [
+     "appear",
+     "lufang"
+    ],
+    [
+     "appear",
+     "guosheng"
+    ],
+    [
+     "focus",
+     "lufang"
+    ],
+    [
+     "say",
+     "lufang",
+     "吕方、郭盛在此！方才在后路与官军缠住，今日须护哥哥周全！"
+    ],
+    [
+     "say",
+     "guosheng",
+     "兄弟们只管往庙前会齐，背后有我两个！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "众位兄弟到齐了！宋江、戴宗蒙此大恩，容后重谢，先同心退敌！"
+    ],
     [
      "narrate",
      "右方通路又有一队官军杀到！"

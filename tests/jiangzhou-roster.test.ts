@@ -32,23 +32,35 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     const skills=rt.data.classes[rt.classIds.get('wangying')!].skills.filter(s=>s.name.startsWith('三岔毒龙枪'));
     expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
   });
-  it('白龙庙开场17人可控，第4回合水军三人可控，另六人仍为友军', () => {
-    const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(17);
+  it('白龙庙六人守庙，其他好汉分批来援，第5回合20人可控', () => {
+    const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(6);
     for(const id of ['zhangshun','zhangheng','lijun'])expect(get(id).present).toBe(false);
     for(let n=1;n<=3;n++)trigger(b,n);
-    expect(b.active().filter(u=>u.side==='player')).toHaveLength(20);
+    expect(b.active().filter(u=>u.side==='player')).toHaveLength(18);
+    trigger(b,4);expect(b.active().filter(u=>u.side==='player')).toHaveLength(20);
     for(const id of ['zhangshun','zhangheng','lijun']){expect(get(id).side).toBe('player');expect(get(id).present).toBe(true);}
     for(const id of ['lili','muhong','muchun','tongwei','tongmeng','xueyong']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);}
   });
-  it('开场好汉在画面左下与右下两拨各10人，50名敌军及都监集中地图中部', () => {
+  it('左侧白龙庙为自拼地图，六名守庙者在院前，敌军仍集中中部，所有落点连通', () => {
     const {s,b}=open('bailongmiao'),friends=s.units.filter(u=>u.side!=='enemy'&&!u.hidden);
-    expect(friends.filter(u=>u.y-u.x>=10&&u.x+u.y>=64)).toHaveLength(10);
-    expect(friends.filter(u=>u.x-u.y>=10&&u.x+u.y>=68)).toHaveLength(10);
+    expect(s.map).toEqual({custom:'bailongmiao'});
+    expect(friends.map(u=>u.id).sort()).toEqual(['songjiang','daizong','likui','chaogai','huarong','liutang'].sort());
+    for(const u of friends){expect(u.y-u.x,u.id).toBeGreaterThanOrEqual(14);expect(Math.abs(u.x-24)+Math.abs(u.y-42),u.id).toBeLessThanOrEqual(5);}
     const foes=s.units.filter(u=>u.side==='enemy'&&!u.hidden);
     expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(10);
     expect(s.units.find(u=>u.id==='dujian')).toMatchObject({x:28,y:28});
     const field=b.board.distanceField([s.units.find(u=>u.id==='dujian')!]);const used=new Set<string>();
     for(const u of s.units.filter(u=>!u.id.startsWith('boss-cav-'))){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);expect(used.has(`${u.x},${u.y}`),u.id).toBe(false);used.add(`${u.x},${u.y}`);}
+  });
+  it('其余23人开场隐藏，四批援军每批都有接应对白，未到回合不提前登场', () => {
+    const {s,b,get}=open('bailongmiao');const expected:Record<number,string[]>={2:['ruanxiaoer','ruanxiaowu','ruanxiaoqi','baisheng','duqian','songwan'],3:['yanshun','huangxin','wangying','zhugui','zhengtianshou','shiyong'],4:['zhangshun','zhangheng','lijun','lili','muhong','muchun','tongwei','tongmeng','xueyong'],5:['lufang','guosheng']};
+    for(const id of Object.values(expected).flat())expect(get(id).present,id).toBe(false);
+    for(let turn=2;turn<=5;turn++) {
+      const block=s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===turn)!;
+      expect(block.do.filter(op=>op[0]==='say')).not.toHaveLength(0);
+      trigger(b,turn-1);for(const id of expected[turn])expect(get(id).present,id).toBe(true);
+      for(const [later,ids]of Object.entries(expected))if(Number(later)>turn)for(const id of ids)expect(get(id).present,id).toBe(false);
+    }
   });
   it('都监体力始终为普通模板四倍，每回合2名亲随骑兵在身边出现并主动进攻', () => {
     const {s,b,get}=open('bailongmiao'),boss=get('dujian');
