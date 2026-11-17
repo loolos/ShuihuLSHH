@@ -118,8 +118,8 @@
       "id": "hx-1",
       "class": 32,
       "side": "enemy",
-      "x": 12,
-      "y": 13,
+      "x": 10,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -128,8 +128,8 @@
       "id": "hx-2",
       "class": 33,
       "side": "enemy",
-      "x": 5,
-      "y": 13,
+      "x": 11,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -138,8 +138,8 @@
       "id": "hx-3",
       "class": 32,
       "side": "enemy",
-      "x": 18,
-      "y": 13,
+      "x": 12,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -148,8 +148,8 @@
       "id": "hx-4",
       "class": 33,
       "side": "enemy",
-      "x": 9,
-      "y": 15,
+      "x": 13,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -158,8 +158,8 @@
       "id": "hx-5",
       "class": 32,
       "side": "enemy",
-      "x": 15,
-      "y": 15,
+      "x": 14,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -168,8 +168,8 @@
       "id": "hx-6",
       "class": 33,
       "side": "enemy",
-      "x": 7,
-      "y": 12,
+      "x": 9,
+      "y": 18,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -178,8 +178,8 @@
       "id": "hx-7",
       "class": 32,
       "side": "enemy",
-      "x": 16,
-      "y": 12,
+      "x": 10,
+      "y": 18,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
@@ -203,6 +203,94 @@
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵"
+    },
+    {
+      "id": "hx-10",
+      "class": 32,
+      "side": "enemy",
+      "x": 11,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-11",
+      "class": 33,
+      "side": "enemy",
+      "x": 12,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-12",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-13",
+      "class": 33,
+      "side": "enemy",
+      "x": 9,
+      "y": 17,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-14",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 17,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-15",
+      "class": 33,
+      "side": "enemy",
+      "x": 11,
+      "y": 17,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-16",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 17,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
+    },
+    {
+      "id": "hx-17",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 17,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2
     },
     {
       "id": "jd-1",
@@ -412,7 +500,7 @@
         ],
         [
           "narrate",
-          "次日，秦明、宋江引着众好汉，带了清风山喽啰，直到清风寨前。黄信闻知，紧闭寨门，摆开人马迎敌。刘高家里还有一伙家丁，也都拿了刀棒守在后院。"
+          "次日，秦明、宋江引着众好汉，带了清风山喽啰，直到清风寨前。黄信闻知，紧闭寨门，令寨兵在门内密列三排，刀枪交错，堵住进路。刘高家里还有一伙家丁，也都拿了刀棒守在后院。"
         ],
         [
           "say",
@@ -643,6 +731,22 @@
           "leave",
           "hx-9"
         ],
+        ["defect", "hx-10", "ally"],
+        ["leave", "hx-10"],
+        ["defect", "hx-11", "ally"],
+        ["leave", "hx-11"],
+        ["defect", "hx-12", "ally"],
+        ["leave", "hx-12"],
+        ["defect", "hx-13", "ally"],
+        ["leave", "hx-13"],
+        ["defect", "hx-14", "ally"],
+        ["leave", "hx-14"],
+        ["defect", "hx-15", "ally"],
+        ["leave", "hx-15"],
+        ["defect", "hx-16", "ally"],
+        ["leave", "hx-16"],
+        ["defect", "hx-17", "ally"],
+        ["leave", "hx-17"],
         [
           "flag",
           "surrendered"
@@ -739,6 +843,22 @@
           "leave",
           "hx-9"
         ],
+        ["defect", "hx-10", "ally"],
+        ["leave", "hx-10"],
+        ["defect", "hx-11", "ally"],
+        ["leave", "hx-11"],
+        ["defect", "hx-12", "ally"],
+        ["leave", "hx-12"],
+        ["defect", "hx-13", "ally"],
+        ["leave", "hx-13"],
+        ["defect", "hx-14", "ally"],
+        ["leave", "hx-14"],
+        ["defect", "hx-15", "ally"],
+        ["leave", "hx-15"],
+        ["defect", "hx-16", "ally"],
+        ["leave", "hx-16"],
+        ["defect", "hx-17", "ally"],
+        ["leave", "hx-17"],
         [
           "flag",
           "surrendered"
