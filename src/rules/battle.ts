@@ -69,6 +69,7 @@ export type BattleEvent =
   | { type: 'message'; text: string }
   | { type: 'subtitle'; text: string }
   /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
+  | { type: 'shot'; uid: number; x: number; y: number; facing: number; target?: number; text: string }
   | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
   | { type: 'tint'; tint: string }
   | { type: 'focus'; x: number; y: number }
@@ -1540,6 +1541,17 @@ export class Battle {
           if (t) sel.facing = facingTowards(sel, t, sel.facing);
           const action = op.args?.action === 'hurt' || op.args?.action === 'defend' ? op.args.action : 'attack';
           this.emit({ type: 'act', uid: sel.uid, action, facing: sel.facing });
+          break;
+        }
+        // 117 剧情射箭：仅记录演出，不走战斗攻击、耗气或经验结算。
+        case 117: {
+          if (!sel?.present || !sel.alive) break;
+          const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+          if (op.args?.toward !== undefined && (!t?.present || !t.alive)) break;
+          const x = t?.x ?? op.args?.x ?? -1, y = t?.y ?? op.args?.y ?? -1;
+          if (!this.board.inBounds(x, y)) break;
+          sel.facing = facingTowards(sel, { x, y }, sel.facing);
+          this.emit({ type: 'shot', uid: sel.uid, x, y, facing: sel.facing, target: t?.uid, text: op.text ?? '' });
           break;
         }
         // 110 换天色（text = night / dusk / snow，空 = 恢复白天）

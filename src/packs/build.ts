@@ -514,6 +514,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         else ops.push({ op: 108, flag: null, value: Number(a[1]) & 3 });
         break;
       }
+      case 'shoot': {
+        // 剧情射箭，不结算伤害；目标可以是装饰物所在格或人物。
+        select(a[0]);
+        const target = typeof a[1] === 'string';
+        if (!target && (!Number.isInteger(a[1]) || !Number.isInteger(a[2]) || Number(a[1]) < 0 || Number(a[2]) < 0)) fail(`第 ${index} 个区块：shoot 目标坐标必须是非负整数`);
+        ops.push({ op: 117, flag: null, value: 0, text: String(a[target ? 2 : 3] ?? ''), args: target ? { toward: r.unitRef(a[1]).act.group } : { x: Number(a[1]), y: Number(a[2]) } });
+        break;
+      }
       case 'act': {
         // ['act', 谁, 'attack' | 'hurt' | 'defend', 朝向谁（可省）]
         const action = String(a[1] ?? 'attack');
