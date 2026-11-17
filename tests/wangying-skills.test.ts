@@ -26,7 +26,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('王英三岔
   });
   it('6/14/22/30级自动替换旧级，威力和命中、带毒不随级数增加；武器不扩范围', () => {
     expect(skills.map(s=>s.learnLevel)).toEqual([6,14,22,30]);
-    expect(skills.map(s=>s.mpCost)).toEqual([40,50,60,70]);
+    expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
     for (const s of skills) {
       expect(s).toMatchObject({power:20,hitMod:30,poison:20,stun:0,critMod:0});
       expect(castRange({classId:cid,stats:{rangeBonus:10}} as Unit,s,rt.data)).toEqual([1,1]);
@@ -43,8 +43,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('王英三岔
     ]});
     b.begin();const u=b.units[0],s=skills[3],at={x:6,y:5};
     expect(b.affected(u,s,at).map(t=>t.uid)).toEqual([1,2,3]);
-    u.mp=69;expect(b.useSkill(u,s,at)).toEqual([]);expect(u.acted).toBe(false);
-    u.mp=100;const ev=b.useSkill(u,s,at),attack=ev.find(e=>e.type==='attack');
+    u.mp=104;expect(b.useSkill(u,s,at)).toEqual([]);expect(u.acted).toBe(false);
+    u.mp=135;const ev=b.useSkill(u,s,at),attack=ev.find(e=>e.type==='attack');
     expect(attack?.type==='attack'&&attack.hits.map(h=>h.uid)).toEqual([1,2,3]);
     expect(u.mp).toBe(30);
   });
