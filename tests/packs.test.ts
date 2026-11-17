@@ -556,11 +556,13 @@ describe.skipIf(!has)('外传：江州劫法场（§15.9）', () => {
     }
     const cj = rt.classIds.get('caijiu')!;
     expect(rt.looks.get(cj)).toMatchObject({ from: 54, face: 'faces/caijiu.png' });
-    // 友军花荣、黄信换色，不和敌方的弓箭手、都头撞样子；敌方不用都头
+    // 花荣、黄信换色，白龙庙新增的原版都头与黑甲黄信区分；法场仍不用敌方都头
     expect(rt.looks.get(rt.classIds.get('huarong')!)).toMatchObject({ from: 34 });
     expect(rt.looks.get(rt.classIds.get('huarong')!)?.recolor?.length).toBeGreaterThan(0);
     expect(rt.looks.get(rt.classIds.get('huangxin')!)).toMatchObject({ from: 38 });
-    for (const s of rt.stages) expect(s.units.filter((u) => u.side === 'enemy' && (u.class === 34 || u.class === 38)).every((u) => u.class !== 38), s.id).toBe(true);
+    for (const s of rt.stages.filter(s=>s.id!=='bailongmiao')) expect(s.units.filter((u) => u.side === 'enemy' && (u.class === 34 || u.class === 38)).every((u) => u.class !== 38), s.id).toBe(true);
+    expect(rt.stages.find(s=>s.id==='bailongmiao')!.units.some(u=>u.side==='enemy'&&u.class===38)).toBe(true);
+    expect(rt.stages.find(s=>s.id==='bailongmiao')!.units.some(u=>u.side==='enemy'&&u.class===36)).toBe(true);
   });
 
   it('浔阳楼：纯剧情关，题完反诗、黄文炳告发，演完就过关', () => {
