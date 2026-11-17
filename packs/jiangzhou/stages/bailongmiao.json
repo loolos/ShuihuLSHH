@@ -157,7 +157,7 @@
   {
    "id": "lufang",
    "class": "lvfang",
-   "side": "player",
+   "side": "ally",
    "x": 44,
    "y": 38,
    "facing": 2,
@@ -168,7 +168,7 @@
   {
    "id": "guosheng",
    "class": "guosheng",
-   "side": "player",
+   "side": "ally",
    "x": 44,
    "y": 37,
    "facing": 2,
@@ -245,7 +245,7 @@
   {
    "id": "zhangheng",
    "class": "zhangheng",
-   "side": "player",
+   "side": "ally",
    "x": 31,
    "y": 46,
    "facing": 1,
