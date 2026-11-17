@@ -640,7 +640,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['jingyanggang', undefined, true],
       ['tiaolian', undefined, true],
       ['shizilou', undefined, false],
-      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','shiyong'].map(id => [id,undefined,false]),
+      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong'].map(id => [id,undefined,false]),
     ]);
     const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu','xingzhe','kongjiazhuang','xingjiutang','yuanxiao','zhizhan','yeshuo','duiyingshan','shiyong'];
     for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
@@ -653,7 +653,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
     const after = insertPlaces().filter((p) => p.after === 'N14').map((p) => p.ref.slice('mainline/'.length));
-    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','shiyong']);
+    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
       const stage = stageOf(id);
       const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
@@ -1459,6 +1459,58 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       const out = (b as unknown as { out: BattleEvent[] }).out;
       expect(out.some((e) => (e.type === 'say' || e.type === 'narrate') && e.text.includes('斩了'))).toBe(true);
     }
+  });
+  it('解甲留锋串接在射戟与家书之间，三将断后、1/3/5回合分波且全敌败退才胜', () => {
+    const s=stage('liufeng'),b=new Battle(compileStage(rt,s,files,{seed:1}));
+    expect(s.map).toEqual({base:'N03',crop:[10,14,16,20]});
+    expect([b.board.width,b.board.height]).toEqual([16,20]);
+    const seen=new Set<string>(),field=b.board.distanceField([{x:7,y:10}]);
+    for(const u of s.units){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(seen.has(`${u.x},${u.y}`),u.id).toBe(false);seen.add(`${u.x},${u.y}`);expect(Number.isFinite(field[u.y*16+u.x]),u.id).toBe(true);}
+    const ev=b.begin(),get=(id:string)=>b.units[s.units.findIndex(u=>u.id===id)];
+    expect(b.active().filter(u=>u.side==='player').map(u=>u.classId).sort()).toEqual(['huarong','huangxin','qinming'].map(cid).sort());
+    for(const id of ['songjiang','hero']){expect(get(id).present).toBe(false);const move=ev.findIndex(e=>e.type==='move'&&e.uid===get(id).uid),leave=ev.findIndex(e=>e.type==='leave'&&e.uid===get(id).uid);expect(move).toBeGreaterThan(-1);expect(leave).toBeGreaterThan(move);}
+    const kill=(u:Unit)=>(b as unknown as {kill:(a:Unit,t:Unit)=>void}).kill(get('qinming'),u);
+    const check=()=>(b as unknown as {afterAction:()=>void}).afterAction();
+    const trigger=(turn:number)=>{b.turn=turn;(b as unknown as {runTurnTriggers:(n:number)=>void}).runTurnTriggers(turn-1);};
+    const enemies=()=>b.active().filter(u=>u.side==='enemy');
+    expect(enemies()).toHaveLength(6);enemies().forEach(kill);check();expect(b.status).toBe('playing');
+    trigger(2);expect(enemies()).toHaveLength(0);trigger(3);expect(enemies()).toHaveLength(7);
+    enemies().forEach(kill);check();expect(b.status).toBe('playing');trigger(4);expect(enemies()).toHaveLength(0);
+    trigger(5);expect(enemies()).toHaveLength(10);trigger(6);trigger(7);enemies().forEach(kill);check();expect(b.status).toBe('won');
+    const text=s.script.flatMap(x=>x.do).filter(op=>op[0]==='say').map(op=>String(op[2])).join('');
+    for(const phrase of ['高俅','城下之盟','压寨夫人','强抢民女','杀人放火','刘知寨'])expect(text).toContain(phrase);
+    expect(text).not.toContain('【改写】');
+    expect(s.script.filter(x=>typeof x.on==='object'&&'turn'in x.on).map(x=>(x.on as {turn:number}).turn)).toEqual([2,3,4,5,6,7]);
+    const list=insertPlaces(),c:CampaignState={version:1,stage:1,gold:0,members:[]};
+    expect(pendingInsert(c,list,'N14','after','mainline/duiyingshan')).toBe('mainline/liufeng');
+    expect(pendingInsert(c,list,'N14','after','mainline/liufeng')).toBe('mainline/shiyong');
+    expect(pendingInsert(c,list,'N14','after','mainline/shiyong')).toBeUndefined();
+  });
+  it.each(['huarong','huangxin','qinming'])('解甲留锋：%s倒下即失败',id=>{
+    const s=stage('liufeng'),b=start('liufeng'),u=b.units[s.units.findIndex(u=>u.id===id)],foe=b.active().find(u=>u.side==='enemy')!;
+    (b as unknown as {kill:(a:Unit,t:Unit)=>void}).kill(foe,u);
+    (b as unknown as {afterAction:()=>void}).afterAction();
+    expect(b.status).toBe('lost');
+  });
+  it('解甲留锋超过12回合失败，未出场敌军不能被当作已击退',()=>{
+    const b=start('liufeng');
+    while(b.status==='playing'&&b.turn<=12){for(const u of b.units)if(u.side==='enemy')u.present=false;b.endPlayerPhase();}
+    expect(b.status).toBe('lost');expect(b.turn).toBe(13);
+  });
+  it('解甲留锋保留三将装备、锻造和经验，结算不覆盖先行队员及银子',()=>{
+    const s=stage('liufeng'),initial=new Battle(compileStage(rt,s,files));
+    const c:CampaignState={version:1,stage:1,gold:4321,members:[{classId:0,level:29,exp:17,slots:[0,84,113],forge:[0,0,0]}],companions:{}};
+    for(const id of ['huarong','huangxin','qinming']){
+      const u=initial.units.find(u=>u.classId===cid(id))!;
+      c.companions![`mainline/${id}`]={level:29,exp:37,slots:u.slots.map(v=>{const key=[...rt.itemIds].find(([,n])=>n===v)?.[0];return key?`mainline/${key}`:v;}),forge:u.slots.map(()=>2)};
+    }
+    const b=new Battle(compileStage(rt,s,files,{party:packParty(c,rt)}));b.begin();
+    for(const id of ['huarong','huangxin','qinming']){
+      const u=b.units.find(u=>u.classId===cid(id))!,saved=c.companions![`mainline/${id}`];expect(u.exp).toBe(37);expect(u.slots).toEqual(packParty(c,rt).get(cid(id))!.slots);expect(u.forge).toEqual(saved.forge);
+    }
+    b.status='won';
+    const after=recordPackResult(c,b,rt);expect(after.gold).toBe(4321);expect(after.members.find(m=>m.classId===0)).toMatchObject(c.members[0]);
+    for(const id of ['huarong','huangxin','qinming'])expect(after.companions![`mainline/${id}`]).toEqual(c.companions![`mainline/${id}`]);
   });
   it('夜困霹雳使用官道遇伏兵地图与明亮夜色，陷坑和两侧伏兵全部连通，南路第4回合增援', () => {
     const s = stage('yekun'), input = compileStage(rt, s, files), b = new Battle(input);

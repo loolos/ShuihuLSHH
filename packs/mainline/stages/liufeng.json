@@ -1,0 +1,739 @@
+{
+  "id": "liufeng",
+  "title": "解甲留锋",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N03",
+    "crop": [
+      10,
+      14,
+      16,
+      20
+    ]
+  },
+  "bgm": [
+    "battle",
+    "tense"
+  ],
+  "units": [
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "player",
+      "x": 7,
+      "y": 10,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "huangxin",
+      "class": "huangxin",
+      "side": "player",
+      "x": 8,
+      "y": 11,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "qinming",
+      "class": "qinming",
+      "side": "player",
+      "x": 9,
+      "y": 10,
+      "level": 29,
+      "facing": 1
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "ally",
+      "x": 7,
+      "y": 13,
+      "level": 29,
+      "facing": 1,
+      "ai": 8
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "ally",
+      "x": 8,
+      "y": 14,
+      "level": 29,
+      "facing": 1,
+      "ai": 8
+    },
+    {
+      "id": "w1-1",
+      "class": 38,
+      "side": "enemy",
+      "x": 6,
+      "y": 2,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州押队都头"
+    },
+    {
+      "id": "w1-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 2,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w1-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 8,
+      "y": 2,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w1-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 9,
+      "y": 2,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w1-5",
+      "class": 34,
+      "side": "enemy",
+      "x": 6,
+      "y": 0,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w1-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 8,
+      "y": 0,
+      "level": 29,
+      "facing": 1,
+      "hidden": false,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w2-1",
+      "class": 38,
+      "side": "enemy",
+      "x": 7,
+      "y": 3,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追军都头"
+    },
+    {
+      "id": "w2-2",
+      "class": 38,
+      "side": "enemy",
+      "x": 6,
+      "y": 4,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州押队都头"
+    },
+    {
+      "id": "w2-3",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 4,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w2-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 8,
+      "y": 4,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w2-5",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 5,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w2-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 12,
+      "y": 6,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w2-7",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 6,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w3-1",
+      "class": 38,
+      "side": "enemy",
+      "x": 7,
+      "y": 0,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": 0,
+      "name": "青州追军队正"
+    },
+    {
+      "id": "w3-2",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 0,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-3",
+      "class": 33,
+      "side": "enemy",
+      "x": 9,
+      "y": 0,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-4",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 1,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-5",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 1,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-6",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 1,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州追兵"
+    },
+    {
+      "id": "w3-7",
+      "class": 34,
+      "side": "enemy",
+      "x": 12,
+      "y": 8,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w3-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 8,
+      "level": 29,
+      "facing": 1,
+      "hidden": true,
+      "levelOffset": -1,
+      "name": "青州弓手"
+    },
+    {
+      "id": "w3-9",
+      "class": 38,
+      "side": "enemy",
+      "x": 8,
+      "y": 6,
+      "level": 29,
+      "levelOffset": -1,
+      "hidden": true,
+      "name": "青州押队都头",
+      "facing": 2
+    },
+    {
+      "id": "w3-10",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 7,
+      "level": 29,
+      "levelOffset": -1,
+      "hidden": true,
+      "name": "青州追兵",
+      "facing": 2
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "赴梁山途中 · 庄道留锋"
+        ],
+        [
+          "narrate",
+          "且说众人辞了对影山，仍取路投梁山泊去。家眷车辆行得迟缓，后面忽有青州追军赶来。行至一处旧庄夹道，两旁竹篱相对，花荣勒住坐骑，与秦明、黄信商议断后。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "后面马蹄声紧！众兄弟护住老小，休教车辆散了！"
+        ],
+        [
+          "say",
+          "huarong",
+          "哥哥先行。此处路窄，小弟与两位总管拦他一阵，追军便过不来。"
+        ],
+        [
+          "say",
+          "huangxin",
+          "他军中进退的路数，小弟认得。恩官，容我与你守这一程。"
+        ],
+        [
+          "say",
+          "qinming",
+          "休再称恩官了。如今这条路，咱三个一道走便是。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "三位千万保重！前面村店相候，一个也少不得！"
+        ],
+        [
+          "say",
+          "hero",
+          "大队自有我等照应。三位脱身，循着车辙赶来便了！"
+        ],
+        [
+          "move",
+          "songjiang",
+          5,
+          17
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "move",
+          "hero",
+          6,
+          17
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "focus",
+          "huangxin"
+        ],
+        [
+          "say",
+          "huangxin",
+          "昨日还在清风寨点卯，今日倒成了官军要拿的贼。这条路，怎地走到这般田地！"
+        ],
+        [
+          "say",
+          "huarong",
+          "刘高那厮陷害我时，何曾顾念同僚之情！我素慕公明哥哥仗义之名，只道世间还有个可投奔的人。"
+        ],
+        [
+          "say",
+          "qinming",
+          "你慕他的名声，却也亲眼见他如何待我！"
+        ],
+        [
+          "objective",
+          "胜利：打退全部三路追军（第3、5回合有援军）\n失败：花荣、秦明或黄信任一人倒下；超过12回合"
+        ],
+        [
+          "turnLimit",
+          12
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "say",
+          "qinming",
+          "教人穿我的衣甲，骑我的马，去城外杀人放火！那庄上百姓与他何仇，却拿来断我的归路！"
+        ],
+        [
+          "say",
+          "huangxin",
+          "只为留住恩官一个，倒害了许多无辜性命。这也算得仗义么？"
+        ],
+        [
+          "say",
+          "huarong",
+          "秦兄，这桩事，小弟实无话可说。那些百姓，原不该受这般苦楚。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "庄道那头又起一阵喊声，追军都头引兵赶到，另有弓手绕向篱外侧路。"
+        ],
+        [
+          "appear",
+          "w2-1"
+        ],
+        [
+          "appear",
+          "w2-2"
+        ],
+        [
+          "appear",
+          "w2-3"
+        ],
+        [
+          "appear",
+          "w2-4"
+        ],
+        [
+          "appear",
+          "w2-5"
+        ],
+        [
+          "appear",
+          "w2-6"
+        ],
+        [
+          "appear",
+          "w2-7"
+        ],
+        [
+          "say",
+          "w2-1",
+          "花荣、秦明、黄信！你三个原是朝廷命官，如今劫掠百姓，强抢民女，又害了刘知寨性命！还敢称甚么好汉？快下马受缚！"
+        ],
+        [
+          "say",
+          "huangxin",
+          "都头且住！我等也有冤屈，岂是一句话说得尽的！"
+        ],
+        [
+          "say",
+          "qinming",
+          "冤屈？慕容那厮杀我妻小，宋江却用这条毒计留我！高俅那等奸贼，为遂己意，把人逼得无路可走；他宋江所为，又有甚分别？"
+        ],
+        [
+          "say",
+          "huarong",
+          "我受过他的情义，素来敬他。只是秦兄这句话……教我如何答你！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "say",
+          "huangxin",
+          "我又何尝甘心落草！兵刃临头，恩官又在山上，我若不应，待走那里去？这分明是城下之盟！"
+        ],
+        [
+          "say",
+          "qinming",
+          "你还有旧路可想，我却连家也没了。几句赔罪，一门亲事，便抵得我一家老小么！"
+        ],
+        [
+          "say",
+          "huarong",
+          "如今官府也不容我等分说。且守住这一阵，旁的事，只得往后再理会。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "do": [
+        [
+          "narrate",
+          "庄道那头又起一阵喊声，追军队正催着后队赶来，两名弓手从另一处岔口包抄。"
+        ],
+        [
+          "appear",
+          "w3-1"
+        ],
+        [
+          "appear",
+          "w3-2"
+        ],
+        [
+          "appear",
+          "w3-3"
+        ],
+        [
+          "appear",
+          "w3-4"
+        ],
+        [
+          "appear",
+          "w3-5"
+        ],
+        [
+          "appear",
+          "w3-6"
+        ],
+        [
+          "appear",
+          "w3-7"
+        ],
+        [
+          "appear",
+          "w3-8"
+        ],
+        [
+          "appear",
+          "w3-9"
+        ],
+        [
+          "appear",
+          "w3-10"
+        ],
+        [
+          "say",
+          "w3-1",
+          "前头的休退！这伙贼杀官劫财，掳人妻女，罪犯弥天！便逃到梁山泊，也须拿来正法！"
+        ],
+        [
+          "say",
+          "huangxin",
+          "听他骂来，我倒无言可对。那王英抢了刘高的妻子，便要作压寨夫人，何曾问那妇人肯是不肯？这也是好汉的行径！"
+        ],
+        [
+          "say",
+          "huarong",
+          "那妇人虽曾害我哥哥，也不该任人强占。她有她的过恶，却遮不得王英这等勾当。"
+        ],
+        [
+          "say",
+          "qinming",
+          "只因手里有刀枪，便把旁人任意摆布。我如今却是尝够了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "say",
+          "huangxin",
+          "燕顺更不分说，一刀便结果了她！我也恨那妇人诬陷良善，只是人已拿住，又无寸铁，何至于此！这般抢人杀人，与草寇有甚分别！"
+        ],
+        [
+          "say",
+          "huarong",
+          "小弟见了，心下也自不安。只是从前总想，他既有那般声名，做事必有个道理……"
+        ],
+        [
+          "say",
+          "qinming",
+          "好个道理！只怕日后又说是为我好，却拿别人的性命来填！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "do": [
+        [
+          "say",
+          "huarong",
+          "今日留下，只为不教身后那些老小再遭刀兵。秦兄，你问我的话，小弟实在答不得。"
+        ],
+        [
+          "say",
+          "qinming",
+          "这满腔怨气，岂是打退几队官军便消得的！只是眼下，还不能把性命撇在这里。"
+        ],
+        [
+          "say",
+          "huangxin",
+          "且活着出去罢。往后信谁，投那里去，只得行一步，看一步。"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "追军见三人守住夹道，前后几番都讨不得便宜，余下的只得收兵退走。三人也不追赶，各自勒住坐骑，望着道路尽头。"
+        ],
+        [
+          "say",
+          "huangxin",
+          "追军退了，前头的人还等着。"
+        ],
+        [
+          "say",
+          "qinming",
+          "走罢。这里没有我可讨的公道。"
+        ],
+        [
+          "say",
+          "huarong",
+          "两位先过道口，小弟在后照应。"
+        ],
+        [
+          "move",
+          "huangxin",
+          6,
+          16
+        ],
+        [
+          "move",
+          "qinming",
+          7,
+          16
+        ],
+        [
+          "move",
+          "huarong",
+          8,
+          16
+        ],
+        [
+          "narrate",
+          "三人收住兵刃，循车辙赶上大队。心中各有未了的言语，沿途却都不再提起。众人又行一程，寻到村店暂歇。"
+        ],
+        [
+          "victory",
+          "三将打退青州追军，赶上大队，继续取路梁山泊。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huarong"
+      },
+      "do": [
+        [
+          "defeat",
+          "断后之将倒下，余下两人再也守不住庄道。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "huangxin"
+      },
+      "do": [
+        [
+          "defeat",
+          "断后之将倒下，余下两人再也守不住庄道。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "qinming"
+      },
+      "do": [
+        [
+          "defeat",
+          "断后之将倒下，余下两人再也守不住庄道。"
+        ]
+      ]
+    }
+  ]
+}
