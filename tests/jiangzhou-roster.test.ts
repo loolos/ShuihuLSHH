@@ -32,19 +32,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     const skills=rt.data.classes[rt.classIds.get('wangying')!].skills.filter(s=>s.name.startsWith('三岔毒龙枪'));
     expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
   });
-  it('白龙庙六人守庙，其他好汉分批来援，第5回合20人可控', () => {
-    const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(6);
+  it('白龙庙吴用随宋江等七人守庙，第5回合18人可控', () => {
+    const {b,get}=open('bailongmiao');expect(b.active().filter(u=>u.side==='player')).toHaveLength(7);
+    expect(get('wuyong')).toMatchObject({side:'player',present:true,classId:10,x:24,y:41});expect(b.canAct(get('wuyong'))).toBe(true);
     for(const id of ['zhangshun','zhangheng','lijun'])expect(get(id).present).toBe(false);
-    for(let n=1;n<=3;n++)trigger(b,n);
-    expect(b.active().filter(u=>u.side==='player')).toHaveLength(18);
-    trigger(b,4);expect(b.active().filter(u=>u.side==='player')).toHaveLength(20);
-    for(const id of ['zhangshun','zhangheng','lijun']){expect(get(id).side).toBe('player');expect(get(id).present).toBe(true);}
+    for(let n=2;n<=4;n++)(b as unknown as {startTurn:(n:number)=>void}).startTurn(n);
+    expect(b.active().filter(u=>u.side==='player')).toHaveLength(16);
+    (b as unknown as {startTurn:(n:number)=>void}).startTurn(5);expect(b.active().filter(u=>u.side==='player')).toHaveLength(18);
+    for(const id of ['yanshun','zhangshun','lijun']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);expect(b.canAct(get(id)),id).toBe(false);expect(b.autoActUnits()).not.toContain(get(id));}
+    expect(get('zhangheng').side).toBe('player');expect(b.canAct(get('zhangheng'))).toBe(true);
+    (b as unknown as {startPhase:(side:'ally')=>void}).startPhase('ally');
+    for(const id of ['yanshun','zhangshun','lijun'])expect(b.canAct(get(id)),id).toBe(true);
     for(const id of ['lili','muhong','muchun','tongwei','tongmeng','xueyong']){expect(get(id).side).toBe('ally');expect(get(id).present).toBe(true);}
   });
-  it('左侧白龙庙为自拼地图，六名守庙者在院前，敌军仍集中中部，所有落点连通', () => {
+  it('左侧白龙庙为自拼地图，七名守庙者在院前，敌军仍集中中部，所有落点连通', () => {
     const {s,b}=open('bailongmiao'),friends=s.units.filter(u=>u.side!=='enemy'&&!u.hidden);
     expect(s.map).toEqual({custom:'bailongmiao'});
-    expect(friends.map(u=>u.id).sort()).toEqual(['songjiang','daizong','likui','chaogai','huarong','liutang'].sort());
+    expect(friends.map(u=>u.id).sort()).toEqual(['songjiang','wuyong','daizong','likui','chaogai','huarong','liutang'].sort());
     for(const u of friends){expect(u.y-u.x,u.id).toBeGreaterThanOrEqual(14);expect(Math.abs(u.x-24)+Math.abs(u.y-42),u.id).toBeLessThanOrEqual(5);}
     const foes=s.units.filter(u=>u.side==='enemy'&&!u.hidden);
     expect(foes).toHaveLength(50);for(const u of foes)expect(Math.abs(u.x-30)+Math.abs(u.y-28),u.id).toBeLessThanOrEqual(12);
