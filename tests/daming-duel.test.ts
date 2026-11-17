@@ -27,7 +27,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('大名府斗�
     for(const u of b.units){expect(b.board.passable(u.x,u.y),u.name).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.name).toBe(true);expect(occupied.has(`${u.x},${u.y}`),u.name).toBe(false);occupied.add(`${u.x},${u.y}`);}
     expect(new Set(['licheng','zhoujin','suochao'].map(id=>get(b,id).classId)).size).toBe(3);
     expect(b.units.filter(u=>u.side==='enemy'&&u.present)).toHaveLength(0);
-    const ev=b.begin();expect(b.status).toBe('playing');expect(b.active().filter(u=>u.side==='player').map(u=>u.classId)).toEqual([14]);
+    const ev=b.begin();expect(get(b,'liangzhongshu').classId).toBe(54);expect(get(b,'suochao').classId).toBe(71);expect(ev).toContainEqual({type:'portrait',classId:71,file:'@class:32'});expect(b.status).toBe('playing');expect(b.active().filter(u=>u.side==='player').map(u=>u.classId)).toEqual([14]);
     expect(b.active().filter(u=>u.side==='enemy').map(u=>u.name)).toEqual(['李成']);
     expect(b.spectators.size).toBe(26);
     const enemy=get(b,'licheng'),watch=get(b,'watch-1');enemy.x=watch.x;enemy.y=watch.y+1;

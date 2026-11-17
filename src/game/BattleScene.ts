@@ -937,9 +937,19 @@ export class BattleScene extends Phaser.Scene {
     if (on) this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
   }
 
+  private setPortrait(e: Extract<BattleEvent, { type: 'portrait' }>) {
+    const source = /^@class:(\d+)$/.exec(e.file);
+    const url = source ? this.ui.portrait(Number(source[1])) : e.file && this.assets.pack ? packFaceUrl(this.assets.pack.rt.id, e.file) : undefined;
+    if (url) this.ui.faceOverride.set(e.classId, url);
+    else this.ui.faceOverride.delete(e.classId);
+  }
+
   /** 快进：不播动画，只做必须的画面变化；对白、结局照常显示 */
   private skip(e: BattleEvent) {
     switch (e.type) {
+      case 'portrait':
+        this.setPortrait(e);
+        break;
       case 'message':
         this.ui.message(e.text);
         break;
@@ -1587,9 +1597,7 @@ export class BattleScene extends Phaser.Scene {
         await wait(this, this.fast ? 0 : e.ms);
         break;
       case 'portrait': {
-        const url = e.file && this.assets.pack ? packFaceUrl(this.assets.pack.rt.id, e.file) : undefined;
-        if (url) this.ui.faceOverride.set(e.classId, url);
-        else this.ui.faceOverride.delete(e.classId);
+        this.setPortrait(e);
         break;
       }
       case 'sound':
