@@ -128,6 +128,8 @@ export function condZones(c: PasCond): { char: number; x1: number; y1: number; x
 }
 
 export interface StageInput {
+  /** 囚车外观的 ACT 序号，只影响表现。 */
+  prisonCarts?: number[];
   name: string;
   /** 过关奖励银子；不写时按关卡名查 STAGE_CLEAR_GOLD（扩展包关卡用 rewards.gold） */
   clearGold?: number;
@@ -182,6 +184,7 @@ export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' 
 const BOUND_TURNS = 9999;
 
 export class Battle {
+  readonly prisonCarts: ReadonlySet<number>;
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
   readonly header?: PasHeader;
@@ -235,6 +238,7 @@ export class Battle {
   private readonly aiPrefer: Record<number, number[]>;
 
   constructor(input: StageInput) {
+    this.prisonCarts = new Set(input.prisonCarts ?? []);
     this.name = input.name;
     this.clearGoldOverride = input.clearGold;
     this.header = input.header;

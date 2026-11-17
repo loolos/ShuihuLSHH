@@ -21,7 +21,8 @@
       "x": 17,
       "y": 16,
       "level": 29,
-      "facing": 2
+      "facing": 2,
+      "hidden": true
     },
     {
       "id": "likui",
@@ -30,7 +31,8 @@
       "x": 16,
       "y": 16,
       "level": 29,
-      "facing": 2
+      "facing": 2,
+      "hidden": true
     },
     {
       "id": "wangying",
@@ -39,24 +41,27 @@
       "x": 18,
       "y": 16,
       "level": 29,
-      "facing": 2
+      "facing": 2,
+      "hidden": true
     },
     {
       "id": "huarong",
       "class": "huarong",
       "side": "player",
       "x": 17,
-      "y": 22,
-      "level": 29
+      "y": 25,
+      "level": 29,
+      "prisonCart": true
     },
     {
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
       "x": 17,
-      "y": 26,
+      "y": 28,
       "level": 29,
-      "facing": 2
+      "facing": 2,
+      "prisonCart": true
     },
     {
       "id": "wusong",
@@ -92,7 +97,8 @@
       "x": 15,
       "y": 16,
       "level": 29,
-      "name": "燕顺"
+      "name": "燕顺",
+      "hidden": true
     },
     {
       "id": "zhengtianshou",
@@ -101,7 +107,8 @@
       "x": 19,
       "y": 15,
       "level": 29,
-      "name": "郑天寿"
+      "name": "郑天寿",
+      "hidden": true
     },
     {
       "id": "ally-1",
@@ -110,7 +117,8 @@
       "x": 15,
       "y": 15,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "hidden": true
     },
     {
       "id": "ally-2",
@@ -119,7 +127,8 @@
       "x": 15,
       "y": 17,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "hidden": true
     },
     {
       "id": "ally-3",
@@ -128,7 +137,8 @@
       "x": 19,
       "y": 14,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "hidden": true
     },
     {
       "id": "ally-4",
@@ -137,14 +147,15 @@
       "x": 20,
       "y": 15,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "hidden": true
     },
     {
       "id": "huangxin",
       "class": "huangxin",
       "side": "enemy",
       "x": 16,
-      "y": 19,
+      "y": 22,
       "level": 29,
       "levelOffset": 2,
       "facing": 0,
@@ -155,7 +166,7 @@
       "class": "liugao",
       "side": "enemy",
       "x": 17,
-      "y": 24,
+      "y": 27,
       "level": 29,
       "levelOffset": 1,
       "facing": 0,
@@ -700,8 +711,98 @@
           "黄信、刘高押着两辆囚车，离了清风寨，行不过三四十里，前面望见一座大林子。"
         ],
         [
+          "focus",
+          "songjiang"
+        ],
+        [
+          "say",
+          "liugao",
+          "都走快些！过了这片林子，便是去青州的大路。"
+        ],
+        [
+          "move",
+          "huangxin",
+          16,
+          19
+        ],
+        [
+          "move",
+          "huarong",
+          17,
+          22
+        ],
+        [
+          "move",
+          "liugao",
+          17,
+          24
+        ],
+        [
+          "move",
+          "songjiang",
+          17,
+          26
+        ],
+        [
+          "focus",
+          "huangxin"
+        ],
+        [
+          "say",
+          "huangxin",
+          "前面林深路窄，都把囚车看紧了！"
+        ],
+        [
+          "wait",
+          400
+        ],
+        [
           "narrate",
           "只听得山坡上锣声响处，一伙喽啰抢将出来，拦住去路。"
+        ],
+        [
+          "sound",
+          "m04"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "appear",
+          "wangying"
+        ],
+        [
+          "appear",
+          "yanshun"
+        ],
+        [
+          "appear",
+          "zhengtianshou"
+        ],
+        [
+          "appear",
+          "ally-1"
+        ],
+        [
+          "appear",
+          "ally-2"
+        ],
+        [
+          "appear",
+          "ally-3"
+        ],
+        [
+          "appear",
+          "ally-4"
+        ],
+        [
+          "wait",
+          300
         ],
         [
           "focus",

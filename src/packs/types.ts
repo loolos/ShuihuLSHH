@@ -196,6 +196,8 @@ export interface PackUnitJson {
   levelOffset?: number;
   /** 开局不在场，剧本点名（appear / say）时登场 */
   hidden?: boolean;
+  /** 被押送者的囚车外观；解开绑缚后移除，只影响画面。 */
+  prisonCart?: boolean;
   /** 只在对话里出声、不上地图：开局隐藏，say 点名时也不登场（例如景阳冈的酒家） */
   offstage?: boolean;
   /** AI 模式（§8），默认 0 */
