@@ -37,6 +37,8 @@ export interface Unit {
   level: number;
   exp: number;
   hp: number;
+  /** 本关体力倍率，随属性重算和倒流保留。 */
+  hpMultiplier?: number;
   mp: number;
   stats: Stats;
   /** 7 个道具槽，0 = 空；前 3 格是装备栏（武器、衣服、头饰），见 data.ts EQUIP_SLOTS */
@@ -143,6 +145,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 
 export function refreshStats(u: Unit, data: GameData) {
   u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs, u.side);
+  u.stats.maxHp = Math.max(1, Math.round(u.stats.maxHp * (u.hpMultiplier ?? 1)));
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);
 }
