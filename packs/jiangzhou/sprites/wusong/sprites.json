@@ -1,0 +1,187 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "crouch-idle": {
+   "source": "Crouch_Idle_Loop",
+   "front": {
+    "file": "crouch-idle-front.png",
+    "frames": 8,
+    "ms": 367
+   },
+   "back": {
+    "file": "crouch-idle-back.png",
+    "frames": 8,
+    "ms": 367
+   }
+  },
+  "death01": {
+   "source": "Death01",
+   "front": {
+    "file": "death01-front.png",
+    "frames": 8,
+    "ms": 300
+   },
+   "back": {
+    "file": "death01-back.png",
+    "frames": 8,
+    "ms": 300
+   }
+  },
+  "hit-chest": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-chest-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-chest-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "idle": {
+   "source": "Idle_Loop",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 312
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 312
+   }
+  },
+  "punch-cross": {
+   "source": "Punch_Cross",
+   "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "punch-jab": {
+   "source": "Punch_Jab",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 108
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 108
+   }
+  },
+  "roll": {
+   "source": "Roll",
+   "front": {
+    "file": "roll-front.png",
+    "frames": 8,
+    "ms": 183
+   },
+   "back": {
+    "file": "roll-back.png",
+    "frames": 8,
+    "ms": 183
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+"punch-two": {
+  "source": "Punch_Jab × 2",
+  "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
+  },
+  "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
+  }
+},
+"punch-three": {
+  "source": "Punch_Jab × 3",
+  "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 3
+  },
+  "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 3
+  }
+},
+"kick": {
+  "source": "Kick_R（--poses 自拼）",
+  "front": {"file": "kick-r-front.png", "frames": 8, "ms": 80},
+  "back": {"file": "kick-r-back.png", "frames": 8, "ms": 80}
+},
+"kick-four": {
+  "source": "Kick_R + Kick_L（--poses 自拼）× 2，左右交替 4 脚",
+  "front": {"file": "kick-rl-front.png", "frames": 16, "ms": 65, "cycles": 2},
+  "back": {"file": "kick-rl-back.png", "frames": 16, "ms": 65, "cycles": 2}
+},
+"punch-four": {
+  "source": "Punch_Cross × 4",
+  "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  },
+  "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 65,
+    "cycles": 4
+  }
+},
+"punch-wave": {
+  "source": "Punch_Cross × 2",
+  "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
+  },
+  "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
+  }
+}
+}
+}
