@@ -1,0 +1,948 @@
+{
+  "id": "daming-duel",
+  "title": "大名府斗武",
+  "pov": true,
+  "dynamicLevels": true,
+  "map": {
+    "base": "Train1"
+  },
+  "bgm": [
+    "tense",
+    "army"
+  ],
+  "units": [
+    {
+      "id": "yangzhi",
+      "class": 14,
+      "side": "player",
+      "x": 8,
+      "y": 11,
+      "level": 21,
+      "facing": 0
+    },
+    {
+      "id": "licheng",
+      "class": 42,
+      "side": "enemy",
+      "x": 10,
+      "y": 9,
+      "level": 21,
+      "name": "李成",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "zhoujin",
+      "class": 43,
+      "side": "enemy",
+      "x": 11,
+      "y": 10,
+      "level": 21,
+      "name": "周谨",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "suochao",
+      "class": 69,
+      "side": "enemy",
+      "x": 10,
+      "y": 12,
+      "level": 21,
+      "name": "索超",
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "liangzhongshu",
+      "class": 36,
+      "side": "ally",
+      "x": 8,
+      "y": 3,
+      "level": 21,
+      "name": "梁中书",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "wenda",
+      "class": 38,
+      "side": "ally",
+      "x": 9,
+      "y": 3,
+      "level": 21,
+      "name": "闻达",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-1",
+      "class": 32,
+      "side": "ally",
+      "x": 6,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-2",
+      "class": 33,
+      "side": "ally",
+      "x": 7,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-3",
+      "class": 34,
+      "side": "ally",
+      "x": 8,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-4",
+      "class": 32,
+      "side": "ally",
+      "x": 9,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-5",
+      "class": 33,
+      "side": "ally",
+      "x": 10,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-6",
+      "class": 34,
+      "side": "ally",
+      "x": 11,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-7",
+      "class": 32,
+      "side": "ally",
+      "x": 12,
+      "y": 5,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-8",
+      "class": 33,
+      "side": "ally",
+      "x": 5,
+      "y": 6,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-9",
+      "class": 34,
+      "side": "ally",
+      "x": 5,
+      "y": 7,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-10",
+      "class": 32,
+      "side": "ally",
+      "x": 5,
+      "y": 8,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-11",
+      "class": 33,
+      "side": "ally",
+      "x": 5,
+      "y": 9,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-12",
+      "class": 34,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-13",
+      "class": 32,
+      "side": "ally",
+      "x": 13,
+      "y": 6,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-14",
+      "class": 33,
+      "side": "ally",
+      "x": 13,
+      "y": 7,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-15",
+      "class": 34,
+      "side": "ally",
+      "x": 13,
+      "y": 8,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-16",
+      "class": 32,
+      "side": "ally",
+      "x": 13,
+      "y": 9,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-17",
+      "class": 33,
+      "side": "ally",
+      "x": 13,
+      "y": 10,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-18",
+      "class": 34,
+      "side": "ally",
+      "x": 13,
+      "y": 11,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-19",
+      "class": 32,
+      "side": "ally",
+      "x": 8,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-20",
+      "class": 33,
+      "side": "ally",
+      "x": 9,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-21",
+      "class": 34,
+      "side": "ally",
+      "x": 10,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-22",
+      "class": 32,
+      "side": "ally",
+      "x": 11,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-23",
+      "class": 33,
+      "side": "ally",
+      "x": 12,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    },
+    {
+      "id": "watch-24",
+      "class": 34,
+      "side": "ally",
+      "x": 13,
+      "y": 14,
+      "level": 21,
+      "name": "观战军士",
+      "spectator": true,
+      "ai": 8
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "大名府 · 东郭教场"
+        ],
+        [
+          "narrate",
+          "话分两头。且说那青面兽杨志，本是三代将门之后、五侯杨令公之孙，曾应武举，做到殿司制使。因押运花石纲，黄河风浪打翻了船，只得逃往他处避难。"
+        ],
+        [
+          "narrate",
+          "后来遇赦，杨志携资回京求复旧职，却被高俅一笔批倒。盘缠使尽，只得变卖祖传宝刀；偏又遇泼皮牛二强夺，一时性起杀了牛二，亲往开封府自首，被刺配北京大名府。"
+        ],
+        [
+          "narrate",
+          "留守梁世杰，人称梁中书，见杨志勤谨，有心抬举，又怕众将不服，便点集将校，在东郭门外教场演武试艺。"
+        ],
+        [
+          "focus",
+          "liangzhongshu"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "我有心要抬举你做个军中副牌，月支一分请受，只不知你武艺如何？"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "小人应过武举出身，曾做殿司府制使职役，这十八般武艺，自小习学。今日蒙恩相抬举，如拨云见日一般。"
+        ],
+        [
+          "narrate",
+          "将台两边，大小军官列坐；四周军士分班围观。三通鼓罢，场中肃静。梁中书命杨志接连试艺，先由李成下场考校，再与周谨、索超较量。"
+        ],
+        [
+          "say",
+          "wenda",
+          "今日军中自家比试，枪刀本是无情之物，恐有伤损。可将枪头去了，用毡片包裹，蘸上石灰，白点多者当输。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "言之极当。众军各守行列，不许助战。"
+        ],
+        [
+          "appear",
+          "licheng"
+        ],
+        [
+          "focus",
+          "licheng"
+        ],
+        [
+          "say",
+          "licheng",
+          "俺是李天王李成。既要在大名府军中立足，先让俺试试你的本事！"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "若蒙恩相差遣，安敢有违钧旨。请都监赐教！"
+        ],
+        [
+          "objective",
+          "第一场：独自与李成比试，将其体力压至四成以下（击倒也算）。\n胜利：连续完成李成、周谨、索超三场比试。\n失败：杨志倒下，或超过30回合。将台官员和四周军士只观战。"
+        ],
+        [
+          "turnLimit",
+          30
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "licheng",
+        "below": 40
+      },
+      "unless": "li-done",
+      "do": [
+        [
+          "flag",
+          "li-done"
+        ],
+        [
+          "narrate",
+          "李成收住军器，点头道：“杨制使果然好武艺！”这一场考校已过，李都监退回将台。"
+        ],
+        [
+          "leave",
+          "licheng"
+        ],
+        [
+          "cleanse",
+          "yangzhi"
+        ],
+        [
+          "narrate",
+          "旗牌官叫两边收招，军士递水。杨志稍歇，重新整顿衣甲，体力、气力恢复，再听将令。"
+        ],
+        [
+          "transform",
+          "yangzhi",
+          14,
+          "杨志"
+        ],
+        [
+          "move",
+          "yangzhi",
+          8,
+          11
+        ],
+        [
+          "appear",
+          "zhoujin"
+        ],
+        [
+          "move",
+          "zhoujin",
+          10,
+          9
+        ],
+        [
+          "focus",
+          "zhoujin"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "杨志，你敢与周谨比试武艺高低？如若赢时，便迁你充其职役。"
+        ],
+        [
+          "say",
+          "zhoujin",
+          "这个贼配军，敢来与我交枪！"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "请！"
+        ],
+        [
+          "objective",
+          "第二场：独自与周谨比枪，将其体力压至四成以下（击倒也算）。\n杨志倒下或超过30回合失败；官兵只观战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "licheng"
+      },
+      "do": [
+        [
+          "flag",
+          "li-done"
+        ],
+        [
+          "narrate",
+          "李成收住军器，点头道：“杨制使果然好武艺！”这一场考校已过，李都监退回将台。"
+        ],
+        [
+          "leave",
+          "licheng"
+        ],
+        [
+          "cleanse",
+          "yangzhi"
+        ],
+        [
+          "narrate",
+          "旗牌官叫两边收招，军士递水。杨志稍歇，重新整顿衣甲，体力、气力恢复，再听将令。"
+        ],
+        [
+          "transform",
+          "yangzhi",
+          14,
+          "杨志"
+        ],
+        [
+          "move",
+          "yangzhi",
+          8,
+          11
+        ],
+        [
+          "appear",
+          "zhoujin"
+        ],
+        [
+          "move",
+          "zhoujin",
+          10,
+          9
+        ],
+        [
+          "focus",
+          "zhoujin"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "杨志，你敢与周谨比试武艺高低？如若赢时，便迁你充其职役。"
+        ],
+        [
+          "say",
+          "zhoujin",
+          "这个贼配军，敢来与我交枪！"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "请！"
+        ],
+        [
+          "objective",
+          "第二场：独自与周谨比枪，将其体力压至四成以下（击倒也算）。\n杨志倒下或超过30回合失败；官兵只观战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "zhoujin",
+        "below": 40
+      },
+      "unless": "zhou-done",
+      "do": [
+        [
+          "flag",
+          "zhou-done"
+        ],
+        [
+          "narrate",
+          "两个来来往往，斗了数十合。看周谨身上，白点三五十处；看杨志时，只有左肩胛下一点白。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "量你这般武艺，如何南征北讨？教杨志替此人职役。"
+        ],
+        [
+          "narrate",
+          "李成禀道：“周谨枪法生疏，弓马熟闲。再教周谨与杨志比箭如何？”梁中书应允，二人各领遮箭牌。"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "你先射我三箭，后却还你三箭。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志去镫里藏身，第一箭落空。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志用弓梢一拨，第二箭落在草地。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志扭回身，绰住第三枝箭。"
+        ],
+        [
+          "narrate",
+          "轮到杨志，先虚扯弓弦，骗过防牌，再射一箭，只取不致命的左肩。众军士喝彩，将周谨扶到场边。"
+        ],
+        [
+          "shoot",
+          "yangzhi",
+          "zhoujin",
+          "一箭中的，箭术亦胜。"
+        ],
+        [
+          "leave",
+          "zhoujin"
+        ],
+        [
+          "appear",
+          "suochao"
+        ],
+        [
+          "focus",
+          "suochao"
+        ],
+        [
+          "say",
+          "suochao",
+          "休要谢职！我和你两个比试。"
+        ],
+        [
+          "say",
+          "suochao",
+          "周谨患病未痊，精神不在，因此误输与杨志。小将不才，愿与杨志比试武艺。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "你与索超比试武艺如何？"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "恩相将令，安敢有违。"
+        ],
+        [
+          "narrate",
+          "李成把惯战的马匹、披挂借与索超，叮嘱：“周谨是你徒弟，先自输了。小心在意，休教折了锐气！”梁中书也命取自己的战马借与杨志。"
+        ],
+        [
+          "cleanse",
+          "yangzhi"
+        ],
+        [
+          "narrate",
+          "旗牌官叫两边收招，军士递水。杨志稍歇，重新整顿衣甲，体力、气力恢复，再听将令。"
+        ],
+        [
+          "transform",
+          "yangzhi",
+          14,
+          "杨志"
+        ],
+        [
+          "move",
+          "yangzhi",
+          8,
+          11
+        ],
+        [
+          "move",
+          "suochao",
+          10,
+          9
+        ],
+        [
+          "objective",
+          "第三场：与急先锋索超较量，将其体力压至四成以下（击倒也算），证明足以任职。\n杨志倒下或超过30回合失败；官兵只观战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhoujin"
+      },
+      "do": [
+        [
+          "flag",
+          "zhou-done"
+        ],
+        [
+          "narrate",
+          "两个来来往往，斗了数十合。看周谨身上，白点三五十处；看杨志时，只有左肩胛下一点白。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "量你这般武艺，如何南征北讨？教杨志替此人职役。"
+        ],
+        [
+          "narrate",
+          "李成禀道：“周谨枪法生疏，弓马熟闲。再教周谨与杨志比箭如何？”梁中书应允，二人各领遮箭牌。"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "你先射我三箭，后却还你三箭。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志去镫里藏身，第一箭落空。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志用弓梢一拨，第二箭落在草地。"
+        ],
+        [
+          "shoot",
+          "zhoujin",
+          "yangzhi",
+          "杨志扭回身，绰住第三枝箭。"
+        ],
+        [
+          "narrate",
+          "轮到杨志，先虚扯弓弦，骗过防牌，再射一箭，只取不致命的左肩。众军士喝彩，将周谨扶到场边。"
+        ],
+        [
+          "shoot",
+          "yangzhi",
+          "zhoujin",
+          "一箭中的，箭术亦胜。"
+        ],
+        [
+          "leave",
+          "zhoujin"
+        ],
+        [
+          "appear",
+          "suochao"
+        ],
+        [
+          "focus",
+          "suochao"
+        ],
+        [
+          "say",
+          "suochao",
+          "休要谢职！我和你两个比试。"
+        ],
+        [
+          "say",
+          "suochao",
+          "周谨患病未痊，精神不在，因此误输与杨志。小将不才，愿与杨志比试武艺。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "你与索超比试武艺如何？"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "恩相将令，安敢有违。"
+        ],
+        [
+          "narrate",
+          "李成把惯战的马匹、披挂借与索超，叮嘱：“周谨是你徒弟，先自输了。小心在意，休教折了锐气！”梁中书也命取自己的战马借与杨志。"
+        ],
+        [
+          "cleanse",
+          "yangzhi"
+        ],
+        [
+          "narrate",
+          "旗牌官叫两边收招，军士递水。杨志稍歇，重新整顿衣甲，体力、气力恢复，再听将令。"
+        ],
+        [
+          "transform",
+          "yangzhi",
+          14,
+          "杨志"
+        ],
+        [
+          "move",
+          "yangzhi",
+          8,
+          11
+        ],
+        [
+          "move",
+          "suochao",
+          10,
+          9
+        ],
+        [
+          "objective",
+          "第三场：与急先锋索超较量，将其体力压至四成以下（击倒也算），证明足以任职。\n杨志倒下或超过30回合失败；官兵只观战。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "suochao",
+        "below": 40
+      },
+      "unless": "suo-done",
+      "do": [
+        [
+          "flag",
+          "suo-done"
+        ],
+        [
+          "narrate",
+          "杨志与索超在教场中心翻翻复复，枪斧并举，各逞平生本事。两边军将不住喝彩。"
+        ],
+        [
+          "say",
+          "wenda",
+          "两个好汉，且歇！相公有令！"
+        ],
+        [
+          "narrate",
+          "杨志、索超收住军器。李成、闻达一同禀道：“相公，据这两个武艺一般，皆可重用。”"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "两个都是好本事！取银两、表里来赏赐，同升管军提辖使。"
+        ],
+        [
+          "narrate",
+          "杨志、索超拜谢受赏。索超心服，自此与杨志相敬。杨志连过三场，终于在大名府军中立住了脚。"
+        ],
+        [
+          "narrate",
+          "光阴迅速，转眼到了五月。梁中书备办十万贯金珠宝贝，要送往东京给蔡太师庆生辰。因杨志教场显过本领，便把这桩要紧差遣付托给他。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "你若与我送得生辰纲去，我自有抬举你处。"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "恩相差遣，不敢不依。若依小人，并不要车子，把礼物装做十余条担子，只做客人的打扮行货。"
+        ],
+        [
+          "narrate",
+          "梁中书听从杨志安排，拣军士装作脚夫，另令谢都管和两个虞候随行，嘱众人一路听杨志提调。北京这一路先按下，且看东溪村晁保正庄上，又将生出甚么事来。"
+        ],
+        [
+          "victory",
+          "杨志教场试艺，连过三场，受任提辖；梁中书因而委派他押送生辰纲。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "suochao"
+      },
+      "do": [
+        [
+          "flag",
+          "suo-done"
+        ],
+        [
+          "narrate",
+          "杨志与索超在教场中心翻翻复复，枪斧并举，各逞平生本事。两边军将不住喝彩。"
+        ],
+        [
+          "say",
+          "wenda",
+          "两个好汉，且歇！相公有令！"
+        ],
+        [
+          "narrate",
+          "杨志、索超收住军器。李成、闻达一同禀道：“相公，据这两个武艺一般，皆可重用。”"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "两个都是好本事！取银两、表里来赏赐，同升管军提辖使。"
+        ],
+        [
+          "narrate",
+          "杨志、索超拜谢受赏。索超心服，自此与杨志相敬。杨志连过三场，终于在大名府军中立住了脚。"
+        ],
+        [
+          "narrate",
+          "光阴迅速，转眼到了五月。梁中书备办十万贯金珠宝贝，要送往东京给蔡太师庆生辰。因杨志教场显过本领，便把这桩要紧差遣付托给他。"
+        ],
+        [
+          "say",
+          "liangzhongshu",
+          "你若与我送得生辰纲去，我自有抬举你处。"
+        ],
+        [
+          "say",
+          "yangzhi",
+          "恩相差遣，不敢不依。若依小人，并不要车子，把礼物装做十余条担子，只做客人的打扮行货。"
+        ],
+        [
+          "narrate",
+          "梁中书听从杨志安排，拣军士装作脚夫，另令谢都管和两个虞候随行，嘱众人一路听杨志提调。北京这一路先按下，且看东溪村晁保正庄上，又将生出甚么事来。"
+        ],
+        [
+          "victory",
+          "杨志教场试艺，连过三场，受任提辖；梁中书因而委派他押送生辰纲。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "yangzhi"
+      },
+      "do": [
+        [
+          "defeat",
+          "杨志比试失利，未能通过教场考校。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 31
+      },
+      "do": [
+        [
+          "defeat",
+          "三十回合已过，教场比试未能完成。"
+        ]
+      ]
+    }
+  ]
+}

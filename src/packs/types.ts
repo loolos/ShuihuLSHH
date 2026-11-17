@@ -198,6 +198,8 @@ export interface PackUnitJson {
   hidden?: boolean;
   /** 被押送者的囚车外观；解开绑缚后移除，只影响画面。 */
   prisonCart?: boolean;
+  /** 观战演员：不可行动、不可成为攻击或技能的目标；仍占据自己的格子。 */
+  spectator?: boolean;
   /** 只在对话里出声、不上地图：开局隐藏，say 点名时也不登场（例如景阳冈的酒家） */
   offstage?: boolean;
   /** AI 模式（§8），默认 0 */

@@ -31,7 +31,7 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '柴门招豪客', stages: ['N-add09b', 'Act8-1', 'N-add10', 'N08'] },
   // 负责人 2026-11-15：沧州设毒计、摆脱追骑（及中间的城镇 黄泥冈前）归第九章
   { name: '风雪山神庙', stages: ['Act9-1', 'N09', 'N-add11'] },
-  { name: '青面兽杨志', stages: ['mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
+  { name: '青面兽杨志', stages: ['mainline/daming-duel', 'mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
   { name: '认义东溪村', stages: ['N-add13', 'N11'] },
   { name: '义释晁天王', stages: ['N-add14', 'N12', 'Act13-1'] },
   { name: '石碣村三雄', stages: ['N-add15', 'Act13-2', 'N13', 'Act14-1'] },
