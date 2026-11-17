@@ -19,7 +19,7 @@ export interface SkillDef extends ClassSkill {
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；只是画面 */
-  hitFx?: 'blood' | 'explosion' | 'impact';
+  hitFx?: 'blood' | 'explosion' | 'impact' | 'fire';
   /** 遠程技飞行中的箭加画面效果【新】：fire = 火箭（箭头染成橙红、拖一串火苗，命中处冒一小团火；花荣 穿云贯日，负责人 2026-11-16）；只是画面 */
   arrowFx?: 'fire';
   /** 穿透【新】（遠程技，花荣 穿云贯日，负责人 2026-11-16）：施放点只定方向，从施放者身前一格起整条直线都受击，长 max(area, 到施放点的距离)；箭一路飞到线尾，不停在第一个目标 */
