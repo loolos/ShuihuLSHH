@@ -90,7 +90,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     const mp=u.mp,ev=b.useSkill(u,s,{x:15,y:7});
     const attack=ev.find(e=>e.type==='attack');
     expect(attack?.type==='attack' && attack.hits.map(h=>h.uid)).toEqual([1,3]);
-    expect(u.mp).toBe(mp-35);
+    expect(u.mp).toBe(mp-60);
     const rng=new Rng(7);vi.spyOn(rng,'chance').mockReturnValue(true);vi.spyOn(rng,'next').mockReturnValue(0.5);
     const result=rollAttack(u,b.units[3],s,rng,true);
     expect(result.parts).toHaveLength(3);
