@@ -44,7 +44,7 @@
     },
     {
       "id": "suochao",
-      "class": 69,
+      "class": 71,
       "side": "enemy",
       "x": 10,
       "y": 12,
@@ -55,7 +55,7 @@
     },
     {
       "id": "liangzhongshu",
-      "class": 36,
+      "class": 54,
       "side": "ally",
       "x": 8,
       "y": 3,
@@ -344,6 +344,7 @@
     {
       "on": "start",
       "do": [
+        ["portrait", 71, 32],
         [
           "title",
           "大名府 · 东郭教场"
