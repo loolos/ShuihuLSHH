@@ -95,7 +95,7 @@ export function fxSpots(s: Pick<SkillDef, 'type' | 'pierce'>, from: Cell, at: Ce
   const dir = DIRS[d];
   return cells.map((c) => {
     const ox = c.x - at.x, oy = c.y - at.y;
-    if (s.type === 14 || s.type === 16) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
+    if (s.type === 14 || s.type === 16 || s.type === 17) return { cell: c, ring: Math.max(0, Math.abs((c.x - from.x) * dir.x + (c.y - from.y) * dir.y) - 1) };
     const ring = s.type === 0 || s.type === 1 || s.type === 5 || s.type === 6 || s.type === 15 ? Math.abs(ox * dir.x + oy * dir.y) : Math.abs(ox) + Math.abs(oy);
     return { cell: c, ring };
   });

@@ -50,7 +50,7 @@ export function skillsLearnedAt(u: Unit, data: GameData, level: number): SkillDe
 export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number] {
   if (s === attackSkill(u, data)) return attackRange(u, data);
   // 援气固定相邻一格；四格前冲技只选相邻方向，不由武器射程扩大施放点。
-  if (isAllyChargeSkill(s) || s.type === 15 || s.type === 16) return [s.rangeMin, s.rangeMax];
+  if (isAllyChargeSkill(s) || s.type === 15 || s.type === 16 || s.type === 17) return [s.rangeMin, s.rangeMax];
   const lo = s.rangeMin;
   let hi = s.rangeMax > 0 ? Math.max(lo, s.rangeMax + u.stats.rangeBonus) : s.rangeMax;
   // 上限按「施放点 + 线形范围延伸」算：一线 2 格的技能施放点最远到第 reachCap − 1 格
@@ -90,7 +90,7 @@ export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): n
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
  * - 1：从施放点沿施放方向展开的扇形，第 i 行（从 0 数）向两侧各 floor(i/2) 格，共 size 行（0x40d330）
  * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）
- * - 12 周身技：周围 8 格；13 横扫：面前三格；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格；16 三岔：正前、左右斜前各 size 格【新】
+ * - 12 周身技：周围 8 格；13 横扫：面前三格；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格；16 三岔：正前、左右斜前各 size 格；17 倒锥：近宽远窄，size 行【新】
  * - 其余（3、4、7、8、9、11）：以施放点为中心的菱形，曼哈顿距离 < size；size 0 只含施放点（0x40cde0）
  */
 export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell[] {
@@ -128,6 +128,11 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
       // 前方长方形：从施放者身前一格起往前 size 行，每行宽 3 格
       for (let i = 1; i <= size; i++)
         for (let j = -1; j <= 1; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
+      break;
+    case 17:
+      // 倒锥形：从身前第一排起，半宽为 size - depth，逐排收窄到一点。
+      for (let i = 1; i <= size; i++)
+        for (let j = -(size - i); j <= size - i; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
       break;
     case 16:
       // 三条射线：斜线每向前一格，同时向侧面一格；范围仅由技能等级决定。
