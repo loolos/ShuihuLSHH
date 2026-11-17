@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { alertRadius, planAi } from '../src/rules/ai.ts';
-import { rangedFactor } from '../src/rules/combat.ts';
+import { baseDamage, rangedFactor } from '../src/rules/combat.ts';
 import { buildClasses, TROOP_REACH_CLASSES, TROOP_SKILLS, type GameData } from '../src/rules/data.ts';
 import { GRUNT_CLASSES, OFFICER_CLASSES } from '../src/rules/growth.ts';
 import { castRange, learnedSkills } from '../src/rules/skills.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
+import type { Unit } from '../src/rules/unit.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 
 const skill = (skillId: number, type: number, rangeMax: number, area = 1) => ({
@@ -123,5 +124,23 @@ describe('杂兵「遠程攻擊」最远打到第 3 格（负责人 2026-11-15�
       expect(reach(2), `职业 ${id}`).toBe(3);
     }
     expect(classes[34].skills[0].reachCap).toBeUndefined();
+  });
+});
+
+describe('骑兵气功技伤害', () => {
+  it('普通与必杀均减半，普攻、骑射和其他职业的同源技能不变', () => {
+    const attacker = { classId: 43, x: 0, y: 0, facing: 0, stats: { attack: 100, crit: 10, rangeBonus: 0 } } as Unit;
+    const other = { ...attacker, classId: 85 };
+    const target = { x: 1, y: 0, facing: 0, stats: { defense: 50 } } as never;
+    const qigong = { ...skill(226, 0, 3), name: '氣功技', power: 15 };
+    const before = baseDamage(other, target, qigong);
+    const after = baseDamage(attacker, target, qigong);
+    for (let i = 0; i < 2; i++) {
+      expect(before[i]).toBeGreaterThan(0);
+      expect(after[i]).toBeCloseTo(before[i] * 0.5);
+    }
+    for (const unchanged of [classes[43].skills[0], classes[43].skills.find((s) => s.volley)!]) {
+      expect(baseDamage(attacker, target, unchanged)).toEqual(baseDamage(other, target, unchanged));
+    }
   });
 });
