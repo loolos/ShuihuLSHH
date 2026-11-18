@@ -53,7 +53,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     expect(main.sheets['sprites/likui']).toEqual(jiang.sheets['sprites/likui']);
   });
   it('武松普攻2段、重拳3段、鸳鸯4段：动画真正循环相应次数，命中各落在一次出拳内',()=> {
-    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,50,40],['擒虎镇岳LV2',4,60,50],['擒虎镇岳LV3',5,70,60],['玉环鸳鸯脚',4,40,40]] as const) {
+    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,50,40],['擒虎镇岳LV2',4,60,50],['擒虎镇岳LV3',5,70,60],['玉环鸳鸯脚',4,40,55]] as const) {
       const s=skill('wusong',name),look=main.looks.get(main.classIds.get('wusong')!)!;
       const action=main.sheets[look.sheet].actions[look.actions[s.group+3]];
       expect(attackParts(s)).toHaveLength(cycles);expect(s).toMatchObject({power,mpCost:cost});
@@ -90,7 +90,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     expect(b.affected(u,s,{x:12,y:12}).map(t=>t.uid)).toEqual([1,2,3,4,5]);
     b.units[2].side='ally';expect(b.affected(u,s,{x:12,y:12}).map(t=>t.uid)).toEqual([1,3,4,5]);
     const cost=u.mp,ev=b.useSkill(u,s,{x:12,y:12});const attack=ev.find(e=>e.type==='attack');
-    expect(attack?.type==='attack' && attack.hits.map(h=>h.uid)).toEqual([1,3,4,5]);expect(u.mp).toBe(cost-40);
+    expect(attack?.type==='attack' && attack.hits.map(h=>h.uid)).toEqual([1,3,4,5]);expect(u.mp).toBe(cost-55);
     // Existing skills retain the original four-direction casting rule.
     expect(castCells(board,u,[1,4])).not.toContainEqual({x:12,y:12});
   });
