@@ -1,5 +1,5 @@
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
-import { lateHeroSkills, type AreaOffset } from './late-hero-skills.ts';
+import { heroSkillTiers, lateHeroSkills, type AreaOffset } from './late-hero-skills.ts';
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
@@ -339,7 +339,7 @@ export function unlockHiddenSkills(skills: SkillDef[]): SkillDef[] {
 export function buildClasses(records: ClassRecord[], names: string[], skillNames: string[]): ClassDef[] {
   return records.map((r) => {
     const [attack, defense, hit, agility, crit] = r.stats.map((s) => ({ base: s.base, growth: s.growth }));
-    const own: SkillDef[] = r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
+    const original: SkillDef[] = r.skills.map((s, i) => withChargeDivisor(noHeroHitPenalty(r.id, {
       ...s,
       ...SKILL_OVERRIDES[s.skillId],
       ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
@@ -351,6 +351,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         : SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
       ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
     })));
+    const own = heroSkillTiers(r.id, original);
     const all = [...own, ...(CLASS_EXTRA_SKILLS[r.id] ?? [])];
     return {
       id: r.id,
