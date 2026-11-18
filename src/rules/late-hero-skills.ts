@@ -64,9 +64,19 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
  return out;
 }
 
-/** 两招原有单体技分三级；一级原样，NPC保留自己的原技能。 */
+/** 好汉单体技分三级；按职业与原技能号限定，NPC保留自己的原技能。 */
 export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
  return own.flatMap(s => {
+  if(cls===0&&s.skillId===3){
+   const tiers=[
+    {id:3,level:8,power:40,mp:30,hit:20,stun:15,frames:[7,14,20],weights:[30,50,20]},
+    {id:1304,level:20,power:60,mp:40,hit:30,stun:20,frames:[5,10,15,20],weights:[25,25,25,25]},
+    {id:1305,level:28,power:80,mp:50,hit:40,stun:25,frames:[4,8,12,16,20],weights:[20,20,20,20,20]},
+   ];
+   return tiers.map((t,i)=>({...s,skillId:t.id,soundId:s.soundId??s.skillId,name:`${s.name}LV${i+1}`,learnLevel:t.level,
+    power:t.power,mpCost:t.mp,hitMod:t.hit,stun:t.stun,
+    hits:t.frames.map((frame,k)=>({frame,percent:t.weights[k],dir:0}))}));
+  }
   const chenda=cls===13&&s.skillId===115;
   const xiaoqi=cls===9&&s.skillId===81;
   if(!chenda&&!xiaoqi)return [s];
