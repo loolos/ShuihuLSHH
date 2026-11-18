@@ -170,10 +170,10 @@
       "5": {"classId": 40, "level": 1}
     },
     "act5-2": {
-      "9": {"classId": 65, "level": 10},
-      "10": {"classId": 44, "level": 9},
-      "11": {"classId": 44, "level": 9},
-      "12": {"classId": 44, "level": 9}
+      "9": {"classId": 45, "level": 10},
+      "10": {"classId": 45, "level": 9},
+      "11": {"classId": 45, "level": 9},
+      "12": {"classId": 45, "level": 9}
     },
     "act5-3": {
       "0": {"classId": 57, "level": 1},
