@@ -172,6 +172,7 @@ export class BattleScene extends Phaser.Scene {
     if (!loaded) throw new Error(`找不到地图 ${this.mapName}`);
     const { map } = loaded;
     this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
+    this.ui.spectators = this.battle.spectators;
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
