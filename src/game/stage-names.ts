@@ -35,7 +35,7 @@ export const STAGE_NAMES: Record<string, string> = {
   'n-add06': '此路是我开',
   train1: '延安府练武',
   'n-add07': '反劫剪径贼',
-  'act5-2': '酒楼结豪杰',
+  'act5-2': '柳下逢知己',
   'act5-3': '岳庙逢恶少',
   n05: '痛打高衙内',
   'act6-1': '富安献毒计',
@@ -113,7 +113,7 @@ export interface StageLabel {
 export function stageLabel(title: string, mapName: string): StageLabel {
   const ch = chapterOf(mapName) || Number(/第\s*(\d+)\s*章/.exec(title)?.[1] ?? 0);
   const battle = /戰役\s*(\d+)/.exec(title);
-  const kind = battle ? `战役${cnNumber(Number(battle[1]))}` : /訓練/.test(title) ? '训练' : '剧情';
+  const kind = mapName.toLowerCase() === 'act5-2' ? '战役' : battle ? `战役${cnNumber(Number(battle[1]))}` : /訓練/.test(title) ? '训练' : '剧情';
   const name = STAGE_NAMES[mapName.toLowerCase()] ?? (title || mapName);
   const chapterLabel = labelOfChapter(ch) || (ch ? `第${cnNumber(ch)}章` : '');
   const short = `${kind} ${name}`;

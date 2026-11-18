@@ -1,3 +1,4 @@
+import { isWillowEncounter, WILLOW_MAP, willowUnits, willowBlocks } from './willow-encounter.ts';
 // 从原版文件组装 GameData 与 StageInput（浏览器与 Node 共用）。
 import { parseAct } from '../formats/act.ts';
 import { readExeTables } from '../formats/exe.ts';
@@ -154,6 +155,7 @@ export function stageMapName(map: { base?: string; custom?: string; crop?: reado
 
 /** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径（自拼地图是一个不存在的路径，所以也没有 .act） */
 export function loadStageMap(files: FileSource, name: string): { file: string; map: MapData } | undefined {
+  if (isWillowEncounter(name)) return loadStageMap(files, WILLOW_MAP);
   const [base, crop] = name.split('@');
   let file: string | undefined;
   let map: MapData | undefined;
@@ -182,11 +184,20 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
   const { file: mapFile, map } = loaded;
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
-  const actFile = mapFile.replace(/\.map$/i, '.act');
+  const actFile = isWillowEncounter(stage) ? findStageFile(files, stage, '.act')! : mapFile.replace(/\.map$/i, '.act');
   const pabFile = findStageFile(files, stage, '.pab');
   const pasFile = findStageFile(files, stage, '.pas');
   // 后期关卡追加的敌人和增援（stage-tune.ts）
-  const units = files.has(actFile) ? tuneUnits(stage, adjustEnemies(stage, parseAct(files.get(actFile), actFile)), board) : [];
+  const original = files.has(actFile) ? parseAct(files.get(actFile), actFile) : [];
+  const units = isWillowEncounter(stage) ? adjustEnemies(stage, willowUnits(original)) : tuneUnits(stage, adjustEnemies(stage, original), board);
+  if (isWillowEncounter(stage)) {
+    const own = units;
+    const header = parsePasHeader(files.get(pabFile!));
+    return { name: stage, board, units: own, blocks: willowBlocks(), data, header: { ...header, act: 0 }, seed: opts.seed, text: opts.text, party: opts.party, joinLevel: opts.joinLevel,
+      names: Object.fromEntries(own.filter(u=>u.side==='enemy').map((u,i)=>[u.index,i?'街头泼皮':'泼皮头目'])),
+      spectators: own.filter(u=>[0,3,13,15,5].includes(u.type)).map(u=>u.index),
+      clearGold: 0 };
+  }
   return {
     name: stage,
     // 黄泥冈沿用原随行演员，分别承担军汉、虞候和谢都管对白，不另加战斗单位。

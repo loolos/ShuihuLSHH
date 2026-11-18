@@ -1,10 +1,11 @@
+import { isWillowEncounter } from '../rules/willow-encounter.ts';
 // 从原版文件解码出的共享资源：调色板、图块库、人物动画库、EXE 表、道具表。
 import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/image.ts';
 import { readExeTables, type ExeTables } from '../formats/exe.ts';
 import { parseGoods, type Item } from '../formats/goo.ts';
 import { parseAct } from '../formats/act.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
-import { buildT2S, loadGameData, loadStageMap } from '../rules/load.ts';
+import { buildT2S, loadGameData, loadStage, loadStageMap } from '../rules/load.ts';
 import { withItemOverrides, type GameData, type SkillDef } from '../rules/data.ts';
 import { FIXED_FX, fxGroups } from './effects.ts';
 import frameAlias from '../data/frame-alias.json' with { type: 'json' };
@@ -144,7 +145,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
       if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.span(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
     });
   const actFile = mapFile.replace(/\.map$/i, '.act');
-  const classes = new Set(classesOverride ?? [0]);
+  const classes = new Set(classesOverride ?? (isWillowEncounter(stage) ? loadStage(files,assets.data,stage).units.map(u=>u.type) : [0]));
   if (!classesOverride && files.has(actFile))
     for (const a of parseAct(files.get(actFile), actFile)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);
   for (const cls of classes) {

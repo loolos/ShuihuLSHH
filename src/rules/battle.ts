@@ -69,6 +69,8 @@ export type BattleEvent =
   | { type: 'message'; text: string }
   | { type: 'subtitle'; text: string }
   /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
+  | { type: 'uproot'; cells: { x: number; y: number }[] }
+  | { type: 'flourish'; uid: number; facing: number }
   | { type: 'shot'; uid: number; x: number; y: number; facing: number; target?: number; text: string }
   | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
   | { type: 'tint'; tint: string }
@@ -1558,6 +1560,16 @@ export class Battle {
           this.emit({ type: 'act', uid: sel.uid, action, facing: sel.facing });
           break;
         }
+        // 拔树在规则层同步清除占格，演出由场景完成；不修改原地图资源。
+        case 118: {
+          const cells = (op.args?.cells ?? []).filter(c=>this.board.inBounds(c.x,c.y));
+          for (const c of cells) this.board.blocked[c.y*this.board.width+c.x]=0;
+          this.emit({type:'uproot',cells});
+          break;
+        }
+        case 119:
+          if(sel?.present&&sel.alive)this.emit({type:'flourish',uid:sel.uid,facing:sel.facing});
+          break;
         // 117 剧情射箭：仅记录演出，不走战斗攻击、耗气或经验结算。
         case 117: {
           if (!sel?.present || !sel.alive) break;
