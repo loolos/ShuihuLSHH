@@ -1,4 +1,5 @@
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
+import { lateHeroSkills, type AreaOffset } from './late-hero-skills.ts';
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
@@ -6,6 +7,10 @@ import { GRUNT_CLASSES, OFFICER_CLASSES, statAt, tierGear } from './growth.ts';
 
 export interface SkillDef extends ClassSkill {
   name: string;
+  /** 自有后期技能：落点相对坐标 [横向, 前向]，随方向旋转；可含空心范围。 */
+  areaPattern?: readonly AreaOffset[];
+  /** 自有技能特效染色；复用原版特效组，不影响结算。 */
+  fxTint?: number;
   /** 出手音效用的技能号（s<号>.mp3）；扩展包技能借原版技能的声音，不填就用 skillId */
   soundId?: number;
   /** 指定技能可在曼哈顿距离内选点；默认保持原版四向直线。 */
@@ -346,6 +351,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         : SKILL_NAME_OVERRIDES[s.skillId] ?? skillNames[s.skillId] ?? `#${s.skillId}`,
       ...(i === 0 && BASIC_ATTACK_HITS[r.id] ? { hits: BASIC_ATTACK_HITS[r.id].map((h) => ({ ...h })) } : {}),
     })));
+    const all = [...own, ...(CLASS_EXTRA_SKILLS[r.id] ?? [])];
     return {
       id: r.id,
       name: names[r.id] ?? `#${r.id}`,
@@ -362,6 +368,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       defaultItems: r.defaultItems,
       skills: unlockHiddenSkills([
         ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
+        ...lateHeroSkills(r.id, all),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
       ]),
     };

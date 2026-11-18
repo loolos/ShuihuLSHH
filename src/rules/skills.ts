@@ -50,7 +50,7 @@ export function skillsLearnedAt(u: Unit, data: GameData, level: number): SkillDe
 export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number] {
   if (s === attackSkill(u, data)) return attackRange(u, data);
   // 援气固定相邻一格；四格前冲技只选相邻方向，不由武器射程扩大施放点。
-  if (isAllyChargeSkill(s) || s.type === 15 || s.type === 16 || s.type === 17) return [s.rangeMin, s.rangeMax];
+  if (s.areaPattern || isAllyChargeSkill(s) || s.type === 15 || s.type === 16 || s.type === 17) return [s.rangeMin, s.rangeMax];
   const lo = s.rangeMin;
   let hi = s.rangeMax > 0 ? Math.max(lo, s.rangeMax + u.stats.rangeBonus) : s.rangeMax;
   // 上限按「施放点 + 线形范围延伸」算：一线 2 格的技能施放点最远到第 reachCap − 1 格
@@ -98,6 +98,11 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
   const out: Cell[] = [];
   const add = (x: number, y: number) => board.inBounds(x, y) && out.push({ x, y });
   const size = Math.max(1, s.area);
+  if (s.areaPattern) {
+    const side = { x: -dir.y, y: dir.x };
+    for (const [x,y] of s.areaPattern) add(at.x + side.x*x + dir.x*y, at.y + side.y*x + dir.y*y);
+    return out;
+  }
   if (s.pierce) {
     for (let i = 1; i <= pierceLength(from, s, at); i++) add(from.x + dir.x * i, from.y + dir.y * i);
     return out;

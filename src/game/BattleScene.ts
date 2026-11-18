@@ -1397,6 +1397,7 @@ export class BattleScene extends Phaser.Scene {
                     const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(sp.cell.x, sp.cell.y, 10));
                     s.play(anim);
                     // 火箭：飞行中的箭（遠程技第一段）染成橙红，每到一格在箭身上冒几簇火苗
+                    if (skill.fxTint !== undefined) s.setTint(skill.fxTint);
                     if (pi === 0 && fx?.projectile && skill.arrowFx === 'fire') {
                       s.setTint(0xffa060);
                       const c = s.getCenter();
