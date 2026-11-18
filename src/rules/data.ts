@@ -1,3 +1,4 @@
+import { balanceHeroAoe } from './aoe-balance.ts';
 // 规则引擎使用的数据：由原版解析结果整理而来，不依赖 Phaser。
 import { heroSkillTiers, lateHeroSkills, type AreaOffset } from './late-hero-skills.ts';
 import type { ClassRecord, ClassSkill, SkillHit } from '../formats/hum.ts';
@@ -380,7 +381,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...lateHeroSkills(r.id, all),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
-      ]),
+      ]).map(s => balanceHeroAoe(r.id, s)),
     };
   });
 }

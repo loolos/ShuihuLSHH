@@ -647,7 +647,7 @@
             0.8875
         ],
         "power": 40,
-        "mpCost": 40,
+        "mpCost": 55,
         "learnLevel": 20,
         "type": 3,
         "rangeMin": 1,
@@ -1399,7 +1399,7 @@
         "from": 222,
         "anim": 0,
         "learnLevel": 24,
-        "mpCost": 50,
+        "mpCost": 60,
         "area": 8,
         "pierce": true,
         "power": 60,

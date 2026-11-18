@@ -135,7 +135,7 @@ describe.skipIf(!has)('N01', () => {
 
   it('耗气审阅调整只改好汉，敌方版好汉照原版', () => {
     const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
-    expect([by(3, 40).mpCost, by(16, 138).mpCost, by(5, 62).mpCost]).toEqual([65, 70, 135]); // 龍騰九天、佛光普照、奇門遁甲LV3
+    expect([by(3, 40).mpCost, by(16, 138).mpCost, by(5, 62).mpCost]).toEqual([65, 70, 115]); // 龍騰九天、佛光普照、奇門遁甲LV3
     expect([48, 49, 50].map((id) => [by(4, id).mpCost, by(4, id).power, by(4, id).hitMod])).toEqual([[30, 40, 10], [30, 50, 20], [30, 60, 30]]); // 監守自盜LV1–3
     expect([by(13, 115).power, by(13, 115).mpCost, by(13, 115).hits.length]).toEqual([40, 20, 2]); // 黑虎偷心
     expect([by(3, 34).hits.length, by(3, 35).hits.length]).toEqual([2, 3]); // 龍爭虎鬥LV2 / LV3

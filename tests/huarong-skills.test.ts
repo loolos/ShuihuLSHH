@@ -36,7 +36,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     const man=openLib(fs.readFileSync(path.join(DATA,'Data/Man.lib')));
     for (let tier=1;tier<=3;tier++) {
       const s=skill(`穿云贯日LV${tier}`);
-      expect(s).toMatchObject({power:tier*20,mpCost:20+10*tier,critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8,area:8,pierce:true,castSpeed:2,arrowFx:'fire'});
+      expect(s).toMatchObject({power:tier*20,mpCost:[30,40,60][tier-1],critMod:10,castCycles:tier+1,rangeMin:1,rangeMax:8,area:8,pierce:true,castSpeed:2,arrowFx:'fire'});
       expect(attackParts(s)).toHaveLength(tier+1);
       expect(skillFx(s)?.projectile).toBe(true); // 箭逐格飞出，arrowFx 火苗跟着箭走
       expect(s.hits.reduce((n,h)=>n+h.percent,0)).toBe(100);
