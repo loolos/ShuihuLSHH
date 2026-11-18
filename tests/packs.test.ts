@@ -1515,12 +1515,24 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     for(const u of s.units.filter(u=>u.side==='enemy')){
       // 等距投影：x-y越大越靠右，x+y较小越靠上。
       expect(u.x-u.y,u.id).toBeGreaterThanOrEqual(3);
+      expect(u.facing,u.id).toBe(2);
       // 必须明显在三将上方，不能只靠x-y把追兵推到画面纯右侧。
       expect(u.x+u.y,u.id).toBeLessThanOrEqual(13);
       expect(u.x+u.y,u.id).toBeLessThanOrEqual(Math.min(...defenders.map(d=>d.x+d.y))-4);
       expect(Math.min(...defenders.map(d=>Math.abs(u.x-d.x)+Math.abs(u.y-d.y))),u.id).toBeGreaterThanOrEqual(8);
     }
     expect([...new Set(s.units.filter(u=>u.side==='enemy').map(u=>u.class))].sort()).toEqual([32,33,34,38,43]);
+    // 朝三将的来路是画面左下；用x-y校验每波前锋、都头、后排的纵深顺序。
+    for(const wave of ['w1-','w2-','w3-']){
+      const units=s.units.filter(u=>u.id.startsWith(wave));
+      const front=units.filter(u=>u.class===32||u.class===33).map(u=>u.x-u.y);
+      const command=units.filter(u=>u.class===38).map(u=>u.x-u.y);
+      const bows=units.filter(u=>u.class===34).map(u=>u.x-u.y);
+      expect(Math.max(...front)).toBeLessThan(Math.min(...command));
+      expect(Math.max(...command)).toBeLessThan(Math.min(...bows));
+      for(const cavalry of units.filter(u=>u.class===43))expect(cavalry.x-cavalry.y).toBeGreaterThan(Math.max(...command));
+    }
+
     expect([b.board.width,b.board.height]).toEqual([16,20]);
     const seen=new Set<string>(),field=b.board.distanceField([{x:7,y:10}]);
     for(const u of s.units){expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(seen.has(`${u.x},${u.y}`),u.id).toBe(false);seen.add(`${u.x},${u.y}`);expect(Number.isFinite(field[u.y*16+u.x]),u.id).toBe(true);}
