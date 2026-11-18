@@ -1653,7 +1653,9 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const get=(id:string)=>b.units[s.units.findIndex(u=>u.id===id)];
     const hx=get('huangxin'),qm=get('qinming');
     expect([hx.x,hx.y]).toEqual([14,5]);
-    for(const u of s.units.filter(u=>u.side==='player')){expect(u.x-u.y).toBeLessThan(-15);expect(u.x+u.y).toBeGreaterThan(30);}
+    for(const u of s.units.filter(u=>u.side==='player'||u.side==='ally'&&!u.hidden)){expect(Math.abs(u.x-20)+Math.abs(u.y-28)).toBeLessThanOrEqual(4);expect(u.x-u.y).toBeLessThanOrEqual(-6);expect(u.x+u.y).toBeGreaterThanOrEqual(46);}
+    expect([qm.x,qm.y]).toEqual([20,28]);
+    for(const u of s.units.filter(u=>u.side==='enemy'&&!u.hidden)){expect(u.x).toBeGreaterThanOrEqual(12);expect(u.y).toBeLessThanOrEqual(22);}
     const field=b.board.distanceField([qm]),seen=new Set<string>();
     for(const u of b.units){expect(b.board.passable(u.x,u.y),u.name).toBe(true);expect(Number.isFinite(field[u.y*36+u.x]),u.name).toBe(true);expect(seen.has(`${u.x},${u.y}`)).toBe(false);seen.add(`${u.x},${u.y}`);}
     const guards=['huangxin',...Array.from({length:9},(_,i)=>`hx-${i+1}`)].map(get);
@@ -1722,9 +1724,9 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       spot(hx.x - 1, hx.y);
       expect(ev().some((e) => e.type === 'say' && e.text.includes('岂肯随你落草'))).toBe(true);
       expect(hx.side).toBe('enemy');
-      spot(6, 26); spot(hx.x - 1, hx.y);
+      spot(20, 28); spot(hx.x - 1, hx.y);
       expect(hx.side, '没伤到一半不降').toBe('enemy');
-      spot(6, 26);
+      spot(20, 28);
       hx.hp = Math.floor(hx.stats.maxHp * 0.4); check(b);
       spot(hx.x - 1, hx.y);
       expect(hx.side).toBe('ally');
