@@ -16,7 +16,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('单体技能数值修
    [3,33,25,15,10,1],[3,34,45,35,20,2],[3,35,65,55,30,3],
    [7,65,30,20,10,2],[7,66,40,35,10,3],[7,67,50,40,10,4],
    [8,74,40,40,10,3],[17,146,55,40,30,2],[11,99,100,55,30,3],
-   [14,123,100,80,40,4],[16,138,80,50,30,3],
+   [14,123,100,80,40,4],[16,138,80,50,30,3],[10,1007,25,30,10,3],[12,106,60,50,30,5],[5,56,60,20,30,4],
   ]){
    const s=data.classes[cls].skills.find(s=>s.skillId===id)!;
    expect(s).toMatchObject({power,mpCost:mp,hitMod:hit,area:1});expect(attackParts(s)).toHaveLength(count);
@@ -26,6 +26,8 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('单体技能数值修
    expect(baseDamage(u,target,s)).toEqual(baseDamage(u,target,{...s,hits:[{frame:1,percent:100,dir:0}]}));
   }
   expect(data.classes[14].skills.find(s=>s.skillId===123)).toMatchObject({critMod:50,stun:15});
+  expect(data.classes[12].skills.find(s=>s.skillId===106)).toMatchObject({critMod:40,stun:10});
+  expect(data.classes[10].skills.find(s=>s.skillId===1007)).toMatchObject({stun:60,critMod:5,learnLevel:24});
   expect(data.classes[16].skills.find(s=>s.skillId===138)).toMatchObject({stun:40});
   const z=data.classes[rt.classIds.get('zhangshun')!].skills.find(s=>s.name==='浪里钻')!;expect(z.mpCost).toBe(45);
  });

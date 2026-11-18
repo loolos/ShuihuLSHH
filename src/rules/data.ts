@@ -140,6 +140,8 @@ const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) =
  */
 export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   // 单体技能本轮调整：保留原范围与解锁，仅好汉职业生效。
+  56: { hitMod: 30 }, // 朱武 诡计多端
+  106: { power: 60, hits: hitsAt([6, 8, 12, 15, 18], [20, 20, 20, 20, 20]) }, // 晁盖 天王举鼎式：五段
   7: { power: 100, mpCost: 80 }, // 武龙 一夫当关
   20: { mpCost: 40, hits: hitsAt([11, 16, 21], [30, 30, 40]) }, // 公孙胜 神妙御剑心法
   33: { hitMod: 10 },
@@ -247,7 +249,7 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 吳用（24 级入队）：回气借本人那组一帧的姿势（第 1 组，其它好汉的集气技也是一帧）；单体昏迷借普攻动作（第 0 组），第 28 组蓝色光环特效（原版没有技能用）
   10: [
     extraSkill({ name: '運籌帷幄', skillId: 1006, type: 8, group: 1, learnLevel: 24, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0, hits: [] }),
-    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
+    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 60, effect: 29, soundId: 86, hits: hitsAt([3, 5, 7], [30, 30, 40]) }),
   ],
   // 晁蓋（24 级左右入队）：回旋技，借天王舉鼎式的旋身腾跃动作（第 1 组，原版三个击打帧 8/12/18），拆三段 30/30/40%；
   // 第 43 组白色打击火花（小、9 帧；负责人 2026-11-15 嫌第 34 组旋风太复杂）；数值按林沖 風雪交加（13 级：威力 30 / 气 50，约攻击 26%、气条 28%）折算到 24 级
