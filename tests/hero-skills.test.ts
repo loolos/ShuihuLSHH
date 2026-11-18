@@ -20,7 +20,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
   const board = new Board(31,31);
   const from = {x:15,y:15};
   const names: Record<string,string[]> = {
-    wusong: ['伏虎拳','横江断浪LV1','擒虎镇岳','抱元归息','横江断浪LV2','玉环鸳鸯脚','横江断浪LV3','横江断浪LV4'],
+    wusong: ['伏虎拳','横江断浪LV1','擒虎镇岳LV1','擒虎镇岳LV2','擒虎镇岳LV3','抱元归息','横江断浪LV2','玉环鸳鸯脚','横江断浪LV3','横江断浪LV4'],
     likui: ['双斧开山','狂澜裂岳LV1','裂石连斩','沉息蓄锋','狂澜裂岳LV2','旋风卷岳','狂澜裂岳LV3','狂澜裂岳LV4'],
   };
   const battle = (who: string, level=28) => new Battle({
@@ -31,7 +31,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
   it('两人按1/4/8/12/16/20/24/28学习，最高一级替换旧级，低等级不提前拥有集气',()=> {
     for(const who of ['wusong','likui']) {
       const sk=skills(who);expect(sk.map(s=>s.name)).toEqual(names[who]);
-      expect(sk.map(s=>s.learnLevel)).toEqual([1,4,8,12,16,20,24,28]);
+      expect(sk.map(s=>s.learnLevel)).toEqual(who==='wusong'?[1,4,8,18,28,12,16,20,24,28]:[1,4,8,12,16,20,24,28]);
       for(let lv=1;lv<=30;lv++) {
         const u={classId:main.classIds.get(who)!,level:lv} as Unit;
         const learned=learnedSkills(u,main.data);
@@ -39,8 +39,10 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
         expect(new Set(learned.map(s=>skillBaseName(s.name))).size).toBe(learned.length);
         expect(learned.filter(s=>s.type===8).length).toBe(lv>=12?1:0);
         const tier=lv>=28?4:lv>=24?3:lv>=16?2:lv>=4?1:0;
-        expect(learned.filter(s=>s.name.includes('LV')).map(s=>s.name)).toEqual(tier?[`${who==='wusong'?'横江断浪':'狂澜裂岳'}LV${tier}`]:[]);
-        expect(skillsLearnedAt(u,main.data,lv).length).toBe([4,8,12,16,20,24,28].includes(lv)?1:0);
+        const expected=tier?[`${who==='wusong'?'横江断浪':'狂澜裂岳'}LV${tier}`]:[];
+        if(who==='wusong'&&lv>=8)expected.push(`擒虎镇岳LV${lv>=28?3:lv>=18?2:1}`);
+        expect(learned.filter(s=>s.name.includes('LV')).map(s=>s.name)).toEqual(expected);
+        expect(skillsLearnedAt(u,main.data,lv).length).toBe(who==='wusong'&&lv===28?2:([4,8,12,16,20,24,28].includes(lv)||(who==='wusong'&&lv===18))?1:0);
       }
       expect(learnedSkills({classId:main.classIds.get(who)!,level:28} as Unit,main.data)).toHaveLength(4);
     }
@@ -51,7 +53,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     expect(main.sheets['sprites/likui']).toEqual(jiang.sheets['sprites/likui']);
   });
   it('武松普攻2段、重拳3段、鸳鸯4段：动画真正循环相应次数，命中各落在一次出拳内',()=> {
-    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳',3,60,60],['玉环鸳鸯脚',4,40,40]] as const) {
+    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,50,40],['擒虎镇岳LV2',4,60,50],['擒虎镇岳LV3',5,70,60],['玉环鸳鸯脚',4,40,40]] as const) {
       const s=skill('wusong',name),look=main.looks.get(main.classIds.get('wusong')!)!;
       const action=main.sheets[look.sheet].actions[look.actions[s.group+3]];
       expect(attackParts(s)).toHaveLength(cycles);expect(s).toMatchObject({power,mpCost:cost});
@@ -65,7 +67,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
         expect(totalMs).toBeLessThan(2500);
       }
     }
-    expect(skill('wusong','擒虎镇岳').stun).toBe(30);
+    expect(skill('wusong','擒虎镇岳LV3').stun).toBe(30);
   });
   it('横江断浪各级恒定+20、2段，方向锥形纵深3/4/5/6，自己和身后不在范围',()=> {
     for(let tier=1;tier<=4;tier++) {

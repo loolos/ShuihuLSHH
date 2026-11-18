@@ -182,6 +182,36 @@
     "ms": 80,
     "cycles": 2
   }
-}
-}
+},
+  "punch-four": {
+   "source": "Punch_Jab × 4",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 60,
+    "cycles": 4
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 60,
+    "cycles": 4
+   }
+  },
+  "punch-five": {
+   "source": "Punch_Jab × 5",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 50,
+    "cycles": 5
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 50,
+    "cycles": 5
+   }
+  }
+ }
 }

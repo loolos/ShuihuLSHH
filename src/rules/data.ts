@@ -135,18 +135,25 @@ const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) =
 
 /**
  * 耗气审阅后的调整（技能号 → 字段），只用于好汉职业（职业号 < 18）；敌方版好汉照原版【新】（负责人 2026-11-14）。
- * 在 SKILL_OVERRIDES 之后、noHeroHitPenalty 之前合并；改了威力的技能同时把命中修正写 0，威力就是实际值。
+ * 在 SKILL_OVERRIDES 之后、noHeroHitPenalty 之前合并；正命中修正独立计算，未覆盖的负命中仍按好汉规则折算威力。
  * 依据：按期望伤害折成"几次普通攻击"，回气一回合回半条气，单体技原来要 50–100% 气条却只有 1.5–2.2 次普攻。
  */
 export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
+  // 单体技能本轮调整：保留原范围与解锁，仅好汉职业生效。
+  56: { hitMod: 30, mpCost: 40 }, // 朱武 诡计多端
+  106: { power: 60, hits: hitsAt([6, 8, 12, 15, 18], [20, 20, 20, 20, 20]) }, // 晁盖 天王举鼎式：五段
+  7: { power: 100, mpCost: 80 }, // 武龙 一夫当关
+  20: { mpCost: 40, hits: hitsAt([11, 16, 21], [30, 30, 40]) }, // 公孙胜 神妙御剑心法
+  33: { hitMod: 10 },
+  65: { hits: hitsAt([12, 23], [40, 60]) }, // 冲太岁LV1，两段
   86: { critMod: 10 }, // 吳用普攻「暗度陳倉」必杀修正 +20 → +10；敌方版吴用保留原值。
   // 公孫勝 回心咒：原版只回自己 1/3 体力（100 / 200 气）→ 以自己为中心的范围回复，耗气不变
   26: { area: 3, power: 2 }, // LV1：菱形半径 2（13 格），回 1/2
   27: { area: 4, power: 1 }, // LV2：菱形半径 3（25 格），回满
-  // 白勝 監守自盜LV1–3：仅此三阶沿用花荣100%→60%的距离缩放；已有耗气、威力、命中不变。
-  48: { mpCost: 5, power: 40, hitMod: 0, rangedDamage: [1, 0.6] },
-  49: { mpCost: 5, power: 50, hitMod: 0, rangedDamage: [1, 0.6] },
-  50: { mpCost: 5, power: 60, hitMod: 0, rangedDamage: [1, 0.6] },
+  // 白勝 監守自盜LV1–3：仅此三阶沿用花荣100%→60%的距离缩放；耗气统一30，命中+10/+20/+30，1/2/3段，原威力不变。
+  48: { mpCost: 30, power: 40, hitMod: 10, rangedDamage: [1, 0.6], hits: hitsAt([20], [100]) },
+  49: { mpCost: 30, power: 50, hitMod: 20, rangedDamage: [1, 0.6], hits: hitsAt([12, 20], [40, 60]) },
+  50: { mpCost: 30, power: 60, hitMod: 30, rangedDamage: [1, 0.6], hits: hitsAt([6, 13, 20], [30, 30, 40]) },
   47: { mpCost: 15 }, // 白勝 窮鼠噬貓 50 → 15（原版已是三段 20/20/60%）
   // 陳達 黑虎偷心：威力 +20（原版 30、命中 −10 → 实际 20 → 40），耗气 20 不变；
   // 两段：跃起挥枪（第 12 帧）40% + 落地突刺（第 23 帧，原版命中帧）60%
@@ -156,21 +163,21 @@ export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   // 撑槳腾空（第 18 帧，原版命中帧）、空中挥槳横扫（第 25 帧）、落下飞踢（第 28 帧），30% / 30% / 40%；威力、耗气不变
   81: { hits: hitsAt([18, 25, 28], [30, 30, 40]) },
   91: { stun: 40 }, // 吳用 星羅棋布LV1：加昏迷 40%，耗气不变
-  40: { mpCost: 65 }, // 史進 龍騰九天 210（压到 159）→ 65
+  40: { mpCost: 65, power: 100, hits: hitsAt([4, 6, 8, 10, 12, 15], [15, 15, 15, 15, 20, 20]) }, // 史进 龙腾九天：威力100，六段，耗气65
   // 史進 龍爭虎鬥LV2 / LV3：耗气 60 → 35、130 → 55；出手动作是翻身飞踢（第 18 帧落地）
-  34: { mpCost: 35, hits: hitsAt([12, 18], [40, 60]) }, // 两段：空中翻身 + 落地
-  35: { mpCost: 55, hits: hitsAt([9, 13, 18], [30, 30, 40]) }, // 三段：扑出、空中翻身、落地
-  138: { mpCost: 50 }, // 魯智深 佛光普照 170 → 50
+  34: { mpCost: 35, hitMod: 20, hits: hitsAt([12, 18], [40, 60]) }, // 两段：空中翻身 + 落地
+  35: { mpCost: 55, hitMod: 30, hits: hitsAt([9, 13, 18], [30, 30, 40]) }, // 三段：扑出、空中翻身、落地
+  138: { mpCost: 70, power: 80, hitMod: 30 }, // 鲁智深 佛光普照：威力80、命中+30，耗气70
   136: { mpCost: 40 }, // 魯智深 殺身成佛 60 → 40
-  123: { mpCost: 65 }, // 楊志 千刀萬剮 150 → 65
+  123: { mpCost: 80, power: 100, hits: hitsAt([6, 12, 20, 27], [25, 25, 25, 25]) }, // 杨志 千刀万剮：威力100，四段，耗气80
   122: { mpCost: 45 }, // 楊志 快刀斬亂麻 100 → 45
-  99: { mpCost: 70 }, // 林沖 策馬入林 140 → 70
+  99: { mpCost: 55, power: 100 }, // 林冲 策马入林：威力100，耗气55
   98: { mpCost: 35 }, // 林沖 義憤填膺 80 → 35
-  66: { mpCost: 35 }, // 阮小二 沖太歲LV2 70 → 35
-  67: { mpCost: 40 }, // 阮小二 沖太歲LV3 110 → 40
+  66: { mpCost: 35, hits: hitsAt([10, 16, 23], [30, 30, 40]) }, // 阮小二 沖太歲LV2 70 → 35
+  67: { mpCost: 40, hits: hitsAt([6, 12, 18, 23], [25, 25, 25, 25]) }, // 阮小二 沖太歲LV3 110 → 40
   69: { mpCost: 30 }, // 阮小二 天羅地網LV1（单格）70 → 30
-  74: { mpCost: 55 }, // 阮小五 絕地逢生 80 → 55
-  146: { mpCost: 60 }, // 劉唐 百鬼夜行 100 → 60
+  74: { mpCost: 40 }, // 阮小五 绝地逢生：耗气40
+  146: { mpCost: 40 }, // 刘唐 百鬼夜行：耗气40
   // 朱武 奇門遁甲LV1–3（扇形 8 / 13 / 18 格）范围大、耗气少：40 / 55 / 70 → 90 / 105 / 135
   60: { mpCost: 90 },
   61: { mpCost: 105 },
@@ -242,7 +249,7 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 吳用（24 级入队）：回气借本人那组一帧的姿势（第 1 组，其它好汉的集气技也是一帧）；单体昏迷借普攻动作（第 0 组），第 28 组蓝色光环特效（原版没有技能用）
   10: [
     extraSkill({ name: '運籌帷幄', skillId: 1006, type: 8, group: 1, learnLevel: 24, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0, hits: [] }),
-    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 30, effect: 29, soundId: 86, hits: [{ frame: 7, percent: 100, dir: 0 }] }),
+    extraSkill({ name: '調虎離山', skillId: 1007, type: 6, group: 0, learnLevel: 24, mpCost: 30, power: 25, rangeMax: 2, hitMod: 10, critMod: 5, stun: 60, effect: 29, soundId: 86, hits: hitsAt([3, 5, 7], [30, 30, 40]) }),
   ],
   // 晁蓋（24 级左右入队）：回旋技，借天王舉鼎式的旋身腾跃动作（第 1 组，原版三个击打帧 8/12/18），拆三段 30/30/40%；
   // 第 43 组白色打击火花（小、9 帧；负责人 2026-11-15 嫌第 34 组旋风太复杂）；数值按林沖 風雪交加（13 级：威力 30 / 气 50，约攻击 26%、气条 28%）折算到 24 级
@@ -343,6 +350,8 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
       ...s,
       ...SKILL_OVERRIDES[s.skillId],
       ...(r.id < HERO_CLASS_COUNT ? HERO_SKILL_OVERRIDES[s.skillId] : undefined),
+      // 杜迁擎天连环：仅本职业提高为4段和命中+40。
+      ...(r.id === 69 && s.skillId === 203 ? { hitMod: 40, hits: hitsAt([4, 7, 10, 14], [25, 25, 25, 25]) } : {}),
       // 模板普攻默认无必杀修正，仅刺客保留最多 +5；特殊技仍封顶 +5，其他职业不受影响。
       ...(GRUNT_CLASSES.has(r.id) || OFFICER_CLASSES.has(r.id) ? { critMod: i === 0 && r.id !== 66 ? 0 : Math.min(5, SKILL_OVERRIDES[s.skillId]?.critMod ?? s.critMod) } : {}),
       // 縣尉同号气功分开命名，避免范围招式被同名直线技覆盖。
