@@ -1665,8 +1665,9 @@ export class Battle {
           if (!sel || !op.text) break;
           sel.side = op.text as Unit['side'];
           sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : this.spectators.has(sel.uid) ? (sel.side === 'ally' ? '旁观' : '归队') : sel.side === 'enemy' ? '倒戈' : '歸順' });
-          this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : this.spectators.has(sel.uid) ? (sel.side === 'ally' ? '观战' : '归队') : sel.side === 'enemy' ? '倒戈' : '歸順' });
+          // 观战/归队不换模型，避免重复播放逐人淡出淡入。
+          if (!this.spectators.has(sel.uid)) this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
         }
         // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）

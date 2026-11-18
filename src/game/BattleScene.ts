@@ -1027,6 +1027,21 @@ export class BattleScene extends Phaser.Scene {
     try {
       for (let i = 0; i < events.length; i++) {
         const e = events[i];
+        // 同伴一起观战/归队：不逐人移动镜头、淡出淡入或串行等待。
+        if (!this.fast && !this.ui.skipping && e.type === 'status' && this.battle.spectators.has(e.uid) && (e.text === '观战' || e.text === '归队')) {
+          const group = [e];
+          while (true) {
+            const next = events[i + 1];
+            if (next?.type !== 'status' || next.text !== e.text || !this.battle.spectators.has(next.uid)) break;
+            group.push(next); i++;
+          }
+          for (const notice of group) {
+            const v = this.vs(this.battle.unit(notice.uid)!);
+            this.float(v.x, v.y, this.assets.tr(notice.text), '#c080ff', 0, 0, 700);
+          }
+          await wait(this, 200);
+          continue;
+        }
         // 连着的几个登场（或几个退场）一起淡入淡出，不再一个接一个【新】（负责人 2026-11-14：伏兵逐一出现太慢）
         if (!this.fast && !this.ui.skipping && (e.type === 'appear' || e.type === 'leave')) {
           const group: BattleEvent[] = [e];
@@ -1177,7 +1192,7 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
-  private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0) {
+  private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0, lifetime = 1200) {
     const p = cellToWorld(x, y);
     p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
     const t = this.add
@@ -1185,7 +1200,7 @@ export class BattleScene extends Phaser.Scene {
       .setOrigin(side < 0 ? 1 : side > 0 ? 0 : 0.5, 0.5)
       .setDepth(100000);
     this.tweens.add({ targets: t, y: p.y - 20, duration: 350, ease: 'Cubic.easeOut' });
-    this.tweens.add({ targets: t, alpha: 0, delay: 900, duration: 300, onComplete: () => t.destroy() });
+    this.tweens.add({ targets: t, alpha: 0, delay: lifetime - 300, duration: 300, onComplete: () => t.destroy() });
   }
 
   private async banner(text: string) {

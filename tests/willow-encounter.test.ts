@@ -13,7 +13,8 @@ describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>
  it('原串关换用狮子楼裁图，只有鲁智深参战，四名泼皮，其余五人旁观且不可攻击',()=>{
   expect(loadStageMap(files,'Act5-2')!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);
   const i=input(),b=new Battle(i);const opening=b.begin();
-  expect(opening.filter(e=>e.type==='status'&&b.spectators.has(e.uid)).map(e=>e.type==='status'&&e.text)).toEqual(Array(5).fill('旁观'));
+  expect(opening.filter(e=>e.type==='status'&&b.spectators.has(e.uid)).map(e=>e.type==='status'&&e.text)).toEqual(Array(5).fill('观战'));
+  expect(opening.filter(e=>e.type==='look'&&b.spectators.has(e.uid))).toHaveLength(0);
   expect(i.header).toMatchObject({act:0,next:27});expect(stageLabel('第5章','Act5-2').kind).toBe('战役');
   expect(b.active().filter(u=>u.side==='player').map(u=>u.classId)).toEqual([16]);
   expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(4);
@@ -35,6 +36,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>
   (b as unknown as{afterAction:()=>void}).afterAction();const events=(b as unknown as{flush:()=>BattleEvent[]}).flush();
   const walk=events.findIndex(e=>e.type==='move'&&e.uid===lu.uid&&e.path.at(-1)?.x===4&&e.path.at(-1)?.y===14),up=events.findIndex(e=>e.type==='uproot'),staff=events.findIndex(e=>e.type==='flourish'),appear=events.findIndex(e=>e.type==='appear'&&e.uid===lin.uid);
   expect(walk).toBeGreaterThanOrEqual(0);expect(up).toBeGreaterThan(walk);expect(staff).toBeGreaterThan(up);expect(appear).toBeGreaterThan(staff);
+  expect(events.filter(e=>e.type==='look'&&b.spectators.has(e.uid))).toHaveLength(0);
   expect(events.filter(e=>e.type==='flourish')).toHaveLength(2);
   expect(events.filter(e=>e.type==='status'&&b.spectators.has(e.uid)).map(e=>e.type==='status'&&e.text)).toEqual(Array(5).fill('归队'));
   const said=events.filter((e):e is Extract<BattleEvent,{type:'say'}>=>e.type==='say').map(e=>e.text).join('');expect(said).toContain('王进');expect(said).toContain('夫人在庙前');expect(said).not.toContain('【改写】');
