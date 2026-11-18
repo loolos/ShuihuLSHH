@@ -109,6 +109,7 @@ export class BattleScene extends Phaser.Scene {
   private groundItems = new Map<string, Phaser.GameObjects.Image>();
   /** 地上物的遮挡索引，和被挡住的人物的虚影（按单位 uid；key 记下上次判断时的位置和帧，没变就不重算） */
   private occluders = new OccluderIndex();
+  private upperImages = new Map<string, Phaser.GameObjects.Image[]>();
   private ghosts = new Map<number, { img: Phaser.GameObjects.Image; key: string; cover: number | null }>();
   private overlay!: Phaser.GameObjects.Graphics;
   /** 地图上的撤退出口等区域（Battle.objectiveZones），变了才重画 */
@@ -155,6 +156,7 @@ export class BattleScene extends Phaser.Scene {
     this.view = new Map();
     this.groundItems = new Map();
     this.occluders = new OccluderIndex();
+    this.upperImages = new Map();
     this.ghosts = new Map();
     this.mode = { kind: 'idle' };
     this.busy = false;
@@ -192,14 +194,16 @@ export class BattleScene extends Phaser.Scene {
           const fr = this.assets[lib].frame(l.tile);
           const key = textureFor(this, `${lib}:${l.tile}`, () => frameToCanvas(fr, this.assets.palette));
           const depth = k === 0 ? -2 : depthOf(x, y, k);
-          this.add
+          const image = this.add
             .image(p.x, p.y, key)
             .setOrigin(fr.anchorX / Math.max(1, fr.width), fr.anchorY / Math.max(1, fr.height))
             .setDepth(depth);
           if (k === 0 || !fr.width || !fr.height) return;
+          const cellKey = `${x},${y}`;
+          this.upperImages.set(cellKey,[...(this.upperImages.get(cellKey)??[]),image]);
           let mask = masks.get(l.tile);
           if (!mask) masks.set(l.tile, (mask = coarseMask(fr.width, fr.height, fr.pixels)));
-          this.occluders.add(p.x - fr.anchorX, p.y - fr.anchorY, fr.width, fr.height, depth, mask);
+          this.occluders.add(p.x - fr.anchorX, p.y - fr.anchorY, fr.width, fr.height, depth, mask, cellKey);
         });
       }
     this.zoneG = this.add.graphics().setDepth(-1.5);
@@ -937,6 +941,10 @@ export class BattleScene extends Phaser.Scene {
     if (on) this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
   }
 
+  private removeTree(cells: {x:number;y:number}[]) {
+    return cells.flatMap(c=>{const key=`${c.x},${c.y}`,images=this.upperImages.get(key)??[];this.upperImages.delete(key);this.occluders.remove(key);return images;});
+  }
+
   private setPortrait(e: Extract<BattleEvent, { type: 'portrait' }>) {
     const source = /^@class:(\d+)$/.exec(e.file);
     const url = source ? this.ui.portrait(Number(source[1])) : e.file && this.assets.pack ? packFaceUrl(this.assets.pack.rt.id, e.file) : undefined;
@@ -968,6 +976,11 @@ export class BattleScene extends Phaser.Scene {
         this.sprites.delete(e.uid);
         break;
       }
+      case 'uproot':
+        this.removeTree(e.cells).forEach(image=>image.destroy());
+        break;
+      case 'flourish':
+        break;
       case 'shot': {
         const u = this.battle.unit(e.uid);
         if (u) { this.vs(u).facing = e.facing; this.pose(u); }
@@ -1531,6 +1544,30 @@ export class BattleScene extends Phaser.Scene {
         await this.banner(tr(e.text));
         break;
       // 剧情演出（扩展包指令 109–113）
+      case 'uproot': {
+        const images=this.removeTree(e.cells);
+        if(!images.length)break;
+        const base=cellToWorld(3,13),group=this.add.container(base.x,base.y).setDepth(Math.max(...images.map(i=>i.depth))+32);
+        for(const image of images){image.setPosition(image.x-base.x,image.y-base.y);group.add(image);}
+        await this.focus(3,13,300);
+        sound.hurt(false);
+        await new Promise<void>(resolve=>this.tweens.add({targets:group,x:base.x+6,duration:70,yoyo:true,repeat:5,onComplete:()=>resolve()}));
+        const dust=this.add.graphics().setPosition(base.x,base.y).setDepth(group.depth+1);
+        for(let i=0;i<14;i++)dust.fillStyle(0xbaa078,0.65).fillCircle((i%7-3)*11,Math.floor(i/7)*-9,5+i%4);
+        this.tweens.add({targets:dust,alpha:0,scaleX:2,scaleY:1.6,duration:900,onComplete:()=>dust.destroy()});
+        sound.hurt(false);
+        await new Promise<void>(resolve=>this.tweens.add({targets:group,y:base.y-110,angle:-12,alpha:0,duration:850,ease:'Cubic.easeOut',onComplete:()=>resolve()}));
+        group.destroy(true);
+        break;
+      }
+      case 'flourish': {
+        const u=b.unit(e.uid)!;const v=this.vs(u);v.facing=e.facing;
+        const skill=attackSkill(u,this.assets.data);await ensureSkill(this.assets,v.cls,skill);
+        await this.focusOn(u,250);sound.cast(skill.soundId??skill.skillId,skill.type,true);
+        const action=ACTION.firstSkill+skill.group;
+        await this.playOnce(u,action,e.facing,(actionMs(this.assets,v.cls,action,e.facing)??1200)+100);
+        this.pose(u);break;
+      }
       case 'shot': {
         const u = b.unit(e.uid)!;
         const v = this.vs(u);

@@ -30,6 +30,7 @@ export function coarseMask(width: number, height: number, pixels: ArrayLike<numb
 }
 
 interface Occluder {
+  id?: string;
   /** 图块左上角的世界坐标 */
   x: number;
   y: number;
@@ -42,9 +43,9 @@ interface Occluder {
 export class OccluderIndex {
   private buckets = new Map<string, Occluder[]>();
 
-  add(x: number, y: number, w: number, h: number, depth: number, mask: CoarseMask) {
+  add(x: number, y: number, w: number, h: number, depth: number, mask: CoarseMask, id?: string) {
     if (!mask.bits.some(Boolean)) return;
-    const o: Occluder = { x, y, w, h, depth, mask };
+    const o: Occluder = { x, y, w, h, depth, mask, id };
     for (let by = Math.floor(y / BUCKET); by <= Math.floor((y + h - 1) / BUCKET); by++)
       for (let bx = Math.floor(x / BUCKET); bx <= Math.floor((x + w - 1) / BUCKET); bx++) {
         const k = `${bx},${by}`;
@@ -52,6 +53,13 @@ export class OccluderIndex {
         if (list) list.push(o);
         else this.buckets.set(k, [o]);
       }
+  }
+
+  remove(id: string) {
+    for (const [key, list] of this.buckets) {
+      const left = list.filter(o=>o.id!==id);
+      if(left.length)this.buckets.set(key,left);else this.buckets.delete(key);
+    }
   }
 
   /**

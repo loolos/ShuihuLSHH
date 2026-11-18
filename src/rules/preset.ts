@@ -1,3 +1,4 @@
+import { isWillowEncounter, willowUnits } from './willow-encounter.ts';
 import { levelKit } from './equipment.ts';
 // 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
@@ -25,7 +26,8 @@ interface Stage {
 function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: number } {
   const act = findStageFile(files, s.mapName, '.act');
   const pab = findStageFile(files, s.mapName, '.pab');
-  return { units: act ? adjustEnemies(s.mapName, parseAct(files.get(act), act)) : [], town: pab ? parsePasHeader(files.get(pab)).town : 0 };
+  const original = act ? parseAct(files.get(act), act) : [];
+  return { units: adjustEnemies(s.mapName, isWillowEncounter(s.mapName) ? willowUnits(original) : original), town: pab ? parsePasHeader(files.get(pab)).town : 0 };
 }
 
 /**

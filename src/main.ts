@@ -299,7 +299,7 @@ function startGame(assets: Assets) {
   if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game; __ui: BattleUI }).__game = game, ((window as unknown as { __ui: BattleUI }).__ui = ui);
   const stageOf = (i: number) => stages.find((s) => s.index === i)!;
   const label = (s: (typeof stages)[number]) => stageLabel(s.title, s.mapName).full;
-  const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName);
+  const isAct = (s: (typeof stages)[number]) => /^act/i.test(s.mapName) && s.mapName.toLowerCase() !== 'act5-2';
   // 没有剧本头的关卡才用关卡表顺序推断下一关（campaign.ts nextStages）
   const speakerOf = (cls: number) => assets.data.classes[cls]?.name ?? '';
   /** 原版的二选一对话框：问题 + 两个按钮，选后由主角说对应的台词（EXE 0x443988 / 0x4439b2） */
