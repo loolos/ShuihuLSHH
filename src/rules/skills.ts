@@ -27,7 +27,7 @@ export const skillBaseName = (name: string) => name.replace(/\s*LV\s*\d+$/i, '')
 /**
  * 已习得、可以从技能菜单使用的技能（不含第一项普通攻击）。
  * 习得条件：习得等级 ≤ 当前等级，且不是隐藏技。原版的隐藏技（古武術祕笈）在 buildClasses 里已改成普通技能（unlockHiddenSkills）。
- * 分级技能（LV1–3）只保留已习得的最高一级。
+ * 分级技能（LV1–4）只保留已习得的最高一级。
  */
 export function learnedSkills(u: Unit, data: GameData): SkillDef[] {
   const all = data.classes[u.classId]?.skills ?? [];
