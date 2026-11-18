@@ -13,7 +13,7 @@ import { DATA } from '../tools/sim-lib.ts';
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',()=>{
  const rt=loadPackFromDisk('jiangzhou'),data=rt.data,board=new Board(30,30);
  const act=(index:number,type:number,side:ActUnit['side'],x:number,y:number):ActUnit=>({index,type,side,x,y,level:30,group:index+1,flags:0,facing:0,extra:[0,0,0],items:[0,0,0,0,0,0,0],raw:[]});
- it('13招在指定等级解锁，射程不因装备改变，每招2至5段且权重100%',()=>{
+ it('14招在指定等级解锁，射程不因装备改变，每招2至5段且权重100%',()=>{
   for(const [i,e]of LATE_HERO_SKILLS.entries()){
    const skill=data.classes[e.cls].skills.find(s=>s.skillId===1200+i)!;
    const b=new Battle({name:'test',board,units:[act(0,e.cls,'player',10,10)],blocks:[],data,seed:1});b.begin();const u=b.units[0];
@@ -29,6 +29,17 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
   expect(areaCells(board,{x:10,y:15},r,{x:10,y:10}).map(c=>`${c.x},${c.y}`).sort()).toEqual(['10,10','9,9','9,10','9,11','11,9','11,10','11,11'].sort());
   expect(areaCells(board,{x:5,y:10},r,{x:10,y:10}).map(c=>`${c.x},${c.y}`).sort()).toEqual(['10,10','9,9','10,9','11,9','9,11','10,11','11,11'].sort());
   const cells=areaCells(board,{x:10,y:15},z,{x:10,y:10});expect(cells).toHaveLength(8);expect(cells).not.toContainEqual({x:10,y:10});
+ });
+ it('晁盖29级远程大十字9格，三段100%伤害，10%昏迷且不重复加回气',()=>{
+  const c=data.classes[12],s=c.skills.find(s=>s.name==='天王震岳')!;
+  expect(s).toMatchObject({skillId:1213,learnLevel:29,rangeMin:2,rangeMax:5,mpCost:140,power:20,hitMod:5,critMod:-5,stun:10,poison:0,damageScale:1,targetShape:'diamond',fxTint:0xffcc66});
+  expect(s.hits.map(h=>h.percent)).toEqual([30,30,40]);
+  expect(c.skills.filter(s=>s.type===8)).toHaveLength(1);
+  expect(areaCells(board,{x:10,y:15},s,{x:10,y:10}).map(c=>`${c.x},${c.y}`).sort()).toEqual(['10,10','9,10','8,10','11,10','12,10','10,9','10,8','10,11','10,12'].sort());
+  const b=new Battle({name:'chaogai',board,units:[act(0,12,'player',10,15),act(1,32,'enemy',10,10),act(2,7,'player',11,10)],blocks:[],data,seed:1});b.begin();const u=b.units[0];u.mp=200;
+  const events=b.useSkill(u,s,{x:10,y:10}),attack=events.find(e=>e.type==='attack');
+  expect(attack).toBeDefined();if(attack?.type==='attack'){expect(attack.hits).toHaveLength(1);expect(attack.hits[0].result.parts).toHaveLength(3);}
+  expect(u.mp).toBe(60);expect(u.acted).toBe(true);expect(b.units[2].hp).toBe(b.units[2].stats.maxHp);
  });
  it('折角及蛇行提供左右两式，菜单稳定引用、相同射程与消耗',()=>{
   for(const [id,name]of [[13,'跳涧飞枪'],[15,'游蛇追命']] as const){const a=data.classes[id].skills.find(s=>s.name===name)!,left=data.classes[id].skills.find(s=>s.name===name+'·左折')!;expect(left.areaPattern).toEqual(a.areaPattern!.map(([x,y])=>[-x,y]));expect(left.mpCost).toBe(a.mpCost);expect(left.learnLevel).toBe(a.learnLevel);}

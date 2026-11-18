@@ -15,6 +15,7 @@ export const LATE_PATTERNS = {
   ranks: [[-1,0],[0,0],[1,0],[-1,2],[0,2],[1,2]],
   fan: [[0,0],[-1,1],[0,1],[1,1],[-2,2],[-1,2],[0,2],[1,2],[2,2]],
   spear: [[0,0],[0,-1],[0,1],[-1,-1],[1,-1],[-1,1],[1,1]],
+  quake: [[0,0],[-1,0],[-2,0],[1,0],[2,0],[0,-1],[0,-2],[0,1],[0,2]],
   plum: [[0,0],[-1,-1],[-1,1],[1,-1],[1,1]],
 } satisfies Record<string, readonly AreaOffset[]>;
 
@@ -34,6 +35,7 @@ export const LATE_HERO_SKILLS: Entry[] = [
  {cls:16,name:'伏虎震杖',level:28,range:[1,4],pattern:'fan',weights:[35,65],mp:135,power:15,hit:0,crit:-10,fx:38,stun:15},
  {cls:11,name:'回马扫阵',level:29,range:[2,5],pattern:'spear',weights:[20,20,25,35],mp:115,power:20,hit:10,crit:0,fx:32},
  {cls:4,name:'撒钉封路',level:27,range:[2,6],pattern:'plum',weights:[20,20,20,20,20],mp:100,power:0,hit:15,crit:-10,fx:44,poison:15,free:true},
+ {cls:12,name:'天王震岳',level:29,range:[2,5],pattern:'quake',weights:[30,30,40],mp:140,power:20,hit:5,crit:-5,fx:38,stun:10,free:true},
 ];
 
 export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
@@ -47,7 +49,7 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
   return [{...own,skillId:1200+i,soundId:own.soundId??own.skillId,name:e.name,type:0,hidden:false,learnLevel:e.level,
    rangeMin:e.range[0],rangeMax:e.range[1],area:5,areaPattern:LATE_PATTERNS[e.pattern],targetShape:e.free?'diamond':undefined,
    mpCost:e.mp,power:e.power,hitMod:e.hit,critMod:e.crit,poison:e.poison??0,stun:e.stun??0,
-   fxTint:e.cls===17?0xdd6655:e.cls===15?0x80ee88:e.cls===7||e.cls===9?0x99ddff:undefined,
+   fxTint:e.cls===12?0xffcc66:e.cls===17?0xdd6655:e.cls===15?0x80ee88:e.cls===7||e.cls===9?0x99ddff:undefined,
    effect:e.fx,effect2:0,effect3:0,damageScale:1,rangedDamage:undefined,
    hits:e.weights.map((percent,i)=>({frame:frames[i],percent,dir:0})),raw:''}];
  });
@@ -60,4 +62,22 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
    rangeMin:0,rangeMax:0,area:0,hits:[],effect:0,effect2:0,effect3:0,poison:0,stun:0,hitMod:0,critMod:0,raw:''});
  }
  return out;
+}
+
+/** 两招原有单体技分三级；一级原样，NPC保留自己的原技能。 */
+export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
+ return own.flatMap(s => {
+  const chenda=cls===13&&s.skillId===115;
+  const xiaoqi=cls===9&&s.skillId===81;
+  if(!chenda&&!xiaoqi)return [s];
+  const tiers=chenda
+   ? [{id:115,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[12,23],weights:[40,60]},
+      {id:1300,level:20,power:55,mp:40,frames:[12,18,23],weights:[30,30,40]},
+      {id:1301,level:28,power:75,mp:65,frames:[8,12,18,23],weights:[25,25,25,25]}]
+   : [{id:81,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[18,25,28],weights:[30,30,40]},
+      {id:1302,level:27,power:60,mp:45,frames:[18,22,25,28],weights:[25,25,25,25]},
+      {id:1303,level:30,power:80,mp:75,frames:[15,18,22,25,28],weights:[20,20,20,20,20]}];
+  return tiers.map((t,i)=>({...s,skillId:t.id,soundId:s.soundId??s.skillId,name:`${s.name}LV${i+1}`,learnLevel:t.level,power:t.power,mpCost:t.mp,
+   hits:t.frames.map((frame,k)=>({frame,percent:t.weights[k],dir:0}))}));
+ });
 }
