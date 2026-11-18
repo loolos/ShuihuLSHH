@@ -13,6 +13,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('秦明霹雳�
   const rt=loadPackFromDisk('mainline'),cid=rt.classIds.get('qinming')!;
   const skills=rt.data.classes[cid].skills.filter(s=>s.name.startsWith('霹雳火LV'));
   const board=new Board(15,15),from={x:7,y:7};
+  it('横扫千军两包均不扣命中，保留威力、耗气、范围与双段',()=>{
+    for(const name of ['mainline','jiangzhou']){
+      const p=loadPackFromDisk(name),s=p.data.classes[p.classIds.get('qinming')!].skills.find(s=>s.name==='横扫千军')!;
+      expect(s).toMatchObject({hitMod:0,power:30,mpCost:45,type:12,area:2,learnLevel:14});
+      expect(s.hits.map(h=>h.percent)).toEqual([50,50]);
+    }
+  });
   it('四级四朝向均为近宽远窄的完整区域，逐排减两格，特效与命中区域一致', () => {
     for (const [tier,s] of skills.entries()) for (const d of DIRS) {
       const at={x:from.x+d.x,y:from.y+d.y},cells=areaCells(board,from,s,at);

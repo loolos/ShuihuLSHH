@@ -1647,6 +1647,23 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(b.status).toBe('playing');
   });
 
+  it('黄信被擒时也只有两名亲随随降，普通寨兵不改阵营且仍须击败',()=>{
+    const s=stage('gongpo'),b=start('gongpo'),get=(id:string)=>b.units[s.units.findIndex(u=>u.id===id)];
+    const qm=get('qinming'),hx=get('huangxin');
+    (b as unknown as{kill:(a:Unit,t:Unit)=>void}).kill(qm,hx);
+    (b as unknown as{afterAction:()=>void}).afterAction();
+    const trusted=['hx-1','hx-2'].map(get),ordinary=s.units.filter(u=>u.id.startsWith('hx-')&&!['hx-1','hx-2'].includes(u.id)).map(u=>get(u.id));
+    expect(trusted).toHaveLength(2);expect(trusted.every(u=>!u.present&&u.side==='ally')).toBe(true);
+    expect(ordinary).toHaveLength(15);expect(ordinary.every(u=>u.present&&u.side==='enemy')).toBe(true);
+    const out=(b as unknown as{out:BattleEvent[]}).out;
+    const surrendered=out.filter((e):e is Extract<BattleEvent,{type:'status'}>=>e.type==='status'&&e.text==='歸順');
+    expect(surrendered.map(e=>e.uid).sort()).toEqual(trusted.map(u=>u.uid).sort());
+    const text=s.script.flatMap(b=>b.do).filter(op=>op[0]==='narrate').map(op=>op[1]).join('');expect(text).toContain('朝廷粮饷');expect(text).not.toContain('寨兵也都放下了刀枪');
+    for(const u of b.units.filter(u=>u.side==='enemy'&&u.alive&&!ordinary.includes(u)))(b as unknown as{kill:(a:Unit,t:Unit)=>void}).kill(qm,u);
+    (b as unknown as{afterAction:()=>void}).afterAction();expect(b.status).toBe('playing');
+    for(const u of ordinary)(b as unknown as{kill:(a:Unit,t:Unit)=>void}).kill(qm,u);
+    (b as unknown as{afterAction:()=>void}).afterAction();expect(b.status).toBe('won');
+  });
   it('清风寨破使用N02：左下进军、右上守门，左侧与下方分波增援；门卫警戒其余主动进攻',()=>{
     const s=stage('gongpo'),b=start('gongpo');
     expect(s.map).toEqual({base:'N02'});expect([b.board.width,b.board.height]).toEqual([36,36]);
@@ -1672,7 +1689,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     Object.assign(qm,{x:12,y:10});
     for(const u of guards){planAi(b,u);expect(u.ai.mode).toBe(0);}
   });
-  it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都只触发擒获，清敌才过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
+  it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都只触发擒获，清敌才过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，仅亲随降离场，其余寨兵家丁打退才过关', () => {
     const ids = ['yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'];
     for (const id of ids) {
       const s = stage(id), b = new Battle(compileStage(rt, s, files));
@@ -1731,7 +1748,8 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       spot(hx.x - 1, hx.y);
       expect(hx.side).toBe('ally');
       const soldiers = s.units.filter((u) => u.id.startsWith('hx-')).map((u) => get(b, s, u.id));
-      expect(soldiers.every((u) => !u.present && u.side === 'ally')).toBe(true);
+      expect(soldiers.filter(u=>u.name==='黄信亲随').every(u=>!u.present&&u.side==='ally')).toBe(true);
+      expect(soldiers.filter(u=>u.name!=='黄信亲随').every(u=>u.present&&u.side==='enemy')).toBe(true);
       expect(b.status).toBe('playing');
       for (const u of b.units.filter((u) => u.side === 'enemy' && u.alive)) (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(qm, u);
       check(b); expect(b.status).toBe('won');
