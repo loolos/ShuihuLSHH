@@ -1,9 +1,10 @@
+import type { Unit } from '../src/rules/unit.ts';
 import fs from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
-import { baseDamage, rangedFactor, rollAttack } from '../src/rules/combat.ts';
+import { attackParts, baseDamage, rangedFactor, rollAttack } from '../src/rules/combat.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { areaCells, castRange, learnedSkills } from '../src/rules/skills.ts';
 import { LATE_HERO_SKILLS } from '../src/rules/late-hero-skills.ts';
@@ -13,6 +14,23 @@ import { DATA } from '../tools/sim-lib.ts';
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',()=>{
  const rt=loadPackFromDisk('jiangzhou'),data=rt.data,board=new Board(30,30);
  const act=(index:number,type:number,side:ActUnit['side'],x:number,y:number):ActUnit=>({index,type,side,x,y,level:30,group:index+1,flags:0,facing:0,extra:[0,0,0],items:[0,0,0,0,0,0,0],raw:[]});
+ for(const pack of ['mainline','jiangzhou'])it(`${pack}轮回转世四阶按等级替换，十字范围逐格扩大且每阶多一段`,()=>{
+  const d=loadPackFromDisk(pack).data,tiers=d.classes[16].skills.filter(s=>s.skillId===135||[1306,1307,1308].includes(s.skillId));
+  expect(tiers).toHaveLength(4);
+  tiers.forEach((s,i)=>{
+   expect(s).toMatchObject({learnLevel:[4,14,22,30][i],power:20+i*5,mpCost:40+i*10,hitMod:i*5,critMod:5+i*5,poison:0,stun:0,soundId:135});
+   expect(attackParts(s)).toHaveLength(i+1);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
+   const center={x:10,y:10},cells=areaCells(board,center,s,center);
+   const expected=Array.from({length:i+1},(_,k)=>k+1).flatMap(n=>[{x:10+n,y:10},{x:10-n,y:10},{x:10,y:10+n},{x:10,y:10-n}]);
+   expect(cells).toHaveLength(4*(i+1));expect(cells).toEqual(expect.arrayContaining(expected));
+   const edge=areaCells(board,{x:0,y:0},s,{x:0,y:0});expect(edge).toHaveLength(2*(i+1));
+   expect(castRange({classId:16,stats:{rangeBonus:3}} as Unit,s,d)).toEqual([0,0]);
+  });
+  for(let level=1;level<=32;level++){
+   const available=learnedSkills({classId:16,level} as Unit,d).filter(s=>s.name.startsWith('輪迴轉世'));
+   const tier=[4,14,22,30].filter(n=>n<=level).length;expect(available).toHaveLength(tier?1:0);if(tier)expect(available[0]).toBe(tiers[tier-1]);
+  }
+ });
  it('14招在指定等级解锁，射程不因装备改变，每招2至5段且权重100%',()=>{
   for(const [i,e]of LATE_HERO_SKILLS.entries()){
    const skill=data.classes[e.cls].skills.find(s=>s.skillId===1200+i)!;

@@ -64,9 +64,17 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
  return out;
 }
 
-/** 好汉单体技分三级；按职业与原技能号限定，NPC保留自己的原技能。 */
+/** 好汉技能分阶；按职业与原技能号限定，NPC保留自己的原技能。 */
 export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
  return own.flatMap(s => {
+  if(cls===16&&s.skillId===135){
+   const frames=[12,13,15,17],weights=[[100],[50,50],[30,30,40],[25,25,25,25]];
+   return [4,14,22,30].map((level,i)=>({...s,skillId:i===0?135:1305+i,soundId:s.soundId??s.skillId,
+    name:`${s.name}LV${i+1}`,learnLevel:level,rangeMin:0,rangeMax:0,area:i+1,
+    areaPattern:Array.from({length:i+1},(_,k)=>k+1).flatMap(n=>[[n,0],[-n,0],[0,n],[0,-n]] as AreaOffset[]),
+    power:s.power+i*5,mpCost:s.mpCost+i*10,hitMod:s.hitMod+i*5,critMod:s.critMod+i*5,
+    hits:weights[i].map((percent,k)=>({frame:frames[k],percent,dir:0}))}));
+  }
   if(cls===0&&s.skillId===3){
    const tiers=[
     {id:3,level:8,power:40,mp:30,hit:20,stun:15,frames:[7,14,20],weights:[30,50,20]},
