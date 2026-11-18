@@ -1514,7 +1514,10 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const defenders=s.units.filter(u=>['huarong','huangxin','qinming'].includes(u.id));
     for(const u of s.units.filter(u=>u.side==='enemy')){
       // 等距投影：x-y越大越靠右，x+y较小越靠上。
-      expect(u.x-u.y,u.id).toBeGreaterThanOrEqual(7);expect(u.y,u.id).toBeLessThanOrEqual(4);
+      expect(u.x-u.y,u.id).toBeGreaterThanOrEqual(3);
+      // 必须明显在三将上方，不能只靠x-y把追兵推到画面纯右侧。
+      expect(u.x+u.y,u.id).toBeLessThanOrEqual(13);
+      expect(u.x+u.y,u.id).toBeLessThanOrEqual(Math.min(...defenders.map(d=>d.x+d.y))-4);
       expect(Math.min(...defenders.map(d=>Math.abs(u.x-d.x)+Math.abs(u.y-d.y))),u.id).toBeGreaterThanOrEqual(8);
     }
     expect([...new Set(s.units.filter(u=>u.side==='enemy').map(u=>u.class))].sort()).toEqual([32,33,34,38,43]);
