@@ -138,12 +138,33 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(b.endPlayerPhase()).toEqual([]);
   });
 
-  it('黄泥冈：白胜先唱歌后登场，原来的对白照常接上', () => {
+  it('黄泥冈：白胜先唱歌再卖酒，接上改写对白', () => {
     const { ev } = play('Act10-1');
     const lines = says(ev);
     const song = lines.findIndex((l) => l.includes('赤日炎炎似火烧'));
     expect(lines[song]).toMatch(/^白胜：/);
     expect(lines[song + 1]).toMatch(/^白胜：客官们买桶白酒吧！/);
+  });
+
+  it('黄泥冈军汉抱怨、都管争执与劝酒有因果，争瓢及半瓢中计先于失纲醒悟', () => {
+    const {b,ev}=play('Act10-1');
+    const dialogue=ev.filter(e=>e.type==='say'||e.type==='narrate');
+    const find=(s:string)=>dialogue.findIndex(e=>e.text.includes(s));
+    expect(b.status).toBe('won');expect(dialogue.length).toBeLessThanOrEqual(55);expect(dialogue.reduce((n,e)=>n+e.text.length,0)).toBeLessThan(1600);
+    const stages=['都是一般父母皮肉','谁敢五更半夜走','我在太师府里做奶公','今日天下怎地不太平','我等弟兄七人','赤日炎炎','多少好汉，被蒙汗药麻翻了','倾回桶里','那贩枣子客人已买了一桶','既然老都管说了','只吃半瓢','倒也！倒也！','药却藏在吴用的瓢里','这纸领状须缴不得','扯破领状'];
+    const indexes=stages.map(find);for(const i of indexes)expect(i).toBeGreaterThanOrEqual(0);expect(indexes).toEqual([...indexes].sort((a,b)=>a-b));
+    const guan=dialogue.filter(e=>e.type==='say'&&e.speaker==='谢都管');expect(guan).toHaveLength(4);expect(guan.every(e=>e.type==='say'&&e.uid===5)).toBe(true);
+    expect(dialogue.some(e=>e.text.includes('精神崩溃')||e.text.includes('提尿壶')||e.text.includes('六兄弟'))).toBe(false);
+    expect(ev.some(e=>e.type==='attack'||e.type==='die')).toBe(false);expect(b.units).toHaveLength(13);
+  });
+
+  it('黄泥冈原版走位和结束指令保留，简体与繁体两份演出结构一致', () => {
+    const raw=parsePasBlocks(files.get(findStageFile(files,'Act10-1','.pab')!),'big5');
+    const patched=applyStoryQuotes('Act10-1',raw,tr).blocks;
+    const movement=(bs:typeof raw)=>bs.flatMap(b=>b.ops.filter(o=>[14,15,16,17,29].includes(o.op)).map(o=>[o.op,o.flag,o.value]));
+    expect(movement(patched)).toEqual(movement(raw));
+    const gb=applyStoryQuotes('Act10-1',parsePasBlocks(files.get(findStageFile(files,'Act10-1','.pas')!),'gbk')).blocks;
+    expect(patched.map(b=>b.ops.map(o=>[o.op,[13,29].includes(o.op)?null:o.value]))).toEqual(gb.map(b=>b.ops.map(o=>[o.op,[13,29].includes(o.op)?null:o.value])));
   });
 
   it('插入之后把原来的说话者点回来', () => {
