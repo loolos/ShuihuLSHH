@@ -142,17 +142,19 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     const { ev } = play('Act10-1');
     const lines = says(ev);
     const song = lines.findIndex((l) => l.includes('赤日炎炎似火烧'));
-    expect(lines[song]).toMatch(/^白胜：/);
+    expect(lines[song]).toBe('白胜：赤日炎炎似火烧，野田禾稻半枯焦。农夫心内如汤煮，公子王孙把扇摇。');
     expect(lines[song + 1]).toMatch(/^白胜：客官们买桶白酒吧！/);
   });
 
-  it('黄泥冈军汉抱怨、都管争执与劝酒有因果，争瓢及半瓢中计先于失纲醒悟', () => {
+  it('黄泥冈军汉抱怨、都管争执与劝酒有因果，杨志昏倒后才搬走生辰纲，本关不演醒来', () => {
     const {b,ev}=play('Act10-1');
     const dialogue=ev.filter(e=>e.type==='say'||e.type==='narrate');
     const find=(s:string)=>dialogue.findIndex(e=>e.text.includes(s));
     expect(b.status).toBe('won');expect(dialogue.length).toBeLessThanOrEqual(55);expect(dialogue.reduce((n,e)=>n+e.text.length,0)).toBeLessThan(1600);
-    const stages=['都是一般父母皮肉','谁敢五更半夜走','我在太师府里做奶公','今日天下怎地不太平','我等弟兄七人','赤日炎炎','多少好汉，被蒙汗药麻翻了','倾回桶里','那贩枣子客人已买了一桶','既然老都管说了','只吃半瓢','倒也！倒也！','药却藏在吴用的瓢里','这纸领状须缴不得','扯破领状'];
+    const stages=['都是一般父母皮肉','谁敢五更半夜走','我在太师府里做奶公','今日天下怎地不太平','我等弟兄七人','赤日炎炎','多少好汉，被蒙汗药麻翻了','倾回桶里','那贩枣子客人已买了一桶','既然老都管说了','只吃半瓢','倒也！倒也！','不好！这酒里有蒙汗药','杨志也眼前一黑','快把金珠装上车','晁盖等人将十一担生辰纲'];
     const indexes=stages.map(find);for(const i of indexes)expect(i).toBeGreaterThanOrEqual(0);expect(indexes).toEqual([...indexes].sort((a,b)=>a-b));
+    expect(dialogue.some(e=>/稍醒|醒来|领状|如何回去见得梁中书|有家难奔|又羞又愤|羞愧难当|独自向冈下/.test(e.text))).toBe(false);
+    expect(dialogue.find(e=>e.text.includes('不好！这酒里有蒙汗药'))).toMatchObject({type:'say',speaker:'杨志'});
     const guan=dialogue.filter(e=>e.type==='say'&&e.speaker==='谢都管');expect(guan).toHaveLength(4);expect(guan.every(e=>e.type==='say'&&e.uid===5)).toBe(true);
     expect(dialogue.some(e=>e.text.includes('精神崩溃')||e.text.includes('提尿壶')||e.text.includes('六兄弟'))).toBe(false);
     expect(ev.some(e=>e.type==='attack'||e.type==='die')).toBe(false);expect(b.units).toHaveLength(13);

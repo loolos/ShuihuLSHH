@@ -1,7 +1,7 @@
 // 主线对白里补的原著原文【新】（负责人 2026-11-15）：在原版对白之间插几句《水浒传》原文或按原著改写的句子。
 // 不改原版文件：载入关卡时按原版某句对白定位，在它前后插入对白 / 旁白；原版剧本（Big5）和简体显示剧本插在同一位置，
 // 保持两份区块一一对应。出处和核对情况见 docs/game-design.md §9.4。
-import { HUANGNIGANG_INSERTS, HUANGNIGANG_REPLACE } from './huangnigang-story.ts';
+import { HUANGNIGANG_INSERTS, HUANGNIGANG_OMIT, HUANGNIGANG_REPLACE } from './huangnigang-story.ts';
 import type { PasBlock, PasOp } from '../formats/pas.ts';
 
 /** 说话者：角色号（0 = 主角，即 HUM 职业号），'旁白' = 旁白 */
@@ -278,7 +278,7 @@ export function applyStoryQuotes(stage: string, blocks: PasBlock[], text: (s: st
   const deaths = STORY_DEATH_BLOCKS[key] ?? [];
   const found = new Set<StoryInsert>();
   const out = blocks.map((block) => {
-    let ops = block.ops.map((op) => {
+    let ops = block.ops.filter(op => !(key === 'act10-1' && op.op === 13 && op.text && HUANGNIGANG_OMIT.has(norm(text(op.text))))).map((op) => {
       if (!op.text) return op;
       const r = replace[norm(text(op.text))];
       return r ? { ...op, text: r } : op;
