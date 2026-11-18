@@ -189,6 +189,8 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
   const units = files.has(actFile) ? tuneUnits(stage, adjustEnemies(stage, parseAct(files.get(actFile), actFile)), board) : [];
   return {
     name: stage,
+    // 黄泥冈沿用原随行演员，分别承担军汉、虞候和谢都管对白，不另加战斗单位。
+    names: stage.toLowerCase() === 'act10-1' ? { 1: '军汉', 2: '军汉', 3: '虞候', 4: '虞候', 5: '谢都管' } : undefined,
     board,
     units,
     blocks: pabFile

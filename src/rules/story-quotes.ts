@@ -1,6 +1,7 @@
 // 主线对白里补的原著原文【新】（负责人 2026-11-15）：在原版对白之间插几句《水浒传》原文或按原著改写的句子。
 // 不改原版文件：载入关卡时按原版某句对白定位，在它前后插入对白 / 旁白；原版剧本（Big5）和简体显示剧本插在同一位置，
 // 保持两份区块一一对应。出处和核对情况见 docs/game-design.md §9.4。
+import { HUANGNIGANG_INSERTS, HUANGNIGANG_REPLACE } from './huangnigang-story.ts';
 import type { PasBlock, PasOp } from '../formats/pas.ts';
 
 /** 说话者：角色号（0 = 主角，即 HUM 职业号），'旁白' = 旁白 */
@@ -169,16 +170,8 @@ export const STORY_INSERTS: Record<string, StoryInsert[]> = {
       ],
     },
   ],
-  // 第 16 回：白胜挑酒上冈唱的歌
-  'act10-1': [
-    {
-      after: '哈哈哈...原来是一场误会...咦？！又有人来了！',
-      lines: [
-        [N, '远远地一个汉子，挑着一副担桶，唱上冈子来。'],
-        [BAI_SHENG, '赤日炎炎似火烧，野田禾稻半枯焦。农夫心内如汤煮，公子王孙把扇摇。'],
-      ],
-    },
-  ],
+  // 第16回：黄泥冈对白压缩重写，保留原演出。
+  'act10-1': HUANGNIGANG_INSERTS,
   // 梁山泊（第 11 回起）
   'act14-2': [
     {
@@ -201,6 +194,7 @@ export const STORY_INSERTS: Record<string, StoryInsert[]> = {
 
 /** 原版句子整句换掉（和插入配合；原著原文或为了接上插入的句子） */
 export const STORY_REPLACE: Record<string, Record<string, string>> = {
+  'act10-1': HUANGNIGANG_REPLACE,
   "n09": {
       "地点是这里没错...洪教头！你给我出来！": "不好！草料场怎么已经烧起来了？我们才去市集买修屋的材料和酒食，来回不过这点工夫！",
       "...没人回应。": "林教头，先别冲过去！那边有三个人走来，咱们且借山神庙旁的暗处藏身，听听动静。",
@@ -292,7 +286,7 @@ export function applyStoryQuotes(stage: string, blocks: PasBlock[], text: (s: st
     for (const ins of inserts) {
       if (found.has(ins)) continue;
       const anchor = ins.after ?? ins.before ?? '';
-      const i = ops.findIndex((op) => (op.op === 13 || op.op === 29) && !!op.text && norm(text(op.text)).includes(anchor));
+      const i = ops.findIndex((op) => (op.op === 13 || op.op === 29) && !!op.text && (norm(op.text).includes(anchor) || norm(text(op.text)).includes(anchor)));
       if (i < 0) continue;
       found.add(ins);
       let at = i + 1;
