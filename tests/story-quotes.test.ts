@@ -142,7 +142,7 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     const { ev } = play('Act10-1');
     const lines = says(ev);
     const song = lines.findIndex((l) => l.includes('赤日炎炎似火烧'));
-    expect(lines[song]).toMatch(/^白胜：/);
+    expect(lines[song]).toBe('白胜：赤日炎炎似火烧，野田禾稻半枯焦。农夫心内如汤煮，公子王孙把扇摇。');
     expect(lines[song + 1]).toMatch(/^白胜：客官们买桶白酒吧！/);
   });
 
