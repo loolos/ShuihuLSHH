@@ -6,7 +6,7 @@
     "gold": 0
   },
   "map": {
-    "custom": "guanfu"
+    "base": "N02"
   },
   "bgm": [
     "battle",
@@ -17,239 +17,278 @@
       "id": "qinming",
       "class": "qinming",
       "side": "player",
-      "x": 11,
-      "y": 21,
+      "x": 6,
+      "y": 26,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 12,
-      "y": 21,
+      "x": 7,
+      "y": 26,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
-      "x": 10,
-      "y": 22,
+      "x": 8,
+      "y": 26,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "huarong",
       "class": "huarong",
       "side": "player",
-      "x": 11,
-      "y": 22,
+      "x": 9,
+      "y": 26,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 12,
-      "y": 22,
+      "x": 10,
+      "y": 26,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "likui",
       "class": "likui",
       "side": "player",
-      "x": 13,
-      "y": 22,
+      "x": 6,
+      "y": 28,
       "level": 29,
-      "facing": 1
+      "facing": 0
     },
     {
       "id": "yanshun",
       "class": "yanshun",
       "side": "ally",
-      "x": 10,
-      "y": 21,
+      "x": 7,
+      "y": 28,
       "level": 29,
-      "name": "燕顺"
+      "name": "燕顺",
+      "facing": 0
     },
     {
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 13,
-      "y": 21,
+      "x": 8,
+      "y": 28,
       "level": 29,
-      "name": "郑天寿"
+      "name": "郑天寿",
+      "facing": 0
     },
     {
       "id": "ally-1",
       "class": 44,
       "side": "ally",
       "x": 9,
-      "y": 21,
+      "y": 28,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "facing": 0
     },
     {
       "id": "ally-2",
       "class": 45,
       "side": "ally",
-      "x": 14,
-      "y": 21,
+      "x": 10,
+      "y": 28,
       "level": 29,
-      "name": "清风山喽啰"
+      "name": "清风山喽啰",
+      "facing": 0
     },
     {
       "id": "huangxin",
       "class": "huangxin",
       "side": "enemy",
-      "x": 16,
+      "x": 14,
       "y": 5,
       "level": 29,
       "levelOffset": 2,
       "facing": 2,
-      "name": "黄信"
+      "name": "黄信",
+      "ai": 12,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-1",
       "class": 32,
       "side": "enemy",
-      "x": 10,
-      "y": 19,
+      "x": 14,
+      "y": 6,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-2",
       "class": 33,
       "side": "enemy",
-      "x": 11,
-      "y": 19,
+      "x": 15,
+      "y": 6,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-3",
       "class": 32,
       "side": "enemy",
-      "x": 12,
-      "y": 19,
+      "x": 16,
+      "y": 6,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-4",
       "class": 33,
       "side": "enemy",
-      "x": 13,
-      "y": 19,
+      "x": 14,
+      "y": 7,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-5",
       "class": 32,
       "side": "enemy",
-      "x": 14,
-      "y": 19,
+      "x": 16,
+      "y": 7,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-6",
       "class": 33,
       "side": "enemy",
-      "x": 9,
-      "y": 18,
+      "x": 13,
+      "y": 7,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-7",
       "class": 32,
       "side": "enemy",
-      "x": 10,
-      "y": 18,
+      "x": 17,
+      "y": 7,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-8",
       "class": 34,
       "side": "enemy",
-      "x": 15,
-      "y": 6,
+      "x": 12,
+      "y": 5,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-9",
       "class": 34,
       "side": "enemy",
-      "x": 19,
-      "y": 6,
+      "x": 17,
+      "y": 5,
       "level": 29,
       "levelOffset": 2,
-      "name": "清风寨兵"
+      "name": "清风寨兵",
+      "ai": 12,
+      "facing": 2,
+      "guardArea": [
+        10,
+        4,
+        21,
+        12
+      ]
     },
     {
       "id": "hx-10",
-      "class": 32,
-      "side": "enemy",
-      "x": 11,
-      "y": 18,
-      "level": 29,
-      "levelOffset": 2,
-      "name": "清风寨兵",
-      "facing": 2
-    },
-    {
-      "id": "hx-11",
-      "class": 33,
-      "side": "enemy",
-      "x": 12,
-      "y": 18,
-      "level": 29,
-      "levelOffset": 2,
-      "name": "清风寨兵",
-      "facing": 2
-    },
-    {
-      "id": "hx-12",
-      "class": 32,
-      "side": "enemy",
-      "x": 13,
-      "y": 18,
-      "level": 29,
-      "levelOffset": 2,
-      "name": "清风寨兵",
-      "facing": 2
-    },
-    {
-      "id": "hx-13",
-      "class": 33,
-      "side": "enemy",
-      "x": 9,
-      "y": 17,
-      "level": 29,
-      "levelOffset": 2,
-      "name": "清风寨兵",
-      "facing": 2
-    },
-    {
-      "id": "hx-14",
       "class": 32,
       "side": "enemy",
       "x": 10,
@@ -257,10 +296,11 @@
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵",
-      "facing": 2
+      "facing": 2,
+      "ai": 0
     },
     {
-      "id": "hx-15",
+      "id": "hx-11",
       "class": 33,
       "side": "enemy",
       "x": 11,
@@ -268,222 +308,309 @@
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵",
-      "facing": 2
+      "facing": 2,
+      "ai": 0
+    },
+    {
+      "id": "hx-12",
+      "class": 32,
+      "side": "enemy",
+      "x": 10,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2,
+      "ai": 0
+    },
+    {
+      "id": "hx-13",
+      "class": 33,
+      "side": "enemy",
+      "x": 11,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2,
+      "ai": 0
+    },
+    {
+      "id": "hx-14",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2,
+      "ai": 0
+    },
+    {
+      "id": "hx-15",
+      "class": 33,
+      "side": "enemy",
+      "x": 22,
+      "y": 18,
+      "level": 29,
+      "levelOffset": 2,
+      "name": "清风寨兵",
+      "facing": 2,
+      "ai": 0
     },
     {
       "id": "hx-16",
       "class": 32,
       "side": "enemy",
-      "x": 13,
-      "y": 17,
+      "x": 21,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵",
-      "facing": 2
+      "facing": 2,
+      "ai": 0
     },
     {
       "id": "hx-17",
       "class": 33,
       "side": "enemy",
-      "x": 14,
-      "y": 17,
+      "x": 22,
+      "y": 19,
       "level": 29,
       "levelOffset": 2,
       "name": "清风寨兵",
-      "facing": 2
+      "facing": 2,
+      "ai": 0
     },
     {
       "id": "jd-1",
       "class": 37,
       "side": "enemy",
-      "x": 3,
-      "y": 3,
+      "x": 10,
+      "y": 11,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-2",
       "class": 37,
       "side": "enemy",
-      "x": 4,
-      "y": 3,
+      "x": 11,
+      "y": 11,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-3",
       "class": 37,
       "side": "enemy",
-      "x": 5,
-      "y": 4,
+      "x": 10,
+      "y": 12,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-4",
       "class": 37,
       "side": "enemy",
-      "x": 4,
-      "y": 5,
+      "x": 11,
+      "y": 12,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-5",
       "class": 37,
       "side": "enemy",
-      "x": 18,
-      "y": 5,
+      "x": 20,
+      "y": 11,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-6",
       "class": 37,
       "side": "enemy",
-      "x": 3,
-      "y": 2,
+      "x": 21,
+      "y": 11,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-7",
       "class": 37,
       "side": "enemy",
-      "x": 5,
-      "y": 2,
+      "x": 20,
+      "y": 12,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-8",
       "class": 37,
       "side": "enemy",
-      "x": 17,
-      "y": 3,
+      "x": 21,
+      "y": 12,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-9",
       "class": 37,
       "side": "enemy",
-      "x": 6,
-      "y": 3,
+      "x": 17,
+      "y": 23,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-10",
       "class": 37,
       "side": "enemy",
-      "x": 3,
-      "y": 5,
+      "x": 18,
+      "y": 23,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-11",
       "class": 37,
       "side": "enemy",
-      "x": 20,
-      "y": 3,
+      "x": 17,
+      "y": 24,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd-12",
       "class": 37,
       "side": "enemy",
-      "x": 19,
-      "y": 4,
+      "x": 18,
+      "y": 24,
       "level": 29,
       "levelOffset": 2,
-      "name": "刘高家丁"
+      "name": "刘高家丁",
+      "ai": 0,
+      "facing": 2
     },
     {
       "id": "jd2-1",
       "class": 37,
       "side": "enemy",
-      "x": 20,
-      "y": 5,
+      "x": 1,
+      "y": 22,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 3
     },
     {
       "id": "jd2-2",
       "class": 37,
       "side": "enemy",
-      "x": 19,
-      "y": 8,
+      "x": 1,
+      "y": 23,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 3
     },
     {
       "id": "jd2-3",
       "class": 37,
       "side": "enemy",
-      "x": 21,
-      "y": 8,
+      "x": 1,
+      "y": 24,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 3
     },
     {
       "id": "jd2-4",
       "class": 37,
       "side": "enemy",
-      "x": 21,
-      "y": 9,
+      "x": 26,
+      "y": 35,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 0
     },
     {
       "id": "jd2-5",
       "class": 37,
       "side": "enemy",
-      "x": 22,
-      "y": 5,
+      "x": 27,
+      "y": 35,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 0
     },
     {
       "id": "jd2-6",
       "class": 37,
       "side": "enemy",
-      "x": 22,
-      "y": 4,
+      "x": 28,
+      "y": 35,
       "level": 29,
       "hidden": true,
       "name": "刘高家丁",
-      "levelOffset": 0
+      "levelOffset": 0,
+      "ai": 0,
+      "facing": 0
     },
     {
       "id": "mei",
       "class": "huarong-mei",
       "side": "ally",
-      "x": 12,
-      "y": 17,
+      "x": 18,
+      "y": 7,
       "level": 5,
       "ai": 8,
       "hidden": true,
@@ -500,7 +627,7 @@
         ],
         [
           "narrate",
-          "次日，秦明、宋江引着众好汉，带了清风山喽啰，直到清风寨前。黄信闻知，紧闭寨门，令寨兵在门内密列三排，刀枪交错，堵住进路。刘高家里还有一伙家丁，也都拿了刀棒守在后院。"
+          "次日，秦明、宋江引着众好汉，从西南一路来到清风寨。黄信守在东北寨门前，身边列着刀枪卫队，弓手在后压阵。寨中几队官兵分守道路，刘高的家丁也各执刀棒，闻声赶来拦截。"
         ],
         [
           "say",
@@ -551,7 +678,7 @@
       "do": [
         [
           "narrate",
-          "刘高家里又从后门抢出几个家丁来。"
+          "左边道口一阵喧嚷，刘高又调来几个家丁，径向众好汉杀来。"
         ],
         [
           "appear",
@@ -564,6 +691,17 @@
         [
           "appear",
           "jd2-3"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "do": [
+        [
+          "narrate",
+          "南边来路又有家丁赶到，想从后面截断众好汉的退路。"
         ],
         [
           "appear",
@@ -731,22 +869,78 @@
           "leave",
           "hx-9"
         ],
-        ["defect", "hx-10", "ally"],
-        ["leave", "hx-10"],
-        ["defect", "hx-11", "ally"],
-        ["leave", "hx-11"],
-        ["defect", "hx-12", "ally"],
-        ["leave", "hx-12"],
-        ["defect", "hx-13", "ally"],
-        ["leave", "hx-13"],
-        ["defect", "hx-14", "ally"],
-        ["leave", "hx-14"],
-        ["defect", "hx-15", "ally"],
-        ["leave", "hx-15"],
-        ["defect", "hx-16", "ally"],
-        ["leave", "hx-16"],
-        ["defect", "hx-17", "ally"],
-        ["leave", "hx-17"],
+        [
+          "defect",
+          "hx-10",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-10"
+        ],
+        [
+          "defect",
+          "hx-11",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-11"
+        ],
+        [
+          "defect",
+          "hx-12",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-12"
+        ],
+        [
+          "defect",
+          "hx-13",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-13"
+        ],
+        [
+          "defect",
+          "hx-14",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-14"
+        ],
+        [
+          "defect",
+          "hx-15",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-15"
+        ],
+        [
+          "defect",
+          "hx-16",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-16"
+        ],
+        [
+          "defect",
+          "hx-17",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-17"
+        ],
         [
           "flag",
           "surrendered"
@@ -843,22 +1037,78 @@
           "leave",
           "hx-9"
         ],
-        ["defect", "hx-10", "ally"],
-        ["leave", "hx-10"],
-        ["defect", "hx-11", "ally"],
-        ["leave", "hx-11"],
-        ["defect", "hx-12", "ally"],
-        ["leave", "hx-12"],
-        ["defect", "hx-13", "ally"],
-        ["leave", "hx-13"],
-        ["defect", "hx-14", "ally"],
-        ["leave", "hx-14"],
-        ["defect", "hx-15", "ally"],
-        ["leave", "hx-15"],
-        ["defect", "hx-16", "ally"],
-        ["leave", "hx-16"],
-        ["defect", "hx-17", "ally"],
-        ["leave", "hx-17"],
+        [
+          "defect",
+          "hx-10",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-10"
+        ],
+        [
+          "defect",
+          "hx-11",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-11"
+        ],
+        [
+          "defect",
+          "hx-12",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-12"
+        ],
+        [
+          "defect",
+          "hx-13",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-13"
+        ],
+        [
+          "defect",
+          "hx-14",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-14"
+        ],
+        [
+          "defect",
+          "hx-15",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-15"
+        ],
+        [
+          "defect",
+          "hx-16",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-16"
+        ],
+        [
+          "defect",
+          "hx-17",
+          "ally"
+        ],
+        [
+          "leave",
+          "hx-17"
+        ],
         [
           "flag",
           "surrendered"
@@ -884,14 +1134,14 @@
         [
           "move",
           "huarong",
-          13,
-          17
+          17,
+          8
         ],
         [
           "move",
           "qinming",
-          12,
-          16
+          16,
+          8
         ],
         [
           "face",

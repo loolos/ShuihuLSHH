@@ -1647,6 +1647,29 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(b.status).toBe('playing');
   });
 
+  it('清风寨破使用N02：左下进军、右上守门，左侧与下方分波增援；门卫警戒其余主动进攻',()=>{
+    const s=stage('gongpo'),b=start('gongpo');
+    expect(s.map).toEqual({base:'N02'});expect([b.board.width,b.board.height]).toEqual([36,36]);
+    const get=(id:string)=>b.units[s.units.findIndex(u=>u.id===id)];
+    const hx=get('huangxin'),qm=get('qinming');
+    expect([hx.x,hx.y]).toEqual([14,5]);
+    for(const u of s.units.filter(u=>u.side==='player')){expect(u.x-u.y).toBeLessThan(-15);expect(u.x+u.y).toBeGreaterThan(30);}
+    const field=b.board.distanceField([qm]),seen=new Set<string>();
+    for(const u of b.units){expect(b.board.passable(u.x,u.y),u.name).toBe(true);expect(Number.isFinite(field[u.y*36+u.x]),u.name).toBe(true);expect(seen.has(`${u.x},${u.y}`)).toBe(false);seen.add(`${u.x},${u.y}`);}
+    const guards=['huangxin',...Array.from({length:9},(_,i)=>`hx-${i+1}`)].map(get);
+    for(const u of guards){expect(u.ai.mode).toBe(12);expect(planAi(b,u).path?.length??0).toBe(0);expect(u.ai.mode).toBe(12);}
+    for(const u of b.units.filter(u=>u.side==='enemy'&&!guards.includes(u)))expect(u.ai.mode).toBe(0);
+    const activeBefore=b.active().filter(u=>u.side==='enemy').length;
+    b.turn=3;(b as unknown as {runTurnTriggers:(n:number)=>void}).runTurnTriggers(2);
+    expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(activeBefore+3);
+    for(let i=1;i<=3;i++){expect(get(`jd2-${i}`).present).toBe(true);expect(get(`jd2-${i}`).x).toBe(1);}
+    for(let i=4;i<=6;i++)expect(get(`jd2-${i}`).present).toBe(false);
+    b.turn=5;(b as unknown as {runTurnTriggers:(n:number)=>void}).runTurnTriggers(4);
+    expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(activeBefore+6);
+    for(let i=4;i<=6;i++){expect(get(`jd2-${i}`).present).toBe(true);expect(get(`jd2-${i}`).y).toBe(35);}
+    Object.assign(qm,{x:12,y:10});
+    for(const u of guards){planAi(b,u);expect(u.ai.mode).toBe(0);}
+  });
   it('霹雳火秦明（第二十章）：五关站位可通行不重格；三场剧情演完；困秦明引进陷坑或打倒都只触发擒获，清敌才过关；破清风寨秦明先劝不动、黄信伤过一半再劝才归降转友军，寨兵随降离场，家丁打光过关', () => {
     const ids = ['yekun', 'yeshuo', 'gongpo', 'duiyingshan', 'shiyong'];
     for (const id of ids) {
@@ -1699,9 +1722,9 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       spot(hx.x - 1, hx.y);
       expect(ev().some((e) => e.type === 'say' && e.text.includes('岂肯随你落草'))).toBe(true);
       expect(hx.side).toBe('enemy');
-      spot(11, 21); spot(hx.x - 1, hx.y);
+      spot(6, 26); spot(hx.x - 1, hx.y);
       expect(hx.side, '没伤到一半不降').toBe('enemy');
-      spot(11, 21);
+      spot(6, 26);
       hx.hp = Math.floor(hx.stats.maxHp * 0.4); check(b);
       spot(hx.x - 1, hx.y);
       expect(hx.side).toBe('ally');
