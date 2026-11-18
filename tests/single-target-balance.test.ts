@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { DATA } from '../tools/sim-lib.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { learnedSkills } from '../src/rules/skills.ts';
-import { attackParts, baseDamage } from '../src/rules/combat.ts';
+import { attackParts, baseDamage, rangedFactor } from '../src/rules/combat.ts';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -42,6 +42,20 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('单体技能数值修
   const d=data.classes[69].skills.find(s=>s.skillId===203)!;expect(d).toMatchObject({mpCost:40,power:20,hitMod:40,critMod:5,stun:15});expect(attackParts(d)).toHaveLength(4);
   const g=data.classes[0].skills.filter(s=>s.name.startsWith('隔山打虎'));expect(g).toHaveLength(1);expect(g[0]).toMatchObject({name:'隔山打虎',learnLevel:2,power:60,mpCost:30});expect(attackParts(g[0])).toHaveLength(4);
   for(const pack of ['mainline','jiangzhou']){const r=loadPackFromDisk(pack),c=r.data.classes[r.classIds.get('qinming')!];expect(c.skills.find(s=>s.name==='当头一棒')).toMatchObject({mpCost:40,power:50,stun:30});}
+ });
+ it('杨春灵蛇吐信近远及射程加成均不衰减，保留原耗气威力与中毒',()=>{
+  const s=data.classes.flatMap(c=>c.skills).find(s=>s.skillId===1004)!;
+  expect(s).toMatchObject({type:10,rangeMax:8,mpCost:25,power:20,poison:30,damageScale:1});
+  const actor={classId:13,x:10,y:10,facing:0,stats:{attack:150,crit:0,rangeBonus:0}}as Unit;
+  for(const bonus of [0,2]){
+   actor.stats.rangeBonus=bonus;
+   const damages=[];
+   for(const d of [1,4,8+bonus]){
+    const target={...actor,y:10-d,stats:{...actor.stats,defense:100}};
+    expect(rangedFactor(actor,target,s)).toBe(1);damages.push(baseDamage(actor,target,s));
+   }
+   for(const damage of damages)expect(damage).toEqual(damages[0]);
+  }
  });
  it('敌方同源技能不套用好汉的新命中威力和段数',()=>{
   for(const c of data.classes.filter(c=>c.id>=18&&c.id<69))for(const s of c.skills){

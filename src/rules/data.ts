@@ -263,7 +263,7 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   ],
   // 楊春：借本人普通攻击的动作（第 1 组与第 0 组帧完全相同）、飞刀特效（第 56–59 组，同白勝 監守自盜）
   15: [
-    extraSkill({ name: '靈蛇吐信', skillId: 1004, type: 10, group: 1, learnLevel: 8, mpCost: 25, power: 20, rangeMax: 8, critMod: 10, poison: 30, effect: 57, soundId: 48, hits: [{ frame: 13, percent: 100, dir: 0 }] }),
+    extraSkill({ name: '靈蛇吐信', skillId: 1004, damageScale: 1, type: 10, group: 1, learnLevel: 8, mpCost: 25, power: 20, rangeMax: 8, critMod: 10, poison: 30, effect: 57, soundId: 48, hits: [{ frame: 13, percent: 100, dir: 0 }] }),
   ],
 };
 
