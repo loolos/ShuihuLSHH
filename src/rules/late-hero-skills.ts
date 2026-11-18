@@ -72,12 +72,12 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
   if(!chenda&&!xiaoqi)return [s];
   const tiers=chenda
    ? [{id:115,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[12,23],weights:[40,60]},
-      {id:1300,level:20,power:55,mp:40,frames:[12,18,23],weights:[30,30,40]},
-      {id:1301,level:28,power:75,mp:65,frames:[8,12,18,23],weights:[25,25,25,25]}]
+      {id:1300,level:20,power:55,mp:30,frames:[12,18,23],weights:[30,30,40]},
+      {id:1301,level:28,power:75,mp:40,frames:[8,12,18,23],weights:[25,25,25,25]}]
    : [{id:81,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[18,25,28],weights:[30,30,40]},
-      {id:1302,level:27,power:60,mp:45,frames:[18,22,25,28],weights:[25,25,25,25]},
-      {id:1303,level:30,power:80,mp:75,frames:[15,18,22,25,28],weights:[20,20,20,20,20]}];
-  return tiers.map((t,i)=>({...s,skillId:t.id,soundId:s.soundId??s.skillId,name:`${s.name}LV${i+1}`,learnLevel:t.level,power:t.power,mpCost:t.mp,
+      {id:1302,level:27,power:60,mp:30,frames:[18,22,25,28],weights:[25,25,25,25]},
+      {id:1303,level:30,power:80,mp:40,frames:[15,18,22,25,28],weights:[20,20,20,20,20]}];
+  return tiers.map((t,i)=>({...s,skillId:t.id,soundId:s.soundId??s.skillId,name:`${s.name}LV${i+1}`,learnLevel:t.level,power:t.power,mpCost:t.mp,hitMod:s.hitMod+i*5,
    hits:t.frames.map((frame,k)=>({frame,percent:t.weights[k],dir:0}))}));
  });
 }

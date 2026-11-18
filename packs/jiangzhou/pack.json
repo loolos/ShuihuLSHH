@@ -1260,7 +1260,8 @@
      "name": "浪里钻",
      "from": 74,
      "anim": 1,
-     "learnLevel": 15
+     "learnLevel": 15,
+     "mpCost": 45
     },
     {
      "id": "zs-qi",
@@ -1876,7 +1877,7 @@
     },
     {
      "id": "antou",
-     "name": "擒虎镇岳",
+     "name": "擒虎镇岳LV1",
      "from": 154,
      "anim": "punch-three",
      "poison": 0,
@@ -1886,11 +1887,53 @@
       0.516667,
       0.85
      ],
-     "power": 60,
-     "mpCost": 60,
+     "power": 50,
+     "mpCost": 40,
      "learnLevel": 8,
      "area": 1,
-     "effect": 0
+     "effect": 0,
+     "hitMod": 10
+    },
+    {
+     "id": "antou-2",
+     "name": "擒虎镇岳LV2",
+     "from": 154,
+     "anim": "punch-four",
+     "poison": 0,
+     "stun": 30,
+     "hitAt": [
+      0.1375,
+      0.3875,
+      0.6375,
+      0.8875
+     ],
+     "power": 60,
+     "mpCost": 50,
+     "learnLevel": 18,
+     "area": 1,
+     "effect": 0,
+     "hitMod": 20
+    },
+    {
+     "id": "antou-3",
+     "name": "擒虎镇岳LV3",
+     "from": 154,
+     "anim": "punch-five",
+     "poison": 0,
+     "stun": 30,
+     "hitAt": [
+      0.11,
+      0.31,
+      0.51,
+      0.71,
+      0.91
+     ],
+     "power": 70,
+     "mpCost": 60,
+     "learnLevel": 28,
+     "area": 1,
+     "effect": 0,
+     "hitMod": 30
     },
     {
      "id": "yunqi",

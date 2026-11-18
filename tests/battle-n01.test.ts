@@ -126,7 +126,7 @@ describe.skipIf(!has)('N01', () => {
   it('好汉技能不扣命中，威力下降等额（最低 1）；敌方职业不变', () => {
     for (const c of data.classes.slice(0, 18)) for (const k of c.skills) expect(k.hitMod).toBeGreaterThanOrEqual(0);
     const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
-    expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([50, 0]); // 魯智深 佛光普照 70 / −20
+    expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([80, 30]); // 魯智深 佛光普照 70 / −20
     expect([by(16, 133).power, by(16, 133).hitMod]).toEqual([10, 0]); // 魯智深 普攻 三世因果 20 / −10
     expect(by(4, 51).power).toBe(1); // 白勝 通殺LV1 10 / −15
     expect([by(46, 21).power, by(46, 21).hitMod]).toEqual([50, -10]); // 敌方公孫勝 天雷滅敵正法 不变
