@@ -2174,6 +2174,7 @@
      "rangeMin": 0,
      "rangeMax": 0,
      "power": 30,
+     "hitMod": 0,
      "mpCost": 45,
      "hits": [
       {
