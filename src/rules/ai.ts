@@ -202,6 +202,7 @@ export function alertRadius(b: Battle, u: Unit): number {
 }
 
 export function planAi(b: Battle, u: Unit): AiPlan {
+  if (b.spectators.has(u.uid)) return {};
   const [, hi] = attackRange(u, b.data);
   const target = u.ai.target ? b.unitByChar(u.ai.target) : undefined;
   switch (u.ai.mode) {

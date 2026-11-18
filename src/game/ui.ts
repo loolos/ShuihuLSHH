@@ -137,6 +137,8 @@ export class BattleUI {
     this.log.replaceChildren();
   }
 
+  spectators: ReadonlySet<number> = new Set();
+
   showUnit(u: Unit | null, preview?: AttackPreview | null, hint = '', item?: { title: string; lines: string[]; warn?: string }) {
     if (!u) {
       this.panel.hidden = true;
@@ -145,7 +147,7 @@ export class BattleUI {
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
     const buffs = u.buffs.map(buffLabel);
-    const states = [u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), u.ended && u.side === 'player' && '已行动']
+    const states = [this.spectators.has(u.uid) && u.side === 'ally' && '旁观', u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), u.ended && u.side === 'player' && '已行动']
       .filter((state): state is string => typeof state === 'string');
     const face = this.portrait(u.classId);
     this.panel.innerHTML = `

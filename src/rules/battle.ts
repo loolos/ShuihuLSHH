@@ -540,7 +540,7 @@ export class Battle {
     if (this.status !== 'playing' || this.phase !== 'player') return [];
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
-      for (const u of this.units.filter((x) => x.side === side && x.alive && (x.present || this.ambushers.has(x.uid)))) {
+      for (const u of this.units.filter((x) => x.side === side && x.alive && !this.spectators.has(x.uid) && (x.present || this.ambushers.has(x.uid)))) {
         if (this.status !== 'playing') break;
         if (!u.alive || u.ended) continue;
         if (!u.present) {
@@ -1665,7 +1665,7 @@ export class Battle {
           if (!sel || !op.text) break;
           sel.side = op.text as Unit['side'];
           sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : sel.side === 'enemy' ? '倒戈' : '歸順' });
+          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : this.spectators.has(sel.uid) ? (sel.side === 'ally' ? '旁观' : '归队') : sel.side === 'enemy' ? '倒戈' : '歸順' });
           this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
         }
