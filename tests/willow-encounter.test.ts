@@ -23,6 +23,11 @@ describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>
   for(const id of b.spectators){const u=b.unit(id)!;expect(u.side).toBe('ally');expect(b.canAct(u)).toBe(false);expect(b.canMove(u)).toBe(false);expect(planAi(b,u)).toEqual({});for(const foe of b.active().filter(u=>u.side==='enemy'))expect(b.aiFoesOf(foe)).not.toContain(u);}
   expect(b.units.find(u=>u.classId===11)!.present).toBe(false);expect(b.status).toBe('playing');expect(b.turnLimit).toBe(5);
  });
+ it('四名泼皮使用无昏迷喽啰，技能及默认装备均不附带昏迷',()=>{
+  const b=new Battle(input());b.begin();
+  const foes=b.active().filter(u=>u.side==='enemy');expect(foes).toHaveLength(4);
+  for(const u of foes){expect(u.classId).toBe(45);expect(u.stats.stun).toBe(0);for(const s of data.classes[u.classId].skills)expect(s.stun,s.name).toBe(0);}
+ });
  it('旁观同伴整回合不移动、不受敌方攻击或技能波及',()=>{
   const b=new Battle(input());b.begin();const watchers=b.units.filter(u=>b.spectators.has(u.uid));
   const before=watchers.map(u=>[u.x,u.y,u.hp]);const events=b.endPlayerPhase();

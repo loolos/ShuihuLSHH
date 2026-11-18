@@ -11,7 +11,7 @@ const move=(who:number,x:number,y:number):PasOp[]=>[op(12,who),op(14,x),op(15,y)
 export function willowUnits(original:ActUnit[]):ActUnit[]{
  const positions:Record<number,[number,number]>={0:[9,16],3:[8,17],13:[10,17],15:[10,15],5:[11,16],16:[8,13],11:[12,8],31:[14,8],35:[12,11]};
  const units=original.map(u=>({...u,items:[...u.items],raw:[...u.raw],x:positions[u.type][0],y:positions[u.type][1],flags:[11,31,35].includes(u.type)?7:0,level:u.type===16?12:u.level}));
- for(const [i,type,x,y] of [[0,65,7,10],[1,44,6,12],[2,44,10,12],[3,44,12,13]])units.push({index:units.length,type,group:20+i,side:'enemy',facing:2,x,y,level:i?9:10,flags:0,extra:[0,0,0],items:[],raw:[]});
+ for(const [i,type,x,y] of [[0,45,7,10],[1,45,6,12],[2,45,10,12],[3,45,12,13]])units.push({index:units.length,type,group:20+i,side:'enemy',facing:2,x,y,level:i?9:10,flags:0,extra:[0,0,0],items:[],raw:[]});
  return units;
 }
 export function willowBlocks():PasBlock[]{
