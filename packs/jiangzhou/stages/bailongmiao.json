@@ -3768,6 +3768,462 @@
    "facing": 2,
    "level": 28,
    "hidden": true
+  },
+  {
+   "id": "left3_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 35,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left3_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 13,
+   "y": 35,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left3_3",
+   "class": 38,
+   "side": "enemy",
+   "x": 14,
+   "y": 35,
+   "level": 28,
+   "name": "增援都头",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left3_4",
+   "class": 36,
+   "side": "enemy",
+   "x": 12,
+   "y": 37,
+   "level": 28,
+   "name": "增援官吏",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left3_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 37,
+   "level": 29,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left3_6",
+   "class": 32,
+   "side": "enemy",
+   "x": 14,
+   "y": 37,
+   "level": 28,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 37,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 37,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_3",
+   "class": 38,
+   "side": "enemy",
+   "x": 5,
+   "y": 37,
+   "level": 28,
+   "name": "增援都头",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_4",
+   "class": 36,
+   "side": "enemy",
+   "x": 3,
+   "y": 39,
+   "level": 28,
+   "name": "增援官吏",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 4,
+   "y": 39,
+   "level": 29,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left7_6",
+   "class": 32,
+   "side": "enemy",
+   "x": 5,
+   "y": 39,
+   "level": 28,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_1",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 41,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_2",
+   "class": 43,
+   "side": "enemy",
+   "x": 18,
+   "y": 41,
+   "level": 28,
+   "name": "增援马军",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_3",
+   "class": 38,
+   "side": "enemy",
+   "x": 19,
+   "y": 41,
+   "level": 28,
+   "name": "增援都头",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_4",
+   "class": 36,
+   "side": "enemy",
+   "x": 17,
+   "y": 43,
+   "level": 28,
+   "name": "增援官吏",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_5",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 43,
+   "level": 29,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "left11_6",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 43,
+   "level": 28,
+   "name": "江州增援兵",
+   "hidden": true,
+   "ai": 0,
+   "facing": 0
+  },
+  {
+   "id": "boss-support-1-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-2-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-3-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-4-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-5-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-6-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-7-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-8-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-9-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-10-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-11-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-12-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-13-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-14-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-15-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-16-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-17-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-18-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-19-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
+  },
+  {
+   "id": "boss-support-20-4",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "facing": 2,
+   "level": 30,
+   "hidden": true,
+   "ai": 0,
+   "name": "都监亲随士兵"
   }
  ],
  "script": [
@@ -3780,7 +4236,7 @@
     ],
     [
      "objective",
-     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、吴用、戴宗等七人开场守在左侧白龙庙旁，其余好汉第2–6回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名骑兵、2名官吏、1名都头主动进攻。"
+     "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、吴用、戴宗等七人开场守在左侧白龙庙旁，其余好汉第2–6回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名骑兵、2名官吏、1名都头、1名士兵主动进攻。"
     ],
     [
      "turnLimit",
@@ -3894,6 +4350,10 @@
      "boss-support-1-3"
     ],
     [
+     "appear",
+     "boss-support-1-4"
+    ],
+    [
      "focus",
      "songjiang"
     ]
@@ -3997,6 +4457,10 @@
     [
      "appear",
      "boss-support-2-3"
+    ],
+    [
+     "appear",
+     "boss-support-2-4"
     ]
    ]
   },
@@ -4105,6 +4569,10 @@
      "boss-support-3-3"
     ],
     [
+     "appear",
+     "boss-support-3-4"
+    ],
+    [
      "narrate",
      "右方又涌来一队官军，都头、官吏带着马步军一齐压上！"
     ],
@@ -4131,6 +4599,34 @@
     [
      "appear",
      "spike3_6"
+    ],
+    [
+     "narrate",
+     "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
+    ],
+    [
+     "appear",
+     "left3_1"
+    ],
+    [
+     "appear",
+     "left3_2"
+    ],
+    [
+     "appear",
+     "left3_3"
+    ],
+    [
+     "appear",
+     "left3_4"
+    ],
+    [
+     "appear",
+     "left3_5"
+    ],
+    [
+     "appear",
+     "left3_6"
     ]
    ]
   },
@@ -4262,6 +4758,10 @@
     [
      "appear",
      "boss-support-4-3"
+    ],
+    [
+     "appear",
+     "boss-support-4-4"
     ]
    ]
   },
@@ -4386,6 +4886,10 @@
     [
      "appear",
      "boss-support-5-3"
+    ],
+    [
+     "appear",
+     "boss-support-5-4"
     ]
    ]
   },
@@ -4497,6 +5001,10 @@
     [
      "appear",
      "boss-support-6-3"
+    ],
+    [
+     "appear",
+     "boss-support-6-4"
     ]
    ]
   },
@@ -4558,6 +5066,10 @@
      "boss-support-7-3"
     ],
     [
+     "appear",
+     "boss-support-7-4"
+    ],
+    [
      "narrate",
      "右方又涌来一队官军，都头、官吏带着马步军一齐压上！"
     ],
@@ -4584,6 +5096,34 @@
     [
      "appear",
      "spike7_6"
+    ],
+    [
+     "narrate",
+     "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
+    ],
+    [
+     "appear",
+     "left7_1"
+    ],
+    [
+     "appear",
+     "left7_2"
+    ],
+    [
+     "appear",
+     "left7_3"
+    ],
+    [
+     "appear",
+     "left7_4"
+    ],
+    [
+     "appear",
+     "left7_5"
+    ],
+    [
+     "appear",
+     "left7_6"
     ]
    ]
   },
@@ -4643,6 +5183,10 @@
     [
      "appear",
      "boss-support-8-3"
+    ],
+    [
+     "appear",
+     "boss-support-8-4"
     ]
    ]
   },
@@ -4702,6 +5246,10 @@
     [
      "appear",
      "boss-support-9-3"
+    ],
+    [
+     "appear",
+     "boss-support-9-4"
     ]
    ]
   },
@@ -4761,6 +5309,10 @@
     [
      "appear",
      "boss-support-10-3"
+    ],
+    [
+     "appear",
+     "boss-support-10-4"
     ]
    ]
   },
@@ -4822,6 +5374,10 @@
      "boss-support-11-3"
     ],
     [
+     "appear",
+     "boss-support-11-4"
+    ],
+    [
      "narrate",
      "右方又涌来一队官军，都头、官吏带着马步军一齐压上！"
     ],
@@ -4848,6 +5404,34 @@
     [
      "appear",
      "spike11_6"
+    ],
+    [
+     "narrate",
+     "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
+    ],
+    [
+     "appear",
+     "left11_1"
+    ],
+    [
+     "appear",
+     "left11_2"
+    ],
+    [
+     "appear",
+     "left11_3"
+    ],
+    [
+     "appear",
+     "left11_4"
+    ],
+    [
+     "appear",
+     "left11_5"
+    ],
+    [
+     "appear",
+     "left11_6"
     ]
    ]
   },
@@ -4907,6 +5491,10 @@
     [
      "appear",
      "boss-support-12-3"
+    ],
+    [
+     "appear",
+     "boss-support-12-4"
     ]
    ]
   },
@@ -4966,6 +5554,10 @@
     [
      "appear",
      "boss-support-13-3"
+    ],
+    [
+     "appear",
+     "boss-support-13-4"
     ]
    ]
   },
@@ -5025,6 +5617,10 @@
     [
      "appear",
      "boss-support-14-3"
+    ],
+    [
+     "appear",
+     "boss-support-14-4"
     ]
    ]
   },
@@ -5084,6 +5680,10 @@
     [
      "appear",
      "boss-support-15-3"
+    ],
+    [
+     "appear",
+     "boss-support-15-4"
     ]
    ]
   },
@@ -5143,6 +5743,10 @@
     [
      "appear",
      "boss-support-16-3"
+    ],
+    [
+     "appear",
+     "boss-support-16-4"
     ]
    ]
   },
@@ -5202,6 +5806,10 @@
     [
      "appear",
      "boss-support-17-3"
+    ],
+    [
+     "appear",
+     "boss-support-17-4"
     ]
    ]
   },
@@ -5261,6 +5869,10 @@
     [
      "appear",
      "boss-support-18-3"
+    ],
+    [
+     "appear",
+     "boss-support-18-4"
     ]
    ]
   },
@@ -5320,6 +5932,10 @@
     [
      "appear",
      "boss-support-19-3"
+    ],
+    [
+     "appear",
+     "boss-support-19-4"
     ]
    ]
   },
@@ -5379,6 +5995,10 @@
     [
      "appear",
      "boss-support-20-3"
+    ],
+    [
+     "appear",
+     "boss-support-20-4"
     ]
    ]
   },

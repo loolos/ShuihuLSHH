@@ -93,24 +93,24 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
     expect(threat).toBeGreaterThan(-1);expect(String(ops[threat][2])).toContain('一律格杀');expect(response).toBeGreaterThan(threat);expect(stand).toBeGreaterThan(response);
     expect(String(ops[stand][2])).toContain('二十回合');expect(String(ops[stand][2])).toContain('打倒那都监');
   });
-  it('都监体力始终为普通模板四倍，每回合两骑兵两官吏一都头在身边出现并主动进攻', () => {
+  it('都监体力始终为普通模板四倍，每回合两骑兵两官吏一都头一士兵在身边出现并主动进攻', () => {
     const {s,b,get}=open('bailongmiao'),boss=get('dujian');
     const normal=computeStats(b.data.classes[boss.classId],boss.level,boss.slots,b.data,false,boss.forge,[],boss.side);
     expect(boss.hp).toBe(normal.maxHp*4);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
     refreshStats(boss,b.data);refreshStats(boss,b.data);expect(boss.stats.maxHp).toBe(normal.maxHp*4);
     const rewind=open('bailongmiao');(rewind.b as unknown as {startTurn:(n:number)=>void}).startTurn(2);rewind.get('dujian').hp=1;rewind.b.rewind();refreshStats(rewind.get('dujian'),rewind.b.data);expect(rewind.get('dujian').stats.maxHp).toBe(normal.maxHp*4);expect(rewind.get('dujian').hp).toBe(normal.maxHp*4);
-    const cavalry=s.units.filter(u=>u.id.startsWith('boss-'));expect(cavalry).toHaveLength(100);
+    const cavalry=s.units.filter(u=>u.id.startsWith('boss-'));expect(cavalry).toHaveLength(120);
     for(let turn=1;turn<=20;turn++) {
       if(turn>1)trigger(b,turn-1);
-      const pair=cavalry.filter(u=>u.id.startsWith(`boss-cav-${turn}-`)||u.id.startsWith(`boss-support-${turn}-`));expect(pair).toHaveLength(5);expect(pair.map(u=>u.class).sort()).toEqual([36,36,38,43,43]);
+      const pair=cavalry.filter(u=>u.id.startsWith(`boss-cav-${turn}-`)||u.id.startsWith(`boss-support-${turn}-`));expect(pair).toHaveLength(6);expect(pair.map(u=>u.class).sort()).toEqual([32,36,36,38,43,43]);
       for(const u of pair){const actual=get(u.id);expect(actual.present&&actual.alive,u.id).toBe(true);expect(actual.ai.mode).toBe(0);expect(Math.abs(actual.x-boss.x)+Math.abs(actual.y-boss.y),u.id).toBeLessThanOrEqual(12);}
       const live=b.active();expect(new Set(live.map(u=>`${u.x},${u.y}`)).size).toBe(live.length);
       expect(b.active().filter(u=>u.name==='都监亲随马军')).toHaveLength(turn*2);
     }
   });
-  it('282名敌人、55名开场敌军，19波每波6人以2×3从下方右方交替进入，守满20回合判胜', () => {
+  it('320名敌人、56名开场敌军，19波每波6人以2×3从下方右方交替进入，守满20回合判胜', () => {
     const {s,b}=open('bailongmiao'),enemies=s.units.filter(u=>u.side==='enemy');
-    expect(enemies).toHaveLength(282);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(55);
+    expect(enemies).toHaveLength(320);expect(b.active().filter(u=>u.side==='enemy')).toHaveLength(56);
     const additions=enemies.filter(u=>u.id.startsWith('dense-')||/^r\d+_[45]$/.test(u.id));expect(additions).toHaveLength(56);
     const field=b.board.distanceField([s.units.find(u=>u.id==='songjiang')!]);
     for(const u of [...additions,...enemies.filter(u=>/^r2_[123]$/.test(u.id))]) {
@@ -122,16 +122,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('江州可控�
       const block=s.script.find(b=>typeof b.on==='object'&&'turn' in b.on&&b.on.turn===turn)!;
       const arrivals=block.do.filter(op=>op[0]==='appear').map(op=>s.units.find(u=>u.id===op[1])!).filter(u=>u.side==='enemy'&&!u.id.startsWith('boss-'));
       const spike=arrivals.filter(u=>u.id.startsWith('spike'));
+      const left=arrivals.filter(u=>u.id.startsWith('left'));expect(left).toHaveLength([3,7,11].includes(turn)?6:0);
+      for(const u of left){expect(u.x-u.y,u.id).toBeLessThanOrEqual(-20);expect(b.board.passable(u.x,u.y),u.id).toBe(true);expect(Number.isFinite(field[u.y*b.board.width+u.x]),u.id).toBe(true);}
       expect(spike).toHaveLength([3,7,11].includes(turn)?6:0);
-      expect(arrivals).toHaveLength([3,7,11].includes(turn)?12:6);
+      expect(arrivals).toHaveLength([3,7,11].includes(turn)?18:6);
       expect(wave.some(u=>u.class===38)).toBe(true);expect(wave.some(u=>u.class===36)).toBe(true);
-      for(const squad of [wave,...(spike.length?[spike]:[])]) {
+      for(const squad of [wave,...(spike.length?[spike,left]:[])]) {
         const xs=[...new Set(squad.map(u=>u.x))].sort((a,b)=>a-b),ys=[...new Set(squad.map(u=>u.y))].sort((a,b)=>a-b);
         expect(xs).toEqual([xs[0],xs[0]+1,xs[0]+2]);expect(ys).toEqual([ys[0],ys[0]+2]);
         for(const y of ys)expect(squad.filter(u=>u.y===y)).toHaveLength(3);
       }
       expect(s.units.some(u=>u.id.startsWith('w3_')||u.id.startsWith('w7_'))).toBe(false);
-      for(const u of arrivals) expect(turn%2===0?u.x+u.y>=86:u.x-u.y>=18,`${turn}/${u.id}`).toBe(true);
+      for(const u of arrivals.filter(u=>!u.id.startsWith('left'))) expect(turn%2===0?u.x+u.y>=86:u.x-u.y>=18,`${turn}/${u.id}`).toBe(true);
       trigger(b,turn-1);for(const u of arrivals){const actual=b.units[s.units.indexOf(u)];expect(actual.present,u.id).toBe(true);expect([actual.x,actual.y],u.id).toEqual([u.x,u.y]);}
     }
     expect(b.status).toBe('playing');expect(b.turnLimit).toBe(20);
