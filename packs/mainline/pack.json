@@ -2436,7 +2436,7 @@
         "anim": 0,
         "learnLevel": 3,
         "power": 50,
-        "mpCost": 25,
+        "mpCost": 40,
         "stun": 30,
         "hitMod": 0,
         "critMod": 0,
