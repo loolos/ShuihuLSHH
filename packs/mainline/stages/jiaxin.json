@@ -86,21 +86,21 @@
     {
       "id": "caijiu",
       "class": "caijiu",
-      "side": "ally",
+      "side": "enemy",
       "x": 19,
       "y": 6,
       "level": 30,
-      "ai": 8,
+      "ai": 11,
       "facing": 2
     },
     {
       "id": "huangwenbing",
       "class": "huangwenbing",
-      "side": "ally",
+      "side": "enemy",
       "x": 20,
       "y": 6,
       "level": 30,
-      "ai": 8,
+      "ai": 11,
       "facing": 2
     },
     {

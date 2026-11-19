@@ -134,6 +134,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     const { b, get, s } = open('jiaxin');
     expect(s.townAfter).toBe(11);
     expect(s.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['daizong', 'guosheng', 'hero', 'lijun', 'lvfang', 'wangying', 'yanshun', 'zhugui']);
+    for (const id of ['huangwenbing', 'caijiu']) expect(get(id).side, id).toBe('enemy');
     const hero = get('hero'), dz = get('daizong'), wy = get('wangying');
     wy.x = dz.x + 1; wy.y = dz.y; after(b);
     expect(dz.present).toBe(false);
