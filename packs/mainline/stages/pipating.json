@@ -6,7 +6,7 @@
     "gold": 300
   },
   "map": {
-    "custom": "dukou"
+    "custom": "dukou-yuchuan"
   },
   "bgm": "battle",
   "units": [
@@ -256,13 +256,13 @@
       "do": [
         [
           "narrate",
-          "张顺吃李逵打得急了，一跳跳上栈桥尽头的渔船，把竹篙一点。"
+          "张顺吃李逵打得急了，一跳跳上栈桥边泊着的渔船，把竹篙一点。"
         ],
         [
           "move",
           "zhangshun",
-          2,
-          10
+          4,
+          15
         ],
         [
           "say",
@@ -275,10 +275,34 @@
           "我便怕你不成！"
         ],
         [
+          "leave",
+          "yuren-1"
+        ],
+        [
+          "leave",
+          "yuren-2"
+        ],
+        [
+          "leave",
+          "yuren-3"
+        ],
+        [
+          "leave",
+          "yuren-4"
+        ],
+        [
+          "leave",
+          "yuren-5"
+        ],
+        [
+          "leave",
+          "yuren-6"
+        ],
+        [
           "move",
           "likui",
-          3,
-          10
+          5,
+          15
         ],
         [
           "narrate",
