@@ -90,7 +90,7 @@ export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): n
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
  * - 1：从施放点沿施放方向展开的扇形，第 i 行（从 0 数）向两侧各 floor(i/2) 格，共 size 行（0x40d330）
  * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）
- * - 12 周身技：周围 8 格；13 横扫：面前三格；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格；16 三岔：正前、左右斜前各 size 格；17 倒锥：近宽远窄，size 行【新】
+ * - 12 周身技：周围 8 格；13 横扫：面前三格；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格；16 三岔：身前一格为柄，再向前展开三条各 size 格的射线；17 倒锥：近宽远窄，size 行【新】
  * - 其余（3、4、7、8、9、11）：以施放点为中心的菱形，曼哈顿距离 < size；size 0 只含施放点（0x40cde0）
  */
 export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell[] {
@@ -143,9 +143,10 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
         for (let j = -(size - i); j <= size - i; j++) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
       break;
     case 16:
-      // 三条射线：斜线每向前一格，同时向侧面一格；范围仅由技能等级决定。
+      // 身前一格为柄，原三条射线整体前移一格，形成三叉形。
+      add(from.x + dir.x, from.y + dir.y);
       for (let i = 1; i <= size; i++)
-        for (const j of [-i, 0, i]) add(from.x + dir.x * i + dir.y * j, from.y + dir.y * i + dir.x * j);
+        for (const j of [-i, 0, i]) add(from.x + dir.x * (i + 1) + dir.y * j, from.y + dir.y * (i + 1) + dir.x * j);
       break;
     case 15:
       // 正前、前两格，以及第一排的左前和右前；不含自己、身后或更远处。
