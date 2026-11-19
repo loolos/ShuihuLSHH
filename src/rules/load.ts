@@ -25,6 +25,11 @@ export interface FileSource {
  * 逐字对齐两份文本即可得到剧本中出现过的全部字的对照。没出现过的字保持原样。
  */
 export function buildT2S(files: FileSource): (s: string) => string {
+  const map = new Map(Object.entries(t2sTable(files)));
+  return (s) => [...s].map((c) => map.get(c) ?? c).join('');
+}
+
+export function t2sTable(files: FileSource): Record<string, string> {
   // 逐字投票：.pas 偶有错字（如把"得"写成"的"），取出现次数最多的对应（含不变）
   const votes = new Map<string, Map<string, number>>();
   for (const pab of files.list('Map', '.pab')) {
@@ -52,7 +57,7 @@ export function buildT2S(files: FileSource): (s: string) => string {
     const best = [...v].sort((a, b) => b[1] - a[1])[0][0];
     if (best !== c) map.set(c, best);
   }
-  return (s) => [...s].map((c) => map.get(c) ?? c).join('');
+  return Object.fromEntries([...map].sort((a, b) => (a[0] < b[0] ? -1 : 1)));
 }
 
 export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {

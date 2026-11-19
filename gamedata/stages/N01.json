@@ -1,0 +1,144 @@
+{
+  "map": "N01",
+  "header": {"blockCount":7,"town":0,"next":1,"act":0},
+  "units": [
+    {"index":0,"type":1,"group":0,"side":"player","facing":2,"x":4,"y":4,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":18,"group":0,"side":"ally","facing":2,"x":4,"y":3,"level":1,"flags":1280,"extra":[1,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":0,"group":0,"side":"player","facing":3,"x":3,"y":4,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":32,"group":0,"side":"enemy","facing":1,"x":10,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":32,"group":0,"side":"enemy","facing":0,"x":6,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":32,"group":0,"side":"enemy","facing":0,"x":8,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":32,"group":0,"side":"enemy","facing":1,"x":10,"y":5,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":38,"group":0,"side":"enemy","facing":0,"x":25,"y":47,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,166,0,0,0]},
+    {"index":8,"type":32,"group":1,"side":"enemy","facing":0,"x":24,"y":46,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":9,"type":32,"group":2,"side":"enemy","facing":0,"x":26,"y":46,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":34,"group":3,"side":"enemy","facing":0,"x":23,"y":48,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":34,"group":4,"side":"enemy","facing":0,"x":22,"y":49,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":32,"group":0,"side":"enemy","facing":0,"x":10,"y":34,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":13,"type":32,"group":0,"side":"enemy","facing":0,"x":9,"y":34,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":32,"group":0,"side":"enemy","facing":0,"x":8,"y":34,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":34,"group":0,"side":"enemy","facing":0,"x":11,"y":42,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":16,"type":32,"group":0,"side":"enemy","facing":1,"x":38,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":32,"group":0,"side":"enemy","facing":1,"x":38,"y":11,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":32,"group":0,"side":"enemy","facing":1,"x":38,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":34,"group":0,"side":"enemy","facing":1,"x":40,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":34,"group":0,"side":"enemy","facing":0,"x":34,"y":17,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":21,"type":34,"group":0,"side":"enemy","facing":1,"x":35,"y":28,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":34,"group":0,"side":"enemy","facing":0,"x":31,"y":30,"level":1,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":0,"group":0,"side":"object","facing":0,"x":3,"y":46,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":156,"group":0,"side":"object","facing":0,"x":29,"y":27,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":25,"type":1000,"group":0,"side":"object","facing":0,"x":24,"y":53,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,22,5,1,1,2,33,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":14,"flag":1,"value":6},
+        {"op":15,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":18},
+        {"op":14,"flag":1,"value":6},
+        {"op":15,"flag":1,"value":5},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"娘，过了这个山头就快到延安府了；高俅的追兵应该就不会继续追来。娘，再振作一点！"},
+        {"op":12,"flag":1,"value":18},
+        {"op":13,"flag":0,"text":"儿啊, 我已经跑不动了,不要管我这个老人了, 赶紧自己逃命吧！"},
+        {"op":12,"flag":1,"value":38},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"王教头，辛苦你啦！新任的高太尉请你前去叙叙，你何必乘夜逃走呢？堂堂八十万禁军教头竟做这偷偷摸摸的事,岂不丢脸？"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"宴无好宴,会无好会；我王进怎会不知这是场鸿门宴？高俅逮到这个机会，岂不借机报仇？！"},
+        {"op":12,"flag":1,"value":38},
+        {"op":13,"flag":0,"text":"太尉有令！如果请不回王教头，则以『怠忽职守，弃职逃亡』的罪名逮捕！张三，李四，你们从左边包围；周五，王六，你们从右边包围。不能让犯人逃走！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"娘！快走！我来阻挡追兵！"},
+        {"op":35,"flag":null,"value":50},
+        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 让王母逃到撤退区域"},
+        {"op":33,"flag":null,"text":"失败条件一 --- 王进被杀害"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 王母被杀害"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":2},
+      "cond": {"type":0,"arg":2},
+      "head": [1,16,5,1,1,3,33,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":0},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":6},
+        {"op":13,"flag":0,"text":"这么多人打一个人，你们还有一丝的羞耻心吗？"},
+        {"op":12,"flag":1,"value":38},
+        {"op":13,"flag":0,"text":"你是谁！竟敢阻碍官军办案！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"以官压民，以多胜少；官呀，官呀，全是一群狐假虎威的家伙..."},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这位壮士，请不要插手！他们要的是我王进一个人，他们不会为难你的。"},
+        {"op":12,"flag":1,"value":38},
+        {"op":13,"flag":0,"text":"你...你还不报上姓名！再向前就以『帮助逃亡』的罪名把你捉起来！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"我乃%N。众位大哥何不就此罢手，回报王进已经不知去向；否则拳脚无情，拆筋断骨可是很痛的..."},
+        {"op":12,"flag":1,"value":38},
+        {"op":13,"flag":0,"text":"原来你跟犯人是一伙的！来人啊！顺便把这个共犯一起抓回去讨赏！"},
+        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 让王母逃到撤退区域"},
+        {"op":33,"flag":null,"text":"失败条件一 --- 王进被杀害"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 王母被杀害"},
+        {"op":33,"flag":null,"text":"失败条件三 --- %N被杀害"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":50},
+      "cond": {"type":0,"arg":50},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":18},
+      "cond": {"type":1,"arg":18},
+      "head": [1,0,1,0,0,0,130,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"王母在混战之中被官兵所杀，悲愤的王进冲入敌阵，击毙数名官兵，后被乱刀砍死；%N奋力杀出敌阵，隔日遭官府全面通缉，从此亡命天涯........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,0,1,0,0,0,136,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进为救母亲，被官兵所包围，%N援救不及，王进被杀，王母也随之自尽，%N虽逃出生天，却每每自责其罪，三年后，抑郁而终，享年二十八岁.........."}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1000},
+      "cond": {"type":1,"arg":1000},
+      "head": [1,0,1,0,0,0,80,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N为官兵所擒杀，王进孤掌难鸣，终失手被擒，被解押回京，后在狱中为高俅所害........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":18,"x1":23,"y1":52,"x2":25,"y2":53},
+      "cond": {"op":"and","a":{"type":4,"arg":18},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":23},"b":{"type":8,"arg":52}},"b":{"op":"and","a":{"type":9,"arg":25},"b":{"type":10,"arg":53}}}},
+      "head": [4,8,1,0,0,0,40,2,4],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"唉...这该怎么才好；为了我的事，又把一个人淌入这场混水中..."},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"你在烦恼什么啊？！不用在意！我找官府麻烦又不是第一次了！况且你要是被那些官军捉走，那么你娘怎么办？"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"娘应该到达安全的地方了，我得赶紧赶上去。多谢壮士相救。啊..."},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"受伤的人还那么勉强。来，扶住我的肩膀，我护送你们一程。"},
+        {"op":29,"flag":null,"text":"在%N的帮助下，王母暂时逃脱了官兵的追捕。"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "map": "Act4-2",
+  "header": {"blockCount":1,"town":0,"next":20,"act":1},
+  "units": [
+    {"index":0,"type":3,"group":0,"side":"player","facing":3,"x":8,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":0,"group":0,"side":"player","facing":0,"x":9,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":13,"group":0,"side":"player","facing":1,"x":10,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":15,"group":0,"side":"player","facing":2,"x":9,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":5,"group":0,"side":"player","facing":2,"x":8,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,30,1,0,0,0,24,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"当夜，众人就在桃花村住下。转眼间已经到强盗约定的时刻了。"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"真慢啊..."},
+        {"op":12,"flag":1,"value":13},
+        {"op":13,"flag":0,"text":"强盗们来了！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"嘘～小声点，听听看他们在讲些什么！"},
+        {"op":12,"flag":1,"value":44},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":20},
+        {"op":13,"flag":0,"text":"帽儿光光，今夜做个新郎；衣衫窄窄，今夜做个娇客！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"哇哈哈！我的夫人在哪里！"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"大王息怒，想必是怕羞不敢出来..."},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"呵呵...今夜就要成亲还那么害羞；我喜欢！丈人不用引路，我亲自到闺房中抱出新娘！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"娘子，娘子，你不来迎接我，我就来找你啦；你不要怕羞，我明日就要你当压寨夫人！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"哎呦！干嘛打老公！"},
+        {"op":12,"flag":1,"value":16},
+        {"op":13,"flag":0,"text":"叫你认得你老婆！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"妈呀！新娘没有头发！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"来人啊！救人啊！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"出状况了！快出去看看！"},
+        {"op":29,"flag":null,"text":"桃花村，小霸王抢亲失败！"}
+      ]
+    }
+  ]
+}

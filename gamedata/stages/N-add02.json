@@ -1,0 +1,82 @@
+{
+  "map": "N-add02",
+  "header": {"blockCount":4,"town":0,"next":4,"act":1},
+  "units": [
+    {"index":0,"type":0,"group":0,"side":"player","facing":2,"x":7,"y":2,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":3,"group":0,"side":"enemy","facing":0,"x":7,"y":9,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":1,"group":0,"side":"player","facing":2,"x":7,"y":1,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":18,"group":0,"side":"ally","facing":2,"x":6,"y":1,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,35,4,1,1,1,23,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":14,"flag":1,"value":8},
+        {"op":15,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":18},
+        {"op":14,"flag":1,"value":8},
+        {"op":15,"flag":1,"value":3},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":0},
+        {"op":14,"flag":1,"value":7},
+        {"op":15,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"我们在路上遭到山贼袭击，有人受伤！不知能否借宿一夜！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":8},
+        {"op":13,"flag":0,"text":"唉呀...."},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"王兄！！"},
+        {"op":12,"flag":1,"value":3},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"你是谁！为何要偷袭我们？！"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"废话少说，接招吧！！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"王兄，你有伤在身，还是先退下吧，这里交给我就行了！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"%X兄，小心了！"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"王进退场了！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":18},
+        {"op":17,"flag":0,"value":2},
+        {"op":35,"flag":null,"value":10},
+        {"op":31,"flag":null,"text":"限制回合数 --- 10"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败史进"},
+        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":10},
+      "cond": {"type":0,"arg":10},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":0},
+      "cond": {"type":1,"arg":0},
+      "head": [1,0,1,0,0,0,102,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N失手被史进打倒，三人只好离开史家庄，不料在庄外遭大批官兵围捕，%N、王进力战身亡，王母悲愤自尽........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":3},
+      "cond": {"type":1,"arg":3},
+      "head": [1,0,1,0,0,0,30,2,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"%N果然一身好功夫，将史进打败。"}
+      ]
+    }
+  ]
+}

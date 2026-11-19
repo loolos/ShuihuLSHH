@@ -1,0 +1,177 @@
+{
+  "map": "N02",
+  "header": {"blockCount":8,"town":0,"next":7,"act":0},
+  "units": [
+    {"index":0,"type":0,"group":0,"side":"player","facing":2,"x":15,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":1,"group":0,"side":"player","facing":2,"x":14,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":3,"group":0,"side":"player","facing":2,"x":16,"y":9,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":59,"group":0,"side":"enemy","facing":0,"x":20,"y":28,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":4,"type":65,"group":1,"side":"enemy","facing":0,"x":18,"y":27,"level":3,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":44,"group":3,"side":"enemy","facing":0,"x":20,"y":26,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":6,"type":65,"group":2,"side":"enemy","facing":0,"x":22,"y":27,"level":3,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":44,"group":0,"side":"enemy","facing":1,"x":21,"y":18,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":44,"group":0,"side":"enemy","facing":1,"x":20,"y":16,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":44,"group":0,"side":"enemy","facing":1,"x":21,"y":14,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":44,"group":0,"side":"enemy","facing":3,"x":10,"y":10,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":44,"group":0,"side":"enemy","facing":3,"x":9,"y":8,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":44,"group":0,"side":"enemy","facing":3,"x":9,"y":12,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":65,"group":0,"side":"enemy","facing":3,"x":8,"y":10,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,168,0,0,0]},
+    {"index":14,"type":65,"group":0,"side":"enemy","facing":1,"x":22,"y":16,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":44,"group":0,"side":"enemy","facing":3,"x":12,"y":18,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":16,"type":44,"group":0,"side":"enemy","facing":3,"x":13,"y":20,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":44,"group":0,"side":"enemy","facing":3,"x":12,"y":22,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":65,"group":0,"side":"enemy","facing":3,"x":11,"y":20,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":45,"group":10,"side":"enemy","facing":0,"x":22,"y":23,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":45,"group":11,"side":"enemy","facing":0,"x":22,"y":24,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":19,"group":0,"side":"ally","facing":2,"x":16,"y":7,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":45,"group":0,"side":"enemy","facing":3,"x":15,"y":21,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":23,"type":45,"group":12,"side":"enemy","facing":0,"x":25,"y":23,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":20,"group":0,"side":"ally","facing":2,"x":14,"y":7,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":25,"type":19,"group":0,"side":"ally","facing":2,"x":16,"y":6,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":20,"group":0,"side":"ally","facing":2,"x":13,"y":6,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":20,"group":0,"side":"ally","facing":2,"x":14,"y":6,"level":3,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":28,"type":19,"group":0,"side":"ally","facing":2,"x":17,"y":6,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":45,"group":4,"side":"enemy","facing":0,"x":18,"y":25,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":45,"group":5,"side":"enemy","facing":0,"x":19,"y":25,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":45,"group":6,"side":"enemy","facing":0,"x":20,"y":25,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,156,0,0,0]},
+    {"index":32,"type":45,"group":7,"side":"enemy","facing":0,"x":21,"y":25,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":33,"type":45,"group":8,"side":"enemy","facing":0,"x":18,"y":23,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":45,"group":9,"side":"enemy","facing":0,"x":19,"y":22,"level":2,"flags":512,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":35,"type":45,"group":0,"side":"enemy","facing":1,"x":20,"y":14,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":36,"type":45,"group":0,"side":"enemy","facing":1,"x":19,"y":16,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":37,"type":45,"group":0,"side":"enemy","facing":3,"x":10,"y":11,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":38,"type":45,"group":0,"side":"enemy","facing":3,"x":13,"y":19,"level":2,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":39,"type":45,"group":14,"side":"enemy","facing":0,"x":26,"y":26,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":40,"type":45,"group":13,"side":"enemy","facing":0,"x":27,"y":25,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":41,"type":45,"group":15,"side":"enemy","facing":0,"x":28,"y":27,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":42,"type":45,"group":16,"side":"enemy","facing":0,"x":29,"y":29,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":43,"type":45,"group":19,"side":"enemy","facing":0,"x":14,"y":28,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":44,"type":45,"group":17,"side":"enemy","facing":0,"x":15,"y":27,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":45,"type":45,"group":21,"side":"enemy","facing":0,"x":12,"y":28,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":46,"type":45,"group":20,"side":"enemy","facing":0,"x":15,"y":29,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":47,"type":45,"group":18,"side":"enemy","facing":0,"x":13,"y":26,"level":2,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":48,"type":14,"group":0,"side":"object","facing":0,"x":8,"y":5,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":49,"type":162,"group":0,"side":"object","facing":0,"x":32,"y":21,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":50,"type":21,"group":0,"side":"object","facing":0,"x":25,"y":5,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,16,7,1,2,3,27,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":59},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":11},
+        {"op":13,"flag":0,"text":"俺是少华山头领『跳涧虎』陈达！今日要前往华阴县借粮，路经贵宝地，本着『四海之内皆兄弟』，欲借一条路。请史大郎答话！"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"你们杀人放火，打家劫舍；犯下滔天大罪，全是些罪该万死的人！县内已经提出赏金捉拿你们，没想到你们居然敢来太岁头上动土！"},
+        {"op":12,"flag":1,"value":59},
+        {"op":13,"flag":0,"text":"俺今日手下带有三四百名喽罗，如你不答应，俺只有以武力通过！喽罗皆是粗鲁人，奸淫掳掠在所难免！你再阻挡俺的去路，俺让你妻子不保！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"此等人多说无益，必须好好教训他。王兄，那么你呢？"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"徒儿有难，师父怎可袖手旁观？"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"陈达！就算我肯，还有一个不肯！"},
+        {"op":12,"flag":1,"value":59,"quiet":true},
+        {"op":13,"flag":1,"text":"好汉教我问谁？"},
+        {"op":12,"flag":1,"value":3,"quiet":true},
+        {"op":13,"flag":1,"text":"你问得我手中这条棍棒肯时，便放你过去！"},
+        {"op":12,"flag":1,"value":59},
+        {"op":13,"flag":0,"text":"欺人太甚！小子们，给我上！"},
+        {"op":35,"flag":null,"value":50},
+        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
+        {"op":32,"flag":null,"text":"胜利条件一 --- 打败陈达"},
+        {"op":32,"flag":null,"text":"胜利条件二 --- 所有喽罗死亡"},
+        {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 王进死亡"},
+        {"op":33,"flag":null,"text":"失败条件三 --- 史进死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":1,"arg":44},"b":{"type":1,"arg":45}},
+      "head": [1,0,1,0,0,0,26,4,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"%N帮助史进终于将贼寇击败。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,0,1,0,0,0,64,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进死后，史进发狂，连毙敌人数十名，终力尽而死，庄客们一轰而散。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":3},
+      "cond": {"type":1,"arg":3},
+      "head": [1,0,1,0,0,0,62,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"史进死后，%N发狂，连毙敌人数十名，终力尽而死，庄客们一轰而散。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":8},
+      "cond": {"type":0,"arg":8},
+      "head": [1,26,3,1,1,1,23,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":59},
+        {"op":13,"flag":0,"text":"哼！没想到史进那么顽强，喽罗！你领几个人回少华山禀报大头目，把所有人都给俺带过来！"},
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":1,"text":"是！"},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":45},
+        {"op":13,"flag":1,"text":"是！"},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"糟了！不能让那几个人逃走！"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"咦？！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"若让少华山众匪倾巢而出的话，就麻烦了！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这该如何是好？"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"庄后有条通往少华山必经之地的捷径，我派几名家丁前去拦截！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"唔...我看还是慎重一些的好，不如就请王兄领几名庄客前往吧！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"交给我好了。"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"王进退场了！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":17,"flag":0,"value":2},
+        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败陈达"},
+        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":59},
+      "cond": {"type":1,"arg":59},
+      "head": [1,0,1,0,0,0,26,2,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"%N帮助史进终于将贼寇击败。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":50},
+      "cond": {"type":0,"arg":50},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":0},
+      "cond": {"type":1,"arg":0},
+      "head": [1,0,1,0,0,0,108,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N死后，史进发狂，连毙敌人数十名，终力尽而死，庄客们一轰而散，王进带着老母继续亡命天涯，从此不知去向........"}
+      ]
+    }
+  ]
+}
