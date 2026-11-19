@@ -9,6 +9,7 @@ export const HERO_AOE_COSTS: Readonly<Record<number, Readonly<Record<number, num
     10: 75, // 萬夫莫敵LV1
     11: 115, // 萬夫莫敵LV2
     12: 170, // 萬夫莫敵LV3
+    1309: 210, // 萬夫莫敵LV4
   },
   2: {
     21: 75, // 天雷滅敵正法

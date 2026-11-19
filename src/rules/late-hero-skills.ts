@@ -67,6 +67,14 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
 /** 好汉技能分阶；按职业与原技能号限定，NPC保留自己的原技能。 */
 export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
  return own.flatMap(s => {
+  if(cls===0&&[10,11,12].includes(s.skillId)){
+   const tier=s.skillId-10;
+   const updated={...s,hitMod:5*(tier+1),critMod:20+5*tier,
+    hits:tier===2?[{frame:8,percent:50,dir:0},{frame:12,percent:50,dir:0}]:s.hits};
+   if(tier!==2)return [updated];
+   return [updated,{...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
+    learnLevel:28,mpCost:210,power:65,area:8,hitMod:20,critMod:35}];
+  }
   if(cls===16&&s.skillId===135){
    const frames=[12,13,15,17],weights=[[100],[50,50],[30,30,40],[25,25,25,25]];
    return [4,14,22,30].map((level,i)=>({...s,skillId:i===0?135:1305+i,soundId:s.soundId??s.skillId,
