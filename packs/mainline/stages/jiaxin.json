@@ -7,7 +7,7 @@
     "gold": 500
   },
   "map": {
-    "custom": "guanfu"
+    "base": "N-add08"
   },
   "bgm": "battle",
   "units": [
@@ -16,7 +16,7 @@
       "class": "daizong",
       "side": "player",
       "x": 16,
-      "y": 6,
+      "y": 12,
       "level": 30,
       "facing": 1
     },
@@ -24,8 +24,8 @@
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 11,
-      "y": 20,
+      "x": 16,
+      "y": 33,
       "level": 30,
       "facing": 0
     },
@@ -33,8 +33,8 @@
       "id": "lijun",
       "class": "lijun",
       "side": "player",
-      "x": 10,
-      "y": 21,
+      "x": 17,
+      "y": 33,
       "level": 30,
       "facing": 0
     },
@@ -42,8 +42,8 @@
       "id": "lvfang",
       "class": "lvfang",
       "side": "player",
-      "x": 12,
-      "y": 21,
+      "x": 15,
+      "y": 34,
       "level": 30,
       "facing": 0
     },
@@ -51,8 +51,8 @@
       "id": "guosheng",
       "class": "guosheng",
       "side": "player",
-      "x": 13,
-      "y": 21,
+      "x": 16,
+      "y": 34,
       "level": 30,
       "facing": 0
     },
@@ -60,8 +60,8 @@
       "id": "zhugui",
       "class": "zhugui",
       "side": "player",
-      "x": 9,
-      "y": 21,
+      "x": 17,
+      "y": 34,
       "level": 30,
       "facing": 0
     },
@@ -69,8 +69,8 @@
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 14,
-      "y": 21,
+      "x": 18,
+      "y": 34,
       "level": 30,
       "facing": 0
     },
@@ -78,8 +78,8 @@
       "id": "yanshun",
       "class": "yanshun",
       "side": "player",
-      "x": 15,
-      "y": 21,
+      "x": 16,
+      "y": 35,
       "level": 30,
       "facing": 0
     },
@@ -87,8 +87,8 @@
       "id": "caijiu",
       "class": "caijiu",
       "side": "ally",
-      "x": 20,
-      "y": 3,
+      "x": 19,
+      "y": 6,
       "level": 30,
       "ai": 8,
       "facing": 2
@@ -97,8 +97,8 @@
       "id": "huangwenbing",
       "class": "huangwenbing",
       "side": "ally",
-      "x": 18,
-      "y": 3,
+      "x": 20,
+      "y": 6,
       "level": 30,
       "ai": 8,
       "facing": 2
@@ -107,10 +107,10 @@
       "id": "h1",
       "class": 36,
       "side": "enemy",
-      "x": 15,
-      "y": 5,
+      "x": 13,
+      "y": 10,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -118,10 +118,10 @@
       "id": "h2",
       "class": 36,
       "side": "enemy",
-      "x": 17,
-      "y": 5,
+      "x": 20,
+      "y": 10,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -129,10 +129,10 @@
       "id": "h3",
       "class": 36,
       "side": "enemy",
-      "x": 15,
-      "y": 7,
+      "x": 12,
+      "y": 13,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -140,10 +140,10 @@
       "id": "h4",
       "class": 36,
       "side": "enemy",
-      "x": 17,
-      "y": 7,
+      "x": 21,
+      "y": 13,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -151,10 +151,10 @@
       "id": "h5",
       "class": 32,
       "side": "enemy",
-      "x": 18,
-      "y": 6,
+      "x": 11,
+      "y": 12,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -162,10 +162,10 @@
       "id": "h6",
       "class": 33,
       "side": "enemy",
-      "x": 14,
-      "y": 6,
+      "x": 22,
+      "y": 12,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1
     },
@@ -173,32 +173,32 @@
       "id": "h7",
       "class": 34,
       "side": "enemy",
-      "x": 19,
-      "y": 4,
+      "x": 16,
+      "y": 8,
       "level": 30,
-      "facing": 1,
+      "facing": 2,
       "name": "弓手",
       "levelOffset": -1
     },
     {
       "id": "h8",
-      "class": 32,
+      "class": 34,
       "side": "enemy",
-      "x": 20,
-      "y": 5,
+      "x": 17,
+      "y": 8,
       "level": 30,
-      "facing": 1,
-      "name": "公人",
+      "facing": 2,
+      "name": "弓手",
       "levelOffset": -1
     },
     {
       "id": "y1",
       "class": 32,
       "side": "enemy",
-      "x": 12,
-      "y": 13,
+      "x": 15,
+      "y": 27,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -2
     },
@@ -206,10 +206,10 @@
       "id": "y2",
       "class": 33,
       "side": "enemy",
-      "x": 14,
-      "y": 13,
+      "x": 18,
+      "y": 27,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -2
     },
@@ -217,10 +217,10 @@
       "id": "y3",
       "class": 32,
       "side": "enemy",
-      "x": 9,
-      "y": 15,
+      "x": 16,
+      "y": 24,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -2
     },
@@ -228,10 +228,10 @@
       "id": "y4",
       "class": 33,
       "side": "enemy",
-      "x": 16,
-      "y": 17,
+      "x": 17,
+      "y": 24,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -2
     },
@@ -240,42 +240,42 @@
       "class": 34,
       "side": "enemy",
       "x": 13,
-      "y": 9,
+      "y": 22,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "弓手",
       "levelOffset": -2
     },
     {
       "id": "y6",
+      "class": 34,
+      "side": "enemy",
+      "x": 20,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2
+    },
+    {
+      "id": "y7",
       "class": 36,
       "side": "enemy",
-      "x": 7,
-      "y": 13,
+      "x": 16,
+      "y": 20,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -1
     },
     {
-      "id": "y7",
+      "id": "y8",
       "class": 32,
       "side": "enemy",
-      "x": 18,
-      "y": 13,
+      "x": 10,
+      "y": 18,
       "level": 30,
-      "facing": 2,
-      "name": "公人",
-      "levelOffset": -2
-    },
-    {
-      "id": "y8",
-      "class": 33,
-      "side": "enemy",
-      "x": 5,
-      "y": 15,
-      "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "公人",
       "levelOffset": -2
     },
@@ -283,10 +283,10 @@
       "id": "y9",
       "class": 43,
       "side": "enemy",
-      "x": 10,
-      "y": 12,
+      "x": 22,
+      "y": 18,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "马军",
       "levelOffset": -1
     },
@@ -294,10 +294,10 @@
       "id": "y10",
       "class": 43,
       "side": "enemy",
-      "x": 16,
-      "y": 12,
+      "x": 9,
+      "y": 23,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "马军",
       "levelOffset": -1
     },
@@ -305,10 +305,10 @@
       "id": "dutou",
       "class": 38,
       "side": "enemy",
-      "x": 13,
-      "y": 12,
+      "x": 16,
+      "y": 17,
       "level": 30,
-      "facing": 2,
+      "facing": 0,
       "name": "江州都头",
       "levelOffset": 1,
       "hpMultiplier": 1.5
@@ -317,8 +317,8 @@
       "id": "g1",
       "class": 32,
       "side": "enemy",
-      "x": 3,
-      "y": 4,
+      "x": 15,
+      "y": 1,
       "level": 30,
       "facing": 0,
       "name": "公人",
@@ -329,8 +329,8 @@
       "id": "g2",
       "class": 33,
       "side": "enemy",
-      "x": 4,
-      "y": 4,
+      "x": 18,
+      "y": 1,
       "level": 30,
       "facing": 0,
       "name": "公人",
@@ -341,8 +341,8 @@
       "id": "g3",
       "class": 36,
       "side": "enemy",
-      "x": 5,
-      "y": 4,
+      "x": 16,
+      "y": 2,
       "level": 30,
       "facing": 0,
       "name": "公人",
@@ -353,8 +353,8 @@
       "id": "g4",
       "class": 32,
       "side": "enemy",
-      "x": 6,
-      "y": 4,
+      "x": 17,
+      "y": 2,
       "level": 30,
       "facing": 0,
       "name": "公人",
@@ -365,8 +365,8 @@
       "id": "g5",
       "class": 34,
       "side": "enemy",
-      "x": 4,
-      "y": 5,
+      "x": 15,
+      "y": 3,
       "level": 30,
       "facing": 0,
       "name": "弓手",
@@ -377,8 +377,8 @@
       "id": "g6",
       "class": 33,
       "side": "enemy",
-      "x": 3,
-      "y": 7,
+      "x": 18,
+      "y": 3,
       "level": 30,
       "facing": 0,
       "name": "公人",
@@ -389,10 +389,10 @@
       "id": "m1",
       "class": 43,
       "side": "enemy",
-      "x": 11,
-      "y": 22,
+      "x": 21,
+      "y": 33,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "马军",
       "levelOffset": 0,
       "hidden": true
@@ -401,10 +401,10 @@
       "id": "m2",
       "class": 43,
       "side": "enemy",
-      "x": 12,
-      "y": 22,
+      "x": 9,
+      "y": 33,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "马军",
       "levelOffset": 0,
       "hidden": true
@@ -413,10 +413,10 @@
       "id": "m3",
       "class": 34,
       "side": "enemy",
-      "x": 10,
-      "y": 21,
+      "x": 22,
+      "y": 35,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "弓手",
       "levelOffset": -1,
       "hidden": true
@@ -425,10 +425,10 @@
       "id": "m4",
       "class": 34,
       "side": "enemy",
-      "x": 13,
-      "y": 21,
+      "x": 11,
+      "y": 35,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "弓手",
       "levelOffset": -1,
       "hidden": true
@@ -437,10 +437,10 @@
       "id": "m5",
       "class": 36,
       "side": "enemy",
-      "x": 9,
-      "y": 21,
+      "x": 23,
+      "y": 34,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": 0,
       "hidden": true
@@ -449,10 +449,10 @@
       "id": "m6",
       "class": 33,
       "side": "enemy",
-      "x": 14,
-      "y": 21,
+      "x": 12,
+      "y": 33,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -1,
       "hidden": true
@@ -461,10 +461,10 @@
       "id": "m7",
       "class": 32,
       "side": "enemy",
-      "x": 7,
-      "y": 21,
+      "x": 8,
+      "y": 34,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -1,
       "hidden": true
@@ -474,9 +474,9 @@
       "class": 43,
       "side": "enemy",
       "x": 10,
-      "y": 22,
+      "y": 34,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "马军",
       "levelOffset": -1,
       "hidden": true
@@ -486,9 +486,9 @@
       "class": 32,
       "side": "enemy",
       "x": 12,
-      "y": 22,
+      "y": 34,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -498,9 +498,9 @@
       "class": 34,
       "side": "enemy",
       "x": 11,
-      "y": 21,
+      "y": 33,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "弓手",
       "levelOffset": -2,
       "hidden": true
@@ -510,9 +510,9 @@
       "class": 36,
       "side": "enemy",
       "x": 13,
-      "y": 21,
+      "y": 35,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -1,
       "hidden": true
@@ -521,10 +521,10 @@
       "id": "k5",
       "class": 33,
       "side": "enemy",
-      "x": 8,
-      "y": 21,
+      "x": 22,
+      "y": 34,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -533,10 +533,10 @@
       "id": "k6",
       "class": 32,
       "side": "enemy",
-      "x": 15,
-      "y": 21,
+      "x": 24,
+      "y": 33,
       "level": 30,
-      "facing": 0,
+      "facing": 1,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -620,19 +620,12 @@
         ],
         [
           "objective",
-          "胜：我方任一好汉冲到戴宗身边（或第 6 回合戴宗被擒）之后，武龙从后堂的后门杀出去\n败：武龙倒下；戴宗被擒前倒下；超过 15 回合"
+          "胜：我方任一好汉冲到戴宗身边（或第 7 回合戴宗被擒）之后，武龙从北面的后门杀出去\n败：武龙倒下；戴宗被擒前倒下；超过 18 回合"
         ],
         [
           "turnLimit",
-          15
-        ]
-      ]
-    },
-    {
-      "on": {
-        "turn": 1
-      },
-      "do": [
+          18
+        ],
         [
           "buff",
           "daizong",
@@ -662,7 +655,7 @@
         ],
         [
           "narrate",
-          "黄文炳早叫人关了后堂，众公人一拥而上，把戴宗拖进后堂，捆了个结实。"
+          "众公人一拥而上，把戴宗拖进大牢，捆了个结实。"
         ],
         [
           "leave",
@@ -704,13 +697,13 @@
         [
           "say",
           "lijun",
-          "人多救不得了！前门官军越来越多，从后堂杀出后门去！武龙兄弟，我们护着你回梁山报信！"
+          "人多救不得了！前门官军越来越多，从北面后门杀出去！武龙兄弟，我们护着你回梁山报信！"
         ]
       ]
     },
     {
       "on": {
-        "turn": 6
+        "turn": 7
       },
       "unless": "caught",
       "do": [
@@ -721,7 +714,7 @@
         ],
         [
           "narrate",
-          "黄文炳早叫人关了后堂，众公人一拥而上，把戴宗拖进后堂，捆了个结实。"
+          "众公人一拥而上，把戴宗拖进大牢，捆了个结实。"
         ],
         [
           "leave",
@@ -763,7 +756,7 @@
         [
           "say",
           "lijun",
-          "人多救不得了！前门官军越来越多，从后堂杀出后门去！武龙兄弟，我们护着你回梁山报信！"
+          "人多救不得了！前门官军越来越多，从北面后门杀出去！武龙兄弟，我们护着你回梁山报信！"
         ]
       ]
     },
@@ -845,10 +838,10 @@
       "on": {
         "enter": "hero",
         "area": [
-          3,
-          2,
-          6,
-          2
+          16,
+          0,
+          17,
+          0
         ]
       },
       "do": [

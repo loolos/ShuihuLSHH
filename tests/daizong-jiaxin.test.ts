@@ -83,7 +83,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(b.status).toBe('won');
   });
 
-  it('假信露馅：武龙带李俊、吕方、郭盛、朱贵、王英、燕顺冲进府衙；有人走到戴宗身边，戴宗交代后被擒；武龙从后堂的后门杀出去才过关；之后进梁山泊整备', () => {
+  it('假信露馅：武龙带李俊、吕方、郭盛、朱贵、王英、燕顺冲进府衙；有人走到戴宗身边，戴宗交代后被擒；武龙从北面后门杀出去才过关（地图用大闹太尉府）；之后进梁山泊整备', () => {
     const { b, get, s } = open('jiaxin');
     expect(s.townAfter).toBe(11);
     expect(s.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['daizong', 'guosheng', 'hero', 'lijun', 'lvfang', 'wangying', 'yanshun', 'zhugui']);
@@ -92,7 +92,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(dz.present).toBe(false);
     expect(get('g1').present).toBe(true);
     expect(b.status).toBe('playing');
-    hero.x = 4; hero.y = 2; after(b);
+    hero.x = 16; hero.y = 0; after(b);
     expect(b.status).toBe('won');
   });
 });
