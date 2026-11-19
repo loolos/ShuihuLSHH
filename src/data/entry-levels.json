@@ -99,6 +99,9 @@
     "mainline/liangshan-jielu": {"0":37,"sj-fugitive":34},
     "mainline/liangshan-songbie": {"0":38,"sj-fugitive":35},
     "mainline/jieyangling": {"0":38,"sj-fugitive":35,"lijun":37,"tongwei":37,"tongmeng":37},
+    "mainline/jieyangzhen": {"0":38,"sj-fugitive":36,"lijun":37,"xueyong":37},
+    "mainline/mujiazhuang": {"0":39,"sj-fugitive":36},
+    "mainline/chuanhuoer": {"0":39,"sj-fugitive":37},
     "n-add04b": {"0":8,"3":9,"5":6,"13":6,"15":6},
     "n-add09b": {"0":19,"3":19,"5":17,"11":17,"13":18,"15":17,"16":19}
   }

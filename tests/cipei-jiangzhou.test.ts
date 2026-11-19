@@ -1,4 +1,4 @@
-// 第二十一章「刺配江州」（docs/game-design.md §15.21）：剧情选项、宋江劝住收手、揭阳岭限时救人。
+// 第二十一章「刺配江州」（docs/game-design.md §15.21）：剧情选项、宋江劝住收手、揭阳岭限时救人、揭阳镇、穆家庄潜行、船火儿。
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -9,6 +9,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
+import { insertTownName, insertTownIntro } from '../src/packs/towns.ts';
 
 describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一章 刺配江州', () => {
   useDiskCustomMaps();
@@ -25,7 +26,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     u.hp = 0; u.alive = false; u.present = false;
     (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(u.classId);
   };
-  const ids = ['bensang', 'liangshan-jielu', 'liangshan-songbie', 'jieyangling'];
+  const ids = ['bensang', 'liangshan-jielu', 'liangshan-songbie', 'jieyangling', 'jieyangzhen', 'mujiazhuang', 'chuanhuoer'];
 
   it('四段都在第二十一章；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到', () => {
     for (const id of ids) {
@@ -137,5 +138,79 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
 
   it('梁山送别：演完就过关', () => {
     expect(open('liangshan-songbie').b.status).toBe('won');
+  });
+
+  it('揭阳岭打完进揭阳岭整备，城里由李俊开口', () => {
+    expect(stage('jieyangling').townAfter).toBe(11);
+    expect(insertTownName('mainline/jieyangzhen')).toBe('揭阳岭整备');
+    expect(insertTownIntro('mainline/jieyangzhen')[0].actor).toBe('lijun');
+  });
+
+  it('揭阳镇：李俊同行；穆春打到三成以下就跑掉、不算敌人；闲汉打光过关；穆春被打死判负', () => {
+    const { b, get } = open('jieyangzhen');
+    expect(get('lijun').side).toBe('player');
+    expect(get('lijun').present).toBe(true);
+    const mc = get('muchun');
+    expect(mc.present).toBe(true);
+    mc.hp = Math.floor(mc.stats.maxHp * 0.2); after(b);
+    expect(mc.side).not.toBe('enemy');
+    expect(mc.present).toBe(false);
+    expect(b.status).toBe('playing');
+    turn(b, 3);
+    for (const u of b.units.filter((x) => x.side === 'enemy' && x.present && x.alive)) kill(b, u);
+    after(b);
+    expect(b.status).toBe('won');
+    const o = open('jieyangzhen');
+    kill(o.b, o.get('muchun')); after(o.b);
+    expect(o.b.status).toBe('lost');
+  });
+
+  it('穆家庄夜遁：走进庄客的警戒范围就被发现，下个回合结束前没打倒他判负；打倒了照常走', () => {
+    const { b, get } = open('mujiazhuang');
+    const g = get('shui-1'), sj = get('songjiang');
+    expect(b.watchers.get(g.uid)).toBe(1);
+    expect(b.watchZones().some((z) => z.uid === g.uid && !z.spotted)).toBe(true);
+    sj.x = g.x + 1; sj.y = g.y; after(b);
+    expect(b.spotters[g.uid]).toBe(b.turn + 1);
+    expect(g.ai.mode).toBe(0);
+    b.endPlayerPhase();
+    expect(b.status).toBe('playing');
+    b.endPlayerPhase();
+    expect(b.status).toBe('lost');
+    const o = open('mujiazhuang');
+    const g2 = o.get('shui-1'), sj2 = o.get('songjiang');
+    sj2.x = g2.x + 1; sj2.y = g2.y; after(o.b);
+    kill(o.b, g2); after(o.b);
+    o.b.endPlayerPhase(); o.b.endPlayerPhase();
+    expect(o.b.status).toBe('playing');
+  });
+
+  it('穆家庄夜遁：巡夜庄客沿路线来回走；宋江和武龙都到江边就过关', () => {
+    const { s, b, get } = open('mujiazhuang');
+    const p = get('xun-1'), route = s.units.find((u) => u.id === 'xun-1')!.patrol!;
+    expect(p.ai.mode).toBe(13);
+    const start = { x: p.x, y: p.y };
+    b.endPlayerPhase();
+    expect(p.x !== start.x || p.y !== start.y).toBe(true);
+    expect(Math.abs(p.x - route[1][0]) + Math.abs(p.y - route[1][1])).toBeLessThan(Math.abs(start.x - route[1][0]) + Math.abs(start.y - route[1][1]));
+    const o = open('mujiazhuang');
+    const sj = o.get('songjiang'), hero = o.get('hero');
+    sj.x = 2; sj.y = 30; after(o.b);
+    expect(o.b.status).toBe('playing');
+    hero.x = 3; hero.y = 31; after(o.b);
+    expect(o.b.status).toBe('won');
+  });
+
+  it('船火儿：板刀面、馄饨、报名号三条路都接李俊赶到、过关', () => {
+    for (const k of [0, 1, 2]) {
+      const { b, ev } = open('chuanhuoer');
+      const ask = ev.find((e) => e.type === 'choice');
+      expect(ask && ask.type === 'choice' && ask.choice.options.map((o) => o.label)).toEqual(['吃板刀面', '吃馄饨', '报出名号']);
+      const out = b.answer(k);
+      const text = out.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => ('text' in e ? e.text : '')).join('');
+      expect(text).toContain('船火儿');
+      expect(text).toContain('张顺');
+      expect(b.status).toBe('won');
+    }
   });
 });

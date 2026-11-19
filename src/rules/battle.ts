@@ -138,6 +138,12 @@ export interface StageInput {
   hpMultipliers?: Record<number, number>;
   /** 观战演员的ACT索引，不参与战斗。 */
   spectators?: number[];
+  /** 潜行关【新】：哨兵的 ACT 索引 → 警戒半径（格子步数，不看墙）。我方有人进了半径就被发现，见 Battle.checkSpotted */
+  watchers?: Record<number, number>;
+  /** 潜行关【新】：AI 13 巡逻的路线（ACT 索引 → 依次走过的格子，走完回到第一个） */
+  patrols?: Record<number, { x: number; y: number }[]>;
+  /** 潜行关【新】：被发现后没在期限内打倒发现的人就判负；flag：被发现时设上的剧本标志 */
+  stealth?: { lose: string; flag?: number };
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
   name: string;
@@ -201,6 +207,12 @@ const BOUND_TURNS = 9999;
 
 export class Battle {
   readonly spectators: ReadonlySet<number>;
+  /** 潜行关的哨兵：uid → 警戒半径【新】 */
+  readonly watchers: ReadonlyMap<number, number>;
+  private readonly patrols: Map<number, { x: number; y: number }[]>;
+  private readonly stealth?: { lose: string; flag?: number };
+  /** 发现了我方的哨兵：uid → 要在第几回合的我方回合结束前打倒他（否则判负），即发现时的下一回合【新】 */
+  spotters: Record<number, number> = {};
   readonly prisonCarts: ReadonlySet<number>;
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
@@ -261,6 +273,9 @@ export class Battle {
 
   constructor(input: StageInput) {
     this.spectators = new Set(input.spectators ?? []);
+    this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
+    this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
+    this.stealth = input.stealth;
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     this.name = input.name;
     this.clearGoldOverride = input.clearGold;
@@ -574,6 +589,11 @@ export class Battle {
   endPlayerPhase(): BattleEvent[] {
     this.out = [];
     if (this.status !== 'playing' || this.phase !== 'player') return [];
+    // 潜行关：发现我方的人到期还站着，就喊醒了全庄【新】
+    if (this.stealth && Object.entries(this.spotters).some(([uid, t]) => t <= this.turn && this.units[Number(uid)].alive && this.units[Number(uid)].present)) {
+      this.finish('lost', this.stealth.lose);
+      return this.flush();
+    }
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
       for (const u of this.units.filter((x) => x.side === side && x.alive && !this.spectators.has(x.uid) && (x.present || this.ambushers.has(x.uid)))) {
@@ -601,6 +621,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
+      spotters: this.spotters,
     });
   }
 
@@ -653,6 +674,7 @@ export class Battle {
     this.expBySource = s.expBySource;
     this.benched = new Set(s.benched ?? []);
     this.used = s.used ?? {};
+    this.spotters = s.spotters ?? {};
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
@@ -1272,6 +1294,8 @@ export class Battle {
     if (!this.units.some((u) => u.side === 'enemy' && u.alive && u.present) && !(this.tune?.clearAllWaves && this.pendingWaves().length))
       for (const b of this.blocks) if (b.trigger.kind === 'death' && b.trigger.char === 255) this.runBlock(b);
     if (this.status !== 'playing') return;
+    this.checkSpotted();
+    if (this.status !== 'playing') return;
     // 扩展包：出手之后的触发（用过某几招 / 出手满几次）
     for (const b of this.blocks) {
       const t = b.trigger;
@@ -1356,6 +1380,43 @@ export class Battle {
     if (!('op' in c) && c.type !== 100 && c.type !== 101) return true;
     let sel: Unit | undefined;
     return this.evalCond(c, (u) => (sel = u), () => sel);
+  }
+
+  /** AI 13 巡逻的路线【新】 */
+  patrolOf(u: Unit): readonly { x: number; y: number }[] | undefined {
+    return this.patrols.get(u.uid);
+  }
+
+  /** 还在警戒的哨兵（活着、在场、没被发现过的敌人）和他们的警戒半径，画面上画警戒范围用【新】 */
+  watchZones(): { uid: number; x: number; y: number; r: number; spotted: boolean }[] {
+    if (this.status !== 'playing') return [];
+    return [...this.watchers].flatMap(([uid, r]) => {
+      const w = this.units[uid];
+      return w && w.alive && w.present && w.side === 'enemy' ? [{ uid, x: w.x, y: w.y, r, spotted: uid in this.spotters }] : [];
+    });
+  }
+
+  /**
+   * 潜行关【新】：哨兵（活着、在场、没被打昏的敌人）警戒半径内有我方的人就被发现。发现的人喊起来、转为出战（AI 0），
+   * 要在下个我方回合结束前打倒他（见 endPlayerPhase）。
+   */
+  private checkSpotted() {
+    for (const [uid, r] of this.watchers) {
+      const w = this.units[uid];
+      if (!w || uid in this.spotters || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0) continue;
+      const seen = this.units.find(
+        (t) => t.side === 'player' && t.alive && t.present && !this.spectators.has(t.uid) && Math.abs(t.x - w.x) + Math.abs(t.y - w.y) <= r,
+      );
+      if (!seen) continue;
+      this.spotters[uid] = this.turn + 1;
+      w.ai.mode = 0;
+      this.emit({ type: 'status', uid, text: '发现' });
+      this.emit({ type: 'say', uid, speaker: w.name, text: this.phase === 'player' ? '有贼！快来人——' : '甚么人在那里？！' });
+      if (this.stealth?.flag) {
+        this.flags.add(this.stealth.flag);
+        this.runCondBlocks();
+      }
+    }
   }
 
   private runCondBlocks() {

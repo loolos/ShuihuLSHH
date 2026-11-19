@@ -251,6 +251,15 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       u.ai.mode = 0;
       return defaultPlan(b, u);
     }
+    case 13: {
+      // 【新】巡逻（潜行关）：沿路线依次走，走到一个点换下一个，不攻击；目标点字段记着正要去的点
+      const route = b.patrolOf(u);
+      if (!route?.length) return {};
+      let i = Math.max(0, route.findIndex((p) => p.x === u.ai.point.x && p.y === u.ai.point.y));
+      if (u.x === route[i].x && u.y === route[i].y) i = (i + 1) % route.length;
+      u.ai.point = { ...route[i] };
+      return approach(b, u, [route[i]], 0);
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为

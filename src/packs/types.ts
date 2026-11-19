@@ -164,6 +164,8 @@ export interface PackStageJson {
   dynamicLevels?: boolean;
   /** 胜利后进入续篇城镇整备（原版商品表号）。 */
   townAfter?: number;
+  /** 潜行关【新】：被哨兵发现后，没在期限内打倒发现的人就判负（lose 是判负文字）；flag 是被发现时设上的剧本标志 */
+  stealth?: { lose: string; flag?: string };
   /**
    * 默认装备、药品按每个人的等级表生成。"none" 禁用自动配装（剧情中装备由关卡指定）。
    * 旧存档/包中的主线地图名仍可读取，但不再影响配装。
@@ -219,6 +221,10 @@ export interface PackUnitJson {
   target?: string;
   /** AI 模式 4 先走到的格子 */
   point?: [number, number];
+  /** 潜行关的哨兵【新】：警戒半径（格子步数），我方有人进来就被发现（§15.21 穆家庄夜遁） */
+  watch?: number;
+  /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
+  patrol?: [number, number][];
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */

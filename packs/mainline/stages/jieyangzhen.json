@@ -1,0 +1,643 @@
+{
+  "id": "jieyangzhen",
+  "title": "揭阳镇",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 400
+  },
+  "map": {
+    "base": "N-add02"
+  },
+  "tint": "dusk",
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 11,
+      "y": 7,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "lijun",
+      "class": "lijun",
+      "side": "player",
+      "x": 12,
+      "y": 6,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 12,
+      "y": 8,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "xueyong",
+      "class": "xueyong",
+      "side": "player",
+      "x": 7,
+      "y": 6,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 14,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "spectator": true,
+      "facing": 2,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 15,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "spectator": true,
+      "facing": 2,
+      "name": "李万"
+    },
+    {
+      "id": "muchun",
+      "class": "muchun",
+      "side": "enemy",
+      "x": 3,
+      "y": 7,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "hidden": true,
+      "hpMultiplier": 2.5,
+      "levelOffset": 1
+    },
+    {
+      "id": "xianhan-1",
+      "class": 40,
+      "side": "enemy",
+      "x": 1,
+      "y": 6,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-2",
+      "class": 41,
+      "side": "enemy",
+      "x": 1,
+      "y": 8,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-3",
+      "class": 19,
+      "side": "enemy",
+      "x": 2,
+      "y": 7,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-4",
+      "class": 20,
+      "side": "enemy",
+      "x": 3,
+      "y": 5,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-5",
+      "class": 40,
+      "side": "enemy",
+      "x": 7,
+      "y": 2,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-6",
+      "class": 41,
+      "side": "enemy",
+      "x": 8,
+      "y": 3,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-7",
+      "class": 19,
+      "side": "enemy",
+      "x": 6,
+      "y": 3,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-8",
+      "class": 20,
+      "side": "enemy",
+      "x": 9,
+      "y": 3,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-9",
+      "class": 40,
+      "side": "enemy",
+      "x": 7,
+      "y": 12,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-10",
+      "class": 41,
+      "side": "enemy",
+      "x": 8,
+      "y": 13,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-11",
+      "class": 19,
+      "side": "enemy",
+      "x": 9,
+      "y": 12,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-12",
+      "class": 20,
+      "side": "enemy",
+      "x": 10,
+      "y": 14,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-13",
+      "class": 40,
+      "side": "enemy",
+      "x": 12,
+      "y": 14,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-14",
+      "class": 41,
+      "side": "enemy",
+      "x": 7,
+      "y": 1,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-15",
+      "class": 19,
+      "side": "enemy",
+      "x": 6,
+      "y": 2,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-16",
+      "class": 20,
+      "side": "enemy",
+      "x": 14,
+      "y": 14,
+      "level": 30,
+      "ai": 0,
+      "facing": 0,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "xianhan-17",
+      "class": 40,
+      "side": "enemy",
+      "x": 7,
+      "y": 0,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "闲汉",
+      "hidden": true,
+      "levelOffset": 0
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "揭阳镇 · 黄昏"
+        ],
+        [
+          "narrate",
+          "宋江在李俊家住了几日，辞别要往江州去。李俊放心不下，定要亲自送一程。"
+        ],
+        [
+          "say",
+          "lijun",
+          "哥哥，揭阳镇上不太平，小弟送哥哥过了镇子，再回岭上不迟。"
+        ],
+        [
+          "narrate",
+          "行到揭阳镇上，只见一簇人围住着看。分开人丛看时，一个汉子使一回枪棒，又摊开膏药，叫卖起来。"
+        ],
+        [
+          "say",
+          "xueyong",
+          "小人是个远方来的人，投贵地，特来就事。虽无惊人的本事，全靠恩官作成，远处夸称，近方卖弄。"
+        ],
+        [
+          "narrate",
+          "那汉子托着盘子转了一遭，众人只是看，没一个出钱与他。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "教头，我是个犯罪的人，没甚与你。这五两白银，权表薄意，休嫌轻微。"
+        ],
+        [
+          "say",
+          "xueyong",
+          "恁地一个有名的揭阳镇上，没一个晓事的好汉抬举咱家！难得这位恩官，颠倒赍发五两白银。"
+        ],
+        [
+          "appear",
+          "muchun"
+        ],
+        [
+          "focus",
+          "muchun"
+        ],
+        [
+          "say",
+          "muchun",
+          "兀那厮是甚么鸟汉，那里来的囚徒，敢来灭俺揭阳镇上威风！"
+        ],
+        [
+          "say",
+          "muchun",
+          "这厮那里学得这些鸟枪棒，来俺这揭阳镇上逞强！俺已分付了众人，不许睬他！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我自赏他银两，却干你甚事？"
+        ],
+        [
+          "say",
+          "muchun",
+          "你这贼配军，敢回我话！"
+        ],
+        [
+          "narrate",
+          "那大汉提起双拳，劈脸便打。那使枪棒的抢将入来，只一扑，把那大汉扑翻在地。"
+        ],
+        [
+          "act",
+          "muchun",
+          "hurt"
+        ],
+        [
+          "say",
+          "muchun",
+          "好！你们都等着！——兄弟们，都与我出来！"
+        ],
+        [
+          "appear",
+          "xianhan-1"
+        ],
+        [
+          "appear",
+          "xianhan-2"
+        ],
+        [
+          "appear",
+          "xianhan-3"
+        ],
+        [
+          "appear",
+          "xianhan-4"
+        ],
+        [
+          "appear",
+          "xianhan-5"
+        ],
+        [
+          "appear",
+          "xianhan-6"
+        ],
+        [
+          "appear",
+          "xianhan-7"
+        ],
+        [
+          "appear",
+          "xianhan-8"
+        ],
+        [
+          "appear",
+          "xianhan-9"
+        ],
+        [
+          "appear",
+          "xianhan-10"
+        ],
+        [
+          "appear",
+          "xianhan-11"
+        ],
+        [
+          "say",
+          "lijun",
+          "这是揭阳镇上的一霸，小遮拦穆春。哥哥休慌，有小弟在此！"
+        ],
+        [
+          "say",
+          "xueyong",
+          "小人祖贯河南洛阳人氏，姓薛名永。江湖上但唤小人病大虫薛永。恩官的事，便是小人的事！"
+        ],
+        [
+          "say",
+          "zhangqian",
+          "押司，我两个躲在一边，替你看着包裹。"
+        ],
+        [
+          "objective",
+          "胜：打倒全部闲汉（穆春体力打到三成以下就会跑掉）\n败：穆春被打死；宋江、李俊、武龙或薛永倒下；超过 15 回合"
+        ],
+        [
+          "turnLimit",
+          15
+        ],
+        [
+          "buff",
+          "songjiang",
+          "attack",
+          {
+            "pct": -40,
+            "turns": 99
+          }
+        ],
+        [
+          "buff",
+          "songjiang",
+          "move",
+          {
+            "add": -1,
+            "turns": 99
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "街两头又涌出几个闲汉，手里都拿着棍棒。"
+        ],
+        [
+          "appear",
+          "xianhan-12"
+        ],
+        [
+          "appear",
+          "xianhan-13"
+        ],
+        [
+          "appear",
+          "xianhan-14"
+        ],
+        [
+          "appear",
+          "xianhan-15"
+        ],
+        [
+          "appear",
+          "xianhan-16"
+        ],
+        [
+          "appear",
+          "xianhan-17"
+        ],
+        [
+          "say",
+          "muchun",
+          "把那三个鸟人都打翻了，捆到庄上去！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "muchun",
+        "below": 30
+      },
+      "do": [
+        [
+          "say",
+          "muchun",
+          "好！好！你们有本事，便休走！明日送去江边，捆做一块抛在江里，出那口鸟气！"
+        ],
+        [
+          "standDown",
+          "muchun"
+        ],
+        [
+          "leave",
+          "muchun"
+        ],
+        [
+          "narrate",
+          "穆春爬起身来，一道烟走了。"
+        ],
+        [
+          "flag",
+          "fled"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "闲汉们都散了。宋江谢了薛永，又取些碎银与他做盘缠。"
+        ],
+        [
+          "say",
+          "xueyong",
+          "恩官，那人是此间揭阳镇上一霸，他哥哥唤做没遮拦穆弘，更是了得。恩官休在镇上投宿，早早离了此地为好。"
+        ],
+        [
+          "say",
+          "lijun",
+          "哥哥，前面不远便是江边。小弟岭上还有些勾当，就此别过，早晚却来江州相会。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟保重。多谢一路相送。"
+        ],
+        [
+          "leave",
+          "lijun"
+        ],
+        [
+          "narrate",
+          "宋江和两个公人寻客店安歇，店家都推说「小遮拦分付了，不敢留你」。三个只得连夜出镇，投一个庄院借宿。"
+        ],
+        [
+          "narrate",
+          "那庄上的太公倒也和善，留他们在门房里歇了。三人哪里知道，这正是穆家庄。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "muchun"
+      },
+      "do": [
+        [
+          "defeat",
+          "穆春被打死了，揭阳镇上结下死仇……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "lijun"
+      },
+      "do": [
+        [
+          "defeat",
+          "李俊倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "xueyong"
+      },
+      "do": [
+        [
+          "defeat",
+          "薛永倒下了……"
+        ]
+      ]
+    }
+  ]
+}
