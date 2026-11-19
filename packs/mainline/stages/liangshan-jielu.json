@@ -1,0 +1,824 @@
+{
+  "id": "liangshan-jielu",
+  "title": "梁山截路",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 300
+  },
+  "map": {
+    "base": "N-add16",
+    "crop": [
+      6,
+      9,
+      22,
+      20
+    ]
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 17,
+      "y": 12,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 20,
+      "y": 16,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 16,
+      "y": 12,
+      "level": 30,
+      "ai": 5,
+      "hpMultiplier": 1.5,
+      "target": "songjiang",
+      "facing": 1,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 16,
+      "y": 13,
+      "level": 30,
+      "ai": 5,
+      "hpMultiplier": 1.5,
+      "target": "songjiang",
+      "facing": 1,
+      "name": "李万"
+    },
+    {
+      "id": "liutang",
+      "class": 17,
+      "side": "enemy",
+      "x": 10,
+      "y": 4,
+      "level": 30,
+      "ai": 8,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "刘唐",
+      "levelOffset": 0
+    },
+    {
+      "id": "wuyong",
+      "class": 10,
+      "side": "ally",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "name": "吴用",
+      "offstage": true
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "ally",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "offstage": true
+    },
+    {
+      "id": "louluo-1",
+      "class": 44,
+      "side": "enemy",
+      "x": 8,
+      "y": 3,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-2",
+      "class": 45,
+      "side": "enemy",
+      "x": 11,
+      "y": 3,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-3",
+      "class": 44,
+      "side": "enemy",
+      "x": 9,
+      "y": 2,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-4",
+      "class": 45,
+      "side": "enemy",
+      "x": 12,
+      "y": 2,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-5",
+      "class": 44,
+      "side": "enemy",
+      "x": 20,
+      "y": 3,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-6",
+      "class": 45,
+      "side": "enemy",
+      "x": 21,
+      "y": 5,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-7",
+      "class": 44,
+      "side": "enemy",
+      "x": 2,
+      "y": 17,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-8",
+      "class": 45,
+      "side": "enemy",
+      "x": 3,
+      "y": 18,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰"
+    },
+    {
+      "id": "louluo-9",
+      "class": 44,
+      "side": "enemy",
+      "x": 0,
+      "y": 7,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    },
+    {
+      "id": "louluo-10",
+      "class": 45,
+      "side": "enemy",
+      "x": 1,
+      "y": 8,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    },
+    {
+      "id": "louluo-11",
+      "class": 44,
+      "side": "enemy",
+      "x": 20,
+      "y": 0,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    },
+    {
+      "id": "louluo-12",
+      "class": 45,
+      "side": "enemy",
+      "x": 21,
+      "y": 1,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    },
+    {
+      "id": "louluo-13",
+      "class": 44,
+      "side": "enemy",
+      "x": 21,
+      "y": 0,
+      "level": 30,
+      "ai": 10,
+      "target": "zhangqian",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    },
+    {
+      "id": "louluo-14",
+      "class": 45,
+      "side": "enemy",
+      "x": 1,
+      "y": 16,
+      "level": 30,
+      "ai": 10,
+      "target": "liwan",
+      "facing": 3,
+      "name": "喽啰",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "济州 · 梁山泊前"
+        ],
+        [
+          "narrate",
+          "宋江和两个公人离了郓城，取路投江州来。宋江只怕撞着梁山泊的人，特意绕路，偏偏还是走到梁山泊前。"
+        ],
+        [
+          "narrate",
+          "只听得山坡背后一声锣响，一伙人拦住去路。为头一个好汉，正是赤发鬼刘唐。"
+        ],
+        [
+          "say",
+          "liutang",
+          "哥哥！不杀了这两个男女，等甚么！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "这个不要你们弟兄们坏了我的名！"
+        ],
+        [
+          "say",
+          "liutang",
+          "不要你污了手，把刀来我杀便了。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "你要杀他两个，便先杀我！"
+        ],
+        [
+          "say",
+          "zhangqian",
+          "宋押司救命！"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥休慌，武龙在此！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "武龙兄弟？你怎么也在这里……休伤他们性命，只把人打翻便罢！"
+        ],
+        [
+          "objective",
+          "胜：敌人全部收手（宋江走到身边劝住，或武龙打倒），或撑到第 6 回合\n败：张千或李万倒下；宋江或武龙倒下"
+        ],
+        [
+          "buff",
+          "songjiang",
+          "attack",
+          {
+            "pct": -40,
+            "turns": 99
+          }
+        ],
+        [
+          "buff",
+          "songjiang",
+          "move",
+          {
+            "add": -1,
+            "turns": 99
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "liutang",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "liutang",
+          "哥哥，罢了！刘唐不杀便是，只请哥哥上山！"
+        ],
+        [
+          "standDown",
+          "liutang"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-1",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-1",
+          "哥哥既这般说，小的不敢动手。"
+        ],
+        [
+          "standDown",
+          "louluo-1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-2",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-2",
+          "是宋头领！小的们不敢。"
+        ],
+        [
+          "standDown",
+          "louluo-2"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-3",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-3",
+          "哥哥休怪，小人退在一边。"
+        ],
+        [
+          "standDown",
+          "louluo-3"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-4",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-4",
+          "哥哥休怪，小人收了刀便是。"
+        ],
+        [
+          "standDown",
+          "louluo-4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-5",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-5",
+          "哥哥既这般说，小的不敢动手。"
+        ],
+        [
+          "standDown",
+          "louluo-5"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-6",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-6",
+          "是宋头领！小的们不敢。"
+        ],
+        [
+          "standDown",
+          "louluo-6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-7",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-7",
+          "哥哥休怪，小人退在一边。"
+        ],
+        [
+          "standDown",
+          "louluo-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-8",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-8",
+          "哥哥休怪，小人收了刀便是。"
+        ],
+        [
+          "standDown",
+          "louluo-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-9",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-9",
+          "哥哥既这般说，小的不敢动手。"
+        ],
+        [
+          "standDown",
+          "louluo-9"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-10",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-10",
+          "是宋头领！小的们不敢。"
+        ],
+        [
+          "standDown",
+          "louluo-10"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-11",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-11",
+          "哥哥休怪，小人退在一边。"
+        ],
+        [
+          "standDown",
+          "louluo-11"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-12",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-12",
+          "哥哥休怪，小人收了刀便是。"
+        ],
+        [
+          "standDown",
+          "louluo-12"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-13",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-13",
+          "哥哥既这般说，小的不敢动手。"
+        ],
+        [
+          "standDown",
+          "louluo-13"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "louluo-14",
+        "by": "songjiang",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "say",
+          "louluo-14",
+          "是宋头领！小的们不敢。"
+        ],
+        [
+          "standDown",
+          "louluo-14"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "山坡后又转出几个喽啰来，嚷道：「休放走了两个公人！」"
+        ],
+        [
+          "appear",
+          "louluo-9"
+        ],
+        [
+          "appear",
+          "louluo-10"
+        ],
+        [
+          "appear",
+          "louluo-11"
+        ],
+        [
+          "appear",
+          "louluo-12"
+        ],
+        [
+          "appear",
+          "louluo-13"
+        ],
+        [
+          "appear",
+          "louluo-14"
+        ],
+        [
+          "say",
+          "liutang",
+          "哥哥只顾让开，待刘唐亲自来砍了这两个男女！"
+        ],
+        [
+          "setAi",
+          "liutang",
+          10
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "众喽啰都收了刀，退在路边。"
+        ],
+        [
+          "appear",
+          "wuyong"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "say",
+          "wuyong",
+          "众兄弟住手！晁头领有令，休得惊了公明哥哥！"
+        ],
+        [
+          "say",
+          "huarong",
+          "如何不与兄长开了枷？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "贤弟，是甚么话！此是国家法度，如何敢擅动！"
+        ],
+        [
+          "say",
+          "wuyong",
+          "我知兄长的意了。这个容易，只不留兄长在山寨便了。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "晁头领多时不曾与兄长相会，今次也正要和兄长说几句心腹的话。略请到山寨少叙片时，便送登程。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "只有先生便知道宋江的意。"
+        ],
+        [
+          "narrate",
+          "宋江扶起两个公人，同众人一齐上山去了。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "narrate",
+          "山上一彪人马飞奔下来，为头两个，正是吴用、花荣。"
+        ],
+        [
+          "appear",
+          "wuyong"
+        ],
+        [
+          "appear",
+          "huarong"
+        ],
+        [
+          "say",
+          "wuyong",
+          "众兄弟住手！晁头领有令，休得惊了公明哥哥！"
+        ],
+        [
+          "say",
+          "huarong",
+          "如何不与兄长开了枷？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "贤弟，是甚么话！此是国家法度，如何敢擅动！"
+        ],
+        [
+          "say",
+          "wuyong",
+          "我知兄长的意了。这个容易，只不留兄长在山寨便了。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "晁头领多时不曾与兄长相会，今次也正要和兄长说几句心腹的话。略请到山寨少叙片时，便送登程。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "只有先生便知道宋江的意。"
+        ],
+        [
+          "narrate",
+          "宋江扶起两个公人，同众人一齐上山去了。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangqian"
+      },
+      "do": [
+        [
+          "defeat",
+          "张千倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "liwan"
+      },
+      "do": [
+        [
+          "defeat",
+          "李万倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下了……"
+        ]
+      ]
+    }
+  ]
+}

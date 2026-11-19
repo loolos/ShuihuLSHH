@@ -75,7 +75,10 @@ describe('章节表', () => {
     expect(chapterOf('mainline/jieqiuche')).toBe(19);
     expect(chapterOf('mainline/yekun')).toBe(20);
     expect(chapterOf('mainline/shiyong')).toBe(20);
-    expect(CHAPTERS).toHaveLength(20);
+    expect(chapterOf('mainline/bensang')).toBe(21);
+    expect(chapterOf('mainline/jieyangling')).toBe(21);
+    expect(chapterLabel(21)).toBe('第二十一章 刺配江州');
+    expect(CHAPTERS).toHaveLength(21);
   });
 });
 

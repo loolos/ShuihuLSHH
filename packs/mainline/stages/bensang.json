@@ -1,0 +1,647 @@
+{
+  "id": "bensang",
+  "title": "奔丧归庄",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "N05",
+    "crop": [
+      8,
+      0,
+      24,
+      15
+    ]
+  },
+  "tint": "dusk",
+  "bgm": [
+    "sad",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 22,
+      "y": 11,
+      "level": 30,
+      "facing": 3,
+      "hidden": true
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 2,
+      "y": 8,
+      "level": 30,
+      "facing": 1,
+      "offstage": true
+    },
+    {
+      "id": "wuyong",
+      "class": 10,
+      "side": "ally",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "offstage": true,
+      "name": "吴用"
+    },
+    {
+      "id": "songtaigong",
+      "class": 27,
+      "side": "ally",
+      "x": 11,
+      "y": 7,
+      "level": 20,
+      "ai": 8,
+      "facing": 2,
+      "name": "宋太公",
+      "hidden": true
+    },
+    {
+      "id": "songqing",
+      "class": "songqing",
+      "side": "ally",
+      "x": 13,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "zhaoneng",
+      "class": 38,
+      "side": "enemy",
+      "x": 19,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "赵能",
+      "hidden": true
+    },
+    {
+      "id": "zhaode",
+      "class": 38,
+      "side": "enemy",
+      "x": 20,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "赵得",
+      "hidden": true
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 21,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "张千",
+      "hidden": true
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 22,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "李万",
+      "hidden": true
+    },
+    {
+      "id": "tubing-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 17,
+      "y": 13,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 18,
+      "y": 13,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 13,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 16,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 17,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-6",
+      "class": 33,
+      "side": "enemy",
+      "x": 15,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-8",
+      "class": 33,
+      "side": "enemy",
+      "x": 7,
+      "y": 13,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-9",
+      "class": 32,
+      "side": "enemy",
+      "x": 4,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "土兵",
+      "hidden": true
+    },
+    {
+      "id": "tubing-10",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 14,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "土兵",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "梁山泊 · 聚义厅"
+        ],
+        [
+          "narrate",
+          "却说武龙、燕顺一行上了梁山，晁盖大喜，设筵相待。席散之后，吴用独自把武龙请到后堂。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "武龙兄弟，公明哥哥这一去，奔丧是孝道，只怕官司不肯放过他。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "哥哥为人，必不肯上山落草。你且连夜赶上去，只在暗中护持，休教他知道。"
+        ],
+        [
+          "say",
+          "hero",
+          "小弟理会得。军师放心，有武龙在，断不教哥哥吃人暗算。"
+        ],
+        [
+          "title",
+          "郓城县 · 宋家村"
+        ],
+        [
+          "narrate",
+          "宋江连夜赶路，奔到本乡村口，天色已晚。只见庄上点着灯烛，却不见孝幡纸钱。"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "move",
+          "songjiang",
+          14,
+          8
+        ],
+        [
+          "say",
+          "songqing",
+          "哥哥回来了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟，父亲灵柩停在何处？我这不孝的，竟来迟了！"
+        ],
+        [
+          "narrate",
+          "宋清只是低头不语。只见宋太公从屏风背后走将出来。"
+        ],
+        [
+          "appear",
+          "songtaigong"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "我儿不要焦躁。这个不干你兄弟之事，是我每日思量你，要见你一面，因此教四郎只写道我殁了，你便归来得快。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "我又怕你一时被人撺掇，落草去了，做个不忠不孝的人。为此，急急寄书去，唤你归家。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "我近日听得朝廷册立皇太子，已降下一道赦书，应有民间犯了大罪，尽减一等科断。你便出官，也不该死罪。"
+        ],
+        [
+          "narrate",
+          "宋江听罢，纳头便拜太公，忧喜相半。"
+        ],
+        [
+          "tint",
+          "night"
+        ],
+        [
+          "title",
+          "当夜二更"
+        ],
+        [
+          "narrate",
+          "当夜二更时分，只听得前后门发喊起来。看时，四下里都是火把，团团围住宋家庄。"
+        ],
+        [
+          "appear",
+          "zhaoneng"
+        ],
+        [
+          "appear",
+          "zhaode"
+        ],
+        [
+          "appear",
+          "tubing-1"
+        ],
+        [
+          "appear",
+          "tubing-2"
+        ],
+        [
+          "appear",
+          "tubing-3"
+        ],
+        [
+          "appear",
+          "tubing-4"
+        ],
+        [
+          "appear",
+          "tubing-5"
+        ],
+        [
+          "appear",
+          "tubing-6"
+        ],
+        [
+          "appear",
+          "tubing-7"
+        ],
+        [
+          "appear",
+          "tubing-8"
+        ],
+        [
+          "appear",
+          "tubing-9"
+        ],
+        [
+          "appear",
+          "tubing-10"
+        ],
+        [
+          "focus",
+          "zhaoneng"
+        ],
+        [
+          "say",
+          "zhaoneng",
+          "宋太公！你若是晓事的，便把儿子宋江献出来！若是藏着不放，和你这老子一发捉了去！"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "宋江几时回来？"
+        ],
+        [
+          "say",
+          "zhaoneng",
+          "你便休胡说！村口有人亲眼见他进了庄门。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "focus",
+          "hero"
+        ],
+        [
+          "narrate",
+          "庄墙外的树影里，一条汉子伏着不动，正是武龙。"
+        ],
+        [
+          "say",
+          "hero",
+          "火把虽多，不过三四十个土兵。只等哥哥一声，便杀散了他们。"
+        ],
+        [
+          "focus",
+          "songjiang"
+        ],
+        [
+          "say",
+          "songqing",
+          "哥哥，兄弟这就叫起庄客，抄了家伙，护着哥哥杀将出去！"
+        ],
+        [
+          "choice",
+          "宋江怎么办？",
+          [
+            "开门出首，随都头去县里",
+            "surrender"
+          ],
+          [
+            "与四郎杀出去",
+            "fight"
+          ]
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "fight"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "四郎说得是！兄弟，取我的朴刀来——"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "孩儿，使不得！你若杀将出去，便真个做了不忠不孝的人，叫老汉死了也不瞑目！"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "如今有了赦书，罪当减等。你只顾杀人放火，倒是自家断送了自家！"
+        ],
+        [
+          "narrate",
+          "宋江听了，把手里朴刀丢了，跪下道：「孩儿一时糊涂，父亲休恼。」"
+        ],
+        [
+          "flag",
+          "surrender"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "surrender"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "父亲休烦恼。孩儿便挺身出了官。我的罪犯又不该死，今已赦宥，必已减等。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟，你早晚只在家侍奉，休要为我来江州来，弃撇父亲，无人看顾。"
+        ],
+        [
+          "move",
+          "songjiang",
+          17,
+          11
+        ],
+        [
+          "face",
+          "songjiang",
+          "zhaoneng"
+        ],
+        [
+          "say",
+          "songjiang",
+          "你们且不要闹。且请二位都头进敝庄少叙三杯，明日一同见官。"
+        ],
+        [
+          "say",
+          "zhaoneng",
+          "你休使见识赚我入来！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "我如何连累父亲兄弟？你们只顾进家里来。"
+        ],
+        [
+          "narrate",
+          "宋江开了庄门，请两个都头到庄里堂上坐下，连夜杀鸡宰鹅，置酒相待。土兵都与酒食管待，送些银两与二位都头做「好看钱」。"
+        ],
+        [
+          "focus",
+          "hero"
+        ],
+        [
+          "say",
+          "hero",
+          "（哥哥自去投案……也罢，我只远远跟着便是。）"
+        ],
+        [
+          "leave",
+          "hero"
+        ],
+        [
+          "title",
+          "次日 · 郓城县"
+        ],
+        [
+          "narrate",
+          "次日五更，宋江到县投首。知县见了宋江，问了口词，申解到济州府。"
+        ],
+        [
+          "narrate",
+          "府尹看了申解情由，又值赦书已到，罪当减等，只把宋江脊杖二十，刺配江州牢城。本州差两个防送公人，叫做张千、李万。"
+        ],
+        [
+          "leave",
+          "zhaoneng"
+        ],
+        [
+          "leave",
+          "zhaode"
+        ],
+        [
+          "leave",
+          "tubing-1"
+        ],
+        [
+          "leave",
+          "tubing-2"
+        ],
+        [
+          "leave",
+          "tubing-3"
+        ],
+        [
+          "leave",
+          "tubing-4"
+        ],
+        [
+          "leave",
+          "tubing-5"
+        ],
+        [
+          "leave",
+          "tubing-6"
+        ],
+        [
+          "leave",
+          "tubing-7"
+        ],
+        [
+          "leave",
+          "tubing-8"
+        ],
+        [
+          "leave",
+          "tubing-9"
+        ],
+        [
+          "leave",
+          "tubing-10"
+        ],
+        [
+          "tint",
+          ""
+        ],
+        [
+          "appear",
+          "zhangqian"
+        ],
+        [
+          "appear",
+          "liwan"
+        ],
+        [
+          "move",
+          "songjiang",
+          18,
+          10
+        ],
+        [
+          "say",
+          "songtaigong",
+          "我知江州是个好地面，鱼米之乡，特地使钱买将那里去。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "你路上去，倘或梁山泊的人下山来劫夺你入伙，切不可依随他，教人骂做不忠不孝。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "孩儿记得。父亲保重！"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "孩儿，路上慢慢地去。"
+        ],
+        [
+          "narrate",
+          "宋江洒泪拜辞了父亲，兄弟宋清送了一程，自同两个公人上路去了。"
+        ],
+        [
+          "narrate",
+          "远远的，一条汉子背着包裹，不紧不慢跟在后头——正是武龙。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}

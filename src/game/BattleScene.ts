@@ -1057,7 +1057,7 @@ export class BattleScene extends Phaser.Scene {
           this.setFast(true);
           if (e.type === 'say' || e.type === 'narrate' || e.type === 'objective') continue;
         }
-        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask' || e.type === 'pick';
+        const story = e.type === 'say' || e.type === 'narrate' || e.type === 'objective' || e.type === 'end' || e.type === 'ask' || e.type === 'pick' || e.type === 'choice';
         if (this.fast && !story) {
           this.skip(e);
           continue;
@@ -1316,6 +1316,16 @@ export class BattleScene extends Phaser.Scene {
         this.ui.hideResult();
         await this.ui.say(name(p.replies[k].speaker), p.replies[k].text, p.replies[k].speaker);
         if (k === 0) for (const x of this.battle.signal()) await this.play(x);
+        break;
+      }
+      case 'choice': {
+        // 剧情选项（扩展包指令 120）：选一项，接着演对应的分支【新】
+        const c = e.choice;
+        const k = await new Promise<number>((r) =>
+          this.ui.result(true, c.prompt, c.options.map((o, i) => ({ label: o.label, run: () => r(i) })), '抉择', true),
+        );
+        this.ui.hideResult();
+        for (const x of this.battle.answer(k)) await this.play(x);
         break;
       }
       case 'pick': {

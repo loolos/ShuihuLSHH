@@ -1,0 +1,250 @@
+{
+  "id": "liangshan-songbie",
+  "title": "梁山送别",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "base": "Act14-2"
+  },
+  "bgm": [
+    "story",
+    "sad"
+  ],
+  "units": [
+    {
+      "id": "chaogai",
+      "class": 12,
+      "side": "ally",
+      "x": 9,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "晁盖"
+    },
+    {
+      "id": "wuyong",
+      "class": 10,
+      "side": "ally",
+      "x": 7,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "吴用"
+    },
+    {
+      "id": "huarong",
+      "class": "huarong",
+      "side": "ally",
+      "x": 11,
+      "y": 9,
+      "level": 30,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "liutang",
+      "class": 17,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "刘唐"
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "ally",
+      "x": 11,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 9,
+      "y": 13,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 8,
+      "y": 15,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 10,
+      "y": 15,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "李万"
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 3,
+      "y": 7,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "梁山泊 · 聚义厅"
+        ],
+        [
+          "narrate",
+          "众人簇拥宋江上了大寨，到聚义厅上相见了。晁盖谢道：「自从郓城救了性命，兄弟们到此，无日不想大恩。」"
+        ],
+        [
+          "say",
+          "chaogai",
+          "今日天幸，得哥哥到此，正好和兄弟们一处聚义。来人，与哥哥开了枷！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "使不得！宋江得罪于官府，已蒙赦宥，减等刺配江州。家父再三叮嘱，不可落草，做个不忠不孝的人。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "如是兄长坚意要留宋江在山，情愿只就兄长手里乞死。"
+        ],
+        [
+          "narrate",
+          "说罢，泪如雨下，便拜倒在地。"
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥只管啰唣甚么！便在山上做个快活好汉，强似去江州吃苦！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "若要宋江这般，我自不如死了！"
+        ],
+        [
+          "narrate",
+          "宋江便要拔刀自刎，慌得晁盖、花荣一齐抱住。"
+        ],
+        [
+          "say",
+          "chaogai",
+          "既是哥哥坚执，我们怎敢苦留？只请宽住一日，明日早送下山。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "兄长听禀：吴用有个至爱相识，见在江州充做两院押牢节级，姓戴名宗，本处人称为戴院长。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "小生写一封书，兄长到彼时，可和他做个相识。但有甚事，可教众兄弟知道。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "戴院长？我在孟州时便见过他，原来是先生的相识。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "李逵兄弟，你原是戴院长手下的小牢子，你先下山，赶回江州去，与院长报个信。"
+        ],
+        [
+          "say",
+          "likui",
+          "铁牛这便去！哥哥，到了江州，有甚鸟事，只顾叫铁牛！"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "narrate",
+          "次日，众头领直送下山。晁盖取一盘金银，送与宋江；又将二十两银子与两个公人。宋江洒泪拜别，和公人取路投江州去了。"
+        ],
+        [
+          "leave",
+          "songjiang"
+        ],
+        [
+          "leave",
+          "zhangqian"
+        ],
+        [
+          "leave",
+          "liwan"
+        ],
+        [
+          "tint",
+          "night"
+        ],
+        [
+          "title",
+          "当夜 · 后山"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "move",
+          "wuyong",
+          4,
+          8
+        ],
+        [
+          "say",
+          "wuyong",
+          "武龙兄弟，哥哥这一路去，脸上刺了金印，又戴着行枷，一路上不知有多少风波。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "你仍旧远远跟着，休叫哥哥知道。江州那边有戴院长、李逵兄弟接应。"
+        ],
+        [
+          "say",
+          "hero",
+          "军师放心。武龙这条命，便是哥哥的。"
+        ],
+        [
+          "narrate",
+          "武龙辞了吴用，背上包裹，抄小路下山，赶宋江一行去了。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}

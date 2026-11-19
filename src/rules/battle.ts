@@ -54,6 +54,8 @@ export type BattleEvent =
   | { type: 'leave'; uid: number }
   /** 二选一：伏兵号令（EXE 0x407af3：AI 模式 9 的单位行动时弹出）。选第一项时调用 signal() */
   | { type: 'ask'; prompt: ExePrompt }
+  /** 剧情选项（扩展包指令 120）：选好后调用 answer() */
+  | { type: 'choice'; choice: ChoiceRequest }
   /** 选人（剧本指令 27，见 PickRequest）：选好后调用 choose() */
   | { type: 'pick'; pick: PickRequest }
   | { type: 'move'; uid: number; path: Cell[]; facing: number }
@@ -170,6 +172,12 @@ export interface StageInput {
  * 选人（剧本指令 27，EXE 0x411d38 置标志 0x100 → 玩家在地图上点一个我方人物 0x405d10 → 0x40de90 让其余我方、友军全部退场）。
  * 原版只出现在三关：Train1/Train2 选一人与王進过招，N-add15 主角先退场、选一人和主角一起断后（主角随后被剧本点名回到场上）。
  */
+/** 剧情选项（扩展包指令 120） */
+export interface ChoiceRequest {
+  prompt: string;
+  options: { label: string; flag: number }[];
+}
+
 export interface PickRequest {
   /** 面板标题（原版旁白"請選擇留下的人"；训练关原版没有提示，用重制版的文字） */
   prompt: string;
@@ -210,10 +218,16 @@ export class Battle {
   private blocks: PasBlock[];
   private display?: PasBlock[];
   private fired = new Set<number>();
+  /** 剧本区块是否已经触发过（试打工具用） */
+  hasFired(index: number) {
+    return this.fired.has(index);
+  }
   /** 剧本指令 27 设置的全局标志（EXE 0x411d38，条件 3 读取）：选人期间为 true，选完清掉 */
   private scriptFlag = false;
   /** 等待玩家选人（指令 27）；选完为 null */
   pendingPick: PickRequest | null = null;
+  /** 剧情选项（指令 120）等玩家选：选好后调用 answer() */
+  pendingChoice: ChoiceRequest | null = null;
   /** 因为没被选上而退场的人（不出战，不分全队经验，下一关照常归队） */
   private benched = new Set<number>();
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
@@ -464,7 +478,7 @@ export class Battle {
     this.out = [];
     this.runTurnTriggers(0);
     // 开场剧本要求选人：等 choose() 选完再进第 1 回合（这样时光倒流不会回到选人之前）
-    if (this.pendingPick) return this.flush();
+    if (this.pendingPick || this.pendingChoice) return this.flush();
     this.startTurn(1);
     this.record();
     return this.flush();
@@ -508,6 +522,24 @@ export class Battle {
       }
     }
     return out;
+  }
+
+  /** 剧情选项选好（第 k 项）：设标志，接着执行 { flag } 区块；开场的选项选完才进第 1 回合【新】 */
+  answer(k: number): BattleEvent[] {
+    this.out = [];
+    const c = this.pendingChoice;
+    if (!c) return [];
+    const o = c.options[k];
+    if (!o) throw new Error(`没有第 ${k} 个选项`);
+    this.pendingChoice = null;
+    this.flags.add(o.flag);
+    this.runCondBlocks();
+    if (this.pendingChoice || this.pendingPick) return this.flush();
+    if (this.turn === 0 && this.status === 'playing') {
+      this.startTurn(1);
+      this.record();
+    } else this.afterAction();
+    return this.flush();
   }
 
   /** 本关因为没被选上而退场的我方人物 */
@@ -570,7 +602,7 @@ export class Battle {
       units: this.units, items: this.items, turn: this.turn, phase: this.phase, turnLimit: this.turnLimit, status: this.status,
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
-      expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt,
+      expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
     });
   }
 
@@ -623,6 +655,7 @@ export class Battle {
     this.expBySource = s.expBySource;
     this.benched = new Set(s.benched ?? []);
     this.used = s.used ?? {};
+    if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
     const prompt = this.data.prompts?.[0];
@@ -1269,6 +1302,7 @@ export class Battle {
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
+      if (t.playerPhase && this.phase !== 'player') continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
       if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return;
@@ -1290,7 +1324,7 @@ export class Battle {
 
   private runTurnTriggers(param: number) {
     this.turnParam = param;
-    for (const b of this.blocks) if (b.trigger.kind === 'turn' && (this.turnAt[b.index] ?? b.trigger.turn) === param) this.runBlock(b);
+    for (const b of this.blocks) if (b.trigger.kind === 'turn' && (this.turnAt[b.index] ?? b.trigger.turn) === param && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
     this.runCondBlocks();
   }
 
@@ -1608,6 +1642,27 @@ export class Battle {
         // 114 换头像（value = 职业号，text = 包内头像文件；只放画面）
         case 114:
           this.emit({ type: 'portrait', classId: op.value, file: op.text ?? '' });
+          break;
+        // 120 剧情选项（扩展包【新】）：编译时保证是区块最后一条；等 answer()
+        case 120:
+          if (!op.args?.options?.length) break;
+          this.pendingChoice = { prompt: textOf(i), options: op.args.options.map((o) => ({ label: o.label, flag: o.flag })) };
+          this.emit({ type: 'choice', choice: this.pendingChoice });
+          break;
+        // 121 收手（扩展包【新】，梁山截路被宋江劝住的喽啰）：改成友军、原地不动、不能被选中，不再算敌人
+        case 121:
+          if (!sel || !sel.alive || !sel.present) break;
+          sel.side = 'ally';
+          sel.ai.mode = 8;
+          sel.ended = true;
+          sel.defending = false;
+          (this.spectators as Set<number>).add(sel.uid);
+          this.emit({ type: 'status', uid: sel.uid, text: '收手' });
+          this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          break;
+        // 122 改 AI 模式（扩展包【新】）
+        case 122:
+          if (sel) sel.ai.mode = op.value;
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:
