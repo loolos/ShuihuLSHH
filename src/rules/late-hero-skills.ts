@@ -58,7 +58,7 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
   out.push({...s,name:s.name+'·左折',skillId:s.skillId+80,areaPattern:s.areaPattern!.map(([x,y])=>[-x,y] as const)});
  if([4,13,15].includes(cls)&&!existing.some(s=>s.type===8&&!s.chargeTarget)){
   const names:Record<number,string>={4:'藏锋养气',13:'伏虎调息',15:'盘蛇吐纳'};
-  out.push({...own,skillId:1230+cls,soundId:own.skillId,name:names[cls],type:8,hidden:false,learnLevel:26,mpCost:0,power:2,
+  out.push({...own,skillId:1230+cls,soundId:own.skillId,name:names[cls],type:8,hidden:false,learnLevel:cls===4?26:8,mpCost:0,power:2,
    rangeMin:0,rangeMax:0,area:0,hits:[],effect:0,effect2:0,effect3:0,poison:0,stun:0,hitMod:0,critMod:0,raw:''});
  }
  return out;
