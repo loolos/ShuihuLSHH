@@ -3344,7 +3344,7 @@
       ]
     },
     "face": {
-      "fromHead": 67
+      "file": "faces/lvfang.png"
     }
   },
   {
@@ -3399,7 +3399,7 @@
       ]
     },
     "face": {
-      "fromHead": 67
+      "file": "faces/guosheng.png"
     }
   },
   {"id": "songqing", "name": "宋清", "base": {"hp": 60, "mp": 40, "attack": 45, "defense": 20, "hit": 70, "agility": 25, "crit": 5}, "move": 4, "weaponType": 0, "items": [0, 89, 113], "skills": [{"id": "sq-0", "name": "铁扇拳", "from": 221, "anim": 0}], "sprite": {"fromClass": 37, "recolor": [{"src": [[16, 31]], "dst": [160, 175], "k": 1.0}]}, "face": {"file": "faces/songqing.png"}},
@@ -3412,7 +3412,7 @@
   {"id": "muhong", "name": "穆弘", "base": {"hp": 110, "mp": 80, "attack": 68, "defense": 26, "hit": 95, "agility": 32, "crit": 12}, "move": 5, "weaponType": 0, "items": [0, 85, 0], "skills": [{"id": "mh-0", "name": "没遮拦拳", "from": 221, "anim": 0}, {"id": "mh-1", "name": "旋风脚", "from": 225, "anim": 1}, {"id": "mh-2", "name": "聚气", "from": 227, "anim": 2}, {"id": "mh-3", "name": "震地拳风", "from": 1108, "anim": 0, "learnLevel": 13}], "sprite": {"fromClass": 38, "recolor": [{"src": [[16, 31]], "dst": [224, 239], "k": 0.8}]}, "face": {"file": "faces/muhong.png"}},
   {"id": "zhangheng", "name": "张横", "base": {"hp": 80, "mp": 50, "attack": 58, "defense": 25, "hit": 80, "agility": 26, "crit": 8}, "move": 5, "weaponType": 9, "items": [73, 86, 114], "skills": [{"id": "zh-cha", "name": "船叉", "from": 221, "anim": 0}, {"id": "zh-zhi", "name": "掷叉", "from": 222, "anim": 1}], "sprite": {"fromClass": 21, "recolor": [{"src": [[16, 31]], "dst": [176, 191], "k": 1}]}, "face": {"file": "faces/zhangheng.png"}},
   {"id": "caijiu", "name": "蔡九知府", "base": {"hp": 110, "mp": 100, "attack": 50, "defense": 22, "hit": 65, "agility": 30, "crit": 5}, "move": 7, "weaponType": 4, "items": [45, 108, 131], "skills": [{"id": "cj-ling", "name": "仗势凌人", "from": 155, "anim": 0}, {"id": "cj-bi", "name": "官逼民反", "from": 157, "anim": 1}, {"id": "cj-min", "name": "民不聊生", "from": 158, "anim": 2}, {"id": "cj-li", "name": "名利双收", "from": 159, "anim": 3}], "sprite": {"fromClass": 54}, "face": {"file": "faces/caijiu.png"}},
-  {"id": "zhangshun", "name": "张顺", "base": {"hp": 90, "mp": 100, "attack": 60, "defense": 20, "hit": 80, "agility": 45, "crit": 20}, "move": 6, "weaponType": 6, "items": [31, 84, 114], "skills": [{"id": "zs-dao", "name": "分水刀", "from": 72, "anim": 0}, {"id": "zs-lang", "name": "浪里钻", "from": 74, "anim": 1, "learnLevel": 15, "mpCost": 45}, {"id": "zs-qi", "name": "换气", "from": 75, "anim": 2}], "sprite": {"fromClass": 51, "recolor": [{"src": [[96, 111], [240, 255], [160, 175], [48, 63], [224, 239]], "dst": [16, 31], "k": 1.25}]}, "face": {"fromHead": 51}},
+  {"id": "zhangshun", "name": "张顺", "base": {"hp": 90, "mp": 100, "attack": 60, "defense": 20, "hit": 80, "agility": 45, "crit": 20}, "move": 6, "weaponType": 6, "items": [31, 84, 114], "skills": [{"id": "zs-dao", "name": "分水刀", "from": 72, "anim": 0}, {"id": "zs-lang", "name": "浪里钻", "from": 74, "anim": 1, "learnLevel": 15, "mpCost": 45}, {"id": "zs-qi", "name": "换气", "from": 75, "anim": 2}], "sprite": {"fromClass": 51, "recolor": [{"src": [[96, 111], [240, 255], [160, 175], [48, 63], [224, 239]], "dst": [16, 31], "k": 1.25}]}, "face": {"file": "faces/zhangshun.png"}},
   {"id": "huangwenbing", "name": "黄文炳", "base": {"hp": 60, "mp": 40, "attack": 50, "defense": 20, "hit": 85, "agility": 20, "crit": 5}, "move": 4, "weaponType": 0, "items": [0, 88, 118], "skills": [{"id": "hwb-quan", "name": "拳脚", "from": 188, "anim": 0}], "sprite": {"fromClass": 64, "recolor": [{"src": [[224, 239], [48, 63], [160, 175]], "dst": [64, 79], "k": 0.75}]}, "face": {"fromHead": 64}}
 ],
   "stages": [
