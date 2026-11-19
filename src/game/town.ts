@@ -27,6 +27,9 @@ export interface TownOptions {
   /** 每次买卖、整理后调用（用来存档） */
   onChange: (c: CampaignState) => void;
   onLeave: (c: CampaignState) => void;
+  /** 续篇城镇的酒馆传闻和说书（src/packs/tavern.ts）；不给就按城镇号查原版的 */
+  rumors?: string[];
+  tale?: Tale;
 }
 
 /** 说书用的对白框和二选一面板（和战斗共用 #dialog、#result） */
@@ -47,7 +50,7 @@ export class TownUI {
   private slot = -1;
   private giving = false;
   private line = '';
-  private rumor = new Map<number, number>();
+  private rumor = new Map<number | string, number>();
   private icons = new Map<number, string>();
   private telling = false;
   private openGoods = new Set<string>();
@@ -119,20 +122,21 @@ export class TownUI {
 
   /** 酒店交谈：依次说出本城的传闻，说完从头再来（EXE 0x4194d1） */
   private talk() {
-    if (this.c.insertTown) { this.line = "诸位可在此置办衣药，整备妥当再上路。"; return; }
-    const list = this.assets.exe.town.rumors[this.o.town] ?? [];
+    if (this.c.insertTown && !this.o.rumors) { this.line = "诸位可在此置办衣药，整备妥当再上路。"; return; }
+    const list = this.o.rumors ?? this.assets.exe.town.rumors[this.o.town] ?? [];
     if (!list.length) {
       this.line = '最近没听说什么新鲜事。'; // 原版这些城镇点"交談"没有反应【新】
       return;
     }
-    const k = this.rumor.get(this.o.town) ?? 0;
+    const key = this.o.rumors ? this.o.title : this.o.town; // 续篇城镇都借 11 号，按城镇名分开数
+    const k = this.rumor.get(key) ?? 0;
     this.line = list[k % list.length];
-    this.rumor.set(this.o.town, k + 1);
+    this.rumor.set(key, k + 1);
   }
 
   /** 说书【新】：说书先生一页一页说，故事里的好汉在队里时接着互动、二选一（src/rules/storyteller.ts） */
   private async tell() {
-    const tale = taleOf(this.o.town), st = this.stage;
+    const tale = this.taleHere(), st = this.stage;
     if (!tale || !st || this.telling) return;
     this.telling = true;
     st.done(); // 清掉战斗里可能残留的"跳过"状态
@@ -167,6 +171,11 @@ export class TownUI {
       this.telling = false;
     }
     this.render();
+  }
+
+  /** 本城的说书：续篇城镇用传进来的，原版城镇按城镇号 */
+  private taleHere(): Tale | undefined {
+    return this.o.tale ?? (this.c.insertTown ? undefined : taleOf(this.o.town));
   }
 
   private storyLine(tale: Tale, present: boolean) {
@@ -265,7 +274,7 @@ export class TownUI {
         ? ''
         : SHOPS[this.shop].actions
             .map((a) => `<button data-do="action" data-v="${['talk', 'buy', 'items', 'forge', 'pawn'].indexOf(a)}" class="${this.action === a ? 'on' : ''}">${this.tr(ACTION_LABEL[a])}</button>`)
-            .join('') + (this.shop === 0 && !this.c.insertTown && taleOf(town) && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
+            .join('') + (this.shop === 0 && this.taleHere() && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>
