@@ -20,8 +20,8 @@
       "id": "daizong",
       "class": "daizong",
       "side": "player",
-      "x": 27,
-      "y": 19,
+      "x": 18,
+      "y": 10,
       "level": 30,
       "facing": 0
     },
@@ -29,8 +29,8 @@
       "id": "lijun",
       "class": "lijun",
       "side": "player",
-      "x": 29,
-      "y": 19,
+      "x": 20,
+      "y": 12,
       "level": 30,
       "facing": 0
     },
@@ -38,8 +38,8 @@
       "id": "lvfang",
       "class": "lvfang",
       "side": "player",
-      "x": 28,
-      "y": 19,
+      "x": 17,
+      "y": 11,
       "level": 30,
       "facing": 0
     },
@@ -47,8 +47,8 @@
       "id": "guosheng",
       "class": "guosheng",
       "side": "player",
-      "x": 30,
-      "y": 20,
+      "x": 21,
+      "y": 11,
       "level": 30,
       "facing": 0
     },
@@ -56,8 +56,8 @@
       "id": "xiaorang",
       "class": "xiaorang",
       "side": "ally",
-      "x": 28,
-      "y": 20,
+      "x": 18,
+      "y": 9,
       "level": 30,
       "ai": 14,
       "facing": 0,
@@ -67,8 +67,8 @@
       "id": "jindajian",
       "class": "jindajian",
       "side": "ally",
-      "x": 26,
-      "y": 20,
+      "x": 19,
+      "y": 9,
       "level": 30,
       "ai": 14,
       "facing": 0,
@@ -164,8 +164,8 @@
       "id": "gb-1",
       "class": 43,
       "side": "enemy",
-      "x": 30,
-      "y": 19,
+      "x": 0,
+      "y": 18,
       "level": 30,
       "facing": 0,
       "name": "马军",
@@ -176,8 +176,8 @@
       "id": "gb-2",
       "class": 43,
       "side": "enemy",
-      "x": 31,
-      "y": 18,
+      "x": 2,
+      "y": 19,
       "level": 30,
       "facing": 0,
       "name": "马军",
@@ -188,8 +188,8 @@
       "id": "gb-3",
       "class": 32,
       "side": "enemy",
-      "x": 28,
-      "y": 21,
+      "x": 3,
+      "y": 19,
       "level": 30,
       "facing": 0,
       "name": "土兵",
@@ -200,8 +200,8 @@
       "id": "gb-4",
       "class": 33,
       "side": "enemy",
-      "x": 30,
-      "y": 21,
+      "x": 1,
+      "y": 20,
       "level": 30,
       "facing": 0,
       "name": "土兵",
@@ -212,7 +212,7 @@
       "id": "gb-5",
       "class": 32,
       "side": "enemy",
-      "x": 31,
+      "x": 4,
       "y": 20,
       "level": 30,
       "facing": 0,
@@ -224,7 +224,7 @@
       "id": "gb-6",
       "class": 34,
       "side": "enemy",
-      "x": 26,
+      "x": 27,
       "y": 22,
       "level": 30,
       "facing": 0,
@@ -236,7 +236,7 @@
       "id": "gb-7",
       "class": 36,
       "side": "enemy",
-      "x": 27,
+      "x": 28,
       "y": 21,
       "level": 30,
       "facing": 0,
@@ -248,8 +248,8 @@
       "id": "gb-8",
       "class": 33,
       "side": "enemy",
-      "x": 31,
-      "y": 21,
+      "x": 29,
+      "y": 19,
       "level": 30,
       "facing": 0,
       "name": "土兵",
@@ -441,13 +441,85 @@
       "class": 38,
       "side": "enemy",
       "x": 30,
-      "y": 20,
+      "y": 6,
       "level": 30,
       "facing": 0,
       "name": "济州巡检",
       "levelOffset": 1,
       "hidden": true,
       "hpMultiplier": 1.5
+    },
+    {
+      "id": "gb-9",
+      "class": 32,
+      "side": "enemy",
+      "x": 27,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-10",
+      "class": 33,
+      "side": "enemy",
+      "x": 26,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-11",
+      "class": 43,
+      "side": "enemy",
+      "x": 27,
+      "y": 3,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gb-12",
+      "class": 34,
+      "side": "enemy",
+      "x": 28,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-13",
+      "class": 32,
+      "side": "enemy",
+      "x": 29,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-14",
+      "class": 33,
+      "side": "enemy",
+      "x": 28,
+      "y": 6,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
     }
   ],
   "script": [
@@ -546,7 +618,7 @@
         ],
         [
           "narrate",
-          "话犹未了，背后官道上尘头起处，一彪官军赶来——却是济州巡检听说山路上有强人劫客，带了马军步军来拿！"
+          "话犹未了，三处山路尘头齐起。济州巡检闻报强人劫客，分兵从左首山径、后面官道、右首山口一齐赶来，远远喝令拿人！"
         ],
         [
           "appear",
@@ -582,6 +654,30 @@
         ],
         [
           "appear",
+          "gb-9"
+        ],
+        [
+          "appear",
+          "gb-10"
+        ],
+        [
+          "appear",
+          "gb-11"
+        ],
+        [
+          "appear",
+          "gb-12"
+        ],
+        [
+          "appear",
+          "gb-13"
+        ],
+        [
+          "appear",
+          "gb-14"
+        ],
+        [
+          "appear",
           "xunjian"
         ],
         [
@@ -592,7 +688,7 @@
         [
           "say",
           "lijun",
-          "两位先生只管往山上躲，有我们在！"
+          "两位先生且在里面站定！戴院长护住先生，俺与两位兄弟分头迎他，休教官军冲进来！"
         ],
         [
           "say",
