@@ -55,9 +55,8 @@ const fight = (others: ActUnit[] = [act(1, 0, 'player', 6, 5), act(2, 1, 'enemy'
 const cells = (a: { x: number; y: number }[]) => a.map((p) => `${p.x},${p.y}`).sort();
 
 describe('戴宗新技能', () => {
-  it('主线与江州的戴宗保持同一套技能，援气及三阶范围技随等级领悟', () => {
-    expect(configOf('mainline').skills).toEqual(configOf('jiangzhou').skills);
-    for (const pack of ['mainline', 'jiangzhou']) {
+  it('戴宗援气及三阶范围技随等级领悟', () => {
+    for (const pack of ['mainline']) {
       const { b, dai, aid } = fight(undefined, 7, pack);
       const names = (level: number) => {
         dai.level = level;

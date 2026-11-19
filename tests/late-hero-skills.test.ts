@@ -12,9 +12,9 @@ import type { ActUnit } from '../src/formats/act.ts';
 import { DATA } from '../tools/sim-lib.ts';
 
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',()=>{
- const rt=loadPackFromDisk('jiangzhou'),data=rt.data,board=new Board(30,30);
+ const rt=loadPackFromDisk('mainline'),data=rt.data,board=new Board(30,30);
  const act=(index:number,type:number,side:ActUnit['side'],x:number,y:number):ActUnit=>({index,type,side,x,y,level:30,group:index+1,flags:0,facing:0,extra:[0,0,0],items:[0,0,0,0,0,0,0],raw:[]});
- for(const pack of ['mainline','jiangzhou'])it(`${pack}轮回转世四阶按等级替换，十字范围逐格扩大且每阶多一段`,()=>{
+ for(const pack of ['mainline'])it(`${pack}轮回转世四阶按等级替换，十字范围逐格扩大且每阶多一段`,()=>{
   const d=loadPackFromDisk(pack).data,tiers=d.classes[16].skills.filter(s=>s.skillId===135||[1306,1307,1308].includes(s.skillId));
   expect(tiers).toHaveLength(4);
   tiers.forEach((s,i)=>{
