@@ -66,8 +66,8 @@
       "levelOffset": -2
     },
     {
-      "id": "duqian",
-      "class": 69,
+      "id": "zhangheng",
+      "class": "zhangheng",
       "side": "player",
       "x": 3,
       "y": 15,
@@ -76,8 +76,28 @@
       "hidden": true
     },
     {
-      "id": "songwan",
-      "class": 70,
+      "id": "lvfang",
+      "class": "lvfang",
+      "side": "player",
+      "x": 4,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "zhangshun",
+      "class": "zhangshun",
+      "side": "player",
+      "x": 3,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "guosheng",
+      "class": "guosheng",
       "side": "player",
       "x": 4,
       "y": 15,
@@ -569,25 +589,35 @@
         ],
         [
           "narrate",
-          "朱贵取出一张鹊画弓，搭上一枝响箭，望着对港芦苇丛中射去。响箭到处，早有小喽啰把船摇将过来。"
+          "朱贵取出一张鹊画弓，搭上一枝响箭，望着对港芦苇丛中射去。响箭到处，芦苇丛里早摇出一只快船来。"
         ],
         [
           "appear",
-          "duqian"
+          "zhangheng"
         ],
         [
           "appear",
-          "songwan"
+          "lvfang"
         ],
         [
           "say",
-          "duqian",
-          "朱贵兄弟放箭，必有紧事！摸着天杜迁在此！"
+          "zhangheng",
+          "朱贵兄弟放箭，必有紧事！船火儿张横在此！"
         ],
         [
           "say",
-          "songwan",
-          "云里金刚宋万也来了！哪个鸟官军敢来撩拨？"
+          "lvfang",
+          "小温侯吕方也来了！哪个鸟官军敢来撩拨？"
+        ],
+        [
+          "say",
+          "zhugui",
+          "来得好！后面还有船么？"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "俺兄弟张顺载着郭盛随后便到！"
         ],
         [
           "narrate",
@@ -621,12 +651,732 @@
       ]
     },
     {
+      "on": {
+        "turn": 2
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 8
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 10
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 11
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 12
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 13
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "if": "tick",
+      "unless": "boat2",
+      "do": [
+        [
+          "flag",
+          "boat2"
+        ],
+        [
+          "narrate",
+          "芦苇丛里又摇出一只快船来。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "appear",
+          "guosheng"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "浪里白条张顺来也！哥哥们闪开，看我们杀上岸去！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "赛仁贵郭盛在此，吕兄弟，咱两个的戟又凑一对了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 8
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 10
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 11
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 12
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 13
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "if": "arrow",
+      "unless": "tick",
+      "do": [
+        [
+          "flag",
+          "tick"
+        ]
+      ]
+    },
+    {
       "on": "allEnemiesDefeated",
       "if": "arrow",
       "do": [
         [
           "narrate",
-          "众人杀散了官军。朱贵叫火家收拾了店面，和杜迁、宋万扶着戴宗下船，直望金沙滩来。"
+          "众人杀散了官军。朱贵叫火家收拾了店面，和众兄弟扶着戴宗下船，直望金沙滩来。"
         ],
         [
           "victory",
