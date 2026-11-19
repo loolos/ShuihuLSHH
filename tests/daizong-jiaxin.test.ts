@@ -110,6 +110,20 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     const { s: st, b, get } = open('zhuanshang');
     expect(st.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['daizong', 'guosheng', 'lijun', 'lvfang']);
     for (const id of ['xiaorang', 'jindajian']) expect(get(id)).toMatchObject({ side: 'ally', present: true });
+    const opening=st.units.filter(u=>u.id.startsWith('gb-')||u.id==='xunjian');
+    expect(opening).toHaveLength(15);
+    const escort=st.units.filter(u=>['daizong','lijun','lvfang','guosheng','xiaorang','jindajian'].includes(u.id));
+    for(const u of escort) { expect(u.x).toBeGreaterThanOrEqual(17); expect(u.x).toBeLessThanOrEqual(21); expect(u.y).toBeGreaterThanOrEqual(9); expect(u.y).toBeLessThanOrEqual(12); }
+    expect(opening.filter(u=>u.x-u.y < -10)).toHaveLength(5); // 画面左
+    expect(opening.filter(u=>u.x+u.y > 45)).toHaveLength(5); // 画面下
+    expect(opening.filter(u=>u.x-u.y > 20)).toHaveLength(5); // 画面右
+    const active=b.active();
+    expect(new Set(active.map(u=>u.x+','+u.y)).size).toBe(active.length);
+    for(const foe of opening) {
+      expect(get(foe.id).present).toBe(true);
+      for(const u of escort) expect(Math.abs(foe.x-u.x)+Math.abs(foe.y-u.y)).toBeGreaterThanOrEqual(12);
+    }
+
     for (const id of ['wangying', 'yanshun']) expect(get(id)).toMatchObject({ side: 'ally', present: true });
     expect(get('xunjian').present).toBe(true);
     killAll(b);
