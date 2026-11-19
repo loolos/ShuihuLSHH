@@ -48,7 +48,8 @@
       "level": 30,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "chaogai",
@@ -71,7 +72,8 @@
       "level": 27,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "huarong",
@@ -94,7 +96,8 @@
       "level": 27,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "huangxin",
@@ -117,7 +120,8 @@
       "level": 26,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "lufang",
@@ -140,7 +144,8 @@
       "level": 26,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "guosheng",
@@ -163,7 +168,8 @@
       "facing": 2,
       "hidden": true,
       "name": "推车客商",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "wulong",
@@ -186,7 +192,8 @@
       "level": 27,
       "hidden": true,
       "name": "弄蛇丐者",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "ruanxiaoer",
@@ -214,7 +221,8 @@
       "level": 27,
       "hidden": true,
       "name": "弄蛇丐者",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "ruanxiaowu",
@@ -242,7 +250,8 @@
       "level": 27,
       "hidden": true,
       "name": "弄蛇丐者",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "ruanxiaoqi",
@@ -270,7 +279,8 @@
       "level": 26,
       "hidden": true,
       "name": "弄蛇丐者",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "baisheng",
@@ -298,7 +308,8 @@
       "level": 28,
       "hidden": true,
       "name": "使枪棒卖药的",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "liutang",
@@ -326,7 +337,8 @@
       "level": 26,
       "hidden": true,
       "name": "使枪棒卖药的",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "duqian",
@@ -349,7 +361,8 @@
       "level": 26,
       "hidden": true,
       "name": "使枪棒卖药的",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "songwan",
@@ -372,7 +385,8 @@
       "level": 27,
       "hidden": true,
       "name": "使枪棒卖药的",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "yanshun",
@@ -395,7 +409,8 @@
       "level": 26,
       "hidden": true,
       "name": "挑担脚夫",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "zhugui",
@@ -418,7 +433,8 @@
       "level": 26,
       "hidden": true,
       "name": "挑担脚夫",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "wangying",
@@ -441,7 +457,8 @@
       "level": 26,
       "hidden": true,
       "name": "挑担脚夫",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "zhengtianshou",
@@ -467,7 +484,8 @@
       "level": 26,
       "hidden": true,
       "name": "挑担脚夫",
-      "ai": 8
+      "ai": 8,
+      "spectator": true
     },
     {
       "id": "shiyong",
