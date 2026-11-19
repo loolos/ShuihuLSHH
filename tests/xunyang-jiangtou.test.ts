@@ -10,7 +10,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
-import { insertTownName } from '../src/packs/towns.ts';
+import { insertTownIntro, insertTownName } from '../src/packs/towns.ts';
 
 describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二、二十三章 浔阳江头、江州劫法场', () => {
   useDiskCustomMaps();
@@ -40,6 +40,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
       for (const blk of s.script) for (const op of blk.do) if (op[0] === 'move') expect(b.board.passable(op[2] as number, op[3] as number), `${id} ${op.join()}`).toBe(true);
       expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length, id).toBeLessThanOrEqual(5);
     }
+  });
+
+  it('大闹清风寨打完（劫囚车）进清风山整备，开放霹雳火秦明第一关的全部我方', () => {
+    expect(rt.stages.find((s) => s.id === 'jieqiuche')!.townAfter).toBe(11);
+    expect(insertTownName('mainline/yekun')).toBe('清风山整备');
+    expect(insertTownIntro('mainline/yekun').map((l) => l.actor)).toEqual(['huarong', 'sj-fugitive', 'wangying']);
   });
 
   it('江州牢城、浔阳楼演完就过关；浔阳楼之后进梁山泊整备', () => {
