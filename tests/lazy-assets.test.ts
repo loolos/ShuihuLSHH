@@ -1,103 +1,84 @@
-// 网页版按需下载：进关只下载走路/受击/防御/普通攻击，技能出招前再下载；字节相同的帧只下载一份再复制。
-// 用仓库里的 gamedata/original 模拟 GitHub 的 Range 请求，检查解出来的帧与整份文件一致。
+// 拆出来的原版图像（gamedata/sprites、tiles、portraits、icons）：切出的帧与原版图像库逐像素一致（锚点对齐、空白补 0）；
+// 进关只载入走路/受击/防御/普通攻击那几张图，技能出招前再载入。
 import fs from 'node:fs';
 import path from 'node:path';
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import '../src/platform/buffer-shim.ts';
-import { GameFiles, LAZY_FILES, RemoteFile } from '../src/platform/gamefiles.ts';
-import { GAMEDATA_JSON } from '../src/platform/gamedata-json.ts';
-import { indexSpans, openLib } from '../src/formats/image.ts';
-import { ensureSkill, loadAssets, preloadStage } from '../src/game/assets.ts';
+import { openGrp, openLib, openPic, type Frame } from '../src/formats/image.ts';
+import { ensureSkill, loadAssets, preloadStage, startupImages } from '../src/game/assets.ts';
 import { fxGroups } from '../src/game/effects.ts';
-import alias from '../src/data/frame-alias.json';
+import { nodeGameFiles } from '../tools/sim-lib.ts';
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
-const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
+const DATA = path.resolve(import.meta.dirname, '../gamedata/original/Data');
+const has = fs.existsSync(path.join(DATA, 'Man.lib'));
 
-describe.skipIf(!has)('按需下载', () => {
-  let fetched = 0;
-  beforeAll(() => {
-    vi.stubGlobal('fetch', async (url: string, init?: { headers?: Record<string, string> }) => {
-      const buf = fs.readFileSync(path.join(DATA, decodeURIComponent(url.replace('repo:', ''))));
-      const m = /bytes=(\d+)-(\d+)/.exec(init?.headers?.Range ?? '');
-      const part = m ? buf.subarray(Number(m[1]), Number(m[2]) + 1) : buf;
-      fetched += part.length;
-      return new Response(new Uint8Array(part), { status: m ? 206 : 200 });
-    });
-  });
-  afterAll(() => vi.unstubAllGlobals());
-
-  const open = async () => {
-    const small = new Map<string, ArrayBuffer>();
-    const walk = (d: string, rel: string) => {
-      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-        const r = rel ? `${rel}/${e.name}` : e.name;
-        if (e.isDirectory()) walk(path.join(d, e.name), r);
-        else if (!LAZY_FILES.includes(r)) small.set(r, new Uint8Array(fs.readFileSync(path.join(d, e.name))).buffer);
-      }
-    };
-    walk(DATA, '');
-    const remote: RemoteFile[] = [];
-    for (const p of LAZY_FILES) {
-      const size = fs.statSync(path.join(DATA, p)).size;
-      const r = new RemoteFile(p, size, `repo:${p}`);
-      await r.ensure([[0, 15]]);
-      await r.ensure(indexSpans(Buffer.from(r.buf.buffer, 0, 15), size));
-      remote.push(r);
+/** 拆出的帧 a 与原版帧 b 一致：b 按锚点放进 a 的格子里，其余是透明 */
+function same(a: Frame, b: Frame, what: string) {
+  const ox = a.anchorX - b.anchorX, oy = a.anchorY - b.anchorY;
+  expect(ox >= 0 && oy >= 0 && ox + b.width <= a.width && oy + b.height <= a.height, what).toBe(true);
+  let opaque = 0;
+  for (let y = 0; y < a.height; y++)
+    for (let x = 0; x < a.width; x++) {
+      const bx = x - ox, by = y - oy;
+      const want = bx >= 0 && by >= 0 && bx < b.width && by < b.height ? b.pixels[by * b.width + bx] : 0;
+      if (a.pixels[y * a.width + x] !== want) throw new Error(`${what}: (${x},${y})`);
+      if (want) opaque++;
     }
-    return loadAssets(new GameFiles(small, remote, GAMEDATA_JSON));
-  };
+  return opaque;
+}
 
-  it('frame-alias.json 与 Man.lib、Effect.lib 一致', () => {
-    for (const [p, { dup, src }] of Object.entries(alias as Record<string, { dup: number[]; src: number[] }>)) {
-      const buf = fs.readFileSync(path.join(DATA, p));
-      const lib = openLib(buf, p);
-      let i = 0;
-      dup.forEach((d, k) => {
-        i += d;
-        const [a, b] = lib.span(i);
-        const [c, e] = lib.span(src[k]);
-        expect(src[k]).toBeLessThan(i);
-        expect(Buffer.compare(buf.subarray(a, b), buf.subarray(c, e))).toBe(0);
-      });
-    }
-  });
-
-  it('N01：进关下载的帧与整份文件解码一致，技能出招前才下载', async () => {
-    const assets = await open();
-    const full = openLib(fs.readFileSync(path.join(DATA, 'Data/Man.lib')), 'Man.lib');
-    const fullFx = openLib(fs.readFileSync(path.join(DATA, 'Data/Effect.lib')), 'Effect.lib');
-    fetched = 0;
+describe.skipIf(!has)('拆出来的图像', () => {
+  it('N01：进关载入的帧与原版一致，技能出招前才载入', async () => {
+    const loaded: string[] = [];
+    const assets = loadAssets(nodeGameFiles((p) => loaded.push(p)));
+    await assets.files.ensure(startupImages(assets));
+    loaded.length = 0;
     await preloadStage(assets, 'n01');
-    const core = fetched;
-    expect(core).toBeGreaterThan(0);
-    // 主角（职业 0）：走路、受击、防御、普通攻击都已下载
+    expect(loaded.length).toBeGreaterThan(0);
+    const man = openLib(fs.readFileSync(path.join(DATA, 'Man.lib')), 'Man.lib');
+    const fx = openLib(fs.readFileSync(path.join(DATA, 'Effect.lib')), 'Effect.lib');
+    const check = (g: number, lib = assets.man, ref = man) => {
+      const r = lib.actions[g];
+      expect([r.first, r.last]).toEqual([ref.actions[g].first, ref.actions[g].last]);
+      for (let i = r.first; i <= r.last; i++) same(lib.frame(i), ref.frame(i), `组 ${g} 帧 ${i}`);
+    };
+    // 主角（职业 0）：走路、受击、防御、普通攻击
     const c = assets.man.classes[0];
     const basic = assets.data.classes[0].skills[0];
-    const groups = [...Array(12).keys(), ...[0, 1, 2, 3].map((d) => (3 + basic.group) * 4 + d)].map((g) => c.first + g);
-    const same = (g: number, lib = assets.man, ref = full) => {
-      const r = lib.actions[g];
-      for (let i = r.first; i <= r.last; i++) expect(Buffer.compare(Buffer.from(lib.frame(i).pixels), Buffer.from(ref.frame(i).pixels))).toBe(0);
-    };
-    for (const g of groups) same(g);
-    // 其中有字节相同、只下载了第一份再复制过来的帧
-    const dups = new Set<number>();
-    let i = 0;
-    for (const d of alias['Data/Man.lib'].dup) dups.add((i += d));
-    expect(groups.some((g) => { const r = assets.man.actions[g]; for (let k = r.first; k <= r.last; k++) if (dups.has(k)) return true; return false; })).toBe(true);
-    // 别的技能还没下载：出招前补上
+    for (const g of [...Array(12).keys(), ...[0, 1, 2, 3].map((d) => (3 + basic.group) * 4 + d)]) check(c.first + g);
+    // 别的技能还没载入：出招前补上
     const sk = assets.data.classes[0].skills.find((s) => s.group !== basic.group && fxGroups(s).length)!;
     const g0 = c.first + (3 + sk.group) * 4;
-    const [a, b] = assets.man.span(assets.man.actions[g0].first);
-    expect(assets.files.get('Data/Man.lib').subarray(a, b).every((x) => x === 0)).toBe(true);
-    fetched = 0;
+    expect(assets.files.hasImage(assets.man.sheetOf(g0))).toBe(false);
+    loaded.length = 0;
     await ensureSkill(assets, 0, sk);
-    expect(fetched).toBeGreaterThan(0);
-    for (let d = 0; d < 4; d++) same(g0 + d);
-    for (const g of fxGroups(sk)) same(g, assets.effects, fullFx);
-    // 第二次不再下载
-    fetched = 0;
+    expect(loaded.length).toBeGreaterThan(0);
+    for (let d = 0; d < 4; d++) check(g0 + d);
+    for (const g of fxGroups(sk)) check(g, assets.effects, fx);
+    // 第二次不再载入
+    loaded.length = 0;
     await ensureSkill(assets, 0, sk);
-    expect(fetched).toBe(0);
+    expect(loaded).toEqual([]);
+  });
+
+  it('图块、格子光标、头像、图标与原版一致', async () => {
+    const assets = loadAssets(nodeGameFiles());
+    const all = (lib: { count: number; sheetOf(i: number): string }) => Array.from({ length: lib.count }, (_, i) => lib.sheetOf(i));
+    await assets.files.ensure([...all(assets.ground), ...all(assets.upper), ...startupImages(assets)]);
+    const pairs = [
+      [assets.ground, openGrp(fs.readFileSync(path.join(DATA, 'Ground.grp')))],
+      [assets.upper, openGrp(fs.readFileSync(path.join(DATA, 'Upper.grp')))],
+      [assets.grid, openGrp(fs.readFileSync(path.join(DATA, 'Grid.grp')))],
+      [assets.heads, openPic(fs.readFileSync(path.join(DATA, 'Head.lib')))],
+      [assets.objects, openPic(fs.readFileSync(path.join(DATA, 'Object.lib')))],
+    ] as const;
+    for (const [mine, ref] of pairs) {
+      expect(mine.count).toBe(ref.count);
+      for (let i = 0; i < ref.count; i++) {
+        const a = mine.frame(i), b = ref.frame(i);
+        expect([a.width, a.height, a.anchorX, a.anchorY]).toEqual([b.width, b.height, b.anchorX, b.anchorY]);
+        same(a, b, `#${i}`);
+      }
+    }
   });
 });

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { readExeTables } from '../src/formats/exe.ts';
 import { parsePasHeader } from '../src/formats/pas.ts';
 import { planAi } from '../src/rules/ai.ts';
+import { GameFiles } from '../src/platform/gamefiles.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { joinLevel, newCampaign, nextByHeader, partyOf, recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { buildT2S, exeTables, loadGameData, loadStage, stageJson, type FileSource } from '../src/rules/load.ts';
@@ -20,6 +21,26 @@ export const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
 export const JSON_DIRS = ['stages', 'maps', 'tables'];
 
 /** 读原版原件，并带上 gamedata/ 下的 JSON（路径如 Data/Man.lib、stages/N05.json，不区分大小写） */
+const GAMEDATA = path.resolve(import.meta.dirname, '../gamedata');
+
+/** Node 里的 GameFiles：JSON 和图像都从磁盘上的 gamedata/ 读（浏览器版见 src/platform/gamefiles.ts） */
+export function nodeGameFiles(onLoad?: (path: string, bytes: number) => void): GameFiles {
+  const json = new Map<string, unknown>();
+  const walk = (d: string, rel: string) => {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const r = `${rel}/${e.name}`;
+      if (e.isDirectory()) walk(path.join(d, e.name), r);
+      else if (e.name.endsWith('.json')) json.set(r.toLowerCase(), JSON.parse(fs.readFileSync(path.join(d, e.name), 'utf8')));
+    }
+  };
+  for (const d of [...JSON_DIRS, 'sprites', 'tiles', 'portraits', 'icons']) walk(path.join(GAMEDATA, d), d);
+  return new GameFiles(async (p) => {
+    const buf = new Uint8Array(fs.readFileSync(path.join(GAMEDATA, p)));
+    onLoad?.(p, buf.length);
+    return buf;
+  }, json);
+}
+
 export class NodeFiles implements FileSource {
   private index = new Map<string, string>();
   constructor(root: string, gamedata = path.resolve(import.meta.dirname, '../gamedata')) {

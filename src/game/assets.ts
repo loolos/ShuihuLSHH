@@ -1,28 +1,30 @@
-// 从原版文件解码出的共享资源：调色板、图块库、人物动画库、EXE 表、道具表。
-import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/image.ts';
+// 共享资源：调色板、图块、人物动画、特效、头像、图标（gamedata/ 下拆出来的原版图像），EXE 表、道具表。
 import type { ExeTables } from '../formats/exe.ts';
+import type { Frame } from '../formats/image.ts';
 import type { Item } from '../formats/goo.ts';
+import { effectLib, manLib, picLib, tileLib, type SpriteLib, type TileLib } from '../formats/sheets.ts';
 import { stageUnits } from '../formats/stage-json.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
-import { buildT2S, exeTables, loadGameData, loadItems, loadStageMap, stageJson, stageMap } from '../rules/load.ts';
+import { buildT2S, exeTables, loadGameData, loadItems, loadStageMap, readJson, stageJson, stageMap } from '../rules/load.ts';
 import type { GameData, SkillDef } from '../rules/data.ts';
 import { FIXED_FX, fxGroups } from './effects.ts';
-import frameAlias from '../data/frame-alias.json' with { type: 'json' };
 import type { PackAssets } from './packs.ts';
 
 export interface Assets {
   files: GameFiles;
   palette: Uint8Array;
-  ground: ReturnType<typeof openGrp>;
-  upper: ReturnType<typeof openGrp>;
-  /** Grid.grp：0–3 格子光标，4 = 宝箱（地图上的宝物都画这张，EXE 0x4010d0 / 0x40c24f） */
-  grid: ReturnType<typeof openGrp>;
-  man: ReturnType<typeof openLib>;
-  /** 技能特效：60 组，技能子项 +6 = 组号 + 1（0 = 无特效） */
-  effects: ReturnType<typeof openLib>;
-  objects: ReturnType<typeof openPic>;
-  /** 半身头像，第 i 张对应 HUM 第 i 个职业（按图比对，见 binary-formats §3） */
-  heads: ReturnType<typeof openPic>;
+  ground: TileLib;
+  upper: TileLib;
+  /** 格子光标（原版 Grid.grp）：0–3 格子光标，4 = 宝箱（地图上的宝物都画这张，EXE 0x4010d0 / 0x40c24f） */
+  grid: TileLib;
+  /** 人物动画（原版 Man.lib） */
+  man: SpriteLib;
+  /** 技能特效（原版 Effect.lib）：60 组，技能子项 +6 = 组号 + 1（0 = 无特效） */
+  effects: SpriteLib;
+  /** 道具图标（原版 Object.lib） */
+  objects: TileLib;
+  /** 半身头像（原版 Head.lib），第 i 张对应 HUM 第 i 个职业（按图比对，见 binary-formats §3） */
+  heads: TileLib;
   exe: ExeTables;
   items: Item[];
   /** 规则引擎用的数据 */
@@ -35,78 +37,60 @@ export interface Assets {
 
 export function loadAssets(files: GameFiles): Assets {
   const tr = buildT2S(files);
+  const image = (p: string) => files.image(p);
+  const tiles = readJson<Record<string, number[][]>>(files, 'tiles/tiles.json');
   return {
     tr,
     data: loadGameData(files, tr),
     files,
-    palette: parsePalette(files.get('Data/Default.pal')),
-    ground: openGrp(files.get('Data/Ground.grp'), 'Ground.grp'),
-    upper: openGrp(files.get('Data/Upper.grp'), 'Upper.grp'),
-    grid: openGrp(files.get('Data/Grid.grp'), 'Grid.grp'),
-    man: openLib(files.get('Data/Man.lib'), 'Man.lib'),
-    effects: openLib(files.get('Data/Effect.lib'), 'Effect.lib'),
-    objects: openPic(files.get('Data/Object.lib'), 'Object.lib'),
-    heads: openPic(files.get('Data/Head.lib'), 'Head.lib'),
+    palette: Uint8Array.from(readJson<number[][]>(files, 'tables/palette.json').flat()),
+    ground: tileLib('ground', tiles.ground, image),
+    upper: tileLib('upper', tiles.upper, image),
+    grid: tileLib('grid', tiles.grid, image),
+    man: manLib(readJson(files, 'sprites/man.json'), image),
+    effects: effectLib(readJson(files, 'sprites/effects.json'), image),
+    objects: picLib('icons', readJson(files, 'icons/icons.json'), image),
+    heads: picLib('portraits', readJson(files, 'portraits/portraits.json'), image),
     exe: exeTables(files),
     items: loadItems(files),
   };
 }
 
-type Lib = { span(i: number): [number, number] };
+/** 开始游戏前要先载入的图：全部头像、道具图标（对白、整备随时会用）和格子光标 */
+export function startupImages(a: Assets): string[] {
+  return [
+    ...Array.from({ length: a.heads.count }, (_, i) => a.heads.sheetOf(i)),
+    ...Array.from({ length: a.objects.count }, (_, i) => a.objects.sheetOf(i)),
+    ...new Set(Array.from({ length: a.grid.count }, (_, i) => a.grid.sheetOf(i))),
+  ];
+}
 
-/** frame-alias.json：字节完全相同的帧 → 第一份的帧号（gen:manifest 生成） */
-const ALIAS = new Map(
-  Object.entries(frameAlias as Record<string, { dup: number[]; src: number[] }>).map(([p, { dup, src }]) => {
-    const m = new Map<number, number>();
-    let i = 0;
-    dup.forEach((d, k) => m.set((i += d), src[k]));
-    return [p, m];
-  }),
-);
-
-/** 一批要下载的字节范围。相同内容的帧只下载第一份，下载完再复制到各自的位置。 */
+/** 一批要载入的图 */
 class Fetch {
-  readonly want = new Map<string, [number, number][]>();
-  private copies: [string, number, number, number][] = [];
-  span(path: string, span: [number, number]) {
-    if (span[1] > span[0]) (this.want.get(path) ?? this.want.set(path, []).get(path)!).push(span);
+  readonly want = new Set<string>();
+  add(path: string) {
+    this.want.add(path);
   }
-  frame(path: string, lib: Lib, i: number) {
-    const own = lib.span(i);
-    const j = ALIAS.get(path)?.get(i);
-    if (j === undefined) return this.span(path, own);
-    const src = lib.span(j);
-    this.span(path, src);
-    this.copies.push([path, src[0], own[0], own[1] - own[0]]);
-  }
-  /** 职业 cls 第 action 个动作的 4 个朝向（混搭的职业按 manSource 找出处） */
+  /** 职业 cls 第 action 个动作的 4 个朝向（同一张图；混搭的职业按 manSource 找出处） */
   manAction(assets: Assets, cls: number, action: number) {
     const src = manSource(assets, cls, action);
     const c = assets.man.classes[src.cls];
-    if (c) for (let d = 0; d < 4; d++) {
-      const g = c.first + src.action * 4 + d;
-      if (g <= c.last) this.manGroup(assets, g);
+    if (c) {
+      const g = c.first + src.action * 4;
+      if (g <= c.last) this.add(assets.man.sheetOf(g));
     }
-  }
-  /** Man.lib 第 group 个动作组的全部帧 */
-  manGroup(assets: Assets, group: number) {
-    const r = assets.man.actions[group];
-    if (r) for (let i = r.first; i <= r.last; i++) this.frame('Data/Man.lib', assets.man, i);
   }
   /** 一个技能：职业的出手动作（4 个朝向）和它的特效 */
   skill(assets: Assets, cls: number, sk: SkillDef) {
     this.manAction(assets, cls, ACTION_FIRST_SKILL + sk.group);
     for (const g of fxGroups(sk)) this.effectGroup(assets, g);
   }
-  /** Effect.lib 第 group 组的全部帧 */
+  /** 特效第 group 组 */
   effectGroup(assets: Assets, group: number) {
-    const r = assets.effects.actions[group];
-    if (r) for (let i = r.first; i <= r.last; i++) this.frame('Data/Effect.lib', assets.effects, i);
+    if (assets.effects.actions[group]) this.add(assets.effects.sheetOf(group));
   }
-  async run(files: GameFiles, progress?: Progress): Promise<number> {
-    const n = await files.ensure(this.want, progress);
-    for (const [p, from, to, len] of this.copies) files.copy(p, from, to, len);
-    return n;
+  run(files: GameFiles, progress?: Progress): Promise<number> {
+    return files.ensure(this.want, progress);
   }
 }
 
@@ -128,7 +112,7 @@ export function manSource(assets: Assets, cls: number, action: number): { cls: n
 const ACTION_FIRST_SKILL = 3;
 
 /**
- * 进关前下载本关一定会用到的帧（网页版大文件按需下载；整份在本地时什么也不做）：
+ * 进关前载入本关一定会用到的图（下载过的从缓存读）：
  * 地图用到的图块，本关出场职业的走路、受击、防御动作、动作 3（待机架势取它的第 1 帧，见 sprites.ts idleAction）和普通攻击（含特效），以及防御、反击的固定特效。
  * 其它技能的动作和特效开打后在后台下载（prefetchSkills），出招前还没下完就等它下完（ensureSkill）。返回新下载的字节数。
  */
@@ -141,7 +125,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
   for (const cell of map.cells)
     cell.forEach((l, k) => {
       const lib = k === 0 ? assets.ground : assets.upper;
-      if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.span(k === 0 ? 'Data/Ground.grp' : 'Data/Upper.grp', lib.span(l.tile));
+      if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.add(lib.sheetOf(l.tile));
     });
   const classes = new Set(classesOverride ?? [0]);
   const j = classesOverride ? undefined : stageJson(files, stage);

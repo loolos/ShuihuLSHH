@@ -85,7 +85,6 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); c
   color: #1b1610; background: var(--accent); border: none;
 }
 .hint { font-size: 13px; color: var(--muted); line-height: 1.6; }
-#setup-warn-text { color: var(--danger); white-space: pre-line; text-align: left; font-size: 13px; max-height: 30vh; overflow: auto; }
 code { color: var(--ink); }
 
 /* ───────── 战斗界面 ───────── */
