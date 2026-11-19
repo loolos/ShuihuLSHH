@@ -131,6 +131,12 @@ export function condZones(c: PasCond): { char: number; x1: number; y1: number; x
   return [r];
 }
 
+/** 条件树里「标志设上」（条件 100）的标志号，只看 and 连着的叶子 */
+function flagLeaves(c: PasCond): number[] {
+  if ('op' in c) return c.op === 'and' ? [...flagLeaves(c.a), ...flagLeaves(c.b)] : [];
+  return c.type === 100 ? [c.arg] : [];
+}
+
 export interface StageInput {
   /** 仅战斗敌人：最终等级按实际参战好汉均级限制到兵种区间。 */
   enemyRanks?: Record<number, EnemyRank>;
@@ -506,9 +512,13 @@ export class Battle {
     if (this.status !== 'playing') return [];
     const out: ObjectiveZone[] = [];
     const W = this.board.width, H = this.board.height;
+    const wins = (b: (typeof this.blocks)[number]) => b.ops.some((o) => o.op === 29 || (o.op === 115 && o.value === 1));
+    // 区域只设个标志、由 { flag } 区块再过关的（琵琶亭：赶到栈桥中段设 reach，水战标志也设了才过关）也算过关区域
+    const winFlags = new Set<number>();
+    for (const b of this.blocks) if (!this.fired.has(b.index) && b.cond && wins(b)) for (const f of flagLeaves(b.cond)) winFlags.add(f);
     for (const b of this.blocks) {
       if (this.fired.has(b.index)) continue;
-      const kind = b.ops.some((o) => o.op === 29 || (o.op === 115 && o.value === 1)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      const kind = wins(b) || b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
       const rects =
