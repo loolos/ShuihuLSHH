@@ -1,0 +1,503 @@
+{
+  "id": "pipating",
+  "title": "琵琶亭",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 300
+  },
+  "map": {
+    "custom": "dukou"
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 16,
+      "y": 10,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 16,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 17,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 15,
+      "y": 16,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "zhangshun",
+      "class": "zhangshun",
+      "side": "enemy",
+      "x": 4,
+      "y": 10,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "hidden": true,
+      "levelOffset": 1,
+      "hpMultiplier": 1.5
+    },
+    {
+      "id": "yuren-1",
+      "class": 21,
+      "side": "enemy",
+      "x": 12,
+      "y": 10,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "yuren-2",
+      "class": 21,
+      "side": "enemy",
+      "x": 12,
+      "y": 11,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "yuren-3",
+      "class": 21,
+      "side": "enemy",
+      "x": 10,
+      "y": 10,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "yuren-4",
+      "class": 21,
+      "side": "enemy",
+      "x": 10,
+      "y": 11,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "yuren-5",
+      "class": 21,
+      "side": "enemy",
+      "x": 13,
+      "y": 13,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "yuren-6",
+      "class": 21,
+      "side": "enemy",
+      "x": 14,
+      "y": 7,
+      "level": 30,
+      "ai": 0,
+      "facing": 3,
+      "name": "渔人",
+      "levelOffset": 0
+    },
+    {
+      "id": "lan-1",
+      "class": 21,
+      "side": "enemy",
+      "x": 9,
+      "y": 10,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "渔人",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "lan-2",
+      "class": 21,
+      "side": "enemy",
+      "x": 9,
+      "y": 11,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "渔人",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "lan-3",
+      "class": 21,
+      "side": "enemy",
+      "x": 11,
+      "y": 10,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "渔人",
+      "hidden": true,
+      "levelOffset": 0
+    },
+    {
+      "id": "lan-4",
+      "class": 21,
+      "side": "enemy",
+      "x": 11,
+      "y": 11,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "渔人",
+      "hidden": true,
+      "levelOffset": 0
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "江州 · 琵琶亭下江边"
+        ],
+        [
+          "narrate",
+          "宋江在琵琶亭上要几尾鲜鱼做醒酒汤。李逵自告奋勇，跳下亭子，奔到江边渔船上讨鱼。"
+        ],
+        [
+          "say",
+          "likui",
+          "你船上活鱼，把两尾来与我！"
+        ],
+        [
+          "say",
+          "yuren-1",
+          "主人不来，我们不敢开舱卖鱼。"
+        ],
+        [
+          "narrate",
+          "李逵等不得，跳上船去，把竹笆篾一拔，那活鱼都走了。众渔人一齐拿竹篙来打李逵。"
+        ],
+        [
+          "objective",
+          "胜：先把张顺打到一半体力以下；之后宋江、戴宗、武龙任一人赶到栈桥中段（被渔人堵着），宋江亮出张横的书信\n败：李逵倒下；超过 15 回合"
+        ],
+        [
+          "turnLimit",
+          15
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "只见江边小路上一个人奔来，头上裹着青纱万字巾，腰下系一条绢水裙——正是卖鱼的主人张顺。"
+        ],
+        [
+          "appear",
+          "zhangshun"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "你这黑大汉，吃了豹子心、大虫胆，也不敢来搅乱老爷的道路！"
+        ],
+        [
+          "say",
+          "likui",
+          "老爷正要打你这鸟人！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "zhangshun",
+        "below": 50
+      },
+      "do": [
+        [
+          "narrate",
+          "张顺吃李逵打得急了，一跳跳上栈桥尽头的渔船，把竹篙一点。"
+        ],
+        [
+          "move",
+          "zhangshun",
+          2,
+          10
+        ],
+        [
+          "say",
+          "zhangshun",
+          "黑杀才！今番来和你见个输赢！你若是好汉，便下水来！"
+        ],
+        [
+          "say",
+          "likui",
+          "我便怕你不成！"
+        ],
+        [
+          "move",
+          "likui",
+          3,
+          10
+        ],
+        [
+          "narrate",
+          "李逵跳上船去，张顺把船一侧，两个都翻在江里。张顺把李逵提将起来，又淹将下去，不知淹了几十遭。"
+        ],
+        [
+          "bind",
+          "likui"
+        ],
+        [
+          "setAi",
+          "zhangshun",
+          11
+        ],
+        [
+          "buff",
+          "zhangshun",
+          "attack",
+          {
+            "pct": 50,
+            "turns": 99
+          }
+        ],
+        [
+          "buff",
+          "zhangshun",
+          "defense",
+          {
+            "pct": 50,
+            "turns": 99
+          }
+        ],
+        [
+          "appear",
+          "lan-1"
+        ],
+        [
+          "appear",
+          "lan-2"
+        ],
+        [
+          "appear",
+          "lan-3"
+        ],
+        [
+          "appear",
+          "lan-4"
+        ],
+        [
+          "narrate",
+          "渔人们在栈桥上一字排开，拦住去路，只是喝彩。"
+        ],
+        [
+          "appear",
+          "songjiang"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "focus",
+          "songjiang"
+        ],
+        [
+          "say",
+          "daizong",
+          "不好！那白条子把铁牛淹在江里了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "张横兄弟的书信还在我身边——快去栈桥上，叫他住手！"
+        ],
+        [
+          "objective",
+          "胜：宋江、戴宗、武龙任一人赶到栈桥中段，宋江亮出张横的书信\n败：李逵倒下（他在水里，每回合挨张顺淹）；超过 15 回合"
+        ],
+        [
+          "flag",
+          "water"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "songjiang",
+        "area": [
+          5,
+          10,
+          8,
+          11
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "reach"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "daizong",
+        "area": [
+          5,
+          10,
+          8,
+          11
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "reach"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "hero",
+        "area": [
+          5,
+          10,
+          8,
+          11
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "reach"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "reach"
+      },
+      "if": "water",
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "那位兄弟休淹他！宋江有令兄张横的家书在此！"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "……莫不是山东及时雨宋公明？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "小可便是。"
+        ],
+        [
+          "narrate",
+          "张顺慌忙把李逵托上岸来，纳头便拜。"
+        ],
+        [
+          "cleanse",
+          "likui"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "久闻大名，不想今日得会！多听得江湖上来往的人说兄长清德，扶危济困，仗义疏财。"
+        ],
+        [
+          "say",
+          "daizong",
+          "你两个今番做个至交的弟兄。常言道：「不打不成相识。」"
+        ],
+        [
+          "say",
+          "likui",
+          "你路上休撞着我！"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "我只在水里等你便了。"
+        ],
+        [
+          "narrate",
+          "四人都笑起来。张顺取了几尾金色鲤鱼，一同上琵琶亭吃酒。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "likui"
+      },
+      "do": [
+        [
+          "defeat",
+          "李逵倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangshun"
+      },
+      "do": [
+        [
+          "defeat",
+          "张顺被打死了……"
+        ]
+      ]
+    }
+  ]
+}
