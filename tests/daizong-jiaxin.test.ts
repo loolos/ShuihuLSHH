@@ -27,7 +27,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
   const killAll = (b: Battle, onlyPresent = false) => { for (const u of b.units) if (u.side === 'enemy' && (!onlyPresent || u.present)) { u.hp = 0; u.alive = false; u.present = false; } after(b); };
   const ids = ['zhuguidian', 'liangshan-dingji', 'zhuanshang', 'jiaxin'];
 
-  it('第二十三章四关，排在浔阳楼和法场之间；单位站在可通行格、互不重叠，move 都走得到，假信露馅以外我方不超过 5 人（假信露馅负责人要求八人）', () => {
+  it('第二十三章四关，排在浔阳楼和法场之间；单位站在可通行格、互不重叠，move 都走得到，我方不超过 5 人（负责人要求：假信露馅八人、旱地忽律六人）', () => {
     expect(chapterLabel(23)).toBe('第二十三章 戴宗传假信');
     expect(chapterOf('mainline/xunyanglou')).toBe(22);
     expect(chapterOf('mainline/fachang')).toBe(24);
@@ -40,7 +40,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
         if (!u.hidden) { expect(seen.has(`${u.x},${u.y}`), `${id} ${u.id} 重叠`).toBe(false); seen.add(`${u.x},${u.y}`); }
       }
       for (const blk of s.script) for (const op of blk.do) if (op[0] === 'move') expect(b.board.passable(op[2] as number, op[3] as number), `${id} ${op.join()}`).toBe(true);
-      if (id !== 'jiaxin') expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length, id).toBeLessThanOrEqual(5);
+      expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length, id).toBeLessThanOrEqual(({ jiaxin: 8, zhuguidian: 6 } as Record<string, number>)[id] ?? 5);
     }
   });
 
@@ -79,18 +79,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(u.mp).toBe(110);
   });
 
-  it('旱地忽律：戴宗被麻翻后救醒；朱贵到水亭放号箭，杜迁、宋万坐船来接；打退官军才过关', () => {
+  it('旱地忽律：戴宗被麻翻后救醒；朱贵到水亭放号箭，张横带吕方先到，隔一回合张顺带郭盛再到；打退官军才过关', () => {
     const { b, get, ev } = open('zhuguidian');
     expect(ev.some((e) => e.type === 'say' && /旱地忽律朱贵/.test(e.text))).toBe(true);
     expect(b.isBound(get('daizong'))).toBe(false);
-    expect(get('daizong').buffs.some(v => v.stat === 'defense')).toBe(false);
-    expect(get('duqian').present).toBe(false);
+    expect(get('zhangheng').present).toBe(false);
     killAll(b, true);
     expect(b.status).toBe('playing'); // 还没放号箭
     const zg = get('zhugui'); zg.x = 3; zg.y = 10; after(b);
-    expect(get('duqian').present).toBe(true);
-    expect(get('songwan').present).toBe(true);
+    expect(get('zhangheng').present).toBe(true);
+    expect(get('lvfang').present).toBe(true);
+    expect(get('zhangshun').present).toBe(false);
     expect(get('shichen').present).toBe(true);
+    turn(b, 3);
+    expect(get('zhangshun').present).toBe(false);
+    turn(b, 4);
+    expect(get('zhangshun').present).toBe(true);
+    expect(get('guosheng').present).toBe(true);
     killAll(b);
     expect(b.status).toBe('won');
   });
