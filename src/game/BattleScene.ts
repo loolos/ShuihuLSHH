@@ -593,7 +593,8 @@ export class BattleScene extends Phaser.Scene {
    */
   private drawZones() {
     const zs = this.battle.objectiveZones();
-    const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|');
+    const ws = this.battle.watchZones();
+    const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|') + ws.map((w) => `/${w.x},${w.y},${w.r},${w.spotted}`).join('');
     if (sig === this.zoneSig) return;
     this.zoneSig = sig;
     this.zones = zs.map((z) => ({ ...z, color: `#${ZONE_STYLE[z.kind].color.toString(16).padStart(6, '0')}`, label: ZONE_STYLE[z.kind].label }));
@@ -604,6 +605,12 @@ export class BattleScene extends Phaser.Scene {
       const pts = zoneCorners(z).map((p) => new Phaser.Math.Vector2(p.x, p.y));
       g.lineStyle(3, color, 0.9).strokePoints(pts, true);
     }
+    // 潜行关的哨兵警戒范围【新】：黄色 = 还没发现，红色 = 已经发现（要赶快打倒）
+    const W = this.battle.board.width, H = this.battle.board.height;
+    for (const w of ws)
+      for (let y = Math.max(0, w.y - w.r); y <= Math.min(H - 1, w.y + w.r); y++)
+        for (let x = Math.max(0, w.x - w.r); x <= Math.min(W - 1, w.x + w.r); x++)
+          if (Math.abs(x - w.x) + Math.abs(y - w.y) <= w.r && this.battle.board.passable(x, y)) this.diamond(g, { x, y }, w.spotted ? 0xff4040 : 0xffd040, 0.2);
   }
 
   /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */

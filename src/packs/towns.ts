@@ -4,11 +4,14 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-export const insertTownName = (next: string): string => next === 'mainline/shiyong' ? '村镇整备' : next === 'mainline/yuanyanglou' ? '孟州整备' : '阳谷整备';
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备' };
+/** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen']);
+export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
 export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: string): CampaignState {
-  const mengzhou = next === 'mainline/yuanyanglou';
+  const mengzhou = NEXT_ROSTER.has(next);
   const roadside = next === 'mainline/shiyong';
   const ids = roadside
     ? [0, ...['sj-fugitive','huarong','huangxin','qinming','likui','wangying'].map(id => rt.classIds.get(id)!)]
@@ -28,6 +31,11 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
 }
 
 export function insertTownIntro(next: string): { actor: string; text: string }[] {
+  if (next === 'mainline/jieyangzhen') return [
+    { actor: 'lijun', text: '哥哥受了一场惊恐。前面便是揭阳镇，小弟送哥哥一程，过了镇子再回岭上。' },
+    { actor: 'sj-fugitive', text: '多得兄弟相救。既如此，且在岭下店中补些药物，整顿了再走。' },
+    { actor: 'lijun', text: '揭阳镇上有一霸，哥哥路过时休要与人争闲气。' },
+  ];
   if (next === 'mainline/shiyong') return [
     { actor: 'huarong', text: '前面便是村镇。两位且补些衣药，整顿兵刃，再同大队上路。' },
     { actor: 'huangxin', text: '也罢。眼前所需，先置办齐了。' },

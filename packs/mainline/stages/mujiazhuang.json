@@ -1,0 +1,485 @@
+{
+  "id": "mujiazhuang",
+  "title": "穆家庄夜遁",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 300
+  },
+  "map": {
+    "base": "N-add05"
+  },
+  "tint": "night",
+  "bgm": "battle",
+  "stealth": {
+    "lose": "庄客喊醒了全庄，穆家兄弟带人围了上来……",
+    "flag": "spotted"
+  },
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 16,
+      "y": 5,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 17,
+      "y": 5,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 16,
+      "y": 6,
+      "level": 30,
+      "ai": 5,
+      "hpMultiplier": 1.5,
+      "target": "songjiang",
+      "facing": 2,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 17,
+      "y": 6,
+      "level": 30,
+      "ai": 5,
+      "hpMultiplier": 1.5,
+      "target": "songjiang",
+      "facing": 2,
+      "name": "李万"
+    },
+    {
+      "id": "muhong",
+      "class": "muhong",
+      "side": "enemy",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "offstage": true
+    },
+    {
+      "id": "muchun",
+      "class": "muchun",
+      "side": "enemy",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "offstage": true
+    },
+    {
+      "id": "xun-1",
+      "class": 40,
+      "side": "enemy",
+      "x": 12,
+      "y": 10,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          12,
+          10
+        ],
+        [
+          22,
+          10
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-2",
+      "class": 41,
+      "side": "enemy",
+      "x": 6,
+      "y": 14,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          6,
+          14
+        ],
+        [
+          6,
+          22
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-3",
+      "class": 40,
+      "side": "enemy",
+      "x": 14,
+      "y": 14,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          14,
+          14
+        ],
+        [
+          24,
+          14
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-4",
+      "class": 41,
+      "side": "enemy",
+      "x": 12,
+      "y": 18,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          12,
+          18
+        ],
+        [
+          12,
+          26
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-5",
+      "class": 40,
+      "side": "enemy",
+      "x": 2,
+      "y": 20,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          2,
+          20
+        ],
+        [
+          10,
+          20
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-6",
+      "class": 41,
+      "side": "enemy",
+      "x": 16,
+      "y": 24,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          16,
+          24
+        ],
+        [
+          16,
+          30
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-7",
+      "class": 40,
+      "side": "enemy",
+      "x": 6,
+      "y": 25,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          6,
+          25
+        ],
+        [
+          12,
+          25
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "xun-8",
+      "class": 41,
+      "side": "enemy",
+      "x": 26,
+      "y": 18,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          26,
+          18
+        ],
+        [
+          26,
+          26
+        ]
+      ],
+      "watch": 2,
+      "name": "巡夜庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "shui-1",
+      "class": 19,
+      "side": "enemy",
+      "x": 12,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "watch": 1,
+      "facing": 0,
+      "name": "打盹的庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "shui-2",
+      "class": 20,
+      "side": "enemy",
+      "x": 22,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "watch": 1,
+      "facing": 1,
+      "name": "打盹的庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "shui-3",
+      "class": 19,
+      "side": "enemy",
+      "x": 8,
+      "y": 16,
+      "level": 30,
+      "ai": 8,
+      "watch": 1,
+      "facing": 2,
+      "name": "打盹的庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    },
+    {
+      "id": "shui-4",
+      "class": 20,
+      "side": "enemy",
+      "x": 18,
+      "y": 22,
+      "level": 30,
+      "ai": 8,
+      "watch": 1,
+      "facing": 3,
+      "name": "打盹的庄客",
+      "hpMultiplier": 0.4,
+      "levelOffset": -2
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "穆家庄 · 三更"
+        ],
+        [
+          "narrate",
+          "宋江三人在门房里歇了。约莫一更时分，只听得庄外有人打门，太公的两个儿子回来了。"
+        ],
+        [
+          "say",
+          "muchun",
+          "哥哥，今日镇上一个贼配军，赍发那使枪棒的，坏了俺的威风！那三个鸟人不知投哪里去了。"
+        ],
+        [
+          "say",
+          "muhong",
+          "休慌！明日叫庄客四下里去寻，拿住了一发吊起来打。"
+        ],
+        [
+          "narrate",
+          "宋江在门房里听得，吃了一惊，悄悄叫起两个公人。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "这般不巧！却是怎地好？我们只宜走了好，倘或这厮得知，必然吃他害了性命。"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥休慌。武龙早看过了，庄后有条小路直通江边。只是庄客提着灯笼巡夜，须躲着他们走。"
+        ],
+        [
+          "narrate",
+          "四人悄悄掇开后门，摸黑出了庄子。"
+        ],
+        [
+          "objective",
+          "胜：宋江和武龙都走到西南边的江边（左下角）\n败：被庄客发现后，没在下个回合结束前把发现的人打倒（黄圈是庄客看得到的范围）；宋江、武龙或公人倒下；超过 20 回合"
+        ],
+        [
+          "turnLimit",
+          20
+        ],
+        [
+          "buff",
+          "songjiang",
+          "attack",
+          {
+            "pct": -40,
+            "turns": 99
+          }
+        ],
+        [
+          "buff",
+          "songjiang",
+          "move",
+          {
+            "add": -1,
+            "turns": 99
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "spotted"
+      },
+      "do": [
+        [
+          "narrate",
+          "庄客发现了！下个回合结束前把他打倒，不然全庄都要被喊醒！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": [
+          "songjiang",
+          "hero"
+        ],
+        "area": [
+          0,
+          29,
+          8,
+          32
+        ]
+      },
+      "do": [
+        [
+          "narrate",
+          "四人钻出芦苇丛，眼前一条大江，白茫茫地望不见对岸。"
+        ],
+        [
+          "narrate",
+          "只听得背后喊声大起，火把乱晃——穆家兄弟到底发觉了，引着庄客赶将来。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "苦也！前有大江，后有追兵，却是怎地好？"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥看！芦苇里摇出一只船来了！"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "songjiang"
+      },
+      "do": [
+        [
+          "defeat",
+          "宋江倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhangqian"
+      },
+      "do": [
+        [
+          "defeat",
+          "张千倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "liwan"
+      },
+      "do": [
+        [
+          "defeat",
+          "李万倒下了……"
+        ]
+      ]
+    }
+  ]
+}

@@ -53,6 +53,26 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;
         if (!b.canAct(u)) continue;
+        // 潜行关：有人被发现就全力去打倒发现的人；否则要逃的人绕开哨兵的警戒范围（巡逻的再多留一步移动力外加 1 格）往区域走
+        if (b.watchers.size) {
+          const spotter = b.units.find((w) => w.uid in b.spotters && w.alive && w.present);
+          if (spotter) {
+            if (!b.attackTargets(u).includes(spotter)) walkTo(b, u, spotter.x, spotter.y, ev);
+            if (b.canAct(u) && b.attackTargets(u).includes(spotter)) ev.push(...b.attack(u, spotter));
+            else if (b.canAct(u)) ev.push(...b.defend(u));
+            continue;
+          }
+          if (goal && goal.who.includes(u.classId)) {
+            const zones = b.watchZones().map((w) => ({ ...w, r: w.r + (b.patrolOf(b.units[w.uid]) ? b.units[w.uid].stats.move + 1 : 1) }));
+            const field = b.board.distanceField([{ x: goal.x, y: goal.y }]);
+            const d = (c: { x: number; y: number }) => field[c.y * b.board.width + c.x];
+            const safe = b.moveRange(u).green.filter((c) => !zones.some((z) => dist(z, c) <= z.r));
+            const c = safe.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
+            if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
+            if (b.canAct(u)) ev.push(...b.defend(u));
+            continue;
+          }
+        }
         // 关卡要求某几个人走到区域（劫法场逃到出口）：这几个人一律往区域走
         // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
         if (goal && goal.who.includes(u.classId)) {
@@ -95,6 +115,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         else if (plan.target && b.attackTargets(u).includes(plan.target)) ev.push(...b.attack(u, plan.target));
         else if (b.canAct(u)) ev.push(...b.defend(u));
       }
+      if (process.env.TRACE_POS) console.log(`  回合 ${b.turn}:`, b.units.filter((u) => u.side === 'player' && u.present).map((u) => `${u.name}(${u.x},${u.y})`).join(' '), '发现', JSON.stringify(b.spotters));
       if (b.status === 'playing') ev.push(...b.endPlayerPhase());
     }
     if (process.env.TRACE) for (const e of ev) if (e.type === 'attack') console.log('  ', b.units.find((u) => u.uid === e.uid)!.classId, e.skill.name, e.hits.map((h) => `${h.uid}:${JSON.stringify(h.result)}`).join(' '));

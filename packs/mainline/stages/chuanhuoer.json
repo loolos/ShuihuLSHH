@@ -1,0 +1,481 @@
+{
+  "id": "chuanhuoer",
+  "title": "船火儿",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "dukou"
+  },
+  "tint": "night",
+  "bgm": [
+    "sad",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 5,
+      "y": 10,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 5,
+      "y": 11,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 6,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 1,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 6,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 1,
+      "name": "李万"
+    },
+    {
+      "id": "zhangheng",
+      "class": "zhangheng",
+      "side": "ally",
+      "x": 3,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 3
+    },
+    {
+      "id": "lijun",
+      "class": "lijun",
+      "side": "ally",
+      "x": 3,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "hidden": true
+    },
+    {
+      "id": "tongwei",
+      "class": "tongwei",
+      "side": "ally",
+      "x": 2,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "hidden": true
+    },
+    {
+      "id": "muhong",
+      "class": "muhong",
+      "side": "ally",
+      "x": 13,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "hidden": true
+    },
+    {
+      "id": "muchun",
+      "class": "muchun",
+      "side": "ally",
+      "x": 13,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "hidden": true
+    },
+    {
+      "id": "xueyong",
+      "class": "xueyong",
+      "side": "ally",
+      "x": 14,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-1",
+      "class": 40,
+      "side": "ally",
+      "x": 14,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-2",
+      "class": 41,
+      "side": "ally",
+      "x": 15,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "庄客",
+      "hidden": true
+    },
+    {
+      "id": "zhuangke-3",
+      "class": 40,
+      "side": "ally",
+      "x": 15,
+      "y": 10,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "庄客",
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "浔阳江边 · 夜"
+        ],
+        [
+          "narrate",
+          "那船摇近岸来，艄公道：「你三个是甚么人，走在这里？」宋江道：「背后有强人打劫我们，一味地撞在这里。你快把船来渡我们，我多与你些银两。」"
+        ],
+        [
+          "narrate",
+          "四人慌忙跳上船去。艄公一橹，那只船早荡离了岸。"
+        ],
+        [
+          "appear",
+          "muhong"
+        ],
+        [
+          "appear",
+          "muchun"
+        ],
+        [
+          "appear",
+          "zhuangke-1"
+        ],
+        [
+          "appear",
+          "zhuangke-2"
+        ],
+        [
+          "appear",
+          "zhuangke-3"
+        ],
+        [
+          "move",
+          "muhong",
+          9,
+          10
+        ],
+        [
+          "move",
+          "muchun",
+          9,
+          11
+        ],
+        [
+          "say",
+          "muhong",
+          "你那艄公，快摇船拢来！"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "老爷叫做张梢公，你不要咬我鸟！"
+        ],
+        [
+          "narrate",
+          "那艄公摇着橹，咿咿哑哑，望江心里去了。岸上火把渐渐远了。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "惭愧！正是好人相逢，恶人远离，且得脱了这场灾难。"
+        ],
+        [
+          "narrate",
+          "那艄公摇到江心，把橹一放，唱起湖州歌来：「老爷生长在江边，不爱交游只爱钱……」"
+        ],
+        [
+          "narrate",
+          "宋江三人听了，都酥软了。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "你这三个撮鸟，却是要吃板刀面？却是要吃馄饨？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "家长休要取笑。怎地唤做板刀面？怎地是馄饨？"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "若还要吃板刀面时，俺有一把泼风也似快刀，在这舱板底下，我不消三刀五刀，我只一刀一个，都剁你下水去。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "若还要吃馄饨时，你三个快脱了衣裳，都赤条条地跳下江里自死！"
+        ],
+        [
+          "choice",
+          "宋江怎么回答？",
+          [
+            "吃板刀面",
+            "knife"
+          ],
+          [
+            "吃馄饨",
+            "jump"
+          ],
+          [
+            "报出名号",
+            "name"
+          ]
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "knife"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "……也罢，休要剥了衣裳，便吃一刀罢。"
+        ],
+        [
+          "say",
+          "hero",
+          "哥哥休怕！待武龙夺了他的刀，一同扯下水去！"
+        ],
+        [
+          "narrate",
+          "张横从舱板底下掣出一把明晃晃的板刀来。船晃得厉害，武龙脚下站不稳，扑通跪在舱里。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "老爷在这江上，水里来、水里去，你在我船上还想动手？"
+        ],
+        [
+          "flag",
+          "lijun-come"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "jump"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "罢了，罢了！我三个只得自跳下去罢。"
+        ],
+        [
+          "narrate",
+          "宋江同两个公人抱做一块，望着江里正待要跳。"
+        ],
+        [
+          "flag",
+          "lijun-come"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "name"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "家长，我乃山东郓城宋江，刺配江州的便是。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "休说是宋江，便是赵官家，老爷也只是这般！快脱衣裳！"
+        ],
+        [
+          "narrate",
+          "原来那船黑影里，张横并不曾听仔细。"
+        ],
+        [
+          "flag",
+          "lijun-come"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "lijun-come"
+      },
+      "do": [
+        [
+          "narrate",
+          "只听得江面上咿咿哑哑橹声响，一只快船飞也似从上水头摇将下来。船头上立着一个大汉，手里横着托叉。"
+        ],
+        [
+          "appear",
+          "lijun"
+        ],
+        [
+          "appear",
+          "tongwei"
+        ],
+        [
+          "say",
+          "lijun",
+          "前面是甚么梢公，敢在当港行事？船里货物，见者有分。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "原来却是李大哥！我只道是谁来。大哥，又去做买卖？"
+        ],
+        [
+          "say",
+          "lijun",
+          "船里是甚么人？"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "是三头行货，一个黑矮的囚徒，两个公人。"
+        ],
+        [
+          "say",
+          "lijun",
+          "莫不是我哥哥宋公明？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "船上好汉是谁？救宋江则个！"
+        ],
+        [
+          "say",
+          "lijun",
+          "真个是我哥哥！哥哥惊恐！苦是小弟来得迟了些个。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "我的爷！你何不早通个大名，省得着我做出歹事来，争些儿伤了仁兄！"
+        ],
+        [
+          "narrate",
+          "张横撇了板刀，纳头便拜。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "望哥哥恕兄弟罪过！"
+        ],
+        [
+          "say",
+          "lijun",
+          "哥哥，这个好汉是小弟结义的兄弟，姓张名横，绰号船火儿，专在这浔阳江做这件稳善的道路。"
+        ],
+        [
+          "narrate",
+          "两只船一齐摇回岸边。岸上火把通红，穆家兄弟还在那里等着。"
+        ],
+        [
+          "appear",
+          "xueyong"
+        ],
+        [
+          "say",
+          "lijun",
+          "穆家兄弟，休要动手！这位便是山东及时雨宋公明哥哥！"
+        ],
+        [
+          "say",
+          "muhong",
+          "原来是宋公明哥哥！小弟兄两个有眼不识泰山，冒渎哥哥，万望恕罪！"
+        ],
+        [
+          "say",
+          "lijun",
+          "这一个是揭阳镇上一霸，姓穆名弘，绰号没遮拦；那一个是他兄弟，小遮拦穆春。"
+        ],
+        [
+          "say",
+          "muchun",
+          "哥哥，小弟日间多有冲撞，望乞恕罪。那使枪棒的薛永，小弟也放了出来。"
+        ],
+        [
+          "say",
+          "xueyong",
+          "恩官！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "不知者不罪。众位兄弟请起。"
+        ],
+        [
+          "narrate",
+          "众人都到穆家庄上，杀羊置酒，管待宋江，住了三日。"
+        ],
+        [
+          "say",
+          "zhangheng",
+          "哥哥到江州，小弟有个亲兄弟，唤做张顺，在江州卖鱼。哥哥若见了他，烦带一封家书去。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "这个容易。宋江一定寻他。"
+        ],
+        [
+          "narrate",
+          "宋江收了书信，辞别众人，同两个公人投江州来。武龙仍远远跟在后头。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}

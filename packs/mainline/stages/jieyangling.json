@@ -5,6 +5,7 @@
   "rewards": {
     "gold": 400
   },
+  "townAfter": 11,
   "map": {
     "custom": "jieyangling"
   },
