@@ -1,4 +1,4 @@
-// 技能特效选组与接力（src/game/effects.ts）。原版数据部分需要 gamedata/shuihu，没有时跳过。
+// 技能特效选组与接力（src/game/effects.ts）。原版数据部分需要 gamedata/original，没有时跳过。
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -46,7 +46,7 @@ describe('技能特效选组', () => {
   });
 });
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
 describe.skipIf(!has)('原版技能特效', () => {

@@ -18,7 +18,7 @@ describe.skipIf(!has)('场外占位单位', () => {
     expect(stages).toHaveLength(63);
     const bad: string[] = [];
     for (const s of stages) {
-      const b = new Battle(loadStage(files, data, s, { simplified: true, seed: 1, text: tr }));
+      const b = new Battle(loadStage(files, data, s, { seed: 1, text: tr }));
       b.begin();
       for (const u of b.units) if (u.present && !b.board.onGround(u.x, u.y)) bad.push(`${s} #${u.uid} ${u.name} (${u.x},${u.y})`);
     }
@@ -26,7 +26,7 @@ describe.skipIf(!has)('场外占位单位', () => {
   });
 
   it('Act9-1（沧州设毒计）：ACT 里摆在 (0,0) 的两条主角记录不登场，过场照常结束', () => {
-    const b = new Battle(loadStage(files, data, 'Act9-1', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'Act9-1', { seed: 1, text: tr }));
     const ev = b.begin();
     const heroes = b.units.filter((u) => u.classId === 0);
     expect(heroes).toHaveLength(2);

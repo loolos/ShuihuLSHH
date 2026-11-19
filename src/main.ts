@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import {
   GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, loadFromRepo, saveCache, walkDirectory, type Progress,
 } from './platform/gamefiles.ts';
+import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
@@ -15,8 +16,7 @@ import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
 import { CHAPTERS, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
-import { parsePasHeader } from './formats/pas.ts';
-import { findStageFile, stageMapName } from './rules/load.ts';
+import { stageJson, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
@@ -24,6 +24,8 @@ import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/town
 import { compileStage, stageClasses } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
+
+GameFiles.bundledJson = GAMEDATA_JSON;
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const setupEl = $('setup');
@@ -134,13 +136,12 @@ function writeSave(c: CampaignState) {
 }
 
 function startGame(assets: Assets) {
-  const stages = assets.exe.stages.filter((s) => s.mapName && assets.files.has(`Map/${s.mapName}.act`));
+  const stages = assets.exe.stages.filter((s) => s.mapName && stageJson(assets.files, s.mapName));
   const stageBtn = $<HTMLButtonElement>('stage');
   /** 过关后进城的关卡：关卡号 → 城镇号与城镇之后的下一关（剧本头 +9 / +11） */
   const towns = new Map<number, { town: number; next: number }>();
   for (const s of stages) {
-    const f = findStageFile(assets.files, s.mapName, '.pab');
-    const h = f ? parsePasHeader(assets.files.get(f)) : null;
+    const h = stageJson(assets.files, s.mapName)?.header;
     if (h?.town && stages.some((x) => x.index === h.next)) towns.set(s.index, { town: h.town, next: h.next });
   }
   const townValue = (i: number) => `town:${i}`;
@@ -322,9 +323,8 @@ function startGame(assets: Assets) {
   };
   /** 过关后去哪：剧本头 +9 城镇号、+11 下一关（城镇 2、5 离开时还要问分路）；没有剧本头时按关卡表顺序 */
   const nextOf = (cur: (typeof stages)[number]) => {
-    const f = findStageFile(assets.files, cur.mapName, '.pab');
-    if (!f) return { town: 0, next: nextStages(stages, cur.index).slice(0, 1) };
-    const h = parsePasHeader(assets.files.get(f));
+    const h = stageJson(assets.files, cur.mapName)?.header;
+    if (!h) return { town: 0, next: nextStages(stages, cur.index).slice(0, 1) };
     const n = nextByHeader(h);
     return { town: h.town, route: n.route, next: stages.filter((s) => s.index === n.next) };
   };

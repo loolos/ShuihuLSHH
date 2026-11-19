@@ -6,7 +6,7 @@ import { parsePasHeader } from '../src/formats/pas.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { joinLevel, newCampaign, nextByHeader, partyOf, recordResult, type CampaignState } from '../src/rules/campaign.ts';
-import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
+import { buildT2S, exeTables, loadGameData, loadStage, stageJson, type FileSource } from '../src/rules/load.ts';
 
 declare module '../src/rules/unit.ts' {
   interface Unit {
@@ -14,11 +14,15 @@ declare module '../src/rules/unit.ts' {
   }
 }
 
-export const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+/** 原版原件（gamedata/original）；关卡、地图、数据表的 JSON 在它旁边的 gamedata/stages、maps、tables */
+export const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
+/** gamedata/ 下随代码一起维护的 JSON 目录（浏览器里打包进代码，见 src/platform/gamefiles.ts） */
+export const JSON_DIRS = ['stages', 'maps', 'tables'];
 
+/** 读原版原件，并带上 gamedata/ 下的 JSON（路径如 Data/Man.lib、stages/N05.json，不区分大小写） */
 export class NodeFiles implements FileSource {
   private index = new Map<string, string>();
-  constructor(root: string) {
+  constructor(root: string, gamedata = path.resolve(import.meta.dirname, '../gamedata')) {
     const walk = (d: string, rel: string) => {
       for (const e of fs.readdirSync(d, { withFileTypes: true })) {
         const r = rel ? `${rel}/${e.name}` : e.name;
@@ -26,7 +30,8 @@ export class NodeFiles implements FileSource {
         else this.index.set(r.toLowerCase(), path.join(d, e.name));
       }
     };
-    walk(root, '');
+    if (fs.existsSync(root)) walk(root, '');
+    for (const d of JSON_DIRS) if (fs.existsSync(path.join(gamedata, d))) walk(path.join(gamedata, d), d);
   }
   get(p: string) {
     const f = this.index.get(p.toLowerCase());
@@ -68,10 +73,10 @@ export function simulate(opts: SimOptions = {}): SimStage[] {
   const files = new NodeFiles(DATA);
   const tr = buildT2S(files);
   const data = loadGameData(files, tr);
-  const stages = readExeTables(files.get('ShuiHu.exe')).stages;
+  const stages = exeTables(files).stages;
 
   const play = (map: string, c: CampaignState, seed: number) => {
-    const b = new Battle(loadStage(files, data, map, { seed, text: tr, party: partyOf(c), joinLevel: joinLevel(c), simplified: true }));
+    const b = new Battle(loadStage(files, data, map, { seed, text: tr, party: partyOf(c), joinLevel: joinLevel(c) }));
     const entry = new Map(b.units.filter((u) => u.side === 'player').map((u) => [u.classId, u.level]));
     b.begin();
     // 选人关（Train、N-add15）：选默认推荐的人
@@ -110,7 +115,7 @@ export function simulate(opts: SimOptions = {}): SimStage[] {
     if (r.b.status !== 'won') r.b.settleTeamExp(); // 输了的关当作玩家最终打赢，照样结算全队经验
     c = recordResult(c, r.b);
     out.push({ map, index: i, battle: r.b, entry: r.entry });
-    i = nextByHeader(parsePasHeader(files.get(`Map/${map}.pab`))).next;
+    i = nextByHeader(stageJson(files, map)!.header).next;
   }
   return out;
 }

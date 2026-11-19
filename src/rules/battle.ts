@@ -12,7 +12,7 @@ import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf,
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
-import { stageTune, type StageTune } from './stage-tune.ts';
+import type { StageRules } from '../formats/stage-json.ts';
 import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
@@ -145,10 +145,10 @@ export interface StageInput {
   clearGold?: number;
   board: Board;
   units: ActUnit[];
-  /** .pab（Big5）：用于逻辑 */
+  /** 剧本区块（原版关卡来自 gamedata/stages，文字已是简体） */
   blocks: PasBlock[];
-  /** 显示文字用的版本（如 .pas 的简体）；结构与 blocks 一致时逐条替换文字 */
-  displayBlocks?: PasBlock[];
+  /** 关卡特例规则（增援提前、全灭要连增援一起算等，见 StageRules） */
+  rules?: StageRules;
   data: GameData;
   seed?: number;
   /** 文字转换（繁→简等），用于原版字符串以外的名字 */
@@ -216,7 +216,6 @@ export class Battle {
   status: 'playing' | 'won' | 'lost' = 'playing';
   objectives: string[] = [];
   private blocks: PasBlock[];
-  private display?: PasBlock[];
   private fired = new Set<number>();
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
@@ -237,7 +236,7 @@ export class Battle {
   private pendingDeaths: number[] = [];
   /** 提前了的回合增援区块：区块序号 → 新的回合参数（stage-tune 的 rushOnDeath）【新】 */
   private turnAt: Record<number, number> = {};
-  private readonly tune?: StageTune;
+  private readonly tune?: StageRules;
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
   /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
@@ -270,10 +269,9 @@ export class Battle {
     this.data = input.data;
     this.rng = new Rng(input.seed);
     this.blocks = input.blocks;
-    this.display = input.displayBlocks?.length === input.blocks.length ? input.displayBlocks : undefined;
     this.tr = input.text ?? ((s) => s);
     this.aiPrefer = input.aiPrefer ?? {};
-    this.tune = stageTune(input.name);
+    this.tune = input.rules;
     // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
     const playerLevel = (a: ActUnit) => {
       const kept = input.party?.get(a.type);
@@ -1451,10 +1449,8 @@ export class Battle {
   private runBlock(b: PasBlock) {
     if (this.fired.has(b.index)) return;
     this.fired.add(b.index);
-    const shown = this.display?.[b.index];
     const textOf = (i: number) => {
-      const d = shown?.ops[i];
-      let t = d && d.op === b.ops[i].op && d.text ? d.text : (b.ops[i].text ?? '');
+      let t = b.ops[i].text ?? '';
       // rushOnDeath 那人已倒下才来的增援：换掉喊"谁敢动我大哥"之类的对白
       const rt = this.tune?.rushText;
       if (rt && this.units.some((u) => u.classId === this.tune!.rushOnDeath && !u.alive)) t = rt[this.tr(t)] ?? t;

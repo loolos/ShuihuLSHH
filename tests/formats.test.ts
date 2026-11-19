@@ -1,4 +1,4 @@
-// 解析器回归测试。需要仓库里的 gamedata/shuihu（仓库公开、移除素材后自动跳过）。
+// 解析器回归测试。需要仓库里的 gamedata/original（仓库公开、移除素材后自动跳过）。
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -9,7 +9,7 @@ import { parseHuman } from '../src/formats/hum.ts';
 import { parseGoods } from '../src/formats/goo.ts';
 import { readExeTables } from '../src/formats/exe.ts';
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 const read = (...p: string[]) => fs.readFileSync(path.join(DATA, ...p));
 
@@ -66,9 +66,9 @@ describe.skipIf(!has)('原版文件解析', () => {
   });
 });
 
-describe.skipIf(!fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/shuihu/Data/Man.lib')))('图像锚点', () => {
+describe.skipIf(!fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/original/Data/Man.lib')))('图像锚点', () => {
   it('锚点按有符号读：人物动画的每一帧锚点都在图像附近（龍爭虎鬥中段曾因按无符号读而消失）', () => {
-    const man = openLib(fs.readFileSync(path.resolve(import.meta.dirname, '../gamedata/shuihu/Data/Man.lib')), 'Man.lib');
+    const man = openLib(fs.readFileSync(path.resolve(import.meta.dirname, '../gamedata/original/Data/Man.lib')), 'Man.lib');
     let worst = 0;
     for (let i = 0; i < man.count; i++) {
       const f = man.frame(i);

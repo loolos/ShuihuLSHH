@@ -1,5 +1,5 @@
-// 取得原版文件：IndexedDB 缓存 → 开发服务器 → 试玩页面附带 → GitHub 仓库里的 gamedata/shuihu → 玩家选目录。
-// 构建产物里没有原版素材；网页版运行时从仓库下载（负责人 2026-11-12 决定）。
+// 取得原版图像文件：IndexedDB 缓存 → 开发服务器 → 试玩页面附带 → GitHub 仓库里的 gamedata/original → 玩家选目录。
+// 网页版运行时从仓库下载图像（负责人 2026-11-12 决定）；关卡、地图、数据表是 gamedata/ 下的 JSON，随代码打包（GameFiles.json）。
 import manifest from '../data/manifest.json';
 import { indexSpans } from '../formats/image.ts';
 import { idbGetAll, idbPut, idbPutAll } from './idb.ts';
@@ -81,16 +81,27 @@ export class RemoteFile {
   }
 }
 
-/** 已载入的原版文件，按相对路径（不区分大小写）取用。 */
+/** 已载入的原版文件和 gamedata/ 的 JSON，按相对路径（不区分大小写）取用。 */
 export class GameFiles {
+  /** gamedata/ 下的 JSON（stages/、maps/、tables/），浏览器里由 main.ts 设成随代码打包的那份（gamedata-json.ts） */
+  static bundledJson: Map<string, unknown> = new Map();
   private readonly files: Map<string, ArrayBuffer>;
   private readonly remote: Map<string, RemoteFile>;
-  constructor(files: Map<string, ArrayBuffer>, remote: RemoteFile[] = []) {
+  constructor(files: Map<string, ArrayBuffer>, remote: RemoteFile[] = [], private readonly jsons = GameFiles.bundledJson) {
     this.files = new Map([...files].map(([k, v]) => [key(k), v]));
     this.remote = new Map(remote.map((r) => [key(r.path), r]));
   }
   has(path: string): boolean {
-    return this.files.has(key(path)) || this.remote.has(key(path));
+    return this.files.has(key(path)) || this.remote.has(key(path)) || this.jsons.has(key(path));
+  }
+  json(path: string): unknown {
+    const k = key(path);
+    if (this.jsons.has(k)) return this.jsons.get(k);
+    const ab = this.files.get(k);
+    if (!ab) throw new Error(`缺少数据文件：${path}`);
+    const v = JSON.parse(new TextDecoder().decode(ab));
+    this.jsons.set(k, v);
+    return v;
   }
   /** 返回 Buffer（浏览器中由 buffer-shim 提供），与离线工具共用解析器。 */
   get(path: string): Buffer {
@@ -127,7 +138,7 @@ export class GameFiles {
   }
   list(dir: string, ext: string): string[] {
     const d = key(dir) + '/';
-    return [...this.files.keys()].filter((k) => k.startsWith(d) && k.endsWith(ext.toLowerCase()));
+    return [...this.files.keys(), ...this.jsons.keys()].filter((k) => k.startsWith(d) && k.endsWith(ext.toLowerCase()));
   }
 }
 
@@ -187,23 +198,23 @@ export async function* walkDirectory(dir: FileSystemDirectoryHandle, base = ''):
   }
 }
 
-/** 开发模式：从 Vite 开发服务器读取仓库里的 gamedata/shuihu（构建产物中不存在）。 */
+/** 开发模式：从 Vite 开发服务器读取仓库里的 gamedata/original（构建产物中不存在）。 */
 export async function loadFromDevServer(progress?: Progress): Promise<Map<string, ArrayBuffer> | null> {
   if (!import.meta.env.DEV) return null;
-  const probe = await fetch('/gamedata/shuihu/ShuiHu.exe', { method: 'HEAD' }).catch(() => null);
+  const probe = await fetch('/gamedata/original/ShuiHu.exe', { method: 'HEAD' }).catch(() => null);
   if (!probe?.ok) return null;
   const out = new Map<string, ArrayBuffer>();
   for (let i = 0; i < ENTRIES.length; i++) {
     const e = ENTRIES[i];
     progress?.(`读取 ${e.path}`, i / ENTRIES.length);
-    const r = await fetch(`/gamedata/shuihu/${e.path}`);
+    const r = await fetch(`/gamedata/original/${e.path}`);
     if (r.ok) out.set(e.path, await r.arrayBuffer());
   }
   return out;
 }
 
-/** 网页版用的原版文件来源：本仓库 main 分支的 gamedata/shuihu（raw.githubusercontent.com 允许跨域） */
-export const REPO_GAMEDATA = 'https://raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/';
+/** 网页版用的原版文件来源：本仓库 main 分支的 gamedata/original（raw.githubusercontent.com 允许跨域） */
+export const REPO_GAMEDATA = 'https://raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/original/';
 
 /**
  * 网页版：从 GitHub 仓库取原版文件。小文件整份下载（约 2 MB），大文件（LAZY_FILES）只取目录，帧数据进关前按需下载。

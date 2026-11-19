@@ -6,26 +6,18 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadAssets, preloadStage, prefetchSkills } from '../src/game/assets.ts';
 import { fxGroups } from '../src/game/effects.ts';
-import { parseAct } from '../src/formats/act.ts';
-import { parseMap } from '../src/formats/map.ts';
+import { stageUnits } from '../src/formats/stage-json.ts';
+import { loadStageMap, stageJson, stageMap } from '../src/rules/load.ts';
+import { DATA, NodeFiles } from './sim-lib.ts';
 import { learnedSkills } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import type { GameFiles } from '../src/platform/gamefiles.ts';
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
 const LAZY = ['Data/Man.lib', 'Data/Effect.lib', 'Data/Upper.grp', 'Data/Ground.grp'];
 const UNUSED = ['Data/Panel.lib'];
 const MB = (n: number) => (n / 1048576).toFixed(2).padStart(6);
 
-const index = new Map<string, string>();
-const walk = (d: string, rel: string) => {
-  for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-    const r = rel ? `${rel}/${e.name}` : e.name;
-    if (e.isDirectory()) walk(path.join(d, e.name), r);
-    else index.set(r.toLowerCase(), r);
-  }
-};
-walk(DATA, '');
+const disk = new NodeFiles(DATA);
 const manifest = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../src/data/manifest.json'), 'utf8')).files as { path: string; size: number; sha256: string }[];
 
 type Spans = [number, number][];
@@ -44,9 +36,9 @@ const sum = (s: Spans) => s.reduce((n, [a, b]) => n + b - a, 0);
 function fakeFiles(have: Map<string, Spans>) {
   let got = 0;
   const files = {
-    get: (p: string) => fs.readFileSync(path.join(DATA, index.get(p.toLowerCase()) ?? p)),
-    has: (p: string) => index.has(p.toLowerCase()),
-    list: (dir: string, ext: string) => [...index.values()].filter((p) => p.toLowerCase().startsWith(dir.toLowerCase() + '/') && p.toLowerCase().endsWith(ext)),
+    get: (p: string) => disk.get(p),
+    has: (p: string) => disk.has(p),
+    list: (dir: string, ext: string) => disk.list(dir, ext),
     copy() {},
     async ensure(want: Map<string, Spans>) {
       for (const [p, spans] of want) {
@@ -70,7 +62,7 @@ for (const p of [...LAZY, ...UNUSED]) console.log(`${UNUSED.includes(p) ? '不�
 /** 旧做法：本关职业的全部动作组与全部技能特效，不去重 */
 function oldBytes(stage: string, classes: Set<number>) {
   const s: Spans = [], f: Spans = [], t: Spans = [], u: Spans = [];
-  const map = parseMap(probe.files.get(`Map/${stage}.map`), stage);
+  const map = loadStageMap(probe.files, stageMap(probe.files, stage))!.map;
   for (const cell of map.cells)
     cell.forEach((l, k) => {
       const lib = k === 0 ? probe.ground : probe.upper;
@@ -84,12 +76,12 @@ function oldBytes(stage: string, classes: Set<number>) {
   return [s, f, t, u].reduce((n, x) => n + sum(union(x)), 0);
 }
 
-const stages = probe.exe.stages.filter((s) => s.mapName && index.has(`map/${s.mapName.toLowerCase()}.act`));
+const stages = probe.exe.stages.filter((s) => s.mapName && stageJson(probe.files, s.mapName));
 const total = new Map<string, Spans>();
 let oldMax = 0, newMax = 0, bgMax = 0;
 console.log('\n关卡        旧:进关前   新:进关前  新:开打后后台   按顺序玩新增');
 for (const s of stages) {
-  const acts = parseAct(probe.files.get(`Map/${s.mapName}.act`), s.mapName).filter((a) => a.side !== 'object' && a.side !== 'unknown' && a.type < probe.data.classes.length);
+  const acts = stageUnits(stageJson(probe.files, s.mapName)!).filter((a) => a.side !== 'object' && a.side !== 'unknown' && a.type < probe.data.classes.length);
   const classes = new Set([0, ...acts.map((a) => a.type)]);
   // 单独进这一关（缓存为空）
   const solo = fakeFiles(new Map());

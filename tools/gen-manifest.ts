@@ -1,4 +1,4 @@
-// 生成 src/data/manifest.json：游戏运行需要的原版文件清单（相对路径、大小、SHA256）。
+// 生成 src/data/manifest.json：游戏运行需要的原版图像文件清单（相对路径、大小、SHA256）。
 // 浏览器端用它校验玩家选择的原版目录。清单只含文件名和哈希，不含任何原版内容。
 // 同时生成 src/data/frame-alias.json：Man.lib、Effect.lib 里字节完全相同的帧（网页版按需下载时只取一份）。只含帧号，不含原版内容。
 // 用法：node tools/gen-manifest.ts [原版目录]
@@ -8,8 +8,9 @@ import crypto from 'node:crypto';
 import { openLib } from '../src/formats/image.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const DATA = path.resolve(process.argv[2] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/shuihu'));
-const WANT = /^(ShuiHu\.exe|Data\/.*\.(pal|tbl|grp|att|lib|hum|dab)|Map\/.*\.(map|act|pab|pas))$/i;
+const DATA = path.resolve(process.argv[2] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/original'));
+// 运行时只用原版的图像（调色板、图块、人物动画、特效、头像、道具图标）；关卡、地图、数据表已导出为 gamedata/ 下的 JSON
+const WANT = /^Data\/.*\.(pal|grp|lib)$/i;
 
 const files: { path: string; size: number; sha256: string }[] = [];
 const walk = (dir: string) => {

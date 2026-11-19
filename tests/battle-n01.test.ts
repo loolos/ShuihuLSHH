@@ -7,7 +7,7 @@ import { Board } from '../src/rules/board.ts';
 import { isChargeSkill, learnedSkills, skillsLearnedAt } from '../src/rules/skills.ts';
 import { skillFx, FX_CHARGE } from '../src/game/effects.ts';
 import { planAi } from '../src/rules/ai.ts';
-import { buildT2S, loadGameData, loadStage, type FileSource } from '../src/rules/load.ts';
+import { buildT2S, exeTables, loadGameData, loadStage, stageJson, type FileSource } from '../src/rules/load.ts';
 import { basicAttack, type SkillDef } from '../src/rules/data.ts';
 import { rollAttack } from '../src/rules/combat.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -17,39 +17,15 @@ import { newCampaign, nextByHeader, partyOf, recordResult } from '../src/rules/c
 import { goldBase, goldRange, stageClearGold } from '../src/rules/gold.ts';
 import { parsePasHeader } from '../src/formats/pas.ts';
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
-class NodeFiles implements FileSource {
-  private index = new Map<string, string>();
-  constructor(root: string) {
-    const walk = (d: string, rel: string) => {
-      for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-        const r = rel ? `${rel}/${e.name}` : e.name;
-        if (e.isDirectory()) walk(path.join(d, e.name), r);
-        else this.index.set(r.toLowerCase(), path.join(d, e.name));
-      }
-    };
-    walk(root, '');
-  }
-  get(p: string) {
-    const f = this.index.get(p.toLowerCase());
-    if (!f) throw new Error(`missing ${p}`);
-    return fs.readFileSync(f);
-  }
-  has(p: string) {
-    return this.index.has(p.toLowerCase());
-  }
-  list(dir: string, ext: string) {
-    return [...this.index.keys()].filter((k) => k.startsWith(dir.toLowerCase() + '/') && k.endsWith(ext));
-  }
-}
 
 describe.skipIf(!has)('N01', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
   const data = has ? loadGameData(files, tr) : (null as never);
-  const make = (seed = 1) => new Battle(loadStage(files, data, 'N01', { simplified: true, seed, text: tr }));
+  const make = (seed = 1) => new Battle(loadStage(files, data, 'N01', { seed, text: tr }));
 
   it('朱武6级学会气定神闲，零气力也能施放，只回自身气力且不给经验', () => {
     const b = new Battle({ name: 'test', board: new Board(4, 4), blocks: [], data, units: [] });
@@ -187,7 +163,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('训练关：选人后显示回合限制，第 25 回合结束时过关（组合条件"回合 25 或我方全灭"）', () => {
-    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'Train1', { seed: 1, text: tr }));
     expect(b.begin().some((e) => e.type === 'objective')).toBe(false);
     const ev = b.choose(b.pendingPick!.recommended);
     expect(ev.some((e) => e.type === 'objective')).toBe(true);
@@ -362,7 +338,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('第 1–3 章：关卡顺序、过场开场即过关、人物延续', () => {
-    const stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName && files.has(`Map/${s.mapName}.act`));
+    const stages = exeTables(files).stages.filter((s) => s.mapName && !!stageJson(files, s.mapName));
     const order: string[] = [];
     let c = newCampaign(0);
     for (let i = 0; i < 14; i++) {
@@ -387,7 +363,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('Train1：选 1 人与王進过招，其余人退场，选完才进第 1 回合；只有出场的人分全队经验', () => {
-    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'Train1', { seed: 1, text: tr }));
     const ev = b.begin();
     const pick = ev.find((e) => e.type === 'pick');
     expect(pick?.type === 'pick' && pick.pick.prompt).toBe('請選擇與王進過招的人');
@@ -435,7 +411,7 @@ describe.skipIf(!has)('N01', () => {
 
   for (const name of ['Train1', 'Train2']) {
     it(`${name}：出场的人被王進打倒就过关（"回合 25 或我方全灭"，退场的人不算），王進说完托付的话接下一关`, () => {
-      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      const b = new Battle(loadStage(files, data, name, { seed: 1, text: tr }));
       b.begin();
       b.choose(b.pendingPick!.recommended);
       const me = b.units.find((u) => u.side === 'player' && u.present)!;
@@ -453,7 +429,7 @@ describe.skipIf(!has)('N01', () => {
   }
 
   it('Train1：每打倒一次王進只说一句、换一个分身上场，不会一次把 25 句说完', () => {
-    const b = new Battle(loadStage(files, data, 'Train1', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'Train1', { seed: 1, text: tr }));
     b.begin();
     b.choose(b.pendingPick!.recommended);
     const me = b.units.find((u) => u.side === 'player' && u.present)!;
@@ -475,7 +451,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('N-add15：留下的人倒下关卡继续，主角倒下判负', () => {
-    const b = new Battle(loadStage(files, data, 'N-add15', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N-add15', { seed: 1, text: tr }));
     b.begin();
     b.choose(b.pendingPick!.recommended);
     const hero = b.units.find((u) => u.classId === 0 && u.side === 'player')!;
@@ -489,7 +465,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('N-add15：主角先退场，选 1 人和主角一起断后；时光倒流回不到选人之前', () => {
-    const b = new Battle(loadStage(files, data, 'N-add15', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N-add15', { seed: 1, text: tr }));
     b.begin();
     const p = b.pendingPick!;
     expect(p.prompt).toBe('请选择留下的人');
@@ -517,7 +493,7 @@ describe.skipIf(!has)('N01', () => {
     for (const f of files.list('Map', '.pab')) {
       const name = path.basename(f, '.pab');
       if (name.startsWith('act')) continue;
-      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      const b = new Battle(loadStage(files, data, name, { seed: 1, text: tr }));
       b.begin();
       if (b.pendingPick) b.choose(b.pendingPick.recommended);
       expect([name, b.status]).toEqual([name, 'playing']);
@@ -534,7 +510,7 @@ describe.skipIf(!has)('N01', () => {
 
   it('N12 东溪村突围：埋伏的朱仝不算"已死"；晁蓋到达安全地带或打倒朱仝才过关', () => {
     const start = () => {
-      const b = new Battle(loadStage(files, data, 'N12', { simplified: true, seed: 1, text: tr }));
+      const b = new Battle(loadStage(files, data, 'N12', { seed: 1, text: tr }));
       b.begin();
       return b;
     };
@@ -562,7 +538,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('N02："所有嘍囉死亡"要连埋伏中的嘍囉一起算', () => {
-    const b = new Battle(loadStage(files, data, 'N02', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N02', { seed: 1, text: tr }));
     b.begin();
     const minions = b.units.filter((u) => u.classId === 44 || u.classId === 45);
     expect(minions.some((u) => (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
@@ -575,7 +551,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('N-add03：任何一个嘍囉逃到地图出口都判负（不只是单位表里第一个）', () => {
-    const b = new Battle(loadStage(files, data, 'N-add03', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N-add03', { seed: 1, text: tr }));
     b.begin();
     expect(b.status).toBe('playing');
     // 剧本让第 3 个单位（第二个 45 号嘍囉）往 (10, 0) 逃
@@ -589,7 +565,7 @@ describe.skipIf(!has)('N01', () => {
 
   it('小地图标出的胜负区域：撤退出口（N01 / N12 / N-add16）、敌人逃跑出口（N13 / N-add03）', () => {
     const zones = (name: string) => {
-      const b = new Battle(loadStage(files, data, name, { simplified: true, seed: 1, text: tr }));
+      const b = new Battle(loadStage(files, data, name, { seed: 1, text: tr }));
       b.begin();
       return { b, z: b.objectiveZones().map(({ kind, x1, y1, x2, y2, chars }) => ({ kind, x1, y1, x2, y2, chars })) };
     };
@@ -613,8 +589,8 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('剧本头串起全部关卡，分路两条线汇合', () => {
-    const stages = readExeTables(files.get('ShuiHu.exe')).stages;
-    const header = (i: number) => parsePasHeader(files.get(`Map/${stages[i].mapName}.pab`));
+    const stages = exeTables(files).stages;
+    const header = (i: number) => stageJson(files, stages[i].mapName)!.header;
     const seen: string[] = [];
     for (let i = 0; i < stages.length && stages[i]?.mapName; ) {
       seen.push(stages[i].mapName);

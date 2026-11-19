@@ -5,9 +5,13 @@
 ## 硬性规则
 
 - **不运行原版 EXE**（包括 `ShuiHu.exe`、`Autorun.exe`），只允许只读的静态分析。
-- **不修改 `gamedata/shuihu/` 里的任何文件。**
-- 从原版提取的产物（PNG、JSON、音频）只写到被忽略的 `extracted/`，不入库。
-- 仓库已于 2026-11-12 公开（为了 GitHub Pages），但 `gamedata/shuihu/` 里仍有原版文件（含历史）；负责人决定开发完成后再清理，不必再提。不要把原版素材放进构建产物或 `public/`；网页版运行时直接从本仓库 main 分支的 `gamedata/shuihu` 下载（`loadFromRepo`，负责人 2026-11-12 决定），不再让玩家选自己的文件。例外：负责人同意（2026-11-11）内部试玩页面（私有 Artifact）可以附带原版文件，以 base64 文本块放在页面的 `gamedata/` 下，由 `loadBundled` 读取。
+- 原版原件放在 `gamedata/original/`，不修改（保留作对照和导出来源）。原版的关卡、地图和数据表已于 2026-11-19 导出成 `gamedata/` 下的 JSON（负责人决定拆开整合），这些 JSON 是游戏实际用的数据，可以直接改：
+  - `gamedata/stages/<关卡>.json`：原版关卡（地图名、剧本头、单位、剧本区块；文字为简体）。改原版关卡（加敌人、改台词、调等级、提前增援）直接改这里，不要再写载入时的补丁代码。
+  - `gamedata/maps/<地图>.json`：原版地图（与 `packs/maps` 自拼地图同一种格式），新关卡用 `map.base` 引用或拿来改。
+  - `gamedata/tables/`：EXE 静态表、职业（Human.hum）、道具（Goods.dab）、地形通行、繁→简对照。职业和道具的重制版改动目前仍在 `src/rules/data.ts`。
+  - 原版图像（人物动画、特效、图块、头像、图标）还在 `gamedata/original/Data/`，运行时从仓库下载；拆图像是下一步。
+- 临时的提取产物（预览 PNG、调试用 JSON 等）写到被忽略的 `extracted/`。要入库的导出数据只放在 `gamedata/` 下的约定目录（`stages/`、`maps/`、`tables/`、`sound/`）。
+- 仓库已于 2026-11-12 公开（为了 GitHub Pages），README 有免责声明；`gamedata/original/` 里的原版文件（含历史）负责人决定开发完成后再清理，不必再提。`gamedata/` 下的关卡、地图、数据表 JSON 随代码打包（`src/platform/gamedata-json.ts`）；原版图像不放进构建产物或 `public/`，网页版运行时从本仓库 main 分支的 `gamedata/original` 下载（`loadFromRepo`，负责人 2026-11-12 决定）。例外：负责人同意（2026-11-11）内部试玩页面（私有 Artifact）可以附带原版文件，以 base64 文本块放在页面的 `gamedata/` 下，由 `loadBundled` 读取。
 - 涉及原版的结论要写明证据（文件、偏移、EXE 地址）；推测要标明。
 
 ## 文档约定
@@ -21,13 +25,13 @@
 
 | 命令 | 作用 |
 |---|---|
-| `npm run dev` | 开发服务器。开发模式会直接读取仓库里的 `gamedata/shuihu`，不用选目录 |
+| `npm run dev` | 开发服务器。开发模式会直接读取仓库里的 `gamedata/original`，不用选目录 |
 | `npm run build` | 类型检查 + 生产构建（`dist/`，只含代码） |
 | `npm test` | Vitest 单元测试（没有 `gamedata/` 时自动跳过解析测试） |
 | `npm run typecheck` | 只做类型检查 |
 | `npm run gen:docs` | 重新生成 `docs/reference/` |
-| `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（原版文件清单与 SHA256）和 `src/data/frame-alias.json`（重复帧表） |
-| `npm run check:enemy-levels` | 校验自有敌方绝对等级配置的完整性、职业身份和等级值；`gen:enemy-levels` 为兼容别名，不再生成修正 |
+| `npm run gen:manifest` | 重新生成 `src/data/manifest.json`（运行时要下载的原版图像清单与 SHA256）和 `src/data/frame-alias.json`（重复帧表） |
+| `npm run check:enemy-levels` | 校验 `gamedata/stages` 里每个敌人的等级（正整数）和职业号；`gen:enemy-levels` 为兼容别名 |
 | `npm run gen:levels` | 按期望值估算主线（不到 1 秒），重新生成跳关用的入场等级表 `src/data/entry-levels.json`（改了经验规则或敌人等级后要跑） |
 | `node --experimental-transform-types tools/sim-exp.ts [original\|new]` | 双方 AI 跑一遍主线，打印每关我方等级（校准经验值） |
 | `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 自有敌人基础等级平均 + 1） |

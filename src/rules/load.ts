@@ -1,15 +1,13 @@
-import { isWillowEncounter, encounterMap, willowUnits, willowBlocks } from './willow-encounter.ts';
-// 从原版文件组装 GameData 与 StageInput（浏览器与 Node 共用）。
-import { parseAct } from '../formats/act.ts';
-import { readExeTables } from '../formats/exe.ts';
-import { parseGoods } from '../formats/goo.ts';
-import { parseHuman } from '../formats/hum.ts';
-import { cropMap, mapFromJson, parseMap, type MapData, type MapJson } from '../formats/map.ts';
-import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts';
+// 从 gamedata/ 的 JSON 组装 GameData 与 StageInput（浏览器与 Node 共用）。
+// 原版关卡（gamedata/stages）、地图（gamedata/maps）和数据表（gamedata/tables）都是 2026-11-19 从原版文件导出的 JSON，可直接编辑；
+// 原版原件在 gamedata/original，运行时只用到其中的图像。
+import { mapFromJson, cropMap, type MapData, type MapJson } from '../formats/map.ts';
+import { stageBlocks, stageUnits, type StageJson } from '../formats/stage-json.ts';
+import type { ExeTables } from '../formats/exe.ts';
+import type { ClassRecord } from '../formats/hum.ts';
+import type { Item } from '../formats/goo.ts';
 import { Board } from './board.ts';
-import { enemyRank, adjustEnemies } from './enemy-level.ts';
-import { tuneBlocks, tuneUnits } from './stage-tune.ts';
-import { applyStoryQuotes } from './story-quotes.ts';
+import { enemyRank } from './enemy-level.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, withItemOverrides, type ClassDef, type GameData } from './data.ts';
 import { statAt, tierGear } from './growth.ts';
@@ -18,53 +16,53 @@ export interface FileSource {
   get(path: string): Buffer;
   has(path: string): boolean;
   list(dir: string, ext: string): string[];
+  /** 已解析好的 JSON（浏览器里随代码打包）；没有时由 get 读出再解析 */
+  json?(path: string): unknown;
 }
 
-/**
- * 繁→简对照：原版每个 .pab（Big5）都有一份结构完全相同的 .pas（GB2312，简体），
- * 逐字对齐两份文本即可得到剧本中出现过的全部字的对照。没出现过的字保持原样。
- */
+const parsed = new WeakMap<FileSource, Map<string, unknown>>();
+/** 读 gamedata/ 下的 JSON（路径不区分大小写，如 stages/N05.json） */
+export function readJson<T>(files: FileSource, path: string): T {
+  if (files.json) return files.json(path) as T;
+  const cache = parsed.get(files) ?? parsed.set(files, new Map()).get(files)!;
+  const k = path.toLowerCase();
+  if (!cache.has(k)) cache.set(k, JSON.parse(files.get(path).toString('utf8')));
+  return cache.get(k) as T;
+}
+
+/** EXE 里的静态表（角色名、绰号、技能名、关卡表、二选一对话、城镇文字、特效触发帧），见 docs/binary-formats.md §4 */
+export const exeTables = (files: FileSource) => readJson<ExeTables>(files, 'tables/exe.json');
+
+/** 地形通行表（原版 Ground.att / Upper.att 去掉 8 字节头） */
+export function terrain(files: FileSource): { ground: Uint8Array; upper: Uint8Array } {
+  const t = readJson<{ ground: number[]; upper: number[] }>(files, 'tables/terrain.json');
+  return { ground: Uint8Array.from(t.ground), upper: Uint8Array.from(t.upper) };
+}
+
+/** 原版关卡（gamedata/stages/<名字>.json），没有这一关时为 undefined */
+export function stageJson(files: FileSource, stage: string): StageJson | undefined {
+  const p = `stages/${stage}.json`;
+  return files.has(p) ? readJson<StageJson>(files, p) : undefined;
+}
+
+/** 全部原版关卡名（文件名，保留大小写） */
+export const stageNames = (files: FileSource): string[] =>
+  files.list('stages', '.json').map((p) => p.slice(p.lastIndexOf('/') + 1, -5));
+
+/** 繁→简对照（tables/t2s.json：原版每个 .pab 与同结构的 .pas 逐字对齐、按出现次数投票得到）。没出现过的字保持原样。 */
 export function buildT2S(files: FileSource): (s: string) => string {
-  const map = new Map(Object.entries(t2sTable(files)));
+  const map = new Map(Object.entries(readJson<Record<string, string>>(files, 'tables/t2s.json')));
   return (s) => [...s].map((c) => map.get(c) ?? c).join('');
 }
 
-export function t2sTable(files: FileSource): Record<string, string> {
-  // 逐字投票：.pas 偶有错字（如把"得"写成"的"），取出现次数最多的对应（含不变）
-  const votes = new Map<string, Map<string, number>>();
-  for (const pab of files.list('Map', '.pab')) {
-    const pas = pab.replace(/\.pab$/, '.pas');
-    if (!files.has(pas)) continue;
-    const a = parsePasBlocks(files.get(pab), 'big5');
-    const b = parsePasBlocks(files.get(pas), 'gbk');
-    if (a.length !== b.length) continue;
-    a.forEach((blk, i) =>
-      blk.ops.forEach((op, k) => {
-        const t = b[i].ops[k]?.text;
-        if (!op.text || !t || [...op.text].length !== [...t].length) return;
-        const x = [...op.text], y = [...t];
-        x.forEach((c, j) => {
-          if (c.charCodeAt(0) < 0x2e80) return;
-          const v = votes.get(c) ?? new Map<string, number>();
-          v.set(y[j], (v.get(y[j]) ?? 0) + 1);
-          votes.set(c, v);
-        });
-      }),
-    );
-  }
-  const map = new Map<string, string>();
-  for (const [c, v] of votes) {
-    const best = [...v].sort((a, b) => b[1] - a[1])[0][0];
-    if (best !== c) map.set(c, best);
-  }
-  return Object.fromEntries([...map].sort((a, b) => (a[0] < b[0] ? -1 : 1)));
+export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
+  const exe = exeTables(files);
+  const classes = capSkillCosts(buildClasses(structuredClone(readJson<ClassRecord[]>(files, 'tables/human.json')), exe.characterNames, exe.skillNames));
+  return { classes, items: loadItems(files), charNames: exe.characterNames, effectTriggers: exe.effectTriggers, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
 }
 
-export function loadGameData(files: FileSource, tr: (s: string) => string = (s) => s): GameData {
-  const exe = readExeTables(files.get('ShuiHu.exe'));
-  const classes = capSkillCosts(buildClasses(parseHuman(files.get('Data/Human.hum')), exe.characterNames, exe.skillNames));
-  return { classes, items: withItemOverrides(parseGoods(files.get('Data/Goods.dab'))), charNames: exe.characterNames, effectTriggers: exe.effectTriggers, heroName: tr(exe.characterNames[0]), heroNickname: tr(exe.nicknames[0] ?? ''), prompts: exe.prompts.map((q) => ({ ...q, question: tr(q.question), options: [tr(q.options[0]), tr(q.options[1])], replies: [{ ...q.replies[0], text: tr(q.replies[0].text) }, { ...q.replies[1], text: tr(q.replies[1].text) }] })) };
-}
+/** 原版道具表（tables/goods.json）加上重制版的道具改动 */
+export const loadItems = (files: FileSource): Item[] => withItemOverrides(structuredClone(readJson<Item[]>(files, 'tables/goods.json')));
 
 /**
  * 技能耗气不超过习得那一级的最大气（不算装备）【新】（负责人 2026-11-13）。
@@ -80,66 +78,6 @@ export function capSkillCosts(classes: ClassDef[]): ClassDef[] {
     }
   }
   return classes;
-}
-
-/**
- * 主线关卡剧本的重制版改动【新】（只改触发条件，不改原版文件）。
- * N13 诱敌蓼儿洼：伏兵区块原版条件「回合 = 10」（第 11 回合开始登场），负责人 2026-11-14 嫌太晚，改成「回合 = 7」（第 8 回合开始；先定第 7 回合，负责人嫌少又改第 8）。
- */
-export const STAGE_TURN_TRIGGERS: Record<string, Record<number, number>> = { N13: { 10: 7 } };
-
-/** 林沖刺配沧州后由好汉暗中护送；不改原版文件，只替换剧情文字。 */
-export const STAGE_STORY_TEXT: Record<string, Record<string, string>> = {
-  // 火并王倫：增援全部打倒才过关、王倫一死增援马上赶到（stage-tune.ts，负责人 2026-11-15）
-  n14: { '胜利条件   --- 打败所有敌人': '胜利条件   --- 打败所有敌人（包括增援；王伦一死，增援立刻赶到）' },
-  'act7-1': {
-    '啊...我不会这么容易就被小人陷害。娘子，我现在已经变成通缉犯了；高俅那厮必定在四处张贴通告悬赏我的人头。你要是跟着我，一定是过着朝不保夕、被人追杀的生活；我可以写下休书，你也不用跟着我受苦...如果有适当的人选，不如再嫁了吧...':
-      '高俅虽败，仍借白虎节堂一事定我罪，判我刺配沧州。娘子，这一去不知几时才能回来……',
-    '相公！小女子又没有做过什么玷污相公名声的事，为何把我休了？！':
-      '相公蒙冤受屈，小女子怎会因而埋怨？我在东京等你回来！',
-    '唉...现在时局很乱；我也是一番好意，不希望耽误了你的大好青春...':
-      '这一路凶险，不能带你同行；等我在沧州安顿下来，再设法接你过去。',
-    '不！我不要！': '相公保重，我和锦儿在东京等你。',
-    '唉！罢了！罢了！我不再提这件事了。锦儿，你与夫人就先找个地方躲起来吧！等到时局安定后，我再去迎接你们...首先，叫家人们开始收拾行李...':
-      '锦儿，你照顾好夫人；此去沧州，我会小心。等我离开后，你们寻处安身，莫要叫高府的人找到。',
-    '动作怎么这么快？！': '董超、薛霸二位公人也已到门外？林冲这便随二位起程。',
-    '只是今后该往何处安身，林冲心中实在没有主意啊！':
-      '娘子珍重。董超、薛霸两位公人押我去沧州，诸位不必明着相送。',
-    '总之这里是片刻也不能停留了，如今只得暂且走一步算一步了。':
-      '二位公人这就押林教头起程。我们不能明着同行，待他们走远，便暗中跟上，护他一路去沧州。',
-    '林冲被小人陷害,该往何处安身?': '董超、薛霸押着林冲离去。众人忧心忡忡，悄悄出城，远远跟上。',
-  },
-  'act7-1a': {
-    '这里就是『野猪林』了，大家小心点！': '董超、薛霸和那伙强人已被打退。林教头无恙，众人仍暗中护送他去沧州。',
-  },
-};
-
-/** 对逻辑剧本与简体显示剧本同时替换文字，保持两份区块结构一致。 */
-export function adjustStoryText(stage: string, blocks: PasBlock[], text: (s: string) => string = (s) => s): PasBlock[] {
-  return applyStoryQuotes(stage, replaceStoryText(stage, blocks, text), text).blocks;
-}
-
-function replaceStoryText(stage: string, blocks: PasBlock[], text: (s: string) => string): PasBlock[] {
-  const overrides = STAGE_STORY_TEXT[stage.toLowerCase()];
-  if (!overrides) return blocks;
-  return blocks.map((block) => ({
-    ...block,
-    ops: block.ops.map((op) => {
-      if (!op.text) return op;
-      const replacement = overrides[text(op.text)];
-      return replacement ? { ...op, text: replacement } : op;
-    }),
-  }));
-}
-
-export function adjustBlocks(stage: string, blocks: PasBlock[]): PasBlock[] {
-  const map = STAGE_TURN_TRIGGERS[stage.toUpperCase()];
-  if (!map) return blocks;
-  return blocks.map((b) => (b.trigger.kind === 'turn' && map[b.trigger.turn] !== undefined ? { ...b, trigger: { ...b.trigger, turn: map[b.trigger.turn] } } : b));
-}
-
-export function findStageFile(files: FileSource, stage: string, ext: string): string | undefined {
-  return files.list('Map', ext).find((p) => p.toLowerCase().endsWith(`/${stage.toLowerCase()}${ext}`));
 }
 
 /** 自拼地图（packs/maps/<名字>.json）在地图名里的前缀：custom:<名字> */
@@ -158,10 +96,9 @@ export function stageMapName(map: { base?: string; custom?: string; crop?: reado
   return map.crop ? `${name}@${map.crop.join(',')}` : name;
 }
 
-/** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径（自拼地图是一个不存在的路径，所以也没有 .act） */
-export function loadStageMap(files: FileSource, name: string): { file: string; map: MapData } | undefined {
+/** 按地图名（可带 @截取范围）读地图：原版地图在 gamedata/maps，自拼地图在 packs/maps */
+export function loadStageMap(files: FileSource, name: string): { map: MapData } | undefined {
   const [base, crop] = name.split('@');
-  let file: string | undefined;
   let map: MapData | undefined;
   if (base.startsWith(CUSTOM_MAP_PREFIX)) {
     const id = base.slice(CUSTOM_MAP_PREFIX.length);
@@ -171,52 +108,39 @@ export function loadStageMap(files: FileSource, name: string): { file: string; m
       if (!j) return undefined;
       customMapCache.set(id, (map = mapFromJson(j, `packs/maps/${id}.json`)));
     }
-    file = `Map/${id}.custom.map`;
   } else {
-    file = findStageFile(files, base, '.map');
-    if (!file) return undefined;
-    map = parseMap(files.get(file), file);
+    const p = `maps/${base}.json`;
+    if (!files.has(p)) return undefined;
+    map = mapFromJson(readJson<MapJson>(files, p), p);
   }
-  if (!crop) return { file, map };
+  if (!crop) return { map };
   const [x, y, w, h] = crop.split(',').map(Number);
-  return { file, map: cropMap(map, x, y, w, h) };
+  return { map: cropMap(map, x, y, w, h) };
 }
 
-export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party']; joinLevel?: number } = {}): StageInput {
-  const loaded = loadStageMap(files, encounterMap(stage));
-  if (!loaded) throw new Error(`找不到地图 ${stage}`);
-  const { file: mapFile, map } = loaded;
-  const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
-  const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
-  const actFile = isWillowEncounter(stage) ? findStageFile(files, stage, '.act')! : mapFile.replace(/\.map$/i, '.act');
-  const pabFile = findStageFile(files, stage, '.pab');
-  const pasFile = findStageFile(files, stage, '.pas');
-  // 后期关卡追加的敌人和增援（stage-tune.ts）
-  const original = files.has(actFile) ? parseAct(files.get(actFile), actFile) : [];
-  const units = isWillowEncounter(stage) ? adjustEnemies(stage, willowUnits(original)) : tuneUnits(stage, adjustEnemies(stage, original), board);
-  if (isWillowEncounter(stage)) {
-    const own = units;
-    const header = parsePasHeader(files.get(pabFile!));
-    return { name: stage, board, units: own, blocks: willowBlocks(), data, header: { ...header, act: 0 }, seed: opts.seed, text: opts.text, party: opts.party, joinLevel: opts.joinLevel,
-      names: Object.fromEntries(own.filter(u=>u.side==='enemy').map((u,i)=>[u.index,i?'街头泼皮':'泼皮头目'])),
-      enemyRanks: Object.fromEntries(own.filter(u=>u.side==='enemy').map(u=>[u.index,u.group===20?'leader':enemyRank(u.type)])),
-      spectators: own.filter(u=>[0,3,13,15,5].includes(u.type)).map(u=>u.index),
-      clearGold: 0 };
-  }
+/** 原版关卡用哪张地图（可带截取范围）；不是原版关卡时就是 stage 本身 */
+export const stageMap = (files: FileSource, stage: string): string => stageJson(files, stage)?.map ?? stage;
+
+export function loadStage(files: FileSource, data: GameData, stage: string, opts: { seed?: number; text?: (s: string) => string; party?: StageInput['party']; joinLevel?: number } = {}): StageInput {
+  const j = stageJson(files, stage);
+  if (!j) throw new Error(`找不到关卡 ${stage}`);
+  const loaded = loadStageMap(files, j.map);
+  if (!loaded) throw new Error(`找不到地图 ${j.map}`);
+  const t = terrain(files);
+  const board = Board.fromMap(loaded.map, t.ground, t.upper);
+  const units = stageUnits(j);
+  const battle = !/^(act|train)/i.test(stage);
   return {
     name: stage,
-    enemyRanks: !/^(act|train)/i.test(stage) ? Object.fromEntries(units.filter(u=>u.side==='enemy').map(u=>[u.index,enemyRank(u.type)])) : undefined,
-    // 黄泥冈沿用原随行演员，分别承担军汉、虞候和谢都管对白，不另加战斗单位。
-    names: stage.toLowerCase() === 'act10-1' ? { 1: '军汉', 2: '军汉', 3: '虞候', 4: '虞候', 5: '谢都管' } : undefined,
+    enemyRanks: j.enemyRanks ?? (battle ? Object.fromEntries(units.filter((u) => u.side === 'enemy').map((u) => [u.index, enemyRank(u.type)])) : undefined),
+    names: j.names,
+    spectators: j.spectators,
+    clearGold: j.clearGold,
+    rules: j.rules,
     board,
     units,
-    blocks: pabFile
-      ? tuneBlocks(stage, adjustStoryText(stage, adjustBlocks(stage, parsePasBlocks(files.get(pabFile), 'big5')), opts.text), units, 'big5')
-      : [],
-    header: pabFile ? parsePasHeader(files.get(pabFile)) : undefined,
-    displayBlocks: opts.simplified && pasFile
-      ? tuneBlocks(stage, adjustStoryText(stage, parsePasBlocks(files.get(pasFile), 'gbk')), units, 'gbk')
-      : undefined,
+    blocks: stageBlocks(j),
+    header: { ...j.header },
     data,
     seed: opts.seed,
     text: opts.text,

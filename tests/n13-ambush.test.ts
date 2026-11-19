@@ -13,7 +13,7 @@ describe.skipIf(!has)('N13 诱敌深入', () => {
     const files = new NodeFiles(DATA);
     const tr = buildT2S(files);
     const data = loadGameData(files, tr);
-    const b = new Battle(loadStage(files, data, 'N13', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N13', { seed: 1, text: tr }));
     // 阮氏兄弟不会战败，这样只验证回合触发
     const kill = (b as unknown as { kill: (...a: unknown[]) => void }).kill.bind(b);
     (b as unknown as { kill: (...a: unknown[]) => void }).kill = (u, t, d) => {

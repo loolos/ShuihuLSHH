@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import{describe,it,expect}from'vitest';
-import{loadStage,loadGameData}from'../src/rules/load.ts';
+import{loadStage,loadGameData,exeTables,stageJson}from'../src/rules/load.ts';
 import{Battle}from'../src/rules/battle.ts';
 import{enemyRank,relativeEnemyLevel}from'../src/rules/enemy-level.ts';
 import{loadPackFromDisk}from'../tools/sim-pack.ts';
@@ -25,7 +25,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/ShuiHu.exe`))('完整流程等级',()=>{
  };
  it('全部原版战斗及主线插关/续篇，低级和高级存档都满足等级区间',()=>{
   for(const lv of[5,35]){
-   for(const s of readExeTables(files.get('ShuiHu.exe')).stages.filter(s=>s.mapName&&files.has(`Map/${s.mapName}.act`))){const first=loadStage(files,data,s.mapName),party=new Map(first.units.filter(u=>u.side==='player').map(u=>[u.type,member(u.type,lv)]));check(loadStage(files,data,s.mapName,{party}));}
+   for(const s of exeTables(files).stages.filter(s=>s.mapName&&!!stageJson(files, s.mapName))){const first=loadStage(files,data,s.mapName),party=new Map(first.units.filter(u=>u.side==='player').map(u=>[u.type,member(u.type,lv)]));check(loadStage(files,data,s.mapName,{party}));}
    for(const stage of rt.stages){const party=new Map(stage.units.filter(u=>u.side==='player').map(u=>{const id=typeof u.class==='number'?u.class:rt.classIds.get(u.class)!;return[id,member(id,lv)]}));check(compileStage(rt,stage,files,{party,joinLevel:lv+10}));}
   }
  });

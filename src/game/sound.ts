@@ -119,7 +119,7 @@ class SoundSystem {
   // ---- 原版音效（压缩后的 MP3，见 tools/gen-sound.ts） ----
   /** gamedata/sound/：仓库里由原版 Sound/*.wav 转出的 MP3 和 名字 → 文件 的索引 */
   private base() {
-    return import.meta.env.DEV ? '/gamedata/sound/' : REPO_GAMEDATA.replace(/shuihu\/$/, 'sound/');
+    return import.meta.env.DEV ? '/gamedata/sound/' : REPO_GAMEDATA.replace(/original\/$/, 'sound/');
   }
   private loadIndex(): Promise<Record<string, string> | null> {
     this.index ??= fetch(this.base() + 'index.json')

@@ -6,7 +6,10 @@ import {describe,it,expect}from'vitest';
 import{loadStage,loadStageMap,loadGameData}from'../src/rules/load.ts';
 import{Battle,type BattleEvent}from'../src/rules/battle.ts';
 import{NodeFiles,DATA}from'../tools/sim-lib.ts';
-import{WILLOW_CELLS,WILLOW_MAP,encounterMap}from'../src/rules/willow-encounter.ts';
+import{stageMap}from'../src/rules/load.ts';
+/** 柳树下：狮子楼（N05）裁图，鲁智深拔柳后这几格可走（数据在 gamedata/stages/Act5-2.json） */
+const WILLOW_MAP='N05@32,0,22,22';
+const WILLOW_CELLS=[{x:3,y:11},{x:2,y:12},{x:3,y:12},{x:4,y:12},{x:3,y:13},{x:4,y:13}];
 import{stageLabel}from'../src/game/stage-names.ts';
 import{recordResult}from'../src/rules/campaign.ts';
 import{planAi}from'../src/rules/ai.ts';
@@ -14,7 +17,7 @@ import{OccluderIndex,coarseMask}from'../src/game/occlusion.ts';
 describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>{
  const files=new NodeFiles(DATA),data=loadGameData(files),input=()=>loadStage(files,data,'Act5-2',{seed:2});
  it('原串关换用狮子楼裁图，只有鲁智深参战，四名泼皮，其余五人旁观且不可攻击',()=>{
-  expect(loadStageMap(files,encounterMap('Act5-2'))!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);
+  expect(stageMap(files,'Act5-2')).toBe(WILLOW_MAP);expect(loadStageMap(files,stageMap(files,'Act5-2'))!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);
   const i=input(),b=new Battle(i);const opening=b.begin();
   expect(opening.filter(e=>e.type==='status'&&b.spectators.has(e.uid)).map(e=>e.type==='status'&&e.text)).toEqual(Array(5).fill('观战'));
   expect(opening.filter(e=>e.type==='look'&&b.spectators.has(e.uid))).toHaveLength(0);

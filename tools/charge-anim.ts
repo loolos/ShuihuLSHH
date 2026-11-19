@@ -7,24 +7,10 @@ import { loadAssets } from '../src/game/assets.ts';
 import { chargeTiming, CHARGE_TOTAL_MAX_MS } from '../src/game/cast-timing.ts';
 import type { GameFiles } from '../src/platform/gamefiles.ts';
 import { loadPackFromDisk } from './sim-pack.ts';
-import { DATA } from './sim-lib.ts';
+import { DATA, NodeFiles } from './sim-lib.ts';
 
-const index = new Map<string, string>();
-const walk = (d: string, rel: string) => {
-  for (const e of fs.readdirSync(d, { withFileTypes: true })) {
-    const r = rel ? `${rel}/${e.name}` : e.name;
-    if (e.isDirectory()) walk(path.join(d, e.name), r);
-    else index.set(r.toLowerCase(), r);
-  }
-};
-walk(DATA, '');
-const files = {
-  get: (p: string) => fs.readFileSync(path.join(DATA, index.get(p.toLowerCase()) ?? p)),
-  has: (p: string) => index.has(p.toLowerCase()),
-  list: (dir: string, ext: string) => [...index.values()].filter((p) => p.toLowerCase().startsWith(dir.toLowerCase() + '/') && p.toLowerCase().endsWith(ext)),
-  copy() {},
-  async ensure() { return 0; },
-} as unknown as GameFiles;
+const disk = new NodeFiles(DATA);
+const files = Object.assign(disk, { copy() {}, async ensure() { return 0; } }) as unknown as GameFiles;
 
 /** 旧做法：出手动作按原速播，只有 2500 ms 的保险上限 */
 const OLD_CAP = 2500;

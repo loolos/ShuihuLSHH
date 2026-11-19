@@ -1,11 +1,10 @@
-import { encounterMap } from '../rules/willow-encounter.ts';
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
 import Phaser from 'phaser';
 import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
 import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
-import { loadStage, loadStageMap } from '../rules/load.ts';
+import { loadStage, loadStageMap, stageMap } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
 import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText } from '../rules/skills.ts';
 import { sound } from './sound.ts';
@@ -150,7 +149,8 @@ export class BattleScene extends Phaser.Scene {
     this.party = data.party;
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
-    this.mapName = data.map ?? encounterMap(data.stage);
+    // 原版关卡的地图写在关卡 JSON 里（柳树下用狮子楼裁图）
+    this.mapName = data.map ?? (data.assets.files ? stageMap(data.assets.files, data.stage) : data.stage);
     this.tint = data.tint;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
@@ -172,7 +172,7 @@ export class BattleScene extends Phaser.Scene {
     const loaded = loadStageMap(files, this.mapName);
     if (!loaded) throw new Error(`找不到地图 ${this.mapName}`);
     const { map } = loaded;
-    this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { simplified: true, seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
+    this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
     this.ui.spectators = this.battle.spectators;
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
