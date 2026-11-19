@@ -105,12 +105,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect(b.status).toBe('won');
   });
 
-  it('揭阳岭：四人被绑；第 6 回合开始还没赶到就判负，放哨的火家报信后提前到第 5 回合', () => {
+  it('揭阳岭：四人走进酒店被麻翻、拖进后屋绑住；第 7 回合开始还没赶到就判负，放哨的火家报信后提前到第 6 回合', () => {
     const { b, get } = open('jieyangling');
     for (const id of ['songjiang', 'hero', 'zhangqian', 'liwan']) expect(b.isBound(get(id)), id).toBe(true);
-    turn(b, 5);
-    expect(b.status).toBe('playing');
+    expect([get('songjiang').x, get('songjiang').y]).toEqual([1, 7]);
     turn(b, 6);
+    expect(b.status).toBe('playing');
+    turn(b, 7);
     expect(b.status).toBe('lost');
     const o = open('jieyangling');
     const lj = o.get('lijun');
@@ -121,6 +122,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect(o.get('shao-1').ai.point).toEqual({ x: 11, y: 13 });
     const s1 = o.get('shao-1'); s1.x = 11; s1.y = 13; after(o.b);
     turn(o.b, 5);
+    expect(o.b.status).toBe('playing');
+    turn(o.b, 6);
     expect(o.b.status).toBe('lost');
   });
 
