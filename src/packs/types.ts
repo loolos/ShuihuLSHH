@@ -201,6 +201,8 @@ export interface PackUnitJson {
   hpMultiplier?: number;
   /** 相对本场队伍平均等级的偏移（动态关卡敌人/友军）。 */
   levelOffset?: number;
+  /** 明确区分借杂兵模型的头领与普通兵；省略时按职业分类。 */
+  enemyRank?: 'troop' | 'leader';
   /** 开局不在场，剧本点名（appear / say）时登场 */
   hidden?: boolean;
   /** 被押送者的囚车外观；解开绑缚后移除，只影响画面。 */

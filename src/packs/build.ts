@@ -1,3 +1,5 @@
+import entryLevels from '../data/entry-levels.json' with { type: 'json' };
+import { enemyRank } from '../rules/enemy-level.ts';
 // 扩展包载入（docs/game-design.md §15.2）：把包的职业、技能、道具接到原版数据后面，把关卡 JSON 编译成 StageInput。
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
@@ -286,7 +288,7 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 }
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
-export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number } = {}): StageInput {
+export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean } = {}): StageInput {
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
   const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
@@ -294,7 +296,21 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
     board.blocked[y * board.width + x] = 0;
   }
+  // 选关预设只用于新建试玩，不覆盖正常主线存档；表里的包职业使用稳定key。
+  const preset: Record<string,number> = opts.preset ? (entryLevels.levels as Record<string,Record<string,number>>)[`${rt.id}/${stage.id}`] ?? {} : {};
+  if (opts.preset) {
+    const party = new Map(opts.party);
+    for(const unit of stage.units.filter(u=>u.side==='player')) {
+      const id=typeof unit.class==='number'?unit.class:rt.classIds.get(unit.class)!;
+      const level=preset[String(unit.class)];
+      if(level===undefined)continue;
+      const old=party.get(id);
+      const slots=[...rt.data.classes[id].defaultItems];levelKit(rt.data,rt.data.classes[id],level,slots);party.set(id,{...old,classId:id,level,exp:0,slots,forge:[]});
+    }
+    opts={...opts,party};
+  }
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
+  if(opts.preset)units.forEach((u,i)=>{if(u.side==='player'&&preset[String(stage.units[i].class)]!==undefined)u.level=preset[String(stage.units[i].class)];});
   if (stage.dynamicLevels) {
     const levels = units.filter(u => u.side === 'player').map(u => opts.party?.get(u.type)?.level).filter((n): n is number => n !== undefined);
     const level = levels.length ? Math.round(levels.reduce((a,b) => a+b,0)/levels.length) : opts.joinLevel || Math.round(units.filter(u=>u.side==='player').reduce((a,u)=>a+u.level,0)/Math.max(1, units.filter(u=>u.side==='player').length));
@@ -306,6 +322,10 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     // A story's authored level must not silently promote an existing member or erase experience.
     for (const u of units) if (u.side === 'player' && opts.party.has(u.type)) u.level = opts.party.get(u.type)!.level;
   }
+  // 新入队只按本场已有战斗好汉的均级确定一次，不能再被全局joinLevel二次抬高。
+  const existing = units.filter(u=>u.side==='player' && !stage.units[u.index].spectator && !stage.units[u.index].prisonCart && rt.data.classes[u.type].skills.length && opts.party?.has(u.type)).map(u=>opts.party!.get(u.type)!.level);
+  const localJoin = existing.length ? Math.round(existing.reduce((a,b)=>a+b,0)/existing.length) : opts.joinLevel;
+  if (opts.party?.size && localJoin) for (const u of units) if(u.side==='player'&&!opts.party.has(u.type)) u.level=localJoin;
   // 先确定动态等级，再生成默认配装；已有队员装备仍由 party 继承。
   kitPlayers(rt, stage, units, files);
   const byId = new Map(stage.units.map((u, i) => [u.id, { json: u, act: units[i] }]));
@@ -326,7 +346,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, party: opts.party, joinLevel: opts.joinLevel };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, enemyRanks: Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */

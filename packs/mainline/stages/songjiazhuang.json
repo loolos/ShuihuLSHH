@@ -63,6 +63,7 @@
     },
     {
       "id": "zhang",
+      "enemyRank": "leader",
       "class": 36,
       "side": "enemy",
       "x": 23,

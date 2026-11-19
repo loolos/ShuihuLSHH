@@ -32,6 +32,8 @@ export interface CampaignState {
   tales?: string[];
   /** 主线插关 / 续篇（docs/game-design.md §15.8、§15.10）：当前要演的段落（<包>/<关卡>） */
   insert?: string;
+  /** 全新存档直接选主线插关：仅本次载入使用完整流程推荐等级。 */
+  insertPreset?: string;
   /** 已经打过的插关（<包>/<关卡>），读档、重进不再重复 */
   inserts?: string[];
   /** 主线已经通关；重载时显示通关画面而不是重打最后一关 */

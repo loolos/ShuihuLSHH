@@ -88,7 +88,7 @@
       "level": 29,
       "facing": 2,
       "hidden": false,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -100,7 +100,7 @@
       "level": 29,
       "facing": 2,
       "hidden": false,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -112,7 +112,7 @@
       "level": 29,
       "facing": 2,
       "hidden": false,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -124,7 +124,7 @@
       "level": 29,
       "facing": 2,
       "hidden": false,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -136,7 +136,7 @@
       "level": 29,
       "facing": 2,
       "hidden": false,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -172,7 +172,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -184,7 +184,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -196,7 +196,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -208,7 +208,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -220,7 +220,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -244,7 +244,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -256,7 +256,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -268,7 +268,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -280,7 +280,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -292,7 +292,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州追兵"
     },
     {
@@ -304,7 +304,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -316,7 +316,7 @@
       "level": 29,
       "facing": 2,
       "hidden": true,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "name": "青州弓手"
     },
     {
@@ -338,7 +338,7 @@
       "x": 6,
       "y": 1,
       "level": 29,
-      "levelOffset": -1,
+      "levelOffset": -2,
       "hidden": true,
       "name": "青州追兵",
       "facing": 2

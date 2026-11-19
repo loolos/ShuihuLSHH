@@ -59,6 +59,7 @@
   },
   {
    "id": "qiu",
+   "enemyRank": "leader",
    "class": 66,
    "side": "enemy",
    "x": 13,

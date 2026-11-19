@@ -42,7 +42,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
   const stage = rt.stages.find((s) => !stageId || s.id === stageId)!;
   let wins = 0;
   for (let seed = 1; seed <= Number(n); seed++) {
-    const input = compileStage(rt, stage, files, { seed, text: tr });
+    const input = compileStage(rt, stage, files, { seed, text: tr, preset: id === 'mainline' });
     const b = new Battle(input);
     const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
     const goal = goalBlock?.trigger.kind === 'area' ? { who: goalBlock.trigger.chars ?? [goalBlock.trigger.char], x: (goalBlock.trigger.x1 + goalBlock.trigger.x2) >> 1, y: (goalBlock.trigger.y1 + goalBlock.trigger.y2) >> 1 } : null;

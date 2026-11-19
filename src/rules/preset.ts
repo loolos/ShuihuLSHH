@@ -67,10 +67,11 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
     while (slots.length < SLOT_COUNT) slots.push(0);
     const forge = slots.map(() => 0);
 
-    members.set(u.type, { classId: u.type, level: Math.max(table[u.type] ?? level, u.level), exp: 0, slots, forge });
+    members.set(u.type, { classId: u.type, level: table[u.type] ?? Math.max(level,u.level), exp: 0, slots, forge });
     script.set(u.type, u.level);
   }
-  balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
+  // 已有整条主线的经验估算预设时不再被旧敌人绝对等级反向压低。
+  if (!Object.keys(table).length) balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
   for (const m of members.values()) levelKit(data, data.classes[m.classId], m.level, m.slots);
   // 银子固定为打到上一关为止的期望收入（负责人 2026-11-14），不沿用手上的钱
   return { version: 1, stage: target, gold: pos > 0 ? expectedGold(files, data, stages, pos - 1) : 0, members: [...members.values()] };

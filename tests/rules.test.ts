@@ -1138,7 +1138,7 @@ describe('关卡串联', () => {
     const b = new Battle({ name: 't', board: new Board(6, 6), units, blocks: [], data, seed: 1, party: partyOf(c), joinLevel: joinLevel(c) });
     expect(b.unit(0)!.level).toBe(20); // 老成员照旧
     expect(b.unit(1)!.level).toBe(23); // 新人 = 平均
-    expect(b.unit(2)!.level).toBe(30); // 剧本等级更高时用剧本等级
+    expect(b.unit(2)!.level).toBe(25); // 已有成员不再被剧本30级强行抬高
     expect(splitTeamExp([{ level: 40, exp: 0 }], 50)).toEqual([50]);
   });
 
