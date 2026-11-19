@@ -1,0 +1,63 @@
+{
+  "map": "Act3-1",
+  "header": {"blockCount":1,"town":0,"next":9,"act":1},
+  "units": [
+    {"index":0,"type":5,"group":0,"side":"player","facing":2,"x":10,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":23,"group":1,"side":"ally","facing":0,"x":10,"y":17,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":15,"group":0,"side":"player","facing":2,"x":11,"y":8,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":23,"group":0,"side":"ally","facing":3,"x":7,"y":8,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":22,"group":0,"side":"ally","facing":3,"x":7,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":22,"group":0,"side":"ally","facing":3,"x":7,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":22,"group":0,"side":"ally","facing":3,"x":7,"y":11,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":22,"group":0,"side":"ally","facing":3,"x":7,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":23,"group":0,"side":"ally","facing":1,"x":13,"y":8,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":22,"group":0,"side":"ally","facing":1,"x":13,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":22,"group":0,"side":"ally","facing":1,"x":13,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":22,"group":0,"side":"ally","facing":1,"x":13,"y":11,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":22,"group":0,"side":"ally","facing":1,"x":13,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":23,"group":0,"side":"ally","facing":3,"x":8,"y":14,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":23,"group":0,"side":"ally","facing":1,"x":13,"y":14,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,32,1,0,0,0,24,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1001},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":10},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1001},
+        {"op":13,"flag":0,"text":"报！陈达头目去打史家村时，反而被史进捉住了！现在生死不明。"},
+        {"op":12,"flag":1,"value":15},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":12},
+        {"op":13,"flag":0,"text":"什么！"},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"不听我的劝告，果然变成这个下场。"},
+        {"op":12,"flag":1,"value":15},
+        {"op":13,"flag":0,"text":"大哥！我们倾巢而出，乘混乱将二哥救出来怎么样？"},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"笨蛋！连陈达都轻易被史进活捉，我们两个加起来也打不过他呀！"},
+        {"op":12,"flag":1,"value":15},
+        {"op":13,"flag":0,"text":"那也不能就见死不救啊！当初我们结拜兄弟时，已经发誓『不求同日生，只愿同日死』！如今陈达生死不明，我们怎么能袖手旁观呢！"},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"嗯...如今只有这个办法了...贤弟，你有不怕死的胆量吗？"},
+        {"op":12,"flag":1,"value":15},
+        {"op":13,"flag":0,"text":"当然！只要能救陈达出来，我杨春什么地方都敢闯！兄长有何吩咐？"},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"好！我们走！去史家村！"},
+        {"op":12,"flag":1,"value":5},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":17},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":15},
+        {"op":14,"flag":1,"value":9},
+        {"op":15,"flag":1,"value":16},
+        {"op":17,"flag":0,"value":1},
+        {"op":29,"flag":null,"text":"朱武，杨春舍命闯史家村！"}
+      ]
+    }
+  ]
+}

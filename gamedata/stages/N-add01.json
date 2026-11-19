@@ -1,0 +1,125 @@
+{
+  "map": "N-add01",
+  "header": {"blockCount":6,"town":1,"next":3,"act":0},
+  "units": [
+    {"index":0,"type":18,"group":0,"side":"ally","facing":2,"x":12,"y":0,"level":1,"flags":1281,"extra":[1,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":32,"group":3,"side":"enemy","facing":0,"x":9,"y":14,"level":2,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":32,"group":1,"side":"enemy","facing":3,"x":6,"y":11,"level":2,"flags":257,"extra":[18,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":32,"group":2,"side":"enemy","facing":1,"x":12,"y":11,"level":2,"flags":257,"extra":[18,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":38,"group":4,"side":"enemy","facing":0,"x":10,"y":15,"level":2,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":32,"group":5,"side":"enemy","facing":0,"x":11,"y":14,"level":2,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":32,"group":6,"side":"enemy","facing":3,"x":6,"y":12,"level":2,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":32,"group":7,"side":"enemy","facing":1,"x":12,"y":12,"level":2,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":0,"group":8,"side":"player","facing":2,"x":12,"y":0,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":1,"group":0,"side":"player","facing":2,"x":12,"y":0,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":183,"group":0,"side":"object","facing":0,"x":1,"y":3,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,27,6,1,1,3,27,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":18},
+        {"op":14,"flag":1,"value":9},
+        {"op":15,"flag":1,"value":11},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":18},
+        {"op":13,"flag":0,"text":"哇...."},
+        {"op":12,"flag":1,"value":1001},
+        {"op":12,"flag":1,"value":1002},
+        {"op":12,"flag":1,"value":1003},
+        {"op":12,"flag":1,"value":1004},
+        {"op":12,"flag":1,"value":1005},
+        {"op":12,"flag":1,"value":1006},
+        {"op":12,"flag":0,"value":1007},
+        {"op":12,"flag":1,"value":0},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":7},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1},
+        {"op":14,"flag":1,"value":9},
+        {"op":15,"flag":1,"value":7},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"糟了！娘！！！"},
+        {"op":12,"flag":1,"value":32},
+        {"op":13,"flag":0,"text":"嘿！只要捉住王母，不怕王进不乖乖就范。"},
+        {"op":12,"flag":1,"value":1001},
+        {"op":13,"flag":0,"text":"呵呵！这会儿咱们可要立下大功了。"},
+        {"op":35,"flag":null,"value":20},
+        {"op":31,"flag":null,"text":"限制回合数 --- 20"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 王进死亡"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 王母死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":20},
+      "cond": {"type":0,"arg":20},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":18},
+      "cond": {"type":1,"arg":18},
+      "head": [1,0,1,0,0,0,130,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"王母在混战之中被官兵所杀，悲愤的王进冲入敌阵，击毙数名官兵，后被乱刀砍死；%N奋力杀出敌阵，隔日遭官府全面通缉，从此亡命天涯........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,0,1,0,0,0,136,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进为救母亲，被官兵所包围，%N援救不及，王进被杀，王母也随之自尽，%N虽逃出生天，却每每自责其罪，三年后，抑郁而终，享年二十八岁.........."}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":0},
+      "cond": {"type":1,"arg":0},
+      "head": [1,0,1,0,0,0,80,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N为官兵所擒杀，王进孤掌难鸣，终失手被擒，被解押回京，后在狱中为高俅所害........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":255},
+      "cond": {"type":1,"arg":255},
+      "head": [1,24,1,0,0,0,40,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"承蒙搭救，还未来得及请问壮士的大名？"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"啊...我名叫%N。"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"%N...莫非人称『%M』的%N？"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"哈哈...没有想到我还那么出名。"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"江湖相传路见不平、拔刀相助的『%M』就是您？真是失敬失敬。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"这没什么；我这个人就是好打抱不平，所以常常得罪官兵。对了，我听士兵提到高俅的名字。你是因为什么事得罪了高俅那厮？"},
+        {"op":12,"flag":1,"value":1},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":7},
+        {"op":13,"flag":0,"text":"唉...我名叫王进，原本是八十万禁军教头；前些日子新上任一位高太尉，我当是谁呢！原来是以前在东京的地痞高二！听说这个高二因为踢得一脚好球，所以改名高俅，跟在端王身边。后来端王被册立为天子，高俅也跟着发了。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"那么高俅为何要找你麻烦？"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"他以前曾被我父亲一棒打倒，受了三四个月的重伤；今日是他发迹之时，正想要报仇泄恨；我想再继续待在他底下，一定会被他找机会整死！还不如走为上策，前去延安府投靠熟人..."},
+        {"op":12,"flag":1,"value":1,"quiet":true},
+        {"op":13,"flag":1,"text":"那日他当着众人骂我：『你爷是街市上使花棒卖药的，你省的甚么武艺！』回到家中，我娘只说了一句：『我儿，三十六着，走为上着。』"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"不过你现在伤势不轻，老夫人又饱受跋涉之苦；此处已出高俅管辖范围，不如暂时找一处地方休养，再往延安府不迟。"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"%X兄说的是。"},
+        {"op":29,"flag":null,"text":"经过一场恶战，王母终于逃脱了官兵的追捕。"}
+      ]
+    }
+  ]
+}

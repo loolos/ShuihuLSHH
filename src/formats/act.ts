@@ -16,7 +16,8 @@ export interface ActUnit {
   flags: number; // w7（AI/出场条件，未解）
   extra: number[]; // w8–w10
   items: number[]; // w12–w18：武器、衣服、头饰、物品×4（0 可能表示空，也可能是道具 0，见文档）
-  raw: number[];
+  /** 19 个 u16 原样（只有直接解析 .act 时才有） */
+  raw?: number[];
 }
 
 export function parseAct(buf: Buffer, file = 'act'): ActUnit[] {

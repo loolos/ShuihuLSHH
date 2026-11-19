@@ -1,0 +1,421 @@
+{
+  "map": "N-add03",
+  "header": {"blockCount":37,"town":0,"next":8,"act":0},
+  "units": [
+    {"index":0,"type":44,"group":1,"side":"enemy","facing":2,"x":9,"y":0,"level":3,"flags":1025,"extra":[0,19,34],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":45,"group":2,"side":"enemy","facing":2,"x":9,"y":0,"level":3,"flags":1025,"extra":[0,20,34],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":45,"group":3,"side":"enemy","facing":2,"x":9,"y":0,"level":3,"flags":1025,"extra":[0,19,35],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":44,"group":4,"side":"enemy","facing":2,"x":9,"y":0,"level":3,"flags":1025,"extra":[0,20,35],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":45,"group":5,"side":"enemy","facing":1,"x":9,"y":0,"level":3,"flags":1025,"extra":[0,21,35],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":1,"group":6,"side":"player","facing":1,"x":20,"y":22,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":19,"group":7,"side":"ally","facing":3,"x":14,"y":21,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":19,"group":8,"side":"ally","facing":3,"x":15,"y":22,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,35,4,1,1,1,31,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1006},
+        {"op":13,"flag":0,"text":"大家就在这埋伏，你们一听我号令就杀出去！"},
+        {"op":12,"flag":1,"value":1007},
+        {"op":13,"flag":0,"text":"是！"},
+        {"op":12,"flag":1,"value":1008},
+        {"op":13,"flag":0,"text":"是！"},
+        {"op":12,"flag":1,"value":1006},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":1007},
+        {"op":16,"flag":1,"value":9},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1008},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":1001},
+        {"op":14,"flag":1,"value":9},
+        {"op":15,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1002},
+        {"op":14,"flag":1,"value":11},
+        {"op":15,"flag":1,"value":5},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1003},
+        {"op":14,"flag":1,"value":9},
+        {"op":15,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1004},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":7},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":1005},
+        {"op":14,"flag":1,"value":13},
+        {"op":15,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":35,"flag":null,"value":30},
+        {"op":31,"flag":null,"text":"限制回合数 --- 30"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":33,"flag":null,"text":"失败条件   --- 敌人从画面端逃跑"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":1},
+      "cond": {"type":0,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":2},
+      "cond": {"type":0,"arg":2},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":3},
+      "cond": {"type":0,"arg":3},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":4},
+      "cond": {"type":0,"arg":4},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":5},
+      "cond": {"type":0,"arg":5},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":6},
+      "cond": {"type":0,"arg":6},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":7},
+      "cond": {"type":0,"arg":7},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":8},
+      "cond": {"type":0,"arg":8},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":9},
+      "cond": {"type":0,"arg":9},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":10},
+      "cond": {"type":0,"arg":10},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":11},
+      "cond": {"type":0,"arg":11},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":12},
+      "cond": {"type":0,"arg":12},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":13},
+      "cond": {"type":0,"arg":13},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":14},
+      "cond": {"type":0,"arg":14},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":15},
+      "cond": {"type":0,"arg":15},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":16},
+      "cond": {"type":0,"arg":16},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":17},
+      "cond": {"type":0,"arg":17},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":18},
+      "cond": {"type":0,"arg":18},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":19},
+      "cond": {"type":0,"arg":19},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":20},
+      "cond": {"type":0,"arg":20},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":21},
+      "cond": {"type":0,"arg":21},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":22},
+      "cond": {"type":0,"arg":22},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":23},
+      "cond": {"type":0,"arg":23},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":24},
+      "cond": {"type":0,"arg":24},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":25},
+      "cond": {"type":0,"arg":25},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":26},
+      "cond": {"type":0,"arg":26},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":27},
+      "cond": {"type":0,"arg":27},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":28},
+      "cond": {"type":0,"arg":28},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":29},
+      "cond": {"type":0,"arg":29},
+      "head": [1,2,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"快点！就快到了！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"signal","type":2,"param":1},
+      "cond": {"type":2,"arg":1},
+      "head": [1,13,1,0,0,0,0,2,2],
+      "ops": [
+        {"op":12,"flag":1,"value":44},
+        {"op":13,"flag":0,"text":"什么？！有埋伏！大家撤退，活着离开的人想办法回去通知大头目替我们报仇！"},
+        {"op":12,"flag":1,"value":1001},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1003},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":4},
+        {"op":12,"flag":1,"value":1002},
+        {"op":14,"flag":1,"value":20},
+        {"op":15,"flag":1,"value":34},
+        {"op":17,"flag":0,"value":4},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":30},
+      "cond": {"type":0,"arg":30},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":44,"x1":8,"y1":0,"x2":11,"y2":1},
+      "cond": {"op":"and","a":{"type":4,"arg":44},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":8},"b":{"type":8,"arg":0}},"b":{"op":"and","a":{"type":9,"arg":11},"b":{"type":10,"arg":1}}}},
+      "head": [4,0,1,0,0,0,102,2,4],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进失手让喽罗逃回山寨，不久朱武、杨春率众倾巢而出，双方连战数日，后被官兵所乘，尽歼于史家庄中........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":44,"x1":18,"y1":34,"x2":21,"y2":35},
+      "cond": {"op":"and","a":{"type":4,"arg":44},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":18},"b":{"type":8,"arg":34}},"b":{"op":"and","a":{"type":9,"arg":21},"b":{"type":10,"arg":35}}}},
+      "head": [4,0,1,0,0,0,102,2,4],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进失手让喽罗逃回山寨，不久朱武、杨春率众倾巢而出，双方连战数日，后被官兵所乘，尽歼于史家庄中........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":45,"x1":8,"y1":0,"x2":11,"y2":1},
+      "cond": {"op":"and","a":{"type":4,"arg":45},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":8},"b":{"type":8,"arg":0}},"b":{"op":"and","a":{"type":9,"arg":11},"b":{"type":10,"arg":1}}}},
+      "head": [4,0,1,0,0,0,102,2,4],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进失手让喽罗逃回山寨，不久朱武、杨春率众倾巢而出，双方连战数日，后被官兵所乘，尽歼于史家庄中........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":45,"x1":18,"y1":34,"x2":21,"y2":35},
+      "cond": {"op":"and","a":{"type":4,"arg":45},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":18},"b":{"type":8,"arg":34}},"b":{"op":"and","a":{"type":9,"arg":21},"b":{"type":10,"arg":35}}}},
+      "head": [4,0,1,0,0,0,102,2,4],
+      "ops": [
+        {"op":30,"flag":null,"text":"王进失手让喽罗逃回山寨，不久朱武、杨春率众倾巢而出，双方连战数日，后被官兵所乘，尽歼于史家庄中........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":255},
+      "cond": {"type":1,"arg":255},
+      "head": [1,0,1,0,0,0,28,2,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"王进大显身手，打败所有敌人！"}
+      ]
+    }
+  ]
+}

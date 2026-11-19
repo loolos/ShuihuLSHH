@@ -498,6 +498,34 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 
 导入表显示：MFC/Win32 窗口、`CoCreateInstance`（DirectDraw/DirectInput/DirectSound）、`AVIFIL32`/`MSVFW32`（播放 AVI）、`WINMM`（CD 音轨、WAV）。
 
+## 15. 导出的 JSON（`gamedata/stages`、`maps`、`tables`）
+
+2026-11-19 把原版的关卡、地图和数据表导出成 JSON（目录说明见 game-design §12.2.1），游戏运行时只读这些 JSON；`src/formats/` 的二进制解析器保留，用于对照原件和生成文档。类型定义在 `src/formats/stage-json.ts`。
+
+**关卡 `stages/<关卡>.json`**（`StageJson`）
+
+| 字段 | 来源 | 说明 |
+|---|---|---|
+| `map` | `Map\<关卡>.map` | 地图名（`maps/` 下的文件名）；可带截取范围 `名字@x,y,宽,高`（Act5-2 = `N05@32,0,22,22`） |
+| `header` | `.pab` 15 B 头 | `{blockCount, town, next, act}`，同 §8 的文件头；`blockCount` 是原版区块数，不随追加的区块变 |
+| `units[]` | `.act` 每条 38 B 记录 | `{index, type, group, side, facing, x, y, level, flags, extra, items}`，字段同 §7；`index` 必须等于在数组里的位置。原版的 w5、w11 未解，没有导出（原件里还有）。`level` 对敌人是重制版的自有等级，不是原版值 |
+| `blocks[]` | `.pab` 区块 | `{trigger, cond, head, ops}`，区块号 = 在数组里的位置；`trigger`/`cond`/`head` 同 §8 的解析结果 |
+| `blocks[].ops[]` | 指令 | `{op, flag, value}`；文字指令（13、20、21、29–33）写 `{op, flag, text}`，`text` 是 `.pas` 的简体文字，不写 `value`。重制版加的字段：`quiet`（只点名不登场）、`actor`（已倒下的人临时出来演戏） |
+| `names` / `enemyRanks` / `spectators` / `clearGold` | 重制版 | 单位显示名、敌人等级档、观战演员、过关银子（键都是单位号） |
+| `rules` | 重制版 | `{rushOnDeath, clearAllWaves, rushText}`，见 game-design §9.3 |
+
+**地图 `maps/<地图>.json`**：`{width, height, cells}`，`cells[y*width+x]` 是数字（只有地表）或数组 `[地表, 地上物, 高度, 地上物, 高度, …]`，和自拼地图同一种格式（§5 的 `{tile, flags}` 链，地表层的 flags 在 63 张图里都是 0）。
+
+**数据表 `tables/`**
+
+| 文件 | 来源 | 内容 |
+|---|---|---|
+| `exe.json` | `ShuiHu.exe`（§13） | `readExeTables` 的结果：角色名、绰号、技能名、关卡表、二选一对话、城镇文字、特效触发帧（繁体原文） |
+| `human.json` | `Human.hum`（§10） | `parseHuman` 的结果，72 个职业，含未解字段的十六进制原样 `raw` |
+| `goods.json` | `Goods.dab`（§9） | `parseGoods` 的结果，200 件道具（未加重制版改动） |
+| `terrain.json` | `Ground.att`、`Upper.att`（§6） | `{ground, upper}`，各 2040 个字节（去掉 8 B 头） |
+| `t2s.json` | 63 对 `.pab`/`.pas` 逐字对齐 | 繁→简单字对照，按出现次数投票（`.pas` 偶有错字） |
+
 ## 14. 尚未解决的问题
 
 1. LIB 头部 +0x0B 的 u32；`Man.lib` 每个动作组是什么动作；`Panel.lib` 各帧的用途。

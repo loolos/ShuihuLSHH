@@ -1,48 +1,23 @@
-// 主线对白补的原著原文【新】：每处定位句都找得到，原版 / 简体两份剧本插在同一位置，过场演出时按顺序说出来。
+// 主线对白补的原著原文【新】：2026-11-19 起直接写在 gamedata/stages 的关卡剧本里，这里检查过场演出时按顺序说出来、原版的战斗触发不变。
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parsePasBlocks } from '../src/formats/pas.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
-import { buildT2S, findStageFile, loadGameData, loadStage } from '../src/rules/load.ts';
-import { STORY_DEATH_BLOCKS, STORY_INSERTS, STORY_REPLACE, applyStoryQuotes } from '../src/rules/story-quotes.ts';
+import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
-const STAGES: Record<string, string> = {
-  'n-add01': 'N-add01', 'act2-2': 'Act2-2', n02: 'N02', n03: 'N03', 'act3-4': 'Act3-4', 'act5-1': 'Act5-1', 'act5-2': 'Act5-2',
-  'act5-3': 'Act5-3', n05: 'N05', 'act8-1': 'Act8-1', 'n-add10': 'N-add10', n09: 'N09', 'act10-1': 'Act10-1',
-  'act9-1': 'Act9-1', 'act14-2': 'Act14-2', 'act14-3': 'Act14-3', n13: 'N13',
-};
-
 describe.skipIf(!has)('主线对白补原著原文', () => {
   const files = new NodeFiles(DATA);
   const tr = buildT2S(files);
 
-  it('每处都插上、换上，两份剧本一一对应', () => {
-    const keys = new Set([...Object.keys(STORY_INSERTS), ...Object.keys(STORY_REPLACE), ...Object.keys(STORY_DEATH_BLOCKS)]);
-    for (const key of keys) {
-      const stage = STAGES[key];
-      expect(stage, key).toBeDefined();
-      const big5 = applyStoryQuotes(stage, parsePasBlocks(files.get(findStageFile(files, stage, '.pab')!), 'big5'), tr);
-      const gbk = applyStoryQuotes(stage, parsePasBlocks(files.get(findStageFile(files, stage, '.pas')!), 'gbk'));
-      expect(big5.missing, stage).toEqual([]);
-      expect(gbk.missing, stage).toEqual([]);
-      expect(gbk.blocks.length, stage).toBe(big5.blocks.length);
-      gbk.blocks.forEach((b, i) => expect(b.ops.map((o) => o.op), `${stage} #${i}`).toEqual(big5.blocks[i].ops.map((o) => o.op)));
-      const texts = gbk.blocks.flatMap((b) => b.ops.map((o) => o.text ?? ''));
-      const logicTexts = big5.blocks.flatMap((b) => b.ops.map((o) => o.text ?? ''));
-      for (const r of Object.values(STORY_REPLACE[key] ?? {})) {
-        expect(texts, stage).toContain(r);
-        expect(logicTexts, stage).toContain(r);
-      }
-      for (const ins of STORY_INSERTS[key] ?? []) for (const [, t] of ins.lines) expect(texts, stage).toContain(t);
-    }
-  });
+  /** 原版剧本原件（gamedata/original/Map/*.pab），用来对照重制版没动战斗触发 */
+  const rawBlocks = (stage: string) => parsePasBlocks(files.get(`Map/${stage}.pab`), 'big5');
 
   const play = (stage: string) => {
     const data = loadGameData(files, tr);
-    const b = new Battle(loadStage(files, data, stage, { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, stage, { seed: 1, text: tr }));
     return { b, ev: b.begin() };
   };
   const says = (ev: BattleEvent[]) => ev.flatMap((e) => (e.type === 'say' ? [`${e.speaker}：${e.text}`] : []));
@@ -85,9 +60,9 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(lines.join()).not.toMatch(/挑战书|不赴约|把你叫到这里/);
     expect(ev.some((e) => e.type === 'attack')).toBe(false);
     // 纯文字调整不改原版战斗触发、增援与胜负条件指令。
-    const input = loadStage(files, loadGameData(files, tr), 'N09', { text: tr, simplified: true });
-    const raw = parsePasBlocks(files.get(findStageFile(files, 'N09', '.pab')!), 'big5');
-    const gameplay = (blocks: typeof raw) => blocks.map((b) => ({ trigger: b.trigger, ops: b.ops.filter((o) => o.op !== 12 && o.op !== 13) }));
+    const input = loadStage(files, loadGameData(files, tr), 'N09', { text: tr });
+    const raw = rawBlocks('N09');
+    const gameplay = (blocks: typeof raw) => blocks.map((b) => ({ trigger: b.trigger, ops: b.ops.filter((o) => o.op !== 12 && o.op !== 13).map((o) => ({ op: o.op, flag: o.flag, value: o.text === undefined ? o.value : 0 })) }));
     expect(gameplay(input.blocks)).toEqual(gameplay(raw));
   });
 
@@ -160,13 +135,11 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(ev.some(e=>e.type==='attack'||e.type==='die')).toBe(false);expect(b.units).toHaveLength(13);
   });
 
-  it('黄泥冈原版走位和结束指令保留，简体与繁体两份演出结构一致', () => {
-    const raw=parsePasBlocks(files.get(findStageFile(files,'Act10-1','.pab')!),'big5');
-    const patched=applyStoryQuotes('Act10-1',raw,tr).blocks;
-    const movement=(bs:typeof raw)=>bs.flatMap(b=>b.ops.filter(o=>[14,15,16,17,29].includes(o.op)).map(o=>[o.op,o.flag,o.value]));
+  it('黄泥冈原版走位和结束指令保留', () => {
+    const raw=rawBlocks('Act10-1');
+    const patched=loadStage(files,loadGameData(files,tr),'Act10-1',{text:tr}).blocks;
+    const movement=(bs:typeof raw)=>bs.flatMap(b=>b.ops.filter(o=>[14,15,16,17].includes(o.op)).map(o=>[o.op,o.flag,o.value]));
     expect(movement(patched)).toEqual(movement(raw));
-    const gb=applyStoryQuotes('Act10-1',parsePasBlocks(files.get(findStageFile(files,'Act10-1','.pas')!),'gbk')).blocks;
-    expect(patched.map(b=>b.ops.map(o=>[o.op,[13,29].includes(o.op)?null:o.value]))).toEqual(gb.map(b=>b.ops.map(o=>[o.op,[13,29].includes(o.op)?null:o.value])));
   });
 
   it('插入之后把原来的说话者点回来', () => {

@@ -1,16 +1,17 @@
 // 网页版按需下载：进关只下载走路/受击/防御/普通攻击，技能出招前再下载；字节相同的帧只下载一份再复制。
-// 用仓库里的 gamedata/shuihu 模拟 GitHub 的 Range 请求，检查解出来的帧与整份文件一致。
+// 用仓库里的 gamedata/original 模拟 GitHub 的 Range 请求，检查解出来的帧与整份文件一致。
 import fs from 'node:fs';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import '../src/platform/buffer-shim.ts';
 import { GameFiles, LAZY_FILES, RemoteFile } from '../src/platform/gamefiles.ts';
+import { GAMEDATA_JSON } from '../src/platform/gamedata-json.ts';
 import { indexSpans, openLib } from '../src/formats/image.ts';
 import { ensureSkill, loadAssets, preloadStage } from '../src/game/assets.ts';
 import { fxGroups } from '../src/game/effects.ts';
 import alias from '../src/data/frame-alias.json';
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 
 describe.skipIf(!has)('按需下载', () => {
@@ -44,7 +45,7 @@ describe.skipIf(!has)('按需下载', () => {
       await r.ensure(indexSpans(Buffer.from(r.buf.buffer, 0, 15), size));
       remote.push(r);
     }
-    return loadAssets(new GameFiles(small, remote));
+    return loadAssets(new GameFiles(small, remote, GAMEDATA_JSON));
   };
 
   it('frame-alias.json 与 Man.lib、Effect.lib 一致', () => {

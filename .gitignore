@@ -1,4 +1,4 @@
-# 提取产物不入库；原版文件只放在 gamedata/（仓库须为私有，2026-11-11 用户决定）
+# 临时提取产物不入库；原版原件只放在 gamedata/original，导出的 JSON 在 gamedata/stages、maps、tables
 /original/
 /extracted/
 *.exe
@@ -24,8 +24,8 @@
 
 # 原版文件（不含 Sound/、Title/）只允许出现在 gamedata/ 下
 !/gamedata/**
-/gamedata/shuihu/Sound/
-/gamedata/shuihu/Title/
+/gamedata/original/Sound/
+/gamedata/original/Title/
 
 node_modules/
 dist/

@@ -1036,9 +1036,9 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
   });
 
   it('林冲别妻与大野猪林开场对白衔接到发配和暗中护送', () => {
-    const act = loadStage(files, base, 'Act7-1', { simplified: true, text: tr });
-    const ambush = loadStage(files, base, 'Act7-1a', { simplified: true, text: tr });
-    const text = (input: typeof act) => input.displayBlocks!.flatMap((block) => block.ops.map((op) => op.text ?? '')).join('\n');
+    const act = loadStage(files, base, 'Act7-1', { text: tr });
+    const ambush = loadStage(files, base, 'Act7-1a', { text: tr });
+    const text = (input: typeof act) => input.blocks.flatMap((block) => block.ops.map((op) => op.text ?? '')).join('\n');
     expect(text(act)).toContain('判我刺配沧州');
     expect(text(act)).toContain('董超、薛霸押着林冲离去');
     expect(text(act)).toContain('暗中跟上');

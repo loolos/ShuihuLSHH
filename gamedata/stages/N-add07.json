@@ -1,0 +1,86 @@
+{
+  "map": "N-add07",
+  "header": {"blockCount":4,"town":4,"next":26,"act":0},
+  "units": [
+    {"index":0,"type":0,"group":1,"side":"player","facing":2,"x":10,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":3,"group":2,"side":"player","facing":2,"x":11,"y":8,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":5,"group":3,"side":"player","facing":2,"x":10,"y":4,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":13,"group":4,"side":"player","facing":2,"x":9,"y":5,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":15,"group":5,"side":"player","facing":2,"x":12,"y":6,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":16,"group":6,"side":"player","facing":2,"x":8,"y":6,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":44,"group":7,"side":"enemy","facing":0,"x":18,"y":27,"level":11,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":44,"group":8,"side":"enemy","facing":0,"x":17,"y":28,"level":11,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":44,"group":9,"side":"enemy","facing":0,"x":15,"y":27,"level":11,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":44,"group":10,"side":"enemy","facing":0,"x":17,"y":26,"level":11,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":44,"group":11,"side":"enemy","facing":0,"x":16,"y":29,"level":11,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":65,"group":12,"side":"enemy","facing":0,"x":17,"y":30,"level":11,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":45,"group":13,"side":"enemy","facing":0,"x":18,"y":29,"level":10,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":45,"group":14,"side":"enemy","facing":3,"x":15,"y":25,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":45,"group":15,"side":"enemy","facing":1,"x":19,"y":14,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":45,"group":16,"side":"enemy","facing":1,"x":20,"y":15,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":16,"type":45,"group":17,"side":"enemy","facing":1,"x":19,"y":15,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":45,"group":18,"side":"enemy","facing":3,"x":11,"y":14,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":45,"group":19,"side":"enemy","facing":3,"x":12,"y":14,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":45,"group":20,"side":"enemy","facing":3,"x":10,"y":15,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":45,"group":21,"side":"enemy","facing":0,"x":16,"y":19,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":45,"group":22,"side":"enemy","facing":0,"x":17,"y":20,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":45,"group":23,"side":"enemy","facing":0,"x":18,"y":19,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":45,"group":24,"side":"enemy","facing":3,"x":11,"y":15,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":45,"group":25,"side":"enemy","facing":3,"x":3,"y":5,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":25,"type":45,"group":26,"side":"enemy","facing":3,"x":4,"y":5,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":45,"group":27,"side":"enemy","facing":3,"x":2,"y":6,"level":10,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":45,"group":28,"side":"enemy","facing":1,"x":19,"y":25,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":28,"type":45,"group":29,"side":"enemy","facing":1,"x":20,"y":26,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":45,"group":30,"side":"enemy","facing":1,"x":19,"y":26,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":45,"group":31,"side":"enemy","facing":1,"x":20,"y":25,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":45,"group":32,"side":"enemy","facing":3,"x":15,"y":24,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":32,"type":45,"group":33,"side":"enemy","facing":3,"x":14,"y":25,"level":10,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":33,"type":119,"group":0,"side":"object","facing":0,"x":25,"y":30,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":10,"group":0,"side":"object","facing":0,"x":4,"y":30,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,8,4,1,1,1,27,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":13,"flag":0,"text":"喂！你们..."},
+        {"op":12,"flag":1,"value":13},
+        {"op":13,"flag":0,"text":"废话少说，想活着离开的话，把身上财物留下来！"},
+        {"op":12,"flag":1,"value":1007},
+        {"op":13,"flag":0,"text":"什...什么？！你们没搞错吧，我们可是强盗啊！你们竟然向强盗打劫？！"},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"哈哈！咱们从前都是干强盗头子的，这回你们可踢到铁板了吧！"},
+        {"op":35,"flag":null,"value":40},
+        {"op":31,"flag":null,"text":"限制回合数 --- 40"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":40},
+      "cond": {"type":0,"arg":40},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":0},
+      "cond": {"type":1,"arg":0},
+      "head": [1,0,1,0,0,0,50,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N死亡，众人不敌盗贼围攻，荒野平添几缕英魂........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":255},
+      "cond": {"type":1,"arg":255},
+      "head": [1,0,1,0,0,0,10,2,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"游戏过关！"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "map": "Train2",
+  "header": {"blockCount":28,"town":0,"next":73,"act":1},
+  "units": [
+    {"index":0,"type":1,"group":1,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":0,"extra":[0,0,0],"items":[0,0,0,150,150,150,150]},
+    {"index":1,"type":0,"group":6,"side":"player","facing":0,"x":9,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":0,"group":6,"side":"ally","facing":0,"x":9,"y":9,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":2,"group":2,"side":"player","facing":0,"x":7,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":3,"group":5,"side":"player","facing":0,"x":10,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":4,"group":3,"side":"player","facing":0,"x":7,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":5,"group":7,"side":"player","facing":0,"x":8,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":7,"group":8,"side":"player","facing":0,"x":8,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":8,"group":9,"side":"player","facing":0,"x":9,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":9,"group":10,"side":"player","facing":0,"x":9,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":10,"group":11,"side":"player","facing":0,"x":10,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":11,"group":4,"side":"player","facing":0,"x":8,"y":10,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":12,"group":12,"side":"player","facing":0,"x":10,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":13,"group":13,"side":"player","facing":0,"x":11,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":14,"group":14,"side":"player","facing":0,"x":11,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":15,"group":15,"side":"player","facing":0,"x":12,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":16,"type":16,"group":17,"side":"player","facing":0,"x":9,"y":14,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":17,"group":16,"side":"player","facing":0,"x":12,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":9,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,150,150,150,150]},
+    {"index":24,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":25,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":28,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":32,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,150,150,150,150]},
+    {"index":33,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":35,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":36,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":37,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":38,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":39,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":40,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,150,150,150,150]},
+    {"index":41,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":42,"type":1,"group":0,"side":"enemy","facing":2,"x":9,"y":7,"level":38,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,24,1,0,0,0,0,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"师父！"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"喔！这不是史进吗？%X兄也在... 啊！林冲，你怎么也来了..."},
+        {"op":12,"flag":1,"value":11},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":59},
+        {"op":13,"flag":0,"text":"这真是说来话长啊..."},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"林冲将高衙内看上林夫人、白虎节堂遭陷、野猪林的暗杀、以及主角们仗义相助的来龙去脉都向王进说了。"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"唉～我所担心的事终究还是发生了。"},
+        {"op":12,"flag":1,"value":11},
+        {"op":13,"flag":0,"text":"不过这样也好，至少我不用再在那卑鄙小人的手下做事了，妻子和家人也都送到了安全的地方；倒是王大哥，高俅已经知道你在延安府了，我们都很担心他会来加害于你..."},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"哈哈...这我倒不担心，我已经躲开他那么远了，我相信他不会再来找我麻烦...不谈这个了，来了那么多的好汉，怎么不帮我介绍一下。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"王兄，我来介绍，这位是...."},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"当下%N将晁盖、公孙胜、阮氏兄弟等众人一一介绍给王进，双方相互寒喧了一番，皆是惺惺相惜、相见恨晚。"},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"对了！前些日子我又研究出一套功夫，谁有兴趣与我切磋切磋？"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"哈哈！王兄真是嗜武成痴啊！"},
+        {"op":27,"flag":null,"value":1}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"type":3,"arg":0},
+      "head": [1,0,2,1,0,0,17,2,3],
+      "ops": [
+        {"op":35,"flag":null,"value":25},
+        {"op":31,"flag":null,"text":"训练回合数 --- 25"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"好！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这招使得不错！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"再来再来！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"漂亮！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"试试这招如何！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"好！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这招使得不错！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"再来再来！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"漂亮！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"试试这招如何！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"好！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这招使得不错！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"再来再来！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"漂亮！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"试试这招如何！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"好！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这招使得不错！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"再来再来！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"漂亮！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"试试这招如何！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"好！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"这招使得不错！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"再来再来！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"漂亮！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":1},
+      "cond": {"type":1,"arg":1},
+      "head": [1,2,1,0,0,0,0,2,1],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"试试这招如何！"},
+        {"op":28,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"or","a":{"type":0,"arg":25},"b":{"type":1,"arg":1024}},
+      "head": [1,8,1,0,0,0,30,4,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"大家就暂且在此盘桓几天再走吧！也好让我略尽一下地主之谊。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"不瞒王兄，大伙正要上梁山泊投靠，咱们都是朝廷重赏的钦犯，只怕在此多呆要累了王兄..."},
+        {"op":12,"flag":1,"value":1},
+        {"op":13,"flag":0,"text":"嗳～！什么拖累不拖累的事，%X兄从此以后休要再提起；大伙儿今日不醉个三天三夜的话，我王进是不会放你们走的！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"唉..."},
+        {"op":29,"flag":null,"text":"短暂的平静是不是风波的先兆呢？"}
+      ]
+    }
+  ]
+}

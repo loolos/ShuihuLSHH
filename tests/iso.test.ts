@@ -50,7 +50,7 @@ describe('点击判定按格子菱形', () => {
   });
 });
 
-const gateMap = new URL('../gamedata/shuihu/Map/N-add04a.map', import.meta.url);
+const gateMap = new URL('../gamedata/original/Map/N-add04a.map', import.meta.url);
 it.skipIf(!fs.existsSync(gateMap))('官道遇伏兵的门楼屋顶按原地图抬到192像素高度', () => {
   const map = parseMap(fs.readFileSync(gateMap));
   const layers = map.cells[8 * map.width + 16];

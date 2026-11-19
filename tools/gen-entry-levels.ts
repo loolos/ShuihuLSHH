@@ -3,11 +3,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {ROUTES}from'../src/rules/campaign.ts';
 import {readExeTables}from'../src/formats/exe.ts';
+import {exeTables}from'../src/rules/load.ts';
 import {estimateCampaign}from'./estimate-campaign.ts';
 import {DATA,NodeFiles}from'./sim-lib.ts';
 const rows=estimateCampaign(),levels:Record<string,Record<string,number>>={};
 for(const r of rows){const own:Record<string,number>={};for(const[id,level]of r.entry)own[r.map.includes('/')?(r.keys.get(id)??String(id)):String(id)]=level;levels[r.map.toLowerCase()]=own;}
-const files=new NodeFiles(DATA),stages=readExeTables(files.get('ShuiHu.exe')).stages;
+const files=new NodeFiles(DATA),stages=exeTables(files).stages;
 for(const{alt}of Object.values(ROUTES)){const a=stages.find(s=>s.index===alt),main=stages.find(s=>s.index===alt-1);if(a&&main&&levels[main.mapName.toLowerCase()])levels[a.mapName.toLowerCase()]={...levels[main.mapName.toLowerCase()]};}
 const out=path.resolve(import.meta.dirname,'../src/data/entry-levels.json');
 const body=Object.entries(levels).map(([k,v])=>`    ${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(',\n');

@@ -15,7 +15,7 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const args = process.argv.slice(2);
 const showPass = args[0] === '--pass';
 if (showPass) args.shift();
-const DATA = path.resolve(args[0] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/shuihu'));
+const DATA = path.resolve(args[0] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/original'));
 const only = args.slice(1).map((s) => s.toLowerCase());
 const OUT = path.join(ROOT, 'extracted/maps');
 fs.mkdirSync(OUT, { recursive: true });
