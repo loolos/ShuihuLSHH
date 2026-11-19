@@ -261,7 +261,7 @@ describe.skipIf(!has)('N01', () => {
     b.endPlayerPhase(); // → 第 3 回合，武龍登场
     expect(b.unitByChar(0)).toBeTruthy();
     expect(b.rewindTarget()).toBe(2); // 没动过：回到上一回合开始
-    b.rewind();
+    b.rewind(7); // 固定种子：不给种子会随机重掷，偶尔敌方回合打倒人判负，回合就不再往前走
     expect(b.turn).toBe(2);
     expect(b.unitByChar(0)).toBeUndefined();
     expect(b.rewindTarget()).toBeNull(); // 第 1 回合的状态已经不在（只记两回合）
