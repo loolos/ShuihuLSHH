@@ -4,9 +4,9 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备' };
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
-const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang']);
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun']);
 export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
@@ -31,6 +31,11 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
 }
 
 export function insertTownIntro(next: string): { actor: string; text: string }[] {
+  if (next === 'mainline/yekun') return [
+    { actor: 'huarong', text: '多亏二龙山三位兄弟援手，救得哥哥出来。只是黄信那厮逃了回去，青州必然发兵来打清风山。' },
+    { actor: 'sj-fugitive', text: '鲁大师、武二郎、杨制使已自回山。我等且在山下村坊补些药品，整顿兵器，提防官军。' },
+    { actor: 'wangying', text: '山寨里有的是金银，兄弟们只管去置办！' },
+  ];
   if (next === 'mainline/fachang') return [
     { actor: 'huarong', text: '武龙兄弟连夜报信，公明哥哥和戴院长定在江州十字路口问斩。晁头领已点起十七个兄弟，分作四伙，扮了客商、丐者、脚夫、使枪棒的。' },
     { actor: 'likui', text: '（江州城里）铁牛自在城里等着，到时候从茶坊楼上跳下去，一斧一个！' },
