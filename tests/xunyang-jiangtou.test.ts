@@ -28,8 +28,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
   };
   const text = (ev: BattleEvent[]) => ev.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => ('text' in e ? e.text : '')).join('');
 
-  it('章号；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到；第二十二章我方不超过 5 人（第二十三章按外传，负责人 2026-11-19 允许超过）', () => {
-    for (const [id, ch] of [['jiangzhou-laocheng', 22], ['dufang', 22], ['pipating', 22], ['xunyanglou', 22], ['fachang', 23], ['bailongmiao', 23]] as const) {
+  it('章号；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到；第二十二章我方不超过 5 人（江州劫法场按外传，负责人 2026-11-19 允许超过）', () => {
+    for (const [id, ch] of [['jiangzhou-laocheng', 22], ['dufang', 22], ['pipating', 22], ['xunyanglou', 22], ['fachang', 24], ['bailongmiao', 24]] as const) {
       expect(chapterOf(`mainline/${id}`)).toBe(ch);
       const s = stage(id), b = new Battle(compileStage(rt, s, files, { seed: 1 }));
       const seen = new Set<string>();
@@ -48,12 +48,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(insertTownIntro('mainline/yekun').map((l) => l.actor)).toEqual(['huarong', 'sj-fugitive', 'wangying']);
   });
 
-  it('江州牢城、浔阳楼演完就过关；浔阳楼之后进梁山泊整备', () => {
+  it('江州牢城、浔阳楼演完就过关；浔阳楼只演到蔡九差戴宗上东京，梁山泊整备挪到假信露馅之后', () => {
     expect(open('jiangzhou-laocheng').b.status).toBe('won');
     const x = open('xunyanglou');
     expect(x.b.status).toBe('won');
-    expect(text(x.ev)).toContain('梁山泊报信');
-    expect(stage('xunyanglou').townAfter).toBe(11);
+    expect(text(x.ev)).toContain('蔡太师示下');
+    expect(text(x.ev)).not.toContain('梁山泊报信');
+    expect(stage('xunyanglou').townAfter).toBeUndefined();
+    expect(stage('jiaxin').townAfter).toBe(11);
     expect(insertTownName('mainline/fachang')).toBe('梁山泊整备');
   });
 

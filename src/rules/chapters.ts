@@ -51,6 +51,8 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-19：宋江刺配江州（原著第 36 回）：奔丧归庄（选项）、梁山截路（宋江劝住）、梁山送别、揭阳岭（限时救人）；武龙受吴用之托一路暗中护送
   { name: '刺配江州', stages: ['mainline/bensang', 'mainline/liangshan-jielu', 'mainline/liangshan-songbie', 'mainline/jieyangling', 'mainline/jieyangzhen', 'mainline/mujiazhuang', 'mainline/chuanhuoer'] },
   { name: '浔阳江头', stages: ['mainline/jiangzhou-laocheng', 'mainline/dufang', 'mainline/pipating', 'mainline/xunyanglou'] },
+  // 负责人 2026-11-19：戴宗送信上东京（原著第 39 回）：朱贵酒店、梁山定计、赚萧让金大坚、假信被识破；新好汉朱贵、萧让、金大坚
+  { name: '戴宗传假信', stages: ['mainline/zhuguidian', 'mainline/liangshan-dingji', 'mainline/zhuanshang', 'mainline/jiaxin'] },
   { name: '江州劫法场', stages: ['mainline/fachang', 'mainline/bailongmiao'] },
 ];
 
