@@ -95,7 +95,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
   it('法场主线版：外传里的我方好汉全部可控（18 人），武龙扮客商第 2 回合动手', () => {
     const { b, get, s } = open('fachang');
     expect(s.units.filter((u) => u.side === 'player')).toHaveLength(18);
-    expect(s.units.filter((u) => u.side === 'enemy' && u.id.endsWith('b'))).toHaveLength(0);
+    // 撤退方向（第 4–9 回合南街）的援兵各队翻倍，右下街口的第 2、3 回合不加
+    expect(s.units.filter((u) => u.side === 'enemy' && u.id.endsWith('b')).map((u) => u.id.split('_')[0])).not.toContain('x2');
+    expect(s.units.filter((u) => u.side === 'enemy')).toHaveLength(76);
     expect(get('wulong').present).toBe(false);
     (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
     expect(get('wulong').present).toBe(true);
