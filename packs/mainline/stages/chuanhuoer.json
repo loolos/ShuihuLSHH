@@ -6,7 +6,7 @@
     "gold": 0
   },
   "map": {
-    "custom": "dukou"
+    "custom": "dukou-chuan"
   },
   "tint": "night",
   "bgm": [
@@ -18,40 +18,40 @@
       "id": "songjiang",
       "class": "sj-fugitive",
       "side": "player",
-      "x": 5,
-      "y": 10,
+      "x": 3,
+      "y": 17,
       "level": 30,
-      "facing": 1
+      "facing": 2
     },
     {
       "id": "hero",
       "class": 0,
       "side": "player",
-      "x": 5,
-      "y": 11,
+      "x": 2,
+      "y": 17,
       "level": 30,
-      "facing": 1
+      "facing": 2
     },
     {
       "id": "zhangqian",
       "class": 32,
       "side": "ally",
-      "x": 6,
-      "y": 10,
+      "x": 4,
+      "y": 16,
       "level": 30,
       "ai": 8,
-      "facing": 1,
+      "facing": 2,
       "name": "张千"
     },
     {
       "id": "liwan",
       "class": 33,
       "side": "ally",
-      "x": 6,
-      "y": 11,
+      "x": 3,
+      "y": 16,
       "level": 30,
       "ai": 8,
-      "facing": 1,
+      "facing": 2,
       "name": "李万"
     },
     {
@@ -59,31 +59,31 @@
       "class": "zhangheng",
       "side": "ally",
       "x": 3,
-      "y": 10,
+      "y": 21,
       "level": 30,
       "ai": 8,
-      "facing": 3
+      "facing": 0
     },
     {
       "id": "lijun",
       "class": "lijun",
       "side": "ally",
       "x": 3,
-      "y": 11,
+      "y": 5,
       "level": 30,
       "ai": 8,
-      "facing": 3,
+      "facing": 2,
       "hidden": true
     },
     {
       "id": "tongwei",
       "class": "tongwei",
       "side": "ally",
-      "x": 2,
-      "y": 11,
+      "x": 3,
+      "y": 2,
       "level": 30,
       "ai": 8,
-      "facing": 3,
+      "facing": 2,
       "hidden": true
     },
     {
@@ -195,13 +195,13 @@
         [
           "move",
           "muhong",
-          9,
+          6,
           10
         ],
         [
           "move",
           "muchun",
-          9,
+          6,
           11
         ],
         [
