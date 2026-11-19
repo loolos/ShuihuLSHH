@@ -1420,9 +1420,7 @@
      }
     ]
    },
-   "face": {
-    "fromHead": 21
-   }
+   "face": {"file": "faces/zhangheng.png"}
   },
   {
    "id": "yanshun",
