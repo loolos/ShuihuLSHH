@@ -1,4 +1,4 @@
-import { isWillowEncounter } from '../rules/willow-encounter.ts';
+import { isWillowEncounter, encounterMap } from '../rules/willow-encounter.ts';
 // 从原版文件解码出的共享资源：调色板、图块库、人物动画库、EXE 表、道具表。
 import { openGrp, openLib, openPic, parsePalette, type Frame } from '../formats/image.ts';
 import { readExeTables, type ExeTables } from '../formats/exe.ts';
@@ -136,7 +136,7 @@ const ACTION_FIRST_SKILL = 3;
 export async function preloadStage(assets: Assets, stage: string, progress?: Progress, classesOverride?: number[]): Promise<number> {
   const { files } = assets;
   const job = new Fetch();
-  const loaded = loadStageMap(files, stage);
+  const loaded = loadStageMap(files, classesOverride ? stage : encounterMap(stage));
   if (!loaded) return 0;
   const { file: mapFile, map } = loaded;
   for (const cell of map.cells)

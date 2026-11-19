@@ -1,4 +1,4 @@
-import { isWillowEncounter, WILLOW_MAP, willowUnits, willowBlocks } from './willow-encounter.ts';
+import { isWillowEncounter, encounterMap, willowUnits, willowBlocks } from './willow-encounter.ts';
 // 从原版文件组装 GameData 与 StageInput（浏览器与 Node 共用）。
 import { parseAct } from '../formats/act.ts';
 import { readExeTables } from '../formats/exe.ts';
@@ -155,7 +155,6 @@ export function stageMapName(map: { base?: string; custom?: string; crop?: reado
 
 /** 按地图名（可带 @截取范围）读地图；file 是原版 .map 文件路径（自拼地图是一个不存在的路径，所以也没有 .act） */
 export function loadStageMap(files: FileSource, name: string): { file: string; map: MapData } | undefined {
-  if (isWillowEncounter(name)) return loadStageMap(files, WILLOW_MAP);
   const [base, crop] = name.split('@');
   let file: string | undefined;
   let map: MapData | undefined;
@@ -179,7 +178,7 @@ export function loadStageMap(files: FileSource, name: string): { file: string; m
 }
 
 export function loadStage(files: FileSource, data: GameData, stage: string, opts: { simplified?: boolean; seed?: number; text?: (s: string) => string; party?: StageInput['party']; joinLevel?: number } = {}): StageInput {
-  const loaded = loadStageMap(files, stage);
+  const loaded = loadStageMap(files, encounterMap(stage));
   if (!loaded) throw new Error(`找不到地图 ${stage}`);
   const { file: mapFile, map } = loaded;
   const att = (f: string) => new Uint8Array(files.get(f).subarray(8));

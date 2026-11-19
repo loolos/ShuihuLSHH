@@ -3,6 +3,8 @@ import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock, PasOp, PasTrigger, PasCond } from '../formats/pas.ts';
 export const isWillowEncounter = (stage: string) => stage.toLowerCase() === 'act5-2';
 export const WILLOW_MAP = 'N05@32,0,22,22';
+/** 只对原版关卡入口换图；借用Act5-2素材的插关仍读原图。 */
+export const encounterMap = (stage:string) => isWillowEncounter(stage) ? WILLOW_MAP : stage;
 // 狮子楼裁图中同一株柳树的树干/树冠（Upper.grp 57–65）。
 export const WILLOW_CELLS = [{x:3,y:11},{x:2,y:12},{x:3,y:12},{x:4,y:12},{x:3,y:13},{x:4,y:13}];
 const op=(op:number,value=0,extra:Partial<PasOp>={}):PasOp=>({op,flag:op<24?0:null,value,...extra});
