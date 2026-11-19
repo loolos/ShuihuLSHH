@@ -76,7 +76,7 @@
     {
       "id": "huarong",
       "class": "huarong",
-      "side": "ally",
+      "side": "player",
       "x": 43,
       "y": 7,
       "facing": 2,
@@ -99,7 +99,7 @@
     {
       "id": "huangxin",
       "class": "huangxin",
-      "side": "ally",
+      "side": "player",
       "x": 44,
       "y": 7,
       "facing": 2,
@@ -122,7 +122,7 @@
     {
       "id": "lufang",
       "class": "lvfang",
-      "side": "ally",
+      "side": "player",
       "x": 43,
       "y": 6,
       "facing": 2,
@@ -145,7 +145,7 @@
     {
       "id": "guosheng",
       "class": "guosheng",
-      "side": "ally",
+      "side": "player",
       "x": 44,
       "y": 6,
       "facing": 2,
@@ -191,7 +191,7 @@
     {
       "id": "ruanxiaoer",
       "class": 7,
-      "side": "ally",
+      "side": "player",
       "x": 49,
       "y": 12,
       "facing": 1,
@@ -219,7 +219,7 @@
     {
       "id": "ruanxiaowu",
       "class": 8,
-      "side": "ally",
+      "side": "player",
       "x": 49,
       "y": 13,
       "facing": 1,
@@ -247,7 +247,7 @@
     {
       "id": "ruanxiaoqi",
       "class": 9,
-      "side": "ally",
+      "side": "player",
       "x": 49,
       "y": 14,
       "facing": 1,
@@ -275,7 +275,7 @@
     {
       "id": "baisheng",
       "class": 4,
-      "side": "ally",
+      "side": "player",
       "x": 50,
       "y": 13,
       "facing": 1,
@@ -303,7 +303,7 @@
     {
       "id": "liutang",
       "class": 17,
-      "side": "ally",
+      "side": "player",
       "x": 34,
       "y": 12,
       "facing": 3,
@@ -331,7 +331,7 @@
     {
       "id": "duqian",
       "class": 69,
-      "side": "ally",
+      "side": "player",
       "x": 34,
       "y": 14,
       "facing": 3,
@@ -354,7 +354,7 @@
     {
       "id": "songwan",
       "class": 70,
-      "side": "ally",
+      "side": "player",
       "x": 35,
       "y": 14,
       "facing": 3,
@@ -377,7 +377,7 @@
     {
       "id": "yanshun",
       "class": "yanshun",
-      "side": "ally",
+      "side": "player",
       "x": 33,
       "y": 13,
       "facing": 3,
@@ -423,7 +423,7 @@
     {
       "id": "wangying",
       "class": "wangying",
-      "side": "ally",
+      "side": "player",
       "x": 43,
       "y": 19,
       "facing": 1,
@@ -654,35 +654,11 @@
       "levelOffset": 2
     },
     {
-      "id": "w3_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 49,
-      "y": 20,
-      "facing": 1,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "w3_2",
       "class": 43,
       "side": "enemy",
       "x": 47,
       "y": 23,
-      "facing": 1,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
-      "id": "w3_2b",
-      "class": 43,
-      "side": "enemy",
-      "x": 47,
-      "y": 22,
       "facing": 1,
       "level": 24,
       "hidden": true,
@@ -726,35 +702,11 @@
       "levelOffset": 2
     },
     {
-      "id": "w6_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 39,
-      "y": 42,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "w6_2",
       "class": 32,
       "side": "enemy",
       "x": 40,
       "y": 44,
-      "facing": 0,
-      "level": 22,
-      "hidden": true,
-      "name": "土兵",
-      "levelOffset": 1
-    },
-    {
-      "id": "w6_2b",
-      "class": 32,
-      "side": "enemy",
-      "x": 40,
-      "y": 43,
       "facing": 0,
       "level": 22,
       "hidden": true,
@@ -797,35 +749,11 @@
       "levelOffset": 2
     },
     {
-      "id": "w9_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 36,
-      "y": 47,
-      "facing": 2,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "w9_2",
       "class": 32,
       "side": "enemy",
       "x": 34,
       "y": 49,
-      "facing": 2,
-      "level": 22,
-      "hidden": true,
-      "name": "土兵",
-      "levelOffset": 1
-    },
-    {
-      "id": "w9_2b",
-      "class": 32,
-      "side": "enemy",
-      "x": 34,
-      "y": 48,
       "facing": 2,
       "level": 22,
       "hidden": true,
@@ -868,35 +796,11 @@
       "levelOffset": 2
     },
     {
-      "id": "x2_1b",
-      "class": 36,
-      "side": "enemy",
-      "x": 50,
-      "y": 26,
-      "facing": 1,
-      "level": 23,
-      "hidden": true,
-      "name": "官吏",
-      "levelOffset": 2
-    },
-    {
       "id": "x2_2",
       "class": 36,
       "side": "enemy",
       "x": 48,
       "y": 29,
-      "facing": 1,
-      "level": 23,
-      "hidden": true,
-      "name": "官吏",
-      "levelOffset": 2
-    },
-    {
-      "id": "x2_2b",
-      "class": 36,
-      "side": "enemy",
-      "x": 48,
-      "y": 28,
       "facing": 1,
       "level": 23,
       "hidden": true,
@@ -928,34 +832,11 @@
       "levelOffset": 2
     },
     {
-      "id": "x3_1b",
-      "class": 36,
-      "side": "enemy",
-      "x": 48,
-      "y": 32,
-      "facing": 1,
-      "level": 24,
-      "hidden": true,
-      "name": "官吏",
-      "levelOffset": 2
-    },
-    {
       "id": "x3_2",
       "class": 34,
       "side": "enemy",
       "x": 50,
       "y": 35,
-      "facing": 1,
-      "level": 22,
-      "hidden": true,
-      "levelOffset": 1
-    },
-    {
-      "id": "x3_2b",
-      "class": 34,
-      "side": "enemy",
-      "x": 50,
-      "y": 34,
       "facing": 1,
       "level": 22,
       "hidden": true,
@@ -974,35 +855,11 @@
       "levelOffset": 2
     },
     {
-      "id": "x5_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 43,
-      "y": 35,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "x5_2",
       "class": 43,
       "side": "enemy",
       "x": 44,
       "y": 36,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
-      "id": "x5_2b",
-      "class": 43,
-      "side": "enemy",
-      "x": 44,
-      "y": 35,
       "facing": 0,
       "level": 24,
       "hidden": true,
@@ -1057,35 +914,11 @@
       "levelOffset": 2
     },
     {
-      "id": "x8_1b",
-      "class": 42,
-      "side": "enemy",
-      "x": 44,
-      "y": 39,
-      "facing": 0,
-      "level": 26,
-      "hidden": true,
-      "name": "江州团练",
-      "levelOffset": 2
-    },
-    {
       "id": "x8_2",
       "class": 43,
       "side": "enemy",
       "x": 45,
       "y": 40,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
-      "id": "x8_2b",
-      "class": 43,
-      "side": "enemy",
-      "x": 45,
-      "y": 39,
       "facing": 0,
       "level": 24,
       "hidden": true,
@@ -1128,35 +961,11 @@
       "levelOffset": 2
     },
     {
-      "id": "x9_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 37,
-      "y": 48,
-      "facing": 2,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "x9_2",
       "class": 36,
       "side": "enemy",
       "x": 35,
       "y": 50,
-      "facing": 2,
-      "level": 23,
-      "hidden": true,
-      "name": "官吏",
-      "levelOffset": 2
-    },
-    {
-      "id": "x9_2b",
-      "class": 36,
-      "side": "enemy",
-      "x": 35,
-      "y": 49,
       "facing": 2,
       "level": 23,
       "hidden": true,
@@ -1176,35 +985,11 @@
       "levelOffset": 2
     },
     {
-      "id": "s4_1b",
-      "class": 33,
-      "side": "enemy",
-      "x": 43,
-      "y": 31,
-      "facing": 0,
-      "level": 23,
-      "hidden": true,
-      "name": "土兵",
-      "levelOffset": 2
-    },
-    {
       "id": "s4_2",
       "class": 32,
       "side": "enemy",
       "x": 45,
       "y": 33,
-      "facing": 0,
-      "level": 23,
-      "hidden": true,
-      "name": "土兵",
-      "levelOffset": 2
-    },
-    {
-      "id": "s4_2b",
-      "class": 32,
-      "side": "enemy",
-      "x": 45,
-      "y": 32,
       "facing": 0,
       "level": 23,
       "hidden": true,
@@ -1235,35 +1020,11 @@
       "levelOffset": 2
     },
     {
-      "id": "s7_1b",
-      "class": 43,
-      "side": "enemy",
-      "x": 40,
-      "y": 39,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
       "id": "s7_2",
       "class": 43,
       "side": "enemy",
       "x": 42,
       "y": 40,
-      "facing": 0,
-      "level": 24,
-      "hidden": true,
-      "name": "骑兵",
-      "levelOffset": 2
-    },
-    {
-      "id": "s7_2b",
-      "class": 43,
-      "side": "enemy",
-      "x": 42,
-      "y": 39,
       "facing": 0,
       "level": 24,
       "hidden": true,
@@ -1733,15 +1494,7 @@
         ],
         [
           "appear",
-          "x2_1b"
-        ],
-        [
-          "appear",
           "x2_2"
-        ],
-        [
-          "appear",
-          "x2_2b"
         ],
         [
           "appear",
@@ -1800,15 +1553,7 @@
         ],
         [
           "appear",
-          "w3_1b"
-        ],
-        [
-          "appear",
           "w3_2"
-        ],
-        [
-          "appear",
-          "w3_2b"
         ],
         [
           "appear",
@@ -1824,15 +1569,7 @@
         ],
         [
           "appear",
-          "x3_1b"
-        ],
-        [
-          "appear",
           "x3_2"
-        ],
-        [
-          "appear",
-          "x3_2b"
         ]
       ]
     },
@@ -1887,15 +1624,7 @@
         ],
         [
           "appear",
-          "s4_1b"
-        ],
-        [
-          "appear",
           "s4_2"
-        ],
-        [
-          "appear",
-          "s4_2b"
         ],
         [
           "appear",
@@ -1927,15 +1656,7 @@
         ],
         [
           "appear",
-          "x5_1b"
-        ],
-        [
-          "appear",
           "x5_2"
-        ],
-        [
-          "appear",
-          "x5_2b"
         ],
         [
           "appear",
@@ -1966,15 +1687,7 @@
         ],
         [
           "appear",
-          "w6_1b"
-        ],
-        [
-          "appear",
           "w6_2"
-        ],
-        [
-          "appear",
-          "w6_2b"
         ],
         [
           "appear",
@@ -2001,15 +1714,7 @@
         ],
         [
           "appear",
-          "s7_1b"
-        ],
-        [
-          "appear",
           "s7_2"
-        ],
-        [
-          "appear",
-          "s7_2b"
         ],
         [
           "appear",
@@ -2036,15 +1741,7 @@
         ],
         [
           "appear",
-          "x8_1b"
-        ],
-        [
-          "appear",
           "x8_2"
-        ],
-        [
-          "appear",
-          "x8_2b"
         ],
         [
           "appear",
@@ -2071,15 +1768,7 @@
         ],
         [
           "appear",
-          "w9_1b"
-        ],
-        [
-          "appear",
           "w9_2"
-        ],
-        [
-          "appear",
-          "w9_2b"
         ],
         [
           "appear",
@@ -2095,15 +1784,7 @@
         ],
         [
           "appear",
-          "x9_1b"
-        ],
-        [
-          "appear",
           "x9_2"
-        ],
-        [
-          "appear",
-          "x9_2b"
         ]
       ]
     },

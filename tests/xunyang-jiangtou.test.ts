@@ -28,7 +28,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
   };
   const text = (ev: BattleEvent[]) => ev.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => ('text' in e ? e.text : '')).join('');
 
-  it('章号；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到；我方不超过 5 人', () => {
+  it('章号；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到；第二十二章我方不超过 5 人（第二十三章按外传，负责人 2026-11-19 允许超过）', () => {
     for (const [id, ch] of [['jiangzhou-laocheng', 22], ['dufang', 22], ['pipating', 22], ['xunyanglou', 22], ['fachang', 23], ['bailongmiao', 23]] as const) {
       expect(chapterOf(`mainline/${id}`)).toBe(ch);
       const s = stage(id), b = new Battle(compileStage(rt, s, files, { seed: 1 }));
@@ -38,7 +38,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
         if (!u.hidden) { expect(seen.has(`${u.x},${u.y}`), `${id} ${u.id} 重叠`).toBe(false); seen.add(`${u.x},${u.y}`); }
       }
       for (const blk of s.script) for (const op of blk.do) if (op[0] === 'move') expect(b.board.passable(op[2] as number, op[3] as number), `${id} ${op.join()}`).toBe(true);
-      expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length, id).toBeLessThanOrEqual(5);
+      if (ch === 22) expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length, id).toBeLessThanOrEqual(5);
     }
   });
 
@@ -92,18 +92,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(b.isBound(lk)).toBe(false);
   });
 
-  it('法场主线版：武龙扮客商第 2 回合动手；花荣等其余好汉是友军', () => {
+  it('法场主线版：外传里的我方好汉全部可控（18 人），武龙扮客商第 2 回合动手', () => {
     const { b, get, s } = open('fachang');
-    expect(s.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['chaogai', 'daizong', 'likui', 'songjiang', 'wulong']);
+    expect(s.units.filter((u) => u.side === 'player')).toHaveLength(18);
+    expect(s.units.filter((u) => u.side === 'enemy' && u.id.endsWith('b'))).toHaveLength(0);
     expect(get('wulong').present).toBe(false);
     (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
     expect(get('wulong').present).toBe(true);
-    expect(get('huarong').side).toBe('ally');
+    expect(get('huarong').side).toBe('player');
+    expect(get('zhugui').side).toBe('ally');
   });
 
-  it('白龙庙主线版：武龙开场就在庙旁；新做的穆弘等人用主线职业', () => {
+  it('白龙庙主线版：外传的 26 名可控好汉加李俊共 27 人；武龙开场就在庙旁；新做的穆弘等人用主线职业', () => {
     const { get, s } = open('bailongmiao');
-    expect(s.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['chaogai', 'daizong', 'likui', 'songjiang', 'wulong']);
+    expect(s.units.filter((u) => u.side === 'player')).toHaveLength(27);
+    expect(get('lijun').side).toBe('player');
+    expect(get('zhangshun').side).toBe('ally');
     expect(get('wulong').present).toBe(true);
     for (const id of ['muhong', 'muchun', 'xueyong', 'tongwei', 'tongmeng', 'lili', 'lijun', 'zhangheng', 'zhangshun']) expect(s.units.find((u) => u.id === id)!.class, id).toBe(id);
   });
