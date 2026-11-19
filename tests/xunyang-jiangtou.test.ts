@@ -71,6 +71,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     const { b, get } = open('pipating');
     (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
     const zs = get('zhangshun'), lk = get('likui'), dz = get('daizong');
+    // 栈桥中段要画在小地图上：区域区块只设标志 reach，由 { flag: reach } 区块过关
+    expect(b.objectiveZones().filter((z) => z.kind === 'goal').map((z) => [z.x1, z.y1, z.x2, z.y2])).toEqual([[5, 10, 8, 11]]);
     expect(zs.present).toBe(true);
     dz.x = 6; dz.y = 10; after(b);
     expect(b.status).toBe('playing');
