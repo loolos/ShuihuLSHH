@@ -75,7 +75,7 @@ def main():
     p.add_argument('--width', type=int, default=140)
     p.add_argument('--white', type=int, default=215, help='三个通道都不低于它、又和图边连通的像素算背景')
     p.add_argument('--black', type=int, help='黑底：三个通道都不高于它、又和图边连通的像素算背景')
-    p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'shuihu', 'Data', 'Default.pal'))
+    p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'original', 'Data', 'Default.pal'))
     a = p.parse_args()
 
     im = Image.open(a.src).convert('RGB')
