@@ -5,7 +5,7 @@ import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
-import { canCounter, previewAttack, rollAttack, type AttackPreview, type HitResult } from './combat.ts';
+import { canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
@@ -352,6 +352,7 @@ export class Battle {
       });
     }
     this.hadPlayers = this.units.some((u) => u.side === 'player' && !this.offstage.has(u.uid));
+    for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
   }
 
   // ───────────── 查询 ─────────────
@@ -1388,27 +1389,30 @@ export class Battle {
   }
 
   /** 还在警戒的哨兵（活着、在场、没被发现过的敌人）和他们的警戒半径，画面上画警戒范围用【新】 */
-  watchZones(): { uid: number; x: number; y: number; r: number; spotted: boolean }[] {
+  watchZones(): { uid: number; x: number; y: number; facing: number; r: number; spotted: boolean }[] {
     if (this.status !== 'playing') return [];
     return [...this.watchers].flatMap(([uid, r]) => {
       const w = this.units[uid];
-      return w && w.alive && w.present && w.side === 'enemy' ? [{ uid, x: w.x, y: w.y, r, spotted: uid in this.spotters }] : [];
+      return w && w.alive && w.present && w.side === 'enemy' ? [{ uid, x: w.x, y: w.y, facing: w.facing, r, spotted: uid in this.spotters }] : [];
     });
   }
 
   /**
-   * 潜行关【新】：哨兵（活着、在场、没被打昏的敌人）警戒半径内有我方的人就被发现。发现的人喊起来、转为出战（AI 0），
+   * 潜行关【新】：哨兵（活着、在场、没被打昏的敌人）正前方警戒半径内（watcherSees）有我方或友军的人，或者他挨了打，就被发现。发现的人喊起来、转为出战（AI 0），
    * 要在下个我方回合结束前打倒他（见 endPlayerPhase）。
    */
   private checkSpotted() {
     for (const [uid, r] of this.watchers) {
       const w = this.units[uid];
       if (!w || uid in this.spotters || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0) continue;
+      // 张千、李万这样跟着走的友军进了范围也算（负责人 2026-11-19）
       const seen = this.units.find(
-        (t) => t.side === 'player' && t.alive && t.present && !this.spectators.has(t.uid) && Math.abs(t.x - w.x) + Math.abs(t.y - w.y) <= r,
+        (t) => (t.side === 'player' || t.side === 'ally') && t.alive && t.present && !this.spectators.has(t.uid) && watcherSees(w, t, r),
       );
-      if (!seen) continue;
+      // 挨了打也就惊醒了（偷袭没一下打倒，他照样喊）
+      if (!seen && w.hp >= w.stats.maxHp) continue;
       this.spotters[uid] = this.turn + 1;
+      w.unaware = false;
       w.ai.mode = 0;
       this.emit({ type: 'status', uid, text: '发现' });
       this.emit({ type: 'say', uid, speaker: w.name, text: this.phase === 'player' ? '有贼！快来人——' : '甚么人在那里？！' });

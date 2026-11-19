@@ -11,11 +11,19 @@ export function facingRelation(attackerFacing: number, defenderFacing: number): 
   return 'side';
 }
 
+/** 潜行关的哨兵只看得见正前方（站在格子 c 的人打他算「正面」）、警戒半径以内的格子；背后和侧面摸过去不会被发现（负责人 2026-11-19）【新】 */
+export function watcherSees(w: { x: number; y: number; facing: number }, c: { x: number; y: number }, r: number): boolean {
+  const d = Math.abs(c.x - w.x) + Math.abs(c.y - w.y);
+  return d > 0 && d <= r && facingRelation(facingTowards(c, w), w.facing) === 'front';
+}
+
 const FACING_FACTOR = { back: 2.5, side: 1.6, front: 1 } as const;
 const DEFEND_HIT_FACTOR = 0.4;
 /** 正的技能命中修正：命中 × (1 + 修正 / 20)【新】（负责人 2026-11-13） */
 const POSITIVE_HIT_MOD_STEP = 20;
 const FACING_DAMAGE_FACTOR = { back: 1.25, side: 1.1, front: 1 } as const;
+/** 偷袭没发现我方的哨兵（Unit.unaware）：背后 ×3、侧面 ×2（负责人 2026-11-19，穆家庄夜遁）【新】 */
+const SNEAK_DAMAGE_FACTOR = { back: 3, side: 2, front: 1 } as const;
 
 /**
  * 命中率（%）【新】（负责人 2026-11-13）：所有修正都作用在攻方的"命中"属性上，再代入比例公式：
@@ -93,7 +101,7 @@ export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, numb
   const relation = facingRelation(facingTowards(att, def, att.facing), def.facing);
   // 骑兵气功技伤害减半；按施术职业限定，避免影响借用同一原版技能的好汉。
   const cavalryQigong = att.classId === 43 && skill.skillId === 226 && skill.type === 0 ? 0.5 : 1;
-  const f = rangedFactor(att, def, skill) * (def.defending ? 1 : FACING_DAMAGE_FACTOR[relation]) * cavalryQigong;
+  const f = rangedFactor(att, def, skill) * (def.defending ? 1 : (def.unaware ? SNEAK_DAMAGE_FACTOR : FACING_DAMAGE_FACTOR)[relation]) * cavalryQigong;
   const d = Math.max(0, def.stats.defense);
   const normal = ratioDamage(a, d);
   const critical = a > 0 ? normal + (1 + critChance(att, skill) / 100) * a * a / (a + 3 * d) : 0;

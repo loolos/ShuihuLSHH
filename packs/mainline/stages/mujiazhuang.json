@@ -97,10 +97,10 @@
           10
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-2",
@@ -120,10 +120,10 @@
           22
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-3",
@@ -143,10 +143,10 @@
           14
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-4",
@@ -166,10 +166,10 @@
           26
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-5",
@@ -189,10 +189,10 @@
           20
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-6",
@@ -212,10 +212,10 @@
           30
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-7",
@@ -235,10 +235,10 @@
           25
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "xun-8",
@@ -258,10 +258,79 @@
           26
         ]
       ],
-      "watch": 2,
+      "watch": 3,
       "name": "巡夜庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
+    },
+    {
+      "id": "xun-9",
+      "class": 40,
+      "side": "enemy",
+      "x": 5,
+      "y": 28,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          5,
+          28
+        ],
+        [
+          11,
+          28
+        ]
+      ],
+      "watch": 3,
+      "name": "巡夜庄客",
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
+    },
+    {
+      "id": "xun-10",
+      "class": 41,
+      "side": "enemy",
+      "x": 9,
+      "y": 21,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          9,
+          21
+        ],
+        [
+          9,
+          27
+        ]
+      ],
+      "watch": 3,
+      "name": "巡夜庄客",
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
+    },
+    {
+      "id": "xun-11",
+      "class": 40,
+      "side": "enemy",
+      "x": 22,
+      "y": 12,
+      "level": 30,
+      "ai": 13,
+      "patrol": [
+        [
+          22,
+          12
+        ],
+        [
+          28,
+          12
+        ]
+      ],
+      "watch": 3,
+      "name": "巡夜庄客",
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "shui-1",
@@ -271,11 +340,11 @@
       "y": 8,
       "level": 30,
       "ai": 8,
-      "watch": 1,
+      "watch": 2,
       "facing": 0,
       "name": "打盹的庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "shui-2",
@@ -285,11 +354,11 @@
       "y": 8,
       "level": 30,
       "ai": 8,
-      "watch": 1,
+      "watch": 2,
       "facing": 1,
       "name": "打盹的庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "shui-3",
@@ -299,11 +368,11 @@
       "y": 16,
       "level": 30,
       "ai": 8,
-      "watch": 1,
+      "watch": 2,
       "facing": 2,
       "name": "打盹的庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     },
     {
       "id": "shui-4",
@@ -313,11 +382,11 @@
       "y": 22,
       "level": 30,
       "ai": 8,
-      "watch": 1,
+      "watch": 2,
       "facing": 3,
       "name": "打盹的庄客",
-      "hpMultiplier": 0.4,
-      "levelOffset": -2
+      "hpMultiplier": 1.8,
+      "levelOffset": 0
     }
   ],
   "script": [
@@ -361,8 +430,17 @@
           "四人悄悄掇开后门，摸黑出了庄子。"
         ],
         [
+          "say",
+          "hero",
+          "庄客只顾看前面。真要动手，便从背后摸上去，一下打翻，教他喊不出声。"
+        ],
+        [
+          "narrate",
+          "（从背后偷袭还没发觉的庄客伤害 ×3，侧面 ×2；被发现或挨了打的庄客照常计算）"
+        ],
+        [
           "objective",
-          "胜：宋江和武龙都走到西南边的江边（左下角）\n败：被庄客发现后，没在下个回合结束前把发现的人打倒（黄圈是庄客看得到的范围）；宋江、武龙或公人倒下；超过 20 回合"
+          "胜：宋江和武龙都走到西南边的江边（左下角）\n败：被庄客发现后，没在下个回合结束前把发现的人打倒（地上的黄格子是庄客面前看得到的范围，公人走进去也算）；宋江、武龙或公人倒下；超过 20 回合"
         ],
         [
           "turnLimit",

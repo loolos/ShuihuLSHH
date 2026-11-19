@@ -39,6 +39,8 @@ export interface Unit {
   hp: number;
   /** 本关体力倍率，随属性重算和倒流保留。 */
   hpMultiplier?: number;
+  /** 潜行关里还没发现我方的哨兵【新】：被从背后打伤害 ×3、侧面 ×2（负责人 2026-11-19） */
+  unaware?: boolean;
   mp: number;
   stats: Stats;
   /** 7 个道具槽，0 = 空；前 3 格是装备栏（武器、衣服、头饰），见 data.ts EQUIP_SLOTS */
