@@ -101,6 +101,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(get('wulong').present).toBe(true);
     expect(get('huarong').side).toBe('player');
     expect(get('zhugui').side).toBe('ally');
+    // 乔装的好汉暴露前算围观：官兵选不到他们
+    const guan = b.units.find((u) => u.side === 'enemy' && u.present && u.alive)!;
+    const disguised = s.units.flatMap((u, i) => u.id.endsWith('_d') ? [b.units[i]] : []);
+    expect(disguised.length).toBe(18);
+    for (const d of disguised) expect(b.spectators.has(d.uid)).toBe(true);
+    expect(b.foesOf(guan).some((t) => disguised.includes(t))).toBe(false);
   });
 
   it('白龙庙主线版：外传的 26 名可控好汉加李俊共 27 人；武龙开场就在庙旁；新做的穆弘等人用主线职业', () => {
