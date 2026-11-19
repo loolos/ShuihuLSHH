@@ -5,12 +5,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { loadAssets } from '../src/game/assets.ts';
 import { chargeTiming, CHARGE_TOTAL_MAX_MS } from '../src/game/cast-timing.ts';
-import type { GameFiles } from '../src/platform/gamefiles.ts';
 import { loadPackFromDisk } from './sim-pack.ts';
-import { DATA, NodeFiles } from './sim-lib.ts';
+import { nodeGameFiles } from './sim-lib.ts';
 
-const disk = new NodeFiles(DATA);
-const files = Object.assign(disk, { copy() {}, async ensure() { return 0; } }) as unknown as GameFiles;
+/** 只用到动作组的帧数，不用载入图像 */
+const files = nodeGameFiles();
 
 /** 旧做法：出手动作按原速播，只有 2500 ms 的保险上限 */
 const OLD_CAP = 2500;

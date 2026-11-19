@@ -1,12 +1,10 @@
 import './platform/buffer-shim.ts';
 import Phaser from 'phaser';
-import {
-  GameFiles, checkFiles, collectFromFileList, loadBundled, loadCached, loadFromDevServer, loadFromRepo, saveCache, walkDirectory, type Progress,
-} from './platform/gamefiles.ts';
+import { GameFiles, REPO_GAMEDATA, pruneOldCache, webLoader, type Progress } from './platform/gamefiles.ts';
 import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
-import { frameToCanvas, loadAssets, preloadStage, type Assets } from './game/assets.ts';
+import { frameToCanvas, loadAssets, preloadStage, startupImages, type Assets } from './game/assets.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
 import { installTouchGuards } from './game/touch.ts';
@@ -36,76 +34,9 @@ const progress: Progress = (m, r) => {
   if (r !== undefined) bar.style.width = `${Math.round(r * 100)}%`;
 };
 
-async function obtainFiles(): Promise<GameFiles> {
-  const cached = await loadCached();
-  if (cached) {
-    const { missing, mismatched } = await checkFiles(cached, progress, false);
-    if (!missing.length && !mismatched.length) return new GameFiles(cached);
-  }
-  const dev = await loadFromDevServer(progress);
-  if (dev) return new GameFiles(dev);
-  const bundled = await loadBundled(progress);
-  if (bundled) {
-    await saveCache(bundled);
-    return new GameFiles(bundled);
-  }
-  // 网页版：从 GitHub 仓库取原版文件，大文件进关前按需下载；下载失败才让玩家自己选目录
-  const repo = await loadFromRepo(progress, cached ?? undefined);
-  if (repo) return new GameFiles(repo.files, repo.remote);
-  return new GameFiles(await pickFiles());
-}
-
-function pickFiles(): Promise<Map<string, ArrayBuffer>> {
-  progress('没能从 GitHub 下载原版文件，可以改为选择本机的原版游戏目录。', 0);
-  $('setup-actions').hidden = false;
-  return new Promise((resolve, reject) => {
-    const input = $<HTMLInputElement>('pick-input');
-    const finish = async (list: AsyncIterable<{ path: string; file: Blob }> | Iterable<{ path: string; file: Blob }>) => {
-      $('setup-actions').hidden = true;
-      try {
-        const items: { path: string; file: Blob }[] = [];
-        for await (const it of list) items.push(it);
-        const files = await collectFromFileList(items, progress);
-        const { missing, mismatched } = await checkFiles(files, progress, true);
-        if (missing.length) throw new Error(`缺少 ${missing.length} 个文件，例如：\n${missing.slice(0, 8).join('\n')}`);
-        if (mismatched.length) await confirmMismatch(mismatched);
-        progress('写入浏览器缓存…', 1);
-        await saveCache(files);
-        resolve(files);
-      } catch (e) {
-        progress(String((e as Error).message ?? e), 0);
-        $('setup-actions').hidden = false;
-      }
-    };
-    $('pick').onclick = async () => {
-      const w = window as unknown as { showDirectoryPicker?: () => Promise<FileSystemDirectoryHandle> };
-      // 嵌在 iframe 里（如内部试玩页面）时目录选择器不可用，直接用 <input webkitdirectory>
-      const framed = window.self !== window.top;
-      if (w.showDirectoryPicker && !framed) {
-        try {
-          const dir = await w.showDirectoryPicker();
-          await finish(walkDirectory(dir));
-        } catch (e) {
-          if ((e as Error).name === 'AbortError') return;
-          if ((e as Error).name === 'SecurityError') input.click();
-          else reject(e);
-        }
-      } else input.click();
-    };
-    input.onchange = () =>
-      finish([...(input.files ?? [])].map((f) => ({ path: (f as File & { webkitRelativePath: string }).webkitRelativePath || f.name, file: f })));
-  });
-}
-
-function confirmMismatch(list: string[]): Promise<void> {
-  $('setup-warn').hidden = false;
-  $('setup-warn-text').textContent = `${list.length} 个文件与已知的原版不同，可能是其它版本或修改过的文件，游戏可能出错：\n${list.slice(0, 10).join('\n')}`;
-  return new Promise((resolve) => {
-    $('continue').onclick = () => {
-      $('setup-warn').hidden = true;
-      resolve();
-    };
-  });
+/** 图像来源：开发模式读开发服务器上的 gamedata/（不缓存，改了图马上能看到），网页版从仓库下载并缓存 */
+function gameFiles(): GameFiles {
+  return new GameFiles(import.meta.env.DEV ? webLoader('/gamedata/', false) : webLoader(REPO_GAMEDATA));
 }
 
 const SAVE_KEY = 'shuihu.campaign';
@@ -678,10 +609,11 @@ function startGame(assets: Assets) {
       { label: '回到标题', primary: true, run: () => (location.href = location.pathname) },
       { label: '取消', run: hideToast },
     ]);
-  $('reset').onclick = async () => {
-    await idbClear();
-    location.reload();
-  };
+  $('reset').onclick = () =>
+    toast('清除浏览器里缓存的图像？下次进关时会重新下载。', [
+      { label: '清除', primary: true, run: async () => { await idbClear(); location.reload(); } },
+      { label: '取消', run: hideToast },
+    ]);
   setupUpdateButton();
   // 顶栏在窄屏上会折行，小地图跟着顶栏的实际高度往下放
   const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
@@ -828,14 +760,14 @@ installMusic($<HTMLButtonElement>('music'));
 
 async function boot() {
   try {
-    const files = await obtainFiles();
-    progress('解码中…', 1);
-    const assets = loadAssets(files);
+    pruneOldCache();
+    const assets = loadAssets(gameFiles());
+    await assets.files.ensure(startupImages(assets), progress, '下载头像和图标');
     setupEl.hidden = true;
     startGame(assets);
   } catch (e) {
     console.error(e);
-    progress(`出错了：${(e as Error).message}`);
+    progress(`出错了：${(e as Error).message}。请检查网络后刷新页面重试。`);
   }
 }
 boot();

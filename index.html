@@ -21,7 +21,7 @@
       <button id="music" title="背景音乐">音乐开</button>
       <button id="update" title="检查有没有新版本">检查更新</button>
       <button id="menu" title="回到标题画面">主菜单</button>
-      <button id="reset" title="清除缓存，重新选择原版目录">更换目录</button>
+      <button id="reset" title="清除浏览器里缓存的图像">清除缓存</button>
     </div>
     <div id="bottom" hidden>
       <div id="log"></div>
@@ -57,18 +57,9 @@
     <div id="setup">
       <div class="panel">
         <h1>水浒传之梁山好汉</h1>
-        <p class="sub">网页重制版 · 首次打开会从 GitHub 下载原版文件（每关只下载本关用到的素材）</p>
+        <p class="sub">网页重制版 · 首次打开会从 GitHub 下载图像（每关只下载本关用到的素材）</p>
         <p id="setup-msg">正在检查本地缓存…</p>
         <div class="bar"><div id="setup-bar"></div></div>
-        <div id="setup-actions" hidden>
-          <button id="pick">选择原版游戏目录</button>
-          <input id="pick-input" type="file" webkitdirectory multiple hidden />
-          <p class="hint">请选择含有 <code>ShuiHu.exe</code>、<code>Data</code>、<code>Map</code> 的目录。文件只在你的浏览器里读取，不会上传。</p>
-        </div>
-        <div id="setup-warn" hidden>
-          <p id="setup-warn-text"></p>
-          <button id="continue">仍然继续</button>
-        </div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

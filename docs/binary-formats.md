@@ -498,9 +498,9 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 
 导入表显示：MFC/Win32 窗口、`CoCreateInstance`（DirectDraw/DirectInput/DirectSound）、`AVIFIL32`/`MSVFW32`（播放 AVI）、`WINMM`（CD 音轨、WAV）。
 
-## 15. 导出的 JSON（`gamedata/stages`、`maps`、`tables`）
+## 15. 导出的 JSON 与 PNG（`gamedata/` 下）
 
-2026-11-19 把原版的关卡、地图和数据表导出成 JSON（目录说明见 game-design §12.2.1），游戏运行时只读这些 JSON；`src/formats/` 的二进制解析器保留，用于对照原件和生成文档。类型定义在 `src/formats/stage-json.ts`。
+2026-11-19 把原版的关卡、地图和数据表导出成 JSON，图像导出成索引色 PNG（目录说明见 game-design §12.2.1），游戏运行时只读这些；`src/formats/` 的二进制解析器保留，用于对照原件、格式测试和生成文档。关卡类型定义在 `src/formats/stage-json.ts`，图像在 `src/formats/sheets.ts`。
 
 **关卡 `stages/<关卡>.json`**（`StageJson`）
 
@@ -525,6 +525,19 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 | `goods.json` | `Goods.dab`（§9） | `parseGoods` 的结果，200 件道具（未加重制版改动） |
 | `terrain.json` | `Ground.att`、`Upper.att`（§6） | `{ground, upper}`，各 2040 个字节（去掉 8 B 头） |
 | `t2s.json` | 63 对 `.pab`/`.pas` 逐字对齐 | 繁→简单字对照，按出现次数投票（`.pas` 偶有错字） |
+| `palette.json` | `Default.pal` | 256 个 `[r, g, b]` |
+
+**图像**：全部是 8 位索引色 PNG（色彩类型 3、不隔行），PLTE = `Default.pal`，tRNS 把 0 号设成透明；解码只取索引（`src/formats/png-indexed.ts`），编辑后仍须是这种格式。
+
+| 文件 | 来源 | 排法 | 目录 JSON |
+|---|---|---|---|
+| `sprites/man/<职业两位>/<动作两位>.png` | `Man.lib`（§4） | 一个职业的一个动作一张：4 行 = 原版连续 4 个动作组（4 个朝向），每行按帧号排；每格一样大 | `sprites/man.json`：`names`（职业名，方便查看）、`classes`（职业 → 动作组 `[first, last, param]`，原版组表的 B 段）、`actions`（动作组 → 帧 `[first, last, param]`，A 段）、`sheets`（`"职业/动作"` → `[格宽, 格高, 锚点 x, 锚点 y]`） |
+| `sprites/effects/<组两位>.png` | `Effect.lib` | 一组一张，一行 | `sprites/effects.json`：`actions`、`sheets`（按组号） |
+| `tiles/{ground,upper,grid}/<两位>.png` | `Ground.grp`、`Upper.grp`、`Grid.grp`（§3） | 每张 64 块，每行 8 块，按块号排 | `tiles/tiles.json`：每种一个数组，第 i 块 = `[图号, x, y, 宽, 高, 锚点 x, 锚点 y]` |
+| `portraits/<三位>.png`、`icons/<三位>.png` | `Head.lib`、`Object.lib`（§3） | 一张一个文件 | `portraits/portraits.json`、`icons/icons.json`：第 i 张 = `[宽, 高, 锚点 x, 锚点 y]` |
+
+人物动画、特效的格子：取这张图里所有帧"锚点左/上边最大值 + 右/下边最大值"作格子大小，每帧按锚点对齐放进格子，其余填 0。所以切出来的帧都是格子大小、锚点相同，与原版帧的像素相对锚点的位置不变。全局帧号、动作组号与原版一致（`classes`/`actions` 原样照抄），扩展包按原版帧号、组号借动画不受影响。
+
 
 ## 14. 尚未解决的问题
 

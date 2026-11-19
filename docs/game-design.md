@@ -66,7 +66,7 @@
 | 项目 | 决定 |
 |---|---|
 | 发布形态 | 主要自用，可以使用原版素材 |
-| 素材来源 | **用仓库里的原版文件**（负责人 2026-11-12）：网页版从 GitHub 仓库 `gamedata/original` 下载原版图像，每关只下载本关用到的素材（负责人 2026-11-12），在浏览器中解码并缓存；构建产物里不含素材。下载失败时才让玩家选本机目录 |
+| 素材来源 | **用仓库里的原版文件**（负责人 2026-11-12）：网页版从 GitHub 仓库 `gamedata/` 下载从原版导出的图像，每关只下载本关用到的素材（负责人 2026-11-12），在浏览器中解码并缓存；构建产物里不含素材。下载失败时提示刷新重试（2026-11-19 起不再让玩家选本机目录） |
 | 画面 | 画布随浏览器窗口自适应，不固定 640×480 |
 | 平台 | 电脑浏览器（鼠标、键盘）；界面也要能在手机屏幕尺寸下浏览（2026-11-11） |
 | 部署 | GitHub Pages，推送到 main 后自动发布；构建产物只有代码 |
@@ -84,8 +84,8 @@
 ### 0.3 硬性约束
 
 - 不运行原版 EXE；`gamedata/original/` 里的原版原件不修改（只作对照和导出来源）。
-- **原版数据拆开整合**（负责人 2026-11-19）：原版的关卡、地图和数据表导出成 `gamedata/` 下的 JSON，是游戏实际用的数据，可以直接改（§12.2.1）。原版关卡的重制版改动（加敌人、提前增援、改台词、插原著引文、自有敌人等级）都已写进关卡 JSON，不再有载入时的补丁代码。原版图像（人物动画、特效、图块、头像、图标）下一步再拆。
-- 仓库已于 2026-11-12 公开，README 有免责声明。`gamedata/original/` 的原版文件负责人决定开发完成后再清理。关卡、地图、数据表 JSON 随代码打包；原版图像不放进 `public/` 或构建产物，运行时从仓库按需读取。
+- **原版数据拆开整合**（负责人 2026-11-19）：原版的关卡、地图和数据表导出成 `gamedata/` 下的 JSON，图像导出成索引色 PNG，是游戏实际用的数据，可以直接改（§12.2.1）。原版关卡的重制版改动（加敌人、提前增援、改台词、插原著引文、自有敌人等级）都已写进关卡 JSON，不再有载入时的补丁代码。
+- 仓库已于 2026-11-12 公开，README 有免责声明。`gamedata/original/` 的原版文件负责人决定开发完成后再清理。JSON 随代码打包；PNG 图像不放进 `public/` 或构建产物，运行时从仓库按需读取。
 - 临时提取产物（预览 PNG 等）写到被忽略的 `extracted/`。
 
 ---
@@ -1332,15 +1332,12 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 
 ### 12.2 关键设计
 
-- **原版文件来源**：
-  - 原版的关卡、地图、数据表已导出成 JSON（§12.2.1），随代码打包，不用下载。
-  - 网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/original/` 下载原版图像（`loadFromRepo`）。小文件（调色板、格子光标、道具图标、头像，约 1.3 MB）启动时整份下载；`Man.lib`、`Effect.lib`、`Ground.grp`、`Upper.grp` 只先取文件头和索引，进关前（`preloadStage`）用 HTTP Range 只取地图用到的图块，以及本关出场职业的走路、受击、防御动作和普通攻击（含特效）；各单位已学会的技能动画和特效开打后在后台下载（`prefetchSkills`），出招时还没下完就等它下完（`ensureSkill`，升级后新学的技能也在这时下载）。`Man.lib` 有 6480 帧、`Effect.lib` 有 76 帧与前面的帧字节完全相同（共约 11.5 MB），只下载第一份再复制过去（帧号表 `src/data/frame-alias.json`，由 `npm run gen:manifest` 生成）。`Panel.lib` 暂不使用，不下载。各关下载量用 `node --experimental-transform-types tools/measure-assets.ts` 统计：单关进关前最多从约 27 MB 降到约 12 MB，全部关卡玩完共下载约 42 MB（原来约 56 MB）。【新】
-  - 下载过的文件和分段都存进 IndexedDB，再次打开或回到玩过的关卡不再下载。
-  - 下载失败时退回到选择原版目录：File System Access API，不支持的浏览器用 `<input webkitdirectory>` 兜底。
-  - 对照 `src/data/manifest.json`（运行时要用的 9 个图像文件，64 MB）检查文件是否齐全、SHA256 是否一致；不一致时提示，但允许继续。
-  - 原始文件字节缓存到 IndexedDB，下次启动不用再选目录；图像按需解码，解码结果只留在内存里。
-  - 开发模式直接读取仓库里的 `gamedata/original`。
-  - 如果首次解码变慢，再把解码移到 Web Worker。
+- **数据与图像来源**（2026-11-19 起，§12.2.1）：
+  - 关卡、地图、数据表和图像目录都是 `gamedata/` 下的 JSON，随代码打包，不用下载。
+  - 图像是 `gamedata/` 下的索引色 PNG，网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/` 按需下载（`GameFiles.ensure`，同时最多 8 个请求），开发模式读开发服务器上的 `gamedata/`（不缓存）。启动时载入全部头像、道具图标和格子光标（280 张，约 0.8 MB）；进关前（`preloadStage`）载入地图用到的图块图，以及本关出场职业的走路、受击、防御、动作 3 和普通攻击（每个动作一张图，含 4 个朝向）和特效；各单位已学会的技能开打后在后台载入（`prefetchSkills`），出招时还没载完就等它（`ensureSkill`）。
+  - 下载过的 PNG 原样存进 IndexedDB（键 `img:路径`），再次打开不再下载；启动时删掉旧版缓存的原版大文件。顶栏「清除缓存」清空它。
+  - 各关下载量用 `node --experimental-transform-types tools/measure-assets.ts` 统计：单关进关前最多约 7.2 MB，开打后后台最多约 4.3 MB，主线全部玩完共下载约 29 MB（之前按原版大文件分段下载时分别约 12 MB、—、42 MB）。【新】
+  - 下载失败时提示检查网络后刷新；不再支持选本机原版目录（2026-11-19 拆图像时去掉）。
 - **规则与表现分离**：`rules/` 输出事件流，`game/` 只负责播放。这样快进、单元测试和数值模拟都不依赖画面。
 - **数据驱动**：
   - 所有数值读自原版数据（职业表、道具表、ACT）。
@@ -1352,21 +1349,25 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 
 #### 12.2.1 原版数据目录（2026-11-19）【新】
 
-负责人 2026-11-19 决定把原版文件拆开整合，不再当作一处不能碰的整体。第一步拆关卡和数据表，图像下一步再拆。
+负责人 2026-11-19 决定把原版文件拆开整合，不再当作一处不能碰的整体。分两步做：先拆关卡和数据表（PR #379），再拆图像。
 
 | 目录 | 内容 | 来源 | 运行时 |
 |---|---|---|---|
-| `gamedata/original/` | 原版原件（`ShuiHu.exe`、`Data/`、`Map/` 等，不含音效与片头） | 原版安装目录 | 只读其中的图像（`Data/*.pal/grp/lib`），网页版按需下载 |
+| `gamedata/original/` | 原版原件（`ShuiHu.exe`、`Data/`、`Map/` 等，不含音效与片头） | 原版安装目录 | 不读（只给格式测试、文档生成和地图预览工具用） |
 | `gamedata/stages/<关卡>.json` | 63 个原版关卡：`map`（地图名，可带 `@x,y,宽,高` 截取）、`header`（城镇号、下一关、是否过场）、`units`（ACT 单位）、`blocks`（剧本区块）；个别关卡有 `names`、`enemyRanks`、`spectators`、`clearGold`、`rules` | `.act`、`.pab`（触发、条件、数值）、`.pas`（简体文字），并入了当时的重制版改动 | 随代码打包 |
 | `gamedata/maps/<地图>.json` | 63 张原版地图，与自拼地图（`packs/maps`）同一种格式 | `.map` | 随代码打包 |
-| `gamedata/tables/` | `exe.json`（EXE 静态表）、`human.json`（职业）、`goods.json`（道具）、`terrain.json`（地形通行）、`t2s.json`（繁→简对照） | `ShuiHu.exe`、`Human.hum`、`Goods.dab`、`*.att`、`.pab`/`.pas` 逐字对齐 | 随代码打包 |
+| `gamedata/tables/` | `exe.json`（EXE 静态表）、`human.json`（职业）、`goods.json`（道具）、`terrain.json`（地形通行）、`t2s.json`（繁→简对照）、`palette.json`（调色板） | `ShuiHu.exe`、`Human.hum`、`Goods.dab`、`*.att`、`.pab`/`.pas` 逐字对齐、`Default.pal` | 随代码打包 |
+| `gamedata/sprites/` | 人物动画 `man/<职业>/<动作>.png`（405 张，4 行 = 4 个朝向）+ `man.json`；技能特效 `effects/<组>.png`（60 张）+ `effects.json` | `Man.lib`、`Effect.lib` | PNG 按需下载，JSON 随代码打包 |
+| `gamedata/tiles/` | 地图图块 `ground/`、`upper/`（每张 64 块）、格子光标 `grid/` + `tiles.json` | `Ground.grp`、`Upper.grp`、`Grid.grp` | 同上 |
+| `gamedata/portraits/`、`gamedata/icons/` | 头像（79 张）、道具图标（200 张），一张一个文件 + 目录 JSON | `Head.lib`、`Object.lib` | 启动时载入 |
 | `gamedata/sound/`、`gamedata/bgm/` | 音效、背景音乐 | 原版 `Sound/` 压成 MP3、免版权配乐 | 按需下载 |
 
 - 关卡 JSON 的字段与原版格式的对应见 `docs/binary-formats.md` §7、§8 和 §15。改原版关卡（加敌人、改台词、调敌人等级、提前增援）直接改这些文件；不要再在代码里写载入时的补丁。
 - 导出时并入的改动：自有敌人等级（原 `src/data/enemy-levels.json`）、后期关卡加敌人与提前增援（原 `src/rules/stage-tune.ts`，§9.3）、N13 伏兵提前（原 `STAGE_TURN_TRIGGERS`）、林冲刺配等台词替换（原 `STAGE_STORY_TEXT`）、原著引文与黄泥冈改写（原 `src/rules/story-quotes.ts`、`huangnigang-story.ts`，§9.4）、柳树下遭遇战（原 `src/rules/willow-encounter.ts`）。导出前后 63 关的单位、剧本、关卡头、地图通行逐项比对一致。导出脚本 `tools/export-original.ts` 用完即删，见 git 历史。
 - 剧本只留简体：原来同时读 `.pab`（Big5，逻辑）和 `.pas`（简体，显示），两份结构完全一致，所以合成一份；文字指令的 `text` 取 `.pas`，原来没用的 `value`（文字的前 4 字节）不再保存。
 - 职业和道具的重制版改动（技能改名、加技能、道具改价等）目前仍在 `src/rules/data.ts`，叠在 `tables/` 的原版数据上；以后可以同样并入数据。
-- 网页版启动时要下载的基础文件从约 3 MB 降到约 1.3 MB（关卡、地图、数据表改为随代码打包，代码包 gzip 后多约 160 KB）。
+- 网页版启动时要下载的从约 3 MB 降到约 0.8 MB（关卡、地图、数据表改为随代码打包，代码包 gzip 后多约 160 KB）。
+- 图像（第二步）：全部是 8 位索引色 PNG，调色板 = 原版 `Default.pal`，0 号透明（tRNS）。游戏用索引做换色（扩展包借原版动画换颜色）、透明色键（图标的 13 号蓝底），所以自己解 PNG 取索引（`src/formats/png-indexed.ts`），不交给浏览器解成 RGBA；编辑时必须保持索引色和同一调色板，否则载入时报错。人物动画、特效每张图里每格一样大，各帧的锚点对齐在格子里同一点（目录 JSON 记格子大小和锚点），所以帧尺寸比原版大一些、周围补透明，画面位置不变。导出时 773 张 PNG 逐像素解回来与原版帧比对一致。导出脚本 `tools/export-images.ts` 用完即删，见 git 历史。原版里字节相同的帧不再去重，靠 PNG 压缩：人物动画从 49 MB（去重后约 38 MB）降到约 29 MB。`Panel.lib`、`Default.tbl`、字库没有用到，没有导出。
 
 ---
 

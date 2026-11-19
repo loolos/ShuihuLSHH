@@ -37,3 +37,25 @@ export function encodePng(width: number, height: number, rgba: Uint8Array): Buff
     chunk('IEND', Buffer.alloc(0)),
   ]);
 }
+
+/**
+ * 8 位索引色 PNG（色彩类型 3）：调色板用原版 Default.pal，tRNS 把 0 号设成透明。
+ * gamedata/ 下拆出来的原版图像都是这种格式（解码见 src/formats/png-indexed.ts），用图像软件编辑时要保持索引色和同一调色板。
+ */
+export function encodeIndexedPng(width: number, height: number, pixels: Uint8Array, palette: Uint8Array): Buffer {
+  const raw = Buffer.alloc((width + 1) * height);
+  for (let y = 0; y < height; y++) raw.set(pixels.subarray(y * width, (y + 1) * width), y * (width + 1) + 1);
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(width, 0);
+  ihdr.writeUInt32BE(height, 4);
+  ihdr[8] = 8;
+  ihdr[9] = 3;
+  return Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    chunk('IHDR', ihdr),
+    chunk('PLTE', Buffer.from(palette.subarray(0, 768))),
+    chunk('tRNS', Buffer.from([0])),
+    chunk('IDAT', zlib.deflateSync(raw, { level: 9 })),
+    chunk('IEND', Buffer.alloc(0)),
+  ]);
+}

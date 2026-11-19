@@ -11,8 +11,9 @@
 
 游戏数据放在 `gamedata/`：
 
-- `original/`：原版游戏文件原件（不含音效与片头），只作对照；网页版从这里下载人物动画、特效、图块等图像。
+- `original/`：原版游戏文件原件（不含音效与片头），只作对照，游戏不读。
 - `stages/`、`maps/`、`tables/`：从原版导出的关卡、地图和数据表（JSON），已包含重制版的改动，可直接编辑，随代码打包。
+- `sprites/`、`tiles/`、`portraits/`、`icons/`：从原版导出的人物动画、特效、地图图块、头像、道具图标（索引色 PNG，用原版调色板），网页版按需下载。
 - `sound/`、`bgm/`：音效与背景音乐。
 
 ## 文档
@@ -28,9 +29,9 @@
 
 ```bash
 npm install
-npm run dev     # 打开 http://localhost:5173 ，开发模式直接读取 gamedata/original
+npm run dev     # 打开 http://localhost:5173 ，开发模式直接读取 gamedata/
 npm test
 npm run build
 ```
 
-发布版（GitHub Pages）首次打开时，会从本仓库的 `gamedata/original` 下载原版图像：启动时只下载约 1 MB 的基础文件，每关再下载本关用到的人物动画和图块，下载过的都缓存在浏览器里。下载失败时才需要选择本机的原版游戏目录。
+发布版（GitHub Pages）首次打开时，会从本仓库的 `gamedata/` 下载图像：启动时只下载约 0.8 MB 的头像和图标，每关再下载本关用到的人物动画和图块，下载过的都缓存在浏览器里。
