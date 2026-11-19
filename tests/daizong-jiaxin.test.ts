@@ -5,8 +5,10 @@ import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { chapterLabel, chapterOf } from '../src/rules/chapters.ts';
-import { learnedSkills } from '../src/rules/skills.ts';
-import type { Unit } from '../src/rules/unit.ts';
+import { areaCells, castRange, learnedSkills } from '../src/rules/skills.ts';
+import { DIRS, type Unit } from '../src/rules/unit.ts';
+import { Board } from '../src/rules/board.ts';
+import { skillFx } from '../src/game/effects.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
@@ -44,7 +46,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
 
   it('朱贵是新好汉（头领换色，技能按等级领悟）；萧让、金大坚是不动手的书生，只有普通一击', () => {
     const cid = rt.classIds.get('zhugui')!, cls = rt.data.classes[cid];
-    expect(cls.skills).toHaveLength(6);
+    expect(cls.skills).toHaveLength(8);
     expect(learnedSkills({ classId: cid, level: 30 } as Unit, rt.data)).toHaveLength(5); // 普通攻击不算
     expect(cls.skills.find((s) => s.name === '蒙汗药酒')!.stun).toBe(60);
     const defs = JSON.parse(fs.readFileSync('packs/mainline/pack.json', 'utf8')).classes as { id: string; sprite: { fromClass: number } }[];
@@ -52,10 +54,36 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     for (const id of ['xiaorang', 'jindajian']) expect(rt.data.classes[rt.classIds.get(id)!].skills, id).toHaveLength(1);
   });
 
+  it('朱贵周身连环三段，吞江三阶隔行横排，四向预览与实际命中一致且不伤自己人', () => {
+    const cid=rt.classIds.get('zhugui')!, cls=rt.data.classes[cid];
+    const lian=cls.skills.find(s=>s.name==='忽律连环')!, tun=cls.skills.filter(s=>s.name.startsWith('忽律吞江'));
+    const board=new Board(21,21), from={x:10,y:10};
+    expect(lian.hits.map(h=>h.percent)).toEqual([30,30,40]);
+    expect(areaCells(board,from,lian,from).filter(c=>c.x!==10||c.y!==10)).toHaveLength(12);
+    expect(tun.map(s=>s.mpCost)).toEqual([100,125,150]);
+    expect(tun.map(s=>s.learnLevel)).toEqual([24,28,32]);
+    for(const [i,s] of tun.entries()) for(const d of DIRS) {
+      const at={x:10+d.x,y:10+d.y}, cells=areaCells(board,from,s,at);
+      expect(cells).toHaveLength(3*(i+3));
+      for(const c of cells) expect([1,3,5]).toContain((c.x-10)*d.x+(c.y-10)*d.y);
+      expect(castRange({classId:cid,stats:{rangeBonus:10}} as Unit,s,rt.data)).toEqual([1,1]);
+      expect(skillFx(s)).not.toBeNull();
+    }
+    for(const level of [24,28,32]) expect(learnedSkills({classId:cid,level} as Unit,rt.data).filter(s=>s.name.startsWith('忽律吞江'))).toEqual([tun[(level-24)/4]]);
+    const positions=[[10,10],[10,8],[11,9],[10,7],[10,9]];
+    const b=new Battle({name:'test',data:rt.data,board,blocks:[],seed:1,units:positions.map(([x,y],i)=>({index:i,type:i===0?cid:32,group:i+1,side:i===0?'player':i===4?'ally':'enemy',x,y,facing:0,level:32,flags:0,extra:[0,0,0],items:[],raw:[]}))});
+    b.begin();const u=b.units[0];u.mp=200;
+    expect(b.affected(u,lian,u).map(t=>t.uid)).toEqual([1,2]);
+    const ev=b.useSkill(u,lian,u), attack=ev.find(e=>e.type==='attack');
+    expect(attack?.type==='attack'&&attack.hits.map(h=>h.uid)).toEqual([1,2]);
+    expect(u.mp).toBe(110);
+  });
+
   it('旱地忽律：戴宗被麻翻后救醒；朱贵到水亭放号箭，杜迁、宋万坐船来接；打退官军才过关', () => {
     const { b, get, ev } = open('zhuguidian');
     expect(ev.some((e) => e.type === 'say' && /旱地忽律朱贵/.test(e.text))).toBe(true);
     expect(b.isBound(get('daizong'))).toBe(false);
+    expect(get('daizong').buffs.some(v => v.stat === 'defense')).toBe(false);
     expect(get('duqian').present).toBe(false);
     killAll(b, true);
     expect(b.status).toBe('playing'); // 还没放号箭
