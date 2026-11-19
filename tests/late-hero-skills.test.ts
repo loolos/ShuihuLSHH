@@ -76,10 +76,10 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
   u.stats.crit=0;const rng=new Rng(4);vi.spyOn(rng,'next').mockReturnValue(0.5);const chance=vi.spyOn(rng,'chance');const a=rollAttack(u,t,{...s,critMod:-999},rng,true);expect(chance.mock.calls.filter(([rate])=>rate===20)).toHaveLength(1);const c=rollAttack(u,t,{...s,critMod:-999,hits:[{frame:1,percent:100,dir:0}]},rng,true);
   expect(a.damage).toBe(c.damage);expect(one.damage).toBeGreaterThan(0);
  });
- it('陈达杨春白胜26级新增半条气回复，其余已有回气者不重复添加，NPC不增加技能',()=>{
+ it('陈达杨春8级、白胜26级新增半条气回复，其余已有回气者不重复添加，NPC不增加技能',()=>{
   for(const id of [4,5,7,9,11,13,14,15,16,17]){
    const charges=data.classes[id].skills.filter(s=>s.type===8&&!s.chargeTarget);expect(charges).toHaveLength(1);
-   if([4,13,15].includes(id)){const s=charges[0];expect(s).toMatchObject({learnLevel:26,mpCost:0,power:2,rangeMin:0,rangeMax:0});
+   if([4,13,15].includes(id)){const s=charges[0];for(const level of [s.learnLevel-1,s.learnLevel])expect(learnedSkills({classId:id,level} as Unit,data).includes(s)).toBe(level>=s.learnLevel);expect(s).toMatchObject({learnLevel:id===4?26:8,mpCost:0,power:2,rangeMin:0,rangeMax:0});
     const b=new Battle({name:'charge',board,units:[act(0,id,'player',10,10),act(1,32,'enemy',20,20)],blocks:[],data,seed:2});b.begin();const u=b.units[0];u.mp=0;b.useSkill(u,s,u);expect(u.mp).toBe(Math.floor(u.stats.maxMp/2));
    }
   }
