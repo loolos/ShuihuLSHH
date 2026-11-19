@@ -3,8 +3,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Battle } from '../src/rules/battle.ts';
-import { planAi } from '../src/rules/ai.ts';
-import { attackSkill } from '../src/rules/unit.ts';
+import { bestAttack, planAi } from '../src/rules/ai.ts';
+import { attackSkill, facingTowards } from '../src/rules/unit.ts';
+import { watcherSees } from '../src/rules/combat.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
@@ -53,20 +54,41 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;
         if (!b.canAct(u)) continue;
-        // 潜行关：有人被发现就全力去打倒发现的人；否则要逃的人绕开哨兵的警戒范围（巡逻的再多留一步移动力外加 1 格）往区域走
+        // 潜行关：有人被发现就全力去打倒发现的人；否则要逃的人绕开哨兵现在和下回合看得见的格子往区域走
         if (b.watchers.size) {
-          const spotter = b.units.find((w) => w.uid in b.spotters && w.alive && w.present);
+          // 期限最近的发现者先打，用打他最狠的招
+          const spotter = b.units.filter((w) => w.uid in b.spotters && w.alive && w.present).sort((p, q) => b.spotters[p.uid] - b.spotters[q.uid])[0];
           if (spotter) {
-            if (!b.attackTargets(u).includes(spotter)) walkTo(b, u, spotter.x, spotter.y, ev);
-            if (b.canAct(u) && b.attackTargets(u).includes(spotter)) ev.push(...b.attack(u, spotter));
-            else if (b.canAct(u)) ev.push(...b.defend(u));
+            const plan = bestAttack(b, u, spotter);
+            const last = plan?.path?.at(-1);
+            if (plan && last && plan.path!.length > 1) ev.push(...b.move(u, last.x, last.y));
+            if (plan?.skill && plan.cell && plan.skill !== attackSkill(u, b.data)) ev.push(...b.useSkill(u, plan.skill, plan.cell));
+            else if (plan?.target && b.attackTargets(u).includes(plan.target)) ev.push(...b.attack(u, plan.target));
+            else {
+              walkTo(b, u, spotter.x, spotter.y, ev);
+              if (b.canAct(u) && b.attackTargets(u).includes(spotter)) ev.push(...b.attack(u, spotter));
+            }
+            if (b.canAct(u)) ev.push(...b.defend(u));
             continue;
           }
           if (goal && goal.who.includes(u.classId)) {
-            const zones = b.watchZones().map((w) => ({ ...w, r: w.r + (b.patrolOf(b.units[w.uid]) ? b.units[w.uid].stats.move + 1 : 1) }));
+            // 每个哨兵现在和下回合可能站的位置、朝向（巡逻的沿直线往目标点走，走到了会掉头），半径多留 2 格给跟着走的公人
+            const eyes = b.watchZones().flatMap((w) => {
+              const g = b.units[w.uid], route = b.patrolOf(g);
+              const out = [{ x: w.x, y: w.y, facing: w.facing, r: w.r + 2 }];
+              if (!route) return out;
+              const pt = g.ai.point, f = facingTowards(g, pt, g.facing);
+              let x = g.x, y = g.y;
+              for (let k = 0; k <= g.stats.move && (x !== pt.x || y !== pt.y); k++) {
+                if (x !== pt.x) x += Math.sign(pt.x - x); else y += Math.sign(pt.y - y);
+                out.push({ x, y, facing: f, r: w.r + 2 });
+              }
+              if (x === pt.x && y === pt.y) out.push({ x, y, facing: (f + 2) % 4, r: w.r + 2 });
+              return out;
+            });
             const field = b.board.distanceField([{ x: goal.x, y: goal.y }]);
             const d = (c: { x: number; y: number }) => field[c.y * b.board.width + c.x];
-            const safe = b.moveRange(u).green.filter((c) => !zones.some((z) => dist(z, c) <= z.r));
+            const safe = b.moveRange(u).green.filter((c) => !eyes.some((e) => watcherSees(e, c, e.r) || dist(e, c) <= 1));
             const c = safe.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
             if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
             if (b.canAct(u)) ev.push(...b.defend(u));

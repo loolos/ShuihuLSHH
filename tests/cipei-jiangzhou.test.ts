@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
-import type { Unit } from '../src/rules/unit.ts';
+import { attackSkill, facingTowards, type Unit } from '../src/rules/unit.ts';
+import { baseDamage } from '../src/rules/combat.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
@@ -165,24 +166,59 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect(o.b.status).toBe('lost');
   });
 
-  it('穆家庄夜遁：走进庄客的警戒范围就被发现，下个回合结束前没打倒他判负；打倒了照常走', () => {
+  const DIR = [[0, -1], [-1, 0], [0, 1], [1, 0]];
+  const at = (u: Unit, g: Unit, k: number, sideOf: 'front' | 'back' | 'side') => {
+    const f = sideOf === 'front' ? g.facing : sideOf === 'back' ? (g.facing + 2) % 4 : (g.facing + 1) % 4;
+    u.x = g.x + DIR[f][0] * k; u.y = g.y + DIR[f][1] * k;
+  };
+
+  it('穆家庄夜遁：走到庄客正前方的警戒范围就被发现，下个回合结束前没打倒他判负；打倒了照常走', () => {
     const { b, get } = open('mujiazhuang');
     const g = get('shui-1'), sj = get('songjiang');
-    expect(b.watchers.get(g.uid)).toBe(1);
+    expect(b.watchers.get(g.uid)).toBe(2);
     expect(b.watchZones().some((z) => z.uid === g.uid && !z.spotted)).toBe(true);
-    sj.x = g.x + 1; sj.y = g.y; after(b);
+    at(sj, g, 2, 'front'); after(b);
     expect(b.spotters[g.uid]).toBe(b.turn + 1);
     expect(g.ai.mode).toBe(0);
+    expect(g.unaware).toBe(false);
     b.endPlayerPhase();
     expect(b.status).toBe('playing');
     b.endPlayerPhase();
     expect(b.status).toBe('lost');
     const o = open('mujiazhuang');
     const g2 = o.get('shui-1'), sj2 = o.get('songjiang');
-    sj2.x = g2.x + 1; sj2.y = g2.y; after(o.b);
+    at(sj2, g2, 1, 'front'); after(o.b);
     kill(o.b, g2); after(o.b);
     o.b.endPlayerPhase(); o.b.endPlayerPhase();
     expect(o.b.status).toBe('playing');
+  });
+
+  it('穆家庄夜遁：背后、侧面摸过去不会被发现；公人走到正前方也算发现；挨了打就惊醒', () => {
+    const { b, get } = open('mujiazhuang');
+    const g = get('shui-1');
+    at(get('songjiang'), g, 1, 'back'); at(get('hero'), g, 1, 'side'); after(b);
+    expect(b.spotters).toEqual({});
+    at(get('zhangqian'), g, 2, 'front'); after(b);
+    expect(g.uid in b.spotters).toBe(true);
+    const o = open('mujiazhuang');
+    const g2 = o.get('shui-2');
+    at(o.get('hero'), g2, 1, 'back'); after(o.b);
+    expect(o.b.spotters).toEqual({});
+    g2.hp = g2.stats.maxHp - 1; after(o.b);
+    expect(g2.uid in o.b.spotters).toBe(true);
+  });
+
+  it('穆家庄夜遁：偷袭没发觉的庄客，背后伤害 ×3、侧面 ×2；发觉了照常 ×1.25 / ×1.1', () => {
+    const { b, get } = open('mujiazhuang');
+    const g = get('shui-1'), hero = get('hero');
+    const skill = attackSkill(hero, b.data);
+    const dmg = (side: 'front' | 'back' | 'side') => { at(hero, g, 1, side); hero.facing = facingTowards(hero, g); return baseDamage(hero, g, skill)[0]; };
+    const front = dmg('front');
+    expect(dmg('back') / front).toBeCloseTo(3);
+    expect(dmg('side') / front).toBeCloseTo(2);
+    g.unaware = false;
+    expect(dmg('back') / front).toBeCloseTo(1.25);
+    expect(dmg('side') / front).toBeCloseTo(1.1);
   });
 
   it('穆家庄夜遁：巡夜庄客沿路线来回走；宋江和武龙都到江边就过关', () => {

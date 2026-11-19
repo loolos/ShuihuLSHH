@@ -52,7 +52,7 @@ function consider(b: Battle, choice: Choice, option: Option, compare: (a: Option
  * 70%：范围攻击覆盖人数 → 期望总伤害，同分随机；仅单体可用时先等概率抽目标，再选高伤招式。
  * 治疗、跟随、警戒及脚本指定目标等约束仍由外层模式控制。
  */
-function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiPlan | null {
+export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiPlan | null {
   const legacy = b.rng.chance(LEGACY_ATTACK_PERCENT);
   const reach = b.reachOf(u, budget);
   const basic = attackSkill(u, b.data);
