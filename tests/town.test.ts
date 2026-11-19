@@ -3,8 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import type { Item } from '../src/formats/goo.ts';
-import { parsePasHeader } from '../src/formats/pas.ts';
-import { readExeTables } from '../src/formats/exe.ts';
+import { stageUnits } from '../src/formats/stage-json.ts';
+import { exeTables, stageJson } from '../src/rules/load.ts';
+import { NodeFiles } from '../tools/sim-lib.ts';
 import { parseGoods } from '../src/formats/goo.ts';
 import { newCampaign, nextStages, type CampaignState } from '../src/rules/campaign.ts';
 import { forgeGain, forgeGainText, type ClassDef, type GameData } from '../src/rules/data.ts';
@@ -114,15 +115,13 @@ describe('城镇', () => {
   });
 });
 
-const DATA = path.resolve(import.meta.dirname, '../gamedata/shuihu');
+const DATA = path.resolve(import.meta.dirname, '../gamedata/original');
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 describe.skipIf(!has)('城镇（原版数据）', () => {
-  const exe = readExeTables(fs.readFileSync(path.join(DATA, 'ShuiHu.exe')));
+  const files = new NodeFiles(DATA);
+  const exe = exeTables(files);
   const stages = exe.stages.filter((s) => s.mapName);
-  const pab = (n: string) => {
-    const f = fs.readdirSync(path.join(DATA, 'Map')).find((x) => x.toLowerCase() === `${n.toLowerCase()}.pab`)!;
-    return parsePasHeader(fs.readFileSync(path.join(DATA, 'Map', f)));
-  };
+  const pab = (n: string) => stageJson(files, n)!.header;
 
   it('PAB 文件头：城镇号与下一关', () => {
     const towns = stages.flatMap((s) => (pab(s.mapName).town ? [`${s.mapName}:${pab(s.mapName).town}`] : []));
@@ -159,18 +158,9 @@ describe.skipIf(!has)('测试用跳关', () => {
   it('按主线估算的入场等级表补等级，按人物类别和最终等级查表配装', async () => {
     const { loadGameData } = await import('../src/rules/load.ts');
     const { jumpTo, expectedGold } = await import('../src/rules/preset.ts');
-    const files = {
-      index: new Map<string, string>(),
-      init() {
-        for (const d of ['', 'Data', 'Map']) for (const f of fs.readdirSync(path.join(DATA, d))) this.index.set((d ? `${d}/${f}` : f).toLowerCase(), path.join(DATA, d, f));
-        return this;
-      },
-      get(p: string) { return fs.readFileSync(this.index.get(p.toLowerCase())!); },
-      has(p: string) { return this.index.has(p.toLowerCase()); },
-      list(dir: string, ext: string) { return [...this.index.keys()].filter((k) => k.startsWith(dir.toLowerCase() + '/') && k.endsWith(ext)); },
-    }.init();
+    const files = new NodeFiles(DATA);
     const data = loadGameData(files);
-    const exe = readExeTables(files.get('ShuiHu.exe'));
+    const exe = exeTables(files);
     const stages = exe.stages.filter((s) => s.mapName);
     const c = jumpTo(files, data, stages, 34, newCampaign(0)); // N06
     const lin = c.members.find((m) => m.classId === 11)!; // 林沖
@@ -263,20 +253,10 @@ describe('城镇整备名单', () => {
 describe.skipIf(!has)('城镇整备名单（原版数据）', async () => {
   const { loadGameData } = await import('../src/rules/load.ts');
   const { jumpToTown, townRoster } = await import('../src/rules/preset.ts');
-  const { parseAct } = await import('../src/formats/act.ts');
-  const files = {
-    index: new Map<string, string>(),
-    init() {
-      for (const d of ['', 'Data', 'Map']) for (const f of fs.readdirSync(path.join(DATA, d))) this.index.set((d ? `${d}/${f}` : f).toLowerCase(), path.join(DATA, d, f));
-      return this;
-    },
-    get(p: string) { return fs.readFileSync(this.index.get(p.toLowerCase())!); },
-    has(p: string) { return this.index.has(p.toLowerCase()); },
-    list(dir: string, ext: string) { return [...this.index.keys()].filter((k) => k.startsWith(dir.toLowerCase() + '/') && k.endsWith(ext)); },
-  }.init();
+  const files = new NodeFiles(DATA);
   const data = loadGameData(files);
-  const stages = readExeTables(files.get('ShuiHu.exe')).stages.filter((s) => s.mapName);
-  const header = (m: string) => parsePasHeader(files.get(`Map/${m}.pab`));
+  const stages = exeTables(files).stages.filter((s) => s.mapName);
+  const header = (m: string) => stageJson(files, m)!.header;
   const towns = stages.flatMap((s) => {
     const h = header(s.mapName);
     const next = stages.find((x) => x.index === h.next);
@@ -316,7 +296,7 @@ describe.skipIf(!has)('城镇整备名单（原版数据）', async () => {
   it('名单里只有已经入伙的人：每个人在主线上之前就以我方身份出场过', () => {
     for (const t of towns) {
       const upto = stages.slice(0, stages.indexOf(t.stage) + 1);
-      const seen = new Set(upto.flatMap((s) => (files.has(`Map/${s.mapName}.act`) ? parseAct(files.get(`Map/${s.mapName}.act`)) : []).filter((u) => u.side === 'player').map((u) => u.type)));
+      const seen = new Set(upto.flatMap((s) => (stageJson(files, s.mapName) ? stageUnits(stageJson(files, s.mapName)!) : []).filter((u) => u.side === 'player').map((u) => u.type)));
       for (const id of townRoster(files, t.next.mapName)) expect(seen.has(id), `城镇 ${t.town} ${data.charNames[id]}`).toBe(true);
     }
   });

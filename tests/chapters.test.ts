@@ -82,8 +82,8 @@ describe('章节表', () => {
   });
 });
 
-const EXE = path.join(ROOT, 'gamedata/shuihu/ShuiHu.exe');
-const MAP = path.join(ROOT, 'gamedata/shuihu/Map');
+const EXE = path.join(ROOT, 'gamedata/original/ShuiHu.exe');
+const MAP = path.join(ROOT, 'gamedata/original/Map');
 describe.skipIf(!fs.existsSync(EXE))('章节表与原版', () => {
   const maps = fs.existsSync(MAP) ? new Map(fs.readdirSync(MAP).map((f) => [f.toLowerCase(), f])) : new Map<string, string>();
   const stages = fs.existsSync(EXE) ? readExeTables(fs.readFileSync(EXE)).stages.filter((s) => s.mapName && maps.has(`${s.mapName.toLowerCase()}.act`)) : [];

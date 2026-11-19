@@ -8,7 +8,7 @@ import {previewAttack}from'../src/rules/combat.ts';
 import {newCampaign,joinLevel,partyOf,recordResult,type CampaignState}from'../src/rules/campaign.ts';
 import {chapterSequence}from'../src/rules/chapters.ts';
 import {expToNext,EXP_RULES,OVERKILL_CAP}from'../src/rules/exp.ts';
-import {loadStage,buildT2S}from'../src/rules/load.ts';
+import {loadStage,buildT2S,exeTables,stageJson}from'../src/rules/load.ts';
 import {attackSkill,refreshStats,type Unit}from'../src/rules/unit.ts';
 import {loadPackFromDisk}from'./sim-pack.ts';
 import {compileStage}from'../src/packs/build.ts';
@@ -24,9 +24,9 @@ export function estimateCampaign(limit=200):CampaignEstimateRow[]{
  if(process.env.KP)EXP_RULES.killPerLevel=Number(process.env.KP);
  if(process.env.NOFLOOR==='1')ENEMY_LEVEL.floor=false;
  const need=(level:number)=>expToNext(level)+Number(process.env.NA??0)*(level-1)+Number(process.env.NB??0)*(level-1)**2;
- const files=new NodeFiles(DATA),rt=loadPackFromDisk('mainline'),data=rt.data,tr=buildT2S(files),exe=readExeTables(files.get('ShuiHu.exe'));
+ const files=new NodeFiles(DATA),rt=loadPackFromDisk('mainline'),data=rt.data,tr=buildT2S(files),exe=exeTables(files);
  const route=new Set<string>();let next=0;
- for(let n=0;n<100&&exe.stages[next]?.mapName;n++){const map=exe.stages[next].mapName;route.add(map.toLowerCase());const h=parsePasHeader(files.get(`Map/${map}.pab`));if(!h.next)break;next=h.next;}
+ for(let n=0;n<100&&exe.stages[next]?.mapName;n++){const map=exe.stages[next].mapName;route.add(map.toLowerCase());const h=stageJson(files, map)!.header;if(!h.next)break;next=h.next;}
  const list=chapterSequence().filter(x=>x.key.includes('/')||route.has(x.key.toLowerCase())).slice(0,limit);
  const keys=new Map([...rt.classIds].map(([key,id])=>[id,key]));
  const expected=(a:Unit,d:Unit)=>{const skill=attackSkill(a,data);if(!skill)return{hit:0,damage:1};const p=previewAttack(a,d,skill),hit=p.hit/100,crit=p.crit/100;return{hit,damage:Math.max(1,p.damage*(1-crit)+p.critDamage*crit)};};
@@ -35,7 +35,7 @@ export function estimateCampaign(limit=200):CampaignEstimateRow[]{
   const map=list[i].key,pack=map.includes('/'),stage=pack?rt.stages.find(s=>`${rt.id}/${s.id}`===map):undefined;
   if(pack&&!stage)throw Error(`主线估算缺少关卡${map}`);
   const party=pack?packParty(campaign,rt):partyOf(campaign),join=pack?joinLevel({...campaign,members:[...party.values()]}):joinLevel(campaign);
-  const input=pack?compileStage(rt,stage!,files,{party,joinLevel:join,text:tr,seed:1}):loadStage(files,data,map,{party,joinLevel:join,text:tr,seed:1,simplified:true});
+  const input=pack?compileStage(rt,stage!,files,{party,joinLevel:join,text:tr,seed:1}):loadStage(files,data,map,{party,joinLevel:join,text:tr,seed:1});
   const b=new Battle(input),entry=new Map(b.units.filter(u=>u.side==='player').map(u=>[u.classId,u.level]));
   b.begin();
   const fight=pack?stage!.units.some(u=>u.side==='enemy'&&u.ai!==8):!(/^(act|train)/i.test(map))||map.toLowerCase()==='act5-2';

@@ -14,7 +14,7 @@ describe.skipIf(!has)('N14 火并王倫：增援与胜利条件', () => {
   const tr = has ? buildT2S(files) : (s: string) => s;
   const data = has ? loadGameData(files, tr) : (null as never);
   const start = () => {
-    const b = new Battle(loadStage(files, data, 'N14', { simplified: true, seed: 1, text: tr }));
+    const b = new Battle(loadStage(files, data, 'N14', { seed: 1, text: tr }));
     // 我方不会战败：只验证增援和胜负
     const kill = x(b).kill.bind(b);
     x(b).kill = (u, t) => (t.side === 'player' ? void (t.hp = 1) : kill(u, t));

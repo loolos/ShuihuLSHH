@@ -4,7 +4,7 @@ import { parseGoods } from '../src/formats/goo.ts';
 import { withItemOverrides, type ClassDef, type GameData } from '../src/rules/data.ts';
 import { EQUIPMENT_CATEGORIES, GEAR_TABLE, HERO_KITS, LEVEL_BANDS, MEDICINE_TABLE, WEAPON_TABLE, kitBand, levelKit } from '../src/rules/equipment.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
-const data = { items: withItemOverrides(parseGoods(fs.readFileSync('gamedata/shuihu/Data/Goods.dab'))) } as GameData;
+const data = { items: withItemOverrides(parseGoods(fs.readFileSync('gamedata/original/Data/Goods.dab'))) } as GameData;
 it('每个档位道具都存在，武器类型正确，攻防不会倒退', () => {
   // 弓（类型 11）是 mainline 扩展包新增的道具，不在原版道具表里
   const packItems = loadPackFromDisk('mainline').data.items;

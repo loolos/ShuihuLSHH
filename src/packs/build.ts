@@ -7,7 +7,7 @@ import type { PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
-import { loadStageMap, stageMapName, type FileSource } from '../rules/load.ts';
+import { loadStageMap, stageMapName, terrain, type FileSource } from '../rules/load.ts';
 import { SLOT_COUNT } from '../rules/data.ts';
 import { levelKit } from '../rules/equipment.ts';
 import type { Member } from '../rules/campaign.ts';
@@ -290,8 +290,8 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
 export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean } = {}): StageInput {
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
-  const att = (f: string) => new Uint8Array(files.get(f).subarray(8));
-  const board = Board.fromMap(map, att('Data/Ground.att'), att('Data/Upper.att'));
+  const att = terrain(files);
+  const board = Board.fromMap(map, att.ground, att.upper);
   for (const [x, y] of stage.map.open ?? []) {
     if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
     board.blocked[y * board.width + x] = 0;

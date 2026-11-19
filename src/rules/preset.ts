@@ -1,14 +1,12 @@
-import { isWillowEncounter, willowUnits } from './willow-encounter.ts';
 import { levelKit } from './equipment.ts';
 // 测试用跳关【新】：从关卡下拉框直接进某一关时，按那一关的难度重新配好我方人物的等级和装备，
 // 免得拿 1 级人物打后期关卡。原版没有这个功能。
 // 跳关不沿用之前的任何状态（否则先跳到后期再跳回前面，人物还是后期的等级和装备）；银子也按关卡固定。
-import { parseAct, type ActUnit } from '../formats/act.ts';
-import { parsePasHeader } from '../formats/pas.ts';
-import { adjustEnemies } from './enemy-level.ts';
+import type { ActUnit } from '../formats/act.ts';
+import { stageUnits as jsonUnits } from '../formats/stage-json.ts';
 import { ROUTES, startingParty, type CampaignState, type Member } from './campaign.ts';
 import { SLOT_COUNT, type GameData } from './data.ts';
-import { findStageFile, type FileSource } from './load.ts';
+import { stageJson, type FileSource } from './load.ts';
 import { goldBase, stageClearGold } from './gold.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
@@ -24,10 +22,8 @@ interface Stage {
 }
 
 function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: number } {
-  const act = findStageFile(files, s.mapName, '.act');
-  const pab = findStageFile(files, s.mapName, '.pab');
-  const original = act ? parseAct(files.get(act), act) : [];
-  return { units: adjustEnemies(s.mapName, isWillowEncounter(s.mapName) ? willowUnits(original) : original), town: pab ? parsePasHeader(files.get(pab)).town : 0 };
+  const j = stageJson(files, s.mapName);
+  return { units: j ? jsonUnits(j) : [], town: j?.header.town ?? 0 };
 }
 
 /**

@@ -24,8 +24,8 @@ describe('关卡名字', () => {
   });
 });
 
-const EXE = path.resolve(import.meta.dirname, '../gamedata/shuihu/ShuiHu.exe');
-const MAP = path.resolve(import.meta.dirname, '../gamedata/shuihu/Map');
+const EXE = path.resolve(import.meta.dirname, '../gamedata/original/ShuiHu.exe');
+const MAP = path.resolve(import.meta.dirname, '../gamedata/original/Map');
 describe.skipIf(!fs.existsSync(EXE))('原版关卡表', () => {
   it('每一关、每一章都有名字', () => {
     const maps = new Set(fs.readdirSync(MAP).map((f) => f.toLowerCase()));

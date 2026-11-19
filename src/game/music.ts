@@ -163,7 +163,7 @@ class MusicPlayer {
   }
 
   private base() {
-    return import.meta.env.DEV ? '/gamedata/bgm/' : REPO_GAMEDATA.replace(/shuihu\/$/, 'bgm/');
+    return import.meta.env.DEV ? '/gamedata/bgm/' : REPO_GAMEDATA + 'bgm/';
   }
   loadIndex(): Promise<BgmIndex | null> {
     this.index ??= fetch(this.base() + 'index.json')

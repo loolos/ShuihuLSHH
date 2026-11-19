@@ -1,0 +1,96 @@
+{
+  "map": "N04",
+  "header": {"blockCount":4,"town":0,"next":22,"act":0},
+  "units": [
+    {"index":0,"type":0,"group":1,"side":"player","facing":2,"x":23,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":3,"group":3,"side":"player","facing":2,"x":23,"y":14,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":5,"group":4,"side":"player","facing":2,"x":25,"y":12,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":13,"group":5,"side":"player","facing":2,"x":25,"y":14,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":15,"group":6,"side":"player","facing":2,"x":26,"y":13,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":16,"group":7,"side":"player","facing":2,"x":24,"y":16,"level":7,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":55,"group":8,"side":"enemy","facing":0,"x":24,"y":36,"level":9,"flags":512,"extra":[0,0,0],"items":[0,0,0,184,0,0,0]},
+    {"index":7,"type":44,"group":9,"side":"enemy","facing":0,"x":21,"y":34,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":8,"type":44,"group":10,"side":"enemy","facing":0,"x":19,"y":35,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":44,"group":11,"side":"enemy","facing":0,"x":23,"y":35,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":44,"group":12,"side":"enemy","facing":0,"x":29,"y":34,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":44,"group":13,"side":"enemy","facing":0,"x":27,"y":33,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":12,"type":45,"group":14,"side":"enemy","facing":2,"x":23,"y":28,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":44,"group":15,"side":"enemy","facing":0,"x":15,"y":25,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":44,"group":16,"side":"enemy","facing":0,"x":19,"y":25,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":44,"group":17,"side":"enemy","facing":0,"x":16,"y":24,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":16,"type":44,"group":18,"side":"enemy","facing":0,"x":18,"y":24,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":44,"group":19,"side":"enemy","facing":1,"x":33,"y":20,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":44,"group":20,"side":"enemy","facing":1,"x":33,"y":22,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":44,"group":21,"side":"enemy","facing":1,"x":34,"y":19,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":44,"group":22,"side":"enemy","facing":1,"x":34,"y":23,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":65,"group":23,"side":"enemy","facing":1,"x":35,"y":21,"level":7,"flags":0,"extra":[0,0,0],"items":[0,0,0,166,181,0,0]},
+    {"index":22,"type":65,"group":24,"side":"enemy","facing":0,"x":17,"y":26,"level":7,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":65,"group":25,"side":"enemy","facing":0,"x":21,"y":36,"level":7,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":65,"group":26,"side":"enemy","facing":0,"x":27,"y":35,"level":7,"flags":512,"extra":[0,0,0],"items":[0,0,0,179,0,0,0]},
+    {"index":25,"type":45,"group":27,"side":"enemy","facing":0,"x":22,"y":33,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":45,"group":28,"side":"enemy","facing":3,"x":26,"y":28,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":45,"group":29,"side":"enemy","facing":0,"x":21,"y":41,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":28,"type":45,"group":30,"side":"enemy","facing":0,"x":24,"y":33,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":45,"group":31,"side":"enemy","facing":0,"x":22,"y":41,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":45,"group":32,"side":"enemy","facing":0,"x":26,"y":34,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":45,"group":33,"side":"enemy","facing":2,"x":21,"y":28,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":32,"type":45,"group":34,"side":"enemy","facing":2,"x":22,"y":28,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":33,"type":45,"group":35,"side":"enemy","facing":3,"x":22,"y":27,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":45,"group":36,"side":"enemy","facing":2,"x":24,"y":28,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,181,0,0,0]},
+    {"index":35,"type":45,"group":37,"side":"enemy","facing":2,"x":28,"y":27,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":36,"type":45,"group":38,"side":"enemy","facing":2,"x":28,"y":28,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":37,"type":45,"group":39,"side":"enemy","facing":0,"x":20,"y":41,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":38,"type":45,"group":40,"side":"enemy","facing":0,"x":21,"y":42,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":39,"type":45,"group":41,"side":"enemy","facing":0,"x":32,"y":36,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":40,"type":45,"group":42,"side":"enemy","facing":0,"x":31,"y":36,"level":7,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":41,"type":45,"group":43,"side":"enemy","facing":0,"x":32,"y":37,"level":6,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":42,"type":141,"group":0,"side":"object","facing":0,"x":9,"y":34,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":43,"type":168,"group":0,"side":"object","facing":0,"x":32,"y":35,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":44,"type":126,"group":0,"side":"object","facing":0,"x":47,"y":2,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,8,4,1,1,1,23,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":55},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":23},
+        {"op":13,"flag":0,"text":"死秃驴，连你爷爷『小霸王』周通都敢打！看我放火一把烧了村子！"},
+        {"op":12,"flag":1,"value":16},
+        {"op":13,"flag":0,"text":"我佛慈悲，施主若是火烧桃花村，洒家一定三拳拆了你的山寨！"},
+        {"op":12,"flag":1,"value":55},
+        {"op":13,"flag":0,"text":"小子们！给我围起来！他们没有多少人，全部给我捉起来！尤其是那个胖和尚，我要亲手把他打得『一佛出世，二佛升天』！"},
+        {"op":35,"flag":null,"value":50},
+        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败周通"},
+        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":50},
+      "cond": {"type":0,"arg":50},
+      "head": [1,0,1,0,0,0,38,2,0],
+      "ops": [
+        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":0},
+      "cond": {"type":1,"arg":0},
+      "head": [1,0,1,0,0,0,210,2,1],
+      "ops": [
+        {"op":30,"flag":null,"text":"%N死亡之后，一干人为周通所擒伏，一把大火更将桃花村化为灰烬；鲁智深为周通所杀，史进、朱武等人回到少华山，继续过着打家劫舍的日子。一年后，在一场官府的大规模围剿行动之中，山寨被毁，史、朱等人也随之不知去向........"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":55},
+      "cond": {"type":1,"arg":55},
+      "head": [1,0,1,0,0,0,10,2,1],
+      "ops": [
+        {"op":29,"flag":null,"text":"游戏过关！"}
+      ]
+    }
+  ]
+}

@@ -18,7 +18,7 @@
 // 坐标：x 向右下、y 向左下（同 render-maps 的预览图）。
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseMap, mapToJson, type MapData, type MapLayer } from '../src/formats/map.ts';
+import { mapFromJson, mapToJson, type MapData, type MapLayer } from '../src/formats/map.ts';
 import { encodePng } from '../src/formats/png.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { openTiles, renderMap } from './render-lib.ts';
@@ -41,7 +41,7 @@ export interface Recipe {
 }
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const DATA = path.resolve(process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/shuihu'));
+const DATA = path.resolve(process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/original'));
 const RECIPES = path.join(ROOT, 'tools/map-recipes');
 
 /** 小而稳定的随机数（mulberry32），同一配方每次拼出来一样 */
@@ -60,10 +60,10 @@ const originals = new Map<string, MapData>();
 function original(name: string): MapData {
   let m = originals.get(name);
   if (!m) {
-    const dir = path.join(DATA, 'Map');
-    const f = fs.readdirSync(dir).find((g) => g.toLowerCase() === `${name.toLowerCase()}.map`);
+    const dir = path.join(ROOT, 'gamedata/maps');
+    const f = fs.readdirSync(dir).find((g) => g.toLowerCase() === `${name.toLowerCase()}.json`);
     if (!f) throw new Error(`没有原版地图 ${name}`);
-    originals.set(name, (m = parseMap(fs.readFileSync(path.join(dir, f)), f)));
+    originals.set(name, (m = mapFromJson(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), f)));
   }
   return m;
 }

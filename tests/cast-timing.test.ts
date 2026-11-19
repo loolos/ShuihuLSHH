@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { CHARGE_CAST_MAX_MS, CHARGE_TOTAL_MAX_MS, castPlayMs, castPlaybackRate, castSegmentMs } from '../src/game/cast-timing.ts';
 import { chargeRows } from '../tools/charge-anim.ts';
 
-const has = fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/shuihu/ShuiHu.exe'));
+const has = fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/original/ShuiHu.exe'));
 
 describe.skipIf(!has)('集气技施放时长', () => {
   const rows = has ? chargeRows() : [];

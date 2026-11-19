@@ -26,7 +26,7 @@ const versionFile = (): Plugin => ({
 });
 
 // base './'：GitHub Pages 部署在 /<仓库名>/ 子路径下。
-// 开发服务器会直接提供仓库里的 gamedata/（供本地调试）；构建产物只包含代码，不含任何原版文件。
+// 开发服务器会直接提供仓库里的 gamedata/（供本地调试）。构建产物只含代码和随代码打包的关卡、地图、数据表 JSON（gamedata/stages、maps、tables），不含原版图像。
 export default defineConfig({
   base: './',
   define: { __BUILD__: JSON.stringify(build) },

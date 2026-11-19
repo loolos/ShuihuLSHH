@@ -8,7 +8,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const SRC = path.resolve(process.argv[2] ?? path.join(ROOT, 'gamedata/shuihu/Sound'));
+const SRC = path.resolve(process.argv[2] ?? path.join(ROOT, 'gamedata/original/Sound'));
 const OUT = path.join(ROOT, 'gamedata/sound');
 fs.mkdirSync(OUT, { recursive: true });
 

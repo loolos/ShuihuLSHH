@@ -1,5 +1,5 @@
 // 从原版数据生成设计阶段文档（docs/reference/*.md）与结构化数据（extracted/*.json，不入库）。
-// 用法：node tools/gen-design-docs.ts [原版目录]   （默认 gamedata/shuihu，或环境变量 SHUIHU_DATA）
+// 用法：node tools/gen-design-docs.ts [原版目录]   （默认 gamedata/original，或环境变量 SHUIHU_DATA）
 // 只读打开原版文件；Node 22.6+ 直接运行 .ts（类型擦除），无第三方依赖。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -11,7 +11,7 @@ import { parsePas, type PasScript } from '../src/formats/pas.ts';
 import { parseMap } from '../src/formats/map.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const DATA = path.resolve(process.argv[2] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/shuihu'));
+const DATA = path.resolve(process.argv[2] ?? process.env.SHUIHU_DATA ?? path.join(ROOT, 'gamedata/original'));
 const DOCS = path.join(ROOT, 'docs/reference');
 const growth = (base: number, grade: string) => (grade.trim() ? `${base} · ${grade.trim().charCodeAt(0)}%` : `${base}`);
 const OUT = path.join(ROOT, 'extracted/data');

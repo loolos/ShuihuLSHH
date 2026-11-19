@@ -1,0 +1,62 @@
+{
+  "map": "Act6-1",
+  "header": {"blockCount":1,"town":0,"next":31,"act":1},
+  "units": [
+    {"index":0,"type":56,"group":0,"side":"enemy","facing":2,"x":10,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":63,"group":0,"side":"enemy","facing":0,"x":10,"y":17,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":37,"group":0,"side":"enemy","facing":1,"x":11,"y":11,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":37,"group":0,"side":"enemy","facing":2,"x":9,"y":15,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":37,"group":0,"side":"enemy","facing":2,"x":12,"y":15,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+  ],
+  "blocks": [
+    {
+      "trigger": {"kind":"turn","turn":0},
+      "cond": {"type":0,"arg":0},
+      "head": [1,41,1,0,0,0,30,2,0],
+      "ops": [
+        {"op":12,"flag":1,"value":56},
+        {"op":13,"flag":0,"text":"何以近来都不见少爷？"},
+        {"op":12,"flag":1,"value":37},
+        {"op":13,"flag":0,"text":"这...听富安说少爷最近得了重病..."},
+        {"op":12,"flag":1,"value":56},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":30},
+        {"op":13,"flag":0,"text":"什么？！发生了这么大的事，怎从未曾听人提起？去把富安给我叫来问话！"},
+        {"op":12,"flag":1,"value":37},
+        {"op":14,"flag":1,"value":11},
+        {"op":15,"flag":1,"value":17},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":37},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":63},
+        {"op":12,"flag":1,"value":63},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":10},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":56},
+        {"op":13,"flag":0,"text":"富安！少爷生了什么病？怎地不曾回报？！"},
+        {"op":12,"flag":1,"value":63},
+        {"op":13,"flag":0,"text":"不瞒老爷您说，少爷不害别的病，却害林冲的老婆。"},
+        {"op":12,"flag":1,"value":56},
+        {"op":13,"flag":0,"text":"林冲的老婆几时见他的？"},
+        {"op":12,"flag":1,"value":63},
+        {"op":13,"flag":0,"text":"便是前月二十八日，在岳庙里见来；今经一月有余..."},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"当下富安将事件的来龙去脉加油添醋地说了一遍。"},
+        {"op":12,"flag":1,"value":63},
+        {"op":13,"flag":0,"text":"若要少爷病好，只除害了林冲的性命，教少爷得偿宿愿，这病便好得；若不如此，一定送了少爷性命。"},
+        {"op":12,"flag":1,"value":56},
+        {"op":13,"flag":0,"text":"唔...若为惜林冲一人，便须送了我孩儿性命，这可不成；但这林冲不但武艺高强，又未曾犯过错，怎地害他？"},
+        {"op":12,"flag":1,"value":63},
+        {"op":14,"flag":1,"value":10},
+        {"op":15,"flag":1,"value":10},
+        {"op":17,"flag":0,"value":1},
+        {"op":12,"flag":1,"value":63},
+        {"op":13,"flag":0,"text":"小人有一计，只除....如此如此使得。"},
+        {"op":12,"flag":1,"value":56},
+        {"op":13,"flag":0,"text":"好！你便放手去干吧！"},
+        {"op":29,"flag":null,"text":"高俅设计害林冲，林冲危在旦夕！"}
+      ]
+    }
+  ]
+}
