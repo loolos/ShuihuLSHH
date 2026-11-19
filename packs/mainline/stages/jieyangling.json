@@ -79,14 +79,13 @@
     },
     {
       "id": "lili",
-      "class": 45,
+      "class": "lili",
       "side": "enemy",
       "x": 9,
       "y": 11,
       "level": 30,
       "ai": 8,
       "facing": 2,
-      "name": "李立",
       "spectator": true,
       "levelOffset": 1
     },
