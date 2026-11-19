@@ -77,7 +77,7 @@ export function parsePasHeader(buf: Buffer): PasHeader {
 // ───────────── 区块与指令（事件脚本），结构见 docs/binary-formats.md §8 ─────────────
 
 export type PasTrigger =
-  | { kind: 'turn'; turn: number } // 参数 N：第 N + 1 回合开始时；0 = 开战
+  | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
   | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[] }
@@ -91,7 +91,7 @@ export type PasTrigger =
    */
   | { kind: 'used'; char: number; skills?: number[]; count?: number }
   /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
-  | { kind: 'near'; char: number; uid?: number; by?: number }
+  | { kind: 'near'; char: number; uid?: number; by?: number; playerPhase?: boolean }
   /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
   | { kind: 'hp'; char: number; uid?: number; below: number };
 
@@ -110,7 +110,7 @@ export interface PasOp {
   /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容；扩展包指令 102 是新名字 */
   text?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
-  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number };
+  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number }[] };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
   quiet?: boolean;
   /** 剧情点名：已战败角色仅供演出，不复活、不改变战斗状态。near为显示时靠近的职业号。 */

@@ -47,6 +47,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
     const goal = goalBlock?.trigger.kind === 'area' ? { who: goalBlock.trigger.chars ?? [goalBlock.trigger.char], x: (goalBlock.trigger.x1 + goalBlock.trigger.x2) >> 1, y: (goalBlock.trigger.y1 + goalBlock.trigger.y2) >> 1 } : null;
     const ev = [...b.begin()];
+    while (b.pendingChoice) ev.push(...b.answer(0));
     let guard = 0;
     while (b.status === 'playing' && guard++ < 40) {
       for (const u of b.active().filter((x) => x.side === 'player')) {
@@ -57,6 +58,17 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         if (goal && goal.who.includes(u.classId)) {
           if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
           else walkTo(b, u, goal.x, goal.y, ev);
+          continue;
+        }
+        // 能劝人收手的人（梁山截路的宋江）：走到最近一个还没劝住的人身边
+        const plea = input.blocks
+          .filter((x) => x.trigger.kind === 'near' && x.trigger.by === u.classId && !b.hasFired(x.index) && x.ops.some((o) => o.op === 121))
+          .map((x) => x.trigger)
+          .map((t) => (t.kind === 'near' ? b.units.find((f) => f.uid === t.uid && f.alive && f.present && f.side === 'enemy') : undefined))
+          .filter((t) => t !== undefined)
+          .sort((p, q) => dist(p, u) - dist(q, u))[0];
+        if (plea) {
+          walkTo(b, u, plea.x, plea.y, ev);
           continue;
         }
         // 有被绑的自己人：最近的一个人先过去松绑

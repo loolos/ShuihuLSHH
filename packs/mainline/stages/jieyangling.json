@@ -1,0 +1,616 @@
+{
+  "id": "jieyangling",
+  "title": "揭阳岭",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 400
+  },
+  "map": {
+    "custom": "jieyangling"
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 1,
+      "y": 7,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 2,
+      "y": 6,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 0,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 0,
+      "y": 6,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "李万"
+    },
+    {
+      "id": "lijun",
+      "class": "lijun",
+      "side": "player",
+      "x": 17,
+      "y": 24,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "tongwei",
+      "class": "tongwei",
+      "side": "player",
+      "x": 18,
+      "y": 24,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "tongmeng",
+      "class": "tongmeng",
+      "side": "player",
+      "x": 16,
+      "y": 24,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "lili",
+      "class": 45,
+      "side": "enemy",
+      "x": 9,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "李立",
+      "spectator": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "shao-1",
+      "class": 35,
+      "side": "enemy",
+      "x": 16,
+      "y": 16,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "放哨火家",
+      "point": [
+        11,
+        13
+      ]
+    },
+    {
+      "id": "shao-2",
+      "class": 37,
+      "side": "enemy",
+      "x": 7,
+      "y": 17,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "放哨火家",
+      "point": [
+        9,
+        13
+      ]
+    },
+    {
+      "id": "du-1",
+      "class": 19,
+      "side": "enemy",
+      "x": 4,
+      "y": 8,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "火家"
+    },
+    {
+      "id": "du-2",
+      "class": 20,
+      "side": "enemy",
+      "x": 3,
+      "y": 10,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "火家"
+    },
+    {
+      "id": "du-3",
+      "class": 19,
+      "side": "enemy",
+      "x": 1,
+      "y": 11,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "火家"
+    },
+    {
+      "id": "du-4",
+      "class": 20,
+      "side": "enemy",
+      "x": 6,
+      "y": 6,
+      "level": 30,
+      "ai": 11,
+      "facing": 3,
+      "name": "火家"
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "揭阳岭 · 岭上酒店"
+        ],
+        [
+          "narrate",
+          "宋江和两个公人行到揭阳岭上，又热又渴，进了岭上一家酒店。武龙远远跟着，也扮作过路客人，进店吃酒。"
+        ],
+        [
+          "narrate",
+          "谁知那酒里下了蒙汗药，四个人吃了，一个个口角流涎，扑地倒了。"
+        ],
+        [
+          "bind",
+          "songjiang"
+        ],
+        [
+          "bind",
+          "hero"
+        ],
+        [
+          "bind",
+          "zhangqian"
+        ],
+        [
+          "bind",
+          "liwan"
+        ],
+        [
+          "say",
+          "lili",
+          "好几日没买卖，今日天送这四头行货来与我！"
+        ],
+        [
+          "say",
+          "lili",
+          "火家都去哪里了？等他们回来，一齐开剥！"
+        ],
+        [
+          "focus",
+          "lijun"
+        ],
+        [
+          "narrate",
+          "岭下大路上，三条大汉正急急赶来。"
+        ],
+        [
+          "say",
+          "lijun",
+          "我等候了几日，只不见那个山东及时雨宋公明下岭来。听得说有个戴枷的黑汉子上岭来了，莫不正是？"
+        ],
+        [
+          "say",
+          "tongwei",
+          "哥哥，岭上那李立的店，只怕……"
+        ],
+        [
+          "say",
+          "lijun",
+          "快走！迟了一步，便是一场大错！"
+        ],
+        [
+          "objective",
+          "胜：李俊、童威、童猛任一人走到宋江身边\n败：第 6 回合开始时还没赶到（放哨的火家跑回店里报信，提前到第 5 回合）；李俊倒下"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "lijun",
+        "area": [
+          4,
+          12,
+          22,
+          20
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "seen-lijun"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "tongwei",
+        "area": [
+          4,
+          12,
+          22,
+          20
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "seen-tongwei"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "tongmeng",
+        "area": [
+          4,
+          12,
+          22,
+          20
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "seen-tongmeng"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "seen-lijun"
+      },
+      "unless": "alarm",
+      "do": [
+        [
+          "say",
+          "shao-1",
+          "岭下有人上来了！快回店里报与大哥！"
+        ],
+        [
+          "setAi",
+          "shao-1",
+          4
+        ],
+        [
+          "setAi",
+          "shao-2",
+          4
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "seen-tongwei"
+      },
+      "unless": "alarm",
+      "do": [
+        [
+          "say",
+          "shao-1",
+          "岭下有人上来了！快回店里报与大哥！"
+        ],
+        [
+          "setAi",
+          "shao-1",
+          4
+        ],
+        [
+          "setAi",
+          "shao-2",
+          4
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "seen-tongmeng"
+      },
+      "unless": "alarm",
+      "do": [
+        [
+          "say",
+          "shao-1",
+          "岭下有人上来了！快回店里报与大哥！"
+        ],
+        [
+          "setAi",
+          "shao-1",
+          4
+        ],
+        [
+          "setAi",
+          "shao-2",
+          4
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "shao-1",
+        "area": [
+          8,
+          11,
+          12,
+          14
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "hurry"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "shao-2",
+        "area": [
+          8,
+          11,
+          12,
+          14
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "hurry"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "hurry"
+      },
+      "do": [
+        [
+          "say",
+          "lili",
+          "有人上岭来了？快！先把那四头行货开剥了，省得夜长梦多！"
+        ],
+        [
+          "narrate",
+          "（放哨的火家报了信，开剥提前到第 5 回合）"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "店里，火家烧起一锅滚汤。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "李立在后头磨着剜刀，霍霍有声。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "unless": "hurry",
+      "do": [
+        [
+          "narrate",
+          "火家把宋江抬到剥人凳上。还差两个回合……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "if": "hurry",
+      "do": [
+        [
+          "say",
+          "lili",
+          "先剥那个黑矮的！"
+        ],
+        [
+          "narrate",
+          "火家把宋江抬上剥人凳。只剩这一个回合了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "unless": "hurry",
+      "do": [
+        [
+          "say",
+          "lili",
+          "先剥那个黑矮的！"
+        ],
+        [
+          "narrate",
+          "只剩这一个回合了！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "hurry",
+      "do": [
+        [
+          "narrate",
+          "李立举起剜刀……"
+        ],
+        [
+          "defeat",
+          "没能赶在开剥之前到达"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "narrate",
+          "李立举起剜刀……"
+        ],
+        [
+          "defeat",
+          "没能赶在开剥之前到达"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "lijun"
+      },
+      "do": [
+        [
+          "defeat",
+          "李俊倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "songjiang"
+      },
+      "do": [
+        [
+          "narrate",
+          "三人抢进剥人房，李俊看那剥人凳上的黑汉子，脸上刺着金印。"
+        ],
+        [
+          "say",
+          "lijun",
+          "这个不是宋押司？兀那李立！你如何把哥哥麻翻了！"
+        ],
+        [
+          "say",
+          "lili",
+          "我那里晓得！我只道是过路客人……"
+        ],
+        [
+          "say",
+          "lijun",
+          "快讨解药来，救起哥哥！"
+        ],
+        [
+          "narrate",
+          "李立慌忙调了解药，扶起四人，一个个灌将下去。半个时辰，宋江、武龙和两个公人都醒转来。"
+        ],
+        [
+          "cleanse",
+          "songjiang"
+        ],
+        [
+          "cleanse",
+          "hero"
+        ],
+        [
+          "cleanse",
+          "zhangqian"
+        ],
+        [
+          "cleanse",
+          "liwan"
+        ],
+        [
+          "say",
+          "songjiang",
+          "是甚么人救了宋江？"
+        ],
+        [
+          "say",
+          "lijun",
+          "小弟姓李名俊，祖贯庐州人氏，专在扬子江中撑船艄公为生，能识水性，人都呼小弟做混江龙李俊便是。"
+        ],
+        [
+          "say",
+          "lijun",
+          "这两个兄弟，一个唤做出洞蛟童威，一个唤做翻江蜃童猛。这卖酒的，是此间揭阳岭人，唤做催命判官李立。"
+        ],
+        [
+          "say",
+          "lili",
+          "哥哥休怪，小弟有眼不识泰山！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "武龙兄弟，你怎么也在这里？"
+        ],
+        [
+          "say",
+          "hero",
+          "吴军师托小弟一路暗中护着哥哥……惭愧，倒先着了这厮的道。"
+        ],
+        [
+          "narrate",
+          "众人大笑。李俊请宋江到家中歇了几日，又置酒相待。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}

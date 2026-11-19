@@ -1,0 +1,316 @@
+{
+  "title": "揭阳岭野店",
+  "width": 32,
+  "height": 30,
+  "seed": 36,
+  "ops": [
+    {
+      "op": "stamp",
+      "from": "N-add12",
+      "src": [
+        4,
+        6,
+        32,
+        30
+      ],
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "op": "clear",
+      "rect": [
+        0,
+        0,
+        18,
+        18
+      ]
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        7,
+        0,
+        1,
+        1
+      ],
+      "at": [
+        7,
+        0
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        6,
+        1,
+        3,
+        1
+      ],
+      "at": [
+        6,
+        1
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        5,
+        2,
+        5,
+        1
+      ],
+      "at": [
+        5,
+        2
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        4,
+        3,
+        7,
+        1
+      ],
+      "at": [
+        4,
+        3
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        3,
+        4,
+        9,
+        1
+      ],
+      "at": [
+        3,
+        4
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        2,
+        5,
+        11,
+        1
+      ],
+      "at": [
+        2,
+        5
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        1,
+        6,
+        13,
+        1
+      ],
+      "at": [
+        1,
+        6
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        0,
+        7,
+        15,
+        1
+      ],
+      "at": [
+        0,
+        7
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        1,
+        8,
+        15,
+        1
+      ],
+      "at": [
+        1,
+        8
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        2,
+        9,
+        15,
+        1
+      ],
+      "at": [
+        2,
+        9
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        3,
+        10,
+        15,
+        1
+      ],
+      "at": [
+        3,
+        10
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        4,
+        11,
+        14,
+        1
+      ],
+      "at": [
+        4,
+        11
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        5,
+        12,
+        12,
+        1
+      ],
+      "at": [
+        5,
+        12
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        6,
+        13,
+        10,
+        1
+      ],
+      "at": [
+        6,
+        13
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        7,
+        14,
+        8,
+        1
+      ],
+      "at": [
+        7,
+        14
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        8,
+        15,
+        6,
+        1
+      ],
+      "at": [
+        8,
+        15
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        9,
+        16,
+        4,
+        1
+      ],
+      "at": [
+        9,
+        16
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        10,
+        17,
+        2,
+        1
+      ],
+      "at": [
+        10,
+        17
+      ],
+      "layers": "ground"
+    },
+    {
+      "op": "stamp",
+      "from": "Act5-2",
+      "src": [
+        0,
+        0,
+        18,
+        18
+      ],
+      "at": [
+        0,
+        0
+      ],
+      "layers": "upper"
+    }
+  ]
+}

@@ -215,6 +215,10 @@ export interface PackUnitJson {
   ai?: number;
   /** AI 12（守屋）的屋子范围 [x1, y1, x2, y2]（含边界）：有敌人进来之前原地驻守，进来后转为模式 0 出战 */
   guardArea?: [number, number, number, number];
+  /** AI 模式 1/5/10 的目标人物（单位 id；按职业找人，所以目标的职业要唯一） */
+  target?: string;
+  /** AI 模式 4 先走到的格子 */
+  point?: [number, number];
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
@@ -232,7 +236,9 @@ export type PackTrigger =
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   | { enter: string | string[]; area: [number, number, number, number] }
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
-  | { near: string; by?: string }
+  | { near: string; by?: string; playerPhase?: boolean }
+  /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
+  | { flag: string }
   /** 目标生命低于最大值的 below%（可配 if / unless） */
   | { hp: string; below: number }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
@@ -250,12 +256,15 @@ export type PackTrigger =
  * ["capture", 单位] 擒获并押离战场（退出敌方、绑住退场，不代表归顺、不复活）；
  * ["defect", 单位, 阵营] 换阵营（player / ally / enemy，如黄信归降）；
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
+ * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
+ * ["setAi", 单位, 模式] 改 AI 模式；
+ * ["standDown", 单位] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）
  */
 export type PackOpJson = [string, ...unknown[]];
 
 export interface PackBlockJson {
   on: PackTrigger;
-  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
+  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
   if?: string;
   unless?: string;
   do: PackOpJson[];

@@ -310,6 +310,16 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     opts={...opts,party};
   }
   const units = stage.units.map((u, i) => actUnit(rt, u, i));
+  // AI 目标 / 目标点（模式 1、5、10 追人跟人，模式 4 先走到某格）【新】
+  stage.units.forEach((u, i) => {
+    if (u.target !== undefined) {
+      const t = stage.units.findIndex((x) => x.id === u.target);
+      if (t < 0) fail(`${stage.id}: 单位 ${u.id} 的 target ${u.target} 不存在`);
+      if (units.filter((x) => x.type === units[t].type).length > 1) fail(`${stage.id}: ${u.id} 的 target ${u.target} 职业不唯一`);
+      units[i].extra[0] = units[t].type;
+    }
+    if (u.point) { units[i].extra[1] = u.point[0]; units[i].extra[2] = u.point[1]; }
+  });
   if(opts.preset)units.forEach((u,i)=>{if(u.side==='player'&&preset[String(stage.units[i].class)]!==undefined)u.level=preset[String(stage.units[i].class)];});
   if (stage.dynamicLevels) {
     const levels = units.filter(u => u.side === 'player').map(u => opts.party?.get(u.type)?.level).filter((n): n is number => n !== undefined);
@@ -410,8 +420,15 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp`);
-  else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1 };
+  else if ('flag' in on) {
+    // 剧本标志设上时（剧情选项的分支）【新】
+    trigger = { kind: 'cond' };
+    cond = { type: 100, arg: r.flagRef(on.flag) };
+    if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
+    if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
+  }
+  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag`);
+  else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}) };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
@@ -419,13 +436,13 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
-    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}) };
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}) };
   } else if ('hp' in on) {
     const target = r.unitRef(on.hp).act;
     trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
   }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
-  if (trigger.kind === 'near' || trigger.kind === 'hp') {
+  if (trigger.kind === 'near' || trigger.kind === 'hp' || (trigger.kind === 'turn' && trigger.flagged)) {
     // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
     const conds: PasCond[] = [];
     if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
@@ -575,9 +592,30 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // ['portrait', 职业, 头像文件（包内路径，空 = 恢复职业自己的头像）] 本关之后的对白、面板换这张头像（如武松改扮行者）
         op(114, r.classRef(a[0]), { text: typeof a[1] === 'number' ? `@class:${a[1]}` : String(a[1] ?? '') });
         break;
+      case 'choice': {
+        // ['choice', 提示, [选项, 标志], ...] 剧情选项【新】：必须是区块最后一条，选完设标志，接着跑 { flag } 区块
+        const options = a.slice(1).map((o) => {
+          if (!Array.isArray(o) || o.length !== 2) fail(`第 ${index} 个区块：choice 的选项要写成 [文字, 标志]`);
+          return { label: String(o[0]), flag: r.flagRef(o[1]) };
+        });
+        if (options.length < 2 || options.length > 4) fail(`第 ${index} 个区块：choice 要有 2–4 个选项`);
+        ops.push({ op: 120, flag: null, value: 0, text: String(a[0] ?? ''), args: { options } });
+        break;
+      }
+      case 'standDown':
+        select(a[0]);
+        op(121);
+        break;
+      case 'setAi':
+        // ['setAi', 谁, 模式] 改 AI 模式（揭阳岭放哨的火家看见人才跑回店里）【新】
+        select(a[0]);
+        op(122, Number(a[1]));
+        break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
     }
   }
+  const ci = ops.findIndex((o) => o.op === 120);
+  if (ci >= 0 && ci !== ops.length - 1) fail(`第 ${index} 个区块：choice 必须是区块最后一条指令`);
   return { index, head: [], trigger, cond, ops };
 }

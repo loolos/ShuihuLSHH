@@ -95,6 +95,10 @@
     "mainline/duiyingshan": {"0":37,"sj-fugitive":34,"huarong":34,"qinming":34,"likui":34},
     "mainline/liufeng": {"huarong":34,"huangxin":34,"qinming":34},
     "mainline/shiyong": {"0":37,"sj-fugitive":34},
+    "mainline/bensang": {"0":37,"sj-fugitive":34},
+    "mainline/liangshan-jielu": {"0":37,"sj-fugitive":34},
+    "mainline/liangshan-songbie": {"0":38,"sj-fugitive":35},
+    "mainline/jieyangling": {"0":38,"sj-fugitive":35,"lijun":37,"tongwei":37,"tongmeng":37},
     "n-add04b": {"0":8,"3":9,"5":6,"13":6,"15":6},
     "n-add09b": {"0":19,"3":19,"5":17,"11":17,"13":18,"15":17,"16":19}
   }
