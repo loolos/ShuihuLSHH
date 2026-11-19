@@ -76,6 +76,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(b.status).toBe('playing');
     zs.hp = Math.floor(zs.stats.maxHp * 0.4); after(b);
     expect(b.isBound(lk)).toBe(true);
+    expect([zs.x, zs.y, lk.x, lk.y]).toEqual([4, 15, 5, 15]); // 都上了栈桥边泊着的渔船
     expect(get('songjiang').present).toBe(true);
     expect(get('lan-1').present).toBe(true);
     const sj = get('songjiang'); sj.x = 7; sj.y = 11; after(b);
