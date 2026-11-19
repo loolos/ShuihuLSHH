@@ -1,9 +1,12 @@
+import { parseMap } from '../src/formats/map.ts';
+import { compileStage } from '../src/packs/build.ts';
+import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import fs from 'node:fs';
 import {describe,it,expect}from'vitest';
 import{loadStage,loadStageMap,loadGameData}from'../src/rules/load.ts';
 import{Battle,type BattleEvent}from'../src/rules/battle.ts';
 import{NodeFiles,DATA}from'../tools/sim-lib.ts';
-import{WILLOW_CELLS,WILLOW_MAP}from'../src/rules/willow-encounter.ts';
+import{WILLOW_CELLS,WILLOW_MAP,encounterMap}from'../src/rules/willow-encounter.ts';
 import{stageLabel}from'../src/game/stage-names.ts';
 import{recordResult}from'../src/rules/campaign.ts';
 import{planAi}from'../src/rules/ai.ts';
@@ -11,7 +14,7 @@ import{OccluderIndex,coarseMask}from'../src/game/occlusion.ts';
 describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>{
  const files=new NodeFiles(DATA),data=loadGameData(files),input=()=>loadStage(files,data,'Act5-2',{seed:2});
  it('原串关换用狮子楼裁图，只有鲁智深参战，四名泼皮，其余五人旁观且不可攻击',()=>{
-  expect(loadStageMap(files,'Act5-2')!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);
+  expect(loadStageMap(files,encounterMap('Act5-2'))!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);
   const i=input(),b=new Battle(i);const opening=b.begin();
   expect(opening.filter(e=>e.type==='status'&&b.spectators.has(e.uid)).map(e=>e.type==='status'&&e.text)).toEqual(Array(5).fill('观战'));
   expect(opening.filter(e=>e.type==='look'&&b.spectators.has(e.uid))).toHaveLength(0);
@@ -22,6 +25,17 @@ describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>
   for(const u of b.units){expect(b.board.passable(u.x,u.y)).toBe(true);expect(seen.has(`${u.x},${u.y}`)).toBe(false);seen.add(`${u.x},${u.y}`);expect(Number.isFinite(field[u.y*22+u.x])).toBe(true);}
   for(const id of b.spectators){const u=b.unit(id)!;expect(u.side).toBe('ally');expect(b.canAct(u)).toBe(false);expect(b.canMove(u)).toBe(false);expect(planAi(b,u)).toEqual({});for(const foe of b.active().filter(u=>u.side==='enemy'))expect(b.aiFoesOf(foe)).not.toContain(u);}
   expect(b.units.find(u=>u.classId===11)!.present).toBe(false);expect(b.status).toBe('playing');expect(b.turnLimit).toBe(5);
+ });
+ it('十字坡、坐楼杀惜与扮行者均借原村店图，倒拔垂杨柳独用裁图',()=>{
+  const original=parseMap(files.get('Map/Act5-2.map'),'Map/Act5-2.map');
+  expect(loadStageMap(files,'Act5-2')!.map).toEqual(original);
+  const rt=loadPackFromDisk('mainline');
+  for(const id of ['shizipo','songjiang-yanshixi','xingzhe']){
+   const stage=JSON.parse(fs.readFileSync(`packs/mainline/stages/${id}.json`,'utf8'));
+   const built=compileStage(rt,stage,files);
+   expect(built.board.width,id).toBe(original.width);expect(built.board.height,id).toBe(original.height);
+  }
+  expect(input().board.width).toBe(22);expect(input().board.height).toBe(22);
  });
  it('四名泼皮使用无昏迷喽啰，技能及默认装备均不附带昏迷',()=>{
   const b=new Battle(input());b.begin();

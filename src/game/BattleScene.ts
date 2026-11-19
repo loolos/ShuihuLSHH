@@ -1,3 +1,4 @@
+import { encounterMap } from '../rules/willow-encounter.ts';
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
 import Phaser from 'phaser';
 import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
@@ -149,7 +150,7 @@ export class BattleScene extends Phaser.Scene {
     this.party = data.party;
     this.joinLevel = data.joinLevel;
     this.onEnd = data.onEnd;
-    this.mapName = data.map ?? data.stage;
+    this.mapName = data.map ?? encounterMap(data.stage);
     this.tint = data.tint;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
