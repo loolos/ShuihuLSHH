@@ -36,3 +36,15 @@ export function enemyFloor(playerLevels: number[]): number {
   if (!ENEMY_LEVEL.floor || !playerLevels.length) return 0;
   return Math.round(playerLevels.reduce((a, b) => a + b, 0) / playerLevels.length) - FLOOR_GAP;
 }
+
+/** 战斗关的最终等级区间；剧情演员和陪练不套用。骑兵/刺客是战斗兵种，不因属性模板为officer而算首领。 */
+export type EnemyRank = 'troop' | 'leader';
+const TROOP_LEVEL_CLASSES = new Set([19,20,21,22,23,32,33,34,36,37,40,41,43,44,45,66,67]);
+export function enemyRank(classId: number): EnemyRank {
+  return TROOP_LEVEL_CLASSES.has(classId) ? 'troop' : 'leader';
+}
+export function relativeEnemyLevel(base: number, heroAverage: number, rank: EnemyRank): number {
+  const mid=Math.max(1,Math.round(heroAverage));
+  const [low,high]=rank==='troop'?[Math.max(1,mid-3),mid]:[mid,mid+3];
+  return Math.max(low,Math.min(high,Math.round(base)));
+}

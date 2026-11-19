@@ -7,7 +7,7 @@ import { parseHuman } from '../formats/hum.ts';
 import { cropMap, mapFromJson, parseMap, type MapData, type MapJson } from '../formats/map.ts';
 import { parsePasBlocks, parsePasHeader, type PasBlock } from '../formats/pas.ts';
 import { Board } from './board.ts';
-import { adjustEnemies } from './enemy-level.ts';
+import { enemyRank, adjustEnemies } from './enemy-level.ts';
 import { tuneBlocks, tuneUnits } from './stage-tune.ts';
 import { applyStoryQuotes } from './story-quotes.ts';
 import type { StageInput } from './battle.ts';
@@ -195,11 +195,13 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     const header = parsePasHeader(files.get(pabFile!));
     return { name: stage, board, units: own, blocks: willowBlocks(), data, header: { ...header, act: 0 }, seed: opts.seed, text: opts.text, party: opts.party, joinLevel: opts.joinLevel,
       names: Object.fromEntries(own.filter(u=>u.side==='enemy').map((u,i)=>[u.index,i?'街头泼皮':'泼皮头目'])),
+      enemyRanks: Object.fromEntries(own.filter(u=>u.side==='enemy').map(u=>[u.index,u.group===20?'leader':enemyRank(u.type)])),
       spectators: own.filter(u=>[0,3,13,15,5].includes(u.type)).map(u=>u.index),
       clearGold: 0 };
   }
   return {
     name: stage,
+    enemyRanks: !/^(act|train)/i.test(stage) ? Object.fromEntries(units.filter(u=>u.side==='enemy').map(u=>[u.index,enemyRank(u.type)])) : undefined,
     // 黄泥冈沿用原随行演员，分别承担军汉、虞候和谢都管对白，不另加战斗单位。
     names: stage.toLowerCase() === 'act10-1' ? { 1: '军汉', 2: '军汉', 3: '虞候', 4: '虞候', 5: '谢都管' } : undefined,
     board,

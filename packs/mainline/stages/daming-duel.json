@@ -33,6 +33,7 @@
     },
     {
       "id": "zhoujin",
+      "enemyRank": "leader",
       "class": 43,
       "side": "enemy",
       "x": 11,

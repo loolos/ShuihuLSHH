@@ -232,7 +232,7 @@ function startGame(assets: Assets) {
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
         const done = replayInsertProgress(c, inserts, e.ref);
-        return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, inserts: done, finished: undefined };
+        return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, insertPreset: c.members.length || Object.keys(c.companions ?? {}).length ? undefined : e.ref, inserts: done, finished: undefined };
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
@@ -524,7 +524,7 @@ function startGame(assets: Assets) {
       const join = joinLevel({ ...campaign, members: [...party.values()] });
       const data = {
         assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed,
-        makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr, party, joinLevel: join }) }),
+        makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr, party, joinLevel: join, preset: campaign.insertPreset === ref }) }),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };
       if (scene()) scene()!.scene.restart(data);
@@ -549,7 +549,7 @@ function startGame(assets: Assets) {
     // 主线所有插关连续读写资产；包角色用稳定身份保存，不混入原版职业号。
     const after = recordPackResult(campaign, battle, pack!.rt);
     const entry = inserts.find((x) => x.ref === ref);
-    let c: CampaignState = { ...after, insert: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
+    let c: CampaignState = { ...after, insert: undefined, insertPreset: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
     // 同一位置可能有多段（终章后的续篇、Act10-1 前的赤发鬼 → 三阮）；按登记顺序接完，终章续篇最后一段才标记通关。
     const continuation = entry?.after
       ? pendingInsert(c, inserts, entry.after, 'after', ref)

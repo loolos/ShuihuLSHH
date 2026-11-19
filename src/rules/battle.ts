@@ -11,7 +11,7 @@ import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, 
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
-import { enemyFloor } from './enemy-level.ts';
+import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import { stageTune, type StageTune } from './stage-tune.ts';
 import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
@@ -130,6 +130,8 @@ export function condZones(c: PasCond): { char: number; x1: number; y1: number; x
 }
 
 export interface StageInput {
+  /** 仅战斗敌人：最终等级按实际参战好汉均级限制到兵种区间。 */
+  enemyRanks?: Record<number, EnemyRank>;
   /** 本关单位体力倍率：ACT索引→倍率。 */
   hpMultipliers?: Record<number, number>;
   /** 观战演员的ACT索引，不参与战斗。 */
@@ -261,9 +263,10 @@ export class Battle {
     // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
     const playerLevel = (a: ActUnit) => {
       const kept = input.party?.get(a.type);
-      return Math.max(1, a.level, kept?.level ?? 0, kept ? 0 : (input.joinLevel ?? 0));
+      return kept?.level ?? Math.max(1, a.level, input.joinLevel ?? 0);
     };
-    const mine = input.units.filter((a) => a.side === 'player' && this.data.classes[a.type]).map(playerLevel);
+    const mine = input.units.filter((a) => a.side === 'player' && !this.spectators.has(a.index) && !this.prisonCarts.has(a.index) && this.board.onGround(a.x,a.y) && this.data.classes[a.type]?.skills.length).map(playerLevel);
+    const heroAverage = mine.length ? mine.reduce((sum,n)=>sum+n,0)/mine.length : 0;
     const floor = enemyFloor(mine);
     for (const a of input.units) {
       if (a.side === 'object') {
@@ -276,7 +279,7 @@ export class Battle {
       const slots = cls.defaultItems.slice(0, 7);
       while (slots.length < SLOT_COUNT) slots.push(0);
       a.items.forEach((id, k) => id && (slots[k] = id));
-      // 构造时等级为 1，ACT 只会调高（EXE 0x404808、0x403279）。延续的人物取两者较高者，装备沿用
+      // 原版会按ACT调高；重制版已有好汉保持存档等级、经验和装备，不再强制抬级。
       const kept = a.side === 'player' ? input.party?.get(a.type) : undefined;
       if (kept) {
         slots.splice(0, slots.length, ...kept.slots);
@@ -285,9 +288,12 @@ export class Battle {
       const forge = slots.map((_, k) => kept?.forge?.[k] ?? 0);
       // 新入伙的人（之前没出现过）按当前队伍的平均等级入队，不低于剧本等级【新】
       const join = a.side === 'player' && !kept ? (input.joinLevel ?? 0) : 0;
-      // 敌人等级保底【新】：2 级以上的敌人不低于我方平均等级 − 5（1 级的过场摆设不动）
-      const level = a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1, a.level, kept?.level ?? 0, join);
-      const exp = kept && kept.level >= a.level ? kept.exp : 0;
+      // 正式战斗用兵/将相对区间；无角色策略的旧自定义输入仍保留原有等级保底。
+      const rank = input.enemyRanks?.[a.index];
+      const level = a.side === 'enemy' && rank && heroAverage > 0 && ENEMY_LEVEL.floor
+        ? relativeEnemyLevel(a.level, heroAverage, rank)
+        : kept?.level ?? (a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1,a.level,join));
+      const exp = kept?.exp ?? 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
       let mode = a.flags >> 8;
       let hidden = (a.flags & 0xff) !== 0;

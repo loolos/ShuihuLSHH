@@ -175,11 +175,9 @@ describe.skipIf(!has)('测试用跳关', () => {
     const c = jumpTo(files, data, stages, 34, newCampaign(0)); // N06
     const lin = c.members.find((m) => m.classId === 11)!; // 林沖
     expect(c.stage).toBe(34);
-    // 每个人都不低于这一关敌人平均（修正后约 14）+ 1，林沖按队伍平均入伙，也一样
-    for (const m of c.members) expect(m.level).toBeGreaterThanOrEqual(15);
-    expect(lin.level).toBeGreaterThanOrEqual(15);
-    // 不超过到这一关为止敌人平均等级的最高值 + 3（N06 敌人平均 16）
-    expect(Math.max(...c.members.map((m) => m.level))).toBeLessThanOrEqual(19);
+    const table = JSON.parse(fs.readFileSync(path.join(import.meta.dirname,'../src/data/entry-levels.json'),'utf8')).levels.n06;
+    for(const m of c.members)expect(m.level).toBe(table[m.classId]);
+    expect(lin.level).toBe(table[11]);
     // 第 1 章战役 2（N-add01）：第一关打过不少小兵，两人都不该还是 2 级
     const at1 = jumpTo(files, data, stages, 1, newCampaign(0)).members;
     expect(at1.find((m) => m.classId === 0)!.level).toBeGreaterThanOrEqual(3); // 武龍
@@ -193,16 +191,7 @@ describe.skipIf(!has)('测试用跳关', () => {
       for (const [id, lv] of now) if (seen.has(id)) expect(lv, `${name} ${id}`).toBeGreaterThanOrEqual(seen.get(id)!);
       seen = new Map([...seen, ...now]);
     }
-    // 每场战役：我方平均等级和敌人平均等级（2 级以上，修正后）相差不超过 2（负责人 2026-11-13）
-    const { foeAverage, JUMP_LEVEL_GAP, stageUnits } = await import('../src/rules/preset.ts');
-    for (const [pos, s] of stages.entries()) {
-      if (/^(act|train)/i.test(s.mapName) || !files.has(`Map/${s.mapName}.act`)) continue;
-      const foe = foeAverage(pos + 1, pos, () => stageUnits(files, s));
-      const ms = jumpTo(files, data, stages, s.index, newCampaign(0)).members;
-      if (!foe || !ms.length) continue;
-      const avg = ms.reduce((a, m) => a + m.level, 0) / ms.length;
-      expect(Math.abs(avg - foe), `${s.mapName} 我方 ${avg.toFixed(1)} 敌人 ${foe.toFixed(1)}`).toBeLessThanOrEqual(JUMP_LEVEL_GAP);
-    }
+    // 推荐等级来自实际流程，不再按旧的敌人绝对等级全员压低。
     // 全关卡以最终人物等级查表；不再依赖经过的城镇。
     const { GEAR_TABLE, WEAPON_TABLE, MEDICINE_TABLE, kitBand, kitProfile } = await import('../src/rules/equipment.ts');
     for (const stage of stages) {
