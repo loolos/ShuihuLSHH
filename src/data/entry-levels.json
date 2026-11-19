@@ -102,6 +102,12 @@
     "mainline/jieyangzhen": {"0":38,"sj-fugitive":36,"lijun":37,"xueyong":37},
     "mainline/mujiazhuang": {"0":39,"sj-fugitive":36},
     "mainline/chuanhuoer": {"0":40,"sj-fugitive":37},
+    "mainline/jiangzhou-laocheng": {"0":40,"sj-fugitive":37},
+    "mainline/dufang": {"0":40,"sj-fugitive":37,"daizong":29},
+    "mainline/pipating": {"0":40,"likui":34,"sj-fugitive":38,"daizong":30},
+    "mainline/xunyanglou": {"0":40,"sj-fugitive":38},
+    "mainline/fachang": {"0":40,"12":27,"likui":35,"sj-fugitive":38,"daizong":30},
+    "mainline/bailongmiao": {"0":42,"12":29,"likui":37,"sj-fugitive":40,"daizong":32},
     "n-add04b": {"0":8,"3":9,"5":6,"13":6,"15":6},
     "n-add09b": {"0":19,"3":19,"5":17,"11":17,"13":18,"15":17,"16":19}
   }

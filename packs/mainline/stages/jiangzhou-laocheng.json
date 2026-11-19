@@ -1,0 +1,254 @@
+{
+  "id": "jiangzhou-laocheng",
+  "title": "江州牢城",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "laocheng"
+  },
+  "bgm": [
+    "jiangzhou",
+    "story"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 11,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "offstage": true
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 10,
+      "y": 22,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "张千"
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 12,
+      "y": 22,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "李万"
+    },
+    {
+      "id": "guanying",
+      "class": 64,
+      "side": "ally",
+      "x": 12,
+      "y": 11,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "管营"
+    },
+    {
+      "id": "chaibo",
+      "class": 38,
+      "side": "ally",
+      "x": 11,
+      "y": 14,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "差拨"
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "ally",
+      "x": 20,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "hidden": true
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "ally",
+      "x": 20,
+      "y": 8,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "江州 · 牢城营"
+        ],
+        [
+          "narrate",
+          "宋江和两个公人辞了穆家庄众人，取路投江州来。到了州衙，蔡九知府把宋江押送牢城营里交割。"
+        ],
+        [
+          "move",
+          "songjiang",
+          11,
+          16
+        ],
+        [
+          "say",
+          "chaibo",
+          "新到的配军，见了管营相公，先吃一百杀威棒！"
+        ],
+        [
+          "narrate",
+          "宋江早使了些银两与差拨、管营，众人都欢喜。"
+        ],
+        [
+          "say",
+          "guanying",
+          "这人一路患病，不曾痊可。杀威棒且寄下，与他开了枷，只在抄事房里做个抄事。"
+        ],
+        [
+          "narrate",
+          "管营叫人开了宋江的行枷。张千、李万讨了回文，自回济州去了。"
+        ],
+        [
+          "leave",
+          "zhangqian"
+        ],
+        [
+          "leave",
+          "liwan"
+        ],
+        [
+          "say",
+          "chaibo",
+          "营里人人都有常例钱，只有节级那里，你还不曾送去。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "不妨。那人要时，自来问我讨。"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "move",
+          "daizong",
+          12,
+          15
+        ],
+        [
+          "say",
+          "daizong",
+          "哪个是新配到的囚徒？你这黑矮杀才，倚仗谁的势要，不送常例钱来与我？"
+        ],
+        [
+          "face",
+          "songjiang",
+          "daizong"
+        ],
+        [
+          "say",
+          "songjiang",
+          "人情人情，在人情愿。你如何逼取人财？"
+        ],
+        [
+          "say",
+          "daizong",
+          "你这贼配军，……咦？这张黑脸，莫不是——宋三哥！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "戴院长，孟州一别，可还记得宋江？"
+        ],
+        [
+          "say",
+          "daizong",
+          "怎地不记得！吴学究早有书来，说哥哥配到江州，小弟正等着哪！"
+        ],
+        [
+          "narrate",
+          "两个大笑，携手出营，到街上酒楼里坐下叙话。"
+        ],
+        [
+          "appear",
+          "likui"
+        ],
+        [
+          "move",
+          "likui",
+          13,
+          15
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥！铁牛先回江州报信，左等右等，可等着了！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "李大哥，一向安好？"
+        ],
+        [
+          "say",
+          "likui",
+          "好是好，只是手头紧。哥哥借铁牛十两银子，去去便来！"
+        ],
+        [
+          "say",
+          "daizong",
+          "哥哥休借与他，他拿去又是赌。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "尊兄要使时，只顾拿去。"
+        ],
+        [
+          "narrate",
+          "宋江取出一锭十两银子，递与李逵。李逵接了，一溜烟去了。"
+        ],
+        [
+          "leave",
+          "likui"
+        ],
+        [
+          "say",
+          "hero",
+          "（营门外）哥哥既已安顿，武龙便在城里寻个下处，早晚照应。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}

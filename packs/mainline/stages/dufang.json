@@ -1,0 +1,266 @@
+{
+  "id": "dufang",
+  "title": "赌坊劝架",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 200
+  },
+  "map": {
+    "custom": "zishijie"
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 0,
+      "y": 7,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 0,
+      "y": 8,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 0,
+      "y": 9,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "ally",
+      "x": 23,
+      "y": 8,
+      "level": 30,
+      "ai": 0,
+      "facing": 1,
+      "levelOffset": 2
+    },
+    {
+      "id": "xiaozhangyi",
+      "class": 41,
+      "side": "enemy",
+      "x": 24,
+      "y": 9,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "小张乙",
+      "hpMultiplier": 1.5,
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-1",
+      "class": 19,
+      "side": "enemy",
+      "x": 21,
+      "y": 7,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-2",
+      "class": 20,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-3",
+      "class": 19,
+      "side": "enemy",
+      "x": 25,
+      "y": 7,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-4",
+      "class": 20,
+      "side": "enemy",
+      "x": 26,
+      "y": 10,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-5",
+      "class": 19,
+      "side": "enemy",
+      "x": 20,
+      "y": 9,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-6",
+      "class": 20,
+      "side": "enemy",
+      "x": 27,
+      "y": 8,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-7",
+      "class": 19,
+      "side": "enemy",
+      "x": 24,
+      "y": 11,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    },
+    {
+      "id": "dutu-8",
+      "class": 20,
+      "side": "enemy",
+      "x": 19,
+      "y": 8,
+      "level": 30,
+      "ai": 14,
+      "facing": 1,
+      "name": "赌徒",
+      "levelOffset": -3
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "江州 · 小张乙赌房"
+        ],
+        [
+          "narrate",
+          "李逵拿了宋江的十两银子，一径奔到城外小张乙赌房里，一博就输了。"
+        ],
+        [
+          "say",
+          "likui",
+          "这银子是我哥哥的，不是我的！你们且还了我，明日再来赌！"
+        ],
+        [
+          "say",
+          "xiaozhangyi",
+          "李大哥，你闲常最赌得直，今日如何这般没出豁？"
+        ],
+        [
+          "narrate",
+          "李逵也不答应他，把赌台上的银子一把抢在怀里，赌房里一二十人都来夺，被李逵指东打西，指南打北，打得满街乱跑。"
+        ],
+        [
+          "say",
+          "likui",
+          "老爷闲常赌直，今日权且不直一遍！"
+        ],
+        [
+          "focus",
+          "songjiang"
+        ],
+        [
+          "narrate",
+          "宋江、戴宗和武龙正在街上走，只听得前头喊声大起。"
+        ],
+        [
+          "say",
+          "daizong",
+          "不好！又是那铁牛闯祸！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "快去拦住他，休叫他伤了人性命！"
+        ],
+        [
+          "objective",
+          "胜：宋江、戴宗、武龙任一人走到李逵身边，宋江喝住他\n败：小张乙被打死；超过 8 回合\n（赌徒只会逃，不还手；李逵见人就打）"
+        ],
+        [
+          "turnLimit",
+          8
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "likui"
+      },
+      "do": [
+        [
+          "say",
+          "songjiang",
+          "兄弟住手！贤弟但要银子使用，只顾来问我讨。今日既是明明地输了，快把来还他。"
+        ],
+        [
+          "narrate",
+          "李逵只得从布衫兜里取出银子，都递在宋江手里。宋江叫过小张乙，都付与他。"
+        ],
+        [
+          "say",
+          "xiaozhangyi",
+          "小人只拿自己的便了，那十两原银，虽是李大哥两博输与小人，如今小人情愿不要他的。"
+        ],
+        [
+          "say",
+          "likui",
+          "哥哥面上，铁牛不打了便是。"
+        ],
+        [
+          "narrate",
+          "四人一同进城，到琵琶亭酒馆里吃酒。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "xiaozhangyi"
+      },
+      "do": [
+        [
+          "defeat",
+          "小张乙被李逵打死了……"
+        ]
+      ]
+    }
+  ]
+}

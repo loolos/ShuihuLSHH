@@ -46,7 +46,19 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const input = compileStage(rt, stage, files, { seed, text: tr, preset: id === 'mainline' });
     const b = new Battle(input);
     const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
-    const goal = goalBlock?.trigger.kind === 'area' ? { who: goalBlock.trigger.chars ?? [goalBlock.trigger.char], x: (goalBlock.trigger.x1 + goalBlock.trigger.x2) >> 1, y: (goalBlock.trigger.y1 + goalBlock.trigger.y2) >> 1 } : null;
+    const gt = goalBlock?.trigger.kind === 'area' ? goalBlock.trigger : null;
+    const goal = gt ? { who: gt.chars ?? [gt.char], x: (gt.x1 + gt.x2) >> 1, y: (gt.y1 + gt.y2) >> 1, x1: Math.min(gt.x1, gt.x2), x2: Math.max(gt.x1, gt.x2), y1: Math.min(gt.y1, gt.y2), y2: Math.max(gt.y1, gt.y2) } : null;
+    const inGoal = (c: { x: number; y: number }) => !!goal && c.x >= goal.x1 && c.x <= goal.x2 && c.y >= goal.y1 && c.y <= goal.y2;
+    /** 区域里离这人最近、没人站的格子（区域中心被人占了也能进去） */
+    const goalCell = (u: Battle['units'][number]) => {
+      let best = { x: goal!.x, y: goal!.y }, bd = Infinity;
+      for (let y = goal!.y1; y <= Math.min(goal!.y2, b.board.height - 1); y++) for (let x = goal!.x1; x <= Math.min(goal!.x2, b.board.width - 1); x++) {
+        if (!b.board.passable(x, y) || b.active().some((o) => o !== u && o.x === x && o.y === y)) continue;
+        const d = dist(u, { x, y });
+        if (d < bd) { bd = d; best = { x, y }; }
+      }
+      return best;
+    };
     const ev = [...b.begin()];
     while (b.pendingChoice) ev.push(...b.answer(0));
     let guard = 0;
@@ -99,14 +111,15 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
         if (goal && goal.who.includes(u.classId)) {
           if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
-          else walkTo(b, u, goal.x, goal.y, ev);
+          else if (inGoal(u)) ev.push(...b.defend(u));
+          else { const g = goalCell(u); walkTo(b, u, g.x, g.y, ev); }
           continue;
         }
-        // 能劝人收手的人（梁山截路的宋江）：走到最近一个还没劝住的人身边
+        // 能劝人收手的人（梁山截路的宋江）走到最近一个还没劝住的人身边；走到某人身边就过关的（赌坊劝架拦李逵），谁都往那人身边走
         const plea = input.blocks
-          .filter((x) => x.trigger.kind === 'near' && x.trigger.by === u.classId && !b.hasFired(x.index) && x.ops.some((o) => o.op === 121))
+          .filter((x) => x.trigger.kind === 'near' && !b.hasFired(x.index) && ((x.trigger.by === u.classId && x.ops.some((o) => o.op === 121)) || (x.trigger.by === undefined && x.ops.some((o) => o.op === 29))))
           .map((x) => x.trigger)
-          .map((t) => (t.kind === 'near' ? b.units.find((f) => f.uid === t.uid && f.alive && f.present && f.side === 'enemy') : undefined))
+          .map((t) => (t.kind === 'near' ? b.units.find((f) => f.uid === t.uid && f.alive && f.present && (f.side === 'enemy' || f.side === 'ally')) : undefined))
           .filter((t) => t !== undefined)
           .sort((p, q) => dist(p, u) - dist(q, u))[0];
         if (plea) {

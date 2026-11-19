@@ -260,6 +260,24 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       u.ai.point = { ...route[i] };
       return approach(b, u, [route[i]], 0);
     }
+    case 14: {
+      // 【新】逃跑（赌坊的赌徒）：不攻击；6 格内有敌对的人就往离所有敌对的人（按走路距离）最远的格子跑
+      const foes = b.aiFoesOf(u);
+      if (!foes.some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= 6)) return {};
+      const field = b.board.distanceField(foes);
+      const reach = b.reachOf(u, u.stats.move);
+      const w = b.board.width;
+      let best: { x: number; y: number; cost: number } | null = null;
+      let bestD = field[u.y * w + u.x];
+      for (const n of reach.values()) {
+        const d = field[n.y * w + n.x];
+        if (Number.isFinite(d) && (d > bestD || (d === bestD && best && n.cost < best.cost))) {
+          bestD = d;
+          best = n;
+        }
+      }
+      return best ? { path: b.pathOf(reach, best) } : {};
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为

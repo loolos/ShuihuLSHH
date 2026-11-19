@@ -4,9 +4,9 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备' };
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
-const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen']);
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang']);
 export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
@@ -31,6 +31,11 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
 }
 
 export function insertTownIntro(next: string): { actor: string; text: string }[] {
+  if (next === 'mainline/fachang') return [
+    { actor: 'huarong', text: '武龙兄弟连夜报信，公明哥哥和戴院长定在江州十字路口问斩。晁头领已点起十七个兄弟，分作四伙，扮了客商、丐者、脚夫、使枪棒的。' },
+    { actor: 'likui', text: '（江州城里）铁牛自在城里等着，到时候从茶坊楼上跳下去，一斧一个！' },
+    { actor: 'huarong', text: '诸位且在山上补齐药品，整顿兵器。下山之后，便要一路杀进江州了。' },
+  ];
   if (next === 'mainline/jieyangzhen') return [
     { actor: 'lijun', text: '哥哥受了一场惊恐。前面便是揭阳镇，小弟送哥哥一程，过了镇子再回岭上。' },
     { actor: 'sj-fugitive', text: '多得兄弟相救。既如此，且在岭下店中补些药物，整顿了再走。' },

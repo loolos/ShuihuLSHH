@@ -50,6 +50,8 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '霹雳火秦明', stages: ['mainline/yekun', 'mainline/yeshuo', 'mainline/gongpo', 'mainline/duiyingshan', 'mainline/liufeng', 'mainline/shiyong'] },
   // 负责人 2026-11-19：宋江刺配江州（原著第 36 回）：奔丧归庄（选项）、梁山截路（宋江劝住）、梁山送别、揭阳岭（限时救人）；武龙受吴用之托一路暗中护送
   { name: '刺配江州', stages: ['mainline/bensang', 'mainline/liangshan-jielu', 'mainline/liangshan-songbie', 'mainline/jieyangling', 'mainline/jieyangzhen', 'mainline/mujiazhuang', 'mainline/chuanhuoer'] },
+  { name: '浔阳江头', stages: ['mainline/jiangzhou-laocheng', 'mainline/dufang', 'mainline/pipating', 'mainline/xunyanglou'] },
+  { name: '江州劫法场', stages: ['mainline/fachang', 'mainline/bailongmiao'] },
 ];
 
 const DIGITS = '零一二三四五六七八九';
