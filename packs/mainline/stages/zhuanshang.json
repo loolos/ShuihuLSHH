@@ -1,0 +1,769 @@
+{
+  "id": "zhuanshang",
+  "title": "赚上梁山",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 500
+  },
+  "map": {
+    "base": "N-add16",
+    "crop": [
+      4,
+      8,
+      32,
+      24
+    ]
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 27,
+      "y": 19,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "lijun",
+      "class": "lijun",
+      "side": "player",
+      "x": 29,
+      "y": 19,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "lvfang",
+      "class": "lvfang",
+      "side": "player",
+      "x": 28,
+      "y": 19,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "guosheng",
+      "class": "guosheng",
+      "side": "player",
+      "x": 30,
+      "y": 20,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "xiaorang",
+      "class": "xiaorang",
+      "side": "ally",
+      "x": 28,
+      "y": 20,
+      "level": 30,
+      "ai": 14,
+      "facing": 0,
+      "levelOffset": -3
+    },
+    {
+      "id": "jindajian",
+      "class": "jindajian",
+      "side": "ally",
+      "x": 26,
+      "y": 20,
+      "level": 30,
+      "ai": 14,
+      "facing": 0,
+      "levelOffset": -3
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "ally",
+      "x": 17,
+      "y": 12,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "矮脚虎王英",
+      "hidden": true
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "ally",
+      "x": 16,
+      "y": 12,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "锦毛虎燕顺",
+      "hidden": true
+    },
+    {
+      "id": "zhengtianshou",
+      "class": 67,
+      "side": "ally",
+      "x": 18,
+      "y": 13,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "白面郎君郑天寿",
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ll-1",
+      "class": 22,
+      "side": "ally",
+      "x": 16,
+      "y": 13,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "喽啰",
+      "levelOffset": -3,
+      "hidden": true
+    },
+    {
+      "id": "ll-2",
+      "class": 23,
+      "side": "ally",
+      "x": 19,
+      "y": 12,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "喽啰",
+      "levelOffset": -3,
+      "hidden": true
+    },
+    {
+      "id": "ll-3",
+      "class": 22,
+      "side": "ally",
+      "x": 15,
+      "y": 14,
+      "level": 30,
+      "ai": 0,
+      "facing": 2,
+      "name": "喽啰",
+      "levelOffset": -3,
+      "hidden": true
+    },
+    {
+      "id": "wuyong",
+      "class": 10,
+      "side": "ally",
+      "x": 0,
+      "y": 0,
+      "level": 30,
+      "ai": 8,
+      "offstage": true
+    },
+    {
+      "id": "gb-1",
+      "class": 43,
+      "side": "enemy",
+      "x": 30,
+      "y": 19,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gb-2",
+      "class": 43,
+      "side": "enemy",
+      "x": 31,
+      "y": 18,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gb-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 28,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-4",
+      "class": 33,
+      "side": "enemy",
+      "x": 30,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 31,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 26,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gb-7",
+      "class": 36,
+      "side": "enemy",
+      "x": 27,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gb-8",
+      "class": 33,
+      "side": "enemy",
+      "x": 31,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gc-1",
+      "class": 43,
+      "side": "enemy",
+      "x": 28,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gc-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 31,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gc-3",
+      "class": 34,
+      "side": "enemy",
+      "x": 27,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gc-4",
+      "class": 36,
+      "side": "enemy",
+      "x": 31,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gc-5",
+      "class": 43,
+      "side": "enemy",
+      "x": 31,
+      "y": 19,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gc-6",
+      "class": 32,
+      "side": "enemy",
+      "x": 30,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gc-7",
+      "class": 43,
+      "side": "enemy",
+      "x": 30,
+      "y": 18,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gc-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 28,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gd-1",
+      "class": 34,
+      "side": "enemy",
+      "x": 2,
+      "y": 6,
+      "level": 30,
+      "facing": 2,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gd-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 3,
+      "y": 6,
+      "level": 30,
+      "facing": 2,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gd-3",
+      "class": 43,
+      "side": "enemy",
+      "x": 4,
+      "y": 5,
+      "level": 30,
+      "facing": 2,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gd-4",
+      "class": 36,
+      "side": "enemy",
+      "x": 2,
+      "y": 7,
+      "level": 30,
+      "facing": 2,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gd-5",
+      "class": 32,
+      "side": "enemy",
+      "x": 1,
+      "y": 6,
+      "level": 30,
+      "facing": 2,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "gd-6",
+      "class": 43,
+      "side": "enemy",
+      "x": 5,
+      "y": 6,
+      "level": 30,
+      "facing": 2,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "gd-7",
+      "class": 34,
+      "side": "enemy",
+      "x": 0,
+      "y": 6,
+      "level": 30,
+      "facing": 2,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "xunjian",
+      "class": 38,
+      "side": "enemy",
+      "x": 30,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "济州巡检",
+      "levelOffset": 1,
+      "hidden": true,
+      "hpMultiplier": 1.5
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "济州城外 · 山路"
+        ],
+        [
+          "narrate",
+          "戴宗扮作泰安州岳庙里的太保，寻见萧让、金大坚，各送五十两银子，只说岳庙里要刻一块碑。两个见了银子，欢欢喜喜收拾了，跟着戴宗出城。"
+        ],
+        [
+          "narrate",
+          "李俊、吕方、郭盛三个扮作挑担的伴当，跟在后面——吴学究怕路上有失，特地叫他们来护着戴院长。"
+        ],
+        [
+          "say",
+          "xiaorang",
+          "太保，此去泰安州还有多远？"
+        ],
+        [
+          "say",
+          "daizong",
+          "先生只管走，前面山路过去便是大路了。"
+        ],
+        [
+          "narrate",
+          "行不过七八里，只听得一声呼哨，山坡后跳出一伙好汉来。当先一个，五短身材，手拿一条朴刀。"
+        ],
+        [
+          "appear",
+          "wangying"
+        ],
+        [
+          "appear",
+          "yanshun"
+        ],
+        [
+          "appear",
+          "zhengtianshou"
+        ],
+        [
+          "appear",
+          "ll-1"
+        ],
+        [
+          "appear",
+          "ll-2"
+        ],
+        [
+          "appear",
+          "ll-3"
+        ],
+        [
+          "say",
+          "wangying",
+          "你那几个是甚么人？那里去？孩儿们，拿这两个秀才上山去！"
+        ],
+        [
+          "say",
+          "xiaorang",
+          "好汉饶命！我两个是上泰安州刻石镌文的，又没一分财赋，止有几件衣服！"
+        ],
+        [
+          "say",
+          "jindajian",
+          "太保救我们则个！"
+        ],
+        [
+          "say",
+          "lvfang",
+          "（低声）王头领，戏也做够了，休把两位先生吓坏了。"
+        ],
+        [
+          "say",
+          "wangying",
+          "哈哈！萧先生、金师父休慌，俺是梁山泊矮脚虎王英，奉吴学究将令，特来请二位上山的！"
+        ],
+        [
+          "say",
+          "daizong",
+          "二位休怪。小可不是岳庙太保，是江州戴宗。只因宋公明哥哥有难，要借二位的手段。"
+        ],
+        [
+          "say",
+          "yanshun",
+          "俺是锦毛虎燕顺。二位先生的老小，山寨里自会派人去接，不必挂心。"
+        ],
+        [
+          "say",
+          "xiaorang",
+          "……原来如此。事已至此，也只得随众位去了。"
+        ],
+        [
+          "narrate",
+          "话犹未了，背后官道上尘头起处，一彪官军赶来——却是济州巡检听说山路上有强人劫客，带了马军步军来拿！"
+        ],
+        [
+          "appear",
+          "gb-1"
+        ],
+        [
+          "appear",
+          "gb-2"
+        ],
+        [
+          "appear",
+          "gb-3"
+        ],
+        [
+          "appear",
+          "gb-4"
+        ],
+        [
+          "appear",
+          "gb-5"
+        ],
+        [
+          "appear",
+          "gb-6"
+        ],
+        [
+          "appear",
+          "gb-7"
+        ],
+        [
+          "appear",
+          "gb-8"
+        ],
+        [
+          "appear",
+          "xunjian"
+        ],
+        [
+          "say",
+          "xunjian",
+          "好大胆的贼人，敢在济州地面劫人！一发拿了！"
+        ],
+        [
+          "say",
+          "lijun",
+          "两位先生只管往山上躲，有我们在！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "吕兄，咱两个的戟正好拿官军试一试！"
+        ],
+        [
+          "say",
+          "wangying",
+          "燕顺哥哥，官军来得正好，咱们这回真劫一场！"
+        ],
+        [
+          "say",
+          "yanshun",
+          "兄弟们，跟着王矮虎杀上去！"
+        ],
+        [
+          "objective",
+          "胜：打倒济州巡检和全部官军\n败：戴宗、萧让或金大坚倒下；超过 18 回合"
+        ],
+        [
+          "turnLimit",
+          18
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "do": [
+        [
+          "narrate",
+          "众人杀退官军，取路到了水边，早有船来接上梁山。吴学究又叫人连夜去济州，把两家老小都接上山来。"
+        ],
+        [
+          "narrate",
+          "萧让照着蔡京的笔迹写了回书，金大坚依样刻了一方图书，用了印。戴宗辞了众人，作起神行法，回江州去了。"
+        ],
+        [
+          "say",
+          "wuyong",
+          "（聚义厅上，猛然叫苦）不好了！早间那封回书，图书上使的是「翰林蔡京」四字！"
+        ],
+        [
+          "say",
+          "wuyong",
+          "父亲写书与儿子，如何使个讳字图书？这是我见不到处——那黄文炳是个细心的人，必然看破，倒送了戴院长性命！"
+        ],
+        [
+          "narrate",
+          "戴宗去得远了，追赶不及。吴用急叫武龙引着李俊、吕方、郭盛、朱贵、王英、燕顺六个，连夜赶去江州，暗中接应戴院长。"
+        ],
+        [
+          "victory",
+          "萧让、金大坚上了梁山！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "daizong"
+      },
+      "do": [
+        [
+          "defeat",
+          "戴宗倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "xiaorang"
+      },
+      "do": [
+        [
+          "defeat",
+          "萧让倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "jindajian"
+      },
+      "do": [
+        [
+          "defeat",
+          "金大坚倒下了……"
+        ]
+      ]
+    }
+  ]
+}

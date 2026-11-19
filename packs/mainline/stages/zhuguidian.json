@@ -1,0 +1,685 @@
+{
+  "id": "zhuguidian",
+  "title": "旱地忽律",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 400
+  },
+  "map": {
+    "custom": "dukou-yuchuan"
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 26,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "zhugui",
+      "class": "zhugui",
+      "side": "player",
+      "x": 18,
+      "y": 15,
+      "level": 30,
+      "facing": 2
+    },
+    {
+      "id": "huojia-1",
+      "class": 35,
+      "side": "ally",
+      "x": 15,
+      "y": 16,
+      "level": 30,
+      "ai": 0,
+      "facing": 1,
+      "name": "火家",
+      "levelOffset": -2
+    },
+    {
+      "id": "huojia-2",
+      "class": 35,
+      "side": "ally",
+      "x": 19,
+      "y": 18,
+      "level": 30,
+      "ai": 0,
+      "facing": 1,
+      "name": "火家",
+      "levelOffset": -2
+    },
+    {
+      "id": "huojia-3",
+      "class": 35,
+      "side": "ally",
+      "x": 17,
+      "y": 17,
+      "level": 30,
+      "ai": 0,
+      "facing": 1,
+      "name": "火家",
+      "levelOffset": -2
+    },
+    {
+      "id": "duqian",
+      "class": 69,
+      "side": "player",
+      "x": 3,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "songwan",
+      "class": 70,
+      "side": "player",
+      "x": 4,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "hidden": true
+    },
+    {
+      "id": "a1",
+      "class": 36,
+      "side": "enemy",
+      "x": 26,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "a2",
+      "class": 36,
+      "side": "enemy",
+      "x": 26,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "a3",
+      "class": 32,
+      "side": "enemy",
+      "x": 27,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "b1",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 1,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "b2",
+      "class": 33,
+      "side": "enemy",
+      "x": 15,
+      "y": 1,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "b3",
+      "class": 34,
+      "side": "enemy",
+      "x": 15,
+      "y": 0,
+      "level": 30,
+      "facing": 1,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "c1",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 21,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "c2",
+      "class": 33,
+      "side": "enemy",
+      "x": 15,
+      "y": 22,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "c3",
+      "class": 36,
+      "side": "enemy",
+      "x": 16,
+      "y": 21,
+      "level": 30,
+      "facing": 1,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "c4",
+      "class": 43,
+      "side": "enemy",
+      "x": 17,
+      "y": 22,
+      "level": 30,
+      "facing": 1,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "d1",
+      "class": 43,
+      "side": "enemy",
+      "x": 27,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "d2",
+      "class": 36,
+      "side": "enemy",
+      "x": 28,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "d3",
+      "class": 32,
+      "side": "enemy",
+      "x": 26,
+      "y": 12,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "d4",
+      "class": 34,
+      "side": "enemy",
+      "x": 29,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "e1",
+      "class": 43,
+      "side": "enemy",
+      "x": 28,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "e2",
+      "class": 43,
+      "side": "enemy",
+      "x": 29,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "e3",
+      "class": 33,
+      "side": "enemy",
+      "x": 27,
+      "y": 12,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "e4",
+      "class": 32,
+      "side": "enemy",
+      "x": 26,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "shichen",
+      "class": 38,
+      "side": "enemy",
+      "x": 27,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "济州缉捕使臣",
+      "levelOffset": 1,
+      "hidden": true,
+      "hpMultiplier": 1.5
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "梁山泊边 · 朱贵酒店"
+        ],
+        [
+          "narrate",
+          "戴宗领了蔡九知府的家书，拴上四个甲马，作起神行法，一日行八百里，早来到梁山泊边。"
+        ],
+        [
+          "appear",
+          "daizong"
+        ],
+        [
+          "move",
+          "daizong",
+          16,
+          17
+        ],
+        [
+          "say",
+          "daizong",
+          "走得饥渴了。店家，有甚么素酒素食，只管卖来！"
+        ],
+        [
+          "say",
+          "huojia-1",
+          "客官稍待，有加料的好酒，有蒸得好的馒头。"
+        ],
+        [
+          "narrate",
+          "戴宗吃了一碗酒，又吃了些素馒头，只见天旋地转，头重脚轻，扑地倒在凳边。"
+        ],
+        [
+          "act",
+          "daizong",
+          "hurt"
+        ],
+        [
+          "bind",
+          "daizong"
+        ],
+        [
+          "say",
+          "huojia-1",
+          "倒也！倒也！"
+        ],
+        [
+          "narrate",
+          "朱贵从里面出来，叫火家先搜他身边。只见一个纸包，里面是一封家书，封皮上写着「平安家信，百拜奉上父亲大人膝下，男蔡德章谨封」。"
+        ],
+        [
+          "approach",
+          "zhugui",
+          "daizong"
+        ],
+        [
+          "say",
+          "zhugui",
+          "拆开看时……要解宋江上东京！原来哥哥在江州吃了官司。"
+        ],
+        [
+          "narrate",
+          "火家又搜出一个纸包，里面是一面朱红绿漆的宣牌，上面雕着银字：「江州两院押牢节级戴宗」。"
+        ],
+        [
+          "say",
+          "zhugui",
+          "且住！常听军师说，江州有个神行太保戴院长，是他至爱相识。莫非便是此人？快把解药来，救醒了问个明白！"
+        ],
+        [
+          "narrate",
+          "火家调了解药，扶起戴宗灌将下去。半个时辰，戴宗眼睁睁地醒来。"
+        ],
+        [
+          "cleanse",
+          "daizong"
+        ],
+        [
+          "say",
+          "daizong",
+          "你是甚人？好大胆，却把蒙汗药麻翻了我！如今又看了太师府书信，该得何罪？"
+        ],
+        [
+          "say",
+          "zhugui",
+          "这封鸟书打甚么不紧！休说太师府书信，俺这里兀自要和大宋皇帝做对头的！小弟便是梁山泊好汉旱地忽律朱贵。"
+        ],
+        [
+          "say",
+          "daizong",
+          "原来是朱头领。小可便是戴宗，吴学究的旧交。宋公明哥哥题了反诗，如今下在江州死囚牢里！"
+        ],
+        [
+          "buff",
+          "daizong",
+          "move",
+          {
+            "add": -2,
+            "turns": 3
+          }
+        ],
+        [
+          "buff",
+          "daizong",
+          "defense",
+          {
+            "pct": 100,
+            "turns": 4
+          }
+        ],
+        [
+          "narrate",
+          "话犹未了，店外一片声喊。济州府早疑心这酒店是梁山泊的眼线，今日差缉捕使臣带了做公的，四面围将拢来！"
+        ],
+        [
+          "appear",
+          "a1"
+        ],
+        [
+          "appear",
+          "a2"
+        ],
+        [
+          "appear",
+          "a3"
+        ],
+        [
+          "say",
+          "a1",
+          "里面的人听着！这店是梁山泊贼人的眼线，一个也休走了！"
+        ],
+        [
+          "say",
+          "zhugui",
+          "戴院长药力还未退，且护着他。待小弟去水亭上放一枝号箭，山寨里自有船来接应！"
+        ],
+        [
+          "objective",
+          "胜：朱贵走到水亭（栈桥西头）放号箭，之后打退全部官军\n败：朱贵倒下；超过 16 回合（戴宗体力掉到三成多，火家会扶他进屋躲着）"
+        ],
+        [
+          "turnLimit",
+          16
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "do": [
+        [
+          "narrate",
+          "北边小路上又来了一伙土兵！"
+        ],
+        [
+          "appear",
+          "b1"
+        ],
+        [
+          "appear",
+          "b2"
+        ],
+        [
+          "appear",
+          "b3"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "do": [
+        [
+          "narrate",
+          "南边大路上，马军领着土兵抄了过来！"
+        ],
+        [
+          "appear",
+          "c1"
+        ],
+        [
+          "appear",
+          "c2"
+        ],
+        [
+          "appear",
+          "c3"
+        ],
+        [
+          "appear",
+          "c4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "do": [
+        [
+          "narrate",
+          "东边板桥那头，又一拨官军赶到！"
+        ],
+        [
+          "appear",
+          "d1"
+        ],
+        [
+          "appear",
+          "d2"
+        ],
+        [
+          "appear",
+          "d3"
+        ],
+        [
+          "appear",
+          "d4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "zhugui",
+        "area": [
+          2,
+          10,
+          4,
+          11
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "arrow"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "arrow"
+      },
+      "do": [
+        [
+          "face",
+          "zhugui",
+          0
+        ],
+        [
+          "shoot",
+          "zhugui",
+          3,
+          4,
+          ""
+        ],
+        [
+          "narrate",
+          "朱贵取出一张鹊画弓，搭上一枝响箭，望着对港芦苇丛中射去。响箭到处，早有小喽啰把船摇将过来。"
+        ],
+        [
+          "appear",
+          "duqian"
+        ],
+        [
+          "appear",
+          "songwan"
+        ],
+        [
+          "say",
+          "duqian",
+          "朱贵兄弟放箭，必有紧事！摸着天杜迁在此！"
+        ],
+        [
+          "say",
+          "songwan",
+          "云里金刚宋万也来了！哪个鸟官军敢来撩拨？"
+        ],
+        [
+          "narrate",
+          "缉捕使臣见水里有船来，知道走漏了，亲自领着马军杀进来！"
+        ],
+        [
+          "appear",
+          "shichen"
+        ],
+        [
+          "appear",
+          "e1"
+        ],
+        [
+          "appear",
+          "e2"
+        ],
+        [
+          "appear",
+          "e3"
+        ],
+        [
+          "appear",
+          "e4"
+        ],
+        [
+          "say",
+          "shichen",
+          "休教走了一个！拿住梁山泊的人，州里重重有赏！"
+        ]
+      ]
+    },
+    {
+      "on": "allEnemiesDefeated",
+      "if": "arrow",
+      "do": [
+        [
+          "narrate",
+          "众人杀散了官军。朱贵叫火家收拾了店面，和杜迁、宋万扶着戴宗下船，直望金沙滩来。"
+        ],
+        [
+          "victory",
+          "朱贵救了戴宗，同上梁山！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "daizong",
+        "below": 35
+      },
+      "do": [
+        [
+          "narrate",
+          "戴宗药力还未散尽，一阵头晕，又跌倒在地。火家慌忙把他扶进后屋藏了。"
+        ],
+        [
+          "leave",
+          "daizong"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "daizong"
+      },
+      "do": [
+        [
+          "defeat",
+          "戴宗倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhugui"
+      },
+      "do": [
+        [
+          "defeat",
+          "朱贵倒下了……"
+        ]
+      ]
+    }
+  ]
+}

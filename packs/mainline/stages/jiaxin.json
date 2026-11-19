@@ -1,0 +1,908 @@
+{
+  "id": "jiaxin",
+  "title": "假信露馅",
+  "townAfter": 11,
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 500
+  },
+  "map": {
+    "custom": "guanfu"
+  },
+  "bgm": "battle",
+  "units": [
+    {
+      "id": "daizong",
+      "class": "daizong",
+      "side": "player",
+      "x": 16,
+      "y": 6,
+      "level": 30,
+      "facing": 1
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 11,
+      "y": 20,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "lijun",
+      "class": "lijun",
+      "side": "player",
+      "x": 10,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "lvfang",
+      "class": "lvfang",
+      "side": "player",
+      "x": 12,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "guosheng",
+      "class": "guosheng",
+      "side": "player",
+      "x": 13,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "zhugui",
+      "class": "zhugui",
+      "side": "player",
+      "x": 9,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "wangying",
+      "class": "wangying",
+      "side": "player",
+      "x": 14,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "yanshun",
+      "class": "yanshun",
+      "side": "player",
+      "x": 15,
+      "y": 21,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "caijiu",
+      "class": "caijiu",
+      "side": "ally",
+      "x": 20,
+      "y": 3,
+      "level": 30,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "huangwenbing",
+      "class": "huangwenbing",
+      "side": "ally",
+      "x": 18,
+      "y": 3,
+      "level": 30,
+      "ai": 8,
+      "facing": 2
+    },
+    {
+      "id": "h1",
+      "class": 36,
+      "side": "enemy",
+      "x": 15,
+      "y": 5,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h2",
+      "class": 36,
+      "side": "enemy",
+      "x": 17,
+      "y": 5,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h3",
+      "class": 36,
+      "side": "enemy",
+      "x": 15,
+      "y": 7,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h4",
+      "class": 36,
+      "side": "enemy",
+      "x": 17,
+      "y": 7,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h5",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 6,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h6",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 6,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "h7",
+      "class": 34,
+      "side": "enemy",
+      "x": 19,
+      "y": 4,
+      "level": 30,
+      "facing": 1,
+      "name": "弓手",
+      "levelOffset": -1
+    },
+    {
+      "id": "h8",
+      "class": 32,
+      "side": "enemy",
+      "x": 20,
+      "y": 5,
+      "level": 30,
+      "facing": 1,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "y1",
+      "class": 32,
+      "side": "enemy",
+      "x": 12,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y2",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y3",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 15,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y4",
+      "class": 33,
+      "side": "enemy",
+      "x": 16,
+      "y": 17,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y5",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 9,
+      "level": 30,
+      "facing": 2,
+      "name": "弓手",
+      "levelOffset": -2
+    },
+    {
+      "id": "y6",
+      "class": 36,
+      "side": "enemy",
+      "x": 7,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -1
+    },
+    {
+      "id": "y7",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y8",
+      "class": 33,
+      "side": "enemy",
+      "x": 5,
+      "y": 15,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2
+    },
+    {
+      "id": "y9",
+      "class": 43,
+      "side": "enemy",
+      "x": 10,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "马军",
+      "levelOffset": -1
+    },
+    {
+      "id": "y10",
+      "class": 43,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "马军",
+      "levelOffset": -1
+    },
+    {
+      "id": "dutou",
+      "class": 38,
+      "side": "enemy",
+      "x": 13,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "江州都头",
+      "levelOffset": 1,
+      "hpMultiplier": 1.5
+    },
+    {
+      "id": "g1",
+      "class": 32,
+      "side": "enemy",
+      "x": 3,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "g2",
+      "class": 33,
+      "side": "enemy",
+      "x": 4,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "g3",
+      "class": 36,
+      "side": "enemy",
+      "x": 5,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "g4",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "g5",
+      "class": 34,
+      "side": "enemy",
+      "x": 4,
+      "y": 5,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "g6",
+      "class": 33,
+      "side": "enemy",
+      "x": 3,
+      "y": 7,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "m1",
+      "class": 43,
+      "side": "enemy",
+      "x": 11,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": 0,
+      "hidden": true
+    },
+    {
+      "id": "m2",
+      "class": 43,
+      "side": "enemy",
+      "x": 12,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": 0,
+      "hidden": true
+    },
+    {
+      "id": "m3",
+      "class": 34,
+      "side": "enemy",
+      "x": 10,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "m4",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "m5",
+      "class": 36,
+      "side": "enemy",
+      "x": 9,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": 0,
+      "hidden": true
+    },
+    {
+      "id": "m6",
+      "class": 33,
+      "side": "enemy",
+      "x": 14,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "m7",
+      "class": 32,
+      "side": "enemy",
+      "x": 7,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "k1",
+      "class": 43,
+      "side": "enemy",
+      "x": 10,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "k2",
+      "class": 32,
+      "side": "enemy",
+      "x": 12,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "k3",
+      "class": 34,
+      "side": "enemy",
+      "x": 11,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "k4",
+      "class": 36,
+      "side": "enemy",
+      "x": 13,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "k5",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "k6",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "江州 · 知府衙门"
+        ],
+        [
+          "narrate",
+          "戴宗回到江州，把回书呈上。蔡九知府见了，大喜道：「我父亲叫把宋江解上东京，正好！」"
+        ],
+        [
+          "narrate",
+          "恰好黄文炳到府里来。蔡九把回书与他看了。黄文炳看了一遍，卷过来看了封皮，又见图书新鲜。"
+        ],
+        [
+          "say",
+          "huangwenbing",
+          "这封书不是真的。"
+        ],
+        [
+          "say",
+          "caijiu",
+          "通判错矣！此是家尊亲手笔迹，真正字体，如何不是真的？"
+        ],
+        [
+          "say",
+          "huangwenbing",
+          "相公容复：往常家书来时，可曾有这个图书么？如今升转太师丞相，如何肯把翰林图书使出来？更兼亦是父寄书与子，须不当用讳字图书。"
+        ],
+        [
+          "say",
+          "huangwenbing",
+          "相公只问那下书人：太师府门子是何模样，府里管家是哪个，便知真假。"
+        ],
+        [
+          "say",
+          "caijiu",
+          "戴宗，你到我府里，是哪个门子接着你？"
+        ],
+        [
+          "say",
+          "daizong",
+          "小人到府前时，天色已晚……是一个……一个中年的门子接了。"
+        ],
+        [
+          "say",
+          "caijiu",
+          "胡说！我府里门子是个老的！这封书是哪里来的？左右，与我拿下！"
+        ],
+        [
+          "say",
+          "daizong",
+          "（不好，露了！）休想拿我神行太保！"
+        ],
+        [
+          "say",
+          "hero",
+          "（府门口）里面闹将起来了——众兄弟，杀进去救戴院长！"
+        ],
+        [
+          "say",
+          "wangying",
+          "王矮虎来也！"
+        ],
+        [
+          "say",
+          "yanshun",
+          "锦毛虎燕顺在此，挡我者死！"
+        ],
+        [
+          "say",
+          "zhugui",
+          "休叫院长吃了亏！"
+        ],
+        [
+          "objective",
+          "胜：我方任一好汉冲到戴宗身边（或第 6 回合戴宗被擒）之后，武龙从后堂的后门杀出去\n败：武龙倒下；戴宗被擒前倒下；超过 15 回合"
+        ],
+        [
+          "turnLimit",
+          15
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 1
+      },
+      "do": [
+        [
+          "buff",
+          "daizong",
+          "defense",
+          {
+            "pct": 80,
+            "turns": 5
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "daizong"
+      },
+      "unless": "caught",
+      "do": [
+        [
+          "say",
+          "daizong",
+          "兄弟们！休管我了——假信已被识破，他们定要斩我和宋江哥哥！你们快回梁山泊报信，叫哥哥们来劫法场！"
+        ],
+        [
+          "say",
+          "hero",
+          "院长！……好，武龙拼了性命也把信送到！"
+        ],
+        [
+          "narrate",
+          "黄文炳早叫人关了后堂，众公人一拥而上，把戴宗拖进后堂，捆了个结实。"
+        ],
+        [
+          "leave",
+          "daizong"
+        ],
+        [
+          "flag",
+          "caught"
+        ],
+        [
+          "say",
+          "dutou",
+          "还有一伙同党！前门有兵马堵着，把住后门，休教走了一个！"
+        ],
+        [
+          "appear",
+          "g1"
+        ],
+        [
+          "appear",
+          "g2"
+        ],
+        [
+          "appear",
+          "g3"
+        ],
+        [
+          "appear",
+          "g4"
+        ],
+        [
+          "appear",
+          "g5"
+        ],
+        [
+          "appear",
+          "g6"
+        ],
+        [
+          "say",
+          "lijun",
+          "人多救不得了！前门官军越来越多，从后堂杀出后门去！武龙兄弟，我们护着你回梁山报信！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "unless": "caught",
+      "do": [
+        [
+          "say",
+          "daizong",
+          "（远远望见众人）兄弟们休进来！快回梁山报信——叫哥哥们来劫法场！"
+        ],
+        [
+          "narrate",
+          "黄文炳早叫人关了后堂，众公人一拥而上，把戴宗拖进后堂，捆了个结实。"
+        ],
+        [
+          "leave",
+          "daizong"
+        ],
+        [
+          "flag",
+          "caught"
+        ],
+        [
+          "say",
+          "dutou",
+          "还有一伙同党！前门有兵马堵着，把住后门，休教走了一个！"
+        ],
+        [
+          "appear",
+          "g1"
+        ],
+        [
+          "appear",
+          "g2"
+        ],
+        [
+          "appear",
+          "g3"
+        ],
+        [
+          "appear",
+          "g4"
+        ],
+        [
+          "appear",
+          "g5"
+        ],
+        [
+          "appear",
+          "g6"
+        ],
+        [
+          "say",
+          "lijun",
+          "人多救不得了！前门官军越来越多，从后堂杀出后门去！武龙兄弟，我们护着你回梁山报信！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "府外的马军、公人听得喊声，也从府门赶来了！"
+        ],
+        [
+          "appear",
+          "k1"
+        ],
+        [
+          "appear",
+          "k2"
+        ],
+        [
+          "appear",
+          "k3"
+        ],
+        [
+          "appear",
+          "k4"
+        ],
+        [
+          "appear",
+          "k5"
+        ],
+        [
+          "appear",
+          "k6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "do": [
+        [
+          "narrate",
+          "江州团练领着马军弓手，堵住了府门！"
+        ],
+        [
+          "appear",
+          "m1"
+        ],
+        [
+          "appear",
+          "m2"
+        ],
+        [
+          "appear",
+          "m3"
+        ],
+        [
+          "appear",
+          "m4"
+        ],
+        [
+          "appear",
+          "m5"
+        ],
+        [
+          "appear",
+          "m6"
+        ],
+        [
+          "appear",
+          "m7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "hero",
+        "area": [
+          3,
+          2,
+          6,
+          2
+        ]
+      },
+      "do": [
+        [
+          "flag",
+          "out"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "out"
+      },
+      "if": "caught",
+      "do": [
+        [
+          "narrate",
+          "众好汉护着武龙打开后门杀将出去，夺了几匹快马，星夜奔回梁山泊。"
+        ],
+        [
+          "narrate",
+          "蔡九知府把戴宗也下在死囚牢里，定下斩刑：宋江、戴宗两个，押赴江州十字路口，斩首示众。"
+        ],
+        [
+          "narrate",
+          "晁盖、吴用听了武龙报信，当下点起十七个头领，扮作客商、丐者、脚夫、使枪棒的，暗暗潜入江州。"
+        ],
+        [
+          "victory",
+          "众好汉杀出江州府衙后门，回梁山报信！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "hero"
+      },
+      "do": [
+        [
+          "defeat",
+          "武龙倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "daizong"
+      },
+      "do": [
+        [
+          "defeat",
+          "戴宗倒下了……"
+        ]
+      ]
+    }
+  ]
+}
