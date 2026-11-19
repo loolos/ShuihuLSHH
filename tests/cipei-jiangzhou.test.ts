@@ -105,13 +105,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect(b.status).toBe('won');
   });
 
-  it('揭阳岭：四人走进酒店被麻翻、拖进后屋绑住；第 7 回合开始还没赶到就判负，放哨的火家报信后提前到第 6 回合', () => {
+  it('揭阳岭：四人走进酒店被麻翻、绑在店院原地；第 6 回合开始还没赶到就判负，放哨的火家报信后提前到第 5 回合', () => {
     const { b, get } = open('jieyangling');
     for (const id of ['songjiang', 'hero', 'zhangqian', 'liwan']) expect(b.isBound(get(id)), id).toBe(true);
-    expect([get('songjiang').x, get('songjiang').y]).toEqual([1, 7]);
-    turn(b, 6);
+    expect([get('songjiang').x, get('songjiang').y]).toEqual([10, 12]);
+    turn(b, 5);
     expect(b.status).toBe('playing');
-    turn(b, 7);
+    turn(b, 6);
     expect(b.status).toBe('lost');
     const o = open('jieyangling');
     const lj = o.get('lijun');
@@ -119,18 +119,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     for (const id of ['shao-1', 'shao-2']) {
       expect(o.get(id).ai.mode, id).toBe(4);
     }
-    expect(o.get('shao-1').ai.point).toEqual({ x: 11, y: 13 });
-    const s1 = o.get('shao-1'); s1.x = 11; s1.y = 13; after(o.b);
-    turn(o.b, 5);
+    expect(o.get('shao-1').ai.point).toEqual({ x: 12, y: 10 });
+    const s1 = o.get('shao-1'); s1.x = 12; s1.y = 10; after(o.b);
+    turn(o.b, 4);
     expect(o.b.status).toBe('playing');
-    turn(o.b, 6);
+    turn(o.b, 5);
     expect(o.b.status).toBe('lost');
   });
 
   it('揭阳岭：救人的人走到宋江身边就认出来，解药救醒四人、过关', () => {
     const { b, get } = open('jieyangling');
     const sj = get('songjiang'), tw = get('tongwei');
-    tw.x = sj.x + 1; tw.y = sj.y; after(b);
+    tw.x = sj.x; tw.y = sj.y - 1; after(b);
     expect(b.status).toBe('won');
     expect(b.isBound(sj)).toBe(false);
   });
