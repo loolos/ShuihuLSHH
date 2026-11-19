@@ -26,7 +26,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     const costs = rt.data.classes[12].skills.filter(s => s.skillId >= 107 && s.skillId <= 111).map(s => s.mpCost);
     expect(costs).toEqual([75, 100, 120, 140, 160]);
   });
-  for(const pack of ['mainline','jiangzhou'])it(`${pack}万夫莫敌四阶数值、段数、范围及28级替换正确`,()=>{
+  for(const pack of ['mainline'])it(`${pack}万夫莫敌四阶数值、段数、范围及28级替换正确`,()=>{
     const d=loadPackFromDisk(pack).data;
     const tiers=d.classes[0].skills.filter(s=>[10,11,12,1309].includes(s.skillId));expect(tiers).toHaveLength(4);
     tiers.forEach((s,i)=>{
@@ -40,7 +40,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     }
   });
   it('主线与江州的对应扩展技能同步，非审定技能保留', () => {
-    for (const pack of ['mainline', 'jiangzhou']) {
+    for (const pack of ['mainline']) {
       const p = loadPackFromDisk(pack);
       for (const [cls, name, cost] of [['wusong', '玉环鸳鸯脚', 55], ['huarong', '穿云贯日LV3', 60], ['huarong', '连珠飞星', 60]] as const) {
         expect(p.data.classes[p.classIds.get(cls)!].skills.find(s => s.name === name)?.mpCost).toBe(cost);

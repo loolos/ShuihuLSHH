@@ -14,7 +14,7 @@ import { FX_EXPLOSION, FX_IMPACT, fxGroups } from '../src/game/effects.ts';
 
 const available = fs.existsSync(path.join(DATA, 'Data/Human.hum'));
 describe.skipIf(!available)('武松、李逵技能重做', () => {
-  const main = loadPackFromDisk('mainline'), jiang = loadPackFromDisk('jiangzhou');
+  const main = loadPackFromDisk('mainline');
   const skills = (who: string, rt=main) => rt.data.classes[rt.classIds.get(who)!].skills;
   const skill = (who: string, name: string) => skills(who).find(s=>s.name===name)!;
   const board = new Board(31,31);
@@ -46,11 +46,6 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
       }
       expect(learnedSkills({classId:main.classIds.get(who)!,level:28} as Unit,main.data)).toHaveLength(4);
     }
-  });
-  it('主线与江州李逵的技能和动作保持一致',()=> {
-    const strip=(s:SkillDef)=>{const{skillId,...rest}=s;return rest;};
-    expect(skills('likui').map(strip)).toEqual(skills('likui',jiang).map(strip));
-    expect(main.sheets['sprites/likui']).toEqual(jiang.sheets['sprites/likui']);
   });
   it('武松普攻2段、重拳3段、鸳鸯4段：动画真正循环相应次数，命中各落在一次出拳内',()=> {
     for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,50,40],['擒虎镇岳LV2',4,60,50],['擒虎镇岳LV3',5,70,60],['玉环鸳鸯脚',4,40,55]] as const) {

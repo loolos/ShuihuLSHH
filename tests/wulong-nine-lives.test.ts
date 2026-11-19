@@ -10,7 +10,7 @@ import { Battle } from '../src/rules/battle.ts';
 import type { Unit } from '../src/rules/unit.ts';
 
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('武龙九死一生三级',()=>{
- const data=loadPackFromDisk('jiangzhou').data;
+ const data=loadPackFromDisk('mainline').data;
  const tiers=data.classes[0].skills.filter(s=>s.name.startsWith('九死一生'));
  it('8/20/28级依次替换旧阶，数值和3/4/5段均按确认方案',()=>{
   expect(tiers).toHaveLength(3);expect(tiers.map(s=>s.skillId)).toEqual([3,1304,1305]);

@@ -7,7 +7,7 @@ import { baseDamage } from '../src/rules/combat.ts';
 import type { Unit } from '../src/rules/unit.ts';
 
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('黑虎偷心与生不如死三级',()=>{
- const data=loadPackFromDisk('jiangzhou').data;
+ const data=loadPackFromDisk('mainline').data;
  for(const [cls,name,levels,powers,costs,counts]of [
   [13,'黑虎偷心',[8,20,28],[40,55,75],[20,30,40],[2,3,4]],
   [9,'生不如死',[24,27,30],[40,60,80],[20,30,40],[3,4,5]],

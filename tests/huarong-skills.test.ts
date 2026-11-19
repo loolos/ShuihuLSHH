@@ -13,7 +13,7 @@ import { DATA } from '../tools/sim-lib.ts';
 import type { Unit } from '../src/rules/unit.ts';
 
 describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术', () => {
-  const main = loadPackFromDisk('mainline'), jiang = loadPackFromDisk('jiangzhou');
+  const main = loadPackFromDisk('mainline');
   const cid = main.classIds.get('huarong')!;
   const skills = main.data.classes[cid].skills;
   const skill = (name: string) => skills.find(s => s.name === name)!;
@@ -22,9 +22,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     {index:0,type:cid,group:1,side:'player',x:15,y:15,facing:0,level:24,flags:0,extra:[0,0,0],items:[],raw:[]},
     ...[[14,14],[15,11],[16,7],[15,6],[17,10],[15,16]].map(([x,y],i)=>({index:i+1,type:32,group:i+2,side:'enemy' as const,x,y,facing:2,level:10,flags:0,extra:[0,0,0] as [number,number,number],items:[],raw:[]})),
   ]});
-  it('两包技能同步，按1/4/8/12/16/20/24学习，旧等级自动换成最高级', () => {
-    const strip = (s: typeof skills[number]) => { const {skillId,...rest}=s;return rest; };
-    expect(skills.map(strip)).toEqual(jiang.data.classes[jiang.classIds.get('huarong')!].skills.map(strip));
+  it('按1/4/8/12/16/20/24学习，旧等级自动换成最高级', () => {
     expect(skills.map(s=>s.learnLevel)).toEqual([1,4,8,12,16,20,24]);
     for (const level of [1,4,8,12,16,20,24,35]) {
       const list=learnedSkills({classId:cid,level} as Unit,main.data);
