@@ -56,6 +56,12 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '江州劫法场', stages: ['mainline/fachang', 'mainline/bailongmiao'] },
 ];
 
+/**
+ * 序章（负责人 2026-11-20，§15.26）：第一章之前的教学关，不占章号（章号 0，标签「序章 禁军教头」）。
+ * 只能放插关；新开战役时先演这里，打完接第一章的第一关。
+ */
+export const PROLOGUE: ChapterDef = { name: '禁军教头', stages: ['mainline/jiaochang', 'mainline/xihuamen'] };
+
 const DIGITS = '零一二三四五六七八九';
 /** 1–99 的中文数字 */
 export function cnNumber(n: number): string {
@@ -70,16 +76,16 @@ export const isInsertKey = (key: string) => key.includes('/');
 export interface SequenceItem {
   /** 原版地图名，或插关 '<包>/<关卡>' */
   key: string;
-  /** 章号（从 1 起） */
+  /** 章号（从 1 起；序章是 0） */
   chapter: number;
 }
 
-/** 整条主线（按表里的顺序展开） */
-export function chapterSequence(chapters: ChapterDef[] = CHAPTERS): SequenceItem[] {
-  return chapters.flatMap((c, i) => c.stages.map((key) => ({ key, chapter: i + 1 })));
+/** 整条主线（按表里的顺序展开）；用正式章节表时序章排在最前（章号 0） */
+export function chapterSequence(chapters: ChapterDef[] = CHAPTERS, prologue: ChapterDef | null = chapters === CHAPTERS ? PROLOGUE : null): SequenceItem[] {
+  return [...(prologue?.stages.map((key) => ({ key, chapter: 0 })) ?? []), ...chapters.flatMap((c, i) => c.stages.map((key) => ({ key, chapter: i + 1 })))];
 }
 
-/** 某一关（原版地图名或插关 ref，不分大小写）所在的章号；不在表里为 0 */
+/** 某一关（原版地图名或插关 ref，不分大小写）所在的章号；不在表里为 0（序章也是 0，用 chapterSequence 区分） */
 export function chapterOf(key: string, chapters: ChapterDef[] = CHAPTERS): number {
   const k = key.toLowerCase();
   return chapterSequence(chapters).find((x) => x.key.toLowerCase() === k)?.chapter ?? 0;
@@ -87,6 +93,7 @@ export function chapterOf(key: string, chapters: ChapterDef[] = CHAPTERS): numbe
 
 /** 例："第十六章 景阳冈打虎"；章号不在表里时为空串 */
 export function chapterLabel(n: number, chapters: ChapterDef[] = CHAPTERS): string {
+  if (n === 0 && chapters === CHAPTERS) return `序章 ${PROLOGUE.name}`;
   const c = chapters[n - 1];
   return c ? `第${cnNumber(n)}章 ${c.name}` : '';
 }

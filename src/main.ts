@@ -16,7 +16,7 @@ import { setHero } from './i18n/index.ts';
 import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
-import { CHAPTERS, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
+import { CHAPTERS, PROLOGUE, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
 import { stageJson, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
@@ -106,8 +106,9 @@ function startGame(assets: Assets) {
   /** 插关所在的章 */
   const insChapter = new Map<string, string>();
   const stageByMap = new Map(stages.map((s) => [s.mapName.toLowerCase(), s]));
-  CHAPTERS.forEach((ch, i) => {
-    const chLabel = chapterLabel(i + 1);
+  // 序章（§15.26）排在第一章前面，组名「序章 禁军教头」
+  [PROLOGUE, ...CHAPTERS].forEach((ch, i) => {
+    const chLabel = chapterLabel(i);
     const items: TitleStageItem[] = [];
     for (const key of ch.stages) {
       if (isInsertKey(key)) {
@@ -157,6 +158,11 @@ function startGame(assets: Assets) {
     stageBtn.textContent = `${itemLabel(value)?.replace(/ ✓$/, '') ?? '选关'} ▾`;
   };
   const params = new URLSearchParams(location.search);
+  /** 新开的战役：先演第一关前的序章（教学关，§15.26） */
+  const freshCampaign = (): CampaignState => {
+    const c = newCampaign(stages[0].index);
+    return { ...c, insert: pendingInsert(c, inserts, stages[0].mapName) };
+  };
   let campaign = loadSave() ?? newCampaign(stages[0].index);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
@@ -458,7 +464,8 @@ function startGame(assets: Assets) {
       packBgm = stage.bgm ?? ['battle', 'rock'];
       void music.play(packBgm);
       // 故事视角不隔离资产；所有主线好汉沿用实际存档。
-      const party = packParty(campaign, rt);
+      // 教学关不读存档里的人物：从选关重看时王进也按关卡写的等级（§15.26）
+      const party = stage.tutorial ? new Map() : packParty(campaign, rt);
       const join = joinLevel({ ...campaign, members: [...party.values()] });
       const data = {
         assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed,
@@ -485,7 +492,9 @@ function startGame(assets: Assets) {
     }
     void music.play('victory');
     // 主线所有插关连续读写资产；包角色用稳定身份保存，不混入原版职业号。
-    const after = recordPackResult(campaign, battle, pack!.rt);
+    // 教学关不写回人物和银子（§15.26），只记下已经看过
+    const tutorial = !!pack!.rt.stages.find((s) => `${pack!.rt.id}/${s.id}` === ref)?.tutorial;
+    const after = tutorial ? campaign : recordPackResult(campaign, battle, pack!.rt);
     const entry = inserts.find((x) => x.ref === ref);
     let c: CampaignState = { ...after, insert: undefined, insertPreset: undefined, inserts: [...new Set([...(after.inserts ?? []), ref])] };
     // 同一位置可能有多段（终章后的续篇、Act10-1 前的赤发鬼 → 三阮）；按登记顺序接完，终章续篇最后一段才标记通关。
@@ -523,6 +532,7 @@ function startGame(assets: Assets) {
     }
     const nextTitle = continuation ? inserts.find((x) => x.ref === continuation)?.title : undefined;
     const cont = { label: `继续：${nextTitle ?? label(stageOf(c.stage))}`, run: () => goTo(c) };
+    if (tutorial) return ui.result(true, text, [cont, { label: '再看一次本段', run: replay }]);
     ui.result(true, text, [cont, { label: '整备（装备、道具）', run: () => openTown(c, 0, (x) => goTo(x)) }, { label: '再打一次本关', run: replay }]);
   };
   const runInsertTown = async () => {
@@ -667,7 +677,7 @@ function startGame(assets: Assets) {
       portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
       version: versionLabel(BUILD),
       buttons: [$('lang'), $('sound'), $('music'), $('update')],
-      onNew: () => begin(newCampaign(stages[0].index)),
+      onNew: () => begin(freshCampaign()),
       onLoad: () => begin(ok!),
       onClear: () => {
         clearSaves();

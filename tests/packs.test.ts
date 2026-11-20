@@ -343,6 +343,8 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('主线插关及终章后剧情都已登记，遭遇关开场单位都站在可通行格上', () => {
     expect(rt.stages.filter((s) => !s.sideStory).map((s) => [s.id, placeOf(s.id)?.before, !!s.pov])).toEqual([
+      ['jiaochang', 'N01', false],
+      ['xihuamen', 'N01', false],
       ['wawasi', 'N-add06', false],
       ['daming-duel', 'Act10-1', true],
       ['chifagui', 'Act10-1', true],
@@ -356,7 +358,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['shizilou', undefined, false],
       ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong','bensang','toushou','liangshan-jielu','liangshan-songbie','jieyangling','jieyangzhen','mujiazhuang','chuanhuoer','jiangzhou-laocheng','dufang','pipating','xunyanglou','zhuguidian','liangshan-dingji','zhuanshang','jiaxin','fachang','bailongmiao'].map(id => [id,undefined,false]),
     ]);
-    const cutscenes = ['songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu','xingzhe','kongjiazhuang','xingjiutang','yuanxiao','zhizhan','yeshuo','duiyingshan','shiyong','toushou','liangshan-songbie','chuanhuoer','jiangzhou-laocheng','xunyanglou','liangshan-dingji'];
+    const cutscenes = ['xihuamen', 'songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu','xingzhe','kongjiazhuang','xingjiutang','yuanxiao','zhizhan','yeshuo','duiyingshan','shiyong','toushou','liangshan-songbie','chuanhuoer','jiangzhou-laocheng','xunyanglou','liangshan-dingji'];
     for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
       const b = new Battle(compileStage(rt, s, files, { seed: 1, text: tr }));
       b.begin();

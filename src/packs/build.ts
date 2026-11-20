@@ -3,7 +3,7 @@ import { enemyRank } from '../rules/enemy-level.ts';
 // 扩展包载入（docs/game-design.md §15.2）：把包的职业、技能、道具接到原版数据后面，把关卡 JSON 编译成 StageInput。
 // 纯 TypeScript，浏览器与 Node（测试）共用；读 JSON 和图片由调用方负责（浏览器见 src/game/packs.ts）。
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
+import type { DidAction, PasBlock, PasCond, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
@@ -409,6 +409,7 @@ interface Refs {
 }
 
 const NARRATOR = 0xffffffff;
+const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give'];
 
 function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   const on = b.on;
@@ -429,22 +430,26 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
     if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
   }
-  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag`);
+  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}) };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
     const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
-    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}) };
+    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}) };
   } else if ('hp' in on) {
     const target = r.unitRef(on.hp).act;
     trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
+  } else if ('did' in on) {
+    if (!DID_ACTIONS.includes(on.action)) fail(`第 ${index} 个区块：did 的操作只能是 ${DID_ACTIONS.join(' / ')}`);
+    const who = r.unitRef(on.did).act;
+    trigger = { kind: 'did', char: who.type, uid: who.index, action: on.action };
   }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
-  if (trigger.kind === 'near' || trigger.kind === 'hp' || (trigger.kind === 'turn' && trigger.flagged)) {
+  if (trigger.kind === 'near' || trigger.kind === 'hp' || trigger.kind === 'did' || (trigger.kind === 'area' && trigger.flagged) || (trigger.kind === 'turn' && trigger.flagged)) {
     // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
     const conds: PasCond[] = [];
     if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
