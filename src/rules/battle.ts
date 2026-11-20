@@ -1906,7 +1906,8 @@ export class Battle {
           break;
         // 121 收手（扩展包【新】，梁山截路被宋江劝住的喽啰）：改成友军、原地不动、不能被选中，不再算敌人
         case 121: {
-          if (!sel || !sel.alive || !sel.present) break;
+          // 已经归顺 / 收手过的不再收手（山径斗毛贼：被别的头领带走归顺的手下）
+          if (!sel || !sel.alive || !sel.present || sel.side !== 'enemy') break;
           // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
           // args.reward（负责人 2026-11-20）：身边没有我方时算最后打到他的人、再不行算最近的我方，照正常打倒给经验；
           // args.goldPct：再交出击退银子的这么多百分比（只有反劫剪径贼给 150）；args.leave：收手后直接离开地图；
@@ -2007,11 +2008,22 @@ export class Battle {
         // 115 换阵营（扩展包【新】，黄信归降）：text = player / ally / enemy；换了以后本回合不再行动，血条换色
         case 115: {
           if (!sel || !op.text) break;
-          sel.side = op.text as Unit['side'];
-          sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: op.value === 1 ? '被擒' : this.spectators.has(sel.uid) ? (sel.side === 'ally' ? '观战' : '归队') : sel.side === 'enemy' ? '倒戈' : '歸順' });
-          // 观战/归队不换模型，避免重复播放逐人淡出淡入。
-          if (!this.spectators.has(sel.uid)) this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          const from = sel.side, s0 = sel;
+          // args.nearest【新】（山径斗毛贼，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
+          const n = op.args?.nearest ?? 0, range = op.args?.range ?? 3, classes = op.args?.classes;
+          const crew = n
+            ? this.active()
+                .filter((u) => u !== s0 && u.side === from && dist(u, s0) <= range && (!classes || classes.includes(u.classId)))
+                .sort((a, b) => dist(a, s0) - dist(b, s0) || a.uid - b.uid)
+                .slice(0, n)
+            : [];
+          for (const u of [sel, ...crew]) {
+            u.side = op.text as Unit['side'];
+            u.ended = true;
+            this.emit({ type: 'status', uid: u.uid, text: op.value === 1 ? '被擒' : this.spectators.has(u.uid) ? (u.side === 'ally' ? '观战' : '归队') : u.side === 'enemy' ? '倒戈' : '歸順' });
+            // 观战/归队不换模型，避免重复播放逐人淡出淡入。
+            if (!this.spectators.has(u.uid)) this.emit({ type: 'look', uid: u.uid, classId: u.classId });
+          }
           break;
         }
         // 101 限时增减益：args.stat 属性，pct 按当前值的百分比（-50 = 减半）或 add 直接加，turns 回合（0 = 本关一直有效）

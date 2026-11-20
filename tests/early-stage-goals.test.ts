@@ -140,8 +140,30 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     poke(b, zhu);
     expect(boss.side).toBe('ally');
     const after = b.units.filter((u) => u.side === 'enemy').length;
-    expect(before - after).toBeGreaterThan(3); // 连手下一起
+    // 连身边最近的手下一起，最多四个、三格以内；别的头领手下不动
+    expect(before - after).toBeGreaterThan(2);
+    expect(before - after).toBeLessThanOrEqual(5);
+    const crew = b.units.filter((u) => u.side === 'ally' && u !== boss && [44, 45].includes(u.classId));
+    expect(crew.every((u) => Math.abs(u.x - boss.x) + Math.abs(u.y - boss.y) <= 3)).toBe(true);
+    expect(b.units.filter((u) => u.classId === 65 && u !== boss).every((u) => u.side === 'enemy')).toBe(true);
     expect(b.status).toBe('playing');
+  });
+
+  it('山径斗毛贼：一次最多带四个，多出来的手下照样要打', () => {
+    const b = make('N-add04b');
+    const boss = b.units.find((u) => u.classId === 65 && u.present)!;
+    // 把六个手下都摆到头领身边
+    const ring = [[1, 0], [-1, 0], [0, 1], [1, 1], [-1, -1], [2, 0]];
+    const men = b.units.filter((u) => u.side === 'enemy' && [44, 45].includes(u.classId) && u.present).slice(0, 6);
+    men.forEach((u, k) => place(b, u, boss.x + ring[k][0], boss.y + ring[k][1]));
+    boss.hp = Math.floor(boss.stats.maxHp * 0.4);
+    poke(b);
+    const zhu = cls(b, 5);
+    place(b, zhu, boss.x, boss.y - 1);
+    poke(b, zhu);
+    expect(boss.side).toBe('ally');
+    expect(men.filter((u) => u.side === 'ally').length).toBe(4);
+    expect(men.filter((u) => u.side === 'enemy').length).toBe(2);
   });
 
   it('大破何涛：四处放火即过关，点着的地方不再标出', () => {
