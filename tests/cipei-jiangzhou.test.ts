@@ -73,8 +73,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     sj.x = ll.x + 1; sj.y = ll.y;
     b.phase = 'enemy'; after(b);
     expect(ll.side).toBe('enemy');
+    const exp0 = sj.exp, lv0 = sj.level, team0 = (b as unknown as { teamExp: number }).teamExp;
     b.phase = 'player'; after(b);
     expect(ll.side).toBe('ally');
+    // 劝住也按正常击败算法给宋江经验，另一半进全队（负责人 2026-11-20）
+    expect(sj.level > lv0 || sj.exp > exp0).toBe(true);
+    expect((b as unknown as { teamExp: number }).teamExp).toBeGreaterThan(team0);
     expect(ll.ai.mode).toBe(8);
     expect(b.spectators.has(ll.uid)).toBe(true);
     expect(b.status).toBe('playing');
