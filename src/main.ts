@@ -5,6 +5,7 @@ import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, startupImages, type Assets } from './game/assets.ts';
+import { PRISON_CART_TILES } from './game/prison-cart.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
 import { installTouchGuards } from './game/touch.ts';
@@ -391,7 +392,7 @@ function startGame(assets: Assets) {
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
       const classes = stageClasses(rt, stage);
-      await preloadStage(pa, stageMapName(stage.map), progress, classes);
+      await preloadStage(pa, stageMapName(stage.map), progress, classes, stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
@@ -446,7 +447,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage));
+      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage), stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
