@@ -1166,6 +1166,10 @@
         {"op":13,"flag":0,"text":"山门头领一倒，众喽啰没了主心骨，山上原有的喽啰倒有三成丢下刀枪，情愿归顺！"},
         {"op":12,"flag":1,"value":1028,"quiet":true},
         {"op":115,"flag":null,"text":"ally","args":{"crewOnly":true,"fraction":0.33,"range":99,"classes":[44,45],"only":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,28,29,30,32,33,34]}},
+        {"op":12,"flag":1,"value":45,"quiet":true,"args":{"side":"ally","nth":2}},
+        {"op":13,"flag":0,"text":"头领都没了，还替谁卖命！俺们情愿跟着好汉们干！"},
+        {"op":12,"flag":1,"value":45,"quiet":true,"args":{"side":"ally"}},
+        {"op":13,"flag":0,"text":"弟兄们，掉转枪头，跟着鲁大师打上山去！"},
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":0,"text":"后来赶到的伏兵、援兵见头领已死，又有自家弟兄倒戈，一时乱作一团。"},
         {"op":12,"flag":1,"value":1032,"quiet":true},
@@ -1219,7 +1223,11 @@
         {"op":12,"flag":1,"value":1070,"quiet":true},
         {"op":105,"flag":null,"text":"混亂","args":{"turns":2}},
         {"op":12,"flag":1,"value":1071,"quiet":true},
-        {"op":105,"flag":null,"text":"混亂","args":{"turns":2}}
+        {"op":105,"flag":null,"text":"混亂","args":{"turns":2}},
+        {"op":12,"flag":1,"value":45,"quiet":true,"args":{"side":"enemy","stunned":true,"nth":3}},
+        {"op":13,"flag":0,"text":"怎么自家弟兄倒打过来了？这仗到底帮哪边？"},
+        {"op":12,"flag":1,"value":45,"quiet":true,"args":{"side":"enemy","stunned":true}},
+        {"op":13,"flag":0,"text":"头领死了！乱了乱了，谁来发个号令啊！"}
       ]
     }
   ],

@@ -1760,7 +1760,15 @@ export class Battle {
         case 12:
           // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
           if (op.value > 1000 && op.value < 0x10000) sel = this.unit(this.groups.get(op.value - 1000) ?? -1);
-          else if (op.value <= 1000) sel = this.units.find((u) => u.classId === (op.value === 1000 ? 0 : op.value) && (u.alive || !!op.actor));
+          // args.side / stunned【新】（强闯二龙山倒戈、混乱时喽啰喊话）：只挑这一方在场的、还呆着的人，nth 挑第几个；没有就只剩名字没人
+          else if (op.value <= 1000) {
+            const a = op.args;
+            const hits = this.units.filter(
+              (u) => u.classId === (op.value === 1000 ? 0 : op.value) && (u.alive || !!op.actor) &&
+                (!a?.side || (u.side === a.side && u.alive && u.present)) && (!a?.stunned || u.stunTurns > 0),
+            );
+            sel = hits[Math.min(a?.nth ?? 0, hits.length - 1)]; // nth：换个人说（只有一个时还是他）
+          }
           else sel = undefined; // 0xFFFFFFFF：旁白
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
           if (sel && op.actor?.action === 'show') {
