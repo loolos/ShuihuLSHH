@@ -1638,6 +1638,9 @@ export class Battle {
         return this.flags.has(c.arg);
       case 101:
         return !this.flags.has(c.arg);
+      // 103：编号 arg 的那个人已经倒下（强闯二龙山：打倒山门头领）【新】
+      case 103:
+        return !!this.units.find((u) => u.uid === c.arg && !u.alive);
       // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
       case 102:
         return !this.units.some(u => u.side === 'enemy' && u.alive);
@@ -1955,9 +1958,10 @@ export class Battle {
         // 105 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；106 解开
         case 105:
           if (!sel) break;
-          sel.stunTurns = BOUND_TURNS;
+          // args.turns【新】：只呆住几回合（强闯二龙山山门守军措手不及），text 是头上的字
+          sel.stunTurns = op.args?.turns ?? BOUND_TURNS;
           if (sel.side === this.phase) sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: '被綁' });
+          this.emit({ type: 'status', uid: sel.uid, text: op.text ?? '被綁' });
           break;
         // 106 解开：清掉绑缚、昏迷、中毒和减益；是这一方的回合就马上能行动
         case 106: {
