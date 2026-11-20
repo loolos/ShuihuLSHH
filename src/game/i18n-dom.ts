@@ -114,10 +114,13 @@ async function choose(l: Lang) {
   updateButton();
 }
 
-const SHORT: Record<Lang, string> = { 'zh-Hans': '简', 'zh-Hant': '繁', en: 'EN' };
+/** 按钮固定写「文/A」（负责人 2026-11-20），当前语言放在提示里 */
 function updateButton() {
   const b = document.getElementById('lang');
-  if (b) b.textContent = `文 ${SHORT[getLang()]}`;
+  if (b) {
+    b.textContent = '文/A';
+    b.title = `语言 / Language：${LANGS.find((x) => x.id === getLang())?.label ?? ''}`;
+  }
 }
 
 /** 顶栏的「文」按钮：点开选语言（游戏里、城镇、标题画面都在） */
@@ -145,8 +148,14 @@ function setupLangButton() {
     e.stopPropagation();
     if (!menu.hidden) return void (menu.hidden = true);
     const r = btn.getBoundingClientRect();
-    menu.style.top = `${Math.round(r.bottom + 4)}px`;
-    menu.style.left = `${Math.round(Math.min(r.left, window.innerWidth - 140))}px`;
+    // 按钮在屏幕下半（标题画面底部的工具栏）时往上弹，免得选单跑到屏幕外
+    menu.style.visibility = 'hidden';
+    menu.hidden = false;
+    const h = menu.offsetHeight, w = menu.offsetWidth;
+    const below = r.bottom + 4 + h <= window.innerHeight - 4;
+    menu.style.top = `${Math.round(below ? r.bottom + 4 : Math.max(4, r.top - 4 - h))}px`;
+    menu.style.left = `${Math.round(Math.max(4, Math.min(r.left, window.innerWidth - w - 4)))}px`;
+    menu.style.visibility = '';
     for (const b of menu.querySelectorAll('button')) b.classList.toggle('on', b.dataset.lang === getLang());
     menu.hidden = false;
   };
