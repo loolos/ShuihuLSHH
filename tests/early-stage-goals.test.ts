@@ -108,7 +108,8 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.units[51].present).toBe(true);
     expect(b.units[51].y).toBeGreaterThan(25);
     const grunts = () => b.units.filter((u) => u.alive && u.present && [44, 45].includes(u.classId) && (b as unknown as { foesAtStart: Set<number> }).foesAtStart.has(u.uid));
-    const before = grunts().filter((u) => u.side === 'enemy').length;
+    const garrison = (u: { uid: number }) => u.uid < 51 && ![31, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47].includes(u.uid);
+    const before = grunts().filter((u) => u.side === 'enemy' && garrison(u)).length;
     const me = cls(b, 16);
     place(b, me, head.x + 1, head.y + 2);
     place(b, head, me.x - 1, me.y);
@@ -117,7 +118,12 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     b.attack(me, head);
     expect(head.alive).toBe(false);
     const allies = grunts().filter((u) => u.side === 'ally').length;
-    expect(allies).toBe(Math.round(before * 0.5));
+    // 只有开场就在山上的喽啰会归顺，约三成；伏兵、增援不归顺
+    expect(allies).toBe(Math.round(before * 0.33));
+    expect(b.units.filter((u) => u.side === 'ally' && !garrison(u) && [44, 45].includes(u.classId)).length).toBe(0);
+    // 伏兵、增援乱作一团，停两回合
+    expect(b.units[51].stunTurns).toBe(2);
+    expect(b.units.filter((u) => !garrison(u) && u.side === 'enemy' && !u.present).every((u) => u.stunTurns === 0)).toBe(true);
     expect(b.status).toBe('playing');
   });
 

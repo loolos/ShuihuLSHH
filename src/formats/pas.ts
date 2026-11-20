@@ -125,7 +125,7 @@ export interface PasOp {
   /** 载入时补上的完整编号「关卡名#编号」（如 N01#7），译文按它查；文件里不写 */
   tid?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
-  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number }[]; /** 121 收手：照打倒给经验、交出击退银子的百分之几、直接离场、不飘字 */ reward?: boolean; goldPct?: number; leave?: boolean; quiet?: boolean; /** 115 换阵营：连带 range 格内最近的 nearest 个同阵营的人（classes 限定职业） */ nearest?: number; range?: number; classes?: number[]; /** 115：按比例换（0.5 = 一半），crewOnly = 不换选中的人本身 */ fraction?: number; crewOnly?: boolean };
+  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number }[]; /** 121 收手：照打倒给经验、交出击退银子的百分之几、直接离场、不飘字 */ reward?: boolean; goldPct?: number; leave?: boolean; quiet?: boolean; /** 115 换阵营：连带 range 格内最近的 nearest 个同阵营的人（classes 限定职业） */ nearest?: number; range?: number; classes?: number[]; /** 115：按比例换（0.5 = 一半），crewOnly = 不换选中的人本身 */ fraction?: number; crewOnly?: boolean; /** 115：只在这些编号里挑 */ only?: number[] };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
   quiet?: boolean;
   /** 剧情点名：已战败角色仅供演出，不复活、不改变战斗状态。near为显示时靠近的职业号。 */
