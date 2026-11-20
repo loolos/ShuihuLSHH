@@ -128,7 +128,7 @@
         {"op":15,"flag":1,"value":24},
         {"op":16,"flag":1,"value":4},
         {"op":17,"flag":0,"value":12},
-        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":-1,"turns":0}},
+        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":-2,"turns":0}},
         {"op":12,"flag":1,"value":1010},
         {"op":14,"flag":1,"value":34},
         {"op":15,"flag":1,"value":22},
@@ -345,6 +345,19 @@
         {"op":17,"flag":0,"value":2},
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":0,"text":"洪教头从东边的篱门逃了出去。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"near","char":71,"uid":9,"range":3},
+      "cond": {"type":101,"arg":4},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1010},
+        {"op":13,"flag":0,"text":"来，来，来！林冲，今日再和你使一棒看！"},
+        {"op":12,"flag":1,"value":1010},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":1,"turns":0}}
       ]
     }
   ],

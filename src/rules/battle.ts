@@ -1482,7 +1482,7 @@ export class Battle {
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
       if (t.playerPhase && this.phase !== 'player') continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) === 1) && this.flagsOk(b)) this.runBlock(b);
+      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1)) && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     // 扩展包：某人生命低于一定比例【新】
