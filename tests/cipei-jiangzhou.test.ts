@@ -61,6 +61,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect(b.status).toBe('won');
     expect(zn.side).not.toBe('enemy');
     expect(get('songjiang').present).toBe(true);
+    // 土兵一起收手离场，赵能留下
+    expect(zn.present).toBe(true);
+    expect(get('tubing-1').present).toBe(false);
   });
 
   it('奔丧归庄：武龙倒下就输', () => {
@@ -95,6 +98,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     expect((b as unknown as { teamExp: number }).teamExp).toBeGreaterThan(team0);
     expect(ll.ai.mode).toBe(8);
     expect(b.spectators.has(ll.uid)).toBe(true);
+    expect(ll.present).toBe(false); // 收手的喽啰离开地图，不挡路
+    expect(get('liutang').side).toBe('enemy');
     expect(b.status).toBe('playing');
   });
 

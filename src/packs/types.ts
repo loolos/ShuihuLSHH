@@ -270,7 +270,7 @@ export type PackTrigger =
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
  * ["setAi", 单位, 模式] 改 AI 模式；
- * ["standDown", 单位] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）
+ * ["standDown", 单位, 参数（可省）] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）；参数 {reward: 身边没我方也照打倒给经验, leave: 收手后离开地图, quiet: 不飘字（一起收手时一起淡出）, goldPct: 交出击退银子的百分之几}
  */
 export type PackOpJson = [string, ...unknown[]];
 
