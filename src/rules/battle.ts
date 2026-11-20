@@ -2014,14 +2014,15 @@ export class Battle {
           if (!sel || !op.text) break;
           const from = sel.side, s0 = sel;
           // args.nearest【新】（山径斗毛贼，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
-          const n = op.args?.nearest ?? 0, range = op.args?.range ?? 3, classes = op.args?.classes;
-          const crew = n
+          // args.fraction：改成按比例（强闯二龙山：头领倒下，剩下的小兵一半归顺）；args.crewOnly：只换手下，不换选中的人本身（头领已倒下）
+          const frac = op.args?.fraction, range = op.args?.range ?? 3, classes = op.args?.classes;
+          const pool = op.args?.nearest || frac
             ? this.active()
                 .filter((u) => u !== s0 && u.side === from && dist(u, s0) <= range && (!classes || classes.includes(u.classId)))
                 .sort((a, b) => dist(a, s0) - dist(b, s0) || a.uid - b.uid)
-                .slice(0, n)
             : [];
-          for (const u of [sel, ...crew]) {
+          const crew = pool.slice(0, frac ? Math.round(pool.length * frac) : (op.args?.nearest ?? 0));
+          for (const u of op.args?.crewOnly ? crew : [sel, ...crew]) {
             u.side = op.text as Unit['side'];
             u.ended = true;
             this.emit({ type: 'status', uid: u.uid, text: op.value === 1 ? '被擒' : this.spectators.has(u.uid) ? (u.side === 'ally' ? '观战' : '归队') : u.side === 'enemy' ? '倒戈' : '歸順' });
