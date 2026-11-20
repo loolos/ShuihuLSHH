@@ -771,7 +771,7 @@ export class BattleScene extends Phaser.Scene {
   /** 执行一个玩家指令并播放结果；单位还能行动就保持选中 */
   private async exec(u: Unit, cmd: () => BattleEvent[], next?: Mode) {
     if (this.busy) return;
-    this.overlay.clear();
+    this.clearCells(this.overlay);
     this.ui.setCommands(null);
     await this.run(cmd());
     if (this.battle.status !== 'playing') return;
@@ -884,7 +884,7 @@ export class BattleScene extends Phaser.Scene {
     const turn = b.rewindTarget();
     if (this.busy || this.ending || turn === null || this.ui.inDialog) return false;
     this.select({ kind: 'idle' });
-    this.overlay.clear();
+    this.clearCells(this.overlay);
     const events = b.rewind();
     this.ui.hideResult();
     for (const s of this.sprites.values()) {
