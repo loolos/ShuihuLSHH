@@ -124,8 +124,16 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     place(b, head, me.x - 1, me.y);
     head.hp = 1;
     me.ended = false; me.acted = false;
-    b.attack(me, head);
+    const ev = b.attack(me, head);
     expect(head.alive).toBe(false);
+    // 倒戈的喽啰、乱了的伏兵各喊两句
+    const says = ev.filter((e) => e.type === 'say' && e.speaker && e.uid !== null) as { uid: number; text: string }[];
+    const by = (t: string) => b.units.find((u) => u.uid === says.find((e) => e.text.includes(t))?.uid);
+    expect(by('情愿跟着好汉')?.side).toBe('ally');
+    expect(by('掉转枪头')?.side).toBe('ally');
+    expect(by('帮哪边')?.stunTurns).toBe(2);
+    expect(by('发个号令')?.stunTurns).toBe(2);
+    expect(by('情愿跟着好汉')).not.toBe(by('掉转枪头'));
     const allies = grunts().filter((u) => u.side === 'ally').length;
     // 只有开场就在山上的喽啰会归顺，约三成；伏兵、增援不归顺
     expect(allies).toBe(Math.round(before * 0.33));
