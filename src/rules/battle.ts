@@ -1638,6 +1638,9 @@ export class Battle {
         return this.flags.has(c.arg);
       case 101:
         return !this.flags.has(c.arg);
+      // 103：编号 arg 的那个人已经倒下（强闯二龙山：打倒山门头领）【新】
+      case 103:
+        return !!this.units.find((u) => u.uid === c.arg && !u.alive);
       // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
       case 102:
         return !this.units.some(u => u.side === 'enemy' && u.alive);
@@ -1955,9 +1958,10 @@ export class Battle {
         // 105 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；106 解开
         case 105:
           if (!sel) break;
-          sel.stunTurns = BOUND_TURNS;
+          // args.turns【新】：只呆住几回合（强闯二龙山山门守军措手不及），text 是头上的字
+          sel.stunTurns = op.args?.turns ?? BOUND_TURNS;
           if (sel.side === this.phase) sel.ended = true;
-          this.emit({ type: 'status', uid: sel.uid, text: '被綁' });
+          this.emit({ type: 'status', uid: sel.uid, text: op.text ?? '被綁' });
           break;
         // 106 解开：清掉绑缚、昏迷、中毒和减益；是这一方的回合就马上能行动
         case 106: {
@@ -2010,14 +2014,15 @@ export class Battle {
           if (!sel || !op.text) break;
           const from = sel.side, s0 = sel;
           // args.nearest【新】（山径斗毛贼，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
-          const n = op.args?.nearest ?? 0, range = op.args?.range ?? 3, classes = op.args?.classes;
-          const crew = n
+          // args.fraction：改成按比例（强闯二龙山：头领倒下，剩下的小兵一半归顺）；args.crewOnly：只换手下，不换选中的人本身（头领已倒下）
+          const frac = op.args?.fraction, range = op.args?.range ?? 3, classes = op.args?.classes;
+          const pool = op.args?.nearest || frac
             ? this.active()
                 .filter((u) => u !== s0 && u.side === from && dist(u, s0) <= range && (!classes || classes.includes(u.classId)))
                 .sort((a, b) => dist(a, s0) - dist(b, s0) || a.uid - b.uid)
-                .slice(0, n)
             : [];
-          for (const u of [sel, ...crew]) {
+          const crew = pool.slice(0, frac ? Math.round(pool.length * frac) : (op.args?.nearest ?? 0));
+          for (const u of op.args?.crewOnly ? crew : [sel, ...crew]) {
             u.side = op.text as Unit['side'];
             u.ended = true;
             this.emit({ type: 'status', uid: u.uid, text: op.value === 1 ? '被擒' : this.spectators.has(u.uid) ? (u.side === 'ally' ? '观战' : '归队') : u.side === 'enemy' ? '倒戈' : '歸順' });

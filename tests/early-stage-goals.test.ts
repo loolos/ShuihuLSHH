@@ -78,7 +78,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect([46, 52, 61, 50].every((c) => cls(b, c).present)).toBe(true);
   });
 
-  it('强闯二龙山：押鲁智深到山门前翻脸，伏兵与山下好汉一起杀出', () => {
+  it('强闯二龙山：押鲁智深到山门前翻脸，好汉与伏兵一起杀出', () => {
     const b = make('N-add12');
     const lu = cls(b, 16), yang = cls(b, 14);
     expect(lu.stunTurns).toBeGreaterThan(100); // 被绑
@@ -90,8 +90,35 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     poke(b, yang);
     expect(lu.stunTurns).toBe(0);
     expect(cls(b, 11).present).toBe(true);
-    expect(foes().length).toBeGreaterThan(before + 10);
+    expect(foes().length).toBeGreaterThan(before + 10); // 伏兵从南边起点杀出
     expect(foes().some((u) => u.ai.mode === 8)).toBe(false);
+  });
+
+  it('强闯二龙山：混进山门，头领营地呆一回合、伏兵在南边起点杀出；打倒山门头领一半喽啰归顺', () => {
+    const b = make('N-add12');
+    const yang = cls(b, 14);
+    place(b, yang, 22, 9);
+    poke(b, yang);
+    const head = b.units[27];
+    expect(head.stunTurns).toBe(1);
+    // 林冲等人从山门一带出现，伏兵在南边起点
+    const lin = cls(b, 11);
+    expect(lin.present).toBe(true);
+    expect(lin.y).toBeLessThanOrEqual(12);
+    expect(b.units[51].present).toBe(true);
+    expect(b.units[51].y).toBeGreaterThan(25);
+    const grunts = () => b.units.filter((u) => u.alive && u.present && [44, 45].includes(u.classId) && (b as unknown as { foesAtStart: Set<number> }).foesAtStart.has(u.uid));
+    const before = grunts().filter((u) => u.side === 'enemy').length;
+    const me = cls(b, 16);
+    place(b, me, head.x + 1, head.y + 2);
+    place(b, head, me.x - 1, me.y);
+    head.hp = 1;
+    me.ended = false; me.acted = false;
+    b.attack(me, head);
+    expect(head.alive).toBe(false);
+    const allies = grunts().filter((u) => u.side === 'ally').length;
+    expect(allies).toBe(Math.round(before * 0.5));
+    expect(b.status).toBe('playing');
   });
 
   it('强闯二龙山：路上先动手就被识破，同样翻脸', () => {
