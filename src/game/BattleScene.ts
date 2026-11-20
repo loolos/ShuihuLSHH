@@ -19,6 +19,7 @@ import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_BLAZE, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
+import { batchFamily, batchLength } from './event-batch.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
 import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, blazeAnim, classHead, idleAction, textureFor } from './sprites.ts';
@@ -133,6 +134,8 @@ export class BattleScene extends Phaser.Scene {
   private endSound = false;
   /** 非我方阶段双击后快进：时间、补间、动画都加速，镜头直接跳过去【新】 */
   private fast = false;
+  /** 一批人同时播放（playBatch）中：各自的 play 不再单独移镜头 */
+  private batching = false;
   /** 蹴鞠关的球（画面）；不是蹴鞠关为 null */
   private cujuView: CujuView | null = null;
   private lastTap = 0;
@@ -803,14 +806,26 @@ export class BattleScene extends Phaser.Scene {
     this.ending = true;
     try {
       this.select({ kind: 'idle' });
-      // 还没行动的我方人物按默认规则自动休息 / 用回气技能 / 防御（§2.5），逐个移镜头播放
+      // 还没行动的我方人物按默认规则自动休息 / 用回气技能 / 防御（§2.5）。
+      // 休息、防御攒起来一起播放（负责人 2026-11-20：一个个挨着太拖沓）【新】；用回气技能的照旧逐个移镜头放出手动画
+      let calm: BattleEvent[] = [];
       for (const u of this.battle.autoActUnits()) {
-        if (this.battle.status !== 'playing') return;
+        if (this.battle.status !== 'playing') break;
         this.busy = true; // 移镜头时也挡住点击
+        const events = this.battle.autoAct(u);
+        if (!events.some((e) => e.type === 'attack')) {
+          calm.push(...events);
+          continue;
+        }
+        if (calm.length) await this.run(calm);
+        calm = [];
+        this.busy = true;
         if (!this.fast) await this.focusOn(u);
-        await this.run(this.battle.autoAct(u));
+        await this.run(events);
         this.pose(u);
       }
+      if (calm.length) await this.run(calm);
+      if (this.battle.status !== 'playing') return;
       if (this.battle.status !== 'playing' || this.battle.phase !== 'player') return;
       await this.run(this.battle.endPlayerPhase());
     } finally {
@@ -1124,6 +1139,16 @@ export class BattleScene extends Phaser.Scene {
             continue;
           }
         }
+        // 几个人连着的状态变化（收手、归顺、绑缚、增减益、群体回复、一起倒下、剧本里一起走位 / 一起倒地……）同时播放【新】
+        //（负责人 2026-11-20：一个个挨着显示太拖沓）
+        if (!this.fast && !this.ui.skipping) {
+          const n = batchLength(events, i);
+          if (n > 1) {
+            await this.playBatch(events.slice(i, i + n));
+            i += n - 1;
+            continue;
+          }
+        }
         // 跳过剧情：对白不显示，也不为它移动镜头；其余事件按快进处理
         if (this.ui.skipping) {
           this.setFast(true);
@@ -1185,6 +1210,22 @@ export class BattleScene extends Phaser.Scene {
     );
   }
 
+  /** 一批人同时播放（见 batchLength）：镜头移到这批人中间一次，各自的动画一起放，等最慢的放完 */
+  private async playBatch(group: BattleEvent[]) {
+    const cells = group.flatMap((e): Cell[] => {
+      if (e.type === 'move') return [e.path[e.path.length - 1]];
+      const u = 'uid' in e && e.uid !== null && batchFamily(e) ? this.battle.unit(e.uid) : undefined;
+      return u ? [this.vs(u)] : [];
+    });
+    if (cells.length) await this.focus(Math.round(cells.reduce((a, c) => a + c.x, 0) / cells.length), Math.round(cells.reduce((a, c) => a + c.y, 0) / cells.length));
+    this.batching = true;
+    try {
+      await Promise.all(group.map((e) => this.play(e)));
+    } finally {
+      this.batching = false;
+    }
+  }
+
   /** 剧情退场：几个人同时淡出 */
   private async leaveAll(group: LeaveEvent[]) {
     const gone = group.map((e) => this.sprites.get(e.uid)).filter((s) => !!s);
@@ -1205,6 +1246,7 @@ export class BattleScene extends Phaser.Scene {
   }
 
   private async focus(x: number, y: number, ms = 250) {
+    if (this.batching) return;
     const cam = this.cameras.main;
     const p = cellToWorld(x, y);
     const v = cam.worldView;
