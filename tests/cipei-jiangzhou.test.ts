@@ -27,7 +27,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     u.hp = 0; u.alive = false; u.present = false;
     (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(u.classId);
   };
-  const ids = ['bensang', 'liangshan-jielu', 'liangshan-songbie', 'jieyangling', 'jieyangzhen', 'mujiazhuang', 'chuanhuoer'];
+  const ids = ['bensang', 'toushou', 'liangshan-jielu', 'liangshan-songbie', 'jieyangling', 'jieyangzhen', 'mujiazhuang', 'chuanhuoer'];
 
   it('四段都在第二十一章；单位站在可通行的格子上、互不重叠；剧情里每个 move 都走得到', () => {
     for (const id of ids) {
@@ -43,25 +43,39 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     }
   });
 
-  it('奔丧归庄：开局停在两项的剧情选项上', () => {
-    const { b, ev } = open('bensang');
+  it('奔丧归庄（负责人 2026-11-20 改成小仗）：武龙、燕顺、石勇对土兵；宋江躲进后堂；10 回合', () => {
+    const { s, b, get } = open('bensang');
     expect(b.status).toBe('playing');
-    const ask = ev.find((e) => e.type === 'choice');
-    expect(ask && ask.type === 'choice' && ask.choice.options.map((o) => o.label)).toEqual(['开门出首，随都头去县里', '与四郎杀出去']);
-    expect(b.pendingChoice).not.toBeNull();
-    expect(() => b.answer(9)).toThrow();
+    for (const id of ['hero', 'yanshun', 'shiyong']) expect(get(id).present, id).toBe(true);
+    expect(get('songjiang').present).toBe(false);
+    expect(get('shiyong').classId).toBe(rt.classIds.get('shiyong'));
+    expect(get('zhaoneng').present && get('zhaoneng').side).toBe('enemy');
+    expect(s.units.filter((u) => u.side === 'player' && !u.offstage).length).toBeLessThanOrEqual(5);
   });
 
-  it('奔丧归庄：杀出去被太公拦下，再接出首；选出首直接出首', () => {
-    for (const k of [0, 1]) {
-      const { b } = open('bensang');
-      const out = b.answer(k);
-      const text = out.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => ('text' in e ? e.text : '')).join('');
-      expect(text.includes('使不得'), `选项 ${k}`).toBe(k === 1);
-      expect(text).toContain('明日一同见官');
-      expect(b.status).toBe('won');
-      expect(b.pendingChoice).toBeNull();
-    }
+  it('奔丧归庄：赵能体力打到三成以下就收手，宋江出来劝住、投首，过关', () => {
+    const { b, get } = open('bensang');
+    const zn = get('zhaoneng');
+    zn.hp = Math.floor(zn.stats.maxHp * 0.25);
+    after(b);
+    expect(b.status).toBe('won');
+    expect(zn.side).not.toBe('enemy');
+    expect(get('songjiang').present).toBe(true);
+  });
+
+  it('奔丧归庄：武龙倒下就输', () => {
+    const { b, get } = open('bensang');
+    kill(b, get('hero'));
+    after(b);
+    expect(b.status).toBe('lost');
+  });
+
+  it('投首郓城：知县审宋江、府尹断配江州，演完过关', () => {
+    const { b, ev } = open('toushou');
+    expect(chapterOf('mainline/toushou')).toBe(21);
+    const text = ev.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => ('text' in e ? e.text : '')).join('');
+    for (const w of ['甘服无词', '脊杖二十', '刺配江州', '张千、李万', '不忠不孝']) expect(text).toContain(w);
+    expect(b.status).toBe('won');
   });
 
   it('梁山截路：宋江戴枷；在我方回合走到喽啰身边就劝住，那人收手不动、不再算敌人', () => {

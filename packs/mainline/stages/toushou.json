@@ -1,0 +1,335 @@
+{
+  "id": "toushou",
+  "title": "投首郓城",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 0
+  },
+  "map": {
+    "custom": "guanfu"
+  },
+  "bgm": [
+    "story",
+    "sad"
+  ],
+  "units": [
+    {
+      "id": "songjiang",
+      "class": "sj-fugitive",
+      "side": "player",
+      "x": 17,
+      "y": 13,
+      "level": 30,
+      "facing": 0
+    },
+    {
+      "id": "zhixian",
+      "class": 36,
+      "side": "ally",
+      "x": 17,
+      "y": 3,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "知县时文彬"
+    },
+    {
+      "id": "zhaoneng",
+      "class": 38,
+      "side": "ally",
+      "x": 16,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "都头赵能"
+    },
+    {
+      "id": "zhaode",
+      "class": 38,
+      "side": "ally",
+      "x": 18,
+      "y": 12,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "都头赵得"
+    },
+    {
+      "id": "yayi-1",
+      "class": 32,
+      "side": "ally",
+      "x": 14,
+      "y": 5,
+      "level": 30,
+      "ai": 8,
+      "facing": 1,
+      "name": "衙役"
+    },
+    {
+      "id": "yayi-2",
+      "class": 33,
+      "side": "ally",
+      "x": 20,
+      "y": 5,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "衙役"
+    },
+    {
+      "id": "yayi-3",
+      "class": 32,
+      "side": "ally",
+      "x": 14,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "facing": 1,
+      "name": "衙役"
+    },
+    {
+      "id": "yayi-4",
+      "class": 33,
+      "side": "ally",
+      "x": 20,
+      "y": 7,
+      "level": 30,
+      "ai": 8,
+      "facing": 3,
+      "name": "衙役"
+    },
+    {
+      "id": "fuyin",
+      "class": 36,
+      "side": "ally",
+      "x": 18,
+      "y": 3,
+      "level": 30,
+      "ai": 8,
+      "facing": 2,
+      "name": "济州府尹",
+      "hidden": true
+    },
+    {
+      "id": "songtaigong",
+      "class": 27,
+      "side": "ally",
+      "x": 11,
+      "y": 21,
+      "level": 20,
+      "ai": 8,
+      "facing": 0,
+      "name": "宋太公",
+      "hidden": true
+    },
+    {
+      "id": "songqing",
+      "class": "songqing",
+      "side": "ally",
+      "x": 13,
+      "y": 21,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "hidden": true
+    },
+    {
+      "id": "zhangqian",
+      "class": 32,
+      "side": "ally",
+      "x": 11,
+      "y": 15,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "张千",
+      "hidden": true
+    },
+    {
+      "id": "liwan",
+      "class": 33,
+      "side": "ally",
+      "x": 13,
+      "y": 15,
+      "level": 30,
+      "ai": 8,
+      "facing": 0,
+      "name": "李万",
+      "hidden": true
+    },
+    {
+      "id": "hero",
+      "class": 0,
+      "side": "player",
+      "x": 2,
+      "y": 21,
+      "level": 30,
+      "facing": 1,
+      "offstage": true
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "title",
+          "次日五更 · 郓城县衙"
+        ],
+        [
+          "narrate",
+          "次日五更，两个都头押着宋江到县投首。知县时文彬却才升堂，见都头解宋江到来，心内也有几分欢喜。"
+        ],
+        [
+          "move",
+          "songjiang",
+          17,
+          6
+        ],
+        [
+          "say",
+          "zhixian",
+          "宋江，你在逃这许多时，今日却自来投首？"
+        ],
+        [
+          "say",
+          "songjiang",
+          "小吏宋江，不合于前年秋间典赡到阎婆惜为妾。为因不良，一时恃酒，争论斗殴，致被误杀身死，一向避罪在逃。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "今蒙缉捕到官，取勘前情，所供甘服无词。"
+        ],
+        [
+          "say",
+          "zhixian",
+          "既是招了，且押去牢里监收。"
+        ],
+        [
+          "narrate",
+          "满县人听得宋江投首，谁不爱惜他，都替他去知县处告说讨饶，备说宋江平日的好处。"
+        ],
+        [
+          "narrate",
+          "知县自心里也有八分开豁他。当时依准了供状，免上长枷手杻，只散禁在牢里。"
+        ],
+        [
+          "narrate",
+          "宋太公自来县里央浼，上下使用钱帛。那时阎婆已自身故了半年，没了苦主；这张三又没了粉头，不来做甚冤家。"
+        ],
+        [
+          "narrate",
+          "县里迭成文案，待六十日限满，结解上济州听断。"
+        ],
+        [
+          "leave",
+          "zhixian"
+        ],
+        [
+          "title",
+          "济州府"
+        ],
+        [
+          "appear",
+          "fuyin"
+        ],
+        [
+          "say",
+          "fuyin",
+          "看了申解情由，赦前恩宥之事，已成减罪。"
+        ],
+        [
+          "say",
+          "fuyin",
+          "把宋江脊杖二十，刺配江州牢城。本州差两个防送公人押解前去。"
+        ],
+        [
+          "act",
+          "songjiang",
+          "hurt"
+        ],
+        [
+          "narrate",
+          "当厅带上行枷，押了一道牒文，差两个防送公人，无非是张千、李万。"
+        ],
+        [
+          "appear",
+          "zhangqian"
+        ],
+        [
+          "appear",
+          "liwan"
+        ],
+        [
+          "leave",
+          "fuyin"
+        ],
+        [
+          "title",
+          "济州府前"
+        ],
+        [
+          "appear",
+          "songtaigong"
+        ],
+        [
+          "appear",
+          "songqing"
+        ],
+        [
+          "move",
+          "songjiang",
+          12,
+          18
+        ],
+        [
+          "narrate",
+          "宋太公同兄弟宋清都在州前等候，置酒管待两个公人，赍发了些银两。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "我知江州是个好地面，鱼米之乡，特地使钱买将那里去。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "你路上去，倘或梁山泊的人下山来劫夺你入伙，切不可依随他，教人骂做不忠不孝。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "孩儿记得。父亲保重！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "兄弟，你早晚只在家侍奉，休要为我来江州来，弃撇父亲，无人看顾。"
+        ],
+        [
+          "say",
+          "songtaigong",
+          "孩儿，路上慢慢地去。"
+        ],
+        [
+          "narrate",
+          "宋江洒泪拜辞了父亲，兄弟宋清送了一程，自同两个公人上路去了。"
+        ],
+        [
+          "appear",
+          "hero"
+        ],
+        [
+          "narrate",
+          "远远的，一条汉子背着包裹，不紧不慢跟在后头——正是武龙。"
+        ],
+        [
+          "victory",
+          ""
+        ]
+      ]
+    }
+  ]
+}
