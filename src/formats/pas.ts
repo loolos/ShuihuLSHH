@@ -80,7 +80,7 @@ export type PasTrigger =
   | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
-  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[]; /** 扩展包【新】：区块写了 if / unless（教学关的将台，§15.26） */ flagged?: boolean; /** 扩展包【新】：地图上区域旁写的字（默认「撤退」） */ label?: string }
+  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[]; /** 扩展包【新】：区块写了 if / unless（教学关的将台，§15.26） */ flagged?: boolean; /** 扩展包【新】：地图上区域旁写的字（默认「撤退」） */ label?: string; /** 【新】回合结束（下回合开始前）才检查 */ atTurnEnd?: boolean }
   /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
   /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
