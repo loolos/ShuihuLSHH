@@ -302,6 +302,8 @@ export class Battle {
   private readonly foesAtStart = new Set<number>();
   /** 收手时已经给身边的我方算过击败经验的单位 */
   private credited = new Set<number>();
+  /** 敌人最后一次被我方哪个人打到（收手时算谁打倒的，指令 121 的 reward）【新】 */
+  private lastHitBy: Record<number, number> = {};
   /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
   clearGold = 0;
   private clearGoldOverride?: number;
@@ -704,7 +706,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], fire: this.fire?.save(),
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(),
     });
   }
 
@@ -759,6 +761,7 @@ export class Battle {
     this.used = s.used ?? {};
     this.spotters = s.spotters ?? {};
     this.credited = new Set(s.credited ?? []);
+    this.lastHitBy = s.lastHitBy ?? {};
     if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (this.fire && s.fire) {
       this.fire.load(s.fire);
@@ -1222,6 +1225,7 @@ export class Battle {
       const hp0 = t.hp;
       t.hp = Math.max(0, t.hp - r.damage);
       total += r.damage;
+      if (u.side === 'player' && t.side === 'enemy' && r.damage > 0) this.lastHitBy[t.uid] = u.uid;
       t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
       this.emit({ type: 'face', uid: t.uid, facing: t.facing });
       this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0 });
@@ -1657,6 +1661,7 @@ export class Battle {
     let ending: string | null = null;
     let cleared = false;
     let objective: string[] = [];
+    let quietGold = 0;
     const flushObjective = () => {
       if (objective.length) {
         this.objectives = objective;
@@ -1842,21 +1847,37 @@ export class Battle {
         case 121: {
           if (!sel || !sel.alive || !sel.present) break;
           // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
-          const s0 = sel, by = s0.side === 'enemy' ? this.active().find((t) => t.side === 'player' && dist(t, s0) === 1) : undefined;
-          if (by) {
+          // args.reward（反劫剪径贼，负责人 2026-11-20）：身边没有我方时算最后打到他的人、再不行算最近的我方，
+          // 照正常打倒给经验，并交出 1.5 倍的击退银子；args.leave：收手后直接离开地图；args.quiet：不飘「收手」字
+          const s0 = sel, a = op.args ?? {};
+          const players = this.active().filter((t) => t.side === 'player');
+          let by = s0.side === 'enemy' ? players.find((t) => dist(t, s0) === 1) : undefined;
+          if (!by && a.reward && s0.side === 'enemy') {
+            const last = this.lastHitBy[s0.uid];
+            by = players.find((t) => t.uid === last) ?? players.reduce<Unit | undefined>((m, t) => (!m || dist(t, s0) < dist(m, s0) ? t : m), undefined);
+          }
+          if (by && !this.credited.has(s0.uid)) {
             this.credited.add(s0.uid);
             const total = killExp(by, sel, this.rng);
             this.gainExp(by, killerShare(total, true), 'kill');
             this.teamExp += teamShare(total);
             this.tallyExp('team', teamShare(total));
+            const gold = a.reward ? Math.round(killGold(s0.classId, this.data, this.rng) * 1.5) : 0;
+            if (gold) {
+              by.gold += gold;
+              // 不飘字的（一起收手）银子合成一句，放在区块最后，免得打断连着的退场
+              if (a.quiet) quietGold += gold;
+              else this.emit({ type: 'message', text: `${s0.name}交出銀子 ${gold} 兩。` });
+            }
           }
           sel.side = 'ally';
           sel.ai.mode = 8;
           sel.ended = true;
           sel.defending = false;
           (this.spectators as Set<number>).add(sel.uid);
-          this.emit({ type: 'status', uid: sel.uid, text: '收手' });
-          this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
+          if (!a.quiet) this.emit({ type: 'status', uid: sel.uid, text: '收手' });
+          if (a.leave) this.hide(sel, false);
+          else this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
         }
         // 122 改 AI 模式（扩展包【新】）
@@ -1944,6 +1965,7 @@ export class Battle {
       }
     });
     flushObjective();
+    if (quietGold) this.emit({ type: 'message', text: `收手的敵人一共交出銀子 ${quietGold} 兩。` });
     if (ending !== null) return this.finish('lost', ending);
     if (cleared) this.finish('won', '');
   }

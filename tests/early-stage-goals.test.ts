@@ -96,15 +96,25 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
   it('反劫剪径贼：喽啰体力不到一半求饶，打倒头领即过关', () => {
     const b = make('N-add07');
     const z = b.units.find((u) => u.side === 'enemy' && u.classId === 44 && u.present)!;
+    const gold0 = b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0);
     z.hp = Math.floor(z.stats.maxHp * 0.4);
     poke(b);
+    // 收手：照打倒给经验、交出银子，并且离开地图不占路
     expect(z.side).toBe('ally');
+    expect(z.present).toBe(false);
+    expect(b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0)).toBeGreaterThan(gold0);
     const boss = cls(b, 65), me = cls(b, 0);
     place(b, me, boss.x, boss.y - 1);
     boss.hp = 1;
-    b.attack(me, boss);
+    const ev = b.attack(me, boss);
     expect(boss.alive).toBe(false);
     expect(b.status).toBe('won');
+    // 其余喽啰一起收手离场：退场事件连在一起（画面一次淡出），已经离场的不会再冒出来
+    const leaves = ev.map((e, i) => (e.type === 'leave' ? i : -1)).filter((i) => i >= 0);
+    expect(leaves.length).toBeGreaterThan(5);
+    expect(leaves.at(-1)! - leaves[0]).toBe(leaves.length - 1);
+    expect(ev.some((e) => e.type === 'appear')).toBe(false);
+    expect(ev.some((e) => e.type === 'message' && e.text.startsWith('收手的敵人一共交出銀子'))).toBe(true);
   });
 
   it('山径斗毛贼：头领伤重后朱武过去劝降，头领带手下归顺', () => {
