@@ -93,57 +93,57 @@
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":0,"text":"头领一倒，剩下的喽啰都丢了刀枪，把劫来的财物一包包献了出来。"},
         {"op":12,"flag":1,"value":1007,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1008,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1009,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1010,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1011,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1013,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1014,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1015,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1016,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1017,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1018,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1019,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1020,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1021,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1022,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1023,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1024,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1025,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1026,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1027,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1028,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1029,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1030,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1031,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1032,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1033,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":29,"flag":null,"text":"众好汉反把剪径贼劫了个干净。"}
       ]
     },
@@ -154,7 +154,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1007},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -164,7 +164,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1008},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -174,7 +174,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1009},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -184,7 +184,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1010},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -194,7 +194,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1011},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -204,7 +204,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1013},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -214,7 +214,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1014},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -224,7 +224,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1015},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -234,7 +234,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1016},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -244,7 +244,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1017},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -254,7 +254,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1018},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -264,7 +264,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1019},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -274,7 +274,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1020},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -284,7 +284,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1021},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -294,7 +294,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1022},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -304,7 +304,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1023},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -314,7 +314,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1024},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -324,7 +324,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1025},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -334,7 +334,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1026},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -344,7 +344,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1027},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -354,7 +354,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1028},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -364,7 +364,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1029},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -374,7 +374,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1030},
         {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -384,7 +384,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1031},
         {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -394,7 +394,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1032},
         {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
     {
@@ -404,7 +404,7 @@
       "ops": [
         {"op":12,"flag":1,"value":1033},
         {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true}}
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     }
   ],

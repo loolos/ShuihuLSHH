@@ -40,8 +40,12 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.objectives.some((l) => l.includes('刘太公身边'))).toBe(true);
     const z = b.units.find((u) => u.side === 'enemy' && u.classId === 40 && u.present)!;
     z.hp = Math.floor(z.stats.maxHp * 0.3);
+    const gold0 = b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0);
     poke(b);
     expect(z.side).toBe('ally');
+    // 收手的离开地图，照打倒给经验，但不交银子（只有反劫剪径贼交）
+    expect(z.present).toBe(false);
+    expect(b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0)).toBe(gold0);
     expect(b.status).toBe('playing');
     place(b, cls(b, 0), tg.x - 1, tg.y);
     const ev = (() => { const p = b.active().find((u) => u.side === 'player' && u !== cls(b, 0) && b.canAct(u))!; const g = b.moveRange(p).green.find((c) => c.x !== p.x || c.y !== p.y)!; return b.move(p, g.x, g.y); })();
@@ -61,10 +65,17 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     const me = cls(b, 0);
     place(b, me, chao.x + 1, chao.y);
     chao.hp = 1;
-    b.attack(me, chao);
+    const ev = b.attack(me, chao);
     expect(chao.alive).toBe(false);
     expect(b.status).toBe('won');
     expect(b.units.some((u) => u.side === 'enemy' && u.alive && u.present)).toBe(false);
+    // 庄客一起收手离场（一次淡出，中间不夹升级字幕），好汉们留在场上
+    const first = ev.findIndex((e) => e.type === 'leave');
+    let run = 0;
+    while (ev[first + run]?.type === 'leave') run++;
+    expect(run).toBeGreaterThan(20);
+    expect(b.units.filter((u) => [40, 41].includes(u.classId) && u.alive).every((u) => !u.present)).toBe(true);
+    expect([46, 52, 61, 50].every((c) => cls(b, c).present)).toBe(true);
   });
 
   it('强闯二龙山：押鲁智深到山门前翻脸，伏兵与山下好汉一起杀出', () => {

@@ -1663,6 +1663,14 @@ export class Battle {
     let cleared = false;
     let objective: string[] = [];
     let quietGold = 0;
+    // 一起收手（quiet）的经验和银子等这串收手指令跑完再给：升级字幕之类别插在退场中间，画面才能一次淡出
+    let quietExp: [Unit, number][] = [];
+    const flushQuiet = () => {
+      for (const [u, n] of quietExp) this.gainExp(u, n, 'kill');
+      quietExp = [];
+      if (quietGold) this.emit({ type: 'message', text: `收手的敵人一共交出銀子 ${quietGold} 兩。` });
+      quietGold = 0;
+    };
     const flushObjective = () => {
       if (objective.length) {
         this.objectives = objective;
@@ -1672,6 +1680,7 @@ export class Battle {
     };
     b.ops.forEach((op, i) => {
       if (op.op < 31 || op.op > 33) flushObjective();
+      if (op.op !== 12 && op.op !== 121) flushQuiet();
       switch (op.op) {
         case 12:
           // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
@@ -1848,8 +1857,9 @@ export class Battle {
         case 121: {
           if (!sel || !sel.alive || !sel.present) break;
           // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
-          // args.reward（反劫剪径贼，负责人 2026-11-20）：身边没有我方时算最后打到他的人、再不行算最近的我方，
-          // 照正常打倒给经验，并交出 1.5 倍的击退银子；args.leave：收手后直接离开地图；args.quiet：不飘「收手」字
+          // args.reward（负责人 2026-11-20）：身边没有我方时算最后打到他的人、再不行算最近的我方，照正常打倒给经验；
+          // args.goldPct：再交出击退银子的这么多百分比（只有反劫剪径贼给 150）；args.leave：收手后直接离开地图；
+          // args.quiet：不飘「收手」字
           const s0 = sel, a = op.args ?? {};
           const players = this.active().filter((t) => t.side === 'player');
           let by = s0.side === 'enemy' ? players.find((t) => dist(t, s0) === 1) : undefined;
@@ -1860,10 +1870,11 @@ export class Battle {
           if (by && !this.credited.has(s0.uid)) {
             this.credited.add(s0.uid);
             const total = killExp(by, sel, this.rng);
-            this.gainExp(by, killerShare(total, true), 'kill');
+            if (a.quiet) quietExp.push([by, killerShare(total, true)]);
+            else this.gainExp(by, killerShare(total, true), 'kill');
             this.teamExp += teamShare(total);
             this.tallyExp('team', teamShare(total));
-            const gold = a.reward ? Math.round(killGold(s0.classId, this.data, this.rng) * 1.5) : 0;
+            const gold = a.goldPct ? Math.round((killGold(s0.classId, this.data, this.rng) * a.goldPct) / 100) : 0;
             if (gold) {
               by.gold += gold;
               // 不飘字的（一起收手）银子合成一句，放在区块最后，免得打断连着的退场
@@ -1966,7 +1977,7 @@ export class Battle {
       }
     });
     flushObjective();
-    if (quietGold) this.emit({ type: 'message', text: `收手的敵人一共交出銀子 ${quietGold} 兩。` });
+    flushQuiet();
     if (ending !== null) return this.finish('lost', ending);
     if (cleared) this.finish('won', '');
   }

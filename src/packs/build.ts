@@ -604,10 +604,16 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         ops.push({ op: 120, flag: null, value: 0, text: String(a[0] ?? ''), args: { options } });
         break;
       }
-      case 'standDown':
-        select(a[0]);
-        op(121);
+      case 'standDown': {
+        // ["standDown", 单位, {leave, reward, quiet, goldPct}]（参数可省，同原版关卡 121 的 args）【新】
+        const o = (a[1] ?? {}) as { leave?: boolean; reward?: boolean; quiet?: boolean; goldPct?: number };
+        if (typeof o !== 'object' || Array.isArray(o)) fail(`第 ${index} 个区块：standDown 的第二项要写成 {leave, reward, quiet, goldPct}`);
+        const args = Object.fromEntries(Object.entries({ reward: o.reward, goldPct: o.goldPct, leave: o.leave, quiet: o.quiet }).filter(([, v]) => v));
+        // 一起收手不飘字的：点名也别让已经离场的人回来
+        op(12, 1000 + r.unitRef(a[0]).act.group, o.quiet ? { quiet: true } : {});
+        op(121, 0, Object.keys(args).length ? { args } : {});
         break;
+      }
       case 'setAi':
         // ['setAi', 谁, 模式] 改 AI 模式（揭阳岭放哨的火家看见人才跑回店里）【新】
         select(a[0]);

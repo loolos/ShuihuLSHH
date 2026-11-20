@@ -521,59 +521,129 @@
         ],
         [
           "standDown",
-          "tubing-1"
+          "tubing-1",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-2"
+          "tubing-2",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-3"
+          "tubing-3",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-4"
+          "tubing-4",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-5"
+          "tubing-5",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-6"
+          "tubing-6",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-7"
+          "tubing-7",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-8"
+          "tubing-8",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-9"
+          "tubing-9",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-10"
+          "tubing-10",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-11"
+          "tubing-11",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-12"
+          "tubing-12",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-13"
+          "tubing-13",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-14"
+          "tubing-14",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "narrate",
@@ -685,59 +755,129 @@
         ],
         [
           "standDown",
-          "tubing-1"
+          "tubing-1",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-2"
+          "tubing-2",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-3"
+          "tubing-3",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-4"
+          "tubing-4",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-5"
+          "tubing-5",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-6"
+          "tubing-6",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-7"
+          "tubing-7",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-8"
+          "tubing-8",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-9"
+          "tubing-9",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-10"
+          "tubing-10",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-11"
+          "tubing-11",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-12"
+          "tubing-12",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-13"
+          "tubing-13",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "standDown",
-          "tubing-14"
+          "tubing-14",
+          {
+            "reward": true,
+            "leave": true,
+            "quiet": true
+          }
         ],
         [
           "narrate",

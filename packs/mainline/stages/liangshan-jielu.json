@@ -381,7 +381,11 @@
         ],
         [
           "standDown",
-          "louluo-1"
+          "louluo-1",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -399,7 +403,11 @@
         ],
         [
           "standDown",
-          "louluo-2"
+          "louluo-2",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -417,7 +425,11 @@
         ],
         [
           "standDown",
-          "louluo-3"
+          "louluo-3",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -435,7 +447,11 @@
         ],
         [
           "standDown",
-          "louluo-4"
+          "louluo-4",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -453,7 +469,11 @@
         ],
         [
           "standDown",
-          "louluo-5"
+          "louluo-5",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -471,7 +491,11 @@
         ],
         [
           "standDown",
-          "louluo-6"
+          "louluo-6",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -489,7 +513,11 @@
         ],
         [
           "standDown",
-          "louluo-7"
+          "louluo-7",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -507,7 +535,11 @@
         ],
         [
           "standDown",
-          "louluo-8"
+          "louluo-8",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -525,7 +557,11 @@
         ],
         [
           "standDown",
-          "louluo-9"
+          "louluo-9",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -543,7 +579,11 @@
         ],
         [
           "standDown",
-          "louluo-10"
+          "louluo-10",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -561,7 +601,11 @@
         ],
         [
           "standDown",
-          "louluo-11"
+          "louluo-11",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -579,7 +623,11 @@
         ],
         [
           "standDown",
-          "louluo-12"
+          "louluo-12",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -597,7 +645,11 @@
         ],
         [
           "standDown",
-          "louluo-13"
+          "louluo-13",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
@@ -615,7 +667,11 @@
         ],
         [
           "standDown",
-          "louluo-14"
+          "louluo-14",
+          {
+            "reward": true,
+            "leave": true
+          }
         ]
       ]
     },
