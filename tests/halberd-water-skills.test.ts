@@ -56,4 +56,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('吕方、郭
       expect(sk[3].type, id).toBe(8);
     }
   });
+  it('燕顺、石勇（负责人 2026-11-20）：燕顺换虎系技能；石勇有自己的身体（庄客拳师改深灰），不再借童威的', () => {
+    expect(cls('yanshun').skills.map((s) => s.name)).toEqual(['锦毛朴刀', '饿虎扑食', '猛虎下山', '虎踞']);
+    expect(cls('yanshun').skills[1].hits).toHaveLength(4);
+    expect(cls('yanshun').skills[3].type).toBe(8);
+    const defs = JSON.parse(fs.readFileSync('packs/mainline/pack.json', 'utf8')).classes as { id: string; sprite: { fromClass: number } }[];
+    expect(defs.find((c) => c.id === 'shiyong')!.sprite.fromClass).toBe(19);
+    expect(cls('shiyong').skills.map((s) => s.name)).toEqual(['石将军拳', '一拳毙命', '聚气']);
+    expect(cls('shiyong').skills[1].critMod).toBeGreaterThan(cls('yanshun').skills[1].critMod);
+    for (const st of ['shiyong', 'fachang', 'bailongmiao']) {
+      const u = JSON.parse(fs.readFileSync(`packs/mainline/stages/${st}.json`, 'utf8')).units.find((x: { id: string }) => x.id === 'shiyong');
+      expect(u.class, st).toBe('shiyong');
+    }
+  });
 });

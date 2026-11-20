@@ -489,7 +489,7 @@
     },
     {
       "id": "shiyong",
-      "class": 66,
+      "class": "shiyong",
       "side": "ally",
       "x": 44,
       "y": 20,
