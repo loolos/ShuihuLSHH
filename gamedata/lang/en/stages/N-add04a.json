@@ -1,0 +1,11 @@
+{
+  "N-add04a#1": {"zh":"我们已经在这里等你们很久了，你们好大的胆子，竟敢大刺刺的走关西大道！","t":"We've been waiting for you a long time. You've got some nerve, strolling right down the Guanxi highway!"},
+  "N-add04a#2": {"zh":"哼！就凭你们几个也想拦住我们，别笑掉人家大牙了！","t":"Hmph! You lot think you can stop us? Don't make people laugh their teeth out!"},
+  "N-add04a#3": {"zh":"大哥，别跟他们多费口舌了，大家拳下见真章吧！","t":"Big brother, no more talk. Let our fists settle it!"},
+  "N-add04a#4": {"zh":"限制回合数 --- 45","t":"Turn limit --- 45"},
+  "N-add04a#5": {"zh":"胜利条件   --- 打败所有敌人","t":"Victory --- Defeat all enemies"},
+  "N-add04a#6": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add04a#7": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"The turn limit has run out with the mission unfinished. Game over!"},
+  "N-add04a#8": {"zh":"在重兵围捕之下，%N不幸身亡，众人也一一惨遭官兵杀害，史进杀出重围，郁郁寡欢，每日沉迷于酒色之中，终成废人........","t":"Hunted by a great force, %N fell, and the others were killed by the soldiers one by one. Shi Jin fought his way out, but sank into gloom, drowned himself in wine and women every day, and ended up a wreck........"},
+  "N-add04a#9": {"zh":"果然好身手，一会儿就把官兵们打跑了！","t":"What skill! The soldiers were beaten off in no time!"}
+}
