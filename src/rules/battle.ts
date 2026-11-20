@@ -290,6 +290,10 @@ export class Battle {
   private readonly tune?: StageRules;
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
+  /** 开场时是敌人的单位（poolLeftoverExp 用） */
+  private readonly foesAtStart = new Set<number>();
+  /** 收手时已经给身边的我方算过击败经验的单位 */
+  private credited = new Set<number>();
   /** 过关奖励的银子（胜利时按地图名给，见 gold.ts），关卡结束时记进战役 */
   clearGold = 0;
   private clearGoldOverride?: number;
@@ -326,6 +330,7 @@ export class Battle {
     this.tr = input.text ?? ((s) => s);
     this.aiPrefer = input.aiPrefer ?? {};
     this.tune = input.rules;
+    for (const a of input.units) if (a.side === 'enemy') this.foesAtStart.add(a.index);
     // 开场时我方的等级（与下面逐个建单位时同一算法），用来给敌人等级保底
     const playerLevel = (a: ActUnit) => {
       const kept = input.party?.get(a.type);
@@ -562,6 +567,8 @@ export class Battle {
     for (const b of this.blocks) if (!this.fired.has(b.index) && b.cond && wins(b)) for (const f of flagLeaves(b.cond)) winFlags.add(f);
     for (const b of this.blocks) {
       if (this.fired.has(b.index)) continue;
+      // 只设标志的区域（大破何涛放火点：几个人都能点）标志已经设上了，就不再标出【新】
+      if (b.ops.length && b.ops.every((o) => o.op === 103 && this.flags.has(o.value))) continue;
       const kind = wins(b) || b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
@@ -684,7 +691,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju,
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited],
     });
   }
 
@@ -738,6 +745,7 @@ export class Battle {
     this.benched = new Set(s.benched ?? []);
     this.used = s.used ?? {};
     this.spotters = s.spotters ?? {};
+    this.credited = new Set(s.credited ?? []);
     if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
@@ -1287,6 +1295,24 @@ export class Battle {
     });
   }
 
+  /**
+   * poolLeftoverExp【新】（负责人 2026-11-20）：不用打光敌人就能过关的关，过关时还没打倒的敌人（在场、埋伏中、收手或归顺了但没人拿到经验的；
+   * 还没登场的增援不算）按击败经验整份放进全队经验，随后一起分掉
+   */
+  private poolLeftover() {
+    const ref = this.units.find((u) => u.side === 'player');
+    if (!ref) return;
+    let sum = 0;
+    for (const u of this.units) {
+      if (!this.foesAtStart.has(u.uid) || !u.alive || this.credited.has(u.uid) || !(u.present || this.ambushers.has(u.uid))) continue;
+      sum += killExp(ref, u, this.rng);
+    }
+    if (!sum) return;
+    this.teamExp += sum;
+    this.tallyExp('team', sum);
+    this.emit({ type: 'message', text: `其餘敵人的經驗 ${sum} 併入全隊經驗。` });
+  }
+
   private ambushTurn(u: Unit) {
     if (u.ai.mode !== 6) return void (u.ended = true);
     const r = alertRadius(this, u);
@@ -1785,6 +1811,7 @@ export class Battle {
           // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
           const s0 = sel, by = s0.side === 'enemy' ? this.active().find((t) => t.side === 'player' && dist(t, s0) === 1) : undefined;
           if (by) {
+            this.credited.add(s0.uid);
             const total = killExp(by, sel, this.rng);
             this.gainExp(by, killerShare(total, true), 'kill');
             this.teamExp += teamShare(total);
@@ -1932,6 +1959,7 @@ export class Battle {
   private finish(result: 'won' | 'lost', text: string) {
     if (this.status !== 'playing') return;
     if (result === 'won') {
+      if (this.tune?.poolLeftoverExp) this.poolLeftover();
       this.settleTeamExp();
       this.clearGold = this.hadPlayers ? (this.clearGoldOverride ?? stageClearGold(this.name)) : 0;
       if (this.clearGold) this.emit({ type: 'message', text: `過關獎勵：得到銀子 ${this.clearGold} 兩！` });
