@@ -13,7 +13,7 @@ import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf,
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
-import { basicReaches, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
+import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import type { StageRules } from '../formats/stage-json.ts';
@@ -467,9 +467,9 @@ export class Battle {
       (through ? pass : blocked).add(key(t.x, t.y));
     }
     if (this.cuju) {
-      // 蹴鞠：球所在的格子能走过、不能停；不能走出球场
+      // 蹴鞠：球所在的格子能走过、不能停；最多走出球场一格（球门口不能站）
       pass.add(key(this.cuju.ball.x, this.cuju.ball.y));
-      for (let y = 0; y < this.board.height; y++) for (let x = 0; x < this.board.width; x++) if (!this.inField({ x, y })) blocked.add(key(x, y));
+      for (let y = 0; y < this.board.height; y++) for (let x = 0; x < this.board.width; x++) if (!canStand(this.cuju.rules, { x, y })) blocked.add(key(x, y));
     }
     return this.board.reach(u, budget, blocked, pass);
   }

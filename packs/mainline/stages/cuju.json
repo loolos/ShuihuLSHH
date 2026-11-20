@@ -11,7 +11,7 @@
     "goalsToWin": 3,
     "turns": 12,
     "extraTurns": 3,
-    "bonus": { "enemy": { "power": 1.6, "hit": 1.4 } }
+    "bonus": { "enemy": { "power": 1.6, "hit": 1.3 } }
   },
   "units": [
     { "id": "luzhishen", "class": 16, "side": "player", "x": 3, "y": 9, "facing": 3, "level": 20 },

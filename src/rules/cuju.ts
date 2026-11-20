@@ -58,6 +58,13 @@ export function inField(r: CujuRules, c: { x: number; y: number }) {
   return c.x >= x1 && c.x <= x2 && c.y >= y1 && c.y <= y2;
 }
 
+/** 人能站的格子：球场和场外一圈（最多出界一格，好把边线上的球踢回来），球门口除外【新：负责人 2026-11-20】 */
+export function canStand(r: CujuRules, c: { x: number; y: number }) {
+  const [x1, y1, x2, y2] = r.field;
+  if (c.x < x1 - 1 || c.x > x2 + 1 || c.y < y1 - 1 || c.y > y2 + 1) return false;
+  return !Object.values(r.goals).some((g) => c.x === g.x && c.y >= g.y1 && c.y <= g.y2);
+}
+
 /** 普通攻击能不能碰到球：近战（射程从 1 起）可以踢身边 8 格；其余按射程（上下左右斜着都算，曼哈顿距离） */
 export function basicReaches(at: Cell, ball: Cell, [lo, hi]: [number, number]): boolean {
   const dx = Math.abs(at.x - ball.x), dy = Math.abs(at.y - ball.y);
