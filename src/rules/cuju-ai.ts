@@ -6,7 +6,7 @@
 //    走完防御（防御时上下左右相邻的格子也能拦球），前锋气不够时休息攒气。
 import type { Battle } from './battle.ts';
 import type { Cell } from './board.ts';
-import { DEVIATE_MAX, DEVIATE_MIN, inField, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, traceLine, type BallResult, type Team } from './cuju.ts';
+import { DEVIATE_MAX, DEVIATE_MIN, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, traceLine, type BallResult, type Team } from './cuju.ts';
 import type { SkillDef } from './data.ts';
 import { isSupportSkill, learnedSkills } from './skills.ts';
 import { attackSkill, type Unit } from './unit.ts';
@@ -132,7 +132,7 @@ function walkToward(b: Battle, u: Unit, goal: Cell, act: CujuActions) {
   const ball = b.cuju!.ball;
   const d = (c: Cell) => field[c.y * W + c.x] + (c.x === ball.x && c.y === ball.y ? 99 : 0);
   let best: Cell = { x: u.x, y: u.y };
-  for (const c of b.moveRange(u).green) if (inField(b.cuju!.rules, c) && d(c) < d(best)) best = c;
+  for (const c of b.moveRange(u).green) if (d(c) < d(best)) best = c;
   if (best.x !== u.x || best.y !== u.y) act.move(u, best);
 }
 

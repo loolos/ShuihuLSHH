@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { basicReaches, kickDistance, resolveBall, throwIn, traceLine, type BallPlayer, type CujuRules } from '../src/rules/cuju.ts';
+import { basicReaches, canStand, kickDistance, resolveBall, throwIn, traceLine, type BallPlayer, type CujuRules } from '../src/rules/cuju.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { loadGameData } from '../src/rules/load.ts';
@@ -55,6 +55,14 @@ describe('球路', () => {
     expect(goal).toMatchObject({ kind: 'goal', scorer: 'player' });
     const own = resolveBall(rules, { x: 4, y: 9 }, traceLine({ x: 4, y: 9 }, -1, 0, 0, 6), 'player', []);
     expect(own).toMatchObject({ kind: 'goal', scorer: 'enemy' });
+  });
+
+  it('人最多走出球场一格，球门口不能站', () => {
+    expect(canStand(rules, { x: 15, y: 1 })).toBe(true);
+    expect(canStand(rules, { x: 15, y: 0 })).toBe(false);
+    expect(canStand(rules, { x: 1, y: 3 })).toBe(true);
+    expect(canStand(rules, { x: 1, y: 9 })).toBe(false);
+    expect(canStand(rules, { x: 29, y: 11 })).toBe(false);
   });
 
   it('出界后球放到离出界点最近的对方身边、朝他要攻的门', () => {
