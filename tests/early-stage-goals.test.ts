@@ -205,8 +205,11 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
       const spot = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: v.x + dx, y: v.y + dy })).find((c) => b.board.passable(c.x, c.y))!;
       place(b, p, spot.x, spot.y);
       v.hp = 1;
-      b.attack(p, v);
+      const ev = b.attack(p, v);
       expect(v.alive).toBe(false);
+      // 富安、洪教头倒下各有一段对白
+      const said = ev.filter((e) => e.type === 'say').map((e) => (e.type === 'say' ? e.text : ''));
+      expect(said.some((t) => t.includes(id === 63 ? '衙内的主意' : '输了你一棒'))).toBe(true);
     });
     expect(b.status).toBe('playing');
     const spot = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: lu.x + dx, y: lu.y + dy })).find((c) => b.board.passable(c.x, c.y) && !b.units.some((u) => u.alive && u.present && u.x === c.x && u.y === c.y))!;
