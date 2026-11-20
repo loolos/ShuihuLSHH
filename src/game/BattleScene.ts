@@ -748,7 +748,9 @@ export class BattleScene extends Phaser.Scene {
   private autoEndTurn() {
     if (!this.battle.playerPhaseDone()) return;
     this.time.delayedCall(400, () => {
-      if (this.busy || this.ui.inDialog || !this.battle.playerPhaseDone()) return;
+      if (this.battle.status !== 'playing' || this.battle.phase !== 'player' || !this.battle.playerPhaseDone()) return;
+      // 还在播放或对白没点掉：稍后再试，不要就此放弃（否则全员已行动却停在本回合，看上去像卡住）
+      if (this.busy || this.ending || this.ui.inDialog) return this.autoEndTurn();
       this.endTurn();
     });
   }
