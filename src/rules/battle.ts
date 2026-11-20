@@ -1970,7 +1970,8 @@ export class Battle {
         // 105 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；106 解开
         case 105:
           if (!sel) break;
-          // args.turns【新】：只呆住几回合（强闯二龙山山门守军措手不及），text 是头上的字
+          // args.turns【新】：只呆住几回合（强闯二龙山山门守军措手不及），text 是头上的字；不在场、已倒下的不算
+          if (op.args?.turns && (!sel.alive || !sel.present)) break;
           sel.stunTurns = op.args?.turns ?? BOUND_TURNS;
           if (sel.side === this.phase) sel.ended = true;
           this.emit({ type: 'status', uid: sel.uid, text: op.text ?? '被綁' });
@@ -2027,10 +2028,10 @@ export class Battle {
           const from = sel.side, s0 = sel;
           // args.nearest【新】（山径斗毛贼，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
           // args.fraction：改成按比例（强闯二龙山：头领倒下，剩下的小兵一半归顺）；args.crewOnly：只换手下，不换选中的人本身（头领已倒下）
-          const frac = op.args?.fraction, range = op.args?.range ?? 3, classes = op.args?.classes;
+          const frac = op.args?.fraction, range = op.args?.range ?? 3, classes = op.args?.classes, only = op.args?.only; // only：只在这些编号里挑（开场就在的守军，不含增援）
           const pool = op.args?.nearest || frac
             ? this.active()
-                .filter((u) => u !== s0 && u.side === from && dist(u, s0) <= range && (!classes || classes.includes(u.classId)))
+                .filter((u) => u !== s0 && u.side === from && dist(u, s0) <= range && (!classes || classes.includes(u.classId)) && (!only || only.includes(u.uid)))
                 .sort((a, b) => dist(a, s0) - dist(b, s0) || a.uid - b.uid)
             : [];
           const crew = pool.slice(0, frac ? Math.round(pool.length * frac) : (op.args?.nearest ?? 0));
