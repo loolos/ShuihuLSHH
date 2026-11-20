@@ -3,45 +3,49 @@
   "map": "N-add04b",
   "header": {"blockCount":4,"town":0,"next":16,"act":0},
   "units": [
-    {"index":0,"type":44,"group":1,"side":"enemy","facing":3,"x":15,"y":9,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":1,"type":65,"group":2,"side":"enemy","facing":3,"x":16,"y":10,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":2,"type":44,"group":3,"side":"enemy","facing":3,"x":15,"y":11,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":3,"type":45,"group":4,"side":"enemy","facing":0,"x":28,"y":29,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":4,"type":65,"group":5,"side":"enemy","facing":0,"x":27,"y":30,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":5,"type":44,"group":6,"side":"enemy","facing":1,"x":31,"y":27,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":6,"type":44,"group":7,"side":"enemy","facing":0,"x":26,"y":29,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":7,"type":44,"group":8,"side":"enemy","facing":1,"x":32,"y":26,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":8,"type":44,"group":9,"side":"enemy","facing":1,"x":31,"y":25,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":9,"type":45,"group":10,"side":"enemy","facing":3,"x":18,"y":14,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":10,"type":44,"group":11,"side":"enemy","facing":1,"x":27,"y":15,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":11,"type":44,"group":12,"side":"enemy","facing":1,"x":26,"y":14,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":12,"type":65,"group":13,"side":"enemy","facing":3,"x":9,"y":16,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":13,"type":45,"group":14,"side":"enemy","facing":3,"x":17,"y":15,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":14,"type":45,"group":15,"side":"enemy","facing":3,"x":17,"y":13,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":0,"type":44,"group":1,"side":"enemy","facing":3,"x":18,"y":11,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":65,"group":2,"side":"enemy","facing":3,"x":16,"y":11,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":44,"group":3,"side":"enemy","facing":3,"x":17,"y":11,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":45,"group":4,"side":"enemy","facing":0,"x":31,"y":28,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":65,"group":5,"side":"enemy","facing":0,"x":30,"y":27,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":44,"group":6,"side":"enemy","facing":0,"x":29,"y":27,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":6,"type":44,"group":7,"side":"enemy","facing":0,"x":31,"y":26,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":7,"type":44,"group":8,"side":"enemy","facing":0,"x":31,"y":27,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":44,"group":9,"side":"enemy","facing":0,"x":30,"y":28,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":45,"group":10,"side":"enemy","facing":3,"x":17,"y":10,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":44,"group":11,"side":"enemy","facing":1,"x":32,"y":12,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":44,"group":12,"side":"enemy","facing":1,"x":31,"y":11,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":65,"group":13,"side":"enemy","facing":3,"x":9,"y":15,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":45,"group":14,"side":"enemy","facing":3,"x":15,"y":11,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":45,"group":15,"side":"enemy","facing":3,"x":16,"y":10,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":15,"type":0,"group":16,"side":"player","facing":0,"x":25,"y":19,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":16,"type":3,"group":17,"side":"player","facing":0,"x":24,"y":18,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":17,"type":5,"group":18,"side":"player","facing":2,"x":26,"y":21,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":18,"type":13,"group":19,"side":"player","facing":2,"x":27,"y":22,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":19,"type":15,"group":20,"side":"player","facing":2,"x":25,"y":22,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":20,"type":45,"group":21,"side":"enemy","facing":3,"x":11,"y":12,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":21,"type":44,"group":22,"side":"enemy","facing":1,"x":26,"y":15,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":22,"type":44,"group":23,"side":"enemy","facing":3,"x":8,"y":17,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":23,"type":44,"group":24,"side":"enemy","facing":3,"x":8,"y":16,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":24,"type":44,"group":25,"side":"enemy","facing":3,"x":8,"y":15,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":25,"type":45,"group":26,"side":"enemy","facing":3,"x":10,"y":30,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":26,"type":45,"group":27,"side":"enemy","facing":3,"x":10,"y":29,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":27,"type":45,"group":28,"side":"enemy","facing":3,"x":10,"y":31,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":45,"group":21,"side":"enemy","facing":3,"x":9,"y":16,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":44,"group":22,"side":"enemy","facing":1,"x":30,"y":12,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":44,"group":23,"side":"enemy","facing":3,"x":11,"y":15,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":44,"group":24,"side":"enemy","facing":3,"x":10,"y":16,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":44,"group":25,"side":"enemy","facing":3,"x":10,"y":15,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":25,"type":45,"group":26,"side":"enemy","facing":3,"x":13,"y":30,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":45,"group":27,"side":"enemy","facing":3,"x":12,"y":29,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":45,"group":28,"side":"enemy","facing":3,"x":12,"y":30,"level":4,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":28,"type":65,"group":29,"side":"enemy","facing":3,"x":11,"y":30,"level":6,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":29,"type":44,"group":30,"side":"enemy","facing":3,"x":15,"y":10,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":30,"type":45,"group":31,"side":"enemy","facing":3,"x":11,"y":13,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":31,"type":45,"group":32,"side":"enemy","facing":3,"x":13,"y":29,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":32,"type":45,"group":33,"side":"enemy","facing":3,"x":14,"y":30,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":33,"type":45,"group":34,"side":"enemy","facing":2,"x":15,"y":29,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":34,"type":45,"group":35,"side":"enemy","facing":0,"x":12,"y":13,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":35,"type":44,"group":36,"side":"enemy","facing":0,"x":27,"y":29,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":44,"group":30,"side":"enemy","facing":3,"x":16,"y":12,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":45,"group":31,"side":"enemy","facing":3,"x":8,"y":15,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":45,"group":32,"side":"enemy","facing":3,"x":11,"y":29,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":32,"type":45,"group":33,"side":"enemy","facing":3,"x":10,"y":30,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":33,"type":45,"group":34,"side":"enemy","facing":3,"x":11,"y":31,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":45,"group":35,"side":"enemy","facing":3,"x":9,"y":14,"level":4,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":35,"type":44,"group":36,"side":"enemy","facing":0,"x":32,"y":27,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":36,"type":61,"group":0,"side":"object","facing":0,"x":24,"y":3,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":37,"type":184,"group":0,"side":"object","facing":0,"x":5,"y":33,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":38,"type":191,"group":0,"side":"object","facing":0,"x":6,"y":11,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+    {"index":38,"type":191,"group":0,"side":"object","facing":0,"x":6,"y":11,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":39,"type":65,"group":37,"side":"enemy","facing":1,"x":31,"y":12,"level":6,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":40,"type":44,"group":38,"side":"enemy","facing":1,"x":31,"y":13,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":41,"type":45,"group":39,"side":"enemy","facing":1,"x":32,"y":11,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":42,"type":44,"group":40,"side":"enemy","facing":1,"x":32,"y":13,"level":4,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
   ],
   "blocks": [
     {
@@ -61,7 +65,7 @@
         {"op":13,"flag":0,"id":4,"text":"朱武道：「都是绿林中人，何必赶尽杀绝。把头领打得服软了，我们三个过去劝他入伙。」"},
         {"op":35,"flag":null,"value":45},
         {"op":31,"flag":null,"id":5,"text":"限制回合数 --- 45"},
-        {"op":32,"flag":null,"id":6,"text":"胜利条件   --- 收服或打败所有敌人（头领体力不到一半后，朱武、陈达或杨春走到他身边劝降，头领带手下归顺）"},
+        {"op":32,"flag":null,"id":6,"text":"胜利条件   --- 收服或打败所有敌人（头领体力不到一半后，朱武、陈达或杨春走到他身边劝降，头领带身边最多四个手下归顺）"},
         {"op":33,"flag":null,"id":7,"text":"失败条件   --- %N死亡"}
       ]
     },
@@ -98,7 +102,7 @@
         {"op":13,"flag":0,"id":11,"text":"可恶……这几个人好生了得！"},
         {"op":103,"flag":null,"value":10},
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"id":12,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他入伙。"}
+        {"op":13,"flag":0,"id":12,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他带身边几个弟兄入伙（最多四个）。"}
       ]
     },
     {
@@ -112,23 +116,7 @@
         {"op":12,"flag":1,"value":1002},
         {"op":13,"flag":0,"id":14,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1002},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1001},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1003},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1010},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1012},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1014},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1015},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1022},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1030},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -142,23 +130,7 @@
         {"op":12,"flag":1,"value":1002},
         {"op":13,"flag":0,"id":16,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1002},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1001},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1003},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1010},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1012},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1014},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1015},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1022},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1030},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -172,23 +144,7 @@
         {"op":12,"flag":1,"value":1002},
         {"op":13,"flag":0,"id":18,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1002},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1001},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1003},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1010},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1012},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1014},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1015},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1022},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1030},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -207,13 +163,9 @@
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1010,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
-        {"op":12,"flag":1,"value":1012,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1014,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1015,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
-        {"op":12,"flag":1,"value":1022,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1030,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}}
@@ -228,7 +180,7 @@
         {"op":13,"flag":0,"id":20,"text":"可恶……这几个人好生了得！"},
         {"op":103,"flag":null,"value":11},
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"id":21,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他入伙。"}
+        {"op":13,"flag":0,"id":21,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他带身边几个弟兄入伙（最多四个）。"}
       ]
     },
     {
@@ -242,21 +194,7 @@
         {"op":12,"flag":1,"value":1005},
         {"op":13,"flag":0,"id":23,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1005},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1004},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1006},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1007},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1008},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1009},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1011},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1036},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -270,21 +208,7 @@
         {"op":12,"flag":1,"value":1005},
         {"op":13,"flag":0,"id":25,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1005},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1004},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1006},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1007},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1008},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1009},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1011},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1036},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -298,21 +222,7 @@
         {"op":12,"flag":1,"value":1005},
         {"op":13,"flag":0,"id":27,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1005},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1004},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1006},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1007},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1008},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1009},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1011},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1036},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -335,8 +245,6 @@
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1009,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
-        {"op":12,"flag":1,"value":1011,"quiet":true},
-        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1036,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}}
       ]
@@ -350,7 +258,7 @@
         {"op":13,"flag":0,"id":29,"text":"可恶……这几个人好生了得！"},
         {"op":103,"flag":null,"value":12},
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"id":30,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他入伙。"}
+        {"op":13,"flag":0,"id":30,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他带身边几个弟兄入伙（最多四个）。"}
       ]
     },
     {
@@ -364,19 +272,7 @@
         {"op":12,"flag":1,"value":1013},
         {"op":13,"flag":0,"id":32,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1013},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1021},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1023},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1024},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1025},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1031},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1035},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -390,19 +286,7 @@
         {"op":12,"flag":1,"value":1013},
         {"op":13,"flag":0,"id":34,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1013},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1021},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1023},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1024},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1025},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1031},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1035},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -416,19 +300,7 @@
         {"op":12,"flag":1,"value":1013},
         {"op":13,"flag":0,"id":36,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1013},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1021},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1023},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1024},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1025},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1031},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1035},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -464,7 +336,7 @@
         {"op":13,"flag":0,"id":38,"text":"可恶……这几个人好生了得！"},
         {"op":103,"flag":null,"value":13},
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"id":39,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他入伙。"}
+        {"op":13,"flag":0,"id":39,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他带身边几个弟兄入伙（最多四个）。"}
       ]
     },
     {
@@ -478,19 +350,7 @@
         {"op":12,"flag":1,"value":1029},
         {"op":13,"flag":0,"id":41,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1029},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1026},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1027},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1028},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1032},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1033},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1034},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -504,19 +364,7 @@
         {"op":12,"flag":1,"value":1029},
         {"op":13,"flag":0,"id":43,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1029},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1026},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1027},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1028},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1032},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1033},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1034},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -530,19 +378,7 @@
         {"op":12,"flag":1,"value":1029},
         {"op":13,"flag":0,"id":45,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
         {"op":12,"flag":1,"value":1029},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1026},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1027},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1028},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1032},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1033},
-        {"op":115,"flag":null,"text":"ally"},
-        {"op":12,"flag":1,"value":1034},
-        {"op":115,"flag":null,"text":"ally"}
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
       ]
     },
     {
@@ -566,6 +402,84 @@
         {"op":12,"flag":1,"value":1033,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1034,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":39,"below":50},
+      "cond": {"type":101,"arg":24},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1037},
+        {"op":13,"flag":0,"text":"可恶……这几个人好生了得！"},
+        {"op":103,"flag":null,"value":14},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"这个头领伤得不轻，朱武、陈达或杨春走到他身边，可以劝他带身边几个弟兄入伙（最多四个）。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"near","char":65,"uid":39,"by":5,"playerPhase":true},
+      "cond": {"op":"and","a":{"type":100,"arg":14},"b":{"type":101,"arg":24}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":24},
+        {"op":12,"flag":1,"value":5},
+        {"op":13,"flag":0,"text":"在下朱武，少华山的头领。大家都是绿林中人，何必自相残杀？不如带了弟兄跟我们走！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":13,"flag":0,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
+      ]
+    },
+    {
+      "trigger": {"kind":"near","char":65,"uid":39,"by":13,"playerPhase":true},
+      "cond": {"op":"and","a":{"type":100,"arg":14},"b":{"type":101,"arg":24}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":24},
+        {"op":12,"flag":1,"value":13},
+        {"op":13,"flag":0,"text":"俺是跳涧虎陈达！你这身手不坏，跟着俺们干，强似在这山径上剪径！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":13,"flag":0,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
+      ]
+    },
+    {
+      "trigger": {"kind":"near","char":65,"uid":39,"by":15,"playerPhase":true},
+      "cond": {"op":"and","a":{"type":100,"arg":14},"b":{"type":101,"arg":24}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":24},
+        {"op":12,"flag":1,"value":15},
+        {"op":13,"flag":0,"text":"在下白花蛇杨春。同是落草之人，兄弟若肯入伙，从此有福同享！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":13,"flag":0,"text":"原来是少华山的好汉！小人有眼不识泰山，情愿带弟兄们追随！"},
+        {"op":12,"flag":1,"value":1037},
+        {"op":115,"flag":null,"text":"ally","args":{"nearest":4,"range":3,"classes":[44,45]}}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":39,"below":15},
+      "cond": {"type":101,"arg":24},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":24},
+        {"op":12,"flag":1,"value":1037},
+        {"op":13,"flag":0,"text":"打不过……弟兄们，散了吧！"},
+        {"op":12,"flag":1,"value":1037,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1011,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1012,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1022,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1038,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1039,"quiet":true},
+        {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}},
+        {"op":12,"flag":1,"value":1040,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"leave":true,"quiet":true}}
       ]
     }
