@@ -161,6 +161,78 @@
       "offstage": true
     },
     {
+      "id": "fb-1",
+      "class": 22,
+      "side": "enemy",
+      "x": 17,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
+      "id": "fb-2",
+      "class": 23,
+      "side": "enemy",
+      "x": 16,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
+      "id": "fb-3",
+      "class": 22,
+      "side": "enemy",
+      "x": 18,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
+      "id": "fb-4",
+      "class": 22,
+      "side": "enemy",
+      "x": 16,
+      "y": 13,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
+      "id": "fb-5",
+      "class": 23,
+      "side": "enemy",
+      "x": 19,
+      "y": 12,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
+      "id": "fb-6",
+      "class": 22,
+      "side": "enemy",
+      "x": 15,
+      "y": 14,
+      "level": 30,
+      "facing": 2,
+      "name": "强人",
+      "levelOffset": -4,
+      "hidden": true
+    },
+    {
       "id": "gb-1",
       "class": 43,
       "side": "enemy",
@@ -550,7 +622,82 @@
         ],
         [
           "narrate",
-          "行不过七八里，只听得一声呼哨，山坡后跳出一伙好汉来。当先一个，五短身材，手拿一条朴刀。"
+          "行不过七八里，只听得一声呼哨，山坡后跳出一伙强人来，一个个手拿朴刀，拦住去路。"
+        ],
+        [
+          "appear",
+          "fb-1"
+        ],
+        [
+          "appear",
+          "fb-2"
+        ],
+        [
+          "appear",
+          "fb-3"
+        ],
+        [
+          "appear",
+          "fb-4"
+        ],
+        [
+          "appear",
+          "fb-5"
+        ],
+        [
+          "appear",
+          "fb-6"
+        ],
+        [
+          "flag",
+          "robbers"
+        ],
+        [
+          "say",
+          "fb-1",
+          "兀那几个客人！留下买路钱，再把这两个秀才交出来！"
+        ],
+        [
+          "say",
+          "xiaorang",
+          "好汉饶命！我两个是上泰安州刻石镌文的，又没一分财赋，止有几件衣服！"
+        ],
+        [
+          "say",
+          "jindajian",
+          "太保救我们则个！"
+        ],
+        [
+          "say",
+          "daizong",
+          "（怪哉，军师只说半路自有安排，怎地撞着真强人？）伴当们，且打发了这伙毛贼！"
+        ],
+        [
+          "say",
+          "lvfang",
+          "几个毛贼，也敢拦路！"
+        ],
+        [
+          "objective",
+          "胜：先打退拦路的强人，再打倒济州巡检和全部官军\n败：戴宗、萧让或金大坚倒下；超过 22 回合"
+        ],
+        [
+          "turnLimit",
+          22
+        ]
+      ]
+    },
+    {
+      "on": "enemiesDefeated",
+      "unless": "reveal",
+      "do": [
+        [
+          "flag",
+          "reveal"
+        ],
+        [
+          "narrate",
+          "强人被打得东倒西歪，正要四散。山坡上忽然一个五短身材的汉子跳将下来，连声叫道：「住手！住手！自家人！」"
         ],
         [
           "appear",
@@ -579,32 +726,12 @@
         [
           "say",
           "wangying",
-          "你那几个是甚么人？那里去？孩儿们，拿这两个秀才上山去！"
-        ],
-        [
-          "say",
-          "xiaorang",
-          "好汉饶命！我两个是上泰安州刻石镌文的，又没一分财赋，止有几件衣服！"
-        ],
-        [
-          "say",
-          "jindajian",
-          "太保救我们则个！"
-        ],
-        [
-          "say",
-          "lvfang",
-          "（低声）王头领，戏也做够了，休把两位先生吓坏了。"
-        ],
-        [
-          "say",
-          "wangying",
-          "哈哈！萧先生、金师父休慌，俺是梁山泊矮脚虎王英，奉吴学究将令，特来请二位上山的！"
+          "哎哟，下手忒重！俺是梁山泊矮脚虎王英，奉吴学究将令，扮作强人吓一吓二位先生，好请上山的！"
         ],
         [
           "say",
           "daizong",
-          "二位休怪。小可不是岳庙太保，是江州戴宗。只因宋公明哥哥有难，要借二位的手段。"
+          "（原来军师的安排是这个！）……萧先生、金师父休怪。小可不是岳庙太保，是江州戴宗。只因宋公明哥哥有难，要借二位的手段。"
         ],
         [
           "say",
@@ -704,14 +831,52 @@
           "say",
           "yanshun",
           "兄弟们，跟着王矮虎杀上去！"
+        ]
+      ],
+      "if": "robbers"
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
         ],
         [
-          "objective",
-          "胜：打倒济州巡检和全部官军\n败：戴宗、萧让或金大坚倒下；超过 18 回合"
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
         ],
         [
-          "turnLimit",
-          18
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
         ]
       ]
     },
@@ -719,7 +884,962 @@
       "on": {
         "turn": 3
       },
+      "if": "r2",
+      "unless": "r3",
       "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 8
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 10
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 11
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 12
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 13
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 17
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 18
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 19
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 20
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 22
+      },
+      "if": "r2",
+      "unless": "r3",
+      "do": [
+        [
+          "flag",
+          "r3"
+        ],
+        [
+          "narrate",
+          "前面山口也有官军截住了去路，要捉那两个秀才！"
+        ],
+        [
+          "appear",
+          "gd-1"
+        ],
+        [
+          "appear",
+          "gd-2"
+        ],
+        [
+          "appear",
+          "gd-3"
+        ],
+        [
+          "appear",
+          "gd-4"
+        ],
+        [
+          "appear",
+          "gd-5"
+        ],
+        [
+          "appear",
+          "gd-6"
+        ],
+        [
+          "appear",
+          "gd-7"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
         [
           "narrate",
           "官道上又有一队官军赶到！"
@@ -762,38 +1882,1203 @@
       "on": {
         "turn": 4
       },
+      "if": "r1",
+      "unless": "r2",
       "do": [
         [
+          "flag",
+          "r2"
+        ],
+        [
           "narrate",
-          "前面山口也有官军截住了去路，要捉那两个秀才！"
+          "官道上又有一队官军赶到！"
         ],
         [
           "appear",
-          "gd-1"
+          "gc-1"
         ],
         [
           "appear",
-          "gd-2"
+          "gc-2"
         ],
         [
           "appear",
-          "gd-3"
+          "gc-3"
         ],
         [
           "appear",
-          "gd-4"
+          "gc-4"
         ],
         [
           "appear",
-          "gd-5"
+          "gc-5"
         ],
         [
           "appear",
-          "gd-6"
+          "gc-6"
         ],
         [
           "appear",
-          "gd-7"
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 8
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 10
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 11
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 12
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 13
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 17
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 18
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 19
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 20
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 22
+      },
+      "if": "r1",
+      "unless": "r2",
+      "do": [
+        [
+          "flag",
+          "r2"
+        ],
+        [
+          "narrate",
+          "官道上又有一队官军赶到！"
+        ],
+        [
+          "appear",
+          "gc-1"
+        ],
+        [
+          "appear",
+          "gc-2"
+        ],
+        [
+          "appear",
+          "gc-3"
+        ],
+        [
+          "appear",
+          "gc-4"
+        ],
+        [
+          "appear",
+          "gc-5"
+        ],
+        [
+          "appear",
+          "gc-6"
+        ],
+        [
+          "appear",
+          "gc-7"
+        ],
+        [
+          "appear",
+          "gc-8"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 2
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 4
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 5
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 7
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 8
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 9
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 10
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 11
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 12
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 13
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 17
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 18
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 19
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 20
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 22
+      },
+      "if": "reveal",
+      "unless": "r1",
+      "do": [
+        [
+          "flag",
+          "r1"
         ]
       ]
     },
@@ -826,7 +3111,8 @@
           "victory",
           "萧让、金大坚上了梁山！"
         ]
-      ]
+      ],
+      "if": "reveal"
     },
     {
       "on": {

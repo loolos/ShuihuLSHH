@@ -106,7 +106,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(ev.some((e) => e.type === 'say' && /萧名让/.test(e.text))).toBe(true);
   });
 
-  it('赚上梁山：王英假劫只是过场；戴宗和李俊、吕方、郭盛护着萧让、金大坚（友军、只会躲）打退济州官兵', () => {
+  it('赚上梁山：先和拦路的强人过招，打退后王英等人才现身说破（负责人 2026-11-20），接着济州官兵三面杀来；戴宗和李俊、吕方、郭盛护着萧让、金大坚（友军、只会躲）', () => {
     const { s: st, b, get } = open('zhuanshang');
     expect(st.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['daizong', 'guosheng', 'lijun', 'lvfang']);
     for (const id of ['xiaorang', 'jindajian']) expect(get(id)).toMatchObject({ side: 'ally', present: true });
@@ -117,6 +117,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(opening.filter(u=>u.x-u.y < -10)).toHaveLength(5); // 画面左
     expect(opening.filter(u=>u.x+u.y > 45)).toHaveLength(5); // 画面下
     expect(opening.filter(u=>u.x-u.y > 20)).toHaveLength(5); // 画面右
+    // 第一阶段：只有假强人；王英一伙和官军都还没出来
+    expect(st.units.filter((u) => u.id.startsWith('fb-')).every((u) => get(u.id).present && get(u.id).side === 'enemy')).toBe(true);
+    for (const id of ['wangying', 'yanshun', 'xunjian']) expect(get(id).present, id).toBe(false);
+    killAll(b, true);
+    expect(b.status).toBe('playing');
     const active=b.active();
     expect(new Set(active.map(u=>u.x+','+u.y)).size).toBe(active.length);
     for(const foe of opening) {
@@ -126,21 +131,29 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
 
     for (const id of ['wangying', 'yanshun']) expect(get(id)).toMatchObject({ side: 'ally', present: true });
     expect(get('xunjian').present).toBe(true);
+    expect(get('gc-1').present).toBe(false);
+    turn(b, 1); // 第 2 回合（现身后一回合）
+    expect(get('gc-1').present).toBe(false);
+    turn(b, 2);
+    expect(get('gc-1').present).toBe(true);
+    expect(get('gd-1').present).toBe(false);
+    turn(b, 3);
+    expect(get('gd-1').present).toBe(true);
     killAll(b);
     expect(b.status).toBe('won');
   });
 
-  it('假信露馅：武龙带李俊、吕方、郭盛、朱贵、王英、燕顺冲进府衙；有人走到戴宗身边，戴宗交代后被擒；武龙从北面后门杀出去才过关（地图用大闹太尉府）；之后进梁山泊整备', () => {
+  it('伪书事泄（原名假信露馅，负责人 2026-11-20 改）：戴宗开场就被擒绑走；武龙带李俊、吕方、郭盛、朱贵、王英、燕顺从北面后门杀出去才过关（地图用大闹太尉府）；之后进梁山泊整备', () => {
     const { b, get, s } = open('jiaxin');
+    expect(s.title).toBe('伪书事泄');
     expect(s.townAfter).toBe(11);
     expect(s.units.filter((u) => u.side === 'player').map((u) => u.id).sort()).toEqual(['daizong', 'guosheng', 'hero', 'lijun', 'lvfang', 'wangying', 'yanshun', 'zhugui']);
     for (const id of ['huangwenbing', 'caijiu']) expect(get(id).side, id).toBe('enemy');
-    const hero = get('hero'), dz = get('daizong'), wy = get('wangying');
-    wy.x = dz.x + 1; wy.y = dz.y; after(b);
-    expect(dz.present).toBe(false);
+    expect(get('daizong').present).toBe(false);
     expect(get('g1').present).toBe(true);
     expect(b.status).toBe('playing');
-    hero.x = 16; hero.y = 0; after(b);
+    const hero = get('hero'); hero.x = 16; hero.y = 0; after(b);
     expect(b.status).toBe('won');
   });
+
 });
