@@ -16,7 +16,8 @@
     "render:maps": "node tools/render-maps.ts",
     "check:enemy-levels": "node --experimental-transform-types tools/gen-enemy-levels.ts",
     "gen:enemy-levels": "npm run check:enemy-levels",
-    "gen:levels": "node --experimental-transform-types tools/gen-entry-levels.ts"
+    "gen:levels": "node --experimental-transform-types tools/gen-entry-levels.ts",
+    "i18n": "node --experimental-transform-types tools/i18n.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
@@ -26,6 +27,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "phaser": "^4.2.1"
+    "phaser": "^4.2.1",
+    "opencc-js": "^1.4.2"
   }
 }

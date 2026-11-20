@@ -55,8 +55,12 @@ export interface StageJson {
 export function stageUnits(j: StageJson): ActUnit[] {
   return j.units.map((u, i) => ({ ...u, index: i, extra: [...u.extra], items: [...u.items] }));
 }
-export function stageBlocks(j: StageJson): PasBlock[] {
-  return j.blocks.map((b, i) => ({ ...b, index: i, ops: b.ops.map((o) => ({ ...o, value: o.value ?? 0 })) }));
+export function stageBlocks(j: StageJson, stage?: string): PasBlock[] {
+  return j.blocks.map((b, i) => ({
+    ...b,
+    index: i,
+    ops: b.ops.map((o) => ({ ...o, value: o.value ?? 0, ...(stage && o.id !== undefined ? { tid: `${stage}#${o.id}` } : {}) })),
+  }));
 }
 
 const line = (v: unknown) => JSON.stringify(v);
@@ -79,8 +83,8 @@ export function formatStageJson(j: StageJson & { units: (StageUnit & { raw?: unk
     j.blocks
       .map(({ head, trigger, cond, ops }) => {
         const opLines = ops.map((o: PasOp) => {
-          const { op, flag, value, text, ...rest } = o;
-          return '        ' + line(text !== undefined ? { op, flag, text, ...rest } : { op, flag, value, ...rest });
+          const { op, flag, value, text, id, ...rest } = o;
+          return '        ' + line(text !== undefined ? { op, flag, id, text, ...rest } : { op, flag, value, ...rest });
         });
         return `    {\n      "trigger": ${line(trigger)},\n      "cond": ${line(cond)},\n      "head": ${line(head)},\n      "ops": [\n${opLines.join(',\n')}\n      ]\n    }`;
       })

@@ -1,4 +1,5 @@
 // 战斗场景（M-B）：渲染地图与单位，接收玩家操作，播放规则引擎输出的事件流。
+import { text as loc } from '../i18n/index.ts';
 import Phaser from 'phaser';
 import { Battle, type BattleEvent, type StageInput } from '../rules/battle.ts';
 import { watcherSees } from '../rules/combat.ts';
@@ -1268,7 +1269,7 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(x, y);
     p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
     const t = this.add
-      .text(p.x + side * 4, p.y, text, { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
+      .text(p.x + side * 4, p.y, loc(text), { fontFamily: 'serif', fontSize: '22px', fontStyle: 'bold', color, stroke: '#000000', strokeThickness: 4 })
       .setOrigin(side < 0 ? 1 : side > 0 ? 0 : 0.5, 0.5)
       .setDepth(100000);
     this.tweens.add({ targets: t, y: p.y - 20, duration: 350, ease: 'Cubic.easeOut' });
@@ -1278,7 +1279,7 @@ export class BattleScene extends Phaser.Scene {
   private async banner(text: string) {
     const cam = this.cameras.main;
     const t = this.add
-      .text(0, 0, text, { fontFamily: 'serif', fontSize: '34px', color: '#f1e6d0', stroke: '#000', strokeThickness: 6, backgroundColor: '#00000088', padding: { x: 24, y: 10 } })
+      .text(0, 0, loc(text), { fontFamily: 'serif', fontSize: '34px', color: '#f1e6d0', stroke: '#000', strokeThickness: 6, backgroundColor: '#00000088', padding: { x: 24, y: 10 } })
       .setOrigin(0.5)
       .setDepth(200000)
       .setScale(1 / cam.zoom)

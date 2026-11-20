@@ -1,4 +1,5 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
+import { markLine } from '../i18n/index.ts';
 import type { ActUnit } from '../formats/act.ts';
 import type { PasBlock, PasCond, PasHeader } from '../formats/pas.ts';
 import type { ExePrompt } from '../formats/exe.ts';
@@ -1639,12 +1640,15 @@ export class Battle {
     if (this.fired.has(b.index)) return;
     this.fired.add(b.index);
     const textOf = (i: number) => {
-      let t = b.ops[i].text ?? '';
+      const orig = b.ops[i].text ?? '';
+      let t = orig;
       // rushOnDeath 那人已倒下才来的增援：换掉喊"谁敢动我大哥"之类的对白
       const rt = this.tune?.rushText;
       if (rt && this.units.some((u) => u.classId === this.tune!.rushOnDeath && !u.alive)) t = rt[this.tr(t)] ?? t;
       // EXE 0x4106b4：%N、%X = 主角名（名字表第 0 项），%M = 主角绰号（绰号表第 0 项）
-      return t.replace(/%[NX]/g, this.data.heroName).replace(/%M/g, this.data.heroNickname ?? '');
+      const zh = t.replace(/%[NX]/g, this.data.heroName).replace(/%M/g, this.data.heroNickname ?? '');
+      // 多语言：带上这句的编号，显示时查译文（换过的增援台词没有编号）
+      return t === orig ? markLine(b.ops[i].tid, zh) : zh;
     };
     let sel: Unit | undefined;
     let selName = '';

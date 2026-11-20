@@ -1,0 +1,16 @@
+{
+  "N-add02#1": {"zh":"我们在路上遭到山贼袭击，有人受伤！不知能否借宿一夜！","t":"We were attacked by bandits on the road and one of us is hurt! Could you put us up for the night?"},
+  "N-add02#2": {"zh":"唉呀....","t":"Argh...."},
+  "N-add02#3": {"zh":"王兄！！","t":"Brother Wang!!"},
+  "N-add02#4": {"zh":"你是谁！为何要偷袭我们？！","t":"Who are you? Why attack us from behind?!"},
+  "N-add02#5": {"zh":"废话少说，接招吧！！","t":"Enough talk. Have at you!!"},
+  "N-add02#6": {"zh":"王兄，你有伤在身，还是先退下吧，这里交给我就行了！","t":"Brother Wang, you're wounded. Stand back and leave this one to me!"},
+  "N-add02#7": {"zh":"%X兄，小心了！","t":"Brother %X, be careful!"},
+  "N-add02#8": {"zh":"王进退场了！","t":"Wang Jin has withdrawn!"},
+  "N-add02#9": {"zh":"限制回合数 --- 10","t":"Turn limit --- 10"},
+  "N-add02#10": {"zh":"胜利条件   --- 打败史进","t":"Victory --- Defeat Shi Jin"},
+  "N-add02#11": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add02#12": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"The turn limit has run out with the mission unfinished. Game over!"},
+  "N-add02#13": {"zh":"%N失手被史进打倒，三人只好离开史家庄，不料在庄外遭大批官兵围捕，%N、王进力战身亡，王母悲愤自尽........","t":"%N was beaten by Shi Jin, and the three had to leave Shi Family Manor. Outside, a great troop of soldiers surrounded them. %N and Wang Jin fell fighting, and Wang's mother took her own life in grief........"},
+  "N-add02#14": {"zh":"%N果然一身好功夫，将史进打败。","t":"%N proved his skill and defeated Shi Jin."}
+}

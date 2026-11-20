@@ -11,6 +11,8 @@ import { installSound } from './game/sound.ts';
 import { installTouchGuards } from './game/touch.ts';
 import { installMusic, music, type Playlist } from './game/music.ts';
 import { BattleUI } from './game/ui.ts';
+import { initI18n } from './game/i18n-dom.ts';
+import { setHero } from './i18n/index.ts';
 import { TownUI } from './game/town.ts';
 import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/title.ts';
 import { stageLabel, townName } from './game/stage-names.ts';
@@ -664,7 +666,7 @@ function startGame(assets: Assets) {
       current: current ?? (ok ? placeOf(ok) : undefined),
       portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
       version: versionLabel(BUILD),
-      buttons: [$('sound'), $('music'), $('update')],
+      buttons: [$('lang'), $('sound'), $('music'), $('update')],
       onNew: () => begin(newCampaign(stages[0].index)),
       onLoad: () => begin(ok!),
       onClear: () => {
@@ -766,7 +768,9 @@ installMusic($<HTMLButtonElement>('music'));
 async function boot() {
   try {
     pruneOldCache();
+    await initI18n().catch((e) => console.error('多语言载入失败', e));
     const assets = loadAssets(gameFiles());
+    setHero(assets.data.heroName, assets.data.heroNickname ?? '');
     await assets.files.ensure(startupImages(assets), progress, '下载头像和图标');
     setupEl.hidden = true;
     startGame(assets);
