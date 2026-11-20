@@ -9,9 +9,9 @@
     {"index":4,"type":15,"group":5,"side":"player","facing":3,"x":16,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":5,"type":13,"group":6,"side":"player","facing":1,"x":14,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":6,"type":16,"group":7,"side":"player","facing":1,"x":14,"y":9,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":7,"type":63,"group":8,"side":"enemy","facing":0,"x":17,"y":27,"level":18,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":8,"type":64,"group":9,"side":"enemy","facing":0,"x":14,"y":27,"level":21,"flags":1,"extra":[0,0,0],"items":[0,0,0,178,0,0,0]},
-    {"index":9,"type":71,"group":10,"side":"enemy","facing":0,"x":15,"y":26,"level":21,"flags":1,"extra":[0,0,0],"items":[0,0,0,183,0,0,0]},
+    {"index":7,"type":63,"group":8,"side":"enemy","facing":0,"x":8,"y":16,"level":18,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":64,"group":9,"side":"enemy","facing":0,"x":19,"y":19,"level":21,"flags":1,"extra":[0,0,0],"items":[0,0,0,178,0,0,0]},
+    {"index":9,"type":71,"group":10,"side":"enemy","facing":0,"x":24,"y":17,"level":21,"flags":1,"extra":[0,0,0],"items":[0,0,0,183,0,0,0]},
     {"index":10,"type":67,"group":11,"side":"enemy","facing":0,"x":8,"y":28,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":11,"type":67,"group":12,"side":"enemy","facing":0,"x":10,"y":28,"level":17,"flags":1025,"extra":[0,1,3],"items":[0,0,0,157,0,0,0]},
     {"index":12,"type":67,"group":13,"side":"enemy","facing":0,"x":23,"y":28,"level":17,"flags":1025,"extra":[0,19,3],"items":[0,0,0,0,0,0,0]},
@@ -45,6 +45,7 @@
       "cond": {"type":0,"arg":0},
       "head": [1,48,5,1,1,2,27,2,0],
       "ops": [
+        {"op":110,"flag":null,"text":"night"},
         {"op":12,"flag":1,"value":4294967295,"quiet":true},
         {"op":13,"flag":1,"text":"正是严冬天气，彤云密布，朔风渐起，那雪正下得紧。"},
         {"op":12,"flag":1,"value":4294967295,"quiet":true},
@@ -74,7 +75,11 @@
         {"op":12,"flag":1,"value":63},
         {"op":13,"flag":0,"text":"再等火烧透了，拾得他两块骨头回京，也好在太尉和衙内面前交差。林冲一死，衙内那桩心事便了了！"},
         {"op":12,"flag":1,"value":4294967295,"quiet":true},
-        {"op":13,"flag":1,"text":"林冲伏在暗处，将三人的话听得明白，这才知晓纵火与治罪的毒计。他攥紧花枪，怒从心起；众好汉也各执兵刃，随他现身拦住去路。"},
+        {"op":13,"flag":1,"text":"林冲伏在暗处，将三人的话听得明白。他轻轻掇开挡路的大石，挺着花枪，大喝一声——"},
+        {"op":12,"flag":1,"value":11},
+        {"op":13,"flag":0,"text":"泼贼那里去！"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"三人站在远处看火，听得这一声，惊得呆了，一时间竟动弹不得。"},
         {"op":12,"flag":1,"value":11},
         {"op":13,"flag":0,"text":"泼贼！你们竟放火害我，还要拿失守草料场的罪名断我的活路！今日不杀你们，林冲还有甚么活路！"},
         {"op":12,"flag":1,"value":71,"quiet":true},
@@ -109,11 +114,33 @@
         {"op":12,"flag":1,"value":1030},
         {"op":12,"flag":1,"value":1031},
         {"op":12,"flag":0,"value":1032},
-        {"op":35,"flag":null,"value":40},
-        {"op":31,"flag":null,"text":"限制回合数 --- 40"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"三人回过神来，见前门被堵，各自往草料场深处逃去，要从后门、侧门溜走。陆谦吓得慌了手脚，走也走不快。草料场四下火起，火势越烧越大。"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":14,"flag":1,"value":17},
+        {"op":15,"flag":1,"value":34},
+        {"op":16,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":12},
+        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":-2,"turns":0}},
+        {"op":12,"flag":1,"value":1008},
+        {"op":14,"flag":1,"value":1},
+        {"op":15,"flag":1,"value":24},
+        {"op":16,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":12},
+        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":-1,"turns":0}},
+        {"op":12,"flag":1,"value":1010},
+        {"op":14,"flag":1,"value":34},
+        {"op":15,"flag":1,"value":22},
+        {"op":16,"flag":1,"value":4},
+        {"op":17,"flag":0,"value":12},
+        {"op":101,"flag":null,"value":0,"args":{"stat":"move","add":-1,"turns":0}},
+        {"op":35,"flag":null,"value":25},
+        {"op":31,"flag":null,"text":"限制回合数 --- 25"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 拿下陆谦（体力不到三成就逃不动，林冲走到他身边），并打倒或放走富安、洪教头"},
         {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
-        {"op":33,"flag":null,"text":"失败条件二 --- 林冲死亡"}
+        {"op":33,"flag":null,"text":"失败条件二 --- 林冲死亡"},
+        {"op":33,"flag":null,"text":"失败条件三 --- 陆谦从后门逃走"},
+        {"op":33,"flag":null,"text":"注意       --- 着火的地方不能走，站在火旁每回合会被烧伤"}
       ]
     },
     {
@@ -121,11 +148,7 @@
       "cond": {"op":"and","a":{"type":0,"arg":3},"b":{"type":11,"arg":71}},
       "head": [1,4,1,0,0,0,0,4,0],
       "ops": [
-        {"op":12,"flag":1,"value":71},
-        {"op":16,"flag":1,"value":1},
-        {"op":14,"flag":1,"value":11},
-        {"op":17,"flag":0,"value":24},
-        {"op":28,"flag":null,"value":0}
+
       ]
     },
     {
@@ -133,11 +156,7 @@
       "cond": {"op":"and","a":{"type":0,"arg":3},"b":{"type":11,"arg":63}},
       "head": [1,4,1,0,0,0,0,4,0],
       "ops": [
-        {"op":12,"flag":1,"value":63},
-        {"op":16,"flag":1,"value":1},
-        {"op":14,"flag":1,"value":11},
-        {"op":17,"flag":0,"value":24},
-        {"op":28,"flag":null,"value":0}
+
       ]
     },
     {
@@ -145,16 +164,12 @@
       "cond": {"op":"and","a":{"type":0,"arg":3},"b":{"type":11,"arg":64}},
       "head": [1,4,1,0,0,0,0,4,0],
       "ops": [
-        {"op":12,"flag":1,"value":64},
-        {"op":16,"flag":1,"value":1},
-        {"op":14,"flag":1,"value":11},
-        {"op":17,"flag":0,"value":24},
-        {"op":28,"flag":null,"value":0}
+
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":40},
-      "cond": {"type":0,"arg":40},
+      "trigger": {"kind":"turn","turn":25},
+      "cond": {"type":0,"arg":25},
       "head": [1,0,1,0,0,0,38,2,0],
       "ops": [
         {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
@@ -177,8 +192,8 @@
       ]
     },
     {
-      "trigger": {"kind":"death","char":255},
-      "cond": {"type":1,"arg":255},
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"op":"and","a":{"type":100,"arg":2},"b":{"type":100,"arg":3}},"b":{"type":100,"arg":4}},
       "head": [1,10,1,0,0,0,8,2,1],
       "ops": [
         {"op":12,"flag":1,"value":64,"quiet":true,"actor":{"action":"show","near":11}},
@@ -206,6 +221,8 @@
         {"op":13,"flag":1,"text":"陆谦，你我旧日的交情，早被你亲手断尽了。今日这一刀，是你自取的！"},
         {"op":12,"flag":1,"value":4294967295,"quiet":true},
         {"op":13,"flag":1,"text":"林冲手起一刀，结果了陆谦。"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"林冲提了陆谦的首级，回到山神庙里，供在山神面前的供桌上。"},
         {"op":12,"flag":1,"value":64,"quiet":true,"actor":{"action":"hide"}},
         {"op":12,"flag":1,"value":0},
         {"op":13,"flag":0,"text":"沧州也不能待下去了；高俅已经知道我们在这里了。如果继续在这里，一定会连累到柴大官人..."},
@@ -219,6 +236,98 @@
         {"op":13,"flag":0,"text":"走吧，去延安府...必须要早点通知王进。"},
         {"op":29,"flag":null,"text":"过关了！"}
       ]
+    },
+    {
+      "trigger": {"kind":"hp","char":64,"uid":8,"below":30},
+      "cond": {"type":101,"arg":1},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":1},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"陆谦被打翻在雪地里，挣扎着往外爬，再也逃不动了。"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":105,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":11},
+        {"op":13,"flag":0,"text":"奸贼，你待那里去！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"near","char":64,"uid":8,"by":11,"playerPhase":true},
+      "cond": {"op":"and","a":{"type":100,"arg":1},"b":{"type":101,"arg":2}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2},
+        {"op":12,"flag":1,"value":1009},
+        {"op":13,"flag":0,"text":"饶命！饶命！"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"林冲劈胸只一提，将陆谦丢翻在雪地上，一脚踏住胸脯。"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":64},
+      "cond": {"type":1,"arg":64},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":1},
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":63},
+      "cond": {"type":1,"arg":63},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":3},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"富安走不到十来步，被赶上一枪搠倒在雪地里。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":71},
+      "cond": {"type":1,"arg":71},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":4}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":64,"x1":15,"y1":33,"x2":20,"y2":34},
+      "cond": {"type":101,"arg":1},
+      "head": [],
+      "ops": [
+        {"op":30,"flag":null,"text":"陆谦从后门逃出草料场，连夜赶回东京。高太尉得知林冲未死，又加了十倍的追捕，众人再无立足之地……"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":63,"x1":1,"y1":23,"x2":3,"y2":25},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":3},
+        {"op":12,"flag":1,"value":1008},
+        {"op":13,"flag":0,"text":"好险……逃出来了！"},
+        {"op":12,"flag":1,"value":1008},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"富安从西边的篱门钻了出去，逃进风雪里不见了。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":71,"x1":33,"y1":20,"x2":34,"y2":24},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":4},
+        {"op":12,"flag":1,"value":1010},
+        {"op":13,"flag":0,"text":"林冲，这笔账改日再算！"},
+        {"op":12,"flag":1,"value":1010},
+        {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"洪教头从东边的篱门逃了出去。"}
+      ]
     }
-  ]
+  ],
+  "rules": {"poolLeftoverExp":true,"fire":{"seeds":[[4,2],[22,2],[32,3],[3,7],[2,13],[23,12],[12,20],[16,22],[3,30],[32,31]],"fuel":[545,546,558,560,561,562]}}
 }

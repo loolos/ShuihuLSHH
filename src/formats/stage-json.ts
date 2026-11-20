@@ -4,6 +4,7 @@
 import type { ActUnit } from './act.ts';
 import type { MapData, MapJson } from './map.ts';
 import type { PasBlock, PasHeader, PasOp } from './pas.ts';
+import type { FireRules } from '../rules/fire.ts';
 
 /** 关卡单位：ACT 的一条记录（index = 在 units 里的位置，剧本按 group 点名） */
 export type StageUnit = Omit<ActUnit, 'raw'>;
@@ -21,6 +22,8 @@ export interface StageRules {
   rushText?: Record<string, string>;
   /** 过关时还没打倒的敌人（在场的、收手 / 归顺了但没人拿到经验的）按击败经验放进全队经验【新】 */
   poolLeftoverExp?: boolean;
+  /** 火势蔓延【新】（火烧草料场）：见 src/rules/fire.ts */
+  fire?: FireRules;
 }
 
 export interface StageJson {

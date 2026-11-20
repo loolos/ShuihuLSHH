@@ -184,4 +184,46 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39).every((u) => u.ai.mode === 0)).toBe(true);
     expect(b.status).toBe('playing');
   });
+
+  it('火烧草料场：大火每回合蔓延；陆谦被打倒后林冲拿下，富安、洪教头倒下即过关', () => {
+    const b = make('N09');
+    const fire = b.fire!;
+    const lit = fire.burning.size;
+    expect(lit).toBeGreaterThan(5);
+    const [c] = fire.cells();
+    expect(b.board.passable(c.x, c.y)).toBe(false);
+    expect(b.objectiveZones().filter((z) => z.kind === 'danger').length).toBe(3); // 三个出口
+    b.endPlayerPhase();
+    expect(fire.burning.size).toBeGreaterThan(lit);
+    const lu = cls(b, 64), lin = cls(b, 11);
+    lu.hp = Math.floor(lu.stats.maxHp * 0.2);
+    poke(b, lin);
+    expect(lu.stunTurns).toBeGreaterThan(100); // 爬不动了
+    const heroes = b.units.filter((u) => u.side === 'player' && u.present && u !== lin);
+    [63, 71].forEach((id, k) => {
+      const v = cls(b, id), p = heroes[k];
+      const spot = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: v.x + dx, y: v.y + dy })).find((c) => b.board.passable(c.x, c.y))!;
+      place(b, p, spot.x, spot.y);
+      v.hp = 1;
+      b.attack(p, v);
+      expect(v.alive).toBe(false);
+    });
+    expect(b.status).toBe('playing');
+    const spot = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: lu.x + dx, y: lu.y + dy })).find((c) => b.board.passable(c.x, c.y) && !b.units.some((u) => u.alive && u.present && u.x === c.x && u.y === c.y))!;
+    place(b, lin, spot.x, spot.y);
+    poke(b, lin);
+    expect(b.status).toBe('won');
+  });
+
+  it('火烧草料场：陆谦从后门逃走就输，富安从侧门逃走只是退场', () => {
+    const b = make('N09');
+    const fu = cls(b, 63);
+    place(b, fu, 2, 24);
+    poke(b);
+    expect(fu.present).toBe(false);
+    expect(b.status).toBe('playing');
+    place(b, cls(b, 64), 17, 34);
+    poke(b);
+    expect(b.status).toBe('lost');
+  });
 });

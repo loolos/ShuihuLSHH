@@ -203,12 +203,23 @@ export class Minimap {
   }
 
   /** 每帧：目标区域、人物、宝物、镜头范围（世界坐标矩形） */
-  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }, zones: MiniZone[] = []) {
+  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }, zones: MiniZone[] = [], fire: readonly { x: number; y: number }[] = []) {
     if (!this.open) return;
     const l = this.layout;
     const g = this.top.getContext('2d')!;
     g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     g.clearRect(0, 0, l.width, l.height);
+    // 着火的格子【新】（火烧草料场）：橙红色
+    if (fire.length) {
+      g.fillStyle = 'rgba(255,96,16,0.75)';
+      g.beginPath();
+      for (const c of fire) {
+        const pts = zoneCorners({ x1: c.x, y1: c.y, x2: c.x, y2: c.y }).map((p) => worldToMini(l, p.x, p.y));
+        pts.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
+        g.closePath();
+      }
+      g.fill();
+    }
     // 撤退出口等区域【新】：半透明填色 + 实线外框，外面再套一个闪动的圈（区域只有两三格时缩小后太小，圈保证看得见），旁边写字
     const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 260);
     for (const z of zones) {

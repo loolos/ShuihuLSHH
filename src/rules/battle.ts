@@ -11,6 +11,7 @@ import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, 
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
+import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
@@ -78,6 +79,8 @@ export type BattleEvent =
   | { type: 'shot'; uid: number; x: number; y: number; facing: number; target?: number; text: string }
   | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
   | { type: 'tint'; tint: string }
+  /** 火势蔓延【新】：现在正在烧的全部格子（画面照这份同步） */
+  | { type: 'fire'; cells: Cell[] }
   | { type: 'focus'; x: number; y: number }
   | { type: 'wait'; ms: number }
   /** 换头像（扩展包指令 114【新】）：本关里这个职业的对白、面板改用包里的另一张图；file 空 = 恢复 */
@@ -181,6 +184,8 @@ export interface StageInput {
   stealth?: { lose: string; flag?: number };
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
+  /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
+  fire?: FireInput;
   name: string;
   /** 过关奖励银子；不写时按关卡名查 STAGE_CLEAR_GOLD（扩展包关卡用 rewards.gold） */
   clearGold?: number;
@@ -251,6 +256,8 @@ export class Battle {
   /** 发现了我方的哨兵：uid → 要在第几回合的我方回合结束前打倒他（否则判负），即发现时的下一回合【新】 */
   spotters: Record<number, number> = {};
   readonly prisonCarts: ReadonlySet<number>;
+  /** 火势蔓延【新】（火烧草料场） */
+  readonly fire?: Fire;
   readonly name: string;
   /** .pab 文件头（城镇号、下一关）；没有剧本时为 undefined */
   readonly header?: PasHeader;
@@ -320,6 +327,7 @@ export class Battle {
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.prisonCarts = new Set(input.prisonCarts ?? []);
+    if (input.fire) this.fire = new Fire(input.fire, input.board);
     this.name = input.name;
     this.clearGoldOverride = input.clearGold;
     this.header = input.header;
@@ -545,6 +553,7 @@ export class Battle {
   /** 开战：执行开战事件，进入第 1 回合我方阶段 */
   begin(): BattleEvent[] {
     this.out = [];
+    if (this.fire) this.emit({ type: 'fire', cells: this.fire.cells() });
     this.runTurnTriggers(0);
     // 开场剧本要求选人：等 choose() 选完再进第 1 回合（这样时光倒流不会回到选人之前）
     if (this.pendingPick || this.pendingChoice) return this.flush();
@@ -569,7 +578,10 @@ export class Battle {
       if (this.fired.has(b.index)) continue;
       // 只设标志的区域（大破何涛放火点：几个人都能点）标志已经设上了，就不再标出【新】
       if (b.ops.length && b.ops.every((o) => o.op === 103 && this.flags.has(o.value))) continue;
-      const kind = wins(b) || b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      // 敌人走进去就退场（火烧草料场：富安、洪教头从侧门逃走）也标成敌逃【新】
+      const flees = (b: (typeof this.blocks)[number]) =>
+        b.trigger.kind === 'area' && b.ops.some((o) => o.op === 17 && o.value & 2) && this.units.some((u) => b.trigger.kind === 'area' && u.classId === b.trigger.char && u.side === 'enemy');
+      const kind = wins(b) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
       const rects =
@@ -691,7 +703,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited],
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], fire: this.fire?.save(),
     });
   }
 
@@ -747,6 +759,10 @@ export class Battle {
     this.spotters = s.spotters ?? {};
     this.credited = new Set(s.credited ?? []);
     if (this.cuju && s.cuju) this.cuju = s.cuju;
+    if (this.fire && s.fire) {
+      this.fire.load(s.fire);
+      this.emit({ type: 'fire', cells: this.fire.cells() });
+    }
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
@@ -761,11 +777,23 @@ export class Battle {
     if (this.status !== 'playing') return;
     if (this.cuju && this.cujuClock(t)) return;
     if (this.turnLimit && t > this.turnLimit) return this.finish('lost', '限制回合數已到，未完成任務，遊戲失敗！');
-    // 回合开始：装备回复 → 中毒 → 状态回合数 −1
+    // 火势蔓延【新】：每回合开始烧开一圈（有人站着的格子不点着）
+    const fire = this.fire;
+    if (fire && t > 1) {
+      fire.spread(new Set(this.active().map((u) => u.y * this.board.width + u.x)));
+      this.emit({ type: 'fire', cells: fire.cells() });
+    }
+    // 回合开始：装备回复 → 火燎 → 中毒 → 状态回合数 −1
+    const burned: string[] = [];
     for (const u of this.active()) {
       const hp0 = u.hp, mp0 = u.mp;
       u.hp = Math.min(u.stats.maxHp, u.hp + u.stats.regenHp);
       u.mp = Math.min(u.stats.maxMp, u.mp + u.stats.regenMp);
+      // 火旁边的人掉血，不会烧死【新】
+      if (fire && t > 1 && !this.spectators.has(u.uid) && fire.scorches(u.x, u.y)) {
+        u.hp = Math.max(1, u.hp - Math.max(1, Math.floor((u.stats.maxHp * fire.input.damagePct) / 100)));
+        burned.push(u.name);
+      }
       if (u.poisonTurns > 0) {
         const loss = Math.max(1, Math.floor(u.stats.maxHp / 20));
         u.hp = Math.max(1, u.hp - loss); // 毒不致死【待核】
@@ -780,6 +808,7 @@ export class Battle {
         refreshStats(u, this.data);
       }
     }
+    if (burned.length) this.emit({ type: 'message', text: `${burned.join('、')}離火太近，被燒傷了。` });
     this.startPhase('player');
   }
 

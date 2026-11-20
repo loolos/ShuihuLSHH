@@ -7,6 +7,7 @@ import type { ExeTables } from '../formats/exe.ts';
 import type { ClassRecord } from '../formats/hum.ts';
 import type { Item } from '../formats/goo.ts';
 import { Board } from './board.ts';
+import { fireInput } from './fire.ts';
 import { enemyRank } from './enemy-level.ts';
 import type { StageInput } from './battle.ts';
 import { buildClasses, withItemOverrides, type ClassDef, type GameData } from './data.ts';
@@ -138,6 +139,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     clearGold: j.clearGold,
     rules: j.rules,
     board,
+    fire: j.rules?.fire ? fireInput(j.rules.fire, loaded.map) : undefined,
     units,
     blocks: stageBlocks(j),
     header: { ...j.header },

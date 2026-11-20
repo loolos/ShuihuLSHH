@@ -12,6 +12,8 @@ export const FX_HEAL = 17;
 export const FX_DEFEND = 48;
 /** 反击：防御中闪开相邻攻击、触发反击时，在反击者脚下先播第 37 组（聚气爆光，EXE 0x4077a0 → 0x40782b），声音 38.wav，再出手 */
 export const FX_COUNTER = 37;
+/** 火势蔓延【新】：着火格子上循环播的地面火焰（第 41 组，弓箭手 火箭齊發 用的那组） */
+export const FX_BLAZE = 41;
 /** 进关就下载的固定特效组 */
 export const FIXED_FX = [FX_DEFEND, FX_COUNTER];
 /** 技能 hitFx: 'explosion'：命中的人身上炸开的火团（Effect.lib 第 40 组：白光 → 橙色火球 → 黑烟）【新】 */
