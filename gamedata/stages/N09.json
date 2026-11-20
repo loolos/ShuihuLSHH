@@ -280,8 +280,15 @@
       "head": [],
       "ops": [
         {"op":103,"flag":null,"value":3},
-        {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"text":"富安走不到十来步，被赶上一枪搠倒在雪地里。"}
+        {"op":12,"flag":1,"value":4294967295,"quiet":true},
+        {"op":13,"flag":1,"text":"富安走不到十来步，被赶上一枪搠倒在雪地里。"},
+        {"op":12,"flag":1,"value":1008,"quiet":true,"actor":{"action":"show","near":63}},
+        {"op":13,"flag":1,"text":"林教头饶命！都是衙内的主意，小人只是跟着跑腿……"},
+        {"op":12,"flag":1,"value":11,"quiet":true},
+        {"op":13,"flag":1,"text":"跑腿？白虎节堂、野猪林，哪一回少得了你！今日这一枪，替我娘子出一口恶气！"},
+        {"op":12,"flag":1,"value":4294967295,"quiet":true},
+        {"op":13,"flag":1,"text":"林冲拔出枪来，富安再不动了。"},
+        {"op":12,"flag":1,"value":1008,"quiet":true,"actor":{"action":"hide"}}
       ]
     },
     {
@@ -289,7 +296,18 @@
       "cond": {"type":1,"arg":71},
       "head": [],
       "ops": [
-        {"op":103,"flag":null,"value":4}
+        {"op":103,"flag":null,"value":4},
+        {"op":12,"flag":1,"value":4294967295,"quiet":true},
+        {"op":13,"flag":1,"text":"洪教头被打翻在雪地里，棍棒也撇在一边。"},
+        {"op":12,"flag":1,"value":1010,"quiet":true,"actor":{"action":"show","near":71}},
+        {"op":13,"flag":1,"text":"林冲……在柴大官人庄上输了你一棒，我心里不服，才……才跟他们来的……"},
+        {"op":12,"flag":1,"value":11,"quiet":true},
+        {"op":13,"flag":1,"text":"输了一棒，便来放火烧人性命！你这教头，本事没有，心肠倒毒！"},
+        {"op":12,"flag":1,"value":1010,"quiet":true,"actor":{"action":"show","near":71}},
+        {"op":13,"flag":1,"text":"我……悔不该……"},
+        {"op":12,"flag":1,"value":4294967295,"quiet":true},
+        {"op":13,"flag":1,"text":"洪教头话没说完，便断了气。"},
+        {"op":12,"flag":1,"value":1010,"quiet":true,"actor":{"action":"hide"}}
       ]
     },
     {
