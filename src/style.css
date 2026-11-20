@@ -367,6 +367,7 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 .title-stage-grid button.town { color: #9fc48a; }
 .title-stage-grid button.current { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .title-stage-grid button:hover, .title-stage-grid button:focus-visible { border-color: var(--accent); outline: none; }
+.title-stage-grid .stars { color: #f0c860; margin-right: 3px; letter-spacing: -1px; }
 .title-foot { width: min(860px, 100%); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
 .title-tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .title-tools button {
