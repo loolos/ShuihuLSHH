@@ -176,6 +176,20 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.status).toBe('playing');
   });
 
+  it('山径斗毛贼：杨春自己把头领打到一半以下，当场就劝降，不用别人再动', () => {
+    const b = make('N-add04b');
+    const boss = b.units.find((u) => u.classId === 65 && u.present)!;
+    const yang = cls(b, 15);
+    place(b, yang, boss.x, boss.y - 1);
+    boss.stats.maxHp = 10000;
+    boss.hp = 5001;
+    boss.stats.defense = 0;
+    b.attack(yang, boss);
+    expect(boss.alive).toBe(true);
+    expect(boss.hp * 2).toBeLessThan(boss.stats.maxHp);
+    expect(boss.side).toBe('ally');
+  });
+
   it('山径斗毛贼：一次最多带四个，多出来的手下照样要打', () => {
     const b = make('N-add04b');
     const boss = b.units.find((u) => u.classId === 65 && u.present)!;
