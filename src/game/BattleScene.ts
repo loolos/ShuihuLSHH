@@ -75,10 +75,10 @@ const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
-/** 被树木、屋顶等挡住的人，在遮挡物上面再画一层的不透明度（负责人 2026-11-14 定 50%，2026-11-20 改 80%） */
-const GHOST_ALPHA = 0.8;
-/** 移动 / 攻击 / 技能格被景物挡住时，改画到景物上面，填充至少这么实（负责人 2026-11-20；没被挡住的格子不变） */
-const OCCLUDED_CELL_ALPHA = 0.8;
+/** 被树木、屋顶等挡住的人，在遮挡物上面再画一层的不透明度（负责人 2026-11-14 定 50%，2026-11-20 改 60%） */
+const GHOST_ALPHA = 0.6;
+/** 移动 / 攻击 / 技能格被景物挡住时，改画到景物上面，比正常格子再虚这么多（负责人 2026-11-20 先定 80%，同日改为正常 −10 个百分点；没被挡住的格子不变） */
+const OCCLUDED_CELL_ALPHA_DROP = 0.1;
 /** 行动完的状态条颜色：稍微去点饱和度再压暗到七成 */
 function dimColor(c: number) {
   const r = (c >> 16) & 255, g = (c >> 8) & 255, b = c & 255;
@@ -445,7 +445,7 @@ export class BattleScene extends Phaser.Scene {
         let l = layers.get(cover);
         if (!l) layers.set(cover, (l = this.add.graphics().setDepth(cover + 0.4 + g.depth * 0.01)));
         g = l;
-        alpha = Math.max(alpha, OCCLUDED_CELL_ALPHA);
+        alpha = Math.max(0.05, alpha - OCCLUDED_CELL_ALPHA_DROP);
       }
     }
     const p = cellToWorld(c.x, c.y);
