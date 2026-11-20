@@ -1,6 +1,6 @@
 {
   "id": "jiaxin",
-  "title": "假信露馅",
+  "title": "伪书事泄",
   "townAfter": 11,
   "dynamicLevels": true,
   "rewards": {
@@ -25,63 +25,63 @@
       "class": 0,
       "side": "player",
       "x": 16,
-      "y": 33,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "lijun",
       "class": "lijun",
       "side": "player",
-      "x": 17,
-      "y": 33,
+      "x": 15,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "lvfang",
       "class": "lvfang",
       "side": "player",
-      "x": 15,
-      "y": 34,
+      "x": 17,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "guosheng",
       "class": "guosheng",
       "side": "player",
-      "x": 16,
-      "y": 34,
+      "x": 18,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "zhugui",
       "class": "zhugui",
       "side": "player",
-      "x": 17,
-      "y": 34,
+      "x": 14,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 18,
-      "y": 34,
+      "x": 19,
+      "y": 18,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "yanshun",
       "class": "yanshun",
       "side": "player",
       "x": 16,
-      "y": 35,
+      "y": 19,
       "level": 30,
-      "facing": 0
+      "facing": 1
     },
     {
       "id": "caijiu",
@@ -306,12 +306,84 @@
       "class": 38,
       "side": "enemy",
       "x": 16,
-      "y": 17,
+      "y": 22,
       "level": 30,
       "facing": 0,
       "name": "江州都头",
       "levelOffset": 1,
       "hpMultiplier": 1.5
+    },
+    {
+      "id": "n1",
+      "class": 32,
+      "side": "enemy",
+      "x": 8,
+      "y": 2,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "n2",
+      "class": 33,
+      "side": "enemy",
+      "x": 10,
+      "y": 2,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "n3",
+      "class": 34,
+      "side": "enemy",
+      "x": 12,
+      "y": 1,
+      "level": 30,
+      "facing": 2,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "n4",
+      "class": 36,
+      "side": "enemy",
+      "x": 22,
+      "y": 2,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "n5",
+      "class": 43,
+      "side": "enemy",
+      "x": 24,
+      "y": 1,
+      "level": 30,
+      "facing": 2,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "n6",
+      "class": 32,
+      "side": "enemy",
+      "x": 26,
+      "y": 2,
+      "level": 30,
+      "facing": 2,
+      "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
     },
     {
       "id": "g1",
@@ -382,6 +454,54 @@
       "level": 30,
       "facing": 0,
       "name": "公人",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "g7",
+      "class": 36,
+      "side": "enemy",
+      "x": 17,
+      "y": 3,
+      "level": 30,
+      "facing": 0,
+      "name": "公人",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "g8",
+      "class": 43,
+      "side": "enemy",
+      "x": 14,
+      "y": 2,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "g9",
+      "class": 43,
+      "side": "enemy",
+      "x": 19,
+      "y": 2,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "g10",
+      "class": 34,
+      "side": "enemy",
+      "x": 16,
+      "y": 4,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
       "levelOffset": -2,
       "hidden": true
     },
@@ -552,7 +672,7 @@
         ],
         [
           "narrate",
-          "戴宗回到江州，把回书呈上。蔡九知府见了，大喜道：「我父亲叫把宋江解上东京，正好！」"
+          "戴宗回到江州，武龙、李俊等人扮作伴当挑夫，跟着到府里阶下伺候。戴宗把回书呈上。蔡九知府见了，大喜道：「我父亲叫把宋江解上东京，正好！」"
         ],
         [
           "narrate",
@@ -594,14 +714,76 @@
           "胡说！我府里门子是个老的！这封书是哪里来的？左右，与我拿下！"
         ],
         [
+          "narrate",
+          "两边公人一拥而上，不由戴宗分说，把他按翻在地，捆了个结实，拖进大牢去了。"
+        ],
+        [
+          "bind",
+          "daizong"
+        ],
+        [
+          "leave",
+          "daizong"
+        ],
+        [
           "say",
-          "daizong",
-          "（不好，露了！）休想拿我神行太保！"
+          "huangwenbing",
+          "相公，阶下那几个伴当也是同他一路来的，必是一伙！休教走了一个！"
+        ],
+        [
+          "say",
+          "dutou",
+          "把住前后门！前门有兵马堵着，后门也叫人守了！"
+        ],
+        [
+          "appear",
+          "g1"
+        ],
+        [
+          "appear",
+          "g2"
+        ],
+        [
+          "appear",
+          "g3"
+        ],
+        [
+          "appear",
+          "g4"
+        ],
+        [
+          "appear",
+          "g5"
+        ],
+        [
+          "appear",
+          "g6"
+        ],
+        [
+          "appear",
+          "g7"
+        ],
+        [
+          "appear",
+          "g8"
+        ],
+        [
+          "appear",
+          "g9"
+        ],
+        [
+          "appear",
+          "g10"
         ],
         [
           "say",
           "hero",
-          "（府门口）里面闹将起来了——众兄弟，杀进去救戴院长！"
+          "（院长被拿了……）众兄弟，救不得了！先杀出去回梁山报信，再来救院长和宋哥哥！"
+        ],
+        [
+          "say",
+          "lijun",
+          "前门有兵马堵着，从北面后门杀出去！武龙兄弟，我们护着你走！"
         ],
         [
           "say",
@@ -614,149 +796,12 @@
           "锦毛虎燕顺在此，挡我者死！"
         ],
         [
-          "say",
-          "zhugui",
-          "休叫院长吃了亏！"
-        ],
-        [
           "objective",
-          "胜：我方任一好汉冲到戴宗身边（或第 7 回合戴宗被擒）之后，武龙从北面的后门杀出去\n败：武龙倒下；戴宗被擒前倒下；超过 18 回合"
+          "胜：武龙从北面的后门杀出去\n败：武龙倒下；超过 16 回合"
         ],
         [
           "turnLimit",
-          18
-        ],
-        [
-          "buff",
-          "daizong",
-          "defense",
-          {
-            "pct": 80,
-            "turns": 5
-          }
-        ]
-      ]
-    },
-    {
-      "on": {
-        "near": "daizong"
-      },
-      "unless": "caught",
-      "do": [
-        [
-          "say",
-          "daizong",
-          "兄弟们！休管我了——假信已被识破，他们定要斩我和宋江哥哥！你们快回梁山泊报信，叫哥哥们来劫法场！"
-        ],
-        [
-          "say",
-          "hero",
-          "院长！……好，武龙拼了性命也把信送到！"
-        ],
-        [
-          "narrate",
-          "众公人一拥而上，把戴宗拖进大牢，捆了个结实。"
-        ],
-        [
-          "leave",
-          "daizong"
-        ],
-        [
-          "flag",
-          "caught"
-        ],
-        [
-          "say",
-          "dutou",
-          "还有一伙同党！前门有兵马堵着，把住后门，休教走了一个！"
-        ],
-        [
-          "appear",
-          "g1"
-        ],
-        [
-          "appear",
-          "g2"
-        ],
-        [
-          "appear",
-          "g3"
-        ],
-        [
-          "appear",
-          "g4"
-        ],
-        [
-          "appear",
-          "g5"
-        ],
-        [
-          "appear",
-          "g6"
-        ],
-        [
-          "say",
-          "lijun",
-          "人多救不得了！前门官军越来越多，从北面后门杀出去！武龙兄弟，我们护着你回梁山报信！"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "turn": 7
-      },
-      "unless": "caught",
-      "do": [
-        [
-          "say",
-          "daizong",
-          "（远远望见众人）兄弟们休进来！快回梁山报信——叫哥哥们来劫法场！"
-        ],
-        [
-          "narrate",
-          "众公人一拥而上，把戴宗拖进大牢，捆了个结实。"
-        ],
-        [
-          "leave",
-          "daizong"
-        ],
-        [
-          "flag",
-          "caught"
-        ],
-        [
-          "say",
-          "dutou",
-          "还有一伙同党！前门有兵马堵着，把住后门，休教走了一个！"
-        ],
-        [
-          "appear",
-          "g1"
-        ],
-        [
-          "appear",
-          "g2"
-        ],
-        [
-          "appear",
-          "g3"
-        ],
-        [
-          "appear",
-          "g4"
-        ],
-        [
-          "appear",
-          "g5"
-        ],
-        [
-          "appear",
-          "g6"
-        ],
-        [
-          "say",
-          "lijun",
-          "人多救不得了！前门官军越来越多，从北面后门杀出去！武龙兄弟，我们护着你回梁山报信！"
+          16
         ]
       ]
     },
@@ -792,6 +837,41 @@
         [
           "appear",
           "k6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 3
+      },
+      "do": [
+        [
+          "narrate",
+          "后院外廊两头也有公人围拢过来，要堵后门！"
+        ],
+        [
+          "appear",
+          "n1"
+        ],
+        [
+          "appear",
+          "n2"
+        ],
+        [
+          "appear",
+          "n3"
+        ],
+        [
+          "appear",
+          "n4"
+        ],
+        [
+          "appear",
+          "n5"
+        ],
+        [
+          "appear",
+          "n6"
         ]
       ]
     },
@@ -846,18 +926,6 @@
       },
       "do": [
         [
-          "flag",
-          "out"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "flag": "out"
-      },
-      "if": "caught",
-      "do": [
-        [
           "narrate",
           "众好汉护着武龙打开后门杀将出去，夺了几匹快马，星夜奔回梁山泊。"
         ],
@@ -883,17 +951,6 @@
         [
           "defeat",
           "武龙倒下了……"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "dead": "daizong"
-      },
-      "do": [
-        [
-          "defeat",
-          "戴宗倒下了……"
         ]
       ]
     }
