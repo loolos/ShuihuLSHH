@@ -504,13 +504,15 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 
 **关卡 `stages/<关卡>.json`**（`StageJson`）
 
+译文文件 `gamedata/lang/<语言>/stages/<关卡>.json`：`{"<关卡>#<id>": {"zh": 翻译时的中文, "t": 译文}}`，每句一行；`lang/<语言>/terms.json`、`ui.json`：`{中文: 译文}`，键可带 `{n}` / `{s}` 占位（game-design §10.3）。
+
 | 字段 | 来源 | 说明 |
 |---|---|---|
 | `map` | `Map\<关卡>.map` | 地图名（`maps/` 下的文件名）；可带截取范围 `名字@x,y,宽,高`（Act5-2 = `N05@32,0,22,22`） |
 | `header` | `.pab` 15 B 头 | `{blockCount, town, next, act}`，同 §8 的文件头；`blockCount` 是原版区块数，不随追加的区块变 |
 | `units[]` | `.act` 每条 38 B 记录 | `{index, type, group, side, facing, x, y, level, flags, extra, items}`，字段同 §7；`index` 必须等于在数组里的位置。原版的 w5、w11 未解，没有导出（原件里还有）。`level` 对敌人是重制版的自有等级，不是原版值 |
 | `blocks[]` | `.pab` 区块 | `{trigger, cond, head, ops}`，区块号 = 在数组里的位置；`trigger`/`cond`/`head` 同 §8 的解析结果 |
-| `blocks[].ops[]` | 指令 | `{op, flag, value}`；文字指令（13、20、21、29–33）写 `{op, flag, text}`，`text` 是 `.pas` 的简体文字，不写 `value`。重制版加的字段：`quiet`（只点名不登场）、`actor`（已倒下的人临时出来演戏） |
+| `blocks[].ops[]` | 指令 | `{op, flag, value}`；文字指令（13、20、21、29–33）写 `{op, flag, text}`，`text` 是 `.pas` 的简体文字，不写 `value`。重制版加的字段：`quiet`（只点名不登场）、`actor`（已倒下的人临时出来演戏）、`id`（要翻译的文字的固定编号，写在 `text` 前面；译文按「关卡名#id」查，见 game-design §10.3） |
 | `names` / `enemyRanks` / `spectators` / `clearGold` | 重制版 | 单位显示名、敌人等级档、观战演员、过关银子（键都是单位号） |
 | `rules` | 重制版 | `{rushOnDeath, clearAllWaves, rushText}`，见 game-design §9.3 |
 

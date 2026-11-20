@@ -109,6 +109,10 @@ export interface PasOp {
   value: number;
   /** 文字指令（13 对白、29/30 旁白与结局、31–33 条件）的内容；扩展包指令 102 是新名字 */
   text?: string;
+  /** 文字指令的固定编号【新】（多语言，docs/game-design.md §10.3）：同一关里唯一，分配后不再变；tools/i18n.ts ids 自动补 */
+  id?: number;
+  /** 载入时补上的完整编号「关卡名#编号」（如 N01#7），译文按它查；文件里不写 */
+  tid?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
   args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number }[] };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */

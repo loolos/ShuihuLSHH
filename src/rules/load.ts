@@ -141,7 +141,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     board,
     fire: j.rules?.fire ? fireInput(j.rules.fire, loaded.map) : undefined,
     units,
-    blocks: stageBlocks(j),
+    blocks: stageBlocks(j, stage),
     header: { ...j.header },
     data,
     seed: opts.seed,
