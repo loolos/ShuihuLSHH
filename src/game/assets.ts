@@ -116,7 +116,7 @@ const ACTION_FIRST_SKILL = 3;
  * 地图用到的图块，本关出场职业的走路、受击、防御动作、动作 3（待机架势取它的第 1 帧，见 sprites.ts idleAction）和普通攻击（含特效），以及防御、反击的固定特效。
  * 其它技能的动作和特效开打后在后台下载（prefetchSkills），出招前还没下完就等它下完（ensureSkill）。返回新下载的字节数。
  */
-export async function preloadStage(assets: Assets, stage: string, progress?: Progress, classesOverride?: number[]): Promise<number> {
+export async function preloadStage(assets: Assets, stage: string, progress?: Progress, classesOverride?: number[], extraUpper: readonly number[] = []): Promise<number> {
   const { files } = assets;
   const job = new Fetch();
   const loaded = loadStageMap(files, classesOverride ? stage : stageMap(files, stage));
@@ -127,6 +127,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
       const lib = k === 0 ? assets.ground : assets.upper;
       if (l.tile < lib.count && (k > 0 || l.tile > 0)) job.add(lib.sheetOf(l.tile));
     });
+  for (const t of extraUpper) if (t < assets.upper.count) job.add(assets.upper.sheetOf(t)); // 地图上没有、但要另外画的物件（囚车）
   const classes = new Set(classesOverride ?? [0]);
   const j = classesOverride ? undefined : stageJson(files, stage);
   if (j) for (const a of stageUnits(j)) if (a.side !== 'object' && a.side !== 'unknown' && a.type < assets.data.classes.length) classes.add(a.type);

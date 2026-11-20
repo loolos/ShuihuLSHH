@@ -296,7 +296,12 @@ export class BattleScene extends Phaser.Scene {
     const p = cellToWorld(v.x, v.y);
     const spr = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(v.x, v.y, 8));
     const bar = this.add.graphics().setDepth(depthOf(v.x, v.y, 9));
-    const cart = this.battle.prisonCarts.has(u.uid) ? this.add.image(p.x, p.y, textureFor(this, 'prison-cart', prisonCartCanvas)).setOrigin(0.5, 0.85).setDepth(depthOf(v.x, v.y, 8) + 0.1) : undefined;
+    let cart: Phaser.GameObjects.Image | undefined;
+    if (this.battle.prisonCarts.has(u.uid)) {
+      // 原版物件拼的囚车（prison-cart.ts），画在人物身后
+      const pc = prisonCartCanvas(this.assets);
+      cart = this.add.image(p.x, p.y, textureFor(this, 'prison-cart', () => pc.canvas)).setOrigin(pc.ax / pc.canvas.width, pc.ay / pc.canvas.height).setDepth(depthOf(v.x, v.y, 8) - 0.1);
+    }
     this.sprites.set(u.uid, { spr, bar, cart, head: classHead(this.assets, v.cls) });
     this.pose(u);
     return spr;
@@ -315,7 +320,7 @@ export class BattleScene extends Phaser.Scene {
     }
     const p = cellToWorld(v.x, v.y);
     s.spr.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8));
-    s.cart?.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8) + 0.1);
+    s.cart?.setPosition(p.x, p.y).setDepth(depthOf(v.x, v.y, 8) - 0.1);
     if (this.actedDone(u)) s.spr.setTint(0x808080);
     else s.spr.clearTint();
     this.drawBar(u);
@@ -1239,7 +1244,7 @@ export class BattleScene extends Phaser.Scene {
       s.spr.setDepth(depthOf(Math.max(a.x, c.x), Math.max(a.y, c.y), 8));
       s.bar.clear();
       if (s.cart) {
-        s.cart.setDepth(depthOf(Math.max(a.x, c.x), Math.max(a.y, c.y), 8) + 0.1);
+        s.cart.setDepth(depthOf(Math.max(a.x, c.x), Math.max(a.y, c.y), 8) - 0.1);
         this.tweens.add({ targets: s.cart, x: p.x, y: p.y, duration: fast ? 110 : 150 });
       }
       await new Promise<void>((r) => this.tweens.add({ targets: s.spr, x: p.x, y: p.y, duration: fast ? 110 : 150, onComplete: () => r() }));
