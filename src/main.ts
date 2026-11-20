@@ -122,7 +122,7 @@ function startGame(assets: Assets) {
       const s = stageByMap.get(key.toLowerCase());
       if (!s) continue;
       const l = stageLabel(s.title, s.mapName);
-      items.push({ label: l.short, value: String(s.index), title: l.full });
+      items.push({ label: l.short, value: String(s.index), title: l.full, stars: stageJson(assets.files, s.mapName)?.edited });
       // 每个城镇也能直接进（列在进城前那一关后面）
       const t = towns.get(s.index);
       if (t) items.push({ label: `城镇 ${townName(t.town)}`, value: townValue(s.index), title: `${chLabel} 城镇 ${townName(t.town)}` });

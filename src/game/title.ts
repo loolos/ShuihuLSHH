@@ -7,6 +7,8 @@ export interface TitleStageItem {
   /** 交给 main.ts 跳关的值：关卡序号、town:<关卡序号>、ins:<包>/<关卡>（主线插关）或 pack:<包>/<关卡>（外传） */
   value: string;
   title?: string;
+  /** 改过的原版关卡在关名前标星：1 = 改过，2 = 大改（关卡 JSON 的 edited） */
+  stars?: number;
 }
 
 export interface TitleOptions {
@@ -173,6 +175,10 @@ export class TitleScreen {
         const b = el('button', /^town:/.test(it.value) ? 'town' : /^剧情/.test(it.label) ? 'story' : undefined, it.label);
         b.type = 'button';
         if (it.title) b.title = it.title;
+        if (it.stars) {
+          b.prepend(el('span', 'stars', '★'.repeat(it.stars)));
+          b.title = `${b.title ? b.title + ' · ' : ''}${it.stars > 1 ? '原版关卡，大改过' : '原版关卡，改过'}`;
+        }
         if (it.value === this.o.current) {
           b.classList.add('current');
           b.setAttribute('aria-current', 'true');

@@ -512,6 +512,7 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 | `blocks[]` | `.pab` 区块 | `{trigger, cond, head, ops}`，区块号 = 在数组里的位置；`trigger`/`cond`/`head` 同 §8 的解析结果 |
 | `blocks[].ops[]` | 指令 | `{op, flag, value}`；文字指令（13、20、21、29–33）写 `{op, flag, text}`，`text` 是 `.pas` 的简体文字，不写 `value`。重制版加的字段：`quiet`（只点名不登场）、`actor`（已倒下的人临时出来演戏） |
 | `names` / `enemyRanks` / `spectators` / `clearGold` | 重制版 | 单位显示名、敌人等级档、观战演员、过关银子（键都是单位号） |
+| `edited` | 重制版 | 改过这一关多少：1 = 改过，2 = 大改；选关页关名前标 ★ / ★★（game-design §1.3「改动标记」） |
 | `rules` | 重制版 | `{rushOnDeath, clearAllWaves, rushText}`，见 game-design §9.3 |
 
 **地图 `maps/<地图>.json`**：`{width, height, cells}`，`cells[y*width+x]` 是数字（只有地表）或数组 `[地表, 地上物, 高度, 地上物, 高度, …]`，和自拼地图同一种格式（§5 的 `{tile, flags}` 链，地表层的 flags 在 63 张图里都是 0）。

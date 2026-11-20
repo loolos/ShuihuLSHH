@@ -43,6 +43,12 @@ export interface StageJson {
   /** 过关奖励银子，不写按原版 */
   clearGold?: number;
   rules?: StageRules;
+  /**
+   * 重制版改过这一关多少【新】（负责人 2026-11-20）：选关页在关名前标星，好知道哪些原版关卡动过。
+   * 1 = 改过（插原著引文、补对白、加敌人 / 增援等）；2 = 大改（换胜利方式、重排剧情、整段对白重写）。
+   * 不算全局的东西：敌人等级重定、关名。改了关卡记得顺手更新。
+   */
+  edited?: 1 | 2;
 }
 
 /** JSON → 引擎用的单位、区块（补上 index；文字指令的 value 没有意义，补 0） */
@@ -58,6 +64,7 @@ const line = (v: unknown) => JSON.stringify(v);
 /** 写成便于阅读和比对的格式：每个单位、每条指令各占一行 */
 export function formatStageJson(j: StageJson & { units: (StageUnit & { raw?: unknown })[]; blocks: (StageBlock & { index?: number })[] }): string {
   const out: string[] = ['{'];
+  if (j.edited) out.push(`  "edited": ${j.edited},`);
   out.push(`  "map": ${line(j.map)},`);
   out.push(`  "header": ${line(j.header)},`);
   out.push('  "units": [');
