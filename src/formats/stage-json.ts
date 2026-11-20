@@ -19,6 +19,8 @@ export interface StageRules {
   clearAllWaves?: boolean;
   /** rushOnDeath 那人倒下以后才登场的增援，这几句对白换掉（简体原文 → 替换） */
   rushText?: Record<string, string>;
+  /** 过关时还没打倒的敌人（在场的、收手 / 归顺了但没人拿到经验的）按击败经验放进全队经验【新】 */
+  poolLeftoverExp?: boolean;
 }
 
 export interface StageJson {

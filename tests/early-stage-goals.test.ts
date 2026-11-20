@@ -44,8 +44,10 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(z.side).toBe('ally');
     expect(b.status).toBe('playing');
     place(b, cls(b, 0), tg.x - 1, tg.y);
-    poke(b, cls(b, 0));
+    const ev = (() => { const p = b.active().find((u) => u.side === 'player' && u !== cls(b, 0) && b.canAct(u))!; const g = b.moveRange(p).green.find((c) => c.x !== p.x || c.y !== p.y)!; return b.move(p, g.x, g.y); })();
     expect(b.status).toBe('won');
+    // 没打倒的庄客（收手的那个已经给过经验）按击败经验进全队经验
+    expect(ev.some((e) => e.type === 'message' && e.text.startsWith('其餘敵人的經驗'))).toBe(true);
   });
 
   it('斗托塔天王：吴用体力不到三成罢手，打倒晁盖即过关、庄客都收手', () => {
@@ -89,5 +91,48 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(cls(b, 16).stunTurns).toBe(0);
     expect(cls(b, 11).present).toBe(true);
     expect(b.status).toBe('playing');
+  });
+
+  it('反劫剪径贼：喽啰体力不到一半求饶，打倒头领即过关', () => {
+    const b = make('N-add07');
+    const z = b.units.find((u) => u.side === 'enemy' && u.classId === 44 && u.present)!;
+    z.hp = Math.floor(z.stats.maxHp * 0.4);
+    poke(b);
+    expect(z.side).toBe('ally');
+    const boss = cls(b, 65), me = cls(b, 0);
+    place(b, me, boss.x, boss.y - 1);
+    boss.hp = 1;
+    b.attack(me, boss);
+    expect(boss.alive).toBe(false);
+    expect(b.status).toBe('won');
+  });
+
+  it('山径斗毛贼：头领伤重后朱武过去劝降，头领带手下归顺', () => {
+    const b = make('N-add04b');
+    const boss = b.units.find((u) => u.classId === 65 && u.present)!;
+    const before = b.units.filter((u) => u.side === 'enemy').length;
+    boss.hp = Math.floor(boss.stats.maxHp * 0.4);
+    poke(b);
+    expect(boss.side).toBe('enemy');
+    const zhu = cls(b, 5);
+    place(b, zhu, boss.x + 1, boss.y);
+    poke(b, zhu);
+    expect(boss.side).toBe('ally');
+    const after = b.units.filter((u) => u.side === 'enemy').length;
+    expect(before - after).toBeGreaterThan(3); // 连手下一起
+    expect(b.status).toBe('playing');
+  });
+
+  it('大破何涛：四处放火即过关，点着的地方不再标出', () => {
+    const b = make('N-add14');
+    const spots = () => b.objectiveZones().filter((z) => z.kind === 'goal');
+    expect(spots().length).toBe(4);
+    const wu = cls(b, 10);
+    [[23, 12], [14, 8], [4, 18], [15, 19]].forEach(([x, y], k) => {
+      place(b, wu, x, y);
+      poke(b, wu);
+      if (k < 3) expect(spots().length).toBe(3 - k);
+    });
+    expect(b.status).toBe('won');
   });
 });

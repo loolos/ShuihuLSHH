@@ -498,5 +498,6 @@
         {"op":121,"flag":null,"value":0}
       ]
     }
-  ]
+  ],
+  "rules": {"poolLeftoverExp":true}
 }

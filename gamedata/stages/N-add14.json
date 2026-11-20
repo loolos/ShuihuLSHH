@@ -154,9 +154,12 @@
         {"op":12,"flag":1,"value":54},
         {"op":13,"flag":1,"text":"我先到门外等你们的好消息...对了！先把那个杨志给我抓住，若有抵抗格杀勿论！"},
         {"op":17,"flag":0,"value":2},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"吴用道：「何涛人多，硬拼不是办法。庄里四处堆着柴草，放起火来，官兵必乱！」"},
         {"op":35,"flag":null,"value":50},
         {"op":31,"flag":null,"text":"限制回合数 --- 50"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":32,"flag":null,"text":"胜利条件一 --- 在庄内四处放火（吴用、公孙胜、刘唐、白胜走进标出的地方）"},
+        {"op":32,"flag":null,"text":"胜利条件二 --- 打败所有敌人"},
         {"op":33,"flag":null,"text":"失败条件   --- 杨志死亡"}
       ]
     },
@@ -200,6 +203,187 @@
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":1,"text":"敌军增援了！"}
       ]
+    },
+    {
+      "trigger": {"kind":"area","char":10,"x1":22,"y1":11,"x2":24,"y2":13},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":40}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":2,"x1":22,"y1":11,"x2":24,"y2":13},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":40}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":17,"x1":22,"y1":11,"x2":24,"y2":13},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":40}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":4,"x1":22,"y1":11,"x2":24,"y2":13},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":40}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":40},"b":{"type":101,"arg":50}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":50},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"东厢火起了！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":10,"x1":13,"y1":7,"x2":15,"y2":9},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":41}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":2,"x1":13,"y1":7,"x2":15,"y2":9},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":41}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":17,"x1":13,"y1":7,"x2":15,"y2":9},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":41}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":4,"x1":13,"y1":7,"x2":15,"y2":9},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":41}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":41},"b":{"type":101,"arg":51}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":51},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"正厅火起了！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":10,"x1":3,"y1":17,"x2":5,"y2":19},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":42}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":2,"x1":3,"y1":17,"x2":5,"y2":19},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":42}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":17,"x1":3,"y1":17,"x2":5,"y2":19},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":42}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":4,"x1":3,"y1":17,"x2":5,"y2":19},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":42}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":42},"b":{"type":101,"arg":52}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":52},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"西厢火起了！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":10,"x1":14,"y1":18,"x2":17,"y2":20},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":43}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":2,"x1":14,"y1":18,"x2":17,"y2":20},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":43}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":17,"x1":14,"y1":18,"x2":17,"y2":20},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":43}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":4,"x1":14,"y1":18,"x2":17,"y2":20},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":43}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":43},"b":{"type":101,"arg":53}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":53},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"后院火起了！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"op":"and","a":{"op":"and","a":{"type":100,"arg":40},"b":{"type":100,"arg":41}},"b":{"type":100,"arg":42}},"b":{"type":100,"arg":43}},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"庄院四下里火起，烈焰冲天，浓烟滚滚。"},
+        {"op":12,"flag":1,"value":1029,"quiet":true},
+        {"op":13,"flag":0,"text":"不好！贼人放火了……前后都是火，这仗打不得了！撤！快撤！"},
+        {"op":29,"flag":null,"text":"庄院大火，何涛的部队乱作一团，众好汉趁乱杀出。"}
+      ]
     }
-  ]
+  ],
+  "rules": {"poolLeftoverExp":true}
 }

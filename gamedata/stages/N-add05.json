@@ -432,5 +432,6 @@
       ]
     }
   ],
-  "spectators": [1]
+  "spectators": [1],
+  "rules": {"poolLeftoverExp":true}
 }
