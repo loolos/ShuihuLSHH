@@ -3360,6 +3360,7 @@
     "stages/zhuanshang.json",
     "stages/jiaxin.json",
     "stages/fachang.json",
-    "stages/bailongmiao.json"
+    "stages/bailongmiao.json",
+    "stages/cuju.json"
   ]
 }

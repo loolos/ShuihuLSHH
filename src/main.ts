@@ -82,7 +82,7 @@ function startGame(assets: Assets) {
   const packStages = new Map(
     listPacks()
       .filter((e) => e.pack.entry === 'mainline')
-      .flatMap((e) => e.stages.map((s) => [`${e.pack.id}/${s.id}`.toLowerCase(), s] as const)),
+      .flatMap((e) => e.stages.filter((s) => !s.sideStory).map((s) => [`${e.pack.id}/${s.id}`.toLowerCase(), s] as const)),
   );
   const chapterErrors = validateChapters(stages.map((s) => s.mapName), [...packStages.keys()]);
   if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
@@ -134,8 +134,11 @@ function startGame(assets: Assets) {
   if (stray.length) chapters.push({ label: '其它', items: stray.map((s) => ({ label: stageLabel(s.title, s.mapName).short, value: String(s.index), title: s.mapName })) });
   // 最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）。顶栏下拉框和标题画面的选关共用
   const sideItems = (): TitleStageItem[] =>
-    listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
-      ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description })),
+    listPacks().flatMap(({ pack: p, stages: ss }) =>
+      p.entry !== 'mainline'
+        ? ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description }))
+        : // 主线包里的独立外传（sideStory，如蹴鞠）
+          ss.filter((s) => s.sideStory).map((s) => ({ label: `${s.title}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: s.title })),
     );
   const stageGroups = () => {
     const side = sideItems();

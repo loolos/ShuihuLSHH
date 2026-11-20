@@ -11,6 +11,8 @@ import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, 
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
+import { basicReaches, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
+import { cujuPhase } from './cuju-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import type { StageRules } from '../formats/stage-json.ts';
 import {
@@ -83,7 +85,34 @@ export type BattleEvent =
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
-  | { type: 'end'; result: 'won' | 'lost'; text: string };
+  | { type: 'end'; result: 'won' | 'lost'; text: string }
+  /** 蹴鞠【新】：球滚过 path 停在 (x, y)；result 见 BallResult；by = 拦下球的人；score = 进球后的比分 */
+  | { type: 'ball'; path: Cell[]; x: number; y: number; result: BallResult['kind'] | 'place'; by?: number; text?: string; score?: Record<Team, number> };
+
+/** 蹴鞠的场上状态（docs/game-design.md §15.25） */
+export interface CujuState {
+  rules: CujuRules;
+  ball: Cell;
+  score: Record<Team, number>;
+  /** 本方回合里球被对方拦下：这回合球踢不动了（还能走位） */
+  locked: boolean;
+  /** 出界或进球：本方回合已经结束 */
+  over: boolean;
+  /** 开球站位（进球后双方回到这里） */
+  starts: Record<number, { x: number; y: number; facing: number }>;
+  /** AI 用的分工：守门、后卫、前锋 */
+  roles: Record<number, 'keeper' | 'back' | 'forward'>;
+}
+
+/** 踢球预览：命中率、必杀率、命中 / 必杀 / 踢偏时大约踢几格，以及正中时球会怎么走 */
+export interface KickPreview {
+  hit: number;
+  crit: number;
+  distance: number;
+  critDistance: number;
+  missDistance: number;
+  line: BallResult;
+}
 
 export interface GroundItem {
   x: number;
@@ -178,6 +207,8 @@ export interface StageInput {
   aiPrefer?: Record<number, number[]>;
   /** 扩展包【新】：单位显示的名字（ACT 序号 → 名字），不填用职业名 */
   names?: Record<number, string>;
+  /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
+  cuju?: CujuRules;
 }
 
 /**
@@ -228,6 +259,8 @@ export class Battle {
   readonly rng: Rng;
   readonly units: Unit[] = [];
   readonly items: GroundItem[] = [];
+  /** 蹴鞠关的场上状态；不是蹴鞠关为 null */
+  cuju: CujuState | null = null;
   turn = 0;
   phase: Side = 'player';
   turnLimit = 0;
@@ -344,7 +377,8 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const stats = computeStats(cls, level, slots, this.data, false, forge, [], a.side);
+      const statSide = input.cuju ? 'player' : a.side;
+      const stats = computeStats(cls, level, slots, this.data, false, forge, [], statSide);
       const hpMultiplier = input.hpMultipliers?.[a.index] ?? 1;
       if (!Number.isFinite(hpMultiplier) || hpMultiplier <= 0) throw new Error(`单位 ${a.index} 的体力倍率必须为正数`);
       stats.maxHp = Math.max(1, Math.round(stats.maxHp * hpMultiplier));
@@ -352,12 +386,14 @@ export class Battle {
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
         ...(hpMultiplier !== 1 ? { hpMultiplier } : {}),
+        ...(statSide !== a.side ? { statSide } : {}),
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
       });
     }
     this.hadPlayers = this.units.some((u) => u.side === 'player' && !this.offstage.has(u.uid));
+    if (input.cuju) this.setupCuju(input.cuju);
     for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
   }
 
@@ -409,7 +445,14 @@ export class Battle {
     const blocked = new Set<string>(), pass = new Set<string>();
     for (const t of this.active()) {
       if (t === u) continue;
-      (u.side !== 'enemy' && t.side !== 'enemy' ? pass : blocked).add(key(t.x, t.y));
+      // 蹴鞠：两队一样，队友互相穿过、对手挡路
+      const through = this.cuju ? t.side === u.side : u.side !== 'enemy' && t.side !== 'enemy';
+      (through ? pass : blocked).add(key(t.x, t.y));
+    }
+    if (this.cuju) {
+      // 蹴鞠：球所在的格子能走过、不能停；不能走出球场
+      pass.add(key(this.cuju.ball.x, this.cuju.ball.y));
+      for (let y = 0; y < this.board.height; y++) for (let x = 0; x < this.board.width; x++) if (!this.inField({ x, y })) blocked.add(key(x, y));
     }
     return this.board.reach(u, budget, blocked, pass);
   }
@@ -439,7 +482,7 @@ export class Battle {
     return this.status === 'playing' && this.phase === 'player' && !this.units.some((u) => u.side === 'player' && this.canAct(u));
   }
   attackTargets(u: Unit): Unit[] {
-    if (!this.canAct(u) || u.acted) return [];
+    if (!this.canAct(u) || u.acted || this.cuju) return [];
     const r = attackRange(u, this.data);
     return this.foesOf(u).filter((t) => inAttackRange(u, t, r));
   }
@@ -488,6 +531,7 @@ export class Battle {
   }
   /** 能施放的格子（范围内至少有一个可作用的单位） */
   skillTargets(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
+    if (this.cuju && !isSupportSkill(skill)) return this.kickCells(u, skill, at);
     return this.skillCells(u, skill, at).filter((c) => this.affected(u, skill, c, at).length > 0);
   }
 
@@ -605,6 +649,14 @@ export class Battle {
       this.finish('lost', this.stealth.lose);
       return this.flush();
     }
+    if (this.cuju) {
+      this.startPhase('enemy');
+      this.runCujuAi('enemy');
+      if (this.status !== 'playing') return this.flush();
+      this.startTurn(this.turn + 1);
+      this.record();
+      return this.flush();
+    }
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
       for (const u of this.units.filter((x) => x.side === side && x.alive && !this.spectators.has(x.uid) && (x.present || this.ambushers.has(x.uid)))) {
@@ -632,7 +684,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters,
+      spotters: this.spotters, cuju: this.cuju,
     });
   }
 
@@ -686,6 +738,7 @@ export class Battle {
     this.benched = new Set(s.benched ?? []);
     this.used = s.used ?? {};
     this.spotters = s.spotters ?? {};
+    if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
@@ -698,6 +751,7 @@ export class Battle {
     this.turn = t;
     if (t > 1) this.runTurnTriggers(t - 1);
     if (this.status !== 'playing') return;
+    if (this.cuju && this.cujuClock(t)) return;
     if (this.turnLimit && t > this.turnLimit) return this.finish('lost', '限制回合數已到，未完成任務，遊戲失敗！');
     // 回合开始：装备回复 → 中毒 → 状态回合数 −1
     for (const u of this.active()) {
@@ -723,6 +777,10 @@ export class Battle {
 
   private startPhase(side: Side) {
     this.phase = side;
+    if (this.cuju) {
+      this.cuju.locked = false;
+      this.cuju.over = false;
+    }
     for (const u of this.units.filter((x) => x.side === side)) {
       if (u.defending) {
         u.defending = false;
@@ -881,7 +939,7 @@ export class Battle {
 
   /** 可以使用的道具槽（回复、解毒解昏、抗毒抗昏、增益；类型 15–22） */
   usableSlots(u: Unit): number[] {
-    if (!this.canAct(u)) return [];
+    if (!this.canAct(u) || this.cuju) return [];
     return u.slots.flatMap((id, k) => (isUsable(itemOf(this.data, id)) ? [k] : []));
   }
 
@@ -1084,6 +1142,7 @@ export class Battle {
    * 多段技能只是把这一次的伤害按比例分段显示。
    */
   private cast(u: Unit, skill: SkillDef, cell: Cell, counter: boolean) {
+    if (this.cuju && !isSupportSkill(skill)) return this.kickCast(u, skill, cell);
     const targets = this.affected(u, skill, cell);
     const area = this.skillArea(u, skill, cell);
     if (cell.x !== u.x || cell.y !== u.y) u.facing = facingTowards(u, cell, u.facing);
@@ -1870,5 +1929,202 @@ export class Battle {
     }
     this.status = result;
     this.emit({ type: 'end', result, text });
+  }
+
+  // ───────────── 蹴鞠【新】（docs/game-design.md §15.25，负责人 2026-11-20） ─────────────
+
+  private setupCuju(rules: CujuRules) {
+    const starts: CujuState['starts'] = {};
+    const roles: CujuState['roles'] = {};
+    for (const team of ['player', 'enemy'] as const) {
+      const g = rules.goals[team];
+      const gy = (g.y1 + g.y2) / 2;
+      const mine = this.units.filter((u) => u.side === team && u.present && !this.spectators.has(u.uid));
+      mine.sort((a, b) => Math.abs(a.x - g.x) + Math.abs(a.y - gy) - (Math.abs(b.x - g.x) + Math.abs(b.y - gy)));
+      mine.forEach((u, i) => {
+        starts[u.uid] = { x: u.x, y: u.y, facing: u.facing };
+        roles[u.uid] = i === 0 ? 'keeper' : i <= 2 ? 'back' : 'forward';
+      });
+    }
+    this.cuju = { rules, ball: { x: rules.kickoff[0], y: rules.kickoff[1] }, score: { player: 0, enemy: 0 }, locked: false, over: false, starts, roles };
+  }
+
+  /** 格子在不在球场里（不是蹴鞠关时 = 在地图上） */
+  inField(c: Cell): boolean {
+    return this.cuju ? fieldHas(this.cuju.rules, c) : this.board.inBounds(c.x, c.y);
+  }
+
+  /** 场上踢球的人（踢球的人可以假设站在 at） */
+  ballPlayers(kicker?: Unit, at?: Cell): BallPlayer[] {
+    return this.active()
+      .filter((u) => !this.spectators.has(u.uid) && (u.side === 'player' || u.side === 'enemy'))
+      .map((u) => ({ uid: u.uid, side: u.side, x: u === kicker && at ? at.x : u.x, y: u === kicker && at ? at.y : u.y, defending: u.defending }));
+  }
+
+  /** 这个人现在还能不能踢球（能行动、没出过手、球没被拦下锁住、本方回合没因出界 / 进球结束） */
+  canKick(u: Unit): boolean {
+    const c = this.cuju;
+    return !!c && this.canAct(u) && !u.acted && !c.locked && !c.over;
+  }
+
+  /** 普通攻击能不能踢到球（at = 假设的站位） */
+  kickable(u: Unit, at: Cell = u): boolean {
+    return this.canKick(u) && basicReaches(at, this.cuju!.ball, attackRange(u, this.data));
+  }
+
+  /** 技能能踢到球的施放点：作用范围盖到球的格子 */
+  kickCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
+    if (!this.canKick(u) || isSupportSkill(skill)) return [];
+    const b = this.cuju!.ball;
+    if (skill === attackSkill(u, this.data)) return this.kickable(u, at) ? [{ ...b }] : [];
+    return this.skillCells(u, skill, at).filter((c) => this.skillArea(u, skill, c, at).some((a) => a.x === b.x && a.y === b.y));
+  }
+
+  /** 踢球预览（at = 假设的站位） */
+  kickPreview(u: Unit, skill: SkillDef = attackSkill(u, this.data), at: Cell = u): KickPreview {
+    const ball = this.cuju!.ball;
+    const bonus = this.kickBonus(u);
+    const [n, c] = kickPower(u, skill, at, ball, bonus);
+    const distance = kickDistance(n);
+    const line = resolveBall(this.cuju!.rules, ball, traceLine(ball, ball.x - at.x, ball.y - at.y, 0, distance), u.side, this.ballPlayers(u, at));
+    return { hit: kickHitChance(u, skill, bonus), crit: kickCritChance(u, skill), distance, critDistance: kickDistance(c), missDistance: kickDistance(n * MISS_FACTOR), line };
+  }
+
+  /** 这一队踢球的加成（CujuRules.bonus） */
+  kickBonus(u: Unit) {
+    return u.side === 'player' || u.side === 'enemy' ? this.cuju?.rules.bonus?.[u.side] : undefined;
+  }
+
+  /** 普通攻击踢球 */
+  kick(u: Unit): BattleEvent[] {
+    this.out = [];
+    if (!this.kickable(u)) return [];
+    this.cast(u, attackSkill(u, this.data), { ...this.cuju!.ball }, false);
+    this.endAction(u);
+    return this.flush();
+  }
+
+  /** 一方的回合交给 AI 踢（试打工具让我方也这样打） */
+  autoPhase(side: Team): BattleEvent[] {
+    this.out = [];
+    if (this.cuju && this.phase === side && this.status === 'playing') this.runCujuAi(side);
+    return this.flush();
+  }
+
+  private runCujuAi(side: Team) {
+    // AI 调的是公开指令（它们会清空事件流），这里把每一步的事件接到当前事件流后面
+    const nest = (fn: () => BattleEvent[]) => {
+      const saved = this.out;
+      const ev = fn();
+      this.out = saved;
+      this.out.push(...ev);
+    };
+    cujuPhase(this, side, {
+      move: (u, c) => nest(() => this.move(u, c.x, c.y)),
+      kick: (u) => nest(() => this.kick(u)),
+      skill: (u, s, c) => nest(() => this.useSkill(u, s, c)),
+      defend: (u) => nest(() => this.defend(u)),
+      rest: (u) => nest(() => this.rest(u)),
+    });
+    for (const u of this.units) if (u.side === side) u.ended = true;
+  }
+
+  private kickCast(u: Unit, skill: SkillDef, cell: Cell) {
+    const c = this.cuju!;
+    const ball = { ...c.ball };
+    u.facing = facingTowards(u, ball, u.facing);
+    u.mp -= skill.mpCost;
+    (this.used[u.uid] ??= []).push(skill.skillId);
+    const basic = skill === attackSkill(u, this.data);
+    this.emit({ type: 'attack', uid: u.uid, skill, cell, area: basic ? [ball] : this.skillArea(u, skill, cell), facing: u.facing, hits: [], counter: false });
+    if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+    if (!basic) this.emit({ type: 'message', text: `${u.name}使出${this.tr(skill.name)}！` });
+    const r = rollKick(u, skill, u, ball, this.rng, this.kickBonus(u));
+    const res = resolveBall(c.rules, ball, traceLine(ball, ball.x - u.x, ball.y - u.y, r.deviation, r.distance), u.side, this.ballPlayers());
+    const how = r.crit ? '大力抽射！' : r.hits === 0 ? '踢偏了，' : r.hits < r.parts ? '踢得有点偏，' : '';
+    this.emit({ type: 'message', text: `${how}球飞出 ${r.distance} 格。` });
+    const name = (uid: number) => this.unit(uid)?.name ?? '';
+    switch (res.kind) {
+      case 'stop':
+        c.ball = res.at;
+        this.emit({ type: 'ball', path: res.path, x: res.at.x, y: res.at.y, result: 'stop' });
+        break;
+      case 'intercept':
+        c.ball = res.at;
+        c.locked = true;
+        this.emit({ type: 'ball', path: res.path, x: res.at.x, y: res.at.y, result: 'intercept', by: res.by, text: '拦截！' });
+        this.emit({ type: 'message', text: `球被${name(res.by)}拦下了！本回合球踢不动了，只能走位。` });
+        break;
+      case 'out': {
+        this.emit({ type: 'ball', path: res.path, x: res.path.at(-1)!.x, y: res.path.at(-1)!.y, result: 'out', text: '出界！' });
+        const t = throwIn(c.rules, res.at, u.side, this.ballPlayers());
+        if (t) c.ball = t.at;
+        this.emit({ type: 'ball', path: [], x: c.ball.x, y: c.ball.y, result: 'place' });
+        this.emit({ type: 'message', text: `出界！${t ? `球交给${name(t.to)}，` : ''}本回合结束。` });
+        this.endCujuPhase(u.side);
+        break;
+      }
+      case 'goal': {
+        c.score[res.scorer]++;
+        const own = res.scorer !== u.side;
+        this.emit({ type: 'ball', path: res.path, x: res.at.x, y: res.at.y, result: 'goal', text: own ? '乌龙球！' : '进球！', score: { ...c.score } });
+        this.emit({ type: 'message', text: `${own ? `${u.name}踢进了自家球门！` : `${u.name}进球！`}比分 ${c.score.player} : ${c.score.enemy}。` });
+        if (c.score[res.scorer] >= c.rules.goalsToWin || this.turn > c.rules.turns) {
+          this.cujuResult();
+          return;
+        }
+        this.cujuKickoff();
+        this.endCujuPhase(u.side);
+        break;
+      }
+    }
+  }
+
+  /** 出界、进球：这一方本回合立刻结束 */
+  private endCujuPhase(side: Side) {
+    this.cuju!.over = true;
+    for (const u of this.units)
+      if (u.side === side) {
+        u.ended = true;
+        u.movementRemaining = 0;
+        u.turnStart = null;
+      }
+  }
+
+  /** 进球后：双方回到开球站位，球放回开球点 */
+  private cujuKickoff() {
+    const c = this.cuju!;
+    for (const u of this.active()) {
+      const s = c.starts[u.uid];
+      if (!s) continue;
+      if (u.defending) {
+        u.defending = false;
+        this.emit({ type: 'defend', uid: u.uid, on: false });
+      }
+      u.x = s.x;
+      u.y = s.y;
+      u.facing = s.facing;
+      this.emit({ type: 'move', uid: u.uid, path: [{ x: s.x, y: s.y }], facing: s.facing });
+    }
+    c.ball = { x: c.rules.kickoff[0], y: c.rules.kickoff[1] };
+    this.emit({ type: 'ball', path: [], x: c.ball.x, y: c.ball.y, result: 'place' });
+  }
+
+  /** 按比分判胜负 */
+  private cujuResult() {
+    const { player, enemy } = this.cuju!.score;
+    if (player > enemy) this.finish('won', `比分 ${player} : ${enemy}，我方获胜！`);
+    else if (enemy > player) this.finish('lost', `比分 ${player} : ${enemy}，输给了对手。`);
+    else this.finish('lost', `比分 ${player} : ${enemy}，加时也没分出胜负，本场算输。`);
+  }
+
+  /** 回合开始时看时间：常规回合打完领先的赢；平局进加时（先进球的赢）；加时打完还平算输。分出胜负时返回 true */
+  private cujuClock(t: number): boolean {
+    const c = this.cuju!;
+    const tied = c.score.player === c.score.enemy;
+    if (t > c.rules.turns && !tied) return this.cujuResult(), true;
+    if (t > c.rules.turns + c.rules.extraTurns) return this.cujuResult(), true;
+    if (t === c.rules.turns + 1) this.emit({ type: 'message', text: `常规 ${c.rules.turns} 回合打完，比分相同，进入加时：先进球者胜！` });
+    return false;
   }
 }

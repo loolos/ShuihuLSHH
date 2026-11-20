@@ -14,7 +14,8 @@ function registeredInserts(): string[] {
   return ids.flatMap((id) => {
     const pack = JSON.parse(fs.readFileSync(path.join(ROOT, 'packs', id, 'pack.json'), 'utf8'));
     if (pack.entry !== 'mainline') return [];
-    return (pack.stages as string[]).map((f) => `${id}/${JSON.parse(fs.readFileSync(path.join(ROOT, 'packs', id, f), 'utf8')).id}`);
+    // sideStory：主线包里的独立外传（蹴鞠），不进章节表
+    return (pack.stages as string[]).map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'packs', id, f), 'utf8'))).filter((s) => !s.sideStory).map((s) => `${id}/${s.id}`);
   });
 }
 
