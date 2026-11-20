@@ -75,6 +75,10 @@ const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
+/** 被树木、屋顶等挡住的人，在遮挡物上面再画一层的不透明度（负责人 2026-11-14 定 50%，2026-11-20 改 80%） */
+const GHOST_ALPHA = 0.8;
+/** 移动格、攻击格、技能施放格和作用范围的填充不透明度（负责人 2026-11-20：原来 25%–45% 看不清，改 80% 左右） */
+const RANGE_CELL_ALPHA = 0.8;
 /** 行动完的状态条颜色：稍微去点饱和度再压暗到七成 */
 function dimColor(c: number) {
   const r = (c >> 16) & 255, g = (c >> 8) & 255, b = c & 255;
@@ -427,32 +431,32 @@ export class BattleScene extends Phaser.Scene {
     const u = m.u;
     if (m.kind === 'selected' && u.side === 'player') {
       const { green, yellow } = this.battle.moveRange(u);
-      for (const c of green) this.diamond(g, c, 0x3fbf4f, 0.35);
-      for (const c of yellow) this.diamond(g, c, 0xd8c040, 0.35);
+      for (const c of green) this.diamond(g, c, 0x3fbf4f, RANGE_CELL_ALPHA);
+      for (const c of yellow) this.diamond(g, c, 0xd8c040, RANGE_CELL_ALPHA);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
     } else if (m.kind === 'selected') {
       // 其它阵营：预览移动范围【新】
       const r = this.battle.reachOf(u, u.stats.move);
-      for (const n of r.values()) this.diamond(g, n, u.side === 'enemy' ? 0xe04030 : 0x5aa0d8, 0.22);
+      for (const n of r.values()) this.diamond(g, n, u.side === 'enemy' ? 0xe04030 : 0x5aa0d8, RANGE_CELL_ALPHA * 0.75);
     } else if (m.kind === 'move') {
       // 移动模式：菜单收起，只画移动格（lolo 2026-11-14）
       const { green, yellow } = this.battle.moveRange(u);
-      for (const c of green) this.diamond(g, c, 0x3fbf4f, 0.4), this.diamond(g, c, 0x3fbf4f, 0.8, true);
-      for (const c of yellow) this.diamond(g, c, 0xd8c040, 0.4), this.diamond(g, c, 0xd8c040, 0.8, true);
+      for (const c of green) this.diamond(g, c, 0x3fbf4f, RANGE_CELL_ALPHA), this.diamond(g, c, 0x3fbf4f, 0.8, true);
+      for (const c of yellow) this.diamond(g, c, 0xd8c040, RANGE_CELL_ALPHA), this.diamond(g, c, 0xd8c040, 0.8, true);
     } else if (m.kind === 'attack' && this.battle.cuju) {
       // 蹴鞠：踢得到球就画出正中时的球路
       const ball = this.battle.cuju.ball;
       if (this.battle.kickable(u)) this.cujuView?.drawPreview(g, ball, this.battle.kickPreview(u), this.diamond.bind(this));
       else this.diamond(g, ball, 0x909090, 0.8, true);
     } else if (m.kind === 'attack') {
-      for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, 0.25);
+      for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, RANGE_CELL_ALPHA);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
     } else if (m.kind === 'itemSlot' && (m.op === 'use' || m.op === 'give')) {
       const color = m.op === 'use' ? 0x40c0e0 : 0x6fbf5a;
       for (const t of this.itemOpTargets(m)) this.diamond(g, t, color, 0.35), this.diamond(g, t, color, 0.9, true);
     } else if (m.kind === 'skill') {
       const color = isSupportSkill(m.skill) ? 0x40b0e0 : 0xb050e0;
-      for (const c of this.battle.skillCells(u, m.skill)) this.diamond(g, c, color, 0.25);
+      for (const c of this.battle.skillCells(u, m.skill)) this.diamond(g, c, color, RANGE_CELL_ALPHA);
       for (const c of this.battle.skillTargets(u, m.skill)) this.diamond(g, c, color, 0.9, true);
     }
     this.diamond(g, u, 0xffffff, 0.8, true);
@@ -467,7 +471,7 @@ export class BattleScene extends Phaser.Scene {
     const m = this.mode;
     // 范围里没有目标的格子也画出作用范围，方便查看（不能施放）
     if (m.kind === 'skill' && !this.busy && this.battle.skillCells(m.u, m.skill).some((t) => sameCell(t, c)))
-      for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, isSupportSkill(m.skill) ? 0x40b0e0 : 0xf09030, 0.45);
+      for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, isSupportSkill(m.skill) ? 0x40b0e0 : 0xf09030, RANGE_CELL_ALPHA);
     if (m.kind === 'skill' && !this.busy && this.battle.cuju && !isSupportSkill(m.skill) && this.battle.skillTargets(m.u, m.skill).some((t) => sameCell(t, c)))
       this.cujuView?.drawPreview(g, this.battle.cuju.ball, this.battle.kickPreview(m.u, m.skill), this.diamond.bind(this));
     this.diamond(g, c, 0xffffff, 0.5, true);
@@ -636,7 +640,7 @@ export class BattleScene extends Phaser.Scene {
         .setPosition(spr.x, spr.y)
         .setFlipX(spr.flipX)
         .setDepth(g.cover + 0.5)
-        .setAlpha(spr.alpha * 0.5)
+        .setAlpha(spr.alpha * GHOST_ALPHA)
         .setVisible(true);
       if (spr.isTinted) img.setTint(spr.tintTopLeft);
       else img.clearTint();
@@ -1558,7 +1562,7 @@ export class BattleScene extends Phaser.Scene {
         let area: Phaser.GameObjects.Graphics | null = null;
         if (!basic) {
           area = this.add.graphics().setDepth(-0.4);
-          for (const c of e.area) this.diamond(area, c, isSupportSkill(skill) ? 0x40b0e0 : 0xf09030, 0.45);
+          for (const c of e.area) this.diamond(area, c, isSupportSkill(skill) ? 0x40b0e0 : 0xf09030, RANGE_CELL_ALPHA);
         }
         if (announcesSkill(u, skill, this.assets.data)) this.float(uv.x, uv.y, this.assets.tr(skill.name));
         // 受击与出手同步：按技能的命中帧（HUM 技能 +28，帧号从 1 起）在出手动画进行中触发；范围内的人同时受击
