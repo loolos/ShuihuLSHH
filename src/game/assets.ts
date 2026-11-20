@@ -7,7 +7,7 @@ import { stageUnits } from '../formats/stage-json.ts';
 import type { GameFiles, Progress } from '../platform/gamefiles.ts';
 import { buildT2S, exeTables, loadGameData, loadItems, loadStageMap, readJson, stageJson, stageMap } from '../rules/load.ts';
 import type { GameData, SkillDef } from '../rules/data.ts';
-import { FIXED_FX, fxGroups } from './effects.ts';
+import { FIXED_FX, FX_BLAZE, fxGroups } from './effects.ts';
 import type { PackAssets } from './packs.ts';
 
 export interface Assets {
@@ -137,6 +137,7 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
     if (basic) job.skill(assets, cls, basic);
   }
   for (const g of FIXED_FX) job.effectGroup(assets, g); // 防御、反击的固定特效
+  if (j?.rules?.fire) job.effectGroup(assets, FX_BLAZE); // 火势蔓延的火焰
   return job.run(files, progress);
 }
 

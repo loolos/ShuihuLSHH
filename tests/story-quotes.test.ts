@@ -35,7 +35,7 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
   it('火烧草料场：采购归来见火，听完三人毒计后才现身交战', () => {
     const { b, ev } = play('N09');
     expect(b.status).toBe('playing');
-    expect(b.turnLimit).toBe(40);
+    expect(b.turnLimit).toBe(25);
     const lines = ev.flatMap((e) => e.type === 'say' || e.type === 'narrate' ? [e.text] : []);
     const find = (text: string) => lines.findIndex((l) => l.includes(text));
     const supply = find('一道出外采买修屋的材料');
@@ -43,7 +43,7 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     const hide = find('听听动静');
     const confession = find('点了十来处火');
     const sentence = find('也得个死罪');
-    const reveal = find('随他现身');
+    const reveal = find('掇开挡路的大石');
     const challenge = find('泼贼！你们竟放火害我');
     expect(supply).toBeGreaterThanOrEqual(0);
     expect(fire).toBeGreaterThan(supply);
@@ -51,7 +51,8 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(confession).toBeGreaterThan(hide);
     expect(sentence).toBeGreaterThan(confession);
     expect(reveal).toBeGreaterThan(sentence);
-    expect(challenge).toBeGreaterThan(reveal);
+    expect(find('泼贼那里去')).toBeGreaterThan(reveal);
+    expect(challenge).toBeGreaterThan(find('泼贼那里去'));
     expect(find('你竟不在草料场里')).toBeGreaterThan(challenge);
     expect(find('他身后还有人')).toBeGreaterThan(find('你竟不在草料场里'));
     expect(find('今日不杀你们')).toBe(challenge);
@@ -59,11 +60,8 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
     expect(find('众人一起上')).toBeGreaterThan(find('还敢来攀旧日情分'));
     expect(lines.join()).not.toMatch(/挑战书|不赴约|把你叫到这里/);
     expect(ev.some((e) => e.type === 'attack')).toBe(false);
-    // 纯文字调整不改原版战斗触发、增援与胜负条件指令。
-    const input = loadStage(files, loadGameData(files, tr), 'N09', { text: tr });
-    const raw = rawBlocks('N09');
-    const gameplay = (blocks: typeof raw) => blocks.map((b) => ({ trigger: b.trigger, ops: b.ops.filter((o) => o.op !== 12 && o.op !== 13).map((o) => ({ op: o.op, flag: o.flag, value: o.text === undefined ? o.value : 0 })) }));
-    expect(gameplay(input.blocks)).toEqual(gameplay(raw));
+    // 2026-11-20 起胜负条件改为追杀三贼（§9.2.1），对白顺序不变
+    expect(b.objectives.some((l) => l.includes('拿下陆谦'))).toBe(true);
   });
 
   it('草料场战后：陆谦求饶与林冲对峙在前，伏诛后才商议去向并结算', () => {
@@ -73,13 +71,15 @@ describe.skipIf(!has)('主线对白补原著原文', () => {
       u.hp = 0;
       u.alive = false;
     }
+    // 陆谦拿下、富安和洪教头解决（标志 2、3、4，§9.2.1 火烧草料场）
+    for (const f of [2, 3, 4]) (b as unknown as { flags: Set<number> }).flags.add(f);
     const player = b.units.find((u) => u.side === 'player' && b.canMove(u) && b.moveRange(u).green.length)!;
     const step = b.moveRange(player).green[0];
     const ev = b.move(player, step.x, step.y);
     expect(b.status).toBe('won');
     const lines = ev.flatMap((e) => e.type === 'say' || e.type === 'narrate' ? [e.text] : []);
     const at = (text: string) => lines.findIndex((l) => l.includes(text));
-    const sequence = ['尚有一口气', '不干小人事', '放我这一遭', '你骗我去你家', '我必报答', '也要拿失守草料场', '太尉岂肯罢休', '还拿高俅来压我', '今日这一刀', '结果了陆谦', '沧州也不能待下去了', '过关了'];
+    const sequence = ['尚有一口气', '不干小人事', '放我这一遭', '你骗我去你家', '我必报答', '也要拿失守草料场', '太尉岂肯罢休', '还拿高俅来压我', '今日这一刀', '结果了陆谦', '供在山神面前', '沧州也不能待下去了', '过关了'];
     let previous = -1;
     for (const text of sequence) {
       expect(at(text), text).toBeGreaterThan(previous);

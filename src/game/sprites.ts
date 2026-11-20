@@ -93,6 +93,23 @@ export function effectAnim(scene: Phaser.Scene, assets: Assets, group: number): 
   return key;
 }
 
+/**
+ * 着火格子上一直烧着的火（火势蔓延【新】，火烧草料场）：取 Effect.lib 第 group 组（41：地上一圈火焰）中段火势最旺的几帧，
+ * 来回循环播放。
+ */
+export function blazeAnim(scene: Phaser.Scene, assets: Assets, group: number, from = 4, to = 10): string | null {
+  const range = assets.effects.actions[group];
+  if (!range || range.first + to > range.last) return null;
+  const key = `fx:blaze${group}`;
+  if (!scene.anims.exists(key)) {
+    const base = effectAnim(scene, assets, group);
+    if (!base) return null;
+    const frames = scene.anims.get(base)!.frames.slice(from, to + 1).map((f) => ({ key: f.textureKey }));
+    scene.anims.create({ key, frames, frameRate: 1000 / (EFFECT_FRAME_MS * 1.6), repeat: -1, yoyo: true });
+  }
+  return key;
+}
+
 const headCache = new Map<number, number>();
 /** 普通身材的人物头顶状态条一律按这个高度放（世界像素，脚下往上）【新】 */
 export const HEAD_STD = 62;

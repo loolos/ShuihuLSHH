@@ -16,11 +16,11 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
-import { dirIndex, FIXED_FX, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_BLAZE, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
-import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, classHead, idleAction, textureFor } from './sprites.ts';
+import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, blazeAnim, classHead, idleAction, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 import { prisonCartCanvas } from './prison-cart.ts';
 import { packFaceUrl } from './packs.ts';
@@ -119,6 +119,9 @@ export class BattleScene extends Phaser.Scene {
   private zoneG!: Phaser.GameObjects.Graphics;
   private zoneSig = '';
   private zones: MiniZone[] = [];
+  /** 火势蔓延【新】：着火的格子和格子上的火焰 */
+  private fireCells: Cell[] = [];
+  private fireSprites = new Map<string, Phaser.GameObjects.Sprite>();
   private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
@@ -681,7 +684,7 @@ export class BattleScene extends Phaser.Scene {
     }
     // 蹴鞠：球画成白点
     if (this.cujuView) marks.push({ x: this.cujuView.cell.x, y: this.cujuView.cell.y, color: '#ffffff' });
-    mm.draw(marks, this.cameras.main.worldView, this.zones);
+    mm.draw(marks, this.cameras.main.worldView, this.zones, this.fireCells);
   }
 
   private commands(m: Mode): Command[] | null {
@@ -1046,6 +1049,9 @@ export class BattleScene extends Phaser.Scene {
       case 'uproot':
         this.removeTree(e.cells).forEach(image=>image.destroy());
         break;
+      case 'fire':
+        this.syncFire(e.cells, true);
+        break;
       case 'flourish':
         break;
       case 'shot': {
@@ -1300,6 +1306,32 @@ export class BattleScene extends Phaser.Scene {
         this.tweens.add({ targets: s.cart, x: p.x, y: p.y, duration: fast ? 110 : 150 });
       }
       await new Promise<void>((r) => this.tweens.add({ targets: s.spr, x: p.x, y: p.y, duration: fast ? 110 : 150, onComplete: () => r() }));
+    }
+  }
+
+  /** 火势蔓延【新】：照规则里正在烧的格子增删火焰（新点着的淡入、熄灭的淡出） */
+  private syncFire(cells: Cell[], instant: boolean) {
+    this.fireCells = cells;
+    const anim = blazeAnim(this, this.assets, FX_BLAZE);
+    const want = new Set(cells.map((c) => `${c.x},${c.y}`));
+    for (const [k, spr] of this.fireSprites) {
+      if (want.has(k)) continue;
+      this.fireSprites.delete(k);
+      if (instant) spr.destroy();
+      else this.tweens.add({ targets: spr, alpha: 0, duration: 500, onComplete: () => spr.destroy() });
+    }
+    if (!anim) return;
+    for (const c of cells) {
+      const k = `${c.x},${c.y}`;
+      if (this.fireSprites.has(k)) continue;
+      const p = cellToWorld(c.x, c.y);
+      const spr = this.add.sprite(p.x, p.y + 6, '__DEFAULT').setDepth(depthOf(c.x, c.y, 6)).setScale(0.85).setTint(0xff9a50);
+      spr.play({ key: anim, startFrame: Math.floor(Math.random() * 6) });
+      this.fireSprites.set(k, spr);
+      if (!instant) {
+        spr.setAlpha(0);
+        this.tweens.add({ targets: spr, alpha: 0.95, duration: 500 });
+      } else spr.setAlpha(0.95);
     }
   }
 
@@ -1734,6 +1766,9 @@ export class BattleScene extends Phaser.Scene {
         if (e.action !== 'defend') this.pose(u);
         break;
       }
+      case 'fire':
+        this.syncFire(e.cells, this.fast);
+        break;
       case 'tint':
         this.tintFilter = applyTint(this.cameras.main, isStageTint(e.tint) ? e.tint : undefined, this.tintFilter);
         await wait(this, 200);
