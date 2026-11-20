@@ -37,6 +37,7 @@
 | `node tools/gen-sound.ts <原版 Sound 目录>` | 把原版音效压成 MP3（去重）写到 `gamedata/sound/`（需要 ffmpeg；负责人 2026-11-12 同意入库） |
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版启动和每关要下载的图像 |
 | `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
+| `node --experimental-transform-types tools/sim-cuju.ts [局数]` | 蹴鞠外传试打：双方都交给蹴鞠 AI，打印胜率、比分、出界 / 拦截次数（§15.25） |
 | `node --experimental-transform-types tools/charge-anim.ts [--all]` | 列出所有职业（原版 + 扩展包）集气技的施放时长（默认只列被加快的） |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
 | `node --experimental-transform-types tools/compose-map.ts [名字]` | 按 `tools/map-recipes/` 的配方拼新地图，写 `packs/maps/*.json`（§15.15，见配方目录的 README） |

@@ -1,0 +1,42 @@
+{
+  "id": "cuju",
+  "title": "鞠场争锋",
+  "sideStory": true,
+  "map": { "custom": "jucheng" },
+  "bgm": ["battle", "rock"],
+  "cuju": {
+    "field": [2, 2, 28, 16],
+    "goals": { "player": { "x": 1, "y1": 7, "y2": 11 }, "enemy": { "x": 29, "y1": 7, "y2": 11 } },
+    "kickoff": [15, 9],
+    "goalsToWin": 3,
+    "turns": 12,
+    "extraTurns": 3,
+    "bonus": { "enemy": { "power": 1.6, "hit": 1.4 } }
+  },
+  "units": [
+    { "id": "luzhishen", "class": 16, "side": "player", "x": 3, "y": 9, "facing": 3, "level": 20 },
+    { "id": "likui", "class": "likui", "side": "player", "x": 7, "y": 6, "facing": 3, "level": 20 },
+    { "id": "huarong", "class": "huarong", "side": "player", "x": 7, "y": 12, "facing": 3, "level": 20 },
+    { "id": "linchong", "class": 11, "side": "player", "x": 12, "y": 12, "facing": 3, "level": 20 },
+    { "id": "wusong", "class": "wusong", "side": "player", "x": 12, "y": 9, "facing": 3, "level": 20 },
+    { "id": "hongjiaotou", "class": 71, "side": "enemy", "x": 27, "y": 9, "facing": 1, "level": 20 },
+    { "id": "fuan", "class": 63, "side": "enemy", "x": 23, "y": 6, "facing": 1, "level": 20 },
+    { "id": "gaoyanei", "class": 57, "side": "enemy", "x": 23, "y": 12, "facing": 1, "level": 20 },
+    { "id": "luqian", "class": 64, "side": "enemy", "x": 18, "y": 12, "facing": 1, "level": 20 },
+    { "id": "gaoqiu", "class": 56, "side": "enemy", "x": 18, "y": 9, "facing": 1, "level": 20 }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        ["narrate", "东京城外，高太尉府的鞠场。太尉高俅当年凭一脚好气毬得了端王青眼，从此平步青云；今日他摆下擂台，夸口天下没人踢得过他的齐云社。"],
+        ["say", "gaoqiu", "哪里来的一伙粗汉，也敢下场？输了便把脑袋留下！"],
+        ["say", "linchong", "高俅！今日不论刀枪，只在这鞠场上见个高低。"],
+        ["say", "luzhishen", "洒家不会甚么花样，只管一脚踢将过去！"],
+        ["say", "likui", "这皮毬打不得人？那铁牛只好拿它出气了！"],
+        ["objective", "先进 3 球获胜；12 回合后领先也获胜，平局加时 3 回合，先进球者胜。"],
+        ["objective", "攻击、技能只能踢球：伤害定远近，命中定准头。对方站在球路上会拦下球；出界本回合立刻结束。"]
+      ]
+    }
+  ]
+}

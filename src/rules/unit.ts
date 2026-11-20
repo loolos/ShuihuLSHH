@@ -39,6 +39,8 @@ export interface Unit {
   hp: number;
   /** 本关体力倍率，随属性重算和倒流保留。 */
   hpMultiplier?: number;
+  /** 按哪一方算属性（移动力的等级加成只给我方）；蹴鞠两队都按我方算，免得一边跑得快【新】 */
+  statSide?: Side;
   /** 潜行关里还没发现我方的哨兵【新】：被从背后打伤害 ×3、侧面 ×2（负责人 2026-11-19） */
   unaware?: boolean;
   mp: number;
@@ -146,7 +148,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 }
 
 export function refreshStats(u: Unit, data: GameData) {
-  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs, u.side);
+  u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs, u.statSide ?? u.side);
   u.stats.maxHp = Math.max(1, Math.round(u.stats.maxHp * (u.hpMultiplier ?? 1)));
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);

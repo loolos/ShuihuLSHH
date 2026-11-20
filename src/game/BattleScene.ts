@@ -24,6 +24,8 @@ import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim
 import type { BattleUI, Command } from './ui.ts';
 import { prisonCartCanvas } from './prison-cart.ts';
 import { packFaceUrl } from './packs.ts';
+import { CujuView } from './cuju-view.ts';
+import type { KickPreview } from '../rules/battle.ts';
 
 export interface BattleSceneData {
   assets: Assets;
@@ -127,6 +129,8 @@ export class BattleScene extends Phaser.Scene {
   private endSound = false;
   /** 非我方阶段双击后快进：时间、补间、动画都加速，镜头直接跳过去【新】 */
   private fast = false;
+  /** 蹴鞠关的球（画面）；不是蹴鞠关为 null */
+  private cujuView: CujuView | null = null;
   private lastTap = 0;
   /** 正在回放的阶段（引擎已经算到下一回合，不能用 battle.phase） */
   private playingSide: 'player' | 'ally' | 'enemy' = 'player';
@@ -165,6 +169,7 @@ export class BattleScene extends Phaser.Scene {
     // restart 会复用 Scene 实例；旧场景的等待可被销毁，finally 未必有机会解锁。
     this.ending = false;
     this.fast = false;
+    this.cujuView = null;
     this.playingSide = 'player';
   }
 
@@ -217,6 +222,7 @@ export class BattleScene extends Phaser.Scene {
     // 原版地图上的宝物一律画成宝箱（Grid.grp 第 4 帧：0x40c24f 调 0x4010e0 把帧号设为 4，0x4010d0 从 data\\grid 取帧），
     // 不显示里面是什么；走到（或路过）就拾起。开局隐藏的宝物不画（原版绘制时检查显示标志 0x2，0x410960）
     this.drawChests();
+    this.placeBall();
     for (const u of this.battle.units) if (u.present) this.spawn(u);
 
     // 相机：可拖动范围覆盖整张地图
@@ -260,6 +266,29 @@ export class BattleScene extends Phaser.Scene {
     this.ui.showUnit(null);
     this.ui.setCommands(null);
     this.run(this.battle.begin()).then(() => this.autoEndTurn());
+  }
+
+  /** 蹴鞠：按规则状态摆球（开场、时光倒流后） */
+  private placeBall() {
+    const c = this.battle.cuju;
+    if (!c) return;
+    this.cujuView ??= new CujuView(this, c.ball);
+    this.cujuView.place(c.ball);
+  }
+
+  /** 踢球预览的说明（单位面板里） */
+  private kickTip(name: string, p: KickPreview): string {
+    const b = this.battle;
+    const end = p.line.kind === 'stop' ? '球停在这里' : p.line.kind === 'intercept' ? `会被${b.unit(p.line.by)?.name ?? '对方'}拦下` : p.line.kind === 'out' ? '会出界' : p.line.scorer === this.battle.phase ? '能进球！' : '会踢进自家球门！';
+    return `${name}：准头 ${p.hit}%，约 ${p.distance} 格（必杀 ${p.critDistance} 格，踢偏 ${p.missDistance} 格）；踢正的话${end}`;
+  }
+
+  /** 顶栏：回合、阶段，蹴鞠关加上比分 */
+  private setTurn(turn: number, limit: number, phase: string) {
+    const c = this.battle.cuju;
+    if (!c) return this.ui.setTurn(turn, limit, phase);
+    const extra = turn > c.rules.turns ? '（加时）' : '';
+    this.ui.setTurn(turn, c.rules.turns + (extra ? c.rules.extraTurns : 0), `${phase}${extra}　比分 ${c.score.player} : ${c.score.enemy}`);
   }
 
   /** 地图上还没被拾起的宝物画成宝箱 */
@@ -403,6 +432,11 @@ export class BattleScene extends Phaser.Scene {
       const { green, yellow } = this.battle.moveRange(u);
       for (const c of green) this.diamond(g, c, 0x3fbf4f, 0.4), this.diamond(g, c, 0x3fbf4f, 0.8, true);
       for (const c of yellow) this.diamond(g, c, 0xd8c040, 0.4), this.diamond(g, c, 0xd8c040, 0.8, true);
+    } else if (m.kind === 'attack' && this.battle.cuju) {
+      // 蹴鞠：踢得到球就画出正中时的球路
+      const ball = this.battle.cuju.ball;
+      if (this.battle.kickable(u)) this.cujuView?.drawPreview(g, ball, this.battle.kickPreview(u), this.diamond.bind(this));
+      else this.diamond(g, ball, 0x909090, 0.8, true);
     } else if (m.kind === 'attack') {
       for (const c of this.battle.attackCells(u)) this.diamond(g, c, 0xe04030, 0.25);
       for (const t of this.battle.attackTargets(u)) this.diamond(g, t, 0xe04030, 0.9, true);
@@ -427,6 +461,8 @@ export class BattleScene extends Phaser.Scene {
     // 范围里没有目标的格子也画出作用范围，方便查看（不能施放）
     if (m.kind === 'skill' && !this.busy && this.battle.skillCells(m.u, m.skill).some((t) => sameCell(t, c)))
       for (const a of this.battle.skillArea(m.u, m.skill, c)) this.diamond(g, a, isSupportSkill(m.skill) ? 0x40b0e0 : 0xf09030, 0.45);
+    if (m.kind === 'skill' && !this.busy && this.battle.cuju && !isSupportSkill(m.skill) && this.battle.skillTargets(m.u, m.skill).some((t) => sameCell(t, c)))
+      this.cujuView?.drawPreview(g, this.battle.cuju.ball, this.battle.kickPreview(m.u, m.skill), this.diamond.bind(this));
     this.diamond(g, c, 0xffffff, 0.5, true);
   }
 
@@ -452,7 +488,12 @@ export class BattleScene extends Phaser.Scene {
       const c = this.hoverCell;
       const b = this.battle;
       const name = this.assets.tr(m.skill.name);
-      if (c && b.skillTargets(u, m.skill).some((t) => sameCell(t, c))) {
+      if (c && b.cuju && !isSupportSkill(m.skill) && b.skillTargets(u, m.skill).some((t) => sameCell(t, c))) {
+        const tip = this.kickTip(name, b.kickPreview(u, m.skill));
+        this.ui.showUnit(u, null, this.armed && sameCell(this.armed, c) ? `${tip}　再点一次踢球` : tip);
+      } else if (c && b.cuju && !isSupportSkill(m.skill) && b.skillCells(u, m.skill).some((t) => sameCell(t, c))) {
+        this.ui.showUnit(u, null, `${name}：作用范围要盖到球才能踢`);
+      } else if (c && b.skillTargets(u, m.skill).some((t) => sameCell(t, c))) {
         const hit = b.affected(u, m.skill, c);
         const t = hit.find((h) => sameCell(h, c)) ?? hit[0];
         const more = hit.length > 1 ? `${name}：范围内 ${hit.length} 人` : name;
@@ -486,7 +527,10 @@ export class BattleScene extends Phaser.Scene {
       });
     }
     const target = hovered && u.side === 'player' && this.battle.attackTargets(u).includes(hovered) ? hovered : undefined;
-    if (target) this.ui.showUnit(target, this.battle.preview(u, target));
+    if (this.battle.cuju && m.kind === 'attack' && !(hovered && hovered !== u)) {
+      const name = this.assets.tr(attackSkill(u, this.assets.data).name);
+      this.ui.showUnit(u, null, this.battle.kickable(u) ? `${this.kickTip(name, this.battle.kickPreview(u))}。点球踢出去` : this.battle.cuju.locked ? '球被对方拦下了，本回合踢不动了，只能走位' : '够不着球：近战要站在球身边（斜着也行），远程要在射程内');
+    } else if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
     else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : m.kind === 'move' ? '选择移动位置（绿 = 移动，黄 = 强行军，走完本回合结束）' : '');
     if (this.isTargeting(m)) this.setTargetCommands(m);
@@ -635,6 +679,8 @@ export class BattleScene extends Phaser.Scene {
       const v = this.vs(u);
       marks.push({ x: v.x, y: v.y, color: `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
     }
+    // 蹴鞠：球画成白点
+    if (this.cujuView) marks.push({ x: this.cujuView.cell.x, y: this.cujuView.cell.y, color: '#ffffff' });
     mm.draw(marks, this.cameras.main.worldView, this.zones);
   }
 
@@ -664,7 +710,7 @@ export class BattleScene extends Phaser.Scene {
       // 移动：菜单收起，只看地图上的移动格，方便点（lolo 2026-11-14）【新】
       ...(b.canMove(u) ? [{ label: '移动', enabled: range.green.length + range.yellow.length > 0, run: () => this.select({ kind: 'move', u }) }] : []),
       // 范围里没有敌人也能点"攻击"查看攻击范围（lolo 2026-11-13）【新】
-      { label: '攻击', enabled: !u.acted, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
+      { label: b.cuju ? '踢球' : '攻击', enabled: !u.acted, on: m.kind === 'attack', run: () => this.select(m.kind === 'attack' ? { kind: 'selected', u } : { kind: 'attack', u }) },
       ...(skills.length ? [{ label: '技能', enabled: skills.some((k) => k.usable), run: () => this.select({ kind: 'skills', u }) }] : []),
       { label: '防御', run: () => this.exec(u, () => b.defend(u)) },
       { label: '休息', enabled: !u.acted, run: () => this.exec(u, () => b.rest(u)) },
@@ -792,6 +838,7 @@ export class BattleScene extends Phaser.Scene {
     for (const img of this.groundItems.values()) img.destroy();
     this.groundItems.clear();
     this.drawChests();
+    this.placeBall();
     for (const u of b.units) if (u.present && u.alive) this.spawn(u);
     this.endSound = false;
     this.ui.message(`时光倒流：回到第 ${turn} 回合开始。`);
@@ -929,6 +976,7 @@ export class BattleScene extends Phaser.Scene {
       if (at && at !== m.u) return this.select({ kind: 'selected', u: at });
       return;
     }
+    if (m.kind === 'attack' && b.cuju && sameCell(b.cuju.ball, c) && b.kickable(m.u)) return void this.exec(m.u, () => b.kick(m.u));
     if (m.kind === 'selected' || m.kind === 'attack') {
       const u = m.u;
       if (at && u.side === 'player' && b.attackTargets(u).includes(at)) return void this.exec(u, () => b.attack(u, at));
@@ -953,7 +1001,7 @@ export class BattleScene extends Phaser.Scene {
     this.tweens.timeScale = k;
     this.anims.globalTimeScale = k;
     const b = this.battle;
-    if (on) this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
+    if (on) this.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
   }
 
   private removeTree(cells: {x:number;y:number}[]) {
@@ -970,6 +1018,10 @@ export class BattleScene extends Phaser.Scene {
   /** 快进：不播动画，只做必须的画面变化；对白、结局照常显示 */
   private skip(e: BattleEvent) {
     switch (e.type) {
+      case 'ball':
+        this.cujuView?.place({ x: e.x, y: e.y });
+        if (e.score) this.setTurn(this.battle.turn, 0, PHASE_NAME[this.playingSide]);
+        break;
       case 'portrait':
         this.setPortrait(e);
         break;
@@ -1021,7 +1073,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'phase': {
         this.playingSide = e.side;
-        this.ui.setTurn(e.turn, this.battle.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : '　▸▸ 快进中'));
+        this.setTurn(e.turn, this.battle.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : '　▸▸ 快进中'));
         // 回到我方阶段：镜头直接对准第一个能行动的人
         const first = e.side === 'player' && this.battle.active().find((u) => u.side === 'player' && !u.ended);
         if (first) {
@@ -1091,7 +1143,7 @@ export class BattleScene extends Phaser.Scene {
       this.refreshAll();
       for (const [uid, s] of this.sprites) s.cart?.setVisible(this.battle.isBound(this.battle.unit(uid)!));
       const b = this.battle;
-      this.ui.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
+      this.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
       this.ui.setTeamExp(b.teamExp);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       this.ui.setRewind(b.rewindTarget());
@@ -1308,6 +1360,24 @@ export class BattleScene extends Phaser.Scene {
     const b = this.battle;
     const tr = this.assets.tr;
     switch (e.type) {
+      case 'ball': {
+        const v = this.cujuView;
+        if (!v) break;
+        if (e.result === 'place') {
+          v.place({ x: e.x, y: e.y });
+          break;
+        }
+        await v.roll(v.cell, e.path, this.fast);
+        v.place(e.result === 'out' ? (e.path.at(-1) ?? { x: e.x, y: e.y }) : { x: e.x, y: e.y });
+        if (e.text) this.float(e.x, e.y, e.text, e.result === 'goal' ? '#ffd040' : e.result === 'intercept' ? '#ff8060' : '#e0e0e0', 0, 0, e.result === 'goal' ? 1800 : 1200);
+        if (e.result === 'goal') {
+          this.cameras.main.shake(300, 0.006);
+          sound.sfx('m12', 'win');
+          this.setTurn(b.turn, 0, PHASE_NAME[this.playingSide]);
+          await wait(this, this.fast ? 300 : 900);
+        } else if (e.result !== 'stop') await wait(this, this.fast ? 150 : 400);
+        break;
+      }
       case 'say': {
         const u = e.uid !== null ? b.unit(e.uid) : undefined;
         if (u?.present) await this.focusOn(u);
@@ -1355,7 +1425,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'phase':
         this.playingSide = e.side;
-        this.ui.setTurn(e.turn, b.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : this.fast ? '　▸▸ 快进中' : '　双击地图快进'));
+        this.setTurn(e.turn, b.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : this.fast ? '　▸▸ 快进中' : '　双击地图快进'));
         this.refreshAll();
         if (e.side === 'player') {
           const first = b.active().find((u) => u.side === 'player' && !u.ended);
