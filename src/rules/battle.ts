@@ -1462,7 +1462,7 @@ export class Battle {
     }
     for (const b of this.blocks) {
       const t = b.trigger;
-      if (t.kind !== 'area' || this.fired.has(b.index)) continue;
+      if (t.kind !== 'area' || this.fired.has(b.index) || t.atTurnEnd) continue;
       if (t.flagged && !this.flagsOk(b)) continue;
       // 区域触发（区块头 w0 = 4：选人 且 坐标范围）。原版条件 4 只选单位表里这个角色的第一个单位（EXE 0x410ff0 → 0x40c360，
       // 不论死活），所以 N-add03 往 (10,0) 逃的那个嘍囉（不是第一个）跑到出口也不算。重制版【新】：这个角色任何一个在场的人
@@ -1514,6 +1514,15 @@ export class Battle {
 
   private runTurnTriggers(param: number) {
     this.turnParam = param;
+    // 区域触发 atTurnEnd【新】（强闯二龙山，负责人 2026-11-20）：回合结束才看人到没到，下回合开始时大家一起行动
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'area' || !t.atTurnEnd || this.fired.has(b.index) || (t.flagged && !this.flagsOk(b))) continue;
+      const inside = (u: Unit) => u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
+      const id = t.char === 1000 ? 0 : t.char;
+      if (this.units.some((u) => u.classId === id && u.alive && u.present && inside(u))) this.runBlock(b);
+      if (this.status !== 'playing') return;
+    }
     for (const b of this.blocks) if (b.trigger.kind === 'turn' && (this.turnAt[b.index] ?? b.trigger.turn) === param && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
     this.runCondBlocks();
   }

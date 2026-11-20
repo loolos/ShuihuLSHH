@@ -143,7 +143,7 @@
       ]
     },
     {
-      "trigger": {"kind":"area","char":14,"x1":18,"y1":8,"x2":27,"y2":10},
+      "trigger": {"kind":"area","char":14,"x1":18,"y1":8,"x2":27,"y2":10,"atTurnEnd":true,"label":"山门"},
       "cond": {"type":0,"arg":0},
       "head": [],
       "ops": [
@@ -288,19 +288,19 @@
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":0,"text":"山门头领万没料到绑来的和尚会挣脱，营中一时措手不及，都呆住了！可山下也冒出一伙埋伏的喽啰，抄了后路。"},
         {"op":12,"flag":1,"value":1028,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1029,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1030,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1031,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1033,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1034,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}},
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}},
         {"op":12,"flag":1,"value":1035,"quiet":true},
-        {"op":105,"flag":null,"text":"措手不及","args":{"turns":1}}
+        {"op":105,"flag":null,"text":"措手不及","args":{"turns":2}}
       ]
     },
     {

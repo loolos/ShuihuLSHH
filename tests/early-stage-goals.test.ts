@@ -86,10 +86,18 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     const foes = () => b.units.filter((u) => u.side === 'enemy' && u.present);
     expect(foes().every((u) => u.ai.mode === 8)).toBe(true);
     const before = foes().length;
+    expect(b.objectiveZones().map((z) => z.label)).toEqual(['山门']); // 不叫撤退
     place(b, yang, 22, 9);
     poke(b, yang);
+    // 回合结束才检查，这回合里还没翻脸
+    expect(lu.stunTurns).toBeGreaterThan(100);
+    expect(cls(b, 11).present).toBe(false);
+    b.endPlayerPhase();
+    expect(b.phase).toBe('player');
     expect(lu.stunTurns).toBe(0);
     expect(cls(b, 11).present).toBe(true);
+    // 下回合开始大家一起行动
+    for (const id of [0, 14, 16, 11, 3]) expect(b.canAct(cls(b, id))).toBe(true);
     expect(foes().length).toBeGreaterThan(before + 10); // 伏兵从南边起点杀出
     expect(foes().some((u) => u.ai.mode === 8)).toBe(false);
   });
@@ -99,8 +107,9 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     const yang = cls(b, 14);
     place(b, yang, 22, 9);
     poke(b, yang);
+    b.endPlayerPhase();
     const head = b.units[27];
-    expect(head.stunTurns).toBe(1);
+    expect(head.stunTurns).toBe(1); // 这回合的敌方阶段呆住
     // 林冲等人从山门一带出现，伏兵在南边起点
     const lin = cls(b, 11);
     expect(lin.present).toBe(true);
