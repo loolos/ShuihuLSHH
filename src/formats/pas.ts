@@ -80,7 +80,7 @@ export type PasTrigger =
   | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
-  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[] }
+  | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[]; /** 扩展包【新】：区块写了 if / unless（教学关的将台，§15.26） */ flagged?: boolean; /** 扩展包【新】：地图上区域旁写的字（默认「撤退」） */ label?: string }
   /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
   /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
@@ -93,7 +93,18 @@ export type PasTrigger =
   /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
   | { kind: 'near'; char: number; uid?: number; by?: number; playerPhase?: boolean }
   /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
-  | { kind: 'hp'; char: number; uid?: number; below: number };
+  | { kind: 'hp'; char: number; uid?: number; below: number }
+  /**
+   * 扩展包【新】：这个人刚做了某个操作（教学关一步一步教，§15.26）。只在操作发生的那一刻判，之前做过的不算；
+   * action 见 DidAction；可配 if / unless 标志，标志不满足时这次操作不算，等下一次。
+   */
+  | { kind: 'did'; char: number; uid?: number; action: DidAction };
+
+/**
+ * 教学关判的操作：move 移动；attack 普通攻击；skill 用技能（含回气、回复）；flank 从背后或侧面出手；
+ * defend 防御；guard 防御中被人打（命中或闪开都算）；counter 反击；rest 休息；item 用道具；give 给予道具。
+ */
+export type DidAction = 'move' | 'attack' | 'skill' | 'flank' | 'defend' | 'guard' | 'counter' | 'rest' | 'item' | 'give';
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，

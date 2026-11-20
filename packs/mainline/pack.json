@@ -3238,6 +3238,8 @@
   {"id": "jindajian", "name": "金大坚", "base": {"hp": 80, "mp": 40, "attack": 40, "defense": 20, "hit": 50, "agility": 20, "crit": 0}, "move": 4, "weaponType": 0, "items": [0, 98, 0], "skills": [{"id": "jdj-zao", "name": "錾石锤", "from": 208, "anim": 0}], "sprite": {"fromClass": 70, "recolor": [{"src": [[144, 156], [240, 255]], "dst": [160, 175], "k": 0.8}, {"src": [[16, 31]], "dst": [16, 31], "k": 1.4}]}, "face": {"file": "faces/jindajian.png"}}
 ],
   "stages": [
+    "stages/jiaochang.json",
+    "stages/xihuamen.json",
     "stages/wawasi.json",
     "stages/daming-duel.json",
     "stages/chifagui.json",

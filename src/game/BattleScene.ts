@@ -654,7 +654,7 @@ export class BattleScene extends Phaser.Scene {
     const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|') + ws.map((w) => `/${w.x},${w.y},${w.facing},${w.r},${w.spotted}`).join('');
     if (sig === this.zoneSig) return;
     this.zoneSig = sig;
-    this.zones = zs.map((z) => ({ ...z, color: `#${ZONE_STYLE[z.kind].color.toString(16).padStart(6, '0')}`, label: ZONE_STYLE[z.kind].label }));
+    this.zones = zs.map((z) => ({ ...z, color: `#${ZONE_STYLE[z.kind].color.toString(16).padStart(6, '0')}`, label: z.label ?? ZONE_STYLE[z.kind].label }));
     const g = this.zoneG.clear();
     for (const z of zs) {
       const color = ZONE_STYLE[z.kind].color;

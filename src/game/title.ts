@@ -124,7 +124,7 @@ export class TitleScreen {
   menu() {
     const { save } = this.o;
     const nav = el('nav', 'title-nav');
-    const start = this.button('开始游戏', () => (save ? this.confirmNew() : this.o.onNew()), '从第一章「私走延安府」开始', !save);
+    const start = this.button('开始游戏', () => (save ? this.confirmNew() : this.o.onNew()), '从序章「禁军教头」开始（开场可选跳过操作教学）', !save);
     const load = this.button('读取存档', () => this.o.onLoad(), save ? [save.where, save.detail.split('\n')[0]].filter(Boolean).join('\n') : '还没有存档', !!save);
     load.disabled = !save;
     const jump = this.button('选　　关', () => this.stages(), '直接进入任意一关（按那一关的难度配等级和装备）');

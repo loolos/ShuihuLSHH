@@ -162,6 +162,8 @@ export interface PackStageJson {
    * 主线通过packParty/recordPackResult保存原版及包职业，不再由此字段跳过结算
    */
   pov?: boolean;
+  /** 教学关（序章「禁军教场」，§15.26）【新】：不读也不写存档里的人物（等级、经验、装备、道具）和银子，人物按关卡写的等级出场 */
+  tutorial?: boolean;
   /** 主线按本场实际队伍平均等级调整敌友，已有队友等级不重置。 */
   dynamicLevels?: boolean;
   /** 胜利后进入续篇城镇整备（原版商品表号）。 */
@@ -246,7 +248,8 @@ export type PackTrigger =
   | { turn: number }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
-  | { enter: string | string[]; area: [number, number, number, number] }
+  /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */
+  | { enter: string | string[]; area: [number, number, number, number]; label?: string } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
   | { near: string; by?: string; playerPhase?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
@@ -254,7 +257,9 @@ export type PackTrigger =
   /** 目标生命低于最大值的 below%（可配 if / unless） */
   | { hp: string; below: number }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
-  | { used: string; skills?: string[]; count?: number };
+  | { used: string; skills?: string[]; count?: number }
+  /** 这个人刚做了某个操作（教学关，§15.26）：只看操作发生那一刻，可配 if / unless */
+  | { did: string; action: import('../formats/pas.ts').DidAction };
 
 /**
  * 指令（数组，第一项是名字）：
@@ -276,7 +281,7 @@ export type PackOpJson = [string, ...unknown[]];
 
 export interface PackBlockJson {
   on: PackTrigger;
-  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
+  /** 对 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
   if?: string;
   unless?: string;
   do: PackOpJson[];

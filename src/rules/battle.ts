@@ -1,7 +1,7 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
 import { markLine } from '../i18n/index.ts';
 import type { ActUnit } from '../formats/act.ts';
-import type { PasBlock, PasCond, PasHeader } from '../formats/pas.ts';
+import type { DidAction, PasBlock, PasCond, PasHeader } from '../formats/pas.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
@@ -143,6 +143,8 @@ export interface ObjectiveZone {
   x2: number;
   y2: number;
   chars: number[];
+  /** 区域旁写的字；没有时按 kind（撤退 / 敌逃） */
+  label?: string;
 }
 
 /** 条件树里"选定某人（4）且坐标在范围内（5–10）"的部分 → 矩形；"或"的两边各算一个 */
@@ -322,6 +324,8 @@ export class Battle {
   private history: { turn: number; state: string }[] = [];
   /** 每个单位出手用过的技能号（按顺序，含普通攻击和反击），扩展包的 used 触发用 */
   private used: Record<number, number[]> = {};
+  /** 刚做过、还没判过 did 触发的操作（教学关，§15.26）；判完就清空，不进存档 */
+  private didQueue: { uid: number; action: DidAction }[] = [];
   /** 扩展包：AI 优先用的技能（StageInput.aiPrefer） */
   private readonly aiPrefer: Record<number, number[]>;
 
@@ -588,9 +592,11 @@ export class Battle {
       const kind = wins(b) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
+      // 写了 if / unless 的区域：标志不满足时还没轮到，不标出（教学关的将台，§15.26）
+      if (t.kind === 'area' && t.flagged && !this.flagsOk(b)) continue;
       const rects =
         t.kind === 'area'
-          ? [{ chars: t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2 }]
+          ? [{ chars: t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2, label: t.label }]
           : t.kind === 'cond'
             ? condZones(b.cond).map((r) => ({ ...r, chars: [r.char >= 1000 ? r.char - 1000 : r.char] }))
             : [];
@@ -604,6 +610,7 @@ export class Battle {
           x2: Math.min(W - 1, Math.max(r.x1, r.x2)),
           y2: Math.min(H - 1, Math.max(r.y1, r.y2)),
           chars,
+          ...('label' in r && r.label ? { label: r.label } : {}),
         };
         if (z.x1 > z.x2 || z.y1 > z.y2) continue;
         // N-add03：两种嘍囉各有一个区块指向同一个出口，合成一个
@@ -864,6 +871,7 @@ export class Battle {
       u.movementRemaining = 0;
       u.ended = true;
     } else u.movementRemaining -= n.cost;
+    if (u.side === 'player') this.noteDid(u, 'move');
     this.afterAction();
     return this.flush();
   }
@@ -916,6 +924,8 @@ export class Battle {
     u.defending = true;
     u.ended = true;
     this.emit({ type: 'defend', uid: u.uid, on: true });
+    this.noteDid(u, 'defend');
+    this.checkDid();
     return this.flush();
   }
 
@@ -924,6 +934,8 @@ export class Battle {
     if (!this.canAct(u) || u.acted) return [];
     this.applyRest(u);
     u.ended = true;
+    this.noteDid(u, 'rest');
+    this.checkDid();
     return this.flush();
   }
 
@@ -1002,6 +1014,8 @@ export class Battle {
     this.applyItem(u, slot, target);
     this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
+    this.noteDid(u, 'item');
+    this.checkDid();
     return this.flush();
   }
 
@@ -1032,6 +1046,8 @@ export class Battle {
     this.clearSlot(u, slot);
     u.turnStart = null;
     this.emit({ type: 'message', text: `${u.name}把${this.tr(it.name)}交給了${target.name}。` });
+    this.noteDid(u, 'give');
+    this.checkDid();
     return this.flush();
   }
 
@@ -1191,7 +1207,10 @@ export class Battle {
     u.mp -= skill.mpCost;
     (this.used[u.uid] ??= []).push(skill.skillId);
     const basic = skill === attackSkill(u, this.data);
+    // 教学关的 did 触发：从背后 / 侧面出手（flank）记在 attack / skill 前面，先判「打到背后了」再判「出手了」
+    const did = counter ? 'counter' : basic ? 'attack' : 'skill';
     if (isSupportSkill(skill)) {
+      this.noteDid(u, did);
       this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter });
       if (skill.mpCost && !targets.includes(u)) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
       const name = this.tr(skill.name);
@@ -1208,6 +1227,9 @@ export class Battle {
       return;
     }
     const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
+    if (!counter && hits.some(({ r }) => r.backstab !== 'front')) this.noteDid(u, 'flank');
+    this.noteDid(u, did);
+    for (const { t } of hits) if (t.defending) this.noteDid(t, 'guard');
     this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: hits.map(({ t, r }) => ({ uid: t.uid, result: r })), counter });
     if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
     if (counter) this.emit({ type: 'message', text: `${u.name}施展反擊技，` });
@@ -1427,6 +1449,8 @@ export class Battle {
     if (this.status !== 'playing') return;
     this.checkSpotted();
     if (this.status !== 'playing') return;
+    this.checkDid();
+    if (this.status !== 'playing') return;
     // 扩展包：出手之后的触发（用过某几招 / 出手满几次）
     for (const b of this.blocks) {
       const t = b.trigger;
@@ -1439,6 +1463,7 @@ export class Battle {
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'area' || this.fired.has(b.index)) continue;
+      if (t.flagged && !this.flagsOk(b)) continue;
       // 区域触发（区块头 w0 = 4：选人 且 坐标范围）。原版条件 4 只选单位表里这个角色的第一个单位（EXE 0x410ff0 → 0x40c360，
       // 不论死活），所以 N-add03 往 (10,0) 逃的那个嘍囉（不是第一个）跑到出口也不算。重制版【新】：这个角色任何一个在场的人
       // 进了范围都触发（只影响 N-add03"敵人從畫面端逃跑"；其它关只有一个这样的人：N01 王母、N13 何濤、N-add16 主角）
@@ -1502,6 +1527,32 @@ export class Battle {
       this.turnAt[b.index] = Math.min(at, this.turn + i);
     });
     this.runBlock(first);
+  }
+
+  /** 记下刚做的操作，等 checkDid 判 did 触发（只记剧本里用得到的人，免得队列白长） */
+  private noteDid(u: Unit, action: DidAction) {
+    if (this.blocks.some((b) => b.trigger.kind === 'did' && !this.fired.has(b.index))) this.didQueue.push({ uid: u.uid, action });
+  }
+
+  /**
+   * did 触发（教学关，§15.26）：按做的先后，每个操作执行配得上的、还没执行过、标志满足的区块。
+   * 只判刚做的操作：判完就清空，所以先做了某个操作、后来才设上标志的不算。
+   */
+  private checkDid() {
+    while (this.didQueue.length && this.status === 'playing') {
+      const { uid, action } = this.didQueue.shift()!;
+      const u = this.unit(uid);
+      if (!u) continue;
+      for (const b of this.blocks) {
+        const t = b.trigger;
+        if (t.kind !== 'did' || t.action !== action || this.fired.has(b.index)) continue;
+        if (t.uid !== undefined ? t.uid !== uid : t.char !== u.classId) continue;
+        if (!this.flagsOk(b)) continue;
+        this.runBlock(b);
+        if (this.status !== 'playing') break;
+      }
+    }
+    this.didQueue = [];
   }
 
   /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
