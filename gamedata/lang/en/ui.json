@@ -138,5 +138,7 @@
  "时光倒流：回到第 {n} 回合开始时的状态": "Rewind to the start of turn {n}",
  "正在检查本地缓存…": "Checking local cache…",
  "下载头像和图标 {n} / {n}": "Downloading portraits and icons {n} / {n}",
- "下载本关素材 {n} / {n}": "Downloading stage assets {n} / {n}"
+ "下载本关素材 {n} / {n}": "Downloading stage assets {n} / {n}",
+ "{n} 点伤害。（{n} 段命中 {n} 段）": "{n} damage. ({n} of {n} hits landed)",
+ "必杀！{n} 点伤害。（{n} 段命中 {n} 段）": "Critical! {n} damage. ({n} of {n} hits landed)"
 }
