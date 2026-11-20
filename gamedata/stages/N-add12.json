@@ -3,46 +3,46 @@
   "header": {"blockCount":6,"town":0,"next":53,"act":0},
   "units": [
     {"index":0,"type":0,"group":1,"side":"player","facing":0,"x":26,"y":30,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":1,"type":3,"group":2,"side":"player","facing":0,"x":28,"y":28,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":2,"type":5,"group":3,"side":"player","facing":0,"x":26,"y":33,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":3,"type":11,"group":4,"side":"player","facing":0,"x":25,"y":29,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":4,"type":13,"group":5,"side":"player","facing":0,"x":25,"y":31,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":5,"type":15,"group":6,"side":"player","facing":0,"x":27,"y":32,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":3,"group":2,"side":"player","facing":0,"x":28,"y":28,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":5,"group":3,"side":"player","facing":0,"x":26,"y":33,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":3,"type":11,"group":4,"side":"player","facing":0,"x":25,"y":29,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":4,"type":13,"group":5,"side":"player","facing":0,"x":25,"y":31,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":5,"type":15,"group":6,"side":"player","facing":0,"x":27,"y":32,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":6,"type":16,"group":7,"side":"player","facing":0,"x":28,"y":30,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":7,"type":14,"group":8,"side":"player","facing":0,"x":26,"y":27,"level":18,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":8,"type":44,"group":9,"side":"enemy","facing":3,"x":6,"y":24,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":9,"type":44,"group":10,"side":"enemy","facing":3,"x":6,"y":22,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":10,"type":44,"group":11,"side":"enemy","facing":3,"x":7,"y":23,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":11,"type":44,"group":12,"side":"enemy","facing":3,"x":6,"y":20,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":12,"type":44,"group":13,"side":"enemy","facing":3,"x":8,"y":24,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":13,"type":44,"group":14,"side":"enemy","facing":3,"x":8,"y":20,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":14,"type":44,"group":15,"side":"enemy","facing":3,"x":7,"y":21,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":15,"type":44,"group":16,"side":"enemy","facing":3,"x":8,"y":22,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":16,"type":44,"group":17,"side":"enemy","facing":3,"x":7,"y":19,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":17,"type":45,"group":18,"side":"enemy","facing":2,"x":19,"y":18,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":18,"type":45,"group":19,"side":"enemy","facing":2,"x":18,"y":19,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":19,"type":45,"group":20,"side":"enemy","facing":2,"x":17,"y":18,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":20,"type":45,"group":21,"side":"enemy","facing":3,"x":13,"y":25,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":21,"type":45,"group":22,"side":"enemy","facing":3,"x":12,"y":24,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":22,"type":45,"group":23,"side":"enemy","facing":3,"x":13,"y":23,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":23,"type":45,"group":24,"side":"enemy","facing":2,"x":29,"y":15,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":24,"type":45,"group":25,"side":"enemy","facing":2,"x":30,"y":16,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":25,"type":45,"group":26,"side":"enemy","facing":2,"x":28,"y":16,"level":17,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":26,"type":65,"group":27,"side":"enemy","facing":3,"x":4,"y":21,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":27,"type":65,"group":28,"side":"enemy","facing":2,"x":23,"y":3,"level":19,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":28,"type":45,"group":29,"side":"enemy","facing":2,"x":22,"y":4,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":29,"type":45,"group":30,"side":"enemy","facing":2,"x":23,"y":4,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":30,"type":45,"group":31,"side":"enemy","facing":2,"x":25,"y":5,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":31,"type":45,"group":32,"side":"enemy","facing":2,"x":17,"y":13,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":32,"type":45,"group":33,"side":"enemy","facing":2,"x":23,"y":6,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":33,"type":45,"group":34,"side":"enemy","facing":2,"x":21,"y":6,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":34,"type":45,"group":35,"side":"enemy","facing":2,"x":23,"y":7,"level":17,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":35,"type":45,"group":36,"side":"enemy","facing":2,"x":18,"y":14,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":36,"type":45,"group":37,"side":"enemy","facing":2,"x":18,"y":15,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":37,"type":45,"group":38,"side":"enemy","facing":2,"x":20,"y":14,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":38,"type":45,"group":39,"side":"enemy","facing":2,"x":26,"y":18,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":8,"type":44,"group":9,"side":"enemy","facing":3,"x":6,"y":24,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":9,"type":44,"group":10,"side":"enemy","facing":3,"x":6,"y":22,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":10,"type":44,"group":11,"side":"enemy","facing":3,"x":7,"y":23,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":11,"type":44,"group":12,"side":"enemy","facing":3,"x":6,"y":20,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":12,"type":44,"group":13,"side":"enemy","facing":3,"x":8,"y":24,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":13,"type":44,"group":14,"side":"enemy","facing":3,"x":8,"y":20,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":14,"type":44,"group":15,"side":"enemy","facing":3,"x":7,"y":21,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":15,"type":44,"group":16,"side":"enemy","facing":3,"x":8,"y":22,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":16,"type":44,"group":17,"side":"enemy","facing":3,"x":7,"y":19,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":17,"type":45,"group":18,"side":"enemy","facing":2,"x":19,"y":18,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":45,"group":19,"side":"enemy","facing":2,"x":18,"y":19,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":45,"group":20,"side":"enemy","facing":2,"x":17,"y":18,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":45,"group":21,"side":"enemy","facing":3,"x":13,"y":25,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":21,"type":45,"group":22,"side":"enemy","facing":3,"x":12,"y":24,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":22,"type":45,"group":23,"side":"enemy","facing":3,"x":13,"y":23,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":23,"type":45,"group":24,"side":"enemy","facing":2,"x":29,"y":15,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":45,"group":25,"side":"enemy","facing":2,"x":30,"y":16,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":25,"type":45,"group":26,"side":"enemy","facing":2,"x":28,"y":16,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":26,"type":65,"group":27,"side":"enemy","facing":3,"x":4,"y":21,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":27,"type":65,"group":28,"side":"enemy","facing":2,"x":23,"y":3,"level":19,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":28,"type":45,"group":29,"side":"enemy","facing":2,"x":22,"y":4,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":29,"type":45,"group":30,"side":"enemy","facing":2,"x":23,"y":4,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":30,"type":45,"group":31,"side":"enemy","facing":2,"x":25,"y":5,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":31,"type":45,"group":32,"side":"enemy","facing":2,"x":17,"y":13,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":32,"type":45,"group":33,"side":"enemy","facing":2,"x":23,"y":6,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":33,"type":45,"group":34,"side":"enemy","facing":2,"x":21,"y":6,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":34,"type":45,"group":35,"side":"enemy","facing":2,"x":23,"y":7,"level":17,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":35,"type":45,"group":36,"side":"enemy","facing":2,"x":18,"y":14,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":36,"type":45,"group":37,"side":"enemy","facing":2,"x":18,"y":15,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":37,"type":45,"group":38,"side":"enemy","facing":2,"x":20,"y":14,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":38,"type":45,"group":39,"side":"enemy","facing":2,"x":26,"y":18,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":39,"type":65,"group":40,"side":"enemy","facing":2,"x":3,"y":9,"level":19,"flags":1792,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":40,"type":45,"group":41,"side":"enemy","facing":2,"x":27,"y":19,"level":17,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":40,"type":45,"group":41,"side":"enemy","facing":2,"x":27,"y":19,"level":17,"flags":2304,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":41,"type":45,"group":42,"side":"enemy","facing":2,"x":2,"y":10,"level":17,"flags":1792,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":42,"type":45,"group":43,"side":"enemy","facing":2,"x":4,"y":11,"level":17,"flags":1792,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":43,"type":45,"group":44,"side":"enemy","facing":2,"x":4,"y":9,"level":17,"flags":1792,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
@@ -52,7 +52,19 @@
     {"index":47,"type":45,"group":48,"side":"enemy","facing":2,"x":5,"y":10,"level":17,"flags":1792,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":48,"type":142,"group":0,"side":"object","facing":0,"x":35,"y":0,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":49,"type":197,"group":0,"side":"object","facing":0,"x":31,"y":8,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":50,"type":60,"group":0,"side":"object","facing":0,"x":2,"y":35,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+    {"index":50,"type":60,"group":0,"side":"object","facing":0,"x":2,"y":35,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":51,"type":65,"group":60,"side":"enemy","facing":3,"x":24,"y":2,"level":19,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":52,"type":45,"group":61,"side":"enemy","facing":3,"x":25,"y":2,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":53,"type":45,"group":62,"side":"enemy","facing":3,"x":26,"y":2,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":54,"type":45,"group":63,"side":"enemy","facing":3,"x":26,"y":4,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":55,"type":45,"group":64,"side":"enemy","facing":3,"x":27,"y":4,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":56,"type":45,"group":65,"side":"enemy","facing":3,"x":28,"y":4,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":57,"type":45,"group":66,"side":"enemy","facing":3,"x":26,"y":5,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":58,"type":45,"group":67,"side":"enemy","facing":3,"x":27,"y":5,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":59,"type":45,"group":68,"side":"enemy","facing":3,"x":29,"y":4,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":60,"type":45,"group":69,"side":"enemy","facing":3,"x":28,"y":5,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":61,"type":45,"group":70,"side":"enemy","facing":3,"x":24,"y":3,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":62,"type":45,"group":71,"side":"enemy","facing":3,"x":25,"y":3,"level":17,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
   ],
   "blocks": [
     {
@@ -61,16 +73,22 @@
       "head": [1,6,5,1,1,2,27,2,0],
       "ops": [
         {"op":12,"flag":1,"value":65},
-        {"op":13,"flag":0,"text":"喂！你们是谁，竟敢擅自闯入我们的地盘！"},
-        {"op":12,"flag":1,"value":0},
-        {"op":13,"flag":0,"text":"我们有事要见你们头目。"},
+        {"op":13,"flag":0,"text":"站住！你们是什么人，竟敢擅自闯上二龙山！"},
+        {"op":12,"flag":1,"value":14},
+        {"op":13,"flag":0,"text":"小人等是山下近村的庄家。这个胖和尚常来村里吃酒，吃醉了不肯还钱，口里还说要去叫人来打你山寨。小人们灌醉了他，拿条索子绑了，特来献与大王。"},
         {"op":12,"flag":1,"value":65},
-        {"op":13,"flag":0,"text":"哈哈哈！我们的头目只见钱财不见人，喽罗们，把他们身上的东西剥光！"},
-        {"op":35,"flag":null,"value":30},
-        {"op":31,"flag":null,"text":"限制回合数 --- 30"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
-        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"},
-        {"op":33,"flag":null,"text":"失败条件   --- 杨志死亡"}
+        {"op":13,"flag":0,"text":"哈哈！原来是这个秃驴！押上山来，交给大头领发落！"},
+        {"op":12,"flag":1,"value":1007},
+        {"op":105,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":16},
+        {"op":13,"flag":0,"text":"（洒家这索子只是个活结，一扯便开。）"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"林冲、史进等人藏在山下林子里，只等山上号令。押着鲁智深一路走到山门前，路上千万不可先动手。"},
+        {"op":35,"flag":null,"value":35},
+        {"op":31,"flag":null,"text":"限制回合数 --- 35"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人（杨志先押着鲁智深走到山门前）"},
+        {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 杨志死亡"}
       ]
     },
     {
@@ -92,8 +110,8 @@
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":30},
-      "cond": {"type":0,"arg":30},
+      "trigger": {"kind":"turn","turn":35},
+      "cond": {"type":0,"arg":35},
       "head": [1,0,1,0,0,0,38,2,0],
       "ops": [
         {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
@@ -116,11 +134,1009 @@
       ]
     },
     {
-      "trigger": {"kind":"death","char":255},
-      "cond": {"type":1,"arg":255},
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":1,"arg":255},"b":{"type":100,"arg":1}},
       "head": [1,0,1,0,0,0,36,2,1],
       "ops": [
         {"op":29,"flag":null,"text":"经过一场苦战，终于可以进入二龙山了。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"area","char":14,"x1":18,"y1":8,"x2":27,"y2":10},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":1}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":1},"b":{"type":101,"arg":3}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":1},
+        {"op":103,"flag":null,"value":3},
+        {"op":12,"flag":1,"value":1028},
+        {"op":13,"flag":0,"text":"把这秃驴押过来，让俺先打他几下出气！"},
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}},
+        {"op":12,"flag":1,"value":1007},
+        {"op":106,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"鲁智深把索头只一拽，拽脱了活结，夺过一条禅杖，抡将起来。"},
+        {"op":12,"flag":1,"value":16},
+        {"op":13,"flag":0,"text":"洒家在此！哪个敢来！"},
+        {"op":12,"flag":1,"value":14},
+        {"op":13,"flag":0,"text":"兄弟们，杀上山来！"},
+        {"op":12,"flag":1,"value":1002},
+        {"op":12,"flag":1,"value":1003},
+        {"op":12,"flag":1,"value":1004},
+        {"op":12,"flag":1,"value":1005},
+        {"op":12,"flag":1,"value":1006},
+        {"op":12,"flag":1,"value":1060},
+        {"op":12,"flag":1,"value":1061},
+        {"op":12,"flag":1,"value":1062},
+        {"op":12,"flag":1,"value":1063},
+        {"op":12,"flag":1,"value":1064},
+        {"op":12,"flag":1,"value":1065},
+        {"op":12,"flag":1,"value":1066},
+        {"op":12,"flag":1,"value":1067},
+        {"op":12,"flag":1,"value":1068},
+        {"op":12,"flag":1,"value":1069},
+        {"op":12,"flag":1,"value":1070},
+        {"op":12,"flag":1,"value":1071},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"山门里的伏兵一齐杀出；林冲、史进等人也从山下杀了上来！"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1010},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1011},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1012},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1013},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1014},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1015},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1016},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1017},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1018},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1019},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1020},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1021},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1022},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1023},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1024},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1025},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1026},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1027},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1028},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1029},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1030},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1031},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1032},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1033},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1034},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1035},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1036},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1037},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1038},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1039},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1041},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":2},"b":{"type":101,"arg":3}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":1},
+        {"op":103,"flag":null,"value":3},
+        {"op":12,"flag":1,"value":65},
+        {"op":13,"flag":0,"text":"不好！这伙人是来打山寨的！"},
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}},
+        {"op":12,"flag":1,"value":1007},
+        {"op":106,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":16},
+        {"op":13,"flag":0,"text":"露了馅也罢，洒家不装了！"},
+        {"op":12,"flag":1,"value":1002},
+        {"op":12,"flag":1,"value":1003},
+        {"op":12,"flag":1,"value":1004},
+        {"op":12,"flag":1,"value":1005},
+        {"op":12,"flag":1,"value":1006},
+        {"op":12,"flag":1,"value":1060},
+        {"op":12,"flag":1,"value":1061},
+        {"op":12,"flag":1,"value":1062},
+        {"op":12,"flag":1,"value":1063},
+        {"op":12,"flag":1,"value":1064},
+        {"op":12,"flag":1,"value":1065},
+        {"op":12,"flag":1,"value":1066},
+        {"op":12,"flag":1,"value":1067},
+        {"op":12,"flag":1,"value":1068},
+        {"op":12,"flag":1,"value":1069},
+        {"op":12,"flag":1,"value":1070},
+        {"op":12,"flag":1,"value":1071},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"林冲、史进等人从山下杀了上来！"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1010},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1011},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1012},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1013},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1014},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1015},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1016},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1017},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1018},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1019},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1020},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1021},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1022},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1023},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1024},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1025},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1026},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1027},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1028},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1029},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1030},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1031},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1032},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1033},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1034},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1035},
+        {"op":16,"flag":1,"value":2},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1036},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1037},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1038},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1039},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8},
+        {"op":12,"flag":1,"value":1041},
+        {"op":16,"flag":1,"value":6},
+        {"op":17,"flag":0,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":1,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":2,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":3,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":4,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":5,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":6,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":7,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":8,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":9,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":10,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":11,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":12,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":13,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":14,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":15,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":16,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":17,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":18,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":19,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":20,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":21,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":22,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":23,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":24,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":25,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":26,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":27,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":28,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":29,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":30,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":31,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":32,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":33,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":34,"flagged":true},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":116,"flag":null,"value":0,"args":{"toward":8}}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":8,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":9,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":10,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":11,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":12,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":13,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":14,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":15,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":44,"uid":16,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":17,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":18,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":19,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":20,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":21,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":22,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":23,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":24,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":25,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":26,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":27,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":28,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":29,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":30,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":31,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":32,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":33,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":34,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":35,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":36,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":37,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":38,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":39,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":40,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":41,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":42,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":43,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":44,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":45,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":46,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":47,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":65,"uid":51,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":52,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":53,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":54,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":55,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":56,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":57,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":58,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":59,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":60,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":61,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":45,"uid":62,"below":100},
+      "cond": {"type":101,"arg":3},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":2}
       ]
     }
   ]

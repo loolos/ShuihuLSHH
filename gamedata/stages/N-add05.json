@@ -3,7 +3,7 @@
   "header": {"blockCount":7,"town":0,"next":19,"act":0},
   "units": [
     {"index":0,"type":40,"group":1,"side":"enemy","facing":2,"x":19,"y":8,"level":6,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":1,"type":27,"group":0,"side":"ally","facing":2,"x":18,"y":6,"level":1,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":1,"type":27,"group":0,"side":"ally","facing":3,"x":22,"y":5,"level":1,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":2,"type":40,"group":2,"side":"enemy","facing":2,"x":15,"y":8,"level":6,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":3,"type":40,"group":3,"side":"enemy","facing":2,"x":21,"y":8,"level":6,"flags":2048,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":4,"type":40,"group":4,"side":"enemy","facing":2,"x":22,"y":9,"level":5,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
@@ -42,11 +42,14 @@
       "ops": [
         {"op":12,"flag":1,"value":3},
         {"op":13,"flag":0,"text":"哼！想用强的，看来不给你们一点教训是不行了。"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"庄客们不由分说围了上来。他们都是本分的庄户人家，打退便罢，莫伤性命。庄门前那位老者，看来便是这里的庄主。"},
         {"op":35,"flag":null,"value":50},
         {"op":31,"flag":null,"text":"限制回合数 --- 50"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
-        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"},
-        {"op":33,"flag":null,"text":"失败条件   --- 陈达死亡"}
+        {"op":32,"flag":null,"text":"胜利条件一 --- %N走到刘太公身边说明来意"},
+        {"op":32,"flag":null,"text":"胜利条件二 --- 打退所有庄客（庄客体力不到四成便会收手）"},
+        {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
+        {"op":33,"flag":null,"text":"失败条件二 --- 陈达死亡"}
       ]
     },
     {
@@ -177,6 +180,257 @@
         {"op":13,"flag":0,"text":"总之，诸位就安静地住在客房；迎亲的事就不用你们操心。"},
         {"op":29,"flag":null,"text":"刘太公出面化解纷争，众英雄欲伸张正义。"}
       ]
+    },
+    {
+      "trigger": {"kind":"near","char":27,"uid":1,"by":0,"playerPhase":true},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"老丈！我等只是路过借宿的客商，并无恶意，还请喝住贵庄的庄客！"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"退下！不得无礼！老汉是这桃花村的家长，大家当叫我刘太公。请问诸位的姓名是？"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"我们是要去延安府办货的商人，我是王大，其余是史二、朱三、陈四、杨五 。错过旅店，希望能留宿一夜；适才多有冒犯，还望太公勿怪。"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"唉...罢了！众位就权且留宿一夜吧。不过，今夜如果听到什么声响，千万不要出来探个究竟..."},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"敢问贵庄今夜有什么事？"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"...今夜小女招夫婿，为此烦恼。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":18,"flag":1,"value":0},
+        {"op":19,"flag":1,"value":19},
+        {"op":13,"flag":0,"text":"男大当婚，女大当嫁；这是天经地义的事。太公何须烦恼？"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"唉...你有所不知，这门亲事不是心甘情愿的。"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"莫非有何隐情？"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"反正事情都到这个地步，老汉就一五一十地说出来吧！老汉膝下只有一女，年方十九。附近有一座桃花山，近来山上有两个大王，扎了山寨，聚集五七百人，四处打家劫舍，十分凶狠；前几日到老汉庄上收取保护费，看到老汉女儿，撇下二十两金子，一疋红锦作为聘礼。选定良辰吉日，今夜要来入赘。此等杀人不眨眼的魔君，老汉哪敢跟他理论啊？就是因此而烦恼。"},
+        {"op":12,"flag":1,"value":3},
+        {"op":13,"flag":0,"text":"强夺民女？这还像话？！"},
+        {"op":12,"flag":1,"value":0},
+        {"op":13,"flag":0,"text":"如果太公不嫌弃，我们五人都学过功夫；如果有用得着我们的地方，我们可以助一臂之力。"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"与这种强盗打交道，能够不出人命是最好的...前日从五台山来了一个菩萨，自愿今晚以高深佛法劝说强人回心转意，皈依我佛；老汉一生向佛，今日遇此危难，却遇得此活佛相救，真是老天有眼..."},
+        {"op":12,"flag":1,"value":13},
+        {"op":13,"flag":0,"text":"(俺才不信！佛法要是这么便利，那么世上哪里还有强盗山贼！)"},
+        {"op":12,"flag":1,"value":27},
+        {"op":13,"flag":0,"text":"总之，诸位就安静地住在客房；迎亲的事就不用你们操心。"},
+        {"op":29,"flag":null,"text":"刘太公出面化解纷争，众英雄欲伸张正义。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":0,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1001},
+        {"op":13,"flag":0,"text":"饶命！不打了，不打了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":2,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1002},
+        {"op":13,"flag":0,"text":"好汉手下留情！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":3,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1003},
+        {"op":13,"flag":0,"text":"哎哟……俺认输了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":4,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1004},
+        {"op":13,"flag":0,"text":"打不过，打不过！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":5,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1005},
+        {"op":13,"flag":0,"text":"别打了，俺服了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":6,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1006},
+        {"op":13,"flag":0,"text":"饶命！不打了，不打了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":7,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1007},
+        {"op":13,"flag":0,"text":"好汉手下留情！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":8,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1008},
+        {"op":13,"flag":0,"text":"哎哟……俺认输了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":15,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1014},
+        {"op":13,"flag":0,"text":"打不过，打不过！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":16,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1015},
+        {"op":13,"flag":0,"text":"别打了，俺服了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":17,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1016},
+        {"op":13,"flag":0,"text":"饶命！不打了，不打了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":18,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1017},
+        {"op":13,"flag":0,"text":"好汉手下留情！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":19,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1018},
+        {"op":13,"flag":0,"text":"哎哟……俺认输了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":20,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1019},
+        {"op":13,"flag":0,"text":"打不过，打不过！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":21,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1020},
+        {"op":13,"flag":0,"text":"别打了，俺服了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":22,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1021},
+        {"op":13,"flag":0,"text":"饶命！不打了，不打了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":23,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1022},
+        {"op":13,"flag":0,"text":"好汉手下留情！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":24,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1023},
+        {"op":13,"flag":0,"text":"哎哟……俺认输了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":25,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1024},
+        {"op":13,"flag":0,"text":"打不过，打不过！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":26,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1025},
+        {"op":13,"flag":0,"text":"别打了，俺服了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":27,"below":40},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":1026},
+        {"op":13,"flag":0,"text":"饶命！不打了，不打了！"},
+        {"op":121,"flag":null,"value":0}
+      ]
     }
-  ]
+  ],
+  "spectators": [1]
 }
