@@ -1476,6 +1476,30 @@ export class Battle {
       if (hit) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
+    if (!this.checkNear()) return;
+    // 扩展包：某人生命低于一定比例【新】
+    let hpFired = false;
+    for (const b of this.blocks) {
+      const t = b.trigger;
+      if (t.kind !== 'hp' || this.fired.has(b.index)) continue;
+      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
+      if (who && who.hp * 100 < who.stats.maxHp * t.below && this.flagsOk(b)) {
+        this.runBlock(b);
+        hpFired = true;
+      }
+      if (this.status !== 'playing') return;
+    }
+    // 体力区块刚设了标志（山径斗毛贼：头领伤重才能劝降），身边的人不用再动一下就能触发【新】
+    if (hpFired && !this.checkNear()) return;
+    this.runCondBlocks();
+    if (this.status !== 'playing') return;
+    // 选人关没被选上的人这一关不再登场，不算
+    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
+      this.finish('lost', '我方全軍覆沒。');
+  }
+
+  /** 走到某人身边的触发；返回 false 表示已经分出胜负 */
+  private checkNear(): boolean {
     // 扩展包：任一我方单位走到某人身边（劫法场走过去松绑）
     for (const b of this.blocks) {
       const t = b.trigger;
@@ -1483,21 +1507,9 @@ export class Battle {
       if (t.playerPhase && this.phase !== 'player') continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
       if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1)) && this.flagsOk(b)) this.runBlock(b);
-      if (this.status !== 'playing') return;
+      if (this.status !== 'playing') return false;
     }
-    // 扩展包：某人生命低于一定比例【新】
-    for (const b of this.blocks) {
-      const t = b.trigger;
-      if (t.kind !== 'hp' || this.fired.has(b.index)) continue;
-      const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      if (who && who.hp * 100 < who.stats.maxHp * t.below && this.flagsOk(b)) this.runBlock(b);
-      if (this.status !== 'playing') return;
-    }
-    this.runCondBlocks();
-    if (this.status !== 'playing') return;
-    // 选人关没被选上的人这一关不再登场，不算
-    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
-      this.finish('lost', '我方全軍覆沒。');
+    return true;
   }
 
   private runTurnTriggers(param: number) {
