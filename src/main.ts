@@ -5,6 +5,7 @@ import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, startupImages, type Assets } from './game/assets.ts';
+import { PRISON_CART_TILES } from './game/prison-cart.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
 import { installTouchGuards } from './game/touch.ts';
@@ -82,7 +83,7 @@ function startGame(assets: Assets) {
   const packStages = new Map(
     listPacks()
       .filter((e) => e.pack.entry === 'mainline')
-      .flatMap((e) => e.stages.map((s) => [`${e.pack.id}/${s.id}`.toLowerCase(), s] as const)),
+      .flatMap((e) => e.stages.filter((s) => !s.sideStory).map((s) => [`${e.pack.id}/${s.id}`.toLowerCase(), s] as const)),
   );
   const chapterErrors = validateChapters(stages.map((s) => s.mapName), [...packStages.keys()]);
   if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
@@ -134,8 +135,11 @@ function startGame(assets: Assets) {
   if (stray.length) chapters.push({ label: '其它', items: stray.map((s) => ({ label: stageLabel(s.title, s.mapName).short, value: String(s.index), title: s.mapName })) });
   // 最后一组：外传（扩展包，已通关的打勾；一个包有几关时写成「包名·关名」）。顶栏下拉框和标题画面的选关共用
   const sideItems = (): TitleStageItem[] =>
-    listPacks().filter((e) => e.pack.entry !== 'mainline').flatMap(({ pack: p, stages: ss }) =>
-      ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description })),
+    listPacks().flatMap(({ pack: p, stages: ss }) =>
+      p.entry !== 'mainline'
+        ? ss.map((s) => ({ label: `${ss.length > 1 ? `${p.name}·${s.title}` : p.name}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: p.description }))
+        : // 主线包里的独立外传（sideStory，如蹴鞠）
+          ss.filter((s) => s.sideStory).map((s) => ({ label: `${s.title}${packCleared(p.id).includes(s.id) ? ' ✓' : ''}`, value: packStageName(p.id, s.id), title: s.title })),
     );
   const stageGroups = () => {
     const side = sideItems();
@@ -391,7 +395,7 @@ function startGame(assets: Assets) {
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
       const classes = stageClasses(rt, stage);
-      await preloadStage(pa, stageMapName(stage.map), progress, classes);
+      await preloadStage(pa, stageMapName(stage.map), progress, classes, stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
@@ -446,7 +450,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage));
+      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage), stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
