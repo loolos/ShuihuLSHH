@@ -272,4 +272,20 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     poke(b);
     expect(b.status).toBe('lost');
   });
+
+  it('火烧草料场：富安和陆谦一样逃得慢；洪教头被我方逼近三格内就回身硬拼', () => {
+    const b = make('N09');
+    const fu = cls(b, 63), lu = cls(b, 64), hong = cls(b, 71);
+    const slow = (u: Unit) => u.buffs.filter((x) => x.stat === 'move').reduce((n, x) => n + x.value, 0);
+    expect(slow(fu)).toBe(-2);
+    expect(slow(lu)).toBe(-2);
+    expect(slow(hong)).toBe(-1);
+    expect(hong.ai.mode).toBe(4);
+    const lin = cls(b, 11);
+    const spot = [[3, 0], [-3, 0], [0, 3], [0, -3], [2, 1], [1, 2], [-2, 1], [2, -1]].map(([dx, dy]) => ({ x: hong.x + dx, y: hong.y + dy })).find((c) => b.board.passable(c.x, c.y) && !b.units.some((u) => u.alive && u.present && u.x === c.x && u.y === c.y))!;
+    place(b, lin, spot.x, spot.y);
+    poke(b, lin);
+    expect(hong.ai.mode).toBe(0);
+    expect(slow(hong)).toBe(0);
+  });
 });
