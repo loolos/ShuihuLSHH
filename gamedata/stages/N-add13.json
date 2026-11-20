@@ -65,9 +65,9 @@
     {"index":60,"type":41,"group":61,"side":"enemy","facing":2,"x":24,"y":21,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":61,"type":41,"group":62,"side":"enemy","facing":2,"x":20,"y":19,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":62,"type":41,"group":63,"side":"enemy","facing":1,"x":31,"y":18,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":63,"type":39,"group":64,"side":"enemy","facing":3,"x":2,"y":46,"level":24,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":64,"type":39,"group":65,"side":"enemy","facing":2,"x":23,"y":33,"level":24,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":65,"type":39,"group":66,"side":"enemy","facing":1,"x":49,"y":5,"level":24,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":63,"type":39,"group":64,"side":"enemy","facing":3,"x":2,"y":46,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":64,"type":39,"group":65,"side":"enemy","facing":2,"x":23,"y":33,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":65,"type":39,"group":66,"side":"enemy","facing":1,"x":49,"y":5,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":66,"type":147,"group":0,"side":"object","facing":0,"x":31,"y":12,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":67,"type":184,"group":0,"side":"object","facing":0,"x":4,"y":41,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
   ],
@@ -81,16 +81,137 @@
         {"op":13,"flag":0,"text":"叫晁盖出来！告诉他我『青面兽』杨志找他！"},
         {"op":12,"flag":1,"value":37},
         {"op":13,"flag":0,"text":"哦～好狂的口气，想见晁保正先把我给打倒吧！"},
-        {"op":35,"flag":null,"value":50},
-        {"op":31,"flag":null,"text":"限制回合数 --- 50"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败所有敌人"},
+        {"op":12,"flag":1,"value":1065},
+        {"op":13,"flag":0,"text":"晁保正岂是你说见就见的？庄上有三位教头，你一个一个赢过来再说！"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"庄客、家人各守其位，围着看杨志与教头比试。不去招惹他们，他们就不会动手。"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1010},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1011},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1012},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1013},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1014},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1015},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1016},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1017},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1018},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1019},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1020},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1021},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1022},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1023},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1024},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1031},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1032},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1033},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1034},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1035},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1036},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1037},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1038},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1039},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1040},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1041},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1042},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1043},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1044},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1045},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1046},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1047},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1048},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1049},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1050},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1051},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1052},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1053},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1054},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1055},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1056},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1057},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1058},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1059},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1060},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1061},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1062},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1063},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1066},
+        {"op":122,"flag":null,"value":8},
+        {"op":12,"flag":1,"value":1065},
+        {"op":122,"flag":null,"value":0},
+        {"op":35,"flag":null,"value":40},
+        {"op":31,"flag":null,"text":"限制回合数 --- 40"},
+        {"op":32,"flag":null,"text":"胜利条件   --- 打败晁家庄的三个教头（教头一个一个出来，打倒第三个，晁盖就会出庄）"},
         {"op":33,"flag":null,"text":"失败条件一 --- %N死亡"},
-        {"op":33,"flag":null,"text":"失败条件二 --- 杨志死亡"}
+        {"op":33,"flag":null,"text":"失败条件二 --- 杨志死亡"},
+        {"op":33,"flag":null,"text":"注意       --- 对庄客、家人出手，或拖过第 12 回合，他们会一拥而上"}
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":50},
-      "cond": {"type":0,"arg":50},
+      "trigger": {"kind":"turn","turn":40},
+      "cond": {"type":0,"arg":40},
       "head": [1,0,1,0,0,0,38,2,0],
       "ops": [
         {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
@@ -113,12 +234,2543 @@
       ]
     },
     {
-      "trigger": {"kind":"death","char":255},
-      "cond": {"type":1,"arg":255},
-      "head": [1,0,1,0,0,0,10,2,1],
+      "trigger": {"kind":"cond"},
+      "cond": {"op":"and","a":{"type":100,"arg":8},"b":{"type":101,"arg":9}},
+      "head": [],
       "ops": [
-        {"op":29,"flag":null,"text":"游戏过关！"}
+        {"op":103,"flag":null,"value":9},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"有人对庄客动了手，庄上的人再不讲什么规矩，一拥而上！"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1010},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1011},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1012},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1013},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1014},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1015},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1016},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1017},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1018},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1019},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1020},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1021},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1022},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1023},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1024},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1031},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1032},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1033},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1034},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1035},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1036},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1037},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1038},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1039},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1040},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1041},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1042},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1043},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1044},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1045},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1046},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1047},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1048},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1049},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1050},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1051},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1052},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1053},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1054},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1055},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1056},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1057},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1058},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1059},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1060},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1061},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1062},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1063},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":12,"flagged":true},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":9},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"庄客们等得不耐烦，鼓噪起来：「跟他们讲什么规矩，一起上！」"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1010},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1011},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1012},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1013},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1014},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1015},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1016},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1017},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1018},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1019},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1020},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1021},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1022},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1023},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1024},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1031},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1032},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1033},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1034},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1035},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1036},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1037},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1038},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1039},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1040},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1041},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1042},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1043},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1044},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1045},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1046},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1047},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1048},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1049},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1050},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1051},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1052},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1053},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1054},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1055},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1056},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1057},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1058},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1059},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1060},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1061},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1062},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1063},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":39},
+      "cond": {"type":1,"arg":39},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":11},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"第一个教头败下阵来。庄里一阵骚动，第二个教头要出来了。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":39},
+      "cond": {"type":1,"arg":39},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":12},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"第二个教头也倒下了。最后一个教头提着兵器，带人走了过来。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"death","char":39},
+      "cond": {"type":1,"arg":39},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"三个教头都败了，庄门大开，一人大步走了出来。"},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":0,"text":"「都住手！」——正是『托塔天王』晁盖。"},
+        {"op":12,"flag":1,"value":1009},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1010},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1011},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1012},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1013},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1014},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1015},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1016},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1017},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1018},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1019},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1020},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1021},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1022},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1023},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1024},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1025},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1028},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1031},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1032},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1033},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1034},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1035},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1036},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1037},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1038},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1039},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1040},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1041},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1042},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1043},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1044},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1045},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1046},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1047},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1048},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1049},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1050},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1051},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1052},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1053},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1054},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1055},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1056},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1057},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1058},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1059},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1060},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1061},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1062},
+        {"op":121,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1063},
+        {"op":121,"flag":null,"value":0},
+        {"op":29,"flag":null,"text":"连败三个教头，『托塔天王』晁盖终于亲自出庄。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":1,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":1,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":2,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":2,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":3,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":3,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":4,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":4,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":5,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":5,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":6,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":6,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":7,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":7,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":8,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":8,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":9,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":9,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":10,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":10,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":11,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":11,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":12,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":12,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":13,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":13,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":14,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":14,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":15,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":15,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":16,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":16,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":17,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":17,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":18,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":18,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":19,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":19,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":20,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":20,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":21,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":21,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":22,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":22,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":23,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":23,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":24,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":24,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":25,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":25,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":26,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":26,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":27,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":27,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":28,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":28,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":29,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":29,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":30,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":30,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":31,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":31,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":32,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":32,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":33,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":33,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":34,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":34,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":35,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":35,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":36,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":36,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":37,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":37,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":38,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":38,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":39,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":11},"b":{"type":101,"arg":21}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":21},
+        {"op":12,"flag":1,"value":1064},
+        {"op":13,"flag":0,"text":"有点本事！再接我几招！"},
+        {"op":12,"flag":1,"value":1064},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1025},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1026},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1027},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":39,"flagged":true},
+      "cond": {"op":"and","a":{"type":100,"arg":12},"b":{"type":101,"arg":22}},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":22},
+        {"op":12,"flag":1,"value":1066},
+        {"op":13,"flag":0,"text":"让开！看我来会会这个『青面兽』！"},
+        {"op":12,"flag":1,"value":1066},
+        {"op":14,"flag":1,"value":23},
+        {"op":15,"flag":1,"value":33},
+        {"op":16,"flag":1,"value":0},
+        {"op":17,"flag":0,"value":9},
+        {"op":12,"flag":1,"value":1028},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1029},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1030},
+        {"op":122,"flag":null,"value":0},
+        {"op":12,"flag":1,"value":1064},
+        {"op":122,"flag":null,"value":0}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":8,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":9,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":10,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":11,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":12,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":13,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":14,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":15,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":16,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":17,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":18,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":19,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":20,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":21,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":22,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":23,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":24,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":25,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":26,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":27,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":28,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":29,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":30,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":31,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":32,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":33,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":34,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":35,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":36,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":37,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":40,"uid":38,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":39,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":40,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":41,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":42,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":43,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":44,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":45,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":46,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":47,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":48,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":49,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":50,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":51,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":52,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":53,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":54,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":37,"uid":55,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":56,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":57,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":58,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":59,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":60,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":61,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":41,"uid":62,"below":100},
+      "cond": {"type":101,"arg":9},
+      "head": [],
+      "ops": [
+        {"op":103,"flag":null,"value":8}
       ]
     }
-  ]
+  ],
+  "rules": {"poolLeftoverExp":true}
 }

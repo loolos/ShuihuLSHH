@@ -1,4 +1,4 @@
-// 前十五章三关的新胜利方式（docs/game-design.md §9.2.1）：误斗庄客（劝和）、斗托塔天王（只擒不杀）、强闯二龙山（诈降赚山门）
+// 前十五章换花样的关（docs/game-design.md §9.2.1）：误斗庄客、斗托塔天王、强闯二龙山、反劫剪径贼、山径斗毛贼、大破何涛、力擒金眼虎、叫阵晁家庄
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -134,5 +134,54 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
       if (k < 3) expect(spots().length).toBe(3 - k);
     });
     expect(b.status).toBe('won');
+  });
+
+  it('力擒金眼虎：打倒邓龙即过关，其余喽啰投降', () => {
+    const b = make('N10');
+    expect(b.objectives.some((l) => l.includes('邓龙'))).toBe(true);
+    const deng = cls(b, 62), me = cls(b, 0);
+    place(b, me, deng.x, deng.y + 1);
+    deng.hp = 1;
+    const ev = b.attack(me, deng);
+    expect(deng.alive).toBe(false);
+    expect(b.status).toBe('won');
+    expect(b.units.some((u) => u.side === 'enemy' && u.alive && u.present)).toBe(false);
+    expect(ev.some((e) => e.type === 'message' && e.text.startsWith('其餘敵人的經驗'))).toBe(true);
+  });
+
+  it('叫阵晁家庄：三个教头轮流出场，打倒第三个即过关', () => {
+    const b = make('N-add13');
+    const ring = () => b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39);
+    expect(ring().every((u) => u.ai.mode === 8)).toBe(true);
+    const [t1, t2, t3] = [64, 63, 65].map((i) => b.units[i]);
+    expect(t1.ai.mode).toBe(0);
+    expect(t2.ai.mode).toBe(8);
+    const beat = (t: Unit) => {
+      const p = b.active().find((u) => u.side === 'player' && b.canAct(u) && u.classId !== 14)!;
+      place(b, p, t.x - 1, t.y);
+      t.hp = 1;
+      b.attack(p, t);
+      expect(t.alive).toBe(false);
+    };
+    beat(t1);
+    expect(t2.ai.mode).toBe(8); // 下一回合才出来
+    b.endPlayerPhase();
+    expect(t2.ai.mode).toBe(0);
+    expect(Math.abs(t2.x - 23) + Math.abs(t2.y - 33)).toBeLessThan(3);
+    beat(t2);
+    expect(b.status).toBe('playing');
+    b.endPlayerPhase();
+    expect(t3.ai.mode).toBe(0);
+    beat(t3);
+    expect(b.status).toBe('won');
+  });
+
+  it('叫阵晁家庄：对庄客出手，人墙一拥而上', () => {
+    const b = make('N-add13');
+    const z = b.units.find((u) => u.side === 'enemy' && u.present && u.classId === 37)!;
+    z.hp -= 1;
+    poke(b);
+    expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39).every((u) => u.ai.mode === 0)).toBe(true);
+    expect(b.status).toBe('playing');
   });
 });
