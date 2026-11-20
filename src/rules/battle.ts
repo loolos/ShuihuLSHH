@@ -62,7 +62,8 @@ export type BattleEvent =
   | { type: 'choice'; choice: ChoiceRequest }
   /** 选人（剧本指令 27，见 PickRequest）：选好后调用 choose() */
   | { type: 'pick'; pick: PickRequest }
-  | { type: 'move'; uid: number; path: Cell[]; facing: number }
+  /** script：剧本让人走位（指令 17 / 116），连着几个一起走【新】 */
+  | { type: 'move'; uid: number; path: Cell[]; facing: number; script?: boolean }
   | { type: 'face'; uid: number; facing: number }
   /** 普通攻击与技能：cell 为施放点，area 为作用范围，hits 为每个受到攻击的单位的结算（回复/集气技为空） */
   | { type: 'attack'; uid: number; skill: SkillDef; cell: Cell; area: Cell[]; facing: number; hits: { uid: number; result: HitResult }[]; counter: boolean }
@@ -1142,13 +1143,13 @@ export class Battle {
 
   // ───────────── 结算 ─────────────
 
-  private walk(u: Unit, path: Cell[]) {
+  private walk(u: Unit, path: Cell[], script = false) {
     if (path.length < 2) return;
     const last = path[path.length - 1], prev = path[path.length - 2];
     u.x = last.x;
     u.y = last.y;
     u.facing = facingTowards(prev, last, u.facing);
-    this.emit({ type: 'move', uid: u.uid, path, facing: u.facing });
+    this.emit(script ? { type: 'move', uid: u.uid, path, facing: u.facing, script } : { type: 'move', uid: u.uid, path, facing: u.facing });
     // 原版只有我方在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），踩上宝箱才拾起。
     // 重制版【新：负责人 2026-11-12】：只有我方，走到宝箱上或上下左右相邻的格子（路过也算）就自动打开
     if (u.side !== 'player') return;
@@ -1727,7 +1728,7 @@ export class Battle {
           } else if (v & 1 && sel.present) {
             const reach = this.reachOf(sel, 99);
             const path = reach.has(key(px, py)) ? pathTo(reach, px, py) : [];
-            if (path.length > 1) this.walk(sel, path);
+            if (path.length > 1) this.walk(sel, path, true);
           }
           break;
         }
@@ -1938,7 +1939,7 @@ export class Battle {
             const path = pathTo(reach, x, y);
             if (path.length > 1 && (d < bestD || path.length < best.length)) { best = path; bestD = d; }
           }
-          if (best.length) this.walk(sel, best);
+          if (best.length) this.walk(sel, best, true);
           break;
         }
         // 115 换阵营（扩展包【新】，黄信归降）：text = player / ally / enemy；换了以后本回合不再行动，血条换色
