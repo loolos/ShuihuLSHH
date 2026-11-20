@@ -157,8 +157,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('序章 禁�
     b.move(wj, 7, 9);
     b.attack(wj, get(b, 'p3a'));
     const [a, c] = [get(b, 'p4a'), get(b, 'p4b')];
+    b.endPlayerPhase();
+    // 陪练站着不动，等王进摆出防御架势才攻上来
+    expect([a.x, a.y, wj.hp]).toEqual([7, 7, wj.stats.maxHp]);
     a.hp = 1;
     c.hp = 1;
+    b.defend(wj);
     const ev = b.endPlayerPhase();
     expect(said(ev, '日后临阵再练')).toBe(true);
     expect(said(ev, '教学 5/8')).toBe(true);

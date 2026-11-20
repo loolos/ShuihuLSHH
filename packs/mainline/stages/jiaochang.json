@@ -13,8 +13,8 @@
   { "id": "p2", "class": 33, "side": "enemy", "x": 9, "y": 8, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
   { "id": "p3a", "class": 33, "side": "enemy", "x": 7, "y": 8, "facing": 0, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
   { "id": "p3b", "class": 33, "side": "enemy", "x": 11, "y": 8, "facing": 0, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
-  { "id": "p4a", "class": 33, "side": "enemy", "x": 7, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 1, "target": "wangjin", "hidden": true, "hpMultiplier": 4 },
-  { "id": "p4b", "class": 33, "side": "enemy", "x": 11, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 1, "target": "wangjin", "hidden": true, "hpMultiplier": 4 },
+  { "id": "p4a", "class": 33, "side": "enemy", "x": 7, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "target": "wangjin", "hidden": true, "hpMultiplier": 4 },
+  { "id": "p4b", "class": 33, "side": "enemy", "x": 11, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "target": "wangjin", "hidden": true, "hpMultiplier": 4 },
   { "id": "p5a", "class": 33, "side": "enemy", "x": 8, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
   { "id": "p5b", "class": 33, "side": "enemy", "x": 9, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
   { "id": "p5c", "class": 33, "side": "enemy", "x": 10, "y": 7, "facing": 2, "level": 2, "name": "陪练军士", "ai": 8, "hidden": true, "hpMultiplier": 4 },
@@ -84,10 +84,16 @@
    ["appear", "p4b"],
    ["buff", "p4a", "attack", { "pct": -70, "turns": 20 }],
    ["buff", "p4b", "attack", { "pct": -70, "turns": 20 }],
-   ["say", "p4a", "两个打一个，教头小心了！"],
-   ["narrate", "【教学 4/8 · 防御与反击】选「防御」，王进这一回合不出手，挨打时伤害减三成；对方贴身打过来被你闪开，还有一半机会顺势反击，反击必定打中。选了防御就等对方出手。"],
+   ["say", "p4a", "教头摆好架势，我们两个便一齐上！"],
+   ["narrate", "【教学 4/8 · 防御与反击】选「防御」，王进这一回合不出手，挨打时伤害减三成；对方贴身打过来被你闪开，还有一半机会顺势反击，反击必定打中。王进摆出防御架势，两个陪练才会攻上来。"],
+   ["narrate", "【教学】王进这一回合已经出过手，等对方回合过去（自动「回合终了」），下一回合再点王进选「防御」。"],
    ["objective", "教学 4/8 --- 防御：让王进防御，挨对方一下"],
    ["objective", "提示       --- 点王进 → 防御 → 等对方回合"]
+  ]},
+  { "on": { "did": "wangjin", "action": "defend" }, "if": "step4", "unless": "step5", "do": [
+   ["say", "p4b", "教头架势摆好了，上！"],
+   ["setAi", "p4a", 1],
+   ["setAi", "p4b", 1]
   ]},
   { "on": { "did": "wangjin", "action": "attack" }, "if": "step4", "unless": "step5", "do": [
    ["say", "lipai", "教头先别还手，这一节是练守的，选「防御」。"]
@@ -128,6 +134,7 @@
    ["say", "wangjin", "……咳咳。病才好，到底气力不加。"],
    ["say", "lipai", "教头身上带着膏药，先贴上歇一歇。"],
    ["narrate", "【教学 6/8 · 道具】选「道具」，点狗皮膏药，再选「使用」，点王进自己（也可以给身边的人用）。用道具不算行动，用完还能做别的事；「给予」能把东西交给身边的自己人。"],
+   ["narrate", "【教学】出过手的人这一回合就不能再用道具了。等回合终了，下一回合再点王进用膏药。"],
    ["objective", "教学 6/8 --- 道具：用一次狗皮膏药"],
    ["objective", "提示       --- 点王进 → 道具 → 狗皮膏药 → 使用"]
   ]},
