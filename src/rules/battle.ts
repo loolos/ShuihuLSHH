@@ -1721,8 +1721,16 @@ export class Battle {
           this.emit({ type: 'choice', choice: this.pendingChoice });
           break;
         // 121 收手（扩展包【新】，梁山截路被宋江劝住的喽啰）：改成友军、原地不动、不能被选中，不再算敌人
-        case 121:
+        case 121: {
           if (!sel || !sel.alive || !sel.present) break;
+          // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
+          const s0 = sel, by = s0.side === 'enemy' ? this.active().find((t) => t.side === 'player' && dist(t, s0) === 1) : undefined;
+          if (by) {
+            const total = killExp(by, sel, this.rng);
+            this.gainExp(by, killerShare(total, true), 'kill');
+            this.teamExp += teamShare(total);
+            this.tallyExp('team', teamShare(total));
+          }
           sel.side = 'ally';
           sel.ai.mode = 8;
           sel.ended = true;
@@ -1731,6 +1739,7 @@ export class Battle {
           this.emit({ type: 'status', uid: sel.uid, text: '收手' });
           this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
+        }
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
