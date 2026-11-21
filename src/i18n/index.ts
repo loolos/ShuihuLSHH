@@ -25,7 +25,8 @@ interface Table {
   /** 中文原文 → 译文（人名、界面文字） */
   terms: Map<string, string>;
   /** 带占位的模板：正则 + 译文模板 + 每个占位的种类 */
-  patterns: { re: RegExp; out: string; kinds: ('n' | 's')[] }[];
+  /** 模板按写死的字数从多到少排：同一句能套上几个模板时，用最具体的那个 */
+  patterns: { re: RegExp; out: string; kinds: ('n' | 's')[]; fixed: number }[];
 }
 
 const empty = (): Table => ({ lines: new Map(), terms: new Map(), patterns: [] });
@@ -74,9 +75,10 @@ export function addTable(l: Lang, part: { lines?: Record<string, LineEntry>; ter
           return p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         })
         .join('');
-      t.patterns.push({ re: new RegExp(`^${src}$`, 's'), out, kinds });
+      t.patterns.push({ re: new RegExp(`^${src}$`, 's'), out, kinds, fixed: zh.replace(/\{[ns]\}/g, '').length });
     } else t.terms.set(zh, out);
   }
+  t.patterns.sort((a, b) => b.fixed - a.fixed);
 }
 
 // ---- 剧本文字的标记： 编号  中文 （私用区字符，不会出现在正文里） ----
