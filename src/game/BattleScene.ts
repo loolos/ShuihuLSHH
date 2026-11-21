@@ -596,7 +596,7 @@ export class BattleScene extends Phaser.Scene {
       this.ui.showUnit(u, null, this.battle.kickable(u) ? `${this.kickTip(name, this.battle.kickPreview(u))}。点球踢出去` : this.battle.cuju.locked ? '球被对方拦下了，本回合踢不动了，只能走位' : '够不着球：近战要站在球身边（斜着也行），远程要在射程内');
     } else if (target) this.ui.showUnit(target, this.battle.preview(u, target));
     else if (hovered && hovered !== u) this.ui.showUnit(hovered);
-    else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : m.kind === 'move' ? '选择移动位置（绿 = 移动，黄 = 强行军，走完本回合结束）' : '');
+    else this.ui.showUnit(u, null, m.kind === 'attack' ? (this.battle.attackTargets(u).length ? '选择攻击目标' : '攻击范围内没有敌人') : m.kind === 'move' ? '选择移动位置（绿 = 移动，黄 = 强行军，走完本回合结束）' : u.forcedMarch && !this.battle.canAct(u) && this.battle.canUndo(u) ? '强行军，本回合行动完毕（可撤销移动）' : '');
     if (this.isTargeting(m)) this.setTargetCommands(m);
     else this.setFloatCommands(m);
   }
@@ -756,7 +756,14 @@ export class BattleScene extends Phaser.Scene {
     if (m.kind === 'item') return this.itemList(u);
     if (m.kind === 'itemSlot') return this.itemOps(m);
     // 不能行动的我方人物（已行动、敌方回合）也能查看道具
-    if (!b.canAct(u)) return u.slots.some(Boolean) ? [{ label: '道具', run: () => this.select({ kind: 'item', u }) }] : null;
+    // 强行军走完就行动完毕、变灰，但同一回合再点他还能撤销移动（lolo 2026-11-21）【新】
+    if (!b.canAct(u)) {
+      const cmds: Command[] = [
+        ...(u.slots.some(Boolean) ? [{ label: '道具', run: () => this.select({ kind: 'item', u }) }] : []),
+        ...(b.canUndo(u) ? [{ label: '撤销移动', run: () => this.exec(u, () => b.undoMove(u)) }] : []),
+      ];
+      return cmds.length ? cmds : null;
+    }
     if (m.kind === 'skills') {
       return [
         ...b.skillsOf(u).map(({ skill, usable, hasTarget }) => ({

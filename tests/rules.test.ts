@@ -517,6 +517,21 @@ describe('战斗流程', () => {
     expect(b.phase).toBe('player');
   });
 
+  it('强行军后行动完毕，同回合可撤销', () => {
+    const b = new Battle({ name: 't', board: new Board(20, 3), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 19, 2, 0x800)], blocks: [], data, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    const c = b.moveRange(p).yellow[0];
+    b.move(p, c.x, c.y);
+    expect(p.forcedMarch).toBe(true);
+    expect(b.canAct(p)).toBe(false);
+    expect(b.canUndo(p)).toBe(true);
+    b.undoMove(p);
+    expect([p.x, p.y]).toEqual([0, 0]);
+    expect(b.canAct(p)).toBe(true);
+    expect(p.forcedMarch).toBe(false);
+  });
+
   it('我方全员行动完毕：昏迷、阵亡的人不算', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 2), act(2, 0, 'player', 0, 4), act(3, 1, 'enemy', 9, 9)], blocks: [], data, seed: 1 });
     b.begin();
