@@ -213,11 +213,12 @@ export function planAi(b: Battle, u: Unit): AiPlan {
   // 模式 5 跟随的 w8 = 0 是主角（角色 0）：N12 晁蓋就是这样跟着主角走的【推测：EXE 0x40c360 按角色号查找，0 也是合法角色号】。
   // 其它模式的 0 仍当"没指定"。
   const target = u.ai.target || u.ai.mode === 5 ? b.unitByChar(u.ai.target) : undefined;
-  // 手下留情（rules.feint，东溪村突围的朱仝）【新】：出来以后专找那个人做样子打
+  // 手下留情（rules.feint，东溪村突围的朱仝）【新】：那个人到了警戒范围就专找他做样子打
   const feint = b.tune?.feint;
   if (feint && u.classId === feint.by && u.present) {
     const t = b.unitByChar(feint.target);
-    if (t && t.alive && t.present) return bestAttack(b, u, t) ?? approach(b, u, [t]);
+    // 走得到、打得着才去（其余时候照自己的模式，东溪村突围的朱仝是迎击）
+    if (t && t.alive && t.present && Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= alertRadius(b, u)) return bestAttack(b, u, t) ?? approach(b, u, [t]);
   }
   switch (u.ai.mode) {
     case 1:
