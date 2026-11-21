@@ -42,10 +42,11 @@ describe('球路', () => {
     expect(r).toMatchObject({ kind: 'intercept', by: 2, at: { x: 13, y: 9 } });
   });
 
-  it('防御中的对方：路过他上下左右相邻的格子也会被拦下', () => {
+  it('防御中的对方：路过他身边 8 格（含斜角）也会被拦下', () => {
     const line = traceLine({ x: 10, y: 9 }, 1, 0, 0, 6);
     expect(resolveBall(rules, { x: 10, y: 9 }, line, 'player', [P(2, 'enemy', 13, 10)])).toMatchObject({ kind: 'stop', at: { x: 16, y: 9 } });
-    expect(resolveBall(rules, { x: 10, y: 9 }, line, 'player', [P(2, 'enemy', 13, 10, true)])).toMatchObject({ kind: 'intercept', by: 2, at: { x: 13, y: 9 } });
+    expect(resolveBall(rules, { x: 10, y: 9 }, line, 'player', [P(2, 'enemy', 13, 10, true)])).toMatchObject({ kind: 'intercept', by: 2, at: { x: 12, y: 9 } });
+    expect(resolveBall(rules, { x: 10, y: 9 }, line, 'player', [P(2, 'enemy', 13, 11, true)])).toMatchObject({ kind: 'stop', at: { x: 16, y: 9 } });
   });
 
   it('出界、进球、乌龙球', () => {

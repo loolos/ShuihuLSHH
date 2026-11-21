@@ -3,7 +3,7 @@
 //    进球最高，落点越靠前、离对方越远、离本方还没动的队友越近越好；被拦截、出界扣分。
 //    每次挑全队分数最高的那一脚先踢，所以会自然出现"一个传、一个接着射"。
 // 2. 其余的人按分工走位：守门员站在球和本方球门的连线上，后卫挡在球和球门之间，前锋绕到球后面准备下一脚、或往前插接应；
-//    走完防御（防御时上下左右相邻的格子也能拦球），前锋气不够时休息攒气。
+//    走完防御（防御时身边 8 格也能拦球），前锋气不够时休息攒气。
 import type { Battle } from './battle.ts';
 import type { Cell } from './board.ts';
 import { DEVIATE_MAX, DEVIATE_MIN, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, traceLine, type BallResult, type Team } from './cuju.ts';

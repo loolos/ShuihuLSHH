@@ -180,7 +180,7 @@ export type BallResult =
  * 球沿 line 一格一格走：
  * - 出了球场：进了某一方的球门口就是进球，不然是出界；
  * - 走到对方好汉站的格子（斜着走时擦过的两个侧格也算）：被拦下，停在他脚前（上一格）；
- * - 走进防御中的对方好汉上下左右相邻的格子：被拦下，停在这一格；
+ * - 走进防御中的对方好汉身边 8 格（斜角也算）：被拦下，停在这一格；
  * - 自己人不挡球；最后停的格子有人，就退回到上一个空格。
  */
 export function resolveBall(rules: CujuRules, start: Cell, line: Cell[], kicker: Side, players: BallPlayer[]): BallResult {
@@ -210,7 +210,7 @@ export function resolveBall(rules: CujuRules, start: Cell, line: Cell[], kicker:
     if (blocker) return { kind: 'intercept', at: settle(path.length - 1), path, by: blocker.uid };
     path.push(c);
     if (!here) {
-      const guard = players.find((p) => p.side !== kicker && p.defending && Math.abs(p.x - c.x) + Math.abs(p.y - c.y) === 1);
+      const guard = players.find((p) => p.side !== kicker && p.defending && Math.max(Math.abs(p.x - c.x), Math.abs(p.y - c.y)) === 1);
       if (guard) return { kind: 'intercept', at: c, path, by: guard.uid };
     }
     prev = c;
