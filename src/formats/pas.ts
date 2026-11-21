@@ -77,7 +77,7 @@ export function parsePasHeader(buf: Buffer): PasHeader {
 // ───────────── 区块与指令（事件脚本），结构见 docs/binary-formats.md §8 ─────────────
 
 export type PasTrigger =
-  | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战
+  | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战；−1（必须 flagged）= 第 2 回合起任何一回合开始时，标志一满足就执行【新】
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
   | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[]; /** 扩展包【新】：区块写了 if / unless（教学关的将台，§15.26） */ flagged?: boolean; /** 扩展包【新】：地图上区域旁写的字（默认「撤退」） */ label?: string; /** 【新】回合结束（下回合开始前）才检查 */ atTurnEnd?: boolean }
@@ -93,7 +93,7 @@ export type PasTrigger =
   /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
   | { kind: 'near'; char: number; uid?: number; by?: number; playerPhase?: boolean; /** 几格以内算碰到，默认 1（身边）【新】 */ range?: number }
   /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
-  | { kind: 'hp'; char: number; uid?: number; below: number }
+  | { kind: 'hp'; char: number; uid?: number; below: number; /** 【新】比武点到为止（叫阵晁家庄）：区块没执行、标志也满足时，这人挨打不会被打倒，至少留 1 点体力 */ spare?: boolean }
   /**
    * 扩展包【新】：这个人刚做了某个操作（教学关一步一步教，§15.26）。只在操作发生的那一刻判，之前做过的不算；
    * action 见 DidAction；可配 if / unless 标志，标志不满足时这次操作不算，等下一次。
@@ -125,7 +125,7 @@ export interface PasOp {
   /** 载入时补上的完整编号「关卡名#编号」（如 N01#7），译文按它查；文件里不写 */
   tid?: string;
   /** 扩展包的新指令（100 起，src/packs/script.ts）的参数 */
-  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number; /** 多语言编号 */ tid?: string }[]; /** 121 收手：照打倒给经验、交出击退银子的百分之几、直接离场、不飘字 */ reward?: boolean; goldPct?: number; leave?: boolean; quiet?: boolean; /** 115 换阵营：连带 range 格内最近的 nearest 个同阵营的人（classes 限定职业） */ nearest?: number; range?: number; classes?: number[]; /** 115：按比例换（0.5 = 一半），crewOnly = 不换选中的人本身 */ fraction?: number; crewOnly?: boolean; /** 115：只在这些编号里挑 */ only?: number[]; /** 12 选人【新】：只挑这一方（side）在场的、被定住的（stunned）人、第几个（nth） */ side?: string; stunned?: boolean; nth?: number };
+  args?: { stat?: string; pct?: number; add?: number; turns?: number; /** 108 转身、109 动作、112 镜头：对着这个编组号的人 */ toward?: number; /** 109 动作：attack / hurt / defend */ action?: string; /** 118 拔树：整株地上物所在格 */ cells?: { x: number; y: number }[]; /** 112 镜头：格子坐标 */ x?: number; y?: number; /** 120 剧情选项：选项文字和选中后设的标志 */ options?: { label: string; flag: number; /** 多语言编号 */ tid?: string }[]; /** 121 收手：照打倒给经验、交出击退银子的百分之几、直接离场、不飘字 */ reward?: boolean; goldPct?: number; leave?: boolean; quiet?: boolean; /** 115 换阵营：连带 range 格内最近的 nearest 个同阵营的人（classes 限定职业） */ nearest?: number; range?: number; classes?: number[]; /** 115：按比例换（0.5 = 一半），crewOnly = 不换选中的人本身 */ fraction?: number; crewOnly?: boolean; /** 115：只在这些编号里挑 */ only?: number[]; /** 12 选人【新】：只挑这一方（side）在场的、被定住的（stunned）人、第几个（nth） */ side?: string; stunned?: boolean; nth?: number; /** 27 选人【新】（叫阵晁家庄单挑）：没选上的人留在原地观战（不退场），选上的人走到 (x, y) 附近；fresh = 本关选过的人不能再选；must = 这几个职业要在剩下 left 次选人里出场一次 */ keep?: boolean; fresh?: boolean; must?: number[]; left?: number };
   /** 指令 12【新】：只点名说话者，隐藏的人不随之登场（重制版补的对白，src/rules/story-quotes.ts） */
   quiet?: boolean;
   /** 剧情点名：已战败角色仅供演出，不复活、不改变战斗状态。near为显示时靠近的职业号。 */

@@ -256,39 +256,81 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(ev.some((e) => e.type === 'message' && e.text.startsWith('其餘敵人的經驗'))).toBe(true);
   });
 
-  it('叫阵晁家庄：三个教头轮流出场，打倒第三个即过关', () => {
+  it('叫阵晁家庄：三阵单挑，选过的人不再选，杨志要出战一阵，三阵全胜晁盖出庄', () => {
     const b = make('N-add13');
-    const ring = () => b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39);
-    expect(ring().every((u) => u.ai.mode === 8)).toBe(true);
     const [t1, t2, t3] = [64, 63, 65].map((i) => b.units[i]);
+    const yz = cls(b, 14);
+    const crowd = () => b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39);
+    expect(crowd().every((u) => u.ai.mode === 8)).toBe(true);
     expect(t1.ai.mode).toBe(0);
     expect(t2.ai.mode).toBe(8);
-    const beat = (t: Unit) => {
-      const p = b.active().find((u) => u.side === 'player' && b.canAct(u) && u.classId !== 14)!;
-      place(b, p, t.x - 1, t.y);
-      t.hp = 1;
-      b.attack(p, t);
-      expect(t.alive).toBe(false);
-    };
-    beat(t1);
-    expect(t2.ai.mode).toBe(8); // 下一回合才出来
+    expect(b.turn).toBe(0);
+    // 第一阵：选史进
+    const p1 = b.pendingPick!;
+    expect(p1.candidates.length).toBe(8);
+    const shi = cls(b, 3);
+    b.choose([shi.uid]);
+    expect(b.turn).toBe(1);
+    const watchers = b.units.filter((u) => u.side === 'player' && u !== shi);
+    expect(watchers.every((u) => b.spectators.has(u.uid) && !b.canAct(u))).toBe(true);
+    expect(b.canAct(shi)).toBe(true);
+    expect(Math.abs(shi.x - 26) + Math.abs(shi.y - 35)).toBeLessThan(3);
+    // 教头体力不到三成就认输退场
+    t1.hp = Math.floor(t1.stats.maxHp * 0.2);
+    poke(b);
+    expect(t1.alive).toBe(true);
+    expect(t1.present).toBe(false); // 认输退场
+    expect(b.status).toBe('playing');
+    // 下一回合开始，第二个教头上场，再选人；史进不能再选
     b.endPlayerPhase();
     expect(t2.ai.mode).toBe(0);
-    expect(Math.abs(t2.x - 23) + Math.abs(t2.y - 33)).toBeLessThan(3);
-    beat(t2);
-    expect(b.status).toBe('playing');
+    expect(Math.abs(t2.x - 26) + Math.abs(t2.y - 33)).toBeLessThan(3);
+    const p2 = b.pendingPick!;
+    expect(p2.candidates).not.toContain(shi.uid);
+    expect(b.spectators.has(shi.uid)).toBe(true);
+    const lu = cls(b, 16);
+    b.choose([lu.uid]);
+    expect(b.canAct(lu)).toBe(true);
+    t2.hp = Math.floor(t2.stats.maxHp * 0.2);
+    poke(b);
+    expect(t2.present).toBe(false);
     b.endPlayerPhase();
-    expect(t3.ai.mode).toBe(0);
-    beat(t3);
+    // 第三阵：杨志还没出战，只能选他
+    expect(b.pendingPick!.candidates).toEqual([yz.uid]);
+    b.choose([yz.uid]);
+    t3.hp = Math.floor(t3.stats.maxHp * 0.2);
+    poke(b);
+    expect(b.status).toBe('won');
+  });
+
+  it('叫阵晁家庄：输了一阵就翻脸混战，观战的好汉都能动，要打败所有敌人', () => {
+    const b = make('N-add13');
+    const t1 = b.units[64];
+    const wu = cls(b, 0);
+    b.choose([cls(b, 11).uid]);
+    const lin = cls(b, 11);
+    // 教头一刀砍不死林冲，体力不到三成就认输
+    lin.hp = 3;
+    place(b, t1, lin.x, lin.y - 1);
+    b.endPlayerPhase();
+    expect(lin.alive).toBe(true);
+    expect(b.status).toBe('playing');
+    expect(b.objectives.some((l) => l.includes('打败所有敌人'))).toBe(true);
+    expect(b.spectators.has(wu.uid)).toBe(false);
+    expect(b.units.filter((u) => u.side === 'enemy' && u.present).every((u) => u.ai.mode === 0)).toBe(true);
+    for (const u of b.units) if (u.side === 'enemy') u.alive = false;
+    poke(b);
     expect(b.status).toBe('won');
   });
 
   it('叫阵晁家庄：对庄客出手，人墙一拥而上', () => {
     const b = make('N-add13');
+    b.choose([cls(b, 3).uid]);
     const z = b.units.find((u) => u.side === 'enemy' && u.present && u.classId === 37)!;
     z.hp -= 1;
     poke(b);
-    expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39).every((u) => u.ai.mode === 0)).toBe(true);
+    expect(b.units.filter((u) => u.side === 'enemy' && u.present).every((u) => u.ai.mode === 0)).toBe(true);
+    expect(b.units.filter((u) => u.side === 'player').every((u) => !b.spectators.has(u.uid))).toBe(true);
     expect(b.status).toBe('playing');
   });
 

@@ -135,6 +135,7 @@ export function loadStage(files: FileSource, data: GameData, stage: string, opts
     name: stage,
     enemyRanks: j.enemyRanks ?? (battle ? Object.fromEntries(units.filter((u) => u.side === 'enemy').map((u) => [u.index, enemyRank(u.type)])) : undefined),
     names: j.names,
+    hpMultipliers: j.hpMultipliers,
     spectators: j.spectators,
     clearGold: j.clearGold,
     rules: j.rules,
