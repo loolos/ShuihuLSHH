@@ -21,6 +21,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
   };
   const after = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
   const put = (b: Battle, u: Unit, x: number, y: number) => { u.x = x; u.y = y; after(b); };
+  const turnEnd = (b: Battle) => (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(50);
   const kill = (u: Unit) => { u.hp = 0; u.alive = false; u.present = false; };
 
   it('章号；单位站在可通行的格子上、互不重叠；开场只有宋江一人', () => {
@@ -46,6 +47,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
     expect(b.objectives.join('')).toContain('玄女像');
     sj.hp = 1;
     put(b, sj, 10, 3);
+    // 走到玄女像旁回合结束才算【新】（负责人 2026-11-21：下回合登场的好汉可以直接战斗）
+    expect(get('likui').present).toBe(false);
+    const out = (b as unknown as { out: { type: string; text?: string }[] }).out;
+    expect(out.some((e) => e.type === 'status' && e.text === '回合结束时生效')).toBe(true);
+    turnEnd(b);
     expect(sj.hp).toBe(sj.stats.maxHp);
     expect(get('xuannv').name).toBe('九天玄女像');
     for (const id of ['likui', 'hero', 'liutang', 'shiyong', 'oupeng', 'taozongwang', 'lili']) expect(get(id).present, id).toBe(true);
@@ -67,6 +73,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
     const sj = get('songjiang');
     sj.hp = sj.stats.maxHp;
     put(b, sj, 10, 3);
+    expect(b.status).toBe('playing');
+    turnEnd(b);
     expect(b.status).toBe('won');
   });
 });

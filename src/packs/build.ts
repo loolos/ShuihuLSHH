@@ -455,7 +455,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
-    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}) };
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
   } else if ('hp' in on) {
     const target = r.unitRef(on.hp).act;
     trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
