@@ -166,7 +166,28 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           if (inReach && !inGoal(u)) { ev.push(...b.move(u, inReach.x, inReach.y)); if (b.canAct(u)) ev.push(...b.defend(u)); }
           else if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
           else if (inGoal(u)) ev.push(...b.defend(u));
-          else { const g = goalCell(u); walkTo(b, u, g.x, g.y, ev); }
+          else {
+            // 像真人一样绕开敌人：这回合走得到的格子里，离区域近、又不贴着敌人（4 格内）的优先【新】
+            // 从区域往外广搜，敌人 5 格内的格子当成走不通（都绕不开时退回普通距离）
+            const W = b.board.width, H = b.board.height, foes = b.foesOf(u);
+            const safeField = new Float64Array(W * H).fill(Infinity);
+            const q: number[] = [];
+            for (let y = goal.y1; y <= Math.min(goal.y2, H - 1); y++) for (let x = goal.x1; x <= Math.min(goal.x2, W - 1); x++) { safeField[y * W + x] = 0; q.push(y * W + x); }
+            for (let i = 0; i < q.length; i++) {
+              const x = q[i] % W, y = (q[i] / W) | 0;
+              for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+                const X = x + dx, Y = y + dy, k = Y * W + X;
+                if (X < 0 || Y < 0 || X >= W || Y >= H || safeField[k] !== Infinity || !b.board.passable(X, Y)) continue;
+                if (foes.some((f) => dist(f, { x: X, y: Y }) <= 5)) continue;
+                safeField[k] = safeField[q[i]] + 1; q.push(k);
+              }
+            }
+            const field = b.board.distanceField([{ x: goal.x, y: goal.y }]);
+            const score = (c: { x: number; y: number }) => (safeField[c.y * W + c.x] !== Infinity ? safeField[c.y * W + c.x] : 1000 + field[c.y * W + c.x]);
+            const c = b.moveRange(u).green.filter((g) => !b.active().some((o) => o !== u && o.x === g.x && o.y === g.y)).reduce((a, g) => (score(g) < score(a) ? g : a), { x: u.x, y: u.y });
+            if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
+            if (b.canAct(u)) ev.push(...b.defend(u));
+          }
           continue;
         }
         // 能劝人收手的人（梁山截路的宋江）走到最近一个还没劝住的人身边；走到某人身边就过关的（赌坊劝架拦李逵），谁都往那人身边走
