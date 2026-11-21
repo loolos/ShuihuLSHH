@@ -59,7 +59,7 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '智取无为军', stages: ['mainline/wuweijun', 'mainline/jiehuang'] },
   // 负责人 2026-11-21：还道村受天书（原著第 42 回）：宋江独自回乡被赵能、赵得追进还道村玄女庙，黑尘怪风吹散土兵，
   // 玄女授三卷天书；李逵、刘唐、石勇、李立和黄门山的欧鹏、陶宗旺（友军）杀进庙来
-  { name: '还道村受天书', stages: ['mainline/huandaocun'] },
+  { name: '还道村受天书', stages: ['mainline/banqu', 'mainline/huandaocun'] },
 ];
 
 /**
