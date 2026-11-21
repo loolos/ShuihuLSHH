@@ -523,7 +523,9 @@ describe.skipIf(!has)('N01', () => {
     expect(b.status).toBe('playing');
     const zhu = b.units.filter((u) => u.classId === 48);
     expect(zhu.length).toBe(1); // 2026-11-21 起只留出口旁那个（原版另有一个在 (4,25)，换成了都头）
-    expect(zhu.every((u) => !u.present && (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
+    // 朱仝开场在庄前露面，说完在后门和官兵一起登场（负责人 2026-11-21：和敌军一起出现，不是埋伏）
+    expect(zhu.every((u) => u.present && u.x === 4 && u.y === 26 && !(b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
+    Object.assign(zhu[0], { x: 30, y: 40 }); // 挪开，免得敌方回合他先去找晁蓋
     // 晁蓋走到 (0–1, 27–29)；他跟着主角走（模式 5），主角也得在旁边，友军回合他才不会走开
     const chao = b.units.find((u) => u.classId === 12)!;
     chao.x = 1;
@@ -552,7 +554,7 @@ describe.skipIf(!has)('N01', () => {
         expect(shown(cls)?.y, String(cls)).toBe(19);
         expect(evs.some((e) => e.type === 'leave' && bb.units.find((u) => u.uid === e.uid)?.classId === cls)).toBe(true);
       }
-      expect(bb.units.filter((u) => [60, 54, 48].includes(u.classId)).every((u) => !u.present)).toBe(true);
+      expect(bb.units.filter((u) => [60, 54].includes(u.classId)).every((u) => !u.present)).toBe(true);
     }
     // 朱仝出来以后打晁蓋只是做样子：没有伤害，接着说明来意（rules.feint，负责人 2026-11-21）
     const out = (bb: Battle) => (bb as unknown as { ambushers: Set<number> }).ambushers;
