@@ -79,7 +79,7 @@ describe('章节表', () => {
     expect(chapterOf('mainline/bensang')).toBe(21);
     expect(chapterOf('mainline/jieyangling')).toBe(21);
     expect(chapterLabel(21)).toBe('第二十一章 刺配江州');
-    expect(CHAPTERS).toHaveLength(24);
+    expect(CHAPTERS).toHaveLength(25);
   });
 });
 

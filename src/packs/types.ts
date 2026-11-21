@@ -249,6 +249,7 @@ export type PackTrigger =
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */
+  /** enter: "player" = 我方任何一个在场的人进去都算【新】 */
   | { enter: string | string[]; area: [number, number, number, number]; label?: string } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
   | { near: string; by?: string; playerPhase?: boolean }
@@ -275,6 +276,8 @@ export type PackTrigger =
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
  * ["setAi", 单位, 模式] 改 AI 模式；
+ * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
+ * ["stealthEnd"] 潜行结束：哨兵不再警戒，发现也不再判负；
  * ["standDown", 单位, 参数（可省）] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）；参数 {reward: 身边没我方也照打倒给经验, leave: 收手后离开地图, quiet: 不飘字（一起收手时一起淡出）, goldPct: 交出击退银子的百分之几}
  */
 export type PackOpJson = [string, ...unknown[]];
@@ -282,7 +285,8 @@ export type PackOpJson = [string, ...unknown[]];
 export interface PackBlockJson {
   on: PackTrigger;
   /** 对 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did 有效：还要求某个剧本标志（["flag", 名字] 设上）已经设上 / 还没设上 */
-  if?: string;
-  unless?: string;
+  /** 写数组时每个标志都要满足（AND）【新】 */
+  if?: string | string[];
+  unless?: string | string[];
   do: PackOpJson[];
 }

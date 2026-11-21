@@ -283,6 +283,8 @@ export class Battle {
   private fired = new Set<number>();
   /** 剧本放的火（指令 124，只是画面，不挡路、不烧人）【新】 */
   private blaze: Cell[] = [];
+  /** 潜行结束【新】（智取无为军：骗开大门以后，指令 125）：哨兵不再警戒、发现也不再判负 */
+  private stealthOver = false;
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
     return this.fired.has(index);
@@ -603,7 +605,7 @@ export class Battle {
       const flees = (b: (typeof this.blocks)[number]) =>
         b.trigger.kind === 'area' && b.ops.some((o) => o.op === 17 && o.value & 2) && this.units.some((u) => b.trigger.kind === 'area' && u.classId === b.trigger.char && u.side === 'enemy');
       // 放火点（指令 124，大破何涛）不是胜利条件，也标出来【新】
-      const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : b.trigger.kind === 'area' && b.trigger.label ? 'goal' /* 写了字的区域（智取无为军的探查点）也标出【新】 */ : null;
       if (!kind) continue;
       const t = b.trigger;
       // 写了 if / unless 的区域：标志不满足时还没轮到，不标出（教学关的将台，§15.26）
@@ -766,7 +768,7 @@ export class Battle {
     this.out = [];
     if (this.status !== 'playing' || this.phase !== 'player') return [];
     // 潜行关：发现我方的人到期还站着，就喊醒了全庄【新】
-    if (this.stealth && Object.entries(this.spotters).some(([uid, t]) => t <= this.turn && this.units[Number(uid)].alive && this.units[Number(uid)].present)) {
+    if (this.stealth && !this.stealthOver && Object.entries(this.spotters).some(([uid, t]) => t <= this.turn && this.units[Number(uid)].alive && this.units[Number(uid)].present)) {
       this.finish('lost', this.stealth.lose);
       return this.flush();
     }
@@ -805,7 +807,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze,
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver,
       fought: [...this.fought], duelist: this.duelist,
     });
   }
@@ -867,6 +869,7 @@ export class Battle {
     if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
+    this.stealthOver = s.stealthOver ?? false;
     if (this.fire || this.blaze.length) this.emit({ type: 'fire', cells: this.fireCells() });
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
@@ -1701,7 +1704,7 @@ export class Battle {
 
   /** 还在警戒的哨兵（活着、在场、没被发现过的敌人）和他们的警戒半径，画面上画警戒范围用【新】 */
   watchZones(): { uid: number; x: number; y: number; facing: number; r: number; spotted: boolean }[] {
-    if (this.status !== 'playing') return [];
+    if (this.status !== 'playing' || this.stealthOver) return [];
     return [...this.watchers].flatMap(([uid, r]) => {
       const w = this.units[uid];
       return w && w.alive && w.present && w.side === 'enemy' ? [{ uid, x: w.x, y: w.y, facing: w.facing, r, spotted: uid in this.spotters }] : [];
@@ -1713,6 +1716,7 @@ export class Battle {
    * 要在下个我方回合结束前打倒他（见 endPlayerPhase）。
    */
   private checkSpotted() {
+    if (this.stealthOver) return;
     for (const [uid, r] of this.watchers) {
       const w = this.units[uid];
       if (!w || uid in this.spotters || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0) continue;
@@ -2140,6 +2144,12 @@ export class Battle {
           selName = sel?.name ?? '';
           break;
         }
+        // 125 潜行结束【新】（智取无为军，负责人 2026-11-21）：骗开大门后不用再躲，哨兵不再警戒，已发现的也不再判负
+        case 125:
+          this.stealthOver = true;
+          this.spotters = {};
+          for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = false;
+          break;
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
