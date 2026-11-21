@@ -24,8 +24,8 @@
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 1,
-   "y": 6,
+   "x": 7,
+   "y": 7,
    "level": 30,
    "facing": 1
   },
@@ -33,8 +33,8 @@
    "id": "duqian",
    "class": 69,
    "side": "player",
-   "x": 1,
-   "y": 7,
+   "x": 7,
+   "y": 6,
    "level": 30,
    "facing": 1,
    "name": "摸着天杜迁"
@@ -43,8 +43,8 @@
    "id": "songwan",
    "class": 70,
    "side": "player",
-   "x": 2,
-   "y": 7,
+   "x": 7,
+   "y": 8,
    "level": 30,
    "facing": 1,
    "name": "云里金刚宋万"
@@ -52,9 +52,9 @@
   {
    "id": "tongwei",
    "class": "tongwei",
-   "side": "player",
-   "x": 1,
-   "y": 8,
+   "side": "ally",
+   "x": 6,
+   "y": 7,
    "level": 30,
    "facing": 1
   },
@@ -62,8 +62,8 @@
    "id": "wangying",
    "class": "wangying",
    "side": "player",
-   "x": 21,
-   "y": 5,
+   "x": 12,
+   "y": 7,
    "level": 30,
    "facing": 3,
    "name": "矮脚虎王英"
@@ -71,9 +71,9 @@
   {
    "id": "zhengtianshou",
    "class": 67,
-   "side": "player",
-   "x": 22,
-   "y": 5,
+   "side": "ally",
+   "x": 13,
+   "y": 6,
    "level": 30,
    "facing": 3,
    "name": "白面郎君郑天寿"
@@ -81,8 +81,8 @@
   {
    "id": "tongmeng",
    "class": "tongmeng",
-   "side": "player",
-   "x": 22,
+   "side": "ally",
+   "x": 14,
    "y": 6,
    "level": 30,
    "facing": 3
@@ -431,6 +431,97 @@
    "name": "土兵弓手",
    "levelOffset": -2,
    "hidden": true
+  },
+  {
+   "id": "e1",
+   "class": 32,
+   "side": "enemy",
+   "x": 21,
+   "y": 6,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e2",
+   "class": 33,
+   "side": "enemy",
+   "x": 21,
+   "y": 7,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e3",
+   "class": 32,
+   "side": "enemy",
+   "x": 21,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e4",
+   "class": 34,
+   "side": "enemy",
+   "x": 23,
+   "y": 7,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e5",
+   "class": 34,
+   "side": "enemy",
+   "x": 23,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e6",
+   "class": 43,
+   "side": "enemy",
+   "x": 22,
+   "y": 6,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "e7",
+   "class": 43,
+   "side": "enemy",
+   "x": 22,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
   }
  ],
  "script": [
@@ -472,7 +563,7 @@
     [
      "say",
      "wangying",
-     "戴院长放心，小弟和郑兄弟从东边绕过去！"
+     "戴院长放心，小弟和郑兄弟守住东边！"
     ],
     [
      "objective",
@@ -579,6 +670,54 @@
   },
   {
    "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "narrate",
+     "东边大路上尘头大起，县里又差了一伙土兵、马军赶来增援。"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
+    ],
+    [
+     "say",
+     "zhengtianshou",
+     "东边又来了马军！王英哥哥，咱们顶住！"
+    ],
+    [
+     "flag",
+     "eArrived"
+    ]
+   ]
+  },
+  {
+   "on": {
     "dead": "toumu"
    },
    "do": [
@@ -596,7 +735,7 @@
   },
   {
    "on": "allEnemiesDefeated",
-   "if": "dArrived",
+   "if": "eArrived",
    "do": [
     [
      "say",
