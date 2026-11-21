@@ -1,0 +1,16 @@
+{
+  "N06#1": {"zh":"林冲造反啦！王潮、马瀚、张浓、赵湖！快把这些反贼都捉起来！","t":"Lin Chong has rebelled! Wang Chao, Ma Han, Zhang Nong, Zhao Hu! Seize these rebels!"},
+  "N06#2": {"zh":"爹，我的旧伤好像又开始痛起来了...我先到里面休息...","t":"Father, I think my old wounds are hurting again... I'll go rest inside first..."},
+  "N06#3": {"zh":"不孝子！你也给我下去，把林冲捉回来！你们这些士兵，快上啊！国家养你们是作什么的？！","t":"Worthless son! You get down there too and bring Lin Chong back! And you soldiers, get moving! What does the state feed you for?!"},
+  "N06#4": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N06#5": {"zh":"胜利条件   --- 打败高俅","t":"Victory --- Defeat Gao Qiu"},
+  "N06#6": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
+  "N06#7": {"zh":"失败条件二 --- 林冲死亡","t":"Defeat 2 --- Lin Chong dies"},
+  "N06#8": {"zh":"敌军增援了！","t":"Enemy reinforcements!"},
+  "N06#9": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N06#10": {"zh":"%N被砍成重伤，众人失手被擒，锒铛入狱，数日后，众好汉被冠以叛乱罪名，推出午门，斩首示众........","t":"%N was cut down and badly wounded, and the group was captured and thrown in prison. Days later the heroes were charged with rebellion, marched out of the Meridian Gate and publicly beheaded........"},
+  "N06#11": {"zh":"林冲力战而亡，%N等人败走，逃亡二日后，朱武、陈达在东京为官兵所杀，其余众人也相继被擒，数日后，众好汉被冠以叛乱罪名，推出午门，斩首示众........","t":"Lin Chong died fighting, and %N and the others fled. Two days later Zhu Wu and Chen Da were killed by soldiers in Kaifeng, and the rest were caught one by one. Days later the heroes were charged with rebellion, marched out of the Meridian Gate and publicly beheaded........"},
+  "N06#12": {"zh":"太尉！贼寇凶狠，请保重玉体，快从这里离开吧！","t":"Marshal! These bandits are vicious. Please take care of yourself and leave now!"},
+  "N06#13": {"zh":"哼，没想到对付一个林冲，却引来这么多凶神恶煞...『%M』%N...我会记住你的。","t":"Hmph, who'd have thought dealing with one Lin Chong would bring so many fiends... '%M' %N... I'll remember you."},
+  "N06#14": {"zh":"游戏过关！","t":"Stage cleared!"}
+}

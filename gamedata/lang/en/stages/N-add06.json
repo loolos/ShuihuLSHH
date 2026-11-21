@@ -1,0 +1,10 @@
+{
+  "N-add06#1": {"zh":"此路是我开，此树是我栽，欲往此山过，留下买路财！","t":"I opened this road, I planted these trees; to pass this mountain, you'll pay my fees!"},
+  "N-add06#2": {"zh":"哼！这种老掉牙的台词了也拿出来说，同为强盗我真替你们感到可耻！","t":"Hmph! Trotting out such tired old lines? As fellow bandits, I'm ashamed of you!"},
+  "N-add06#3": {"zh":"限制回合数 --- 40","t":"Turn limit --- 40"},
+  "N-add06#4": {"zh":"胜利条件   --- 打败所有敌人","t":"Victory --- Defeat all enemies"},
+  "N-add06#5": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add06#6": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N-add06#7": {"zh":"%N死亡，众人不敌盗贼围攻，荒野平添几缕英魂........","t":"%N died. Overwhelmed by the bandits, the group left only a few more heroic ghosts in the wilds........"},
+  "N-add06#8": {"zh":"游戏过关！","t":"Stage cleared!"}
+}

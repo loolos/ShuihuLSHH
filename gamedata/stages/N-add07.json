@@ -46,19 +46,19 @@
       "head": [1,8,4,1,1,1,27,2,0],
       "ops": [
         {"op":12,"flag":1,"value":1007},
-        {"op":13,"flag":0,"text":"喂！你们..."},
+        {"op":13,"flag":0,"id":1,"text":"喂！你们..."},
         {"op":12,"flag":1,"value":13},
-        {"op":13,"flag":0,"text":"废话少说，想活着离开的话，把身上财物留下来！"},
+        {"op":13,"flag":0,"id":2,"text":"废话少说，想活着离开的话，把身上财物留下来！"},
         {"op":12,"flag":1,"value":1007},
-        {"op":13,"flag":0,"text":"什...什么？！你们没搞错吧，我们可是强盗啊！你们竟然向强盗打劫？！"},
+        {"op":13,"flag":0,"id":3,"text":"什...什么？！你们没搞错吧，我们可是强盗啊！你们竟然向强盗打劫？！"},
         {"op":12,"flag":1,"value":5},
-        {"op":13,"flag":0,"text":"哈哈！咱们从前都是干强盗头子的，这回你们可踢到铁板了吧！"},
+        {"op":13,"flag":0,"id":4,"text":"哈哈！咱们从前都是干强盗头子的，这回你们可踢到铁板了吧！"},
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"text":"这伙剪径贼胆子不大：喽啰挨了重手就会丢下财物求饶，打倒他们的头领，其余的自然散伙。"},
+        {"op":13,"flag":0,"id":5,"text":"这伙剪径贼胆子不大：喽啰挨了重手就会丢下财物求饶，打倒他们的头领，其余的自然散伙。"},
         {"op":35,"flag":null,"value":40},
-        {"op":31,"flag":null,"text":"限制回合数 --- 40"},
-        {"op":32,"flag":null,"text":"胜利条件   --- 打败头领（喽啰体力不到一半便会求饶）"},
-        {"op":33,"flag":null,"text":"失败条件   --- %N死亡"}
+        {"op":31,"flag":null,"id":6,"text":"限制回合数 --- 40"},
+        {"op":32,"flag":null,"id":7,"text":"胜利条件   --- 打败头领（喽啰体力不到一半便会求饶）"},
+        {"op":33,"flag":null,"id":8,"text":"失败条件   --- %N死亡"}
       ]
     },
     {
@@ -66,7 +66,7 @@
       "cond": {"type":0,"arg":40},
       "head": [1,0,1,0,0,0,38,2,0],
       "ops": [
-        {"op":30,"flag":null,"text":"限制回合数已到，未完成任务，游戏失败！"}
+        {"op":30,"flag":null,"id":9,"text":"限制回合数已到，未完成任务，游戏失败！"}
       ]
     },
     {
@@ -74,7 +74,7 @@
       "cond": {"type":1,"arg":0},
       "head": [1,0,1,0,0,0,50,2,1],
       "ops": [
-        {"op":30,"flag":null,"text":"%N死亡，众人不敌盗贼围攻，荒野平添几缕英魂........"}
+        {"op":30,"flag":null,"id":10,"text":"%N死亡，众人不敌盗贼围攻，荒野平添几缕英魂........"}
       ]
     },
     {
@@ -82,7 +82,7 @@
       "cond": {"type":1,"arg":255},
       "head": [1,0,1,0,0,0,10,2,1],
       "ops": [
-        {"op":29,"flag":null,"text":"游戏过关！"}
+        {"op":29,"flag":null,"id":11,"text":"游戏过关！"}
       ]
     },
     {
@@ -91,7 +91,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":4294967295},
-        {"op":13,"flag":0,"text":"头领一倒，剩下的喽啰都丢了刀枪，把劫来的财物一包包献了出来。"},
+        {"op":13,"flag":0,"id":12,"text":"头领一倒，剩下的喽啰都丢了刀枪，把劫来的财物一包包献了出来。"},
         {"op":12,"flag":1,"value":1007,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1008,"quiet":true},
@@ -144,7 +144,7 @@
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
         {"op":12,"flag":1,"value":1033,"quiet":true},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true,"quiet":true}},
-        {"op":29,"flag":null,"text":"众好汉反把剪径贼劫了个干净。"}
+        {"op":29,"flag":null,"id":13,"text":"众好汉反把剪径贼劫了个干净。"}
       ]
     },
     {
@@ -153,7 +153,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1007},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":14,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -163,7 +163,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1008},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":15,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -173,7 +173,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1009},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":16,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -183,7 +183,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1010},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":17,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -193,7 +193,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1011},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":18,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -203,7 +203,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1013},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":19,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -213,7 +213,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1014},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":20,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -223,7 +223,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1015},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":21,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -233,7 +233,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1016},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":22,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -243,7 +243,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1017},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":23,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -253,7 +253,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1018},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":24,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -263,7 +263,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1019},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":25,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -273,7 +273,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1020},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":26,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -283,7 +283,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1021},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":27,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -293,7 +293,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1022},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":28,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -303,7 +303,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1023},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":29,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -313,7 +313,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1024},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":30,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -323,7 +323,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1025},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":31,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -333,7 +333,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1026},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":32,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -343,7 +343,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1027},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":33,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -353,7 +353,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1028},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":34,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -363,7 +363,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1029},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":35,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -373,7 +373,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1030},
-        {"op":13,"flag":0,"text":"小的知错了，饶命啊！"},
+        {"op":13,"flag":0,"id":36,"text":"小的知错了，饶命啊！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -383,7 +383,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1031},
-        {"op":13,"flag":0,"text":"财物都留下，放小的一条生路！"},
+        {"op":13,"flag":0,"id":37,"text":"财物都留下，放小的一条生路！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -393,7 +393,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1032},
-        {"op":13,"flag":0,"text":"好汉饶命！银子都给你们！"},
+        {"op":13,"flag":0,"id":38,"text":"好汉饶命！银子都给你们！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     },
@@ -403,7 +403,7 @@
       "head": [],
       "ops": [
         {"op":12,"flag":1,"value":1033},
-        {"op":13,"flag":0,"text":"别打了！包袱都在这儿！"},
+        {"op":13,"flag":0,"id":39,"text":"别打了！包袱都在这儿！"},
         {"op":121,"flag":null,"value":0,"args":{"reward":true,"goldPct":150,"leave":true}}
       ]
     }

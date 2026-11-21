@@ -1,0 +1,11 @@
+{
+  "N04#1": {"zh":"死秃驴，连你爷爷『小霸王』周通都敢打！看我放火一把烧了村子！","t":"Damn bald donkey, you dare hit your grandpa, the 'Little King' Zhou Tong? I'll burn this village to the ground!"},
+  "N04#2": {"zh":"我佛慈悲，施主若是火烧桃花村，洒家一定三拳拆了你的山寨！","t":"Buddha is merciful. If you burn Peach Blossom Village, I'll tear down your stronghold with three punches!"},
+  "N04#3": {"zh":"小子们！给我围起来！他们没有多少人，全部给我捉起来！尤其是那个胖和尚，我要亲手把他打得『一佛出世，二佛升天』！","t":"Lads! Surround them! There aren't many of them. Capture them all! Especially that fat monk. I'll beat him myself until 'one Buddha is born and a second ascends to heaven'!"},
+  "N04#4": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N04#5": {"zh":"胜利条件   --- 打败周通","t":"Victory --- Defeat Zhou Tong"},
+  "N04#6": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N04#7": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N04#8": {"zh":"%N死亡之后，一干人为周通所擒伏，一把大火更将桃花村化为灰烬；鲁智深为周通所杀，史进、朱武等人回到少华山，继续过着打家劫舍的日子。一年后，在一场官府的大规模围剿行动之中，山寨被毁，史、朱等人也随之不知去向........","t":"After %N died, the whole group was captured by Zhou Tong, and a great fire burned Peach Blossom Village to ashes. Lu Zhishen was killed by Zhou Tong; Shi Jin, Zhu Wu and the others returned to Mount Shaohua and went on raiding. A year later, in a great government sweep, the stronghold was destroyed, and Shi, Zhu and the rest vanished without a trace........"},
+  "N04#9": {"zh":"游戏过关！","t":"Stage cleared!"}
+}
