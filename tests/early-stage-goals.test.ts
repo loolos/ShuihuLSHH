@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
+import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
@@ -230,17 +231,63 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(men.filter((u) => u.side === 'enemy').length).toBe(2);
   });
 
-  it('大破何涛：四处放火即过关，点着的地方不再标出', () => {
+  it('大破何涛：哪位好汉都能放火，火起冒火焰、附近官兵逃窜三回合；放火不过关，打光两波增援才过关', () => {
     const b = make('N-add14');
-    const spots = () => b.objectiveZones().filter((z) => z.kind === 'goal');
+    expect(b.objectives.some((l) => l.includes('打败所有敌人'))).toBe(true);
+    const spots = () => b.objectiveZones().filter((z) => z.kind === 'goal' && z.label === '放火');
     expect(spots().length).toBe(4);
-    const wu = cls(b, 10);
-    [[23, 12], [14, 8], [4, 18], [15, 19]].forEach(([x, y], k) => {
-      place(b, wu, x, y);
-      poke(b, wu);
-      if (k < 3) expect(spots().length).toBe(3 - k);
+    // 阮小二不是原来那四个人，也能放火
+    const ruan = cls(b, 7);
+    place(b, ruan, 23, 12);
+    const p = b.active().find((u) => u.side === 'player' && u !== ruan && b.canAct(u))!;
+    const g = b.moveRange(p).green.find((c) => c.x !== p.x || c.y !== p.y)!;
+    const out = b.move(p, g.x, g.y);
+    // 官兵喊话：说话的是逃窜的人
+    const say = out.filter((e) => e.type === 'say').at(-1);
+    expect(say?.type === 'say' && say.uid !== null && b.unit(say.uid)?.panicTurns).toBe(3);
+    expect(spots().length).toBe(3);
+    expect(b.fireCells().length).toBeGreaterThan(0);
+    expect(b.fireCells().some((c) => c.x === ruan.x && c.y === ruan.y)).toBe(false);
+    const fled = b.units.filter((u) => u.panicTurns);
+    expect(fled.length).toBe(4);
+    expect(fled.every((u) => u.side === 'enemy' && u.classId !== 54 && u.panicTurns === 3)).toBe(true);
+    expect(b.status).toBe('playing');
+    // 逃窜的人只乱走，不打人
+    const plan = planAi(b, fled[0]);
+    expect(plan.skill).toBeUndefined();
+    expect(plan.target).toBeUndefined();
+    // 四处都点着也不过关
+    [[14, 8], [4, 18], [15, 19]].forEach(([x, y]) => {
+      place(b, ruan, x, y);
+      poke(b, ruan);
     });
+    expect(spots().length).toBe(0);
+    expect(b.status).toBe('playing');
+    // 场上的敌人全倒下，但第二波增援还没来：不过关
+    const kill = () => b.units.filter((u) => u.side === 'enemy' && u.present).forEach((u) => (u.alive = false));
+    kill();
+    poke(b);
+    expect(b.status).toBe('playing');
+    const t = b as unknown as { runTurnTriggers(p: number): void };
+    t.runTurnTriggers(4);
+    t.runTurnTriggers(6);
+    expect(b.units.some((u) => u.side === 'enemy' && u.alive && u.present)).toBe(true);
+    kill();
+    poke(b);
     expect(b.status).toBe('won');
+  });
+
+  it('逃窜三回合后回过神来', () => {
+    const b = make('N-add14');
+    const ruan = cls(b, 7);
+    place(b, ruan, 23, 12);
+    poke(b, ruan);
+    const fled = b.units.filter((u) => u.panicTurns);
+    // 杨志别在这几回合里倒下
+    place(b, cls(b, 14), 52, 1);
+    for (let k = 0; k < 3 && b.status === 'playing'; k++) b.endPlayerPhase();
+    expect(b.turn).toBe(4);
+    expect(fled.filter((u) => u.alive).every((u) => !u.panicTurns)).toBe(true);
   });
 
   it('力擒金眼虎：打倒邓龙即过关，其余喽啰投降', () => {
