@@ -16,7 +16,7 @@
   ],
   "units": [
     {
-      "id": "wusong",
+      "id": "wusong", "facing": 0,
       "class": "wusong",
       "side": "player",
       "x": 12,
@@ -24,7 +24,7 @@
       "level": 29
     },
     {
-      "id": "hero",
+      "id": "hero", "facing": 0,
       "class": 0,
       "side": "player",
       "x": 11,
@@ -32,7 +32,7 @@
       "level": 29
     },
     {
-      "id": "likui",
+      "id": "likui", "facing": 0,
       "class": "likui",
       "side": "player",
       "x": 13,
@@ -40,7 +40,7 @@
       "level": 29
     },
     {
-      "id": "huarong",
+      "id": "huarong", "facing": 0,
       "class": "huarong",
       "side": "player",
       "x": 10,

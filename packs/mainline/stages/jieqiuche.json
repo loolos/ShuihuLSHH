@@ -174,7 +174,7 @@
       "name": "刘高"
     },
     {
-      "id": "soldier-1",
+      "id": "soldier-1", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 15,
@@ -314,7 +314,7 @@
       "levelOffset": 0
     },
     {
-      "id": "cav-1",
+      "id": "cav-1", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 16,
@@ -324,7 +324,7 @@
       "name": "青州马军"
     },
     {
-      "id": "cav-2",
+      "id": "cav-2", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 17,
@@ -334,7 +334,7 @@
       "name": "青州马军"
     },
     {
-      "id": "cav-3",
+      "id": "cav-3", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 18,
@@ -424,7 +424,7 @@
       "levelOffset": 0
     },
     {
-      "id": "soldier-19",
+      "id": "soldier-19", "facing": 0,
       "class": 34,
       "side": "enemy",
       "x": 16,
@@ -434,7 +434,7 @@
       "levelOffset": 0
     },
     {
-      "id": "soldier-20",
+      "id": "soldier-20", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 18,

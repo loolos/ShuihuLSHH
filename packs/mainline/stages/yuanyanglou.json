@@ -84,7 +84,7 @@
       "name": "后槽"
     },
     {
-      "id": "hero",
+      "id": "hero", "facing": 0,
       "class": 0,
       "side": "player",
       "x": 12,
@@ -246,7 +246,7 @@
       "name": "东厢徒弟"
     },
     {
-      "id": "guard-10",
+      "id": "guard-10", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 10,
@@ -255,7 +255,7 @@
       "name": "门前军汉"
     },
     {
-      "id": "guard-11",
+      "id": "guard-11", "facing": 0,
       "class": 33,
       "side": "enemy",
       "x": 12,
@@ -264,7 +264,7 @@
       "name": "门前军汉"
     },
     {
-      "id": "guard-12",
+      "id": "guard-12", "facing": 0,
       "class": 36,
       "side": "enemy",
       "x": 14,
