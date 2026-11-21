@@ -555,6 +555,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "zhugui",
         "area": [
           2,

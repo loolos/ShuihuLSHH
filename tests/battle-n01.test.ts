@@ -223,14 +223,19 @@ describe.skipIf(!has)('N01', () => {
     expect(b.unitByChar(0)).toBeTruthy();
   });
 
-  it('王母进入撤退区域即胜利；王進战败即失败', () => {
+  it('王母进入撤退区域、回合结束时还在里面即胜利；王進战败即失败', () => {
     const b = make();
     b.begin();
     const mom = b.unitByChar(18)!;
     mom.x = 24;
     mom.y = 52;
-    // 任意一次行动后检查区域
-    const ev: BattleEvent[] = b.move(b.unitByChar(1)!, 6, 7);
+    // 撤退区域回合结束才算【新】（负责人 2026-11-21）：行动后还没过关，回合结束时王母还在里面才过关（王母跟着王進走）
+    const wj0 = b.unitByChar(1)!;
+    wj0.x = 25;
+    wj0.y = 52;
+    b.move(wj0, 25, 53);
+    expect(b.status).toBe('playing');
+    const ev: BattleEvent[] = b.endPlayerPhase();
     expect(b.status).toBe('won');
     expect(ev.at(-1)).toMatchObject({ type: 'end', result: 'won' });
 
@@ -523,7 +528,10 @@ describe.skipIf(!has)('N01', () => {
     const chao = b.units.find((u) => u.classId === 12)!;
     chao.x = 1;
     chao.y = 28;
-    const ev = settle(b);
+    // 撤退回合结束才算【新】（负责人 2026-11-21）
+    settle(b);
+    expect(b.status).toBe('playing');
+    const ev = b.endPlayerPhase();
     expect(b.status).toBe('won');
     expect(ev.some((e) => e.type === 'say' && /朱仝在这里等你很久了/.test(e.text))).toBe(true);
     // 打倒朱仝（两个都倒下）也过关
@@ -585,6 +593,8 @@ describe.skipIf(!has)('N01', () => {
     chao.x = 1;
     chao.y = 28;
     settle(n12.b);
+    expect(n12.b.objectiveZones()).toHaveLength(1); // 撤退回合结束才算
+    n12.b.endPlayerPhase();
     expect(n12.b.objectiveZones()).toEqual([]);
   });
 

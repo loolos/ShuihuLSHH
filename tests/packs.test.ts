@@ -175,6 +175,8 @@ describe.skipIf(!has)('主线续篇：景阳冈（武松打虎，原外传）', 
     const x = b as unknown as { afterAction: () => void };
     ws.y = 9;
     x.afterAction();
+    expect(tiger.present).toBe(false); // 区域回合结束才算【新】（负责人 2026-11-21）
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
     expect(tiger.present).toBe(true);
   });
 
@@ -771,6 +773,9 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const kill = (u: Unit) => (b as unknown as { kill: (a: Unit, t: Unit) => void }).kill(get('wusong'), u);
     for (const u of b.units) if (u.side !== 'enemy') u.hp = 999999;
     get('wusong').x = 12; get('wusong').y = 8; check();
+    expect(get('jiangmenshen').present).toBe(false); // 区域回合结束才算【新】（负责人 2026-11-21）
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(50);
+    expect(get('jiangmenshen').present).toBe(true);
     const reinforcements = b.units.filter(u => s.units[u.uid].id === 'zhangtuanlian' || s.units[u.uid].id.startsWith('zhang-rescue-'));
     expect(reinforcements).toHaveLength(7);
     expect(reinforcements.every(u => !u.present && u.alive)).toBe(true);

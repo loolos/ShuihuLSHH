@@ -164,7 +164,7 @@
       ]
     },
     {
-      "trigger": {"kind":"cond"},
+      "trigger": {"kind":"cond","atTurnEnd":true},
       "cond": {"op":"or","a":{"type":1,"arg":48},"b":{"op":"and","a":{"type":4,"arg":12},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":0},"b":{"type":8,"arg":27}},"b":{"op":"and","a":{"type":9,"arg":1},"b":{"type":10,"arg":29}}}}},
       "head": [5,8,1,0,0,0,32,2,1],
       "ops": [

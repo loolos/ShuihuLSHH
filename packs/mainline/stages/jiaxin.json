@@ -916,6 +916,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "hero",
         "area": [
           16,

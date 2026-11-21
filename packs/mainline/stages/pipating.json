@@ -494,6 +494,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "songjiang",
         "area": [
           5,
@@ -511,6 +512,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "daizong",
         "area": [
           5,
@@ -528,6 +530,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "hero",
         "area": [
           5,
