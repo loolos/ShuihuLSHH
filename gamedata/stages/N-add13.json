@@ -66,9 +66,9 @@
     {"index":60,"type":41,"group":61,"side":"enemy","facing":2,"x":24,"y":21,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":61,"type":41,"group":62,"side":"enemy","facing":2,"x":20,"y":19,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":62,"type":41,"group":63,"side":"enemy","facing":1,"x":31,"y":18,"level":21,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":63,"type":39,"group":64,"side":"enemy","facing":3,"x":24,"y":30,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":64,"type":39,"group":65,"side":"enemy","facing":2,"x":26,"y":33,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":65,"type":39,"group":66,"side":"enemy","facing":1,"x":28,"y":30,"level":26,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":63,"type":39,"group":64,"side":"enemy","facing":3,"x":24,"y":30,"level":30,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":64,"type":39,"group":65,"side":"enemy","facing":2,"x":26,"y":33,"level":30,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":65,"type":39,"group":66,"side":"enemy","facing":1,"x":28,"y":30,"level":30,"flags":512,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":66,"type":147,"group":0,"side":"object","facing":0,"x":31,"y":12,"level":0,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":67,"type":184,"group":0,"side":"object","facing":0,"x":4,"y":41,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
   ],
@@ -1394,6 +1394,6 @@
       ]
     }
   ],
-  "hpMultipliers": {"63":3.5,"64":3.5,"65":3.5},
+  "enemyRanks": {"8":"troop","9":"troop","10":"troop","11":"troop","12":"troop","13":"troop","14":"troop","15":"troop","16":"troop","17":"troop","18":"troop","19":"troop","20":"troop","21":"troop","22":"troop","23":"troop","24":"troop","25":"troop","26":"troop","27":"troop","28":"troop","29":"troop","30":"troop","31":"troop","32":"troop","33":"troop","34":"troop","35":"troop","36":"troop","37":"troop","38":"troop","39":"troop","40":"troop","41":"troop","42":"troop","43":"troop","44":"troop","45":"troop","46":"troop","47":"troop","48":"troop","49":"troop","50":"troop","51":"troop","52":"troop","53":"troop","54":"troop","55":"troop","56":"troop","57":"troop","58":"troop","59":"troop","60":"troop","61":"troop","62":"troop"},
   "rules": {"poolLeftoverExp":true}
 }
