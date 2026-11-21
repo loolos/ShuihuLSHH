@@ -188,6 +188,8 @@ export interface StageInput {
   patrols?: Record<number, { x: number; y: number }[]>;
   /** 潜行关【新】：被发现后没在期限内打倒发现的人就判负；flag：被发现时设上的剧本标志 */
   stealth?: { lose: string; flag?: number };
+  /** 扩展包 map.seal 封死的格子（打开的记在 Battle.unsealed，读档 / 倒流时据此恢复）【新】 */
+  sealed?: { x: number; y: number }[];
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
   /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
@@ -293,6 +295,9 @@ export class Battle {
   private blaze: Cell[] = [];
   /** 潜行结束【新】（智取无为军：骗开大门以后，指令 125）：哨兵不再警戒、发现也不再判负 */
   private stealthOver = false;
+  private sealed: { x: number; y: number }[] = [];
+  /** 已打开的封死格子（y * 宽 + x） */
+  private unsealed = new Set<number>();
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
     return this.fired.has(index);
@@ -352,6 +357,7 @@ export class Battle {
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
+    this.sealed = input.sealed ?? [];
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     if (input.fire) this.fire = new Fire(input.fire, input.board);
     this.name = input.name;
@@ -815,7 +821,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver,
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed],
       fought: [...this.fought], duelist: this.duelist,
     });
   }
@@ -878,6 +884,11 @@ export class Battle {
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
     this.stealthOver = s.stealthOver ?? false;
+    this.unsealed = new Set(s.unsealed ?? []);
+    for (const c of this.sealed) {
+      const i = c.y * this.board.width + c.x;
+      this.board.blocked[i] = this.unsealed.has(i) ? 0 : 1;
+    }
     if (this.fire || this.blaze.length) this.emit({ type: 'fire', cells: this.fireCells() });
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
@@ -2228,6 +2239,15 @@ export class Battle {
           break;
         }
         // 125 潜行结束【新】（智取无为军，负责人 2026-11-21）：骗开大门后不用再躲，哨兵不再警戒，已发现的也不再判负
+        // 127 打开 map.seal 封死的格子【新】（智取无为军：侯健骗开大门）
+        case 127:
+          for (const c of op.args?.cells ?? []) {
+            if (!this.board.inBounds(c.x, c.y)) continue;
+            const i = c.y * this.board.width + c.x;
+            this.board.blocked[i] = 0;
+            this.unsealed.add(i);
+          }
+          break;
         case 125:
           this.stealthOver = true;
           this.spotters = {};
