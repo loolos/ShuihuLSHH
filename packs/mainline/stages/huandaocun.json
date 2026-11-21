@@ -18,8 +18,8 @@
    "id": "songjiang",
    "class": "sj-fugitive",
    "side": "player",
-   "x": 3,
-   "y": 14,
+   "x": 2,
+   "y": 19,
    "level": 30,
    "facing": 0
   },
@@ -139,11 +139,11 @@
    "id": "zhaoneng",
    "class": 38,
    "side": "enemy",
-   "x": 10,
+   "x": 11,
    "y": 18,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "都头赵能",
    "levelOffset": 1,
    "hpMultiplier": 1.6
@@ -152,11 +152,11 @@
    "id": "a1",
    "class": 32,
    "side": "enemy",
-   "x": 8,
+   "x": 9,
    "y": 17,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵",
    "levelOffset": -2
   },
@@ -164,11 +164,11 @@
    "id": "a2",
    "class": 33,
    "side": "enemy",
-   "x": 9,
+   "x": 10,
    "y": 17,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵",
    "levelOffset": -2
   },
@@ -176,11 +176,11 @@
    "id": "a3",
    "class": 32,
    "side": "enemy",
-   "x": 10,
+   "x": 11,
    "y": 17,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵",
    "levelOffset": -2
   },
@@ -188,11 +188,11 @@
    "id": "a4",
    "class": 33,
    "side": "enemy",
-   "x": 11,
+   "x": 12,
    "y": 17,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵",
    "levelOffset": -2
   },
@@ -200,11 +200,11 @@
    "id": "a5",
    "class": 32,
    "side": "enemy",
-   "x": 12,
+   "x": 13,
    "y": 17,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵",
    "levelOffset": -2
   },
@@ -212,11 +212,11 @@
    "id": "a6",
    "class": 34,
    "side": "enemy",
-   "x": 9,
+   "x": 10,
    "y": 19,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵弓手",
    "levelOffset": -2
   },
@@ -224,11 +224,11 @@
    "id": "a7",
    "class": 34,
    "side": "enemy",
-   "x": 11,
+   "x": 12,
    "y": 19,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 3,
    "name": "土兵弓手",
    "levelOffset": -2
   },
@@ -236,8 +236,8 @@
    "id": "zhaode",
    "class": 39,
    "side": "enemy",
-   "x": 9,
-   "y": 12,
+   "x": 12,
+   "y": 11,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -249,8 +249,8 @@
    "id": "b1",
    "class": 32,
    "side": "enemy",
-   "x": 7,
-   "y": 11,
+   "x": 11,
+   "y": 10,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -261,8 +261,8 @@
    "id": "b2",
    "class": 33,
    "side": "enemy",
-   "x": 7,
-   "y": 12,
+   "x": 11,
+   "y": 11,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -273,8 +273,8 @@
    "id": "b3",
    "class": 32,
    "side": "enemy",
-   "x": 7,
-   "y": 13,
+   "x": 11,
+   "y": 12,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -285,8 +285,8 @@
    "id": "b4",
    "class": 33,
    "side": "enemy",
-   "x": 7,
-   "y": 14,
+   "x": 11,
+   "y": 13,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -297,7 +297,7 @@
    "id": "b5",
    "class": 34,
    "side": "enemy",
-   "x": 9,
+   "x": 13,
    "y": 11,
    "level": 30,
    "facing": 1,
@@ -309,8 +309,8 @@
    "id": "b6",
    "class": 34,
    "side": "enemy",
-   "x": 9,
-   "y": 14,
+   "x": 13,
+   "y": 12,
    "level": 30,
    "facing": 1,
    "ai": 2,
@@ -496,6 +496,97 @@
    "ai": 2,
    "name": "马军",
    "levelOffset": -1
+  },
+  {
+   "id": "e1",
+   "class": 32,
+   "side": "enemy",
+   "x": 4,
+   "y": 19,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e2",
+   "class": 33,
+   "side": "enemy",
+   "x": 3,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e3",
+   "class": 32,
+   "side": "enemy",
+   "x": 3,
+   "y": 19,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e4",
+   "class": 33,
+   "side": "enemy",
+   "x": 3,
+   "y": 20,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e5",
+   "class": 34,
+   "side": "enemy",
+   "x": 5,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 5,
+   "y": 20,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e7",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 17,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
   }
  ],
  "script": [
@@ -531,7 +622,7 @@
     [
      "say",
      "songjiang",
-     "庙门叫他们堵死了……西廊里有一处神帐，且躲到帐后去，看天意如何。"
+     "庙门叫他们堵死了……西廊里有一处神帐，且绕过去躲到帐后，看天意如何。"
     ],
     [
      "objective",
@@ -606,7 +697,7 @@
       "style": "wind",
       "x": 8,
       "y": 8,
-      "radius": 8,
+      "radius": 9,
       "turns": 3,
       "focus": true
      }
@@ -818,6 +909,38 @@
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
     ],
     [
+     "narrate",
+     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
+    ],
+    [
      "flag",
      "rescue"
     ]
@@ -880,6 +1003,38 @@
      "say",
      "hero",
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
+    ],
+    [
+     "narrate",
+     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
     ],
     [
      "flag",
