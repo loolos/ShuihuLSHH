@@ -1,16 +1,22 @@
 // 扩展包关卡试打：我方也交给 AI，跑若干种子，打印胜率、回合数、关键剧情有没有触发。
 // 用法：node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [种子数]
+//      包名写 original 时试打原版关卡（关卡写地图名，如 N10），我方按选关跳关的等级和装备。
+// 我方开局站得太靠前的人先后撤（tools/sim-orders.ts；SIM_AUTO_BACK=0 关掉，TRACE_ORDERS=1 打印）。
 import fs from 'node:fs';
 import path from 'node:path';
 import { Battle } from '../src/rules/battle.ts';
 import { bestAttack, planAi } from '../src/rules/ai.ts';
 import { attackSkill, facingTowards } from '../src/rules/unit.ts';
 import { watcherSees } from '../src/rules/combat.ts';
-import { buildT2S, loadGameData } from '../src/rules/load.ts';
+import { buildT2S, exeTables, loadGameData, loadStage } from '../src/rules/load.ts';
+import { jumpTo } from '../src/rules/preset.ts';
+import { joinLevel, newCampaign, partyOf } from '../src/rules/campaign.ts';
+import type { StageInput } from '../src/rules/battle.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
+import { applyOrders } from './sim-orders.ts';
 
 useDiskCustomMaps(); // 自拼地图 packs/maps/*.json（§15.15）
 
@@ -39,11 +45,26 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
   const [id = 'mainline', stageId = 'jingyanggang', n = '20'] = process.argv.slice(2);
   const files = new NodeFiles(DATA);
   const tr = buildT2S(files);
-  const rt = loadPackFromDisk(id, loadGameData(files, tr));
-  const stage = rt.stages.find((s) => !stageId || s.id === stageId)!;
+  const data = loadGameData(files, tr);
+  let make: (seed: number) => StageInput;
+  let stage: { id: string };
+  const stageKey = id === 'original' ? stageId.toUpperCase() : `${id}/${stageId}`;
+  if (id === 'original') {
+    const stages = exeTables(files).stages;
+    const st = stages.find((s) => s.mapName.toUpperCase() === stageKey);
+    if (!st) throw new Error(`找不到原版关卡 ${stageId}`);
+    const c = jumpTo(files, data, stages, st.index, newCampaign(0));
+    stage = { id: st.mapName };
+    make = (seed) => loadStage(files, data, st.mapName, { seed, text: tr, party: partyOf(c), joinLevel: joinLevel(c) });
+  } else {
+    const rt = loadPackFromDisk(id, data);
+    const ps = rt.stages.find((s) => !stageId || s.id === stageId)!;
+    stage = ps;
+    make = (seed) => compileStage(rt, ps, files, { seed, text: tr, preset: id === 'mainline' });
+  }
   let wins = 0;
   for (let seed = 1; seed <= Number(n); seed++) {
-    const input = compileStage(rt, stage, files, { seed, text: tr, preset: id === 'mainline' });
+    const input = make(seed);
     const b = new Battle(input);
     const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
     const gt = goalBlock?.trigger.kind === 'area' ? goalBlock.trigger : null;
@@ -163,6 +184,8 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           if (b.canAct(u)) ev.push(...b.defend(u));
           continue;
         }
+        // 开局站得太靠前的人先后撤；关卡指定的开局指令（tools/sim-orders.ts）
+        if (applyOrders(b, u, stageKey, ev, (x, y) => walkTo(b, u, x, y, ev))) continue;
         // 我方也按敌方 AI 走：打得到就打（含技能），血少于一半先吃药，否则朝老虎走
         const heal = u.hp < u.stats.maxHp * 0.45 ? b.usableSlots(u)[0] : undefined;
         if (heal !== undefined) ev.push(...b.useItem(u, heal, u));
