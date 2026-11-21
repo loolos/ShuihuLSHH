@@ -250,7 +250,7 @@ export type PackTrigger =
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */
   /** enter: "player" = 我方任何一个在场的人进去都算【新】 */
-  | { enter: string | string[]; area: [number, number, number, number]; label?: string } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
+  | { enter: string | string[]; area: [number, number, number, number]; label?: string; /** 回合结束（敌方行动完、下回合开始前）人还在里面才触发【新】 */ atTurnEnd?: boolean } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
   | { near: string; by?: string; playerPhase?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */

@@ -257,6 +257,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十一
     sj.x = 2; sj.y = 30; after(o.b);
     expect(o.b.status).toBe('playing');
     hero.x = 3; hero.y = 31; after(o.b);
+    expect(o.b.status).toBe('playing');
+    const out = (o.b as unknown as { out: { type: string; text?: string; uid?: number }[] }).out;
+    expect(out.filter((e) => e.type === 'status' && e.text === '回合结束时生效')).toHaveLength(1); // 走进去先提示一次
+    after(o.b);
+    expect(out.filter((e) => e.type === 'status' && e.text === '回合结束时生效')).toHaveLength(1); // 区域回合结束才算【新】（负责人 2026-11-21）
+    turn(o.b, 2);
     expect(o.b.status).toBe('won');
   });
 

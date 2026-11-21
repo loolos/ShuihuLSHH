@@ -26,7 +26,7 @@
    ["objective", "失败条件：武松倒下，或超过 15 回合（天黑）"],
    ["turnLimit", 15]
   ]},
-  {"on": {"enter": "wusong", "area": [0, 0, 17, 9]}, "do": [
+  {"on": {"enter": "wusong", "area": [0, 0, 17, 9], "atTurnEnd": true}, "do": [
    ["narrate", "武松走上冈来，见一块光挞挞的大青石。酒力发作，正要躺下歇息，只见发起一阵狂风，乱树背后扑地一声响，跳出一只吊睛白额大虫来！"],
    ["appear", "tiger"],
    ["say", "tiger", "嗷呜——！"],

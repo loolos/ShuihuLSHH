@@ -122,7 +122,7 @@
       ]
     },
     {
-      "trigger": {"kind":"area","char":0,"x1":5,"y1":0,"x2":8,"y2":1},
+      "trigger": {"kind":"area","char":0,"x1":5,"y1":0,"x2":8,"y2":1,"atTurnEnd":true},
       "cond": {"op":"and","a":{"type":4,"arg":0},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":5},"b":{"type":8,"arg":0}},"b":{"op":"and","a":{"type":9,"arg":8},"b":{"type":10,"arg":1}}}},
       "head": [4,0,1,0,0,0,10,2,4],
       "ops": [

@@ -1,7 +1,7 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
 import { markLine } from '../i18n/index.ts';
 import type { ActUnit } from '../formats/act.ts';
-import type { DidAction, PasBlock, PasCond, PasHeader, PasOp } from '../formats/pas.ts';
+import type { DidAction, PasBlock, PasCond, PasHeader, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
@@ -277,6 +277,12 @@ export class Battle {
   turn = 0;
   phase: Side = 'player';
   turnLimit = 0;
+  /** 正在做回合结束的检查（atTurnEnd 的区域）【新】 */
+  private turnEndCheck = false;
+  /** 正在求值的 cond 区块写了 atTurnEnd【新】 */
+  private condAtTurnEnd = false;
+  /** 回合结束才生效的区域已经提示过的「区块:回合」【新】 */
+  private areaHinted = new Set<string>();
   status: 'playing' | 'won' | 'lost' = 'playing';
   objectives: string[] = [];
   private blocks: PasBlock[];
@@ -1559,20 +1565,19 @@ export class Battle {
     }
     for (const b of this.blocks) {
       const t = b.trigger;
-      if (t.kind !== 'area' || this.fired.has(b.index) || t.atTurnEnd) continue;
+      if (t.kind !== 'area' || this.fired.has(b.index)) continue;
       if (t.flagged && !this.flagsOk(b)) continue;
-      // 区域触发（区块头 w0 = 4：选人 且 坐标范围）。原版条件 4 只选单位表里这个角色的第一个单位（EXE 0x410ff0 → 0x40c360，
-      // 不论死活），所以 N-add03 往 (10,0) 逃的那个嘍囉（不是第一个）跑到出口也不算。重制版【新】：这个角色任何一个在场的人
-      // 进了范围都触发（只影响 N-add03"敵人從畫面端逃跑"；其它关只有一个这样的人：N01 王母、N13 何濤、N-add16 主角）
-      const id = t.char === 1000 ? 0 : t.char;
-      const inside = (u: Unit) =>
-        u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
-      const hit = t.side
-        ? this.units.some((u) => u.side === t.side && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u))
-        : t.chars
-          ? t.chars.every((c) => this.units.some((u) => u.classId === c && u.alive && u.present && inside(u)))
-          : this.units.some((u) => u.classId === id && u.alive && u.present && inside(u));
-      if (hit) this.runBlock(b);
+      const who = this.areaHit(t);
+      if (t.atTurnEnd) {
+        // 回合结束才生效的区域：我方回合里走进去先在头上提示一次（每回合每个区块一次）【新】
+        const key = `${b.index}:${this.turn}`;
+        if (who && who.side === 'player' && this.phase === 'player' && !this.areaHinted.has(key)) {
+          this.areaHinted.add(key);
+          this.emit({ type: 'status', uid: who.uid, text: '回合结束时生效' });
+        }
+        continue;
+      }
+      if (who) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     if (!this.checkNear()) return;
@@ -1597,6 +1602,28 @@ export class Battle {
       this.finish('lost', '我方全軍覆沒。');
   }
 
+  /**
+   * 区域触发（区块头 w0 = 4：选人 且 坐标范围）里进了范围的人，没有就 undefined。原版条件 4 只选单位表里这个角色的第一个单位
+   * （EXE 0x410ff0 → 0x40c360，不论死活），所以 N-add03 往 (10,0) 逃的那个嘍囉（不是第一个）跑到出口也不算。重制版【新】：这个角色
+   * 任何一个在场的人进了范围都触发（只影响 N-add03"敵人從畫面端逃跑"；其它关只有一个这样的人：N01 王母、N13 何濤、N-add16 主角）。
+   * side：这一方任何一个能动的人；chars：这几个人都得进去（返回最后一个）。
+   */
+  private areaHit(t: Extract<PasTrigger, { kind: 'area' }>): Unit | undefined {
+    const inside = (u: Unit) =>
+      u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
+    if (t.side) return this.units.find((u) => u.side === t.side && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u));
+    if (t.chars) {
+      let last: Unit | undefined;
+      for (const c of t.chars) {
+        last = this.units.find((u) => u.classId === c && u.alive && u.present && inside(u));
+        if (!last) return undefined;
+      }
+      return last;
+    }
+    const id = t.char === 1000 ? 0 : t.char;
+    return this.units.find((u) => u.classId === id && u.alive && u.present && inside(u));
+  }
+
   /** 走到某人身边的触发；返回 false 表示已经分出胜负 */
   private checkNear(): boolean {
     // 扩展包：任一我方单位走到某人身边（劫法场走过去松绑）
@@ -1612,14 +1639,22 @@ export class Battle {
   }
 
   private runTurnTriggers(param: number) {
+    this.turnEndCheck = true;
+    try {
+      this.turnTriggers(param);
+    } finally {
+      this.turnEndCheck = false;
+    }
+  }
+
+  private turnTriggers(param: number) {
     this.turnParam = param;
-    // 区域触发 atTurnEnd【新】（强闯二龙山，负责人 2026-11-20）：回合结束才看人到没到，下回合开始时大家一起行动
+    // 区域触发 atTurnEnd【新】（强闯二龙山，负责人 2026-11-20；2026-11-21 推广到撤退、好汉登场等关）：回合结束才看人到没到，
+    // 下回合开始时大家一起行动。条件树里的坐标判断（N12 晁盖撤退）由 cond 区块的 atTurnEnd 管，见 evalCond 的条件 4
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'area' || !t.atTurnEnd || this.fired.has(b.index) || (t.flagged && !this.flagsOk(b))) continue;
-      const inside = (u: Unit) => u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
-      const id = t.char === 1000 ? 0 : t.char;
-      if (this.units.some((u) => u.classId === id && u.alive && u.present && inside(u))) this.runBlock(b);
+      if (this.areaHit(t)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
     for (const b of this.blocks) {
@@ -1743,7 +1778,10 @@ export class Battle {
       if (this.status !== 'playing') return;
       if (b.trigger.kind !== 'cond' || this.fired.has(b.index)) continue;
       let sel: Unit | undefined;
-      if (this.evalCond(b.cond, (u) => (sel = u), () => sel)) this.runBlock(b);
+      this.condAtTurnEnd = !!b.trigger.atTurnEnd;
+      const ok = this.evalCond(b.cond, (u) => (sel = u), () => sel);
+      this.condAtTurnEnd = false;
+      if (ok) this.runBlock(b);
     }
   }
 
@@ -1789,6 +1827,8 @@ export class Battle {
       case 3:
         return this.scriptFlag === (c.arg === 1);
       case 4: {
+        // cond 区块写了 atTurnEnd【新】：坐标判断只在回合结束时算（N12 晁盖撤退）
+        if (this.condAtTurnEnd && !this.turnEndCheck) return false;
         const u = this.unitByChar(c.arg);
         select(u);
         return !!u;

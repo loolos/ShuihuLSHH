@@ -87,12 +87,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     killAll(b, true);
     expect(b.status).toBe('playing'); // 还没放号箭
     const zg = get('zhugui'); zg.x = 3; zg.y = 10; after(b);
+    expect(get('zhangheng').present).toBe(false); // 区域回合结束才算【新】（负责人 2026-11-21）
+    turn(b, 3);
     expect(get('zhangheng').present).toBe(true);
     expect(get('lvfang').present).toBe(true);
     expect(get('zhangshun').present).toBe(false);
     expect(get('shichen').present).toBe(true);
-    turn(b, 3);
-    expect(get('zhangshun').present).toBe(false);
     turn(b, 4);
     expect(get('zhangshun').present).toBe(true);
     expect(get('guosheng').present).toBe(true);
@@ -153,6 +153,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     expect(get('g1').present).toBe(true);
     expect(b.status).toBe('playing');
     const hero = get('hero'); hero.x = 16; hero.y = 0; after(b);
+    expect(b.status).toBe('playing'); // 区域回合结束才算【新】（负责人 2026-11-21）
+    turn(b, 1);
     expect(b.status).toBe('won');
   });
 

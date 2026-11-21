@@ -90,6 +90,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(get('songjiang').present).toBe(true);
     expect(get('lan-1').present).toBe(true);
     const sj = get('songjiang'); sj.x = 7; sj.y = 11; after(b);
+    expect(b.status).toBe('playing'); // 区域回合结束才算【新】（负责人 2026-11-21）
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(50);
     expect(b.status).toBe('won');
     expect(b.isBound(lk)).toBe(false);
   });
