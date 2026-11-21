@@ -646,6 +646,16 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         ops.push({ op: 124, flag: null, value: 0, args: { cells, ...(o.panic ? { panic: o.panic } : {}), ...(o.turns ? { turns: o.turns } : {}), ...(o.spare ? { spare: o.spare.map(r.classRef) } : {}), ...(o.focus ? { focus: true } : {}) } });
         break;
       }
+      case 'gust': {
+        // ['gust', {style: dust|wind, radius, turns, panic, spare, x, y, focus}] 黑尘迷眼 / 怪风（指令 126）：中心（区域触发的区域中心，或 x, y）
+        // radius 格内的敌人逃窜 turns 回合（同放火），画面冒黑尘或卷起怪风【新】（还道村受天书）
+        const o = (a[0] ?? {}) as { style?: string; radius?: number; turns?: number; panic?: number; spare?: unknown[]; x?: number; y?: number; focus?: boolean };
+        if (typeof o !== 'object' || Array.isArray(o)) fail(`第 ${index} 个区块：gust 要写成 ["gust", {style, radius, turns}]`);
+        if (o.style && o.style !== 'dust' && o.style !== 'wind') fail(`第 ${index} 个区块：gust 的 style 只能是 dust / wind`);
+        const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined }).filter(([, v]) => v !== undefined));
+        ops.push({ op: 126, flag: null, value: 0, args });
+        break;
+      }
       case 'stealthEnd':
         // ['stealthEnd'] 潜行结束：哨兵不再警戒，已经发现的也不再判负（智取无为军骗开大门以后）【新】
         op(125);

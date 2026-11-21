@@ -83,6 +83,8 @@ export type BattleEvent =
   | { type: 'tint'; tint: string }
   /** 火势蔓延【新】：现在正在烧的全部格子（画面照这份同步） */
   | { type: 'fire'; cells: Cell[] }
+  /** 黑尘 / 怪风【新】（还道村玄女庙，指令 126）：以 (x, y) 为中心、radius 格内的画面效果 */
+  | { type: 'gust'; x: number; y: number; radius: number; style: 'dust' | 'wind' }
   | { type: 'focus'; x: number; y: number }
   | { type: 'wait'; ms: number }
   /** 换头像（扩展包指令 114【新】）：本关里这个职业的对白、面板改用包里的另一张图；file 空 = 恢复 */
@@ -2182,6 +2184,33 @@ export class Battle {
           }
           sel = fled[0] ?? foes[0];
           selName = sel?.name ?? '';
+          break;
+        }
+        // 126 黑尘 / 怪风【新】（还道村受天书，负责人 2026-11-21）：以区块的区域中心（或 args.x / y）为中心，
+        // args.radius 格（步数）以内的敌人逃窜 args.turns 回合（同 124 放火的逃窜；args.panic 限人数，args.spare 不逃的职业）；
+        // args.style = dust（黑尘迷眼）/ wind（怪风）只管画面。之后的指令 13 由离中心最近的逃窜者来喊
+        case 126: {
+          const a = op.args ?? {};
+          const t = b.trigger;
+          const at = t.kind === 'area' && a.x === undefined ? { x: Math.round((t.x1 + t.x2) / 2), y: Math.round((t.y1 + t.y2) / 2) } : { x: a.x ?? 0, y: a.y ?? 0 };
+          const radius = a.radius ?? 3;
+          const d = (u: Cell) => Math.abs(u.x - at.x) + Math.abs(u.y - at.y);
+          if (a.focus) this.emit({ type: 'focus', x: at.x, y: at.y });
+          this.emit({ type: 'gust', x: at.x, y: at.y, radius, style: a.style === 'wind' ? 'wind' : 'dust' });
+          const foes = this.active()
+            .filter((u) => u.side === 'enemy' && !this.spectators.has(u.uid) && !this.isBound(u) && d(u) <= radius)
+            .sort((p, q) => d(p) - d(q) || p.uid - q.uid);
+          const fled = foes.filter((u) => !a.spare?.includes(u.classId) && !u.panicTurns).slice(0, a.panic ?? foes.length);
+          for (const u of fled) {
+            u.panicTurns = a.turns ?? 3;
+            if (u.defending) {
+              u.defending = false;
+              this.emit({ type: 'defend', uid: u.uid, on: false });
+            }
+            this.emit({ type: 'status', uid: u.uid, text: '逃竄' });
+          }
+          sel = fled[0] ?? foes[0] ?? sel;
+          selName = sel?.name ?? selName;
           break;
         }
         // 125 潜行结束【新】（智取无为军，负责人 2026-11-21）：骗开大门后不用再躲，哨兵不再警戒，已发现的也不再判负

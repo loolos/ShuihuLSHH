@@ -161,7 +161,10 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         // 关卡要求某几个人走到区域（劫法场逃到出口）：这几个人一律往区域走
         // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
         if (goal && goal.who.includes(u.classId)) {
-          if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
+          // 这回合走得进区域就直接进去（还道村宋江钻神帐）【新】
+          const inReach = b.moveRange(u).green.find((c) => inGoal(c) && !b.active().some((o) => o !== u && o.x === c.x && o.y === c.y));
+          if (inReach && !inGoal(u)) { ev.push(...b.move(u, inReach.x, inReach.y)); if (b.canAct(u)) ev.push(...b.defend(u)); }
+          else if (b.foesOf(u).some((f) => dist(f, u) <= 5)) ev.push(...b.defend(u));
           else if (inGoal(u)) ev.push(...b.defend(u));
           else { const g = goalCell(u); walkTo(b, u, g.x, g.y, ev); }
           continue;
