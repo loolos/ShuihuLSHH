@@ -47,6 +47,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     expect(get('qy1').present).toBe(false);
     expect(get('dt5').present).toBe(false);
     const hj = get('houjian'), xy = get('xueyong');
+    // 两座宅子的前后门都封死，骗开门后只开黄文炳家前门（负责人 2026-11-21）
+    expect([[13, 26], [41, 26], [11, 3], [39, 3]].map(([x, y]) => b.board.passable(x, y))).toEqual([false, false, false, false]);
+    // 门子站在门外，够得着
+    expect(get('bing-front').y).toBe(27);
     // 没探查完，走到门口不算
     put(b, hj, 41, 27);
     expect(get('hero').present).toBe(false);
@@ -60,6 +64,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     expect(hj.x === 41 && hj.y === 27 && hj.alive).toBe(true);
     expect(get('hero').present).toBe(true);
     expect(get('chaogai').present).toBe(true);
+    expect([[13, 26], [41, 26], [11, 3], [39, 3]].map(([x, y]) => b.board.passable(x, y))).toEqual([false, true, false, false]);
     expect(get('ye-front').present).toBe(false);
     expect(b.watchZones()).toEqual([]);
     expect(get('qy1').present).toBe(true);

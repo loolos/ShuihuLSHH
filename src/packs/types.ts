@@ -182,7 +182,7 @@ export interface PackStageJson {
   /** 地图：借原版地图（地表、地上物、通行都照原版），或用重制版自拼地图 */
   /** base：借用的原版地图；custom：自拼地图 packs/maps/<名字>.json（§15.15）；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
    *  open：改成可通行的格子 [[x, y], …]（坐标同单位，例如让人从原版堵死的大门走出来） */
-  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][] };
+  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][]; /** 封死的格子（关着的大门），剧本 ["unseal", 格子] 打开【新】（智取无为军） */ seal?: [number, number][] };
   /** 蹴鞠关（§15.25）【新】：攻击只能踢球；球场、球门、开球点、几球获胜、回合数 */
   cuju?: import('../rules/cuju.ts').CujuRules;
   /** 主线包里的独立外传【新】：不进章节表，列在选关的「外传」组，等级固定、不碰主线存档（蹴鞠） */

@@ -297,6 +297,10 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
     board.blocked[y * board.width + x] = 0;
   }
+  for (const [x, y] of stage.map.seal ?? []) {
+    if (!board.inBounds(x, y)) fail(`${stage.id}: map.seal (${x},${y}) 出界`);
+    board.blocked[y * board.width + x] = 1;
+  }
   // 选关预设只用于新建试玩，不覆盖正常主线存档；表里的包职业使用稳定key。
   const preset: Record<string,number> = opts.preset ? (entryLevels.levels as Record<string,Record<string,number>>)[`${rt.id}/${stage.id}`] ?? {} : {};
   if (opts.preset) {
@@ -358,7 +362,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.cuju ? { cuju: stage.cuju } : {}) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -654,6 +658,13 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         if (o.style && o.style !== 'dust' && o.style !== 'wind') fail(`第 ${index} 个区块：gust 的 style 只能是 dust / wind`);
         const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined }).filter(([, v]) => v !== undefined));
         ops.push({ op: 126, flag: null, value: 0, args });
+        break;
+      }
+      case 'unseal': {
+        // ['unseal', [[x, y], …]] 打开 map.seal 封死的格子（侯健骗开黄文炳家大门）（指令 127）【新】
+        const cells = (a[0] as [number, number][] | undefined) ?? [];
+        if (!Array.isArray(cells) || !cells.length) fail(`第 ${index} 个区块：unseal 要写成 ["unseal", [[x, y], …]]`);
+        ops.push({ op: 127, flag: null, value: 0, args: { cells: cells.map(([x, y]) => ({ x, y })) } });
         break;
       }
       case 'stealthEnd':
