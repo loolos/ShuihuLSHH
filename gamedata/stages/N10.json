@@ -94,8 +94,8 @@
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":5},
-      "cond": {"type":0,"arg":5},
+      "trigger": {"kind":"turn","turn":2},
+      "cond": {"type":0,"arg":2},
       "head": [1,27,1,0,0,0,0,2,0],
       "ops": [
         {"op":12,"flag":1,"value":1013},
@@ -129,8 +129,8 @@
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":6},
-      "cond": {"type":0,"arg":6},
+      "trigger": {"kind":"turn","turn":4},
+      "cond": {"type":0,"arg":4},
       "head": [1,21,1,0,0,0,0,2,0],
       "ops": [
         {"op":12,"flag":1,"value":1014},
@@ -158,8 +158,8 @@
       ]
     },
     {
-      "trigger": {"kind":"turn","turn":7},
-      "cond": {"type":0,"arg":7},
+      "trigger": {"kind":"turn","turn":6},
+      "cond": {"type":0,"arg":6},
       "head": [1,6,1,0,0,0,0,2,0],
       "ops": [
         {"op":12,"flag":1,"value":1039},
