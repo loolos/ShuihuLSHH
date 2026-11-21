@@ -31,6 +31,7 @@ describe('自拼地图', () => {
     expect(maps.sort()).toEqual(recipes.sort());
   });
 
+  const DOORS_CLOSED = new Set(['wuweijun']);
   describe.skipIf(!has)('需要原版图块', () => {
     useDiskCustomMaps(ROOT);
     const files = new NodeFiles(DATA);
@@ -46,7 +47,8 @@ describe('自拼地图', () => {
       }
       const s = passStats(m, att('Data/Ground.att'), att('Data/Upper.att'));
       expect(s.total).toBeGreaterThan(100);
-      expect(s.largest).toBeGreaterThanOrEqual(s.total * 0.9);
+      // 智取无为军：两座宅子的门板关着（剧本打开），宅子里另成一片
+      if (!DOORS_CLOSED.has(name)) expect(s.largest).toBeGreaterThanOrEqual(s.total * 0.9);
       // 截取也能用
       expect(loadStageMap(files, `custom:${name}@0,0,10,10`)!.map.width).toBe(10);
     });

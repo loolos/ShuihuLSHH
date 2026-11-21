@@ -234,6 +234,7 @@ export class BattleScene extends Phaser.Scene {
 
     // 原版地图上的宝物一律画成宝箱（Grid.grp 第 4 帧：0x40c24f 调 0x4010e0 把帧号设为 4，0x4010d0 从 data\\grid 取帧），
     // 不显示里面是什么；走到（或路过）就拾起。开局隐藏的宝物不画（原版绘制时检查显示标志 0x2，0x410960）
+    this.syncSeals();
     this.drawChests();
     this.placeBall();
     for (const u of this.battle.units) if (u.present) this.spawn(u);
@@ -920,6 +921,7 @@ export class BattleScene extends Phaser.Scene {
     this.view.clear();
     for (const img of this.groundItems.values()) img.destroy();
     this.groundItems.clear();
+    this.syncSeals();
     this.drawChests();
     this.placeBall();
     for (const u of b.units) if (u.present && u.alive) this.spawn(u);
@@ -1087,6 +1089,20 @@ export class BattleScene extends Phaser.Scene {
     if (on) this.setTurn(b.turn, b.turnLimit, PHASE_NAME[this.playingSide] + '　▸▸ 快进中');
   }
 
+  /** 封死的门（扩展包 map.seal）：开了的格子把门板藏起来，倒流回去再显示 */
+  private syncSeals(fade = false) {
+    for (const c of this.battle.sealState()) {
+      const key = `${c.x},${c.y}`;
+      for (const image of this.upperImages.get(key) ?? []) {
+        if (image.visible === !c.open && image.alpha === 1) continue;
+        if (fade && c.open) this.tweens.add({ targets: image, alpha: 0, duration: 500, onComplete: () => image.setVisible(false) });
+        else image.setVisible(!c.open).setAlpha(1);
+      }
+      if (c.open) this.occluders.remove(key);
+    }
+    this.cellCover.clear();
+  }
+
   private removeTree(cells: {x:number;y:number}[]) {
     return cells.flatMap(c=>{const key=`${c.x},${c.y}`,images=this.upperImages.get(key)??[];this.upperImages.delete(key);this.occluders.remove(key);this.cellCover.clear();return images;});
   }
@@ -1128,6 +1144,9 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'uproot':
         this.removeTree(e.cells).forEach(image=>image.destroy());
+        break;
+      case 'unseal':
+        this.syncSeals();
         break;
       case 'fire':
         this.syncFire(e.cells, true);
@@ -1852,6 +1871,14 @@ export class BattleScene extends Phaser.Scene {
         await this.banner(tr(e.text));
         break;
       // 剧情演出（扩展包指令 109–113）
+      case 'unseal': {
+        const c = e.cells[Math.floor(e.cells.length / 2)];
+        if (c) await this.focus(c.x, c.y, 300);
+        sound.hurt(false);
+        this.syncSeals(true);
+        await new Promise<void>((resolve) => this.time.delayedCall(550, resolve));
+        break;
+      }
       case 'uproot': {
         const images=this.removeTree(e.cells);
         if(!images.length)break;

@@ -373,7 +373,7 @@
    "level": 30,
    "ai": 8,
    "watch": 2,
-   "facing": 1,
+   "facing": 3,
    "name": "黄佛子家门子",
    "levelOffset": -2
   },
@@ -386,7 +386,7 @@
    "level": 30,
    "ai": 8,
    "watch": 2,
-   "facing": 1,
+   "facing": 3,
    "name": "黄佛子家门子",
    "levelOffset": -2
   },
@@ -394,14 +394,17 @@
    "id": "bing-front",
    "class": 40,
    "side": "enemy",
-   "x": 44,
+   "x": 39,
    "y": 27,
    "level": 30,
    "ai": 8,
    "watch": 2,
    "facing": 3,
    "name": "黄通判家门子",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "trusts": [
+    "houjian"
+   ]
   },
   {
    "id": "bing-back",
@@ -412,9 +415,38 @@
    "level": 30,
    "ai": 8,
    "watch": 2,
-   "facing": 3,
+   "facing": 1,
    "name": "黄通判家门子",
    "levelOffset": -1
+  },
+  {
+   "id": "ye-front2",
+   "class": 37,
+   "side": "enemy",
+   "x": 16,
+   "y": 27,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 1,
+   "name": "黄佛子家门子",
+   "levelOffset": -2
+  },
+  {
+   "id": "bing-front2",
+   "class": 40,
+   "side": "enemy",
+   "x": 44,
+   "y": 27,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 1,
+   "name": "黄通判家门子",
+   "levelOffset": -1,
+   "trusts": [
+    "houjian"
+   ]
   },
   {
    "id": "qy1",
@@ -953,6 +985,10 @@
     [
      "leave",
      "ye-front"
+    ],
+    [
+     "leave",
+     "ye-front2"
     ],
     [
      "leave",
