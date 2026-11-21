@@ -252,7 +252,7 @@ export type PackTrigger =
   /** enter: "player" = 我方任何一个在场的人进去都算【新】 */
   | { enter: string | string[]; area: [number, number, number, number]; label?: string; /** 回合结束（敌方行动完、下回合开始前）人还在里面才触发【新】 */ atTurnEnd?: boolean } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
-  | { near: string; by?: string; playerPhase?: boolean }
+  | { near: string; by?: string; playerPhase?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
   | { flag: string }
   /** 目标生命低于最大值的 below%（可配 if / unless） */
