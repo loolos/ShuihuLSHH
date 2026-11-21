@@ -2260,6 +2260,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": [
           "songjiang",
           "daizong"

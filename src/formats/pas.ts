@@ -84,7 +84,7 @@ export type PasTrigger =
   /** 条件 2：N-add03 区块 30（参数 1），内容是"有埋伏！"——重制版放在伏兵号令之后执行（推测） */
   | { kind: 'signal'; type: number; param: number }
   /** 其它条件（组合条件、条件 3/11 等）：按 cond 求值 */
-  | { kind: 'cond' }
+  | { kind: 'cond'; /** 【新】条件树里的坐标判断（条件 4 选人）只在回合结束时算（N12 晁盖撤退） */ atTurnEnd?: boolean }
   /**
    * 扩展包【新】：角色号 char 的单位出手之后——用过 skills 里全部技能（技能号），或累计出手 count 次（含普通攻击、反击）。
    * 原版剧本没有这种触发，只由扩展包关卡（src/packs/）生成。

@@ -457,6 +457,7 @@
     },
     {
       "on": {
+        "atTurnEnd": true,
         "enter": "wusong",
         "area": [
           6,

@@ -1,4 +1,5 @@
 {
+  "edited": 1,
   "map": "N01",
   "header": {"blockCount":7,"town":0,"next":1,"act":0},
   "units": [
@@ -125,7 +126,7 @@
       ]
     },
     {
-      "trigger": {"kind":"area","char":18,"x1":23,"y1":52,"x2":25,"y2":53},
+      "trigger": {"kind":"area","char":18,"x1":23,"y1":52,"x2":25,"y2":53,"atTurnEnd":true},
       "cond": {"op":"and","a":{"type":4,"arg":18},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":23},"b":{"type":8,"arg":52}},"b":{"op":"and","a":{"type":9,"arg":25},"b":{"type":10,"arg":53}}}},
       "head": [4,8,1,0,0,0,40,2,4],
       "ops": [
