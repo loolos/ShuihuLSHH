@@ -16,9 +16,9 @@ describe.skipIf(!has)('后期关卡加敌人 / 提前增援', () => {
   const load = (s: string) => loadStage(files, data, s, { seed: 1, text: tr });
   const enemies = (s: string) => load(s).units.filter((u) => u.side === 'enemy').length;
   // 原版 ACT 敌人数 → 加完以后
-  const COUNTS: Record<string, [number, number]> = { 'N-add14': [52, 60], N12: [59, 69], N13: [49, 59], 'N-add16': [46, 56], N14: [87, 87] };
+  const COUNTS: Record<string, [number, number]> = { 'N-add14': [52, 72], N12: [59, 69], N13: [49, 59], 'N-add16': [46, 56], N14: [87, 87] };
   /** 追加的回合增援：关卡 → [登场回合, 人数] */
-  const WAVES: Record<string, [number, number][]> = { 'N-add14': [[5, 8], [7, 11]], N12: [[6, 6], [11, 4]], N13: [[11, 10]], 'N-add16': [[5, 6]] };
+  const WAVES: Record<string, [number, number][]> = { 'N-add14': [[2, 12], [5, 8], [7, 11]], N12: [[6, 6], [11, 4]], N13: [[11, 10]], 'N-add16': [[5, 6]] };
 
   it('敌人数', () => {
     for (const [s, [, after]] of Object.entries(COUNTS)) expect(enemies(s), s).toBe(after);
