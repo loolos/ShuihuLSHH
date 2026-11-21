@@ -1,0 +1,13 @@
+{
+  "N-add08#1": {"zh":"你们好大的胆子，竟敢擅闯太尉府！","t":"You've got some nerve, barging into the Marshal's manor!"},
+  "N-add08#2": {"zh":"我们只要林冲，把林冲放出来我们便走人。","t":"We only want Lin Chong. Let him out and we'll leave."},
+  "N-add08#3": {"zh":"哼哼！竟敢上太尉府要人，来人啊！把这群无法无天的家伙统统给我抓起来！","t":"Heh! Coming to the Marshal's manor to demand a man? Guards! Seize these lawless louts, every one!"},
+  "N-add08#4": {"zh":"喔？！看样子你们早就准备好了；不过像你们这种货色就算来几百个都不够看哩！","t":"Oh?! Looks like you were ready for us. But trash like you couldn't stop us even by the hundreds!"},
+  "N-add08#5": {"zh":"时间紧迫，大家要速战速决！","t":"Time is short. Let's finish this fast!"},
+  "N-add08#6": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N-add08#7": {"zh":"胜利条件   --- 打败所有敌人","t":"Victory --- Defeat all enemies"},
+  "N-add08#8": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add08#9": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N-add08#10": {"zh":"%N死亡，其余人等浴血奋战，高俅布下天罗地网，将一干好汉殊杀于府内........","t":"%N died. The rest fought on in blood, but Gao Qiu had spread an inescapable net, and the heroes were slaughtered inside the manor........"},
+  "N-add08#11": {"zh":"游戏过关！","t":"Stage cleared!"}
+}
