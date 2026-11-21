@@ -5,7 +5,7 @@
   "units": [
     {"index":0,"type":0,"group":1,"side":"player","facing":2,"x":14,"y":7,"level":1,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":1,"type":12,"group":2,"side":"ally","facing":2,"x":13,"y":7,"level":25,"flags":1280,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":2,"type":38,"group":4,"side":"enemy","facing":0,"x":4,"y":25,"level":26,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":2,"type":38,"group":4,"side":"enemy","facing":0,"x":4,"y":25,"level":26,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":3,"type":43,"group":31,"side":"enemy","facing":0,"x":3,"y":27,"level":26,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":4,"type":43,"group":32,"side":"enemy","facing":0,"x":5,"y":27,"level":26,"flags":1536,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":5,"type":43,"group":33,"side":"enemy","facing":0,"x":3,"y":19,"level":26,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
@@ -19,22 +19,20 @@
     {"index":13,"type":20,"group":0,"side":"ally","facing":2,"x":4,"y":11,"level":30,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":14,"type":19,"group":0,"side":"ally","facing":2,"x":12,"y":6,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":15,"type":20,"group":0,"side":"ally","facing":2,"x":14,"y":6,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":16,"type":19,"group":0,"side":"ally","facing":2,"x":12,"y":8,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":17,"type":20,"group":0,"side":"ally","facing":2,"x":14,"y":8,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":18,"type":19,"group":0,"side":"ally","facing":2,"x":11,"y":6,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":19,"type":20,"group":0,"side":"ally","facing":2,"x":15,"y":6,"level":30,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":20,"type":48,"group":0,"side":"enemy","facing":0,"x":0,"y":27,"level":30,"flags":1537,"extra":[0,0,0],"items":[0,0,0,183,0,0,0]},
-    {"index":21,"type":1000,"group":0,"side":"object","facing":0,"x":0,"y":28,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":22,"type":32,"group":74,"side":"enemy","facing":0,"x":5,"y":22,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
-    {"index":23,"type":32,"group":75,"side":"enemy","facing":0,"x":5,"y":21,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
-    {"index":24,"type":32,"group":76,"side":"enemy","facing":0,"x":4,"y":22,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
-    {"index":25,"type":34,"group":77,"side":"enemy","facing":0,"x":6,"y":22,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":26,"type":43,"group":78,"side":"enemy","facing":0,"x":5,"y":23,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
-    {"index":27,"type":43,"group":79,"side":"enemy","facing":0,"x":5,"y":20,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
-    {"index":28,"type":43,"group":80,"side":"enemy","facing":0,"x":29,"y":2,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
-    {"index":29,"type":43,"group":81,"side":"enemy","facing":0,"x":29,"y":1,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
-    {"index":30,"type":43,"group":82,"side":"enemy","facing":0,"x":28,"y":2,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
-    {"index":31,"type":43,"group":83,"side":"enemy","facing":0,"x":29,"y":3,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]}
+    {"index":16,"type":48,"group":0,"side":"enemy","facing":0,"x":0,"y":27,"level":30,"flags":1537,"extra":[0,0,0],"items":[0,0,0,183,0,0,0]},
+    {"index":17,"type":1000,"group":0,"side":"object","facing":0,"x":0,"y":28,"level":0,"flags":0,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":18,"type":60,"group":0,"side":"enemy","facing":3,"x":26,"y":19,"level":29,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":19,"type":54,"group":0,"side":"enemy","facing":3,"x":24,"y":19,"level":27,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":20,"type":32,"group":74,"side":"enemy","facing":0,"x":5,"y":22,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
+    {"index":21,"type":32,"group":75,"side":"enemy","facing":0,"x":5,"y":21,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
+    {"index":22,"type":32,"group":76,"side":"enemy","facing":0,"x":4,"y":22,"level":25,"flags":1,"extra":[0,0,0],"items":[64,103,129,180,0,0,0]},
+    {"index":23,"type":34,"group":77,"side":"enemy","facing":0,"x":6,"y":22,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":24,"type":43,"group":78,"side":"enemy","facing":0,"x":5,"y":23,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":25,"type":43,"group":79,"side":"enemy","facing":0,"x":5,"y":20,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":26,"type":43,"group":80,"side":"enemy","facing":0,"x":29,"y":2,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":27,"type":43,"group":81,"side":"enemy","facing":0,"x":29,"y":1,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":28,"type":43,"group":82,"side":"enemy","facing":0,"x":28,"y":2,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]},
+    {"index":29,"type":43,"group":83,"side":"enemy","facing":0,"x":29,"y":3,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,157,0,0,0]}
   ],
   "blocks": [
     {
@@ -42,23 +40,29 @@
       "cond": {"type":0,"arg":0},
       "head": [1,31,5,1,1,2,31,2,0],
       "ops": [
+        {"op":12,"flag":1,"value":60,"quiet":true,"actor":{"action":"show"}},
+        {"op":12,"flag":1,"value":54,"quiet":true,"actor":{"action":"show"}},
+        {"op":12,"flag":1,"value":48,"quiet":true,"actor":{"action":"show","near":60}},
         {"op":12,"flag":1,"value":60,"quiet":true},
         {"op":18,"flag":1,"value":0},
         {"op":19,"flag":1,"value":52},
         {"op":13,"flag":0,"text":"时知县有令！命我二人带着部队同来围剿东溪村贼寇晁盖！我是步兵都头『插翅虎』雷横，这位是马兵都头『美髯公』朱仝。"},
         {"op":12,"flag":1,"value":54,"quiet":true},
         {"op":13,"flag":0,"text":"时知县怎么派你们两人来了？也好，咱们就一口气杀入东溪村，取下晁盖的人头吧！"},
-        {"op":12,"flag":1,"value":48},
+        {"op":12,"flag":1,"value":48,"quiet":true},
         {"op":13,"flag":0,"text":"......"},
-        {"op":12,"flag":1,"value":48},
+        {"op":12,"flag":1,"value":48,"quiet":true},
         {"op":13,"flag":0,"text":"不好。我知道晁盖的功夫了得，手下又不知道有哪些虎狼之辈；如果他带领庄客一齐杀出，就算我们捉住晁盖，手下也一定会死很多人。不如采声东击西之计，何观察与雷都头徉攻前门，我去截住后门；等到号令一响，你们只管从前门打进庄内；见一个捉一个，见两个捉一双。"},
-        {"op":12,"flag":1,"value":48},
+        {"op":12,"flag":1,"value":48,"quiet":true},
         {"op":16,"flag":1,"value":6},
         {"op":17,"flag":0,"value":8},
         {"op":12,"flag":1,"value":60,"quiet":true},
         {"op":13,"flag":0,"text":"有道理。每次都是你在出主意，这次也听你的吧！"},
         {"op":12,"flag":1,"value":54,"quiet":true},
         {"op":13,"flag":0,"text":"哼！暂且先听你的，到时候要是出了什么问题，我要你们两个负全部责任！"},
+        {"op":12,"flag":1,"value":60,"quiet":true,"actor":{"action":"hide"}},
+        {"op":12,"flag":1,"value":54,"quiet":true,"actor":{"action":"hide"}},
+        {"op":12,"flag":1,"value":48,"quiet":true,"actor":{"action":"hide"}},
         {"op":12,"flag":1,"value":19},
         {"op":14,"flag":1,"value":16},
         {"op":15,"flag":1,"value":7},
@@ -106,7 +110,7 @@
     },
     {
       "trigger": {"kind":"cond","atTurnEnd":true},
-      "cond": {"op":"or","a":{"type":1,"arg":48},"b":{"op":"and","a":{"type":4,"arg":12},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":0},"b":{"type":8,"arg":27}},"b":{"op":"and","a":{"type":9,"arg":1},"b":{"type":10,"arg":29}}}}},
+      "cond": {"op":"and","a":{"op":"and","a":{"type":4,"arg":12},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":0},"b":{"type":8,"arg":27}},"b":{"op":"and","a":{"type":9,"arg":1},"b":{"type":10,"arg":29}}}},"b":{"type":101,"arg":62}},
       "head": [5,8,1,0,0,0,32,2,1],
       "ops": [
         {"op":12,"flag":1,"value":48},
@@ -147,6 +151,50 @@
         {"op":12,"flag":1,"value":4294967295},
         {"op":13,"flag":1,"text":"敌军增援了！"}
       ]
+    },
+    {
+      "trigger": {"kind":"cond","atTurnEnd":true},
+      "cond": {"op":"and","a":{"op":"and","a":{"type":4,"arg":12},"b":{"op":"and","a":{"op":"and","a":{"type":7,"arg":0},"b":{"type":8,"arg":27}},"b":{"op":"and","a":{"type":9,"arg":1},"b":{"type":10,"arg":29}}}},"b":{"type":100,"arg":62}},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"保正一路保重！"},
+        {"op":12,"flag":1,"value":12},
+        {"op":13,"flag":0,"text":"朱都头，后会有期！"},
+        {"op":29,"flag":null,"text":"经过一场恶战，晁盖到达安全地带。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"cond"},
+      "cond": {"type":100,"arg":62},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"保正休慌！朱仝在这里等你很久了。"},
+        {"op":12,"flag":1,"value":12},
+        {"op":13,"flag":0,"text":"你是『美髯公』朱仝！朱都头，我们无冤无仇，为何如此苦苦相逼？"},
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"保正误会了。你看我这一刀，可曾伤你分毫？我怕雷横不懂得做人情，所以骗他去打前门，我在后门放你走。保正你不可投往别处，只有梁山泊可以安身立命。"},
+        {"op":12,"flag":1,"value":12},
+        {"op":13,"flag":0,"text":"原来如此……你的不杀之恩，他日必报！"},
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"我还得做做样子给手下看。保正快往西南走，莫要回头！"}
+      ]
+    },
+    {
+      "trigger": {"kind":"hp","char":48,"below":1,"spare":true},
+      "cond": {"type":0,"arg":0},
+      "head": [],
+      "ops": [
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"哎呀！好厉害，朱仝拦不住了！"},
+        {"op":12,"flag":1,"value":48},
+        {"op":13,"flag":0,"text":"（低声）保正，这一下是我故意让的，弟兄们都看见我尽力了。保正不可投往别处，只有梁山泊可以安身立命。快走！"},
+        {"op":12,"flag":1,"value":12},
+        {"op":13,"flag":0,"text":"朱都头，你的不杀之恩，他日必报！"},
+        {"op":29,"flag":null,"text":"朱仝故意败下阵来，晁盖一行从后门突围而去。"}
+      ]
     }
-  ]
+  ],
+  "rules": {"feint":{"by":48,"target":12,"flag":62}}
 }

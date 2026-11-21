@@ -6,7 +6,7 @@ import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
-import { canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
+import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
@@ -326,7 +326,7 @@ export class Battle {
   private pendingDeaths: number[] = [];
   /** 提前了的回合增援区块：区块序号 → 新的回合参数（stage-tune 的 rushOnDeath）【新】 */
   private turnAt: Record<number, number> = {};
-  private readonly tune?: StageRules;
+  readonly tune?: StageRules;
   /** 本关累计的全队经验（击倒经验的 35%），胜利后结算 */
   teamExp = 0;
   /** 开场时是敌人的单位（poolLeftoverExp 用） */
@@ -1348,7 +1348,9 @@ export class Battle {
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
       return;
     }
-    const hits = targets.map((t) => ({ t, r: rollAttack(u, t, skill, this.rng, counter) }));
+    const feint = this.tune?.feint;
+    const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : rollAttack(u, t, skill, this.rng, counter) }));
+    if (feint?.flag !== undefined && hits.some(({ t }) => u.classId === feint.by && t.classId === feint.target)) this.flags.add(feint.flag);
     if (!counter && hits.some(({ r }) => r.backstab !== 'front')) this.noteDid(u, 'flank');
     this.noteDid(u, did);
     for (const { t } of hits) if (t.defending) this.noteDid(t, 'guard');
@@ -1964,7 +1966,9 @@ export class Battle {
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
           if (sel && op.actor?.action === 'show') {
             if (sel.present && sel.alive) break; // 本来就在场：不挪位置
-            const near = this.active().find(u => u.classId === op.actor!.near) ?? sel;
+            // near 也可以是只在对白里露面（show）的人（东溪村突围：朱仝站到雷横旁边）【新】
+            const shownNear = [...this.shown].map(([uid, c]) => ({ u: this.units.find((x) => x.uid === uid)!, c })).find(({ u }) => u.classId === op.actor!.near)?.c;
+            const near = this.active().find(u => u.classId === op.actor!.near) ?? shownNear ?? sel;
             const taken = this.occupied();
             for (const c of this.shown.values()) taken.add(key(c.x, c.y));
             const at = this.board.nearestFree(near.x, near.y, taken) ?? sel;
@@ -2628,4 +2632,10 @@ export class Battle {
     if (t === c.rules.turns + 1) this.emit({ type: 'message', text: `常规 ${c.rules.turns} 回合打完，比分相同，进入加时：先进球者胜！` });
     return false;
   }
+}
+
+/** 手下留情（rules.feint）：必定打中、没有伤害的一下 */
+function feintHit(skill: SkillDef): HitResult {
+  const n = attackParts(skill).length;
+  return { hit: true, crit: false, damage: 0, parts: Array(n).fill(0), partHit: Array(n).fill(true), partCrit: Array(n).fill(false), poisoned: false, stunned: false, backstab: 'front' };
 }

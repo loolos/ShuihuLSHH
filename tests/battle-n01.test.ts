@@ -543,13 +543,48 @@ describe.skipIf(!has)('N01', () => {
     b.endPlayerPhase();
     const c2 = b.units.find((u) => u.classId === 12)!;
     expect(Math.abs(c2.x - hero.x) + Math.abs(c2.y - hero.y)).toBe(1);
-    // 打倒朱仝也过关
+    // 开场雷横、何涛、朱仝在庄前露面，说完退下（负责人 2026-11-21）
+    {
+      const bb = new Battle(loadStage(files, data, 'N12', { seed: 1, text: tr }));
+      const evs = bb.begin();
+      const shown = (cls: number) => evs.find((e) => e.type === 'appear' && bb.units.find((u) => u.uid === e.uid)?.classId === cls) as { x: number; y: number } | undefined;
+      for (const cls of [60, 54, 48]) {
+        expect(shown(cls)?.y, String(cls)).toBe(19);
+        expect(evs.some((e) => e.type === 'leave' && bb.units.find((u) => u.uid === e.uid)?.classId === cls)).toBe(true);
+      }
+      expect(bb.units.filter((u) => [60, 54, 48].includes(u.classId)).every((u) => !u.present)).toBe(true);
+    }
+    // 朱仝出来以后打晁蓋只是做样子：没有伤害，接着说明来意（rules.feint，负责人 2026-11-21）
+    const out = (bb: Battle) => (bb as unknown as { ambushers: Set<number> }).ambushers;
     b = start();
-    const [z1] = b.units.filter((u) => u.classId === 48);
-    settle(b);
+    let z = b.units.find((u) => u.classId === 48)!;
+    let c = b.units.find((u) => u.classId === 12)!;
+    // 挪到庄客够不着的地方，免得庄客先把朱仝打倒
+    Object.assign(b.units.find((u) => u.classId === 0)!, { x: 29, y: 6 });
+    Object.assign(c, { x: 28, y: 6 });
+    Object.assign(z, { x: 28, y: 5, present: true });
+    out(b).delete(z.uid);
+    const hp = c.hp;
+    expect(planAi(b, z).target).toBe(c);
+    const hit = b.endPlayerPhase(); // 敌方回合朱仝去打晁蓋
+    expect(c.hp).toBe(hp);
+    expect(hit.some((e) => e.type === 'say' && /可曾伤你分毫/.test(e.text))).toBe(true);
     expect(b.status).toBe('playing');
-    z1.alive = false;
-    settle(b);
+    // 见过朱仝再到出口：换成道别
+    Object.assign(c, { x: 1, y: 28 });
+    Object.assign(b.units.find((u) => u.classId === 0)!, { x: 1, y: 29 });
+    const bye = b.endPlayerPhase();
+    expect(b.status).toBe('won');
+    expect(bye.some((e) => e.type === 'say' && /后会有期/.test(e.text))).toBe(true);
+    // 打倒朱仝：故意放走，过关
+    b = start();
+    z = b.units.find((u) => u.classId === 48)!;
+    Object.assign(z, { x: 14, y: 6, present: true });
+    out(b).delete(z.uid);
+    z.hp = 1;
+    const fall = settle(b);
+    expect(z.alive).toBe(true);
+    expect(fall.some((e) => e.type === 'say' && /故意让的/.test(e.text))).toBe(true);
     expect(b.status).toBe('won');
   });
 

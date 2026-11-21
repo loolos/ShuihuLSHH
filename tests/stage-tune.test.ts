@@ -15,8 +15,8 @@ describe.skipIf(!has)('后期关卡加敌人 / 提前增援', () => {
   const data = has ? loadGameData(files, tr) : (null as never);
   const load = (s: string) => loadStage(files, data, s, { seed: 1, text: tr });
   const enemies = (s: string) => load(s).units.filter((u) => u.side === 'enemy').length;
-  // 原版 ACT 敌人数 → 加完以后（N12 东溪村突围 2026-11-21 只留后门：原版后门 7 人 → 加两波增援 17 人）
-  const COUNTS: Record<string, [number, number]> = { 'N-add14': [52, 72], N12: [7, 17], N13: [49, 59], 'N-add16': [46, 56], N14: [87, 87] };
+  // 原版 ACT 敌人数 → 加完以后（N12 东溪村突围 2026-11-21 只留后门：原版后门 7 人 + 开场露面的雷横、何涛 → 加两波增援 19 人）
+  const COUNTS: Record<string, [number, number]> = { 'N-add14': [52, 72], N12: [9, 19], N13: [49, 59], 'N-add16': [46, 56], N14: [87, 87] };
   /** 追加的回合增援：关卡 → [登场回合, 人数] */
   const WAVES: Record<string, [number, number][]> = { 'N-add14': [[2, 12], [5, 8], [7, 11]], N12: [[6, 6], [11, 4]], N13: [[11, 10]], 'N-add16': [[5, 6]] };
 
