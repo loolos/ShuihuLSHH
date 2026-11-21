@@ -53,6 +53,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     put(b, hj, 13, 29); put(b, hj, 11, 1); put(b, hj, 39, 1); put(b, xy, 41, 29);
     expect(b.objectives.join('')).toContain('骗开大门');
     put(b, hj, 41, 27);
+    // 走到门口潜行就结束，但回合结束才叫门（负责人 2026-11-21：武龙、晁盖登场就能马上行动）
+    expect(b.watchZones()).toEqual([]);
+    expect(get('hero').present).toBe(false);
+    b.endPlayerPhase();
+    expect(hj.x === 41 && hj.y === 27 && hj.alive).toBe(true);
     expect(get('hero').present).toBe(true);
     expect(get('chaogai').present).toBe(true);
     expect(get('ye-front').present).toBe(false);
@@ -67,6 +72,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     const { b, ev, get, s } = open('wuweijun');
     const hj = get('houjian');
     for (const [x, y] of [[13, 29], [11, 1], [39, 1], [41, 29], [41, 27]]) put(b, hj, x, y);
+    b.endPlayerPhase();
     put(b, hj, 34, 6);
     expect(b.fireCells().length).toBeGreaterThan(0);
     expect(b.units.some((u) => u.panicTurns)).toBe(true);
