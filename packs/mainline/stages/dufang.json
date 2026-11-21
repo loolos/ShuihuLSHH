@@ -45,7 +45,7 @@
       "y": 8,
       "level": 30,
       "ai": 0,
-      "facing": 1,
+      "facing": 3,
       "levelOffset": 2
     },
     {
@@ -69,7 +69,7 @@
       "y": 7,
       "level": 30,
       "ai": 14,
-      "facing": 1,
+      "facing": 3,
       "name": "赌徒",
       "levelOffset": -3
     },
@@ -117,7 +117,7 @@
       "y": 9,
       "level": 30,
       "ai": 14,
-      "facing": 1,
+      "facing": 3,
       "name": "赌徒",
       "levelOffset": -3
     },
@@ -153,7 +153,7 @@
       "y": 8,
       "level": 30,
       "ai": 14,
-      "facing": 1,
+      "facing": 3,
       "name": "赌徒",
       "levelOffset": -3
     }

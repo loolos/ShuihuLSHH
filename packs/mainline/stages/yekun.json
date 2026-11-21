@@ -121,7 +121,7 @@
       "name": "秦明"
     },
     {
-      "id": "qz-1",
+      "id": "qz-1", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 17,
@@ -131,7 +131,7 @@
       "name": "青州马军"
     },
     {
-      "id": "qz-2",
+      "id": "qz-2", "facing": 0,
       "class": 43,
       "side": "enemy",
       "x": 19,
@@ -141,7 +141,7 @@
       "name": "青州马军"
     },
     {
-      "id": "qz-3",
+      "id": "qz-3", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 15,
@@ -151,7 +151,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-4",
+      "id": "qz-4", "facing": 0,
       "class": 33,
       "side": "enemy",
       "x": 17,
@@ -161,7 +161,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-5",
+      "id": "qz-5", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 20,
@@ -171,7 +171,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-6",
+      "id": "qz-6", "facing": 0,
       "class": 33,
       "side": "enemy",
       "x": 18,
@@ -181,7 +181,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-7",
+      "id": "qz-7", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 15,
@@ -191,7 +191,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-8",
+      "id": "qz-8", "facing": 0,
       "class": 33,
       "side": "enemy",
       "x": 20,
@@ -201,7 +201,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-9",
+      "id": "qz-9", "facing": 0,
       "class": 34,
       "side": "enemy",
       "x": 16,
@@ -211,7 +211,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-10",
+      "id": "qz-10", "facing": 0,
       "class": 34,
       "side": "enemy",
       "x": 18,
@@ -221,7 +221,7 @@
       "name": "青州军"
     },
     {
-      "id": "qz-11",
+      "id": "qz-11", "facing": 0,
       "class": 34,
       "side": "enemy",
       "x": 20,

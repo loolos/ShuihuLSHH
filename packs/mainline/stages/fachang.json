@@ -574,7 +574,7 @@
       "levelOffset": 2
     },
     {
-      "id": "g5",
+      "id": "g5", "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 42,

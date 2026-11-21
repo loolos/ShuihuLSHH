@@ -20,7 +20,7 @@
   ],
   "units": [
     {
-      "id": "wusong",
+      "id": "wusong", "facing": 0,
       "class": "wusong",
       "side": "player",
       "x": 12,
@@ -28,7 +28,7 @@
       "level": 29
     },
     {
-      "id": "hero",
+      "id": "hero", "facing": 0,
       "class": 0,
       "side": "player",
       "x": 13,
@@ -36,7 +36,7 @@
       "level": 29
     },
     {
-      "id": "songjiang",
+      "id": "songjiang", "facing": 0,
       "class": "sj-fugitive",
       "side": "player",
       "x": 14,
@@ -71,7 +71,7 @@
       "hidden": true
     },
     {
-      "id": "shien",
+      "id": "shien", "facing": 0,
       "class": "shien",
       "side": "ally",
       "x": 14,

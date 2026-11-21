@@ -23,7 +23,7 @@
       "facing": 1
     },
     {
-      "id": "songjiang",
+      "id": "songjiang", "facing": 0,
       "class": "sj-fugitive",
       "side": "player",
       "x": 13,

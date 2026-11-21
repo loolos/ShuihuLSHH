@@ -392,7 +392,7 @@
       "x": 15,
       "y": 4,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -404,7 +404,7 @@
       "x": 16,
       "y": 4,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -416,7 +416,7 @@
       "x": 17,
       "y": 4,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1,
       "hidden": true
@@ -428,7 +428,7 @@
       "x": 18,
       "y": 4,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -440,7 +440,7 @@
       "x": 16,
       "y": 3,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "弓手",
       "levelOffset": -2,
       "hidden": true
@@ -452,7 +452,7 @@
       "x": 15,
       "y": 3,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -2,
       "hidden": true
@@ -464,7 +464,7 @@
       "x": 18,
       "y": 3,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "公人",
       "levelOffset": -1,
       "hidden": true
@@ -476,7 +476,7 @@
       "x": 14,
       "y": 2,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "马军",
       "levelOffset": -1,
       "hidden": true
@@ -488,7 +488,7 @@
       "x": 19,
       "y": 2,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "马军",
       "levelOffset": -1,
       "hidden": true
@@ -500,7 +500,7 @@
       "x": 17,
       "y": 3,
       "level": 30,
-      "facing": 0,
+      "facing": 2,
       "name": "弓手",
       "levelOffset": -2,
       "hidden": true

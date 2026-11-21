@@ -216,7 +216,7 @@
       "y": 16,
       "level": 30,
       "ai": 2,
-      "facing": 3,
+      "facing": 1,
       "name": "火家"
     },
     {
@@ -227,7 +227,7 @@
       "y": 20,
       "level": 30,
       "ai": 2,
-      "facing": 3,
+      "facing": 1,
       "name": "火家"
     }
   ],

@@ -16,7 +16,7 @@
       "side": "player",
       "x": 7,
       "y": 11,
-      "facing": 1,
+      "facing": 3,
       "level": 16,
       "hidden": true
     },
@@ -26,7 +26,7 @@
       "side": "player",
       "x": 9,
       "y": 11,
-      "facing": 1,
+      "facing": 3,
       "level": 16
     },
     {
@@ -35,7 +35,7 @@
       "side": "player",
       "x": 7,
       "y": 8,
-      "facing": 1,
+      "facing": 3,
       "level": 16,
       "hidden": true
     },

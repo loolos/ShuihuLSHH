@@ -32,7 +32,7 @@
       "facing": 1
     },
     {
-      "id": "hj-1",
+      "id": "hj-1", "facing": 0,
       "class": 37,
       "side": "ally",
       "x": 9,
@@ -42,7 +42,7 @@
       "levelOffset": -2
     },
     {
-      "id": "hj-2",
+      "id": "hj-2", "facing": 0,
       "class": 41,
       "side": "ally",
       "x": 14,
