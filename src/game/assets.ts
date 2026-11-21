@@ -137,7 +137,8 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
     if (basic) job.skill(assets, cls, basic);
   }
   for (const g of FIXED_FX) job.effectGroup(assets, g); // 防御、反击的固定特效
-  if (j?.rules?.fire) job.effectGroup(assets, FX_BLAZE); // 火势蔓延的火焰
+  // 火势蔓延、剧本放火（指令 124）的火焰
+  if (j?.rules?.fire || j?.blocks?.some((b) => b.ops.some((o) => o.op === 124))) job.effectGroup(assets, FX_BLAZE);
   return job.run(files, progress);
 }
 

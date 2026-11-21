@@ -203,6 +203,12 @@ export function alertRadius(b: Battle, u: Unit): number {
 
 export function planAi(b: Battle, u: Unit): AiPlan {
   if (b.spectators.has(u.uid)) return {};
+  // 【新】逃窜（大破何涛放火，负责人 2026-11-21）：在移动范围里随便挑一格乱走，不攻击、不用技能、不防御
+  if (u.panicTurns) {
+    const reach = b.reachOf(u, u.stats.move);
+    const cells = [...reach.values()];
+    return { path: b.pathOf(reach, cells[b.rng.int(cells.length)]) };
+  }
   const [, hi] = attackRange(u, b.data);
   const target = u.ai.target ? b.unitByChar(u.ai.target) : undefined;
   switch (u.ai.mode) {

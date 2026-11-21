@@ -281,6 +281,8 @@ export class Battle {
   objectives: string[] = [];
   private blocks: PasBlock[];
   private fired = new Set<number>();
+  /** 剧本放的火（指令 124，只是画面，不挡路、不烧人）【新】 */
+  private blaze: Cell[] = [];
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
     return this.fired.has(index);
@@ -567,7 +569,7 @@ export class Battle {
   /** 开战：执行开战事件，进入第 1 回合我方阶段 */
   begin(): BattleEvent[] {
     this.out = [];
-    if (this.fire) this.emit({ type: 'fire', cells: this.fire.cells() });
+    if (this.fire) this.emit({ type: 'fire', cells: this.fireCells() });
     this.runTurnTriggers(0);
     // 开场剧本要求选人：等 choose() 选完再进第 1 回合（这样时光倒流不会回到选人之前）
     if (this.pendingPick || this.pendingChoice) return this.flush();
@@ -580,6 +582,11 @@ export class Battle {
    * 现在还有效的区域胜负条件（见 ObjectiveZone）：区块没执行过、要进去的人还活着（在不在场都算，可能还没登场）。
    * 区域由地图尺寸截断（条件只写了一边时另一边到地图边缘）。
    */
+  /** 地图上正在烧的格子：火势蔓延（rules.fire）加剧本放的火（指令 124） */
+  fireCells(): Cell[] {
+    return [...(this.fire?.cells() ?? []), ...this.blaze];
+  }
+
   objectiveZones(): ObjectiveZone[] {
     if (this.status !== 'playing') return [];
     const out: ObjectiveZone[] = [];
@@ -595,14 +602,15 @@ export class Battle {
       // 敌人走进去就退场（火烧草料场：富安、洪教头从侧门逃走）也标成敌逃【新】
       const flees = (b: (typeof this.blocks)[number]) =>
         b.trigger.kind === 'area' && b.ops.some((o) => o.op === 17 && o.value & 2) && this.units.some((u) => b.trigger.kind === 'area' && u.classId === b.trigger.char && u.side === 'enemy');
-      const kind = wins(b) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
+      // 放火点（指令 124，大破何涛）不是胜利条件，也标出来【新】
+      const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : null;
       if (!kind) continue;
       const t = b.trigger;
       // 写了 if / unless 的区域：标志不满足时还没轮到，不标出（教学关的将台，§15.26）
       if (t.kind === 'area' && t.flagged && !this.flagsOk(b)) continue;
       const rects =
         t.kind === 'area'
-          ? [{ chars: t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2, label: t.label }]
+          ? [{ chars: t.side ? [] : t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2, label: t.label }]
           : t.kind === 'cond'
             ? condZones(b.cond).map((r) => ({ ...r, chars: [r.char >= 1000 ? r.char - 1000 : r.char] }))
             : [];
@@ -796,7 +804,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(),
+      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze,
       fought: [...this.fought], duelist: this.duelist,
     });
   }
@@ -856,10 +864,9 @@ export class Battle {
     this.fought = new Set(s.fought ?? []);
     this.duelist = s.duelist ?? null;
     if (this.cuju && s.cuju) this.cuju = s.cuju;
-    if (this.fire && s.fire) {
-      this.fire.load(s.fire);
-      this.emit({ type: 'fire', cells: this.fire.cells() });
-    }
+    if (this.fire && s.fire) this.fire.load(s.fire);
+    this.blaze = s.blaze ?? [];
+    if (this.fire || this.blaze.length) this.emit({ type: 'fire', cells: this.fireCells() });
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
@@ -878,7 +885,7 @@ export class Battle {
     const fire = this.fire;
     if (fire && t > 1) {
       fire.spread(new Set(this.active().map((u) => u.y * this.board.width + u.x)));
-      this.emit({ type: 'fire', cells: fire.cells() });
+      this.emit({ type: 'fire', cells: this.fireCells() });
     }
     // 回合开始：装备回复 → 火燎 → 中毒 → 状态回合数 −1
     const burned: string[] = [];
@@ -899,6 +906,7 @@ export class Battle {
       if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0 });
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
+      if (u.panicTurns && --u.panicTurns === 0) this.emit({ type: 'status', uid: u.uid, text: '回過神來' });
       if (u.buffs.length) {
         // 0 表示本关持续；限时效果扣到 0 时立即移除，不转成本关持续。
         u.buffs = u.buffs.filter((b) => b.turns === 0 || --b.turns > 0);
@@ -1555,9 +1563,11 @@ export class Battle {
       const id = t.char === 1000 ? 0 : t.char;
       const inside = (u: Unit) =>
         u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
-      const hit = t.chars
-        ? t.chars.every((c) => this.units.some((u) => u.classId === c && u.alive && u.present && inside(u)))
-        : this.units.some((u) => u.classId === id && u.alive && u.present && inside(u));
+      const hit = t.side
+        ? this.units.some((u) => u.side === t.side && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u))
+        : t.chars
+          ? t.chars.every((c) => this.units.some((u) => u.classId === c && u.alive && u.present && inside(u)))
+          : this.units.some((u) => u.classId === id && u.alive && u.present && inside(u));
       if (hit) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
@@ -2096,6 +2106,37 @@ export class Battle {
             }
             this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
           }
+          break;
+        }
+        // 124 放火【新】（大破何涛，负责人 2026-11-21）：args.cells 上冒火（只是画面，不挡路、不烧人）；
+        // 离火（区块的区域，或 args.x / y）最近的 args.panic 个敌人逃窜 args.turns 回合（乱走、不攻击），args.spare 列的职业不会逃窜。
+        // 之后的指令 13 由离火最近的敌人（先挑逃窜的）来喊
+        case 124: {
+          const a = op.args ?? {};
+          const t = b.trigger;
+          const at = t.kind === 'area' ? { x: (t.x1 + t.x2) / 2, y: (t.y1 + t.y2) / 2 } : { x: a.x ?? 0, y: a.y ?? 0 };
+          const d = (u: Cell) => Math.abs(u.x - at.x) + Math.abs(u.y - at.y);
+          // 有人站着的格子不冒火（放火的人就站在旁边）
+          const cells = (a.cells ?? []).filter((c) => this.board.inBounds(c.x, c.y) && !this.unitAt(c.x, c.y) && !this.blaze.some((o) => o.x === c.x && o.y === c.y));
+          if (cells.length) {
+            if (a.focus) this.emit({ type: 'focus', x: Math.round(at.x), y: Math.round(at.y) });
+            this.blaze.push(...cells);
+            this.emit({ type: 'fire', cells: this.fireCells() });
+          }
+          const foes = this.active()
+            .filter((u) => u.side === 'enemy' && !this.spectators.has(u.uid) && !this.isBound(u))
+            .sort((p, q) => d(p) - d(q) || p.uid - q.uid);
+          const fled = foes.filter((u) => !a.spare?.includes(u.classId) && !u.panicTurns).slice(0, a.panic ?? 0);
+          for (const u of fled) {
+            u.panicTurns = a.turns ?? 3;
+            if (u.defending) {
+              u.defending = false;
+              this.emit({ type: 'defend', uid: u.uid, on: false });
+            }
+            this.emit({ type: 'status', uid: u.uid, text: '逃竄' });
+          }
+          sel = fled[0] ?? foes[0];
+          selName = sel?.name ?? '';
           break;
         }
         // 122 改 AI 模式（扩展包【新】）
