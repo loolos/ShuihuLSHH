@@ -210,7 +210,9 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     return { path: b.pathOf(reach, cells[b.rng.int(cells.length)]) };
   }
   const [, hi] = attackRange(u, b.data);
-  const target = u.ai.target ? b.unitByChar(u.ai.target) : undefined;
+  // 模式 5 跟随的 w8 = 0 是主角（角色 0）：N12 晁蓋就是这样跟着主角走的【推测：EXE 0x40c360 按角色号查找，0 也是合法角色号】。
+  // 其它模式的 0 仍当"没指定"。
+  const target = u.ai.target || u.ai.mode === 5 ? b.unitByChar(u.ai.target) : undefined;
   switch (u.ai.mode) {
     case 1:
     case 10: // 追击指定单位
