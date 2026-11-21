@@ -496,6 +496,97 @@
    "ai": 2,
    "name": "马军",
    "levelOffset": -1
+  },
+  {
+   "id": "e1",
+   "class": 32,
+   "side": "enemy",
+   "x": 4,
+   "y": 19,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e2",
+   "class": 33,
+   "side": "enemy",
+   "x": 3,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e3",
+   "class": 32,
+   "side": "enemy",
+   "x": 3,
+   "y": 19,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e4",
+   "class": 33,
+   "side": "enemy",
+   "x": 3,
+   "y": 20,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e5",
+   "class": 34,
+   "side": "enemy",
+   "x": 5,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 5,
+   "y": 20,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e7",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 17,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
   }
  ],
  "script": [
@@ -818,6 +909,38 @@
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
     ],
     [
+     "narrate",
+     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
+    ],
+    [
      "flag",
      "rescue"
     ]
@@ -880,6 +1003,38 @@
      "say",
      "hero",
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
+    ],
+    [
+     "narrate",
+     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
     ],
     [
      "flag",
