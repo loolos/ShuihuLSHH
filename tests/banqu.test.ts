@@ -29,13 +29,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('搬取宋太
     expect(b.turnLimit).toBe(10);
   });
 
-  it('第 3、4 回合两伙土兵赶到；都到了以后打光才过关', () => {
+  it('第 3、4、5 回合三伙土兵赶到；都到了以后打光才过关', () => {
     const { b, get } = open();
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.ai.mode = 8;
     expect(get('c1').present).toBe(false);
-    for (let t = 1; t < 4 && b.status === 'playing'; t++) b.endPlayerPhase();
+    for (let t = 1; t < 5 && b.status === 'playing'; t++) b.endPlayerPhase();
     expect(get('c1').present).toBe(true);
     expect(get('d1').present).toBe(true);
+    expect(get('e1').present).toBe(true);
     for (const u of b.units.filter((x) => x.side === 'enemy')) { u.hp = 0; u.alive = false; u.present = false; }
     (b as unknown as { afterAction: () => void }).afterAction();
     expect(b.status).toBe('won');
