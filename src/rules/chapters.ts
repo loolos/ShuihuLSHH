@@ -54,6 +54,9 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-19：戴宗送信上东京（原著第 39 回）：朱贵酒店、梁山定计、赚萧让金大坚、假信被识破；新好汉朱贵、萧让、金大坚
   { name: '戴宗传假信', stages: ['mainline/zhuguidian', 'mainline/liangshan-dingji', 'mainline/zhuanshang', 'mainline/jiaxin'] },
   { name: '江州劫法场', stages: ['mainline/fachang', 'mainline/bailongmiao'] },
+  // 负责人 2026-11-21：智取无为军（原著第 41 回）：薛永、侯健、白胜潜入城中摸清两座黄宅，侯健骗开黄文炳家大门，武龙、晁盖杀入放火；
+  // 江上擒黄文炳只用对白，穆家庄割黄文炳为过场；黄门山收四人先不做
+  { name: '智取无为军', stages: ['mainline/wuweijun', 'mainline/jiehuang'] },
 ];
 
 /**

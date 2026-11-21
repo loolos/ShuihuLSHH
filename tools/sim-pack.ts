@@ -68,11 +68,29 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         const z = b.objectiveZones().find((k) => k.kind === 'goal');
         goal = z ? { who: z.chars, x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1, x1: z.x1, x2: z.x2, y1: z.y1, y2: z.y2 } : null;
       }
+      // 谁都能进的区域（智取无为军的探查点、放火点）：每个这样的区域派离它最近、还没分派的一个人去【新】
+      const anyZones = !gt ? b.objectiveZones().filter((k) => k.kind === 'goal' && !k.chars.length) : [];
+      const assigned = new Map<number, (typeof anyZones)[number]>();
+      for (const z of anyZones) {
+        const c = { x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1 };
+        const field = b.board.distanceField([c]);
+        const free = b.active().filter((x) => x.side === 'player' && !assigned.has(x.uid) && b.canAct(x));
+        const who = free.sort((p, q) => field[p.y * b.board.width + p.x] - field[q.y * b.board.width + q.x])[0];
+        if (who) assigned.set(who.uid, z);
+      }
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;
         if (!b.canAct(u)) continue;
+        const zone = assigned.get(u.uid);
+        // 不潜行时，附近 6 格有敌人就先打，清出路来再去
+        if (zone && !b.watchZones().length && b.foesOf(u).some((f) => dist(f, u) <= 6)) goal = null;
+        else if (zone) goal = { who: [u.classId], x: (zone.x1 + zone.x2) >> 1, y: (zone.y1 + zone.y2) >> 1, x1: zone.x1, x2: zone.x2, y1: zone.y1, y2: zone.y2 };
+        else if (anyZones.length) {
+          const z = b.objectiveZones().find((k) => k.kind === 'goal' && k.chars.includes(u.classId));
+          goal = z ? { who: z.chars, x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1, x1: z.x1, x2: z.x2, y1: z.y1, y2: z.y2 } : null;
+        }
         // 潜行关：有人被发现就全力去打倒发现的人；否则要逃的人绕开哨兵现在和下回合看得见的格子往区域走
-        if (b.watchers.size) {
+        if (b.watchZones().length) {
           // 期限最近的发现者先打，用打他最狠的招
           const spotter = b.units.filter((w) => w.uid in b.spotters && w.alive && w.present).sort((p, q) => b.spotters[p.uid] - b.spotters[q.uid])[0];
           if (spotter) {
@@ -90,17 +108,19 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           }
           if (goal && goal.who.includes(u.classId)) {
             // 每个哨兵现在和下回合可能站的位置、朝向（巡逻的沿直线往目标点走，走到了会掉头），半径多留 2 格给跟着走的公人
+            // 有跟着走的友军（公人）时半径多留 2 格，没有就多留 1 格
+            const pad = b.active().some((x) => x.side === 'ally') ? 2 : 1;
             const eyes = b.watchZones().flatMap((w) => {
               const g = b.units[w.uid], route = b.patrolOf(g);
-              const out = [{ x: w.x, y: w.y, facing: w.facing, r: w.r + 2 }];
+              const out = [{ x: w.x, y: w.y, facing: w.facing, r: w.r + pad }];
               if (!route) return out;
               const pt = g.ai.point, f = facingTowards(g, pt, g.facing);
               let x = g.x, y = g.y;
               for (let k = 0; k <= g.stats.move && (x !== pt.x || y !== pt.y); k++) {
                 if (x !== pt.x) x += Math.sign(pt.x - x); else y += Math.sign(pt.y - y);
-                out.push({ x, y, facing: f, r: w.r + 2 });
+                out.push({ x, y, facing: f, r: w.r + pad });
               }
-              if (x === pt.x && y === pt.y) out.push({ x, y, facing: (f + 2) % 4, r: w.r + 2 });
+              if (x === pt.x && y === pt.y) out.push({ x, y, facing: (f + 2) % 4, r: w.r + pad });
               return out;
             });
             const field = b.board.distanceField([{ x: goal.x, y: goal.y }]);
@@ -109,6 +129,11 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
             const c = safe.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
             if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
             if (b.canAct(u)) ev.push(...b.defend(u));
+            continue;
+          }
+          // 潜行中没事做的人原地躲着，不去惊动睡着的敌人
+          if (anyZones.length) {
+            ev.push(...b.defend(u));
             continue;
           }
         }

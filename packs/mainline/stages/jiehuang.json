@@ -1,0 +1,224 @@
+{
+ "id": "jiehuang",
+ "title": "黄蜂刺伏诛",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "base": "N-add05"
+ },
+ "tint": "dusk",
+ "bgm": [
+  "story"
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 16,
+   "y": 8,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "chaogai",
+   "class": 12,
+   "side": "ally",
+   "x": 18,
+   "y": 8,
+   "level": 30,
+   "ai": 8,
+   "facing": 2,
+   "name": "晁盖"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 14,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "name": "武龙"
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 19,
+   "y": 10,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "zhangshun",
+   "class": "zhangshun",
+   "side": "ally",
+   "x": 14,
+   "y": 12,
+   "level": 30,
+   "ai": 8,
+   "facing": 3
+  },
+  {
+   "id": "lijun",
+   "class": "lijun",
+   "side": "ally",
+   "x": 15,
+   "y": 13,
+   "level": 30,
+   "ai": 8,
+   "facing": 3
+  },
+  {
+   "id": "xueyong",
+   "class": "xueyong",
+   "side": "player",
+   "x": 20,
+   "y": 12,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "houjian",
+   "class": "houjian",
+   "side": "player",
+   "x": 20,
+   "y": 13,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "muhong",
+   "class": "muhong",
+   "side": "ally",
+   "x": 13,
+   "y": 8,
+   "level": 30,
+   "ai": 8,
+   "facing": 2
+  },
+  {
+   "id": "huangwenbing",
+   "class": "huangwenbing",
+   "side": "enemy",
+   "x": 17,
+   "y": 11,
+   "level": 30,
+   "ai": 8,
+   "facing": 0
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "穆家庄 · 天明"
+    ],
+    [
+     "bind",
+     "huangwenbing"
+    ],
+    [
+     "narrate",
+     "黄文炳在江州府里望见无为军火起，慌忙讨了一只快船，连夜摇回去。船到江心，芦苇里撑出两只小船，拦住去路。"
+    ],
+    [
+     "say",
+     "zhangshun",
+     "黄文炳那厮正在船舱里，被小弟一跳上船，劈胸揪住，扑通一声都滚下水去。在水里由他挣扎，只灌了他几口江水。"
+    ],
+    [
+     "say",
+     "lijun",
+     "我把船横过去接着，一条索子绑了，连夜押到这里。"
+    ],
+    [
+     "narrate",
+     "众好汉都回到穆太公庄上，把黄文炳剥了湿衣服，绑在柳树上。"
+    ],
+    [
+     "face",
+     "songjiang",
+     "huangwenbing"
+    ],
+    [
+     "say",
+     "songjiang",
+     "你这厮！我与你往日无冤，近日无仇，你如何只要害我？三回五次，教唆蔡九知府杀我两个！"
+    ],
+    [
+     "say",
+     "huangwenbing",
+     "小人已知过失，只求早死。"
+    ],
+    [
+     "say",
+     "chaogai",
+     "你这贼驴，怕你不死！你这厮早知今日，悔不当初！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "那个兄弟替我下手？"
+    ],
+    [
+     "approach",
+     "likui",
+     "huangwenbing"
+    ],
+    [
+     "say",
+     "likui",
+     "我与哥哥动手！我看他肥胖了，倒好烧吃。"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "huangwenbing"
+    ],
+    [
+     "act",
+     "huangwenbing",
+     "hurt"
+    ],
+    [
+     "leave",
+     "huangwenbing"
+    ],
+    [
+     "narrate",
+     "李逵拿起尖刀，割了黄文炳，与宋江报了冤仇。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "今日报了这口冤气，都是众兄弟的力。只是闹了江州、又闹了无为军，官司必然申奏朝廷，此处住不得了。"
+    ],
+    [
+     "say",
+     "chaogai",
+     "便请贤弟和众兄弟一同上梁山泊去，大家聚义！"
+    ],
+    [
+     "say",
+     "hero",
+     "吴学究在山上早盼着哥哥了。"
+    ],
+    [
+     "narrate",
+     "穆太公收拾了家私，众好汉分作五起，望梁山泊进发。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

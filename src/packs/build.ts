@@ -421,6 +421,13 @@ function takeLineId(step: unknown[]): string | undefined {
 const NARRATOR = 0xffffffff;
 const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give'];
 
+/** if / unless 写成数组时：每个标志都要设上 / 都没设（AND）【新】 */
+function flagConds(b: PackBlockJson, r: Refs): PasCond[] {
+  const list = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
+  return [...list(b.if).map((f) => ({ type: 100, arg: r.flagRef(f) })), ...list(b.unless).map((f) => ({ type: 101, arg: r.flagRef(f) }))];
+}
+const andAll = (cs: PasCond[]): PasCond => cs.reduce((a, c) => ({ op: 'and', a, b: c }));
+
 function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   const on = b.on;
   let trigger: PasTrigger;
@@ -430,23 +437,22 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     trigger = { kind: 'cond' };
     cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
-    if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
-    if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
+    cond = andAll([cond, ...flagConds(b, r)]);
   }
   else if ('flag' in on) {
     // 剧本标志设上时（剧情选项的分支）【新】
     trigger = { kind: 'cond' };
-    cond = { type: 100, arg: r.flagRef(on.flag) };
-    if (b.if !== undefined) cond = { op: 'and', a: cond, b: { type: 100, arg: r.flagRef(b.if) } };
-    if (b.unless !== undefined) cond = { op: 'and', a: cond, b: { type: 101, arg: r.flagRef(b.unless) } };
+    cond = andAll([{ type: 100, arg: r.flagRef(on.flag) }, ...flagConds(b, r)]);
   }
   else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}) };
   else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
-    const who = Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
-    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}) };
+    // enter: "player"：我方任何一个在场的人走进去都算（智取无为军的探查点、放火点）【新】
+    const anyone = on.enter === 'player';
+    const who = anyone ? [0] : Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
+    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}) };
@@ -461,10 +467,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
   if (trigger.kind === 'near' || trigger.kind === 'hp' || trigger.kind === 'did' || (trigger.kind === 'area' && trigger.flagged) || (trigger.kind === 'turn' && trigger.flagged)) {
     // near / hp 的 if / unless【新】：触发时还要求标志设上 / 没设（攻破清风寨：秦明第一次劝不动，黄信伤重后再劝才降）
-    const conds: PasCond[] = [];
-    if (b.if !== undefined) conds.push({ type: 100, arg: r.flagRef(b.if) });
-    if (b.unless !== undefined) conds.push({ type: 101, arg: r.flagRef(b.unless) });
-    if (conds.length) cond = conds.length === 1 ? conds[0] : { op: 'and', a: conds[0], b: conds[1] };
+    const conds = flagConds(b, r);
+    if (conds.length) cond = andAll(conds);
   }
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
@@ -635,6 +639,17 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(121, 0, Object.keys(args).length ? { args } : {});
         break;
       }
+      case 'fire': {
+        // ['fire', [[x, y], ...], {panic, turns, spare, focus}] 放火（指令 124，同大破何涛）：这些格子冒火，离火最近的 panic 个敌人逃窜 turns 回合【新】
+        const cells = Array.isArray(a[0]) ? (a[0] as unknown[]).map((c) => (Array.isArray(c) && c.length === 2 ? { x: Number(c[0]), y: Number(c[1]) } : fail(`第 ${index} 个区块：fire 的格子要写成 [x, y]`))) : fail(`第 ${index} 个区块：fire 要写格子列表`);
+        const o = (a[1] ?? {}) as { panic?: number; turns?: number; spare?: unknown[]; focus?: boolean };
+        ops.push({ op: 124, flag: null, value: 0, args: { cells, ...(o.panic ? { panic: o.panic } : {}), ...(o.turns ? { turns: o.turns } : {}), ...(o.spare ? { spare: o.spare.map(r.classRef) } : {}), ...(o.focus ? { focus: true } : {}) } });
+        break;
+      }
+      case 'stealthEnd':
+        // ['stealthEnd'] 潜行结束：哨兵不再警戒，已经发现的也不再判负（智取无为军骗开大门以后）【新】
+        op(125);
+        break;
       case 'setAi':
         // ['setAi', 谁, 模式] 改 AI 模式（揭阳岭放哨的火家看见人才跑回店里）【新】
         select(a[0]);

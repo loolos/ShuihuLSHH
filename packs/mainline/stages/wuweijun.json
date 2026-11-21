@@ -1,0 +1,1171 @@
+{
+ "id": "wuweijun",
+ "title": "智取无为军",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 600
+ },
+ "map": {
+  "custom": "wuweijun"
+ },
+ "tint": "night",
+ "bgm": "battle",
+ "stealth": {
+  "lose": "巡夜军士敲起锣来，满城都惊动了，众人只得退出城去……",
+  "flag": "spotted"
+ },
+ "units": [
+  {
+   "id": "houjian",
+   "class": "houjian",
+   "side": "player",
+   "x": 1,
+   "y": 34,
+   "level": 30,
+   "facing": 3
+  },
+  {
+   "id": "xueyong",
+   "class": "xueyong",
+   "side": "player",
+   "x": 0,
+   "y": 33,
+   "level": 30,
+   "facing": 3
+  },
+  {
+   "id": "baisheng",
+   "class": 4,
+   "side": "player",
+   "x": 0,
+   "y": 35,
+   "level": 30,
+   "facing": 3,
+   "name": "白胜"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 41,
+   "y": 28,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "武龙"
+  },
+  {
+   "id": "chaogai",
+   "class": 12,
+   "side": "player",
+   "x": 42,
+   "y": 28,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "晁盖"
+  },
+  {
+   "id": "xun1",
+   "class": 32,
+   "side": "enemy",
+   "x": 4,
+   "y": 30,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     4,
+     30
+    ],
+    [
+     24,
+     30
+    ]
+   ],
+   "watch": 3,
+   "facing": 3,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun2",
+   "class": 33,
+   "side": "enemy",
+   "x": 31,
+   "y": 31,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     31,
+     31
+    ],
+    [
+     52,
+     31
+    ]
+   ],
+   "watch": 3,
+   "facing": 3,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun3",
+   "class": 32,
+   "side": "enemy",
+   "x": 27,
+   "y": 5,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     27,
+     5
+    ],
+    [
+     27,
+     25
+    ]
+   ],
+   "watch": 3,
+   "facing": 2,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun4",
+   "class": 33,
+   "side": "enemy",
+   "x": 14,
+   "y": 1,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     14,
+     1
+    ],
+    [
+     34,
+     1
+    ]
+   ],
+   "watch": 3,
+   "facing": 3,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun5",
+   "class": 32,
+   "side": "enemy",
+   "x": 54,
+   "y": 4,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     54,
+     4
+    ],
+    [
+     54,
+     27
+    ]
+   ],
+   "watch": 3,
+   "facing": 2,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun6",
+   "class": 33,
+   "side": "enemy",
+   "x": 0,
+   "y": 4,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     0,
+     4
+    ],
+    [
+     0,
+     27
+    ]
+   ],
+   "watch": 3,
+   "facing": 2,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "ye-front",
+   "class": 37,
+   "side": "enemy",
+   "x": 13,
+   "y": 25,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 2,
+   "name": "黄佛子家门子",
+   "levelOffset": -2
+  },
+  {
+   "id": "ye-back",
+   "class": 37,
+   "side": "enemy",
+   "x": 11,
+   "y": 4,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 0,
+   "name": "黄佛子家门子",
+   "levelOffset": -2
+  },
+  {
+   "id": "bing-front",
+   "class": 40,
+   "side": "enemy",
+   "x": 41,
+   "y": 25,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 2,
+   "name": "黄通判家门子",
+   "levelOffset": -1
+  },
+  {
+   "id": "bing-back",
+   "class": 41,
+   "side": "enemy",
+   "x": 39,
+   "y": 4,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "facing": 0,
+   "name": "黄通判家门子",
+   "levelOffset": -1
+  },
+  {
+   "id": "qy1",
+   "class": 40,
+   "side": "enemy",
+   "x": 40,
+   "y": 22,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "qy2",
+   "class": 41,
+   "side": "enemy",
+   "x": 41,
+   "y": 22,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "qy3",
+   "class": 40,
+   "side": "enemy",
+   "x": 42,
+   "y": 22,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "qy4",
+   "class": 41,
+   "side": "enemy",
+   "x": 43,
+   "y": 22,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "qy5",
+   "class": 39,
+   "side": "enemy",
+   "x": 41,
+   "y": 21,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家保镖",
+   "levelOffset": 1,
+   "facing": 2,
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "qy6",
+   "class": 34,
+   "side": "enemy",
+   "x": 40,
+   "y": 20,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家弓手",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "qy7",
+   "class": 34,
+   "side": "enemy",
+   "x": 43,
+   "y": 20,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家弓手",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt1",
+   "class": 40,
+   "side": "enemy",
+   "x": 45,
+   "y": 11,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt2",
+   "class": 41,
+   "side": "enemy",
+   "x": 46,
+   "y": 11,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt3",
+   "class": 40,
+   "side": "enemy",
+   "x": 47,
+   "y": 11,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt4",
+   "class": 41,
+   "side": "enemy",
+   "x": 48,
+   "y": 11,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt5",
+   "class": 38,
+   "side": "enemy",
+   "x": 46,
+   "y": 10,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "保镖教师",
+   "levelOffset": 2,
+   "facing": 2,
+   "hpMultiplier": 1.5
+  },
+  {
+   "id": "dt6",
+   "class": 34,
+   "side": "enemy",
+   "x": 45,
+   "y": 10,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家弓手",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "dt7",
+   "class": 34,
+   "side": "enemy",
+   "x": 48,
+   "y": 10,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家弓手",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "ht1",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 7,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "ht2",
+   "class": 41,
+   "side": "enemy",
+   "x": 34,
+   "y": 7,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "ht3",
+   "class": 40,
+   "side": "enemy",
+   "x": 35,
+   "y": 7,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "ht4",
+   "class": 41,
+   "side": "enemy",
+   "x": 36,
+   "y": 7,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家家丁",
+   "levelOffset": -2,
+   "facing": 2
+  },
+  {
+   "id": "ht5",
+   "class": 39,
+   "side": "enemy",
+   "x": 34,
+   "y": 6,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家保镖",
+   "levelOffset": 1,
+   "facing": 2,
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "ht6",
+   "class": 34,
+   "side": "enemy",
+   "x": 35,
+   "y": 6,
+   "level": 30,
+   "ai": 8,
+   "watch": 2,
+   "name": "黄家弓手",
+   "levelOffset": -2,
+   "facing": 2
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "无为军 · 二更"
+    ],
+    [
+     "narrate",
+     "白龙庙聚义之后，众好汉暂歇在穆太公庄上。宋江只恨黄文炳那厮无中生有、撺掇知府要害他性命，定要报这一冤仇。"
+    ],
+    [
+     "narrate",
+     "薛永先去无为军打探，带回一个徒弟：姓侯名健，祖居洪都，做得第一手裁缝，人都叫他通臂猿。他正在黄文炳家里做生活。"
+    ],
+    [
+     "say",
+     "houjian",
+     "黄文炳弟兄两个。哥哥黄文烨，修桥补路、斋僧布施，城里都叫他黄佛子；这黄文炳专一害人，人都叫他黄蜂刺。两家住在北门里，只隔一条夹巷。"
+    ],
+    [
+     "narrate",
+     "晁盖、宋江定下计策：薛永、侯健、白胜先入城去做眼，等摸清了宅子，引众好汉杀进去。武龙、晁盖带人在城门边接应。"
+    ],
+    [
+     "say",
+     "houjian",
+     "只是两座宅子是一个匠人盖的，门面一模一样，黑夜里认不真。须得前门后门都去看一遍，休错杀了黄佛子家的人。"
+    ],
+    [
+     "say",
+     "baisheng",
+     "巡夜的军士提着灯笼只顾看前面。真要撞着了，从背后摸上去一下打翻，教他叫不出声。"
+    ],
+    [
+     "narrate",
+     "（地上的黄格子是巡夜军士、门子面前看得到的范围；从背后偷袭还没发觉的人伤害 ×3，侧面 ×2）"
+    ],
+    [
+     "objective",
+     "第一步：薛永、侯健、白胜去两座宅子的前门、后门外各看一遍（地图上标「探查」的四处）\n败：被发现后，没在下个回合结束前把发现的人打倒；侯健、武龙或晁盖倒下；超过 35 回合"
+    ],
+    [
+     "turnLimit",
+     35
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "spotted"
+   },
+   "unless": "gate",
+   "do": [
+    [
+     "narrate",
+     "被发现了！下个回合结束前把他打倒，不然满城都要被喊起来！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     12,
+     28,
+     15,
+     29
+    ],
+    "label": "探查"
+   },
+   "unless": "gate",
+   "do": [
+    [
+     "flag",
+     "s1"
+    ],
+    [
+     "narrate",
+     "这家门上悬着一块「积善之家」的匾，门边粥棚的灶还温着。门子打着盹，嘴里念叨明早还要施粥。——这是黄佛子黄文烨的家。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     10,
+     0,
+     13,
+     1
+    ],
+    "label": "探查"
+   },
+   "unless": "gate",
+   "do": [
+    [
+     "flag",
+     "s2"
+    ],
+    [
+     "narrate",
+     "西宅后门外堆着几袋舍米，只一个老苍头看着，院里静悄悄的，并无一个护院。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     40,
+     28,
+     43,
+     29
+    ],
+    "label": "探查"
+   },
+   "unless": "gate",
+   "do": [
+    [
+     "flag",
+     "s3"
+    ],
+    [
+     "narrate",
+     "东宅门前拴马桩、石狮子，灯笼上写着「通判黄」。门子手里提着哨棒，门缝里看得见前院坐着一伙家丁。——这便是黄蜂刺黄文炳的家！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     38,
+     0,
+     41,
+     1
+    ],
+    "label": "探查"
+   },
+   "unless": "gate",
+   "do": [
+    [
+     "flag",
+     "s4"
+    ],
+    [
+     "narrate",
+     "东宅后墙里传出梆子声，保镖巡更。墙头望得见大堂、后堂两处屋脊，门房边堆着柴草。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "s1"
+   },
+   "if": [
+    "s2",
+    "s3",
+    "s4"
+   ],
+   "do": [
+    [
+     "say",
+     "xueyong",
+     "前前后后都看明白了：西边是黄佛子，东边才是黄蜂刺。侯健兄弟，该你去叫门了。"
+    ],
+    [
+     "say",
+     "houjian",
+     "师父放心，他家门子都认得我。"
+    ],
+    [
+     "objective",
+     "第二步：侯健走到东宅（黄文炳家）大门口，骗开大门\n败：被发现后，没在下个回合结束前把发现的人打倒；侯健、武龙或晁盖倒下；超过 35 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "houjian",
+    "area": [
+     40,
+     26,
+     43,
+     27
+    ],
+    "label": "骗门"
+   },
+   "if": [
+    "s1",
+    "s2",
+    "s3",
+    "s4"
+   ],
+   "do": [
+    [
+     "say",
+     "houjian",
+     "开门，开门！我是侯裁缝。"
+    ],
+    [
+     "say",
+     "bing-front",
+     "侯裁缝，三更半夜，有甚么事？"
+    ],
+    [
+     "say",
+     "houjian",
+     "隔壁黄佛子家巷里起了火，大官人教我先把几只箱笼送过来寄放。快开门！"
+    ],
+    [
+     "narrate",
+     "门子揉着眼拔开门闩，侯健一闪身挤了进去。白胜在夹巷口打了个呼哨，武龙、晁盖早引着人从城门边抢了过来。"
+    ],
+    [
+     "stealthEnd"
+    ],
+    [
+     "leave",
+     "ye-front"
+    ],
+    [
+     "leave",
+     "ye-back"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "chaogai"
+    ],
+    [
+     "say",
+     "chaogai",
+     "众兄弟听着：只拿黄文炳一门，隔壁黄佛子家一草一木都休要动他！"
+    ],
+    [
+     "say",
+     "hero",
+     "里面的家丁保镖都起来了，杀进去！"
+    ],
+    [
+     "setAi",
+     "bing-front",
+     0
+    ],
+    [
+     "setAi",
+     "bing-back",
+     0
+    ],
+    [
+     "setAi",
+     "qy1",
+     0
+    ],
+    [
+     "setAi",
+     "qy2",
+     0
+    ],
+    [
+     "setAi",
+     "qy3",
+     0
+    ],
+    [
+     "setAi",
+     "qy4",
+     0
+    ],
+    [
+     "setAi",
+     "qy5",
+     0
+    ],
+    [
+     "setAi",
+     "qy6",
+     0
+    ],
+    [
+     "setAi",
+     "qy7",
+     0
+    ],
+    [
+     "setAi",
+     "xun1",
+     0
+    ],
+    [
+     "setAi",
+     "xun2",
+     0
+    ],
+    [
+     "setAi",
+     "xun3",
+     0
+    ],
+    [
+     "setAi",
+     "xun4",
+     0
+    ],
+    [
+     "setAi",
+     "xun5",
+     0
+    ],
+    [
+     "setAi",
+     "xun6",
+     0
+    ],
+    [
+     "setAi",
+     "dt1",
+     2
+    ],
+    [
+     "setAi",
+     "dt2",
+     2
+    ],
+    [
+     "setAi",
+     "dt3",
+     2
+    ],
+    [
+     "setAi",
+     "dt4",
+     2
+    ],
+    [
+     "setAi",
+     "dt5",
+     2
+    ],
+    [
+     "setAi",
+     "dt6",
+     2
+    ],
+    [
+     "setAi",
+     "dt7",
+     2
+    ],
+    [
+     "setAi",
+     "ht1",
+     2
+    ],
+    [
+     "setAi",
+     "ht2",
+     2
+    ],
+    [
+     "setAi",
+     "ht3",
+     2
+    ],
+    [
+     "setAi",
+     "ht4",
+     2
+    ],
+    [
+     "setAi",
+     "ht5",
+     2
+    ],
+    [
+     "setAi",
+     "ht6",
+     2
+    ],
+    [
+     "flag",
+     "gate"
+    ],
+    [
+     "narrate",
+     "西宅黄文烨家关紧了门户，不敢出来。"
+    ],
+    [
+     "objective",
+     "第三步：打倒黄文炳家的家丁、保镖和赶来的巡夜军士；在后堂、大堂、门房三处放火（标「放火」的地方，谁走进去都算）\n败：侯健、武龙或晁盖倒下；超过 35 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     33,
+     5,
+     36,
+     8
+    ],
+    "label": "放火"
+   },
+   "if": "gate",
+   "do": [
+    [
+     "flag",
+     "f1"
+    ],
+    [
+     "fire",
+     [
+      [
+       33,
+       5
+      ],
+      [
+       36,
+       5
+      ],
+      [
+       33,
+       8
+      ],
+      [
+       36,
+       8
+      ],
+      [
+       35,
+       5
+      ]
+     ],
+     {
+      "panic": 2,
+      "turns": 2,
+      "focus": true
+     }
+    ],
+    [
+     "narrate",
+     "后堂火起了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     46,
+     6,
+     50,
+     9
+    ],
+    "label": "放火"
+   },
+   "if": "gate",
+   "do": [
+    [
+     "flag",
+     "f2"
+    ],
+    [
+     "fire",
+     [
+      [
+       46,
+       6
+      ],
+      [
+       50,
+       6
+      ],
+      [
+       48,
+       7
+      ],
+      [
+       50,
+       9
+      ],
+      [
+       44,
+       6
+      ]
+     ],
+     {
+      "panic": 2,
+      "turns": 2,
+      "focus": true
+     }
+    ],
+    [
+     "narrate",
+     "大堂火起了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     31,
+     23,
+     34,
+     25
+    ],
+    "label": "放火"
+   },
+   "if": "gate",
+   "do": [
+    [
+     "flag",
+     "f3"
+    ],
+    [
+     "fire",
+     [
+      [
+       31,
+       23
+      ],
+      [
+       32,
+       23
+      ],
+      [
+       31,
+       25
+      ],
+      [
+       34,
+       24
+      ]
+     ],
+     {
+      "panic": 2,
+      "turns": 2,
+      "focus": true
+     }
+    ],
+    [
+     "narrate",
+     "门房的柴草烧起来了！"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "if": "gate",
+   "do": [
+    [
+     "flag",
+     "cleared"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "cleared"
+   },
+   "unless": [
+    "f1",
+    "f2",
+    "f3"
+   ],
+   "do": [
+    [
+     "narrate",
+     "黄家的人都打倒了。快去把火放起来！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "cleared"
+   },
+   "if": [
+    "f1",
+    "f2",
+    "f3"
+   ],
+   "do": [
+    [
+     "narrate",
+     "黄文炳家里烈焰冲天，满城百姓只听得喊声大起。众好汉把黄家金银细软打叠了，一齐从城门杀将出去。"
+    ],
+    [
+     "say",
+     "chaogai",
+     "可惜那黄文炳本人不在家里！"
+    ],
+    [
+     "say",
+     "houjian",
+     "他今夜在江州府里陪知府吃酒。望见这里火起，必然连夜坐船赶回来。"
+    ],
+    [
+     "say",
+     "hero",
+     "江上有李俊、张顺两位兄弟带着船埋伏，正好等他！"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "houjian"
+   },
+   "do": [
+    [
+     "defeat",
+     "侯健倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "chaogai"
+   },
+   "do": [
+    [
+     "defeat",
+     "晁盖倒下了……"
+    ]
+   ]
+  }
+ ]
+}
