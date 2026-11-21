@@ -1154,7 +1154,7 @@ export class BattleScene extends Phaser.Scene {
         this.playingSide = e.side;
         this.setTurn(e.turn, this.battle.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : '　▸▸ 快进中'));
         // 回到我方阶段：镜头直接对准第一个能行动的人
-        const first = e.side === 'player' && this.battle.active().find((u) => u.side === 'player' && !u.ended);
+        const first = e.side === 'player' && this.battle.active().find((u) => u.side === 'player' && this.battle.canAct(u));
         if (first) {
           const p = cellToWorld(first.x, first.y);
           this.cameras.main.centerOn(p.x, p.y);
@@ -1560,7 +1560,8 @@ export class BattleScene extends Phaser.Scene {
         this.setTurn(e.turn, b.turnLimit, PHASE_NAME[e.side] + (e.side === 'player' ? '' : this.fast ? '　▸▸ 快进中' : '　双击地图快进'));
         this.refreshAll();
         if (e.side === 'player') {
-          const first = b.active().find((u) => u.side === 'player' && !u.ended);
+          // 观战的人（叫阵晁家庄比试时）不算，镜头对着出战的人
+          const first = b.active().find((u) => u.side === 'player' && b.canAct(u));
           if (first) await this.focusOn(first, 400);
         }
         if (e.side === 'player' || b.units.some((u) => u.side === e.side && u.present && u.alive)) {
