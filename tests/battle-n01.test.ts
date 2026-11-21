@@ -522,7 +522,7 @@ describe.skipIf(!has)('N01', () => {
     let b = start();
     expect(b.status).toBe('playing');
     const zhu = b.units.filter((u) => u.classId === 48);
-    expect(zhu.length).toBe(2);
+    expect(zhu.length).toBe(1); // 2026-11-21 起只留出口旁那个（原版另有一个在 (4,25)，换成了都头）
     expect(zhu.every((u) => !u.present && (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
     // 晁蓋走到 (0–1, 27–29)；他跟着主角走（模式 5），主角也得在旁边，友军回合他才不会走开
     const chao = b.units.find((u) => u.classId === 12)!;
@@ -543,13 +543,12 @@ describe.skipIf(!has)('N01', () => {
     b.endPlayerPhase();
     const c2 = b.units.find((u) => u.classId === 12)!;
     expect(Math.abs(c2.x - hero.x) + Math.abs(c2.y - hero.y)).toBe(1);
-    // 打倒朱仝（两个都倒下）也过关
+    // 打倒朱仝也过关
     b = start();
-    const [z1, z2] = b.units.filter((u) => u.classId === 48);
-    z1.alive = false;
+    const [z1] = b.units.filter((u) => u.classId === 48);
     settle(b);
     expect(b.status).toBe('playing');
-    z2.alive = false;
+    z1.alive = false;
     settle(b);
     expect(b.status).toBe('won');
   });
