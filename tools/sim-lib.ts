@@ -121,6 +121,8 @@ export function simulate(opts: SimOptions = {}): SimStage[] {
         else b.wait(u);
       }
       if (b.status === 'playing') b.endPlayerPhase();
+      // 回合中间的选人（叫阵晁家庄每阵开始前选出战的人）：选默认推荐的人
+      while (b.pendingPick) b.choose(b.pendingPick.recommended);
       weaken();
       if (heal !== 'none') for (const u of b.units) if (u.side !== 'enemy' && u.alive && (heal === 'full' || u.hp < u.stats.maxHp * 0.4)) u.hp = u.stats.maxHp;
     }

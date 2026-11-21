@@ -357,9 +357,9 @@ describe.skipIf(!has)('N01', () => {
     expect(c.members.find((m) => m.classId === 0)!.level).toBeGreaterThan(5);
   });
 
-  it('选人关：只有 Train1、Train2、N-add15 用指令 27，都选 1 人', () => {
+  it('选人关：原版只有 Train1、Train2、N-add15 用指令 27，都选 1 人；重制版叫阵晁家庄每阵选一人单挑', () => {
     const uses = files.list('Map', '.pab').filter((f) => loadStage(files, data, path.basename(f, '.pab')).blocks.some((b) => b.ops.some((o) => o.op === 27)));
-    expect(uses.map((f) => path.basename(f, '.pab')).sort()).toEqual(['n-add15', 'train1', 'train2']);
+    expect(uses.map((f) => path.basename(f, '.pab')).sort()).toEqual(['n-add13', 'n-add15', 'train1', 'train2']);
   });
 
   it('Train1：选 1 人与王進过招，其余人退场，选完才进第 1 回合；只有出场的人分全队经验', () => {

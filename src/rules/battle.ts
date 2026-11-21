@@ -1,7 +1,7 @@
 // 战斗状态机：回合、指令、AI 行动、PAS 事件与胜负。只改状态并输出事件流，画面由 game/ 播放。
 import { markLine } from '../i18n/index.ts';
 import type { ActUnit } from '../formats/act.ts';
-import type { DidAction, PasBlock, PasCond, PasHeader } from '../formats/pas.ts';
+import type { DidAction, PasBlock, PasCond, PasHeader, PasOp } from '../formats/pas.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
@@ -241,6 +241,8 @@ export interface PickRequest {
   count: number;
   /** 默认选中的人：等级最高的 */
   recommended: number[];
+  /** 没选上的人留在场上观战（叫阵晁家庄单挑）【新】 */
+  watch?: boolean;
 }
 
 /** 时光倒流最多能回到几个回合之前（记录最近几个我方回合开始时的状态）【新】 */
@@ -291,6 +293,10 @@ export class Battle {
   pendingChoice: ChoiceRequest | null = null;
   /** 因为没被选上而退场的人（不出战，不分全队经验，下一关照常归队） */
   private benched = new Set<number>();
+  /** 单挑选人（指令 27 的 keep）【新】：本关上过场的人；当前出战的人和他原来站的格子（下一次选人前走回去观战）；这次选上的人要走到哪 */
+  private fought = new Set<number>();
+  private duelist: { uid: number; x: number; y: number } | null = null;
+  private pickTo: { x: number; y: number } | null = null;
   /** 当前回合参数（条件 0：第 N + 1 回合开始时为 N） */
   private turnParam = -1;
   /** 扩展包剧本的标志（指令 103 设上，条件 100 / 101 判断有没有）【新】 */
@@ -655,6 +661,7 @@ export class Battle {
     if (!p) return [];
     const picked = [...new Set(uids)].filter((id) => p.candidates.includes(id));
     if (picked.length !== Math.min(p.count, p.candidates.length)) throw new Error(`要选 ${p.count} 人`);
+    if (this.pickTo) return this.chooseDuelist(picked);
     for (const u of this.units) {
       if (u.side === 'enemy' || !u.alive || !u.present || picked.includes(u.uid)) continue;
       this.hide(u, false);
@@ -668,6 +675,81 @@ export class Battle {
       this.record();
     } else this.afterAction();
     return this.flush();
+  }
+
+  /**
+   * 单挑选人选好【新】（叫阵晁家庄）：其余在场的我方原地观战（不能行动、不能被打），选上的人出列走到擂台，
+   * 开场选的进第 1 回合；回合中间选的把本回合开始的时光倒流记录换成选好之后的（免得倒流回到没人出战的时候）。
+   */
+  private chooseDuelist(picked: number[]): BattleEvent[] {
+    const to = this.pickTo!;
+    this.pickTo = null;
+    this.pendingPick = null;
+    this.scriptFlag = false;
+    const sp = this.spectators as Set<number>;
+    for (const u of this.units) {
+      if (u.side !== 'player' || !u.alive || !u.present) continue;
+      if (picked.includes(u.uid)) continue;
+      if (!sp.has(u.uid)) {
+        sp.add(u.uid);
+        u.defending = false;
+        this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+      }
+    }
+    for (const id of picked) {
+      const u = this.units[id];
+      sp.delete(u.uid);
+      this.fought.add(u.uid);
+      this.duelist = { uid: u.uid, x: u.x, y: u.y };
+      this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+      this.walkNear(u, to.x, to.y);
+      if (u.side === this.phase) {
+        u.ended = u.stunTurns > 0;
+        u.acted = false;
+        u.movementRemaining = u.stats.move;
+        u.turnStart = null;
+      }
+    }
+    this.runCondBlocks();
+    if (this.turn === 0 && this.status === 'playing') {
+      this.startTurn(1);
+      this.record();
+    } else {
+      this.afterAction();
+      if (this.status === 'playing' && this.phase === 'player' && this.history.at(-1)?.turn === this.turn) {
+        this.history.pop();
+        this.record();
+      }
+    }
+    return this.flush();
+  }
+
+  /** 上一阵出战的人走回出列前的位置（站不了就站最近的空格），改成观战 */
+  private sendDuelistBack() {
+    const d = this.duelist;
+    this.duelist = null;
+    const u = d && this.units[d.uid];
+    if (!d || !u || !u.alive || !u.present || u.side !== 'player') return;
+    (this.spectators as Set<number>).add(u.uid);
+    u.defending = false;
+    this.walkNear(u, d.x, d.y);
+    this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+  }
+
+  /** 走到 (x, y)，或走得到的、离它最近的空格（剧本演出，不耗移动力） */
+  private walkNear(u: Unit, x: number, y: number) {
+    const reach = this.reachOf(u, 99);
+    const taken = this.occupied(u);
+    let best: Cell[] = [], bestD = Math.abs(u.x - x) + Math.abs(u.y - y);
+    for (const k of reach.keys()) {
+      if (taken.has(k)) continue;
+      const [cx, cy] = k.split(',').map(Number);
+      const d = Math.abs(cx - x) + Math.abs(cy - y);
+      if (d > bestD) continue;
+      const path = pathTo(reach, cx, cy);
+      if (path.length > 1 && (d < bestD || path.length < best.length)) { best = path; bestD = d; }
+    }
+    if (best.length) this.walk(u, best, true);
   }
 
   /** 我方回合结束：友军、敌方依次行动，然后进入下一回合 */
@@ -715,6 +797,7 @@ export class Battle {
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
       spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(),
+      fought: [...this.fought], duelist: this.duelist,
     });
   }
 
@@ -770,6 +853,8 @@ export class Battle {
     this.spotters = s.spotters ?? {};
     this.credited = new Set(s.credited ?? []);
     this.lastHitBy = s.lastHitBy ?? {};
+    this.fought = new Set(s.fought ?? []);
+    this.duelist = s.duelist ?? null;
     if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (this.fire && s.fire) {
       this.fire.load(s.fire);
@@ -1246,7 +1331,7 @@ export class Battle {
         continue;
       }
       const hp0 = t.hp;
-      t.hp = Math.max(0, t.hp - r.damage);
+      t.hp = Math.max(this.spared(t) ? 1 : 0, t.hp - r.damage);
       total += r.damage;
       if (u.side === 'player' && t.side === 'enemy' && r.damage > 0) this.lastHitBy[t.uid] = u.uid;
       t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
@@ -1523,7 +1608,12 @@ export class Battle {
       if (this.units.some((u) => u.classId === id && u.alive && u.present && inside(u))) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
-    for (const b of this.blocks) if (b.trigger.kind === 'turn' && (this.turnAt[b.index] ?? b.trigger.turn) === param && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
+    for (const b of this.blocks) {
+      if (b.trigger.kind !== 'turn' || this.status !== 'playing') continue;
+      // 回合 −1【新】：第 2 回合起任何一回合开始时，标志满足就执行（叫阵晁家庄：教头认输后，下一回合开始接着比下一阵）
+      const at = b.trigger.turn === -1 && b.trigger.flagged ? param > 0 : (this.turnAt[b.index] ?? b.trigger.turn) === param;
+      if (at && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
+    }
     this.runCondBlocks();
   }
 
@@ -1578,6 +1668,14 @@ export class Battle {
 
   /** 组合条件等其它区块：状态满足就执行（EXE 0x412000 逐块调用 0x411410 求值） */
   /** near / hp 区块的 if / unless 标志（没写时条件是默认的 {type 0}，不判） */
+  /** 比武点到为止【新】：这人有还没执行、标志也满足的 spare 体力区块，挨打至少留 1 点体力（区块随后照常触发认输） */
+  private spared(t: Unit): boolean {
+    return this.blocks.some((b) => {
+      const g = b.trigger;
+      return g.kind === 'hp' && !!g.spare && !this.fired.has(b.index) && (g.uid !== undefined ? g.uid === t.uid : g.char === t.classId) && this.flagsOk(b);
+    });
+  }
+
   private flagsOk(b: PasBlock): boolean {
     const c = b.cond;
     if (!('op' in c) && c.type !== 100 && c.type !== 101) return true;
@@ -1828,7 +1926,7 @@ export class Battle {
         // 27：值为 1 时置全局标志（EXE 0x411d38），出现在 N-add15"請選擇留下的人"和训练关开场的末尾，推测是打开选人界面、
         // 选完后清掉标志，于是条件 3（参数 0）的下一个区块（回合限制、条件文字）才执行。重制版还没有选人界面，视为立即选完
         case 27:
-          if (op.value === 1) this.openPick(b, i, textOf);
+          if (op.value === 1) this.openPick(b, i, textOf, op.args);
           break;
         // 21：播放音效，名字在载荷里（全部是 m08"某某加入了"；EXE 0x411748）。20 的载荷是 0x01，推测为播放标志
         case 21:
@@ -1976,6 +2074,30 @@ export class Battle {
           else this.emit({ type: 'look', uid: sel.uid, classId: sel.classId });
           break;
         }
+        // 123 观战 / 出战【新】（叫阵晁家庄单挑）：value 1 = 改成观战演员（不能行动、不能被打），0 = 回来参战；
+        // args.side = 这一方在场的人全部（翻脸混战时观战的好汉一起上），否则只改点名的人
+        case 123: {
+          const sp = this.spectators as Set<number>;
+          // 全队回来参战前，正在出战的人先走回出列前的位置（输了一阵的人别留在教头跟前）
+          if (op.value === 0 && op.args?.side === 'player') this.sendDuelistBack();
+          const who = op.args?.side ? this.units.filter((u) => u.side === op.args!.side && u.alive && u.present) : sel ? [sel] : [];
+          for (const u of who) {
+            if (op.value === 1) {
+              if (sp.has(u.uid)) continue;
+              sp.add(u.uid);
+              u.defending = false;
+            } else {
+              if (!sp.has(u.uid)) continue;
+              sp.delete(u.uid);
+              if (u.side === this.phase && !u.acted) {
+                u.ended = u.stunTurns > 0;
+                u.movementRemaining = u.stats.move;
+              }
+            }
+            this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+          }
+          break;
+        }
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
@@ -2081,7 +2203,7 @@ export class Battle {
   }
 
   /** 指令 27：打开选人（提示取同一区块里指令 27 之前最后一句旁白，没有就用重制版的文字） */
-  private openPick(b: PasBlock, at: number, textOf: (i: number) => string) {
+  private openPick(b: PasBlock, at: number, textOf: (i: number) => string, args?: PasOp['args']) {
     this.scriptFlag = true;
     let prompt = '';
     for (let i = at - 1; i >= 0 && !prompt; i--) {
@@ -2091,14 +2213,24 @@ export class Battle {
       break;
     }
     const mine = this.units.filter((u) => u.side === 'player' && u.alive);
-    const candidates = mine.filter((u) => u.present);
+    let candidates = mine.filter((u) => u.present);
+    this.pickTo = null;
+    if (args?.keep) {
+      // 单挑【新】：上一阵出战的人走回原来的位置观战；选过的不再选；必须出场的人剩下的机会不多了就只能选他
+      this.sendDuelistBack();
+      if (args.fresh) candidates = candidates.filter((u) => !this.fought.has(u.uid));
+      const must = candidates.filter((u) => args.must?.includes(u.classId));
+      if (must.length && must.length >= (args.left ?? Infinity)) candidates = must;
+      this.pickTo = { x: args.x ?? 0, y: args.y ?? 0 };
+    }
     const best = candidates.reduce<Unit | undefined>((a, u) => (!a || u.level > a.level ? u : a), undefined);
     this.pendingPick = {
       prompt: prompt || (/^train/i.test(this.name) ? '請選擇與王進過招的人' : '請選擇出戰的人'),
       candidates: candidates.map((u) => u.uid),
-      required: mine.filter((u) => !u.present && u.classId === 0).map((u) => u.uid),
+      required: args?.keep ? [] : mine.filter((u) => !u.present && u.classId === 0).map((u) => u.uid),
       count: 1,
       recommended: best ? [best.uid] : [],
+      ...(args?.keep ? { watch: true } : {}),
     };
     this.emit({ type: 'pick', pick: this.pendingPick });
   }

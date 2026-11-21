@@ -1531,7 +1531,7 @@ export class BattleScene extends Phaser.Scene {
         const p = e.pick;
         const units = p.candidates.map((id) => b.unit(id)!).filter(Boolean);
         const req = p.required.map((id) => b.unit(id)!).filter(Boolean);
-        const chosen = await this.ui.pick(p.prompt, units, req, p.count, p.recommended);
+        const chosen = await this.ui.pick(p.prompt, units, req, p.count, p.recommended, p.watch);
         for (const x of this.battle.choose(chosen)) await this.play(x);
         break;
       }

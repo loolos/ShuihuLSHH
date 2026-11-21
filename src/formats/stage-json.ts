@@ -40,6 +40,8 @@ export interface StageJson {
   enemyRanks?: Record<number, 'troop' | 'leader'>;
   /** 观战演员（单位号） */
   spectators?: number[];
+  /** 单位体力倍率（单位号 → 倍率）【新】：叫阵晁家庄单挑的教头 */
+  hpMultipliers?: Record<number, number>;
   /** 过关奖励银子，不写按原版 */
   clearGold?: number;
   rules?: StageRules;
@@ -95,6 +97,7 @@ export function formatStageJson(j: StageJson & { units: (StageUnit & { raw?: unk
       ['names', j.names],
       ['enemyRanks', j.enemyRanks],
       ['spectators', j.spectators],
+      ['hpMultipliers', j.hpMultipliers],
       ['clearGold', j.clearGold],
       ['rules', j.rules && Object.fromEntries(Object.entries(j.rules).filter(([, v]) => v !== undefined))],
     ] as [string, unknown][]

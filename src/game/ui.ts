@@ -290,7 +290,7 @@ export class BattleUI {
    * 选人面板（训练关、断后）：点人物卡选中（要选 count 人；只选 1 人时点别人就换人），"确定"后返回选中的人。
    * required 是不用选也一定出战的人，显示成灰框。
    */
-  pick(title: string, units: Unit[], required: Unit[], count: number, preset: number[]): Promise<number[]> {
+  pick(title: string, units: Unit[], required: Unit[], count: number, preset: number[], watch = false): Promise<number[]> {
     const chosen = new Set(preset.slice(0, count));
     const list = $('unit-pick-list');
     const ok = $<HTMLButtonElement>('unit-pick-ok');
@@ -310,7 +310,7 @@ export class BattleUI {
     const refresh = () => {
       for (const b of list.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')) b.classList.toggle('on', chosen.has(Number(b.dataset.uid)));
       ok.disabled = chosen.size !== need;
-      $('unit-pick-hint').textContent = `已选 ${chosen.size} / ${need} 人${required.length ? `（另有${required.map((u) => this.tr(u.name)).join('、')}一定出战）` : ''}　没选上的人这一关留在后方，下一关归队`;
+      $('unit-pick-hint').textContent = `已选 ${chosen.size} / ${need} 人${required.length ? `（另有${required.map((u) => this.tr(u.name)).join('、')}一定出战）` : ''}${watch ? '　没选上的人在一旁观战' : '　没选上的人这一关留在后方，下一关归队'}`;
     };
     list.replaceChildren(...required.map((u) => card(u, true)), ...units.map((u) => card(u, false)));
     for (const b of list.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')) {
