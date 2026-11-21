@@ -43,6 +43,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
   it('四处探查完，侯健到黄文炳家门口骗开门：潜行结束，武龙、晁盖进场，黄佛子家的门子退场', () => {
     const { b, get } = open('wuweijun');
     expect(b.watchZones().length).toBeGreaterThan(0);
+    // 探查时黄文炳家的家丁还没登场（负责人 2026-11-21）
+    expect(get('qy1').present).toBe(false);
+    expect(get('dt5').present).toBe(false);
     const hj = get('houjian'), xy = get('xueyong');
     // 没探查完，走到门口不算
     put(b, hj, 41, 27);
@@ -54,7 +57,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     expect(get('chaogai').present).toBe(true);
     expect(get('ye-front').present).toBe(false);
     expect(b.watchZones()).toEqual([]);
+    expect(get('qy1').present).toBe(true);
     expect(get('qy1').ai.mode).toBe(0);
+    expect(get('shou1').ai.mode).toBe(0);
     expect(get('dt1').ai.mode).toBe(2);
   });
 
