@@ -204,6 +204,117 @@
    "levelOffset": -1
   },
   {
+   "id": "xun7",
+   "class": 32,
+   "side": "enemy",
+   "x": 50,
+   "y": 35,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     50,
+     35
+    ],
+    [
+     12,
+     35
+    ]
+   ],
+   "watch": 3,
+   "facing": 1,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun8",
+   "class": 33,
+   "side": "enemy",
+   "x": 26,
+   "y": 26,
+   "level": 30,
+   "ai": 13,
+   "patrol": [
+    [
+     26,
+     26
+    ],
+    [
+     26,
+     3
+    ]
+   ],
+   "watch": 3,
+   "facing": 0,
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "shou1",
+   "class": 33,
+   "side": "enemy",
+   "x": 28,
+   "y": 27,
+   "level": 30,
+   "ai": 8,
+   "watch": 3,
+   "facing": 2,
+   "name": "守夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "shou2",
+   "class": 32,
+   "side": "enemy",
+   "x": 29,
+   "y": 2,
+   "level": 30,
+   "ai": 8,
+   "watch": 3,
+   "facing": 0,
+   "name": "守夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "shou3",
+   "class": 33,
+   "side": "enemy",
+   "x": 20,
+   "y": 33,
+   "level": 30,
+   "ai": 8,
+   "watch": 3,
+   "facing": 3,
+   "name": "守夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "shou4",
+   "class": 32,
+   "side": "enemy",
+   "x": 36,
+   "y": 28,
+   "level": 30,
+   "ai": 8,
+   "watch": 3,
+   "facing": 1,
+   "name": "守夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "shou5",
+   "class": 33,
+   "side": "enemy",
+   "x": 49,
+   "y": 1,
+   "level": 30,
+   "ai": 8,
+   "watch": 3,
+   "facing": 1,
+   "name": "守夜军士",
+   "levelOffset": -1
+  },
+  {
    "id": "ye-front",
    "class": 37,
    "side": "enemy",
@@ -263,7 +374,7 @@
    "y": 22,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -276,7 +387,7 @@
    "y": 22,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -289,7 +400,7 @@
    "y": 22,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -302,7 +413,7 @@
    "y": 22,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -315,7 +426,7 @@
    "y": 21,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家保镖",
    "levelOffset": 1,
    "facing": 2,
@@ -329,7 +440,7 @@
    "y": 20,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家弓手",
    "levelOffset": -2,
    "facing": 2
@@ -342,7 +453,7 @@
    "y": 20,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家弓手",
    "levelOffset": -2,
    "facing": 2
@@ -355,7 +466,7 @@
    "y": 11,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -368,7 +479,7 @@
    "y": 11,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -381,7 +492,7 @@
    "y": 11,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -394,7 +505,7 @@
    "y": 11,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -407,7 +518,7 @@
    "y": 10,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "保镖教师",
    "levelOffset": 2,
    "facing": 2,
@@ -421,7 +532,7 @@
    "y": 10,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家弓手",
    "levelOffset": -2,
    "facing": 2
@@ -434,7 +545,7 @@
    "y": 10,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家弓手",
    "levelOffset": -2,
    "facing": 2
@@ -447,7 +558,7 @@
    "y": 7,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -460,7 +571,7 @@
    "y": 7,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -473,7 +584,7 @@
    "y": 7,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -486,7 +597,7 @@
    "y": 7,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家家丁",
    "levelOffset": -2,
    "facing": 2
@@ -499,7 +610,7 @@
    "y": 6,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家保镖",
    "levelOffset": 1,
    "facing": 2,
@@ -513,7 +624,7 @@
    "y": 6,
    "level": 30,
    "ai": 8,
-   "watch": 2,
+   "hidden": true,
    "name": "黄家弓手",
    "levelOffset": -2,
    "facing": 2
@@ -556,7 +667,7 @@
     ],
     [
      "narrate",
-     "（地上的黄格子是巡夜军士、门子面前看得到的范围；从背后偷袭还没发觉的人伤害 ×3，侧面 ×2）"
+     "（地上的黄格子是巡夜、守夜军士和门子面前看得到的范围；从背后偷袭还没发觉的人伤害 ×3，侧面 ×2）"
     ],
     [
      "objective",
@@ -760,9 +871,93 @@
      "众兄弟听着：只拿黄文炳一门，隔壁黄佛子家一草一木都休要动他！"
     ],
     [
+     "narrate",
+     "黄家院里一阵乱响，家丁、保镖提着棍棒刀枪，从前院、大堂、后堂拥了出来。"
+    ],
+    [
      "say",
      "hero",
      "里面的家丁保镖都起来了，杀进去！"
+    ],
+    [
+     "appear",
+     "qy1"
+    ],
+    [
+     "appear",
+     "qy2"
+    ],
+    [
+     "appear",
+     "qy3"
+    ],
+    [
+     "appear",
+     "qy4"
+    ],
+    [
+     "appear",
+     "qy5"
+    ],
+    [
+     "appear",
+     "qy6"
+    ],
+    [
+     "appear",
+     "qy7"
+    ],
+    [
+     "appear",
+     "dt1"
+    ],
+    [
+     "appear",
+     "dt2"
+    ],
+    [
+     "appear",
+     "dt3"
+    ],
+    [
+     "appear",
+     "dt4"
+    ],
+    [
+     "appear",
+     "dt5"
+    ],
+    [
+     "appear",
+     "dt6"
+    ],
+    [
+     "appear",
+     "dt7"
+    ],
+    [
+     "appear",
+     "ht1"
+    ],
+    [
+     "appear",
+     "ht2"
+    ],
+    [
+     "appear",
+     "ht3"
+    ],
+    [
+     "appear",
+     "ht4"
+    ],
+    [
+     "appear",
+     "ht5"
+    ],
+    [
+     "appear",
+     "ht6"
     ],
     [
      "setAi",
@@ -841,6 +1036,41 @@
     ],
     [
      "setAi",
+     "xun7",
+     0
+    ],
+    [
+     "setAi",
+     "xun8",
+     0
+    ],
+    [
+     "setAi",
+     "shou1",
+     0
+    ],
+    [
+     "setAi",
+     "shou2",
+     0
+    ],
+    [
+     "setAi",
+     "shou3",
+     0
+    ],
+    [
+     "setAi",
+     "shou4",
+     0
+    ],
+    [
+     "setAi",
+     "shou5",
+     0
+    ],
+    [
+     "setAi",
      "dt1",
      2
     ],
@@ -914,7 +1144,7 @@
     ],
     [
      "objective",
-     "第三步：打倒黄文炳家的家丁、保镖和赶来的巡夜军士；在后堂、大堂、门房三处放火（标「放火」的地方，谁走进去都算）\n败：侯健、武龙或晁盖倒下；超过 35 回合"
+     "第三步：打倒黄文炳家的家丁、保镖和赶来的巡夜、守夜军士；在后堂、大堂、门房三处放火（标「放火」的地方，谁走进去都算）\n败：侯健、武龙或晁盖倒下；超过 35 回合"
     ]
    ]
   },
