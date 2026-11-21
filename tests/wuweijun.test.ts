@@ -49,8 +49,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十五
     const hj = get('houjian'), xy = get('xueyong');
     // 两座宅子的前后门都封死，骗开门后只开黄文炳家前门（负责人 2026-11-21）
     expect([[13, 26], [41, 26], [11, 3], [39, 3]].map(([x, y]) => b.board.passable(x, y))).toEqual([false, false, false, false]);
-    // 门子站在门外，够得着
-    expect(get('bing-front').y).toBe(27);
+    // 正门外两个门子面对面看着门，够得着（负责人 2026-11-21）
+    expect([get('bing-front'), get('bing-front2')].map((u) => [u.x, u.y])).toEqual([[39, 27], [44, 27]]);
+    // 黄文炳家门子认得侯健
+    put(b, hj, 41, 27);
+    expect(Object.keys(b.spotters)).toEqual([]);
+    put(b, hj, 1, 34);
     // 没探查完，走到门口不算
     put(b, hj, 41, 27);
     expect(get('hero').present).toBe(false);

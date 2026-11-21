@@ -77,6 +77,8 @@ export type BattleEvent =
   | { type: 'subtitle'; text: string }
   /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
   | { type: 'uproot'; cells: { x: number; y: number }[] }
+  /** 指令 127 打开封死的格子（门板消失）【新】 */
+  | { type: 'unseal'; cells: { x: number; y: number }[] }
   | { type: 'flourish'; uid: number; facing: number }
   | { type: 'shot'; uid: number; x: number; y: number; facing: number; target?: number; text: string }
   | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
@@ -184,6 +186,8 @@ export interface StageInput {
   spectators?: number[];
   /** 潜行关【新】：哨兵的 ACT 索引 → 警戒半径（格子步数，不看墙）。我方有人进了半径就被发现，见 Battle.checkSpotted */
   watchers?: Record<number, number>;
+  /** 哨兵认得的职业（ACT 索引 → 职业号），这些人进了范围不算被发现【新】 */
+  watchTrust?: Record<number, number[]>;
   /** 潜行关【新】：AI 13 巡逻的路线（ACT 索引 → 依次走过的格子，走完回到第一个） */
   patrols?: Record<number, { x: number; y: number }[]>;
   /** 潜行关【新】：被发现后没在期限内打倒发现的人就判负；flag：被发现时设上的剧本标志 */
@@ -261,6 +265,7 @@ export class Battle {
   readonly spectators: ReadonlySet<number>;
   /** 潜行关的哨兵：uid → 警戒半径【新】 */
   readonly watchers: ReadonlyMap<number, number>;
+  private readonly watchTrust: ReadonlyMap<number, number[]>;
   private readonly patrols: Map<number, { x: number; y: number }[]>;
   private readonly stealth?: { lose: string; flag?: number };
   /** 发现了我方的哨兵：uid → 要在第几回合的我方回合结束前打倒他（否则判负），即发现时的下一回合【新】 */
@@ -355,6 +360,7 @@ export class Battle {
   constructor(input: StageInput) {
     this.spectators = new Set(input.spectators ?? []);
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
+    this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.sealed = input.sealed ?? [];
@@ -1664,6 +1670,11 @@ export class Battle {
     return true;
   }
 
+  /** map.seal 封死的格子和现在开没开（画面据此显示 / 隐藏门板） */
+  sealState(): { x: number; y: number; open: boolean }[] {
+    return this.sealed.map((c) => ({ ...c, open: this.unsealed.has(c.y * this.board.width + c.x) }));
+  }
+
   private runTurnTriggers(param: number) {
     this.turnEndCheck = true;
     try {
@@ -1784,7 +1795,7 @@ export class Battle {
       if (!w || uid in this.spotters || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0) continue;
       // 张千、李万这样跟着走的友军进了范围也算（负责人 2026-11-19）
       const seen = this.units.find(
-        (t) => (t.side === 'player' || t.side === 'ally') && t.alive && t.present && !this.spectators.has(t.uid) && watcherSees(w, t, r),
+        (t) => (t.side === 'player' || t.side === 'ally') && t.alive && t.present && !this.spectators.has(t.uid) && !this.watchTrust.get(uid)?.includes(t.classId) && watcherSees(w, t, r),
       );
       // 挨了打也就惊醒了（偷袭没一下打倒，他照样喊）
       if (!seen && w.hp >= w.stats.maxHp) continue;
@@ -2247,6 +2258,7 @@ export class Battle {
             this.board.blocked[i] = 0;
             this.unsealed.add(i);
           }
+          this.emit({ type: 'unseal', cells: (op.args?.cells ?? []).map((c) => ({ x: c.x, y: c.y })) });
           break;
         case 125:
           this.stealthOver = true;

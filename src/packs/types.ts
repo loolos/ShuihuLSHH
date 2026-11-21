@@ -231,6 +231,8 @@ export interface PackUnitJson {
   point?: [number, number];
   /** 潜行关的哨兵【新】：警戒半径（格子步数），我方有人进来就被发现（§15.21 穆家庄夜遁） */
   watch?: number;
+  /** 潜行关哨兵认得的人（职业）：他们进了警戒范围也不算被发现（黄文炳家门子认得侯健）【新】 */
+  trusts?: (string | number)[];
   /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
   patrol?: [number, number][];
   /** 显示的名字，不填用职业名 */
