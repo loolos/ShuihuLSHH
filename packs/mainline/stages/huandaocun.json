@@ -1,0 +1,1106 @@
+{
+ "id": "huandaocun",
+ "title": "还道村受天书",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 800
+ },
+ "map": {
+  "custom": "xuannvmiao"
+ },
+ "tint": "dusk",
+ "bgm": [
+  "eerie",
+  "battle"
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 3,
+   "y": 14,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 9,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "武龙"
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 10,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "hidden": true
+  },
+  {
+   "id": "liutang",
+   "class": 17,
+   "side": "player",
+   "x": 0,
+   "y": 18,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "刘唐"
+  },
+  {
+   "id": "shiyong",
+   "class": "shiyong",
+   "side": "player",
+   "x": 0,
+   "y": 19,
+   "level": 30,
+   "facing": 3,
+   "hidden": true
+  },
+  {
+   "id": "lili",
+   "class": "lili",
+   "side": "ally",
+   "x": 20,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "hidden": true
+  },
+  {
+   "id": "oupeng",
+   "class": 65,
+   "side": "ally",
+   "x": 20,
+   "y": 5,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "摩云金翅欧鹏",
+   "levelOffset": 0
+  },
+  {
+   "id": "taozongwang",
+   "class": 20,
+   "side": "ally",
+   "x": 19,
+   "y": 5,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "九尾龟陶宗旺",
+   "levelOffset": 0,
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "xuannv",
+   "class": "xuannv-xiang",
+   "side": "ally",
+   "x": 10,
+   "y": 2,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true
+  },
+  {
+   "id": "tong1",
+   "class": "qingyi-tong",
+   "side": "ally",
+   "x": 9,
+   "y": 3,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true,
+   "hidden": true
+  },
+  {
+   "id": "tong2",
+   "class": "qingyi-tong",
+   "side": "ally",
+   "x": 11,
+   "y": 3,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true,
+   "hidden": true
+  },
+  {
+   "id": "zhaoneng",
+   "class": 38,
+   "side": "enemy",
+   "x": 10,
+   "y": 18,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "都头赵能",
+   "levelOffset": 1,
+   "hpMultiplier": 1.6
+  },
+  {
+   "id": "a1",
+   "class": 32,
+   "side": "enemy",
+   "x": 8,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a2",
+   "class": 33,
+   "side": "enemy",
+   "x": 9,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a3",
+   "class": 32,
+   "side": "enemy",
+   "x": 10,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a4",
+   "class": 33,
+   "side": "enemy",
+   "x": 11,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a5",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a6",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "a7",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "zhaode",
+   "class": 39,
+   "side": "enemy",
+   "x": 9,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "都头赵得",
+   "levelOffset": 1,
+   "hpMultiplier": 1.5
+  },
+  {
+   "id": "b1",
+   "class": 32,
+   "side": "enemy",
+   "x": 7,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b2",
+   "class": 33,
+   "side": "enemy",
+   "x": 7,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b3",
+   "class": 32,
+   "side": "enemy",
+   "x": 7,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b4",
+   "class": 33,
+   "side": "enemy",
+   "x": 7,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b5",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "b6",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "c1",
+   "class": 33,
+   "side": "enemy",
+   "x": 6,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "c2",
+   "class": 32,
+   "side": "enemy",
+   "x": 6,
+   "y": 5,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "c3",
+   "class": 33,
+   "side": "enemy",
+   "x": 6,
+   "y": 6,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "c4",
+   "class": 32,
+   "side": "enemy",
+   "x": 6,
+   "y": 7,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "c5",
+   "class": 34,
+   "side": "enemy",
+   "x": 8,
+   "y": 5,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "c6",
+   "class": 34,
+   "side": "enemy",
+   "x": 8,
+   "y": 6,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "c7",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 3,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "c8",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "d1",
+   "class": 32,
+   "side": "enemy",
+   "x": 16,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "d2",
+   "class": 33,
+   "side": "enemy",
+   "x": 16,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "d3",
+   "class": 32,
+   "side": "enemy",
+   "x": 16,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "d4",
+   "class": 33,
+   "side": "enemy",
+   "x": 16,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "d5",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "d6",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "d7",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 2,
+   "name": "马军",
+   "levelOffset": -1
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "还道村 · 三更"
+    ],
+    [
+     "narrate",
+     "宋江在山寨上终日挂念老父：江州的事一旦申奏朝廷，济州必行文郓城县追捉家属。他不等晁盖点齐人马，独自潜回宋家村，要搬取父亲上山。"
+    ],
+    [
+     "narrate",
+     "不料兄弟宋清在后门说：县里差两个赵都头带一二百土兵日夜看守，只等江州文书一到，便要拿父子下狱。宋江回身便走，背后火把齐明，一路喊「宋江休走」。"
+    ],
+    [
+     "narrate",
+     "慌不择路，奔进一个村子。这村子四面都是高山峻岭，山下一遭涧水，中间只有一条路——便是还道村。宋江钻进村中一座古庙，土兵随后便围了上来。"
+    ],
+    [
+     "say",
+     "zhaoneng",
+     "这村子只有一条路出入，他插翅也飞不出去！把住庙门，一处一处与我搜！"
+    ],
+    [
+     "say",
+     "zhaode",
+     "火把照亮些！神厨、神帐都挑开来看！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "庙门叫他们堵死了……西廊里有一处神帐，且躲到帐后去，看天意如何。"
+    ],
+    [
+     "objective",
+     "宋江躲进西廊的「神帐」\n败：宋江倒下；武龙倒下；超过 30 回合"
+    ],
+    [
+     "turnLimit",
+     30
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "songjiang",
+    "area": [
+     2,
+     10,
+     3,
+     11
+    ],
+    "label": "神帐"
+   },
+   "do": [
+    [
+     "narrate",
+     "宋江闪身钻进神帐后面，屏住气不敢做声。"
+    ],
+    [
+     "approach",
+     "zhaode",
+     "songjiang"
+    ],
+    [
+     "say",
+     "zhaode",
+     "帐子后面有响动！"
+    ],
+    [
+     "narrate",
+     "赵得把朴刀挑起神帐，帐里忽地卷起一阵黑尘，扑了他满脸满眼。"
+    ],
+    [
+     "gust",
+     {
+      "style": "dust",
+      "radius": 4,
+      "turns": 3
+     }
+    ],
+    [
+     "say",
+     "zhaode",
+     "哎哟！迷了我的眼！"
+    ],
+    [
+     "say",
+     "zhaoneng",
+     "兄弟，莫不是神明嗔怪？我们且出去。"
+    ],
+    [
+     "say",
+     "zhaode",
+     "哪有甚么神明！再拿枪搠一搠——"
+    ],
+    [
+     "narrate",
+     "话音未落，殿后又卷起一阵怪风，飞沙走石，满庙的火把都吹灭了，四下里黑洞洞的。"
+    ],
+    [
+     "gust",
+     {
+      "style": "wind",
+      "x": 8,
+      "y": 8,
+      "radius": 8,
+      "turns": 3,
+      "focus": true
+     }
+    ],
+    [
+     "tint",
+     "night"
+    ],
+    [
+     "say",
+     "c1",
+     "神圣救命！神圣救命！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "天可怜见！趁他们乱作一团，快到正殿神座前去！"
+    ],
+    [
+     "narrate",
+     "（周围的土兵逃窜 3 回合：乱走，不打人）"
+    ],
+    [
+     "objective",
+     "宋江走到正殿的九天玄女像前\n败：宋江倒下；武龙倒下；超过 30 回合"
+    ],
+    [
+     "flag",
+     "blown"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "xuannv",
+    "by": "songjiang"
+   },
+   "do": [
+    [
+     "narrate",
+     "宋江扑到神座前，只觉一阵困倦，靠着神案昏昏沉沉，忽听得有人轻声唤他。"
+    ],
+    [
+     "tint",
+     ""
+    ],
+    [
+     "appear",
+     "tong1"
+    ],
+    [
+     "appear",
+     "tong2"
+    ],
+    [
+     "say",
+     "tong1",
+     "小童奉娘娘法旨，请星主说话。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "二位仙童，宋江不敢。娘娘是谁？"
+    ],
+    [
+     "transform",
+     "xuannv",
+     "xuannv",
+     "九天玄女"
+    ],
+    [
+     "say",
+     "xuannv",
+     "星主别来无恙？请饮仙酒，食仙枣。"
+    ],
+    [
+     "transform",
+     "songjiang",
+     "sj-fugitive"
+    ],
+    [
+     "narrate",
+     "三杯仙酒、三枚仙枣下肚，宋江只觉神清气爽。（宋江体力、气力回满）"
+    ],
+    [
+     "say",
+     "xuannv",
+     "宋星主，传汝三卷天书。汝可替天行道为主，全忠仗义为臣，辅国安民，去邪归正。"
+    ],
+    [
+     "say",
+     "xuannv",
+     "此三卷之书，只可与天机星同观，其他皆不可见。功成之后，便可焚之，勿留在世。"
+    ],
+    [
+     "say",
+     "xuannv",
+     "玉帝因星主魔心未断，道行未完，暂罚下方。他日若是罪下酆都，吾亦不能救汝。"
+    ],
+    [
+     "say",
+     "xuannv",
+     "吾有四句天言，汝当记取：遇宿重重喜，逢高不是凶。外夷及内寇，几处见奇功。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "宋江再拜谨受。"
+    ],
+    [
+     "say",
+     "tong2",
+     "星主请看，石桥下水里二龙相戏。"
+    ],
+    [
+     "narrate",
+     "宋江方才探头去看，两个青衣望下一推，宋江大叫一声——"
+    ],
+    [
+     "leave",
+     "tong1"
+    ],
+    [
+     "leave",
+     "tong2"
+    ],
+    [
+     "transform",
+     "xuannv",
+     "xuannv-xiang",
+     "九天玄女像"
+    ],
+    [
+     "tint",
+     "night"
+    ],
+    [
+     "narrate",
+     "却撞在神座前，原来是南柯一梦。袖子里三个枣核，一方帕子包着三卷天书，口里酒香尚在。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "梦中所见，正是这位娘娘——九天玄女！宋江若得脱身，必来重修庙宇，再塑金身。"
+    ],
+    [
+     "flag",
+     "book"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "book"
+   },
+   "unless": "rescue",
+   "do": [
+    [
+     "narrate",
+     "正自出神，忽听得庙门外一片喊杀之声，渐渐杀进庙来。"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "liutang"
+    ],
+    [
+     "appear",
+     "shiyong"
+    ],
+    [
+     "appear",
+     "lili"
+    ],
+    [
+     "appear",
+     "oupeng"
+    ],
+    [
+     "appear",
+     "taozongwang"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥休慌！铁牛来也！"
+    ],
+    [
+     "say",
+     "liutang",
+     "晁天王、吴学究放心不下，先叫戴宗兄弟下山打探，又差我们几个随后接应。村口把守的土兵，已教我们杀尽了！"
+    ],
+    [
+     "say",
+     "oupeng",
+     "小弟摩云金翅欧鹏，和九尾龟陶宗旺兄弟在黄门山落草，久闻哥哥大名，这番投奔山寨，晁天王教我们一同来接哥哥。"
+    ],
+    [
+     "say",
+     "hero",
+     "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
+    ],
+    [
+     "flag",
+     "rescue"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": "rescue",
+   "do": [
+    [
+     "narrate",
+     "庙门外、东西两廊忽然一齐喊杀连天，几路人马杀进庙来！"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "liutang"
+    ],
+    [
+     "appear",
+     "shiyong"
+    ],
+    [
+     "appear",
+     "lili"
+    ],
+    [
+     "appear",
+     "oupeng"
+    ],
+    [
+     "appear",
+     "taozongwang"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥休慌！铁牛来也！"
+    ],
+    [
+     "say",
+     "liutang",
+     "晁天王、吴学究放心不下，先叫戴宗兄弟下山打探，又差我们几个随后接应。村口把守的土兵，已教我们杀尽了！"
+    ],
+    [
+     "say",
+     "oupeng",
+     "小弟摩云金翅欧鹏，和九尾龟陶宗旺兄弟在黄门山落草，久闻哥哥大名，这番投奔山寨，晁天王教我们一同来接哥哥。"
+    ],
+    [
+     "say",
+     "hero",
+     "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
+    ],
+    [
+     "flag",
+     "rescue"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "rescue"
+   },
+   "unless": "book",
+   "do": [
+    [
+     "objective",
+     "打倒庙里全部土兵（宋江还可以到正殿玄女像前）\n败：宋江倒下；武龙倒下；超过 30 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "rescue"
+   },
+   "if": "book",
+   "do": [
+    [
+     "objective",
+     "打倒庙里全部土兵\n败：宋江倒下；武龙倒下；超过 30 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "znDead"
+   },
+   "unless": "zdDead",
+   "do": [
+    [
+     "narrate",
+     "都头赵能扑地倒了，再也挣扎不起。"
+    ],
+    [
+     "say",
+     "zhaode",
+     "哥哥！……都是这黑矮汉子惹出来的祸！与我拿住宋江！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "znDead"
+   },
+   "if": "zdDead",
+   "do": [
+    [
+     "narrate",
+     "都头赵能扑地倒了。两个赵都头都折在这玄女庙里。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "他兄弟两个只是奉官差遣……也是自取其祸。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zhaoneng"
+   },
+   "do": [
+    [
+     "flag",
+     "znDead"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "zdDead"
+   },
+   "unless": "znDead",
+   "do": [
+    [
+     "narrate",
+     "都头赵得倒在龙墀下。"
+    ],
+    [
+     "say",
+     "zhaoneng",
+     "兄弟！……好贼！今日不拿住宋江，誓不回县！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "zdDead"
+   },
+   "if": "znDead",
+   "do": [
+    [
+     "narrate",
+     "都头赵得倒在龙墀下。两个赵都头都折在这玄女庙里。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "他兄弟两个只是奉官差遣……也是自取其祸。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zhaode"
+   },
+   "do": [
+    [
+     "flag",
+     "zdDead"
+    ]
+   ]
+  },
+  {
+   "on": "allEnemiesDefeated",
+   "if": "rescue",
+   "do": [
+    [
+     "flag",
+     "cleared"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "cleared"
+   },
+   "unless": "book",
+   "do": [
+    [
+     "narrate",
+     "土兵都打倒了。宋江哥哥还在正殿外，快去玄女像前！"
+    ],
+    [
+     "objective",
+     "宋江走到正殿的九天玄女像前\n败：宋江倒下；武龙倒下；超过 30 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "cleared"
+   },
+   "if": "book",
+   "do": [
+    [
+     "flag",
+     "win"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "book"
+   },
+   "if": "cleared",
+   "do": [
+    [
+     "flag",
+     "win"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "win"
+   },
+   "do": [
+    [
+     "say",
+     "songjiang",
+     "众兄弟，宋江的老父还在庄上……"
+    ],
+    [
+     "say",
+     "liutang",
+     "哥哥放心。晁天王早差戴宗带杜迁、宋万、王矮虎、郑天寿、童威、童猛，先把太公和四郎接上山去了。"
+    ],
+    [
+     "say",
+     "likui",
+     "俺铁牛砍得好爽快！哥哥，回山吃酒去！"
+    ],
+    [
+     "narrate",
+     "宋江出得庙来，望着庙额「玄女之庙」拜了几拜，同众好汉出了还道村，望梁山泊来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}

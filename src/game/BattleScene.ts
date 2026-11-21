@@ -1345,6 +1345,64 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /** 黑尘迷眼 / 怪风（剧本指令 126，还道村玄女庙）【新】：dust = 一团黑尘从中心翻涌散开；wind = 一圈旋风卷着尘土横扫 radius 格，镜头轻晃 */
+  private async gust(x: number, y: number, radius: number, style: 'dust' | 'wind') {
+    const c = cellToWorld(x, y);
+    const top = 100000;
+    const spread = Math.max(1, radius) * (style === 'wind' ? HALF_W : HALF_W * 0.7);
+    if (style === 'dust') {
+      const colors = [0x1a1a1a, 0x2e2a26, 0x45403a, 0x0c0c0c];
+      for (let i = 0; i < 46; i++) {
+        const r = 6 + Math.random() * 10;
+        const ang = Math.random() * Math.PI * 2;
+        const dist = spread * (0.3 + Math.random() * 0.7);
+        const p = this.add.circle(c.x + (Math.random() - 0.5) * 10, c.y - 30, r, colors[i % colors.length]).setDepth(top).setAlpha(0);
+        this.tweens.add({
+          targets: p,
+          x: c.x + Math.cos(ang) * dist,
+          y: c.y - 30 + Math.sin(ang) * dist * 0.5 - 20 - Math.random() * 30,
+          scale: 1.8 + Math.random(),
+          alpha: { from: 0.85, to: 0 },
+          delay: Math.random() * 300,
+          duration: 900 + Math.random() * 500,
+          ease: 'Quad.easeOut',
+          onComplete: () => p.destroy(),
+        });
+      }
+      await wait(this, 1100);
+      return;
+    }
+    this.cameras.main.shake(900, 0.004);
+    const streaks = [0xe8e0c8, 0xcfc6a8, 0xb8b09a];
+    for (let i = 0; i < 110; i++) {
+      const dust = i % 3 === 0;
+      const o = dust
+        ? this.add.circle(0, 0, 2 + Math.random() * 3, 0x6b6150)
+        : this.add.rectangle(0, 0, 22 + Math.random() * 30, 3, streaks[i % streaks.length]);
+      o.setDepth(top).setAlpha(0);
+      const a0 = Math.random() * Math.PI * 2;
+      const r0 = spread * (0.15 + Math.random() * 0.4);
+      const turn = Math.PI * (1.2 + Math.random());
+      const st = { k: 0 };
+      this.tweens.add({
+        targets: st,
+        k: 1,
+        delay: Math.random() * 500,
+        duration: 1000 + Math.random() * 500,
+        ease: 'Sine.easeInOut',
+        onUpdate: () => {
+          const ang = a0 + turn * st.k;
+          const rr = r0 + (spread - r0) * st.k;
+          o.setPosition(c.x + Math.cos(ang) * rr, c.y - 40 + Math.sin(ang) * rr * 0.5 - 30 * st.k);
+          o.setRotation(ang + Math.PI / 2);
+          o.setAlpha(Math.sin(Math.PI * st.k) * 0.9);
+        },
+        onComplete: () => o.destroy(),
+      });
+    }
+    await wait(this, 1500);
+  }
+
   /** 溅血（技能 hitFx: 'blood'）：受击者胸口迸出几滴红点，抛物线落下后淡出；必杀多溅几滴 */
   private bloodSplash(x: number, y: number, crit = false) {
     const p = cellToWorld(x, y);
@@ -1876,6 +1934,9 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'fire':
         this.syncFire(e.cells, this.fast);
+        break;
+      case 'gust':
+        if (!this.fast) await this.gust(e.x, e.y, e.radius, e.style);
         break;
       case 'tint':
         this.tintFilter = applyTint(this.cameras.main, isStageTint(e.tint) ? e.tint : undefined, this.tintFilter);

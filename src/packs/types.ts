@@ -277,6 +277,7 @@ export type PackTrigger =
  * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
  * ["setAi", 单位, 模式] 改 AI 模式；
  * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
+ * ["gust", {style, radius, turns, panic, spare, x, y, focus}] 黑尘（dust）/ 怪风（wind）：区域中心（或 x, y）radius 格内的敌人逃窜 turns 回合；
  * ["stealthEnd"] 潜行结束：哨兵不再警戒，发现也不再判负；
  * ["standDown", 单位, 参数（可省）] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）；参数 {reward: 身边没我方也照打倒给经验, leave: 收手后离开地图, quiet: 不飘字（一起收手时一起淡出）, goldPct: 交出击退银子的百分之几}
  */
