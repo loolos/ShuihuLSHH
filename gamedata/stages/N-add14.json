@@ -78,7 +78,19 @@
     {"index":72,"type":32,"group":73,"side":"enemy","facing":0,"x":50,"y":25,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":73,"type":34,"group":74,"side":"enemy","facing":0,"x":50,"y":22,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
     {"index":74,"type":34,"group":75,"side":"enemy","facing":0,"x":49,"y":23,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
-    {"index":75,"type":43,"group":76,"side":"enemy","facing":0,"x":51,"y":23,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
+    {"index":75,"type":43,"group":76,"side":"enemy","facing":0,"x":51,"y":23,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":76,"type":32,"group":77,"side":"enemy","facing":0,"x":6,"y":40,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":77,"type":32,"group":78,"side":"enemy","facing":0,"x":7,"y":40,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":78,"type":32,"group":79,"side":"enemy","facing":0,"x":8,"y":40,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":79,"type":43,"group":80,"side":"enemy","facing":0,"x":6,"y":41,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":80,"type":38,"group":81,"side":"enemy","facing":0,"x":7,"y":41,"level":25,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":81,"type":43,"group":82,"side":"enemy","facing":0,"x":8,"y":41,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":82,"type":32,"group":83,"side":"enemy","facing":1,"x":50,"y":29,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":83,"type":32,"group":84,"side":"enemy","facing":1,"x":50,"y":30,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":84,"type":32,"group":85,"side":"enemy","facing":1,"x":50,"y":31,"level":24,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":85,"type":43,"group":86,"side":"enemy","facing":1,"x":51,"y":29,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":86,"type":38,"group":87,"side":"enemy","facing":1,"x":51,"y":30,"level":25,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]},
+    {"index":87,"type":43,"group":88,"side":"enemy","facing":1,"x":51,"y":31,"level":26,"flags":1,"extra":[0,0,0],"items":[0,0,0,0,0,0,0]}
   ],
   "blocks": [
     {
@@ -189,6 +201,27 @@
       "head": [1,0,1,0,0,0,36,2,1],
       "ops": [
         {"op":29,"flag":null,"text":"经过一场恶战，终于击败了何涛的部队。"}
+      ]
+    },
+    {
+      "trigger": {"kind":"turn","turn":1},
+      "cond": {"type":0,"arg":1},
+      "head": [1,0,0,0,0,0,0,0,0],
+      "ops": [
+        {"op":12,"flag":1,"value":1077},
+        {"op":12,"flag":1,"value":1078},
+        {"op":12,"flag":1,"value":1079},
+        {"op":12,"flag":1,"value":1080},
+        {"op":12,"flag":1,"value":1081},
+        {"op":12,"flag":1,"value":1082},
+        {"op":12,"flag":1,"value":1083},
+        {"op":12,"flag":1,"value":1084},
+        {"op":12,"flag":1,"value":1085},
+        {"op":12,"flag":1,"value":1086},
+        {"op":12,"flag":1,"value":1087},
+        {"op":12,"flag":1,"value":1088},
+        {"op":12,"flag":1,"value":4294967295},
+        {"op":13,"flag":1,"text":"敌军增援了！"}
       ]
     },
     {
