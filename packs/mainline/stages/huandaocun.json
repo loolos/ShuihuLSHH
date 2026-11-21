@@ -642,7 +642,8 @@
   {
    "on": {
     "near": "xuannv",
-    "by": "songjiang"
+    "by": "songjiang",
+    "atTurnEnd": true
    },
    "do": [
     [

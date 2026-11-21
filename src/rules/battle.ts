@@ -1627,14 +1627,27 @@ export class Battle {
   }
 
   /** 走到某人身边的触发；返回 false 表示已经分出胜负 */
-  private checkNear(): boolean {
+  private checkNear(turnEnd = false): boolean {
     // 扩展包：任一我方单位走到某人身边（劫法场走过去松绑）
     for (const b of this.blocks) {
       const t = b.trigger;
       if (t.kind !== 'near' || this.fired.has(b.index)) continue;
-      if (t.playerPhase && this.phase !== 'player') continue;
+      // atTurnEnd【新】：只在回合结束时看（turnEnd = true 的那一遍只看这种）
+      if (!!t.atTurnEnd !== turnEnd) {
+        if (!t.atTurnEnd) continue;
+      } else if (t.playerPhase && this.phase !== 'player') continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      if (who && this.units.some((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1)) && this.flagsOk(b)) this.runBlock(b);
+      const by = who && this.units.find((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1));
+      if (by && t.atTurnEnd && !turnEnd) {
+        // 我方回合里走到身边先提示一次（每回合每个区块一次）
+        const key = `${b.index}:${this.turn}`;
+        if (this.phase === 'player' && !this.areaHinted.has(key) && this.flagsOk(b)) {
+          this.areaHinted.add(key);
+          this.emit({ type: 'status', uid: by.uid, text: '回合结束时生效' });
+        }
+        continue;
+      }
+      if (by && this.flagsOk(b)) this.runBlock(b);
       if (this.status !== 'playing') return false;
     }
     return true;
@@ -1659,6 +1672,7 @@ export class Battle {
       if (this.areaHit(t)) this.runBlock(b);
       if (this.status !== 'playing') return;
     }
+    if (!this.checkNear(true)) return;
     for (const b of this.blocks) {
       if (b.trigger.kind !== 'turn' || this.status !== 'playing') continue;
       // 回合 −1【新】：第 2 回合起任何一回合开始时，标志满足就执行（叫阵晁家庄：教头认输后，下一回合开始接着比下一阵）

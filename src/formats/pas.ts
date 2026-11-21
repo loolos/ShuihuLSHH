@@ -91,7 +91,7 @@ export type PasTrigger =
    */
   | { kind: 'used'; char: number; skills?: number[]; count?: number }
   /** 扩展包【新】：在场我方走到目标身边（相邻一格）；uid 精确选目标，by 可限定接近者职业。省略 by 时任一我方均可，兼容劫法场松绑 */
-  | { kind: 'near'; char: number; uid?: number; by?: number; playerPhase?: boolean; /** 几格以内算碰到，默认 1（身边）【新】 */ range?: number }
+  | { kind: 'near'; char: number; uid?: number; by?: number; playerPhase?: boolean; /** 几格以内算碰到，默认 1（身边）【新】 */ range?: number; /** 【新】回合结束（下回合开始前）还在身边才触发（还道村受天书：宋江走到玄女像旁） */ atTurnEnd?: boolean }
   /** 扩展包【新】：目标在场、活着且生命低于最大值的 below%（攻破清风寨：黄信打到一半以下才肯归降） */
   | { kind: 'hp'; char: number; uid?: number; below: number; /** 【新】比武点到为止（叫阵晁家庄）：区块没执行、标志也满足时，这人挨打不会被打倒，至少留 1 点体力 */ spare?: boolean }
   /**
