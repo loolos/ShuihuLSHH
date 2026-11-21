@@ -1,0 +1,659 @@
+{
+ "id": "banqu",
+ "title": "搬取宋太公",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 400
+ },
+ "map": {
+  "base": "N05",
+  "crop": [
+   8,
+   0,
+   24,
+   15
+  ]
+ },
+ "tint": "dusk",
+ "bgm": [
+  "battle",
+  "rock"
+ ],
+ "units": [
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 1,
+   "y": 6,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "duqian",
+   "class": 69,
+   "side": "player",
+   "x": 1,
+   "y": 7,
+   "level": 30,
+   "facing": 1,
+   "name": "摸着天杜迁"
+  },
+  {
+   "id": "songwan",
+   "class": 70,
+   "side": "player",
+   "x": 2,
+   "y": 7,
+   "level": 30,
+   "facing": 1,
+   "name": "云里金刚宋万"
+  },
+  {
+   "id": "tongwei",
+   "class": "tongwei",
+   "side": "player",
+   "x": 1,
+   "y": 8,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "wangying",
+   "class": "wangying",
+   "side": "player",
+   "x": 21,
+   "y": 5,
+   "level": 30,
+   "facing": 3,
+   "name": "矮脚虎王英"
+  },
+  {
+   "id": "zhengtianshou",
+   "class": 67,
+   "side": "player",
+   "x": 22,
+   "y": 5,
+   "level": 30,
+   "facing": 3,
+   "name": "白面郎君郑天寿"
+  },
+  {
+   "id": "tongmeng",
+   "class": "tongmeng",
+   "side": "player",
+   "x": 22,
+   "y": 6,
+   "level": 30,
+   "facing": 3
+  },
+  {
+   "id": "songtaigong",
+   "class": 27,
+   "side": "ally",
+   "x": 9,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "name": "宋太公",
+   "ai": 8
+  },
+  {
+   "id": "songqing",
+   "class": "songqing",
+   "side": "ally",
+   "x": 10,
+   "y": 7,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "toumu",
+   "class": 38,
+   "side": "enemy",
+   "x": 15,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵头目",
+   "levelOffset": 0,
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "a1",
+   "class": 32,
+   "side": "enemy",
+   "x": 14,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a2",
+   "class": 33,
+   "side": "enemy",
+   "x": 14,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a3",
+   "class": 32,
+   "side": "enemy",
+   "x": 14,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a4",
+   "class": 33,
+   "side": "enemy",
+   "x": 14,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "a5",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "a6",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "b1",
+   "class": 32,
+   "side": "enemy",
+   "x": 18,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b2",
+   "class": 33,
+   "side": "enemy",
+   "x": 18,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b3",
+   "class": 32,
+   "side": "enemy",
+   "x": 18,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵",
+   "levelOffset": -2
+  },
+  {
+   "id": "b4",
+   "class": 34,
+   "side": "enemy",
+   "x": 20,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "b5",
+   "class": 34,
+   "side": "enemy",
+   "x": 20,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "土兵弓手",
+   "levelOffset": -2
+  },
+  {
+   "id": "b6",
+   "class": 43,
+   "side": "enemy",
+   "x": 19,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "b7",
+   "class": 43,
+   "side": "enemy",
+   "x": 21,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "c1",
+   "class": 32,
+   "side": "enemy",
+   "x": 2,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c2",
+   "class": 33,
+   "side": "enemy",
+   "x": 2,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c3",
+   "class": 32,
+   "side": "enemy",
+   "x": 2,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c4",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c5",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c6",
+   "class": 43,
+   "side": "enemy",
+   "x": 1,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d1",
+   "class": 32,
+   "side": "enemy",
+   "x": 8,
+   "y": 2,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "d2",
+   "class": 33,
+   "side": "enemy",
+   "x": 9,
+   "y": 2,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "d3",
+   "class": 32,
+   "side": "enemy",
+   "x": 10,
+   "y": 2,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "d4",
+   "class": 33,
+   "side": "enemy",
+   "x": 11,
+   "y": 2,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "d5",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 1,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "d6",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 1,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "宋家村 · 傍晚"
+    ],
+    [
+     "narrate",
+     "宋江江州脱险上了梁山，放心不下老父，独自一个下山回郓城搬取太公。晁盖、吴用哪里放心得下，随即差神行太保戴宗，引杜迁、宋万、王矮虎、郑天寿、童威、童猛，扮作客商，抄小路赶到宋家村。"
+    ],
+    [
+     "narrate",
+     "此时郓城县两个赵都头早已得了江州文书，差一伙土兵看守宋家庄，只等宋江回来自投罗网。"
+    ],
+    [
+     "say",
+     "toumu",
+     "都头吩咐了：宋江那厮不回来，便先把这老儿和他兄弟锁去县里！"
+    ],
+    [
+     "say",
+     "songtaigong",
+     "我儿犯的罪，与老汉何干……四郎，你快走！"
+    ],
+    [
+     "say",
+     "songqing",
+     "爹爹莫慌，孩儿便是死也护着你！"
+    ],
+    [
+     "say",
+     "daizong",
+     "众兄弟，太公就在庄前！晁天王将令：一个不许伤了太公、四郎，土兵一个也休放走！"
+    ],
+    [
+     "say",
+     "wangying",
+     "戴院长放心，小弟和郑兄弟从东边绕过去！"
+    ],
+    [
+     "objective",
+     "打倒全部土兵，护住宋太公\n败：宋太公倒下；戴宗倒下；超过 10 回合"
+    ],
+    [
+     "turnLimit",
+     10
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "西边村口一阵锣响，又一伙在村里巡哨的土兵听见厮杀，赶了回来。"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "say",
+     "c1",
+     "有强人劫宋家庄！围住，莫教走了一个！"
+    ],
+    [
+     "say",
+     "duqian",
+     "背后又来了！宋万兄弟，同我挡住西边！"
+    ],
+    [
+     "flag",
+     "cArrived"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "庄后小路上又转出一伙土兵，是赵都头留在后门把守的，听得前面厮杀，抄了过来。"
+    ],
+    [
+     "appear",
+     "d1"
+    ],
+    [
+     "appear",
+     "d2"
+    ],
+    [
+     "appear",
+     "d3"
+    ],
+    [
+     "appear",
+     "d4"
+    ],
+    [
+     "appear",
+     "d5"
+    ],
+    [
+     "appear",
+     "d6"
+    ],
+    [
+     "say",
+     "songqing",
+     "后门也有人来了！爹爹，快躲到孩儿身后！"
+    ],
+    [
+     "flag",
+     "dArrived"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "toumu"
+   },
+   "do": [
+    [
+     "say",
+     "toumu",
+     "梁山泊的强人……怎地来得这般快……"
+    ],
+    [
+     "say",
+     "songwan",
+     "吃俺一刀！回去对那两个赵都头说，宋太公梁山泊接去了！"
+    ]
+   ]
+  },
+  {
+   "on": "allEnemiesDefeated",
+   "if": "dArrived",
+   "do": [
+    [
+     "say",
+     "daizong",
+     "太公受惊了。小可是梁山泊神行太保戴宗，奉晁天王、宋公明哥哥之命，特来接太公和四郎上山。"
+    ],
+    [
+     "say",
+     "songtaigong",
+     "我那孩儿……三郎他人在哪里？"
+    ],
+    [
+     "say",
+     "daizong",
+     "哥哥独自下山来搬太公，倒和我们走岔了。太公先随我们上山，小弟再去接应哥哥。"
+    ],
+    [
+     "say",
+     "songqing",
+     "哥哥才从后门走了不多时，赵能、赵得带着一二百土兵追他去了……只怕往还道村那边去了！"
+    ],
+    [
+     "say",
+     "tongwei",
+     "事不宜迟！童猛兄弟，你两个先护太公、四郎上路。"
+    ],
+    [
+     "narrate",
+     "众好汉打起一乘轿子，扶太公上了，收拾细软，连夜望梁山泊进发。戴宗一面飞报山寨，晁盖、吴用随即点起李逵、刘唐、石勇等人，赶往还道村接应宋江。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songtaigong"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋太公倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "戴宗倒下了……"
+    ]
+   ]
+  }
+ ]
+}
