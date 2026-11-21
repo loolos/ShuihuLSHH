@@ -460,9 +460,26 @@ export class BattleScene extends Phaser.Scene {
     else g.fillStyle(color, alpha).fillPoints(pts, true);
   }
 
+  /** 蹴鞠：对方防御中的好汉身边 8 格会拦球，一直用淡红色标出来（负责人 2026-11-21） */
+  private drawGuardZones(g: Phaser.GameObjects.Graphics) {
+    const c = this.battle.cuju;
+    if (!c) return;
+    const cells = new Map<string, { x: number; y: number }>();
+    for (const u of this.battle.active()) {
+      if (u.side !== 'enemy' || !u.defending) continue;
+      for (let dy = -1; dy <= 1; dy++)
+        for (let dx = -1; dx <= 1; dx++) {
+          const p = { x: u.x + dx, y: u.y + dy };
+          if (this.battle.board.inBounds(p.x, p.y)) cells.set(`${p.x},${p.y}`, p);
+        }
+    }
+    for (const p of cells.values()) this.diamond(g, p, 0xe04030, 0.18), this.diamond(g, p, 0xe04030, 0.5, true);
+  }
+
   private redraw() {
     const g = this.clearCells(this.overlay);
     const m = this.mode;
+    this.drawGuardZones(g);
     if (m.kind === 'idle') return;
     const u = m.u;
     if (m.kind === 'selected' && u.side === 'player') {
@@ -1219,7 +1236,7 @@ export class BattleScene extends Phaser.Scene {
       this.ui.setTeamExp(b.teamExp);
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       this.ui.setRewind(b.rewindTarget());
-      if (this.mode.kind !== 'idle') this.redraw();
+      if (this.mode.kind !== 'idle' || b.cuju) this.redraw();
     }
   }
 
