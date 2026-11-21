@@ -303,9 +303,12 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(ev.some((e) => e.type === 'message' && e.text.startsWith('其餘敵人的經驗'))).toBe(true);
   });
 
-  it('叫阵晁家庄：三阵单挑，选过的人不再选，杨志要出战一阵，三阵全胜晁盖出庄', () => {
+  it('叫阵晁家庄：三阵对一、二、三个教头，选过的人不再选，杨志要出战一阵，三阵全胜晁盖出庄', () => {
     const b = make('N-add13');
     const [t1, t2, t3] = [64, 63, 65].map((i) => b.units[i]);
+    const byUid = (i: number) => b.units.find((u) => u.uid === i)!;
+    const bout2 = [63, 68].map(byUid), bout3 = [65, 69, 70].map(byUid);
+    expect([...bout2, ...bout3].every((u) => u.classId === 39 && u.level === 30 && u.ai.mode === 8)).toBe(true);
     const yz = cls(b, 14);
     const crowd = () => b.units.filter((u) => u.side === 'enemy' && u.present && u.classId !== 39);
     expect(crowd().every((u) => u.ai.mode === 8)).toBe(true);
@@ -328,24 +331,33 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(t1.alive).toBe(true);
     expect(t1.present).toBe(false); // 认输退场
     expect(b.status).toBe('playing');
-    // 下一回合开始，第二个教头上场，再选人；史进不能再选
+    // 下一回合开始，第二阵两个教头上场，再选人；史进不能再选
     b.endPlayerPhase();
-    expect(t2.ai.mode).toBe(0);
-    expect(Math.abs(t2.x - 26) + Math.abs(t2.y - 33)).toBeLessThan(3);
+    expect(bout2.every((u) => u.ai.mode === 0 && u.y === 33)).toBe(true);
+    expect(t3.ai.mode).toBe(8);
     const p2 = b.pendingPick!;
     expect(p2.candidates).not.toContain(shi.uid);
     expect(b.spectators.has(shi.uid)).toBe(true);
     const lu = cls(b, 16);
     b.choose([lu.uid]);
     expect(b.canAct(lu)).toBe(true);
+    // 只倒一个还不算赢这一阵（测试里的人是剧本等级，给鲁智深加厚体力免得被另一个教头打输）
+    lu.stats.maxHp = lu.hp = 99999;
     t2.hp = Math.floor(t2.stats.maxHp * 0.2);
     poke(b);
     expect(t2.present).toBe(false);
     b.endPlayerPhase();
-    // 第三阵：杨志还没出战，只能选他
+    expect(b.pendingPick).toBeNull();
+    expect(t3.ai.mode).toBe(8);
+    bout2[1].hp = Math.floor(bout2[1].stats.maxHp * 0.2);
+    poke(b);
+    expect(bout2[1].present).toBe(false);
+    b.endPlayerPhase();
+    // 第三阵：三个教头；杨志还没出战，只能选他
+    expect(bout3.map((u) => [u.ai.mode, u.x, u.y])).toEqual([[0, 24, 33], [0, 26, 33], [0, 28, 33]]);
     expect(b.pendingPick!.candidates).toEqual([yz.uid]);
     b.choose([yz.uid]);
-    t3.hp = Math.floor(t3.stats.maxHp * 0.2);
+    for (const t of bout3) t.hp = Math.floor(t.stats.maxHp * 0.2);
     poke(b);
     expect(b.status).toBe('won');
   });

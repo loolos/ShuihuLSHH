@@ -705,7 +705,8 @@ export class Battle {
       }
     }
     for (const id of picked) {
-      const u = this.units[id];
+      const u = this.unit(id);
+      if (!u) continue;
       sp.delete(u.uid);
       this.fought.add(u.uid);
       this.duelist = { uid: u.uid, x: u.x, y: u.y };
@@ -736,7 +737,7 @@ export class Battle {
   private sendDuelistBack() {
     const d = this.duelist;
     this.duelist = null;
-    const u = d && this.units[d.uid];
+    const u = d && this.unit(d.uid);
     if (!d || !u || !u.alive || !u.present || u.side !== 'player') return;
     (this.spectators as Set<number>).add(u.uid);
     u.defending = false;
@@ -2085,11 +2086,11 @@ export class Battle {
           break;
         }
         // 123 观战 / 出战【新】（叫阵晁家庄单挑）：value 1 = 改成观战演员（不能行动、不能被打），0 = 回来参战；
-        // args.side = 这一方在场的人全部（翻脸混战时观战的好汉一起上），否则只改点名的人
+        // args.side = 这一方在场的人全部（翻脸混战时观战的好汉一起上；下一阵开始前全队观战），否则只改点名的人
         case 123: {
           const sp = this.spectators as Set<number>;
-          // 全队回来参战前，正在出战的人先走回出列前的位置（输了一阵的人别留在教头跟前）
-          if (op.value === 0 && op.args?.side === 'player') this.sendDuelistBack();
+          // 整队改的时候，正在出战的人先走回出列前的位置（输了一阵的人别留在教头跟前；下一阵的教头进场前让出擂台）
+          if (op.args?.side === 'player') this.sendDuelistBack();
           const who = op.args?.side ? this.units.filter((u) => u.side === op.args!.side && u.alive && u.present) : sel ? [sel] : [];
           for (const u of who) {
             if (op.value === 1) {
