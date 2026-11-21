@@ -57,12 +57,13 @@ describe('球路', () => {
     expect(own).toMatchObject({ kind: 'goal', scorer: 'enemy' });
   });
 
-  it('人最多走出球场一格，球门口不能站', () => {
+  it('人最多走出球场一格，球门里也能站', () => {
     expect(canStand(rules, { x: 15, y: 1 })).toBe(true);
     expect(canStand(rules, { x: 15, y: 0 })).toBe(false);
     expect(canStand(rules, { x: 1, y: 3 })).toBe(true);
-    expect(canStand(rules, { x: 1, y: 9 })).toBe(false);
-    expect(canStand(rules, { x: 29, y: 11 })).toBe(false);
+    expect(canStand(rules, { x: 1, y: 9 })).toBe(true);
+    expect(canStand(rules, { x: 29, y: 11 })).toBe(true);
+    expect(canStand(rules, { x: 0, y: 9 })).toBe(false);
   });
 
   it('出界后球放到离出界点最近的对方身边、朝他要攻的门', () => {

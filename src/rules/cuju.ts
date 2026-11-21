@@ -58,11 +58,13 @@ export function inField(r: CujuRules, c: { x: number; y: number }) {
   return c.x >= x1 && c.x <= x2 && c.y >= y1 && c.y <= y2;
 }
 
-/** 人能站的格子：球场和场外一圈（最多出界一格，好把边线上的球踢回来），球门口除外【新：负责人 2026-11-20】 */
+/**
+ * 人能站的格子：球场和场外一圈（最多出界一格，好把边线上的球踢回来）【新：负责人 2026-11-20】。
+ * 球门里也能站（负责人 2026-11-21：不然球停在门口时没法从门里往外踢）；站在门里的人不挡球，球进了门口照样算进球。
+ */
 export function canStand(r: CujuRules, c: { x: number; y: number }) {
   const [x1, y1, x2, y2] = r.field;
-  if (c.x < x1 - 1 || c.x > x2 + 1 || c.y < y1 - 1 || c.y > y2 + 1) return false;
-  return !Object.values(r.goals).some((g) => c.x === g.x && c.y >= g.y1 && c.y <= g.y2);
+  return c.x >= x1 - 1 && c.x <= x2 + 1 && c.y >= y1 - 1 && c.y <= y2 + 1;
 }
 
 /** 普通攻击能不能碰到球：近战（射程从 1 起）可以踢身边 8 格；其余按射程（上下左右斜着都算，曼哈顿距离） */
