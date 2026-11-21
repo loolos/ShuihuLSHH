@@ -6,7 +6,7 @@
 import { LANGS, addTable, getLang, onLangChange, setLang, setS2T, hasS2T, text, enableLineMarks, type Lang, type LineEntry } from '../i18n/index.ts';
 
 const LANG_KEY = 'shuihu.lang';
-/** gamedata/lang/<语言>/ 下的译文：stages/<关卡>.json（逐句）、terms.json（人名等）、ui.json（界面文字）；切到哪种语言才载入 */
+/** gamedata/lang/<语言>/ 下的译文：stages/<关卡>.json、packs/<包>/<关卡>.json（逐句）、terms.json（人名等）、ui.json（界面文字）；切到哪种语言才载入 */
 const files = import.meta.glob('/gamedata/lang/*/**/*.json', { import: 'default' }) as Record<string, () => Promise<unknown>>;
 const loaded = new Set<Lang>();
 
@@ -18,7 +18,7 @@ async function loadLang(l: Lang) {
     .filter(([p]) => p.startsWith(prefix))
     .map(async ([p, load]) => {
       const v = (await load()) as Record<string, unknown>;
-      if (p.startsWith(`${prefix}stages/`)) addTable(l, { lines: v as Record<string, LineEntry> });
+      if (p.startsWith(`${prefix}stages/`) || p.startsWith(`${prefix}packs/`)) addTable(l, { lines: v as Record<string, LineEntry> });
       else addTable(l, { terms: v as Record<string, string> });
     });
   if (l === 'zh-Hant' && !hasS2T()) {

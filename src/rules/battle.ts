@@ -1933,7 +1933,7 @@ export class Battle {
         // 120 剧情选项（扩展包【新】）：编译时保证是区块最后一条；等 answer()
         case 120:
           if (!op.args?.options?.length) break;
-          this.pendingChoice = { prompt: textOf(i), options: op.args.options.map((o) => ({ label: o.label, flag: o.flag })) };
+          this.pendingChoice = { prompt: textOf(i), options: op.args.options.map((o) => ({ label: markLine(o.tid, o.label), flag: o.flag })) };
           this.emit({ type: 'choice', choice: this.pendingChoice });
           break;
         // 121 收手（扩展包【新】，梁山截路被宋江劝住的喽啰）：改成友军、原地不动、不能被选中，不再算敌人

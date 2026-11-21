@@ -140,5 +140,7 @@
  "下载头像和图标 {n} / {n}": "Downloading portraits and icons {n} / {n}",
  "下载本关素材 {n} / {n}": "Downloading stage assets {n} / {n}",
  "{n} 点伤害。（{n} 段命中 {n} 段）": "{n} damage. ({n} of {n} hits landed)",
- "必杀！{n} 点伤害。（{n} 段命中 {n} 段）": "Critical! {n} damage. ({n} of {n} hits landed)"
+ "必杀！{n} 点伤害。（{n} 段命中 {n} 段）": "Critical! {n} damage. ({n} of {n} hits landed)",
+ "从序章「禁军教头」开始（开场可选跳过操作教学）": "Start from the Prologue, \"Drill Instructor of the Imperial Guard\" (the controls tutorial can be skipped at the start)",
+ "再看一次本段": "Watch this part again"
 }

@@ -64,3 +64,38 @@ describe('关卡里的剧本编号与译文文件', () => {
     }
   });
 });
+
+describe('扩展包关卡的剧本编号（步骤末尾 "#n"）', () => {
+  const packStage = (s: string) => JSON.parse(readFileSync(`packs/${s.split('/')[0]}/stages/${s.split('/')[1]}.json`, 'utf8')) as { script: { do: unknown[][] }[] };
+  /** 一关里所有编号 → 中文（步骤和剧情选项） */
+  const lines = (s: string) => {
+    const m = new Map<string, string>();
+    const at: Record<string, number> = { say: 2, narrate: 1, objective: 1, victory: 1, defeat: 1, title: 1, choice: 1 };
+    const isId = (v: unknown) => typeof v === 'string' && /^#\d+$/.test(v);
+    for (const b of packStage(s).script)
+      for (const st of b.do) {
+        const last = st[st.length - 1];
+        if (isId(last)) {
+          expect(m.has(`${s}${last}`), `${s} ${String(last)} 重复`).toBe(false);
+          m.set(`${s}${last}`, String(st[at[String(st[0])]]));
+        }
+        if (st[0] === 'choice') for (const o of st.slice(2) as unknown[][]) if (isId(o[o.length - 1])) m.set(`${s}${String(o[o.length - 1])}`, String(o[0]));
+      }
+    return m;
+  };
+  for (const s of ['mainline/jiaochang', 'mainline/xihuamen'])
+    it(`${s}：每句都有编号，英文、繁体逐句译好且没过期`, () => {
+      const m = lines(s);
+      const steps = packStage(s).script.flatMap((b) => b.do).filter((st) => ['say', 'narrate', 'objective', 'victory', 'defeat', 'title', 'choice'].includes(String(st[0])));
+      expect(m.size).toBeGreaterThanOrEqual(steps.length);
+      for (const lang of ['en', 'zh-Hant']) {
+        const tr = JSON.parse(readFileSync(`gamedata/lang/${lang}/packs/${s}.json`, 'utf8')) as Record<string, { zh: string; t: string }>;
+        expect(Object.keys(tr).sort(), lang).toEqual([...m.keys()].sort());
+        for (const [k, zh] of m) {
+          expect(tr[k].zh, `${lang} ${k} 过期`).toBe(zh);
+          expect(tr[k].t, `${lang} ${k} 没翻`).not.toBe('');
+          if (lang === 'en') expect(tr[k].t, `${lang} ${k}`).not.toMatch(/[㐀-鿿]/);
+        }
+      }
+    });
+});
