@@ -142,7 +142,7 @@
    "x": 16,
    "y": 5,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 2,
    "name": "都头赵能",
    "levelOffset": 1,
@@ -155,7 +155,7 @@
    "x": 15,
    "y": 17,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵",
    "levelOffset": -2
@@ -167,7 +167,7 @@
    "x": 15,
    "y": 18,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵",
    "levelOffset": -2
@@ -179,7 +179,7 @@
    "x": 15,
    "y": 19,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵",
    "levelOffset": -2
@@ -191,7 +191,7 @@
    "x": 15,
    "y": 20,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵",
    "levelOffset": -2
@@ -203,7 +203,7 @@
    "x": 16,
    "y": 19,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵",
    "levelOffset": -2
@@ -215,7 +215,7 @@
    "x": 17,
    "y": 18,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵弓手",
    "levelOffset": -2
@@ -227,7 +227,7 @@
    "x": 17,
    "y": 20,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 3,
    "name": "土兵弓手",
    "levelOffset": -2
@@ -504,7 +504,7 @@
    "x": 4,
    "y": 19,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
@@ -517,7 +517,7 @@
    "x": 3,
    "y": 18,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
@@ -530,7 +530,7 @@
    "x": 3,
    "y": 19,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
@@ -543,7 +543,7 @@
    "x": 3,
    "y": 20,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
@@ -556,7 +556,7 @@
    "x": 5,
    "y": 18,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵弓手",
    "levelOffset": -2,
@@ -569,7 +569,7 @@
    "x": 5,
    "y": 20,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "土兵弓手",
    "levelOffset": -2,
@@ -582,7 +582,7 @@
    "x": 4,
    "y": 17,
    "level": 30,
-   "facing": 1,
+   "facing": 3,
    "ai": 0,
    "name": "马军",
    "levelOffset": -1,
@@ -598,7 +598,8 @@
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f2",
@@ -610,7 +611,8 @@
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f3",
@@ -622,7 +624,8 @@
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f4",
@@ -634,7 +637,8 @@
    "ai": 0,
    "name": "土兵",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f5",
@@ -646,7 +650,8 @@
    "ai": 0,
    "name": "土兵弓手",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f6",
@@ -658,7 +663,8 @@
    "ai": 0,
    "name": "土兵弓手",
    "levelOffset": -2,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f7",
@@ -670,7 +676,8 @@
    "ai": 0,
    "name": "马军",
    "levelOffset": -1,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   },
   {
    "id": "f8",
@@ -682,7 +689,8 @@
    "ai": 0,
    "name": "马军",
    "levelOffset": -1,
-   "hidden": true
+   "hidden": true,
+   "facing": 0
   }
  ],
  "script": [
