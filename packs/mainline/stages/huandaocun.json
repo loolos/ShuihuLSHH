@@ -587,6 +587,102 @@
    "name": "马军",
    "levelOffset": -1,
    "hidden": true
+  },
+  {
+   "id": "f1",
+   "class": 32,
+   "side": "enemy",
+   "x": 9,
+   "y": 19,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f2",
+   "class": 33,
+   "side": "enemy",
+   "x": 10,
+   "y": 19,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f3",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 19,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f4",
+   "class": 33,
+   "side": "enemy",
+   "x": 12,
+   "y": 19,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f5",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 20,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f6",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 20,
+   "level": 30,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "f7",
+   "class": 43,
+   "side": "enemy",
+   "x": 8,
+   "y": 19,
+   "level": 30,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "f8",
+   "class": 43,
+   "side": "enemy",
+   "x": 13,
+   "y": 18,
+   "level": 30,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
   }
  ],
  "script": [
@@ -669,7 +765,7 @@
      {
       "style": "dust",
       "radius": 4,
-      "turns": 3
+      "turns": 4
      }
     ],
     [
@@ -698,7 +794,7 @@
       "x": 8,
       "y": 8,
       "radius": 9,
-      "turns": 3,
+      "turns": 4,
       "focus": true
      }
     ],
@@ -718,7 +814,7 @@
     ],
     [
      "narrate",
-     "（周围的土兵逃窜 3 回合：乱走，不打人）"
+     "（周围的土兵逃窜 4 回合：乱走，不打人）"
     ],
     [
      "objective",
@@ -909,38 +1005,6 @@
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
     ],
     [
-     "narrate",
-     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
-    ],
-    [
-     "appear",
-     "e1"
-    ],
-    [
-     "appear",
-     "e2"
-    ],
-    [
-     "appear",
-     "e3"
-    ],
-    [
-     "appear",
-     "e4"
-    ],
-    [
-     "appear",
-     "e5"
-    ],
-    [
-     "appear",
-     "e6"
-    ],
-    [
-     "appear",
-     "e7"
-    ],
-    [
      "flag",
      "rescue"
     ]
@@ -1005,8 +1069,20 @@
      "众兄弟，把这伙土兵杀散了，接宋江哥哥回山！"
     ],
     [
+     "flag",
+     "rescue"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "rescue",
+   "do": [
+    [
      "narrate",
-     "村里四下搜捕的一伙土兵听得庙里喊声，也从西侧门赶了回来！"
+     "村里四下搜捕的两伙土兵听得庙里喊声，一伙从西侧门、一伙从山门赶了回来！"
     ],
     [
      "appear",
@@ -1037,8 +1113,40 @@
      "e7"
     ],
     [
+     "appear",
+     "f1"
+    ],
+    [
+     "appear",
+     "f2"
+    ],
+    [
+     "appear",
+     "f3"
+    ],
+    [
+     "appear",
+     "f4"
+    ],
+    [
+     "appear",
+     "f5"
+    ],
+    [
+     "appear",
+     "f6"
+    ],
+    [
+     "appear",
+     "f7"
+    ],
+    [
+     "appear",
+     "f8"
+    ],
+    [
      "flag",
-     "rescue"
+     "search"
     ]
    ]
   },
@@ -1158,7 +1266,7 @@
   },
   {
    "on": "allEnemiesDefeated",
-   "if": "rescue",
+   "if": "search",
    "do": [
     [
      "flag",
