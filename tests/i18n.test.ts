@@ -35,6 +35,12 @@ describe('多语言查表（§10.3）', () => {
     expect(term('没有的词')).toBe('没有的词');
   });
 
+  it('一句能套上几个模板时用最具体的（写死的字最多）', () => {
+    addTable('en', { terms: { '{s}：选择施放位置': '{s}: choose', '{s}（气力 {n}）：选择施放位置': '{s} (Qi {n}): choose', 龙争虎斗: 'Dragon' } });
+    setLang('en');
+    expect(text('龙争虎斗（气力 30）：选择施放位置')).toBe('Dragon (Qi 30): choose');
+  });
+
   it('繁体：有逐句译文用译文，其余交给简→繁转换', () => {
     addTable('zh-Hant', { lines: { 'N01#5': { zh: '周五', t: '周五' } } });
     setLang('zh-Hant');

@@ -10,6 +10,7 @@
 // 网页版：保留"整图缩小 + 地表 + 彩色方块"的做法，另外把不能走的格子压暗、画出当前镜头范围，
 // 不占满全屏而是放在左上角，可以随时收起。
 import { HALF_H, HALF_W } from './iso.ts';
+import { text as loc } from '../i18n/index.ts';
 
 /** 小地图上的一个标记点（格子坐标） */
 export interface MiniMark {
@@ -249,14 +250,15 @@ export class Minimap {
       g.stroke();
       // 字放在圈的上方；靠地图上边时放到下方，左右不出边
       g.font = 'bold 11px sans-serif';
-      const tw = g.measureText(z.label).width;
+      const label = loc(z.label); // 多语言（§10.3）：画布上的字不经过页面翻译，这里自己换
+      const tw = g.measureText(label).width;
       const ty = cy - r - 3 < 12 ? cy + r + 12 : cy - r - 3;
       const tx = Math.max(2, Math.min(l.width - tw - 2, cx - tw / 2));
       g.lineWidth = 3;
       g.strokeStyle = '#000';
-      g.strokeText(z.label, tx, ty);
+      g.strokeText(label, tx, ty);
       g.fillStyle = z.color;
-      g.fillText(z.label, tx, ty);
+      g.fillText(label, tx, ty);
     }
     // 原版是 8×8 的方块；这里随小地图大小在 3～7 像素之间
     const s = Math.max(3, Math.min(7, Math.round(HALF_W * 2 * l.scale)));
