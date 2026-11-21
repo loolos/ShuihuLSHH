@@ -238,7 +238,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(spots().length).toBe(4);
     // 阮小二不是原来那四个人，也能放火
     const ruan = cls(b, 7);
-    place(b, ruan, 23, 12);
+    place(b, ruan, 27, 10);
     const p = b.active().find((u) => u.side === 'player' && u !== ruan && b.canAct(u))!;
     const g = b.moveRange(p).green.find((c) => c.x !== p.x || c.y !== p.y)!;
     const out = b.move(p, g.x, g.y);
@@ -257,7 +257,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(plan.skill).toBeUndefined();
     expect(plan.target).toBeUndefined();
     // 四处都点着也不过关
-    [[14, 8], [4, 18], [15, 19]].forEach(([x, y]) => {
+    [[13, 8], [14, 3], [10, 29]].forEach(([x, y]) => {
       place(b, ruan, x, y);
       poke(b, ruan);
     });
@@ -280,7 +280,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
   it('逃窜三回合后回过神来', () => {
     const b = make('N-add14');
     const ruan = cls(b, 7);
-    place(b, ruan, 23, 12);
+    place(b, ruan, 27, 10);
     poke(b, ruan);
     const fled = b.units.filter((u) => u.panicTurns);
     // 杨志别在这几回合里倒下
