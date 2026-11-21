@@ -37,11 +37,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
     expect(stage.units.filter((u) => u.side === 'player').length).toBe(5);
   });
 
-  it('宋江钻进神帐：黑尘、怪风，附近的土兵逃窜 3 回合，庙门一伙不乱；之后到玄女像前受天书、体力回满、众好汉杀到', () => {
+  it('宋江钻进神帐：黑尘、怪风，附近的土兵逃窜 4 回合，庙门一伙不乱；之后到玄女像前受天书、体力回满、众好汉杀到', () => {
     const { b, get } = open();
     const sj = get('songjiang');
     put(b, sj, 3, 11);
-    const panicked = b.units.filter((u) => u.side === 'enemy' && u.panicTurns === 3).map((u) => stage.units[b.units.indexOf(u)].id);
+    const panicked = b.units.filter((u) => u.side === 'enemy' && u.panicTurns === 4).map((u) => stage.units[b.units.indexOf(u)].id);
     for (const id of ['zhaode', 'b1', 'c1', 'c5']) expect(panicked).toContain(id);
     for (const id of ['zhaoneng', 'a1', 'd1']) expect(panicked).not.toContain(id);
     expect(b.objectives.join('')).toContain('玄女像');
@@ -58,7 +58,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
     expect(get('oupeng').side).toBe('ally');
   });
 
-  it('没到玄女像也会在第 5 回合来救；打光土兵还要去玄女像前才过关', () => {
+  it('没到玄女像也会在第 5 回合来救，搜村土兵第 7 回合到；打光土兵还要去玄女像前才过关', () => {
     const { b, get } = open();
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.ai.mode = 8; // 只看剧本，不让土兵出手
     for (let t = 1; t < 5 && b.status === 'playing'; t++) {
@@ -66,6 +66,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十六
       b.endPlayerPhase();
     }
     expect(get('likui').present).toBe(true);
+    // 搜村那伙土兵晚两回合（第 7 回合）才来【新】
+    expect(get('e1').present).toBe(false);
+    for (let t = 5; t < 7 && b.status === 'playing'; t++) {
+      get('songjiang').hp = get('songjiang').stats.maxHp;
+      b.endPlayerPhase();
+    }
+    expect(get('e1').present).toBe(true);
     for (const u of b.units.filter((x) => x.side === 'enemy')) kill(u);
     after(b);
     expect(b.status).toBe('playing');
