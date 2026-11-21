@@ -54,6 +54,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('序章 禁�
     expect(b.status).toBe('won');
   });
 
+  it('剧本文字带多语言编号「mainline/关卡#n」（§10.3），剧情选项每项也有', () => {
+    const input = compileStage(rt, stage('jiaochang'), files, { seed: 1 });
+    const ops = input.blocks.flatMap((b) => b.ops);
+    expect(ops.find((o) => o.op === 13 && o.text?.startsWith('教头病好了'))?.tid).toBe('mainline/jiaochang#5');
+    const choice = ops.find((o) => o.op === 120)!;
+    expect(choice.tid).toBe('mainline/jiaochang#10');
+    expect(choice.args?.options?.map((o) => o.tid)).toEqual(['mainline/jiaochang#8', 'mainline/jiaochang#9']);
+    expect(ops.filter((o) => o.text?.startsWith('#'))).toEqual([]);
+  });
+
   it('纯剧情「夜出西华门」开战即过关', () => {
     const b = make('xihuamen');
     const ev = b.begin();

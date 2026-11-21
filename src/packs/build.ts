@@ -352,7 +352,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const classRef = (v: unknown) => (typeof v === 'number' ? v : (rt.classIds.get(String(v)) ?? fail(`${stage.id}: 没有职业 ${String(v)}`)));
   const flagIds = new Map<string, number>();
   const flagRef = (v: unknown) => flagIds.get(String(v)) ?? flagIds.set(String(v), flagIds.size + 1).get(String(v))!;
-  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
@@ -406,6 +406,16 @@ interface Refs {
   unitRef: (id: unknown) => { json: PackUnitJson; act: ActUnit };
   skillRef: (id: unknown) => number;
   itemRef: (v: unknown) => number;
+  /** 多语言编号前缀「包/关卡」（§10.3）：剧本步骤末尾的 "#n" 编成「包/关卡#n」 */
+  tidBase?: string;
+}
+
+/** 步骤（或剧情选项）末尾的多语言编号 "#n"（§10.3）：拿掉并返回编号 */
+export const LINE_ID = /^#\d+$/;
+function takeLineId(step: unknown[]): string | undefined {
+  const last = step[step.length - 1];
+  if (step.length > 1 && typeof last === 'string' && LINE_ID.test(last)) return (step.pop() as string).slice(1);
+  return undefined;
 }
 
 const NARRATOR = 0xffffffff;
@@ -459,7 +469,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   const ops: PasOp[] = [];
   const op = (code: number, value = 0, extra: Partial<PasOp> = {}) => ops.push({ op: code, flag: code < 24 ? 0 : null, value, ...extra });
   const select = (id: unknown) => op(12, 1000 + r.unitRef(id).act.group);
-  for (const [name, ...a] of b.do) {
+  for (const raw of b.do) {
+    const step = [...raw];
+    const lid = takeLineId(step);
+    const before = ops.length;
+    const [name, ...a] = step;
     switch (name) {
       case 'narrate':
         op(12, NARRATOR);
@@ -602,8 +616,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'choice': {
         // ['choice', 提示, [选项, 标志], ...] 剧情选项【新】：必须是区块最后一条，选完设标志，接着跑 { flag } 区块
         const options = a.slice(1).map((o) => {
-          if (!Array.isArray(o) || o.length !== 2) fail(`第 ${index} 个区块：choice 的选项要写成 [文字, 标志]`);
-          return { label: String(o[0]), flag: r.flagRef(o[1]) };
+          const oid = Array.isArray(o) ? takeLineId([...o]) : undefined;
+          const opt = Array.isArray(o) && oid !== undefined ? o.slice(0, -1) : o;
+          if (!Array.isArray(opt) || opt.length !== 2) fail(`第 ${index} 个区块：choice 的选项要写成 [文字, 标志]`);
+          return { label: String(opt[0]), flag: r.flagRef(opt[1]), ...(oid !== undefined && r.tidBase ? { tid: `${r.tidBase}#${oid}` } : {}) };
         });
         if (options.length < 2 || options.length > 4) fail(`第 ${index} 个区块：choice 要有 2–4 个选项`);
         ops.push({ op: 120, flag: null, value: 0, text: String(a[0] ?? ''), args: { options } });
@@ -626,6 +642,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       default:
         fail(`第 ${index} 个区块：不认识的指令 ${name}`);
+    }
+    // 多语言编号挂在这一步生成的文字指令上
+    if (lid !== undefined && r.tidBase) {
+      const t = ops.slice(before).find((o) => o.text !== undefined && o.op !== 21 && o.op !== 110 && o.op !== 114);
+      if (t) t.tid = `${r.tidBase}#${lid}`;
     }
   }
   const ci = ops.findIndex((o) => o.op === 120);

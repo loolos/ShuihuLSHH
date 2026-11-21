@@ -6,8 +6,10 @@
 //                                         去掉删掉的句子；中文改过的句子保留旧译文，列为「过期」
 //   npm run i18n -- check [语言]           列出每关已翻 / 未翻 / 过期的句数
 //
-// 关卡名照 gamedata/stages 的文件名（N01、N-add01）。扩展包关卡还没接上（§10.3 后续）。
+// 关卡名照 gamedata/stages 的文件名（N01、N-add01）；扩展包关卡写「包/关卡」（mainline/jiaochang）：
+// 编号写在剧本步骤末尾（["say", "wangjin", "……", "#3"]，剧情选项的每个选项也一样），译文在 gamedata/lang/<语言>/packs/<包>/<关卡>.json。
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { formatStageJson, type StageJson } from '../src/formats/stage-json.ts';
 import { LANGS, type Lang, type LineEntry } from '../src/i18n/index.ts';
 import { parsePasBlocks } from '../src/formats/pas.ts';
@@ -16,18 +18,97 @@ import { parsePasBlocks } from '../src/formats/pas.ts';
 export const TEXT_OPS = new Set([13, 29, 30, 31, 32, 33, 111]);
 const STAGES = 'gamedata/stages';
 const langDir = (l: string) => `gamedata/lang/${l}/stages`;
+/** 译文文件：原版关卡 stages/<关卡>.json，扩展包关卡 packs/<包>/<关卡>.json */
+const langFile = (l: string, s: string) => (isPack(s) ? `gamedata/lang/${l}/packs/${s}.json` : `${langDir(l)}/${s}.json`);
 
 const readStage = (s: string) => JSON.parse(readFileSync(`${STAGES}/${s}.json`, 'utf8')) as StageJson;
-const allStages = () => readdirSync(STAGES).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5));
+const isPack = (s: string) => s.includes('/');
+const packFile = (s: string) => `packs/${s.split('/')[0]}/stages/${s.split('/')[1]}.json`;
+/** 有编号的扩展包关卡（剧本里出现 "#n"） */
+const packStages = () =>
+  readdirSync('packs', { withFileTypes: true })
+    .filter((d) => d.isDirectory() && existsSync(`packs/${d.name}/stages`))
+    .flatMap((d) => readdirSync(`packs/${d.name}/stages`).filter((f) => f.endsWith('.json')).map((f) => `${d.name}/${f.slice(0, -5)}`))
+    .filter((s) => /"#\d+"/.test(readFileSync(packFile(s), 'utf8')));
+const allStages = () => [...readdirSync(STAGES).filter((f) => f.endsWith('.json')).map((f) => f.slice(0, -5)), ...packStages()];
+
+/** 扩展包剧本里带文字的步骤：步骤名 → 文字在第几项 */
+const PACK_TEXT: Record<string, number> = { say: 2, narrate: 1, objective: 1, victory: 1, defeat: 1, title: 1, choice: 1 };
+const isId = (v: unknown) => typeof v === 'string' && /^#\d+$/.test(v);
+
+/** 扩展包关卡的剧本文字：编号 → 中文 */
+function packLines(s: string): Map<string, string> {
+  const m = new Map<string, string>();
+  const j = JSON.parse(readFileSync(packFile(s), 'utf8')) as { script: { do: unknown[][] }[] };
+  for (const b of j.script)
+    for (const step of b.do) {
+      const k = PACK_TEXT[String(step[0])];
+      if (k === undefined) continue;
+      const last = step[step.length - 1];
+      if (isId(last) && typeof step[k] === 'string' && step[k]) m.set(`${s}#${(last as string).slice(1)}`, step[k] as string);
+      if (step[0] === 'choice')
+        for (const o of step.slice(2)) if (Array.isArray(o) && isId(o[o.length - 1])) m.set(`${s}#${(o[o.length - 1] as string).slice(1)}`, String(o[0]));
+    }
+  return m;
+}
 
 /** 一关的全部剧本文字：编号 → 中文 */
 function stageLines(s: string): Map<string, string> {
+  if (isPack(s)) return packLines(s);
   const m = new Map<string, string>();
   for (const b of readStage(s).blocks) for (const o of b.ops) if (o.id !== undefined && o.text !== undefined) m.set(`${s}#${o.id}`, o.text);
   return m;
 }
 
+/** JSON 文本里从 i（'['）起到配对的 ']' 的位置，跳过字符串 */
+function closeOf(src: string, i: number): number {
+  let depth = 0;
+  for (let k = i; k < src.length; k++) {
+    const c = src[k];
+    if (c === '"') {
+      for (k++; src[k] !== '"'; k++) if (src[k] === '\\') k++;
+    } else if (c === '[') depth++;
+    else if (c === ']' && --depth === 0) return k;
+  }
+  throw new Error('括号不配对');
+}
+
+/** 扩展包关卡：给带文字的步骤（和剧情选项）末尾补 "#n"，直接改文本，不动原来的排版 */
+function assignPackIds(s: string) {
+  const file = packFile(s);
+  let src = readFileSync(file, 'utf8');
+  const used = new Set(stageLines(s).keys());
+  let next = Math.max(0, ...[...used].map((k) => Number(k.split('#')[1]))) + 1;
+  const re = new RegExp(`\\[\\s*"(${Object.keys(PACK_TEXT).join('|')})"\\s*,`, 'g');
+  const inserts: { at: number; id: number }[] = [];
+  let total = 0;
+  for (const m of src.matchAll(re)) {
+    const end = closeOf(src, m.index!);
+    const step = JSON.parse(src.slice(m.index!, end + 1)) as unknown[];
+    const targets: { end: number; has: boolean }[] = [];
+    if (step[0] === 'choice') {
+      // 选项是 [文字, 标志]：逐个找出它们的结尾
+      let k = m.index! + 1;
+      while (k < end) {
+        if (src[k] === '"') { for (k++; src[k] !== '"'; k++) if (src[k] === '\\') k++; k++; continue; }
+        if (src[k] === '[') { const e = closeOf(src, k); const o = JSON.parse(src.slice(k, e + 1)) as unknown[]; targets.push({ end: e, has: isId(o[o.length - 1]) }); k = e + 1; continue; }
+        k++;
+      }
+    }
+    targets.push({ end, has: isId(step[step.length - 1]) });
+    for (const t of targets) {
+      total++;
+      if (!t.has) inserts.push({ at: t.end, id: 0 });
+    }
+  }
+  inserts.sort((a, b) => a.at - b.at).forEach((x) => (x.id = next++));
+  for (const x of [...inserts].reverse()) src = `${src.slice(0, x.at)}, "#${x.id}"${src.slice(x.at)}`;
+  writeFileSync(file, src);
+  console.log(`${s}：新分配 ${inserts.length} 个编号，共 ${total} 句`);
+}
+
 function assignIds(s: string) {
+  if (isPack(s)) return assignPackIds(s);
   const j = readStage(s);
   const ops = j.blocks.flatMap((b) => b.ops).filter((o) => TEXT_OPS.has(o.op) && o.text !== undefined);
   const used = new Set<number>();
@@ -44,15 +125,15 @@ function assignIds(s: string) {
 }
 
 const readLang = (l: string, s: string): Record<string, LineEntry> => {
-  const p = `${langDir(l)}/${s}.json`;
+  const p = langFile(l, s);
   return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : {};
 };
 /** 每句一行，按编号排 */
 function writeLang(l: string, s: string, entries: Record<string, LineEntry>) {
-  mkdirSync(langDir(l), { recursive: true });
+  mkdirSync(dirname(langFile(l, s)), { recursive: true });
   const keys = Object.keys(entries).sort((a, b) => Number(a.split('#')[1]) - Number(b.split('#')[1]));
   const body = keys.map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify({ zh: entries[k].zh, t: entries[k].t })}`).join(',\n');
-  writeFileSync(`${langDir(l)}/${s}.json`, `{\n${body}\n}\n`);
+  writeFileSync(langFile(l, s), `{\n${body}\n}\n`);
 }
 
 /**
@@ -119,7 +200,7 @@ function check(only?: string) {
         if (e?.t) done++;
         if (e && e.zh !== zh) stale++;
       }
-      console.log(`${s.padEnd(10)} 共 ${lines.size}，已翻 ${done}，未翻 ${lines.size - done}，过期 ${stale}`);
+      console.log(`${s.padEnd(18)} 共 ${lines.size}，已翻 ${done}，未翻 ${lines.size - done}，过期 ${stale}`);
     }
   }
 }
