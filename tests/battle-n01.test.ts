@@ -524,16 +524,25 @@ describe.skipIf(!has)('N01', () => {
     const zhu = b.units.filter((u) => u.classId === 48);
     expect(zhu.length).toBe(2);
     expect(zhu.every((u) => !u.present && (b as unknown as { ambushers: Set<number> }).ambushers.has(u.uid))).toBe(true);
-    // 晁蓋走到 (0–1, 27–29)
+    // 晁蓋走到 (0–1, 27–29)；他跟着主角走（模式 5），主角也得在旁边，友军回合他才不会走开
     const chao = b.units.find((u) => u.classId === 12)!;
     chao.x = 1;
     chao.y = 28;
+    Object.assign(b.units.find((u) => u.classId === 0)!, { x: 1, y: 29 });
     // 撤退回合结束才算【新】（负责人 2026-11-21）
     settle(b);
     expect(b.status).toBe('playing');
     const ev = b.endPlayerPhase();
     expect(b.status).toBe('won');
     expect(ev.some((e) => e.type === 'say' && /朱仝在这里等你很久了/.test(e.text))).toBe(true);
+    // 晁蓋是模式 5、跟随目标 0：跟着主角走（2026-11-21 前 0 被当成"没指定"，他一直站在原地）
+    b = start();
+    const hero = b.units.find((u) => u.classId === 0)!;
+    hero.x = 8;
+    hero.y = 7;
+    b.endPlayerPhase();
+    const c2 = b.units.find((u) => u.classId === 12)!;
+    expect(Math.abs(c2.x - hero.x) + Math.abs(c2.y - hero.y)).toBe(1);
     // 打倒朱仝（两个都倒下）也过关
     b = start();
     const [z1, z2] = b.units.filter((u) => u.classId === 48);
@@ -592,6 +601,7 @@ describe.skipIf(!has)('N01', () => {
     const chao = n12.b.units.find((u) => u.classId === 12)!;
     chao.x = 1;
     chao.y = 28;
+    Object.assign(n12.b.units.find((u) => u.classId === 0)!, { x: 1, y: 29 });
     settle(n12.b);
     expect(n12.b.objectiveZones()).toHaveLength(1); // 撤退回合结束才算
     n12.b.endPlayerPhase();
