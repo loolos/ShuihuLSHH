@@ -12,6 +12,7 @@ import { SLOT_COUNT } from '../rules/data.ts';
 import { levelKit } from '../rules/equipment.ts';
 import type { Member } from '../rules/campaign.ts';
 import type { RecolorGroup } from './recolor.ts';
+import { royaleInput, royaleStage } from './royale.ts';
 import type { PackBlockJson, PackClassJson, PackJson, PackSkillJson, PackStageJson, PackUnitJson } from './types.ts';
 
 /** 精灵图条的说明文件（tools/render-sprites.py 输出的 sprites.json） */
@@ -295,7 +296,8 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
 }
 
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
-export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean } = {}): StageInput {
+/** 关卡的棋盘（地图 + 通行，含 map.open / map.seal） */
+export function stageBoard(files: FileSource, stage: PackStageJson): Board {
   const { map } = loadStageMap(files, stageMapName(stage.map)) ?? fail(`找不到地图 ${stageMapName(stage.map)}`);
   const att = terrain(files);
   const board = Board.fromMap(map, att.ground, att.upper);
@@ -307,6 +309,13 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     if (!board.inBounds(x, y)) fail(`${stage.id}: map.seal (${x},${y}) 出界`);
     board.blocked[y * board.width + x] = 1;
   }
+  return board;
+}
+
+export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean; /** 好汉聚义：玩家选的好汉（职业号），不填随机 */ royalePick?: number } = {}): StageInput {
+  // 好汉聚义：还没摆好参赛的人就先摆（网页版在载入前已经摆好，免得预载的职业和开打的不一样）
+  if (stage.royale && !stage.units.some((u) => u.team !== undefined)) stage = royaleStage(rt, stage, files, { pick: opts.royalePick, seed: opts.seed, text: opts.text });
+  const board = stageBoard(files, stage);
   // 选关预设只用于新建试玩，不覆盖正常主线存档；表里的包职业使用稳定key。
   const preset: Record<string,number> = opts.preset ? (entryLevels.levels as Record<string,Record<string,number>>)[`${rt.id}/${stage.id}`] ?? {} : {};
   if (opts.preset) {
@@ -368,7 +377,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -376,7 +385,9 @@ function kitPlayers(rt: PackRuntime, stage: PackStageJson, units: ActUnit[], fil
   if (stage.gearAt === 'none') return;
   const custom = new Set([...rt.itemIds.values()].filter((id) => !rt.shopItems.has(id)));
   for (const u of units) {
-    if (u.side !== 'player') continue;
+    // 好汉聚义：对手好汉也按等级表配装（药在开打时清掉）
+    const team = stage.units[u.index].team;
+    if (u.side !== 'player' && !(stage.royale && team !== undefined && team >= 0)) continue;
     const cls = rt.data.classes[u.type];
     if (!cls) continue;
     const slots = cls.defaultItems.slice();

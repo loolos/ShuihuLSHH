@@ -15,10 +15,12 @@ import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
+import { firstZone, inZone, mainArea, nextZone, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
+import { planRoyale, royaleHealSlot } from './royale-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import type { StageRules } from '../formats/stage-json.ts';
 import {
-  attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, inAttackRange, isFoe, refreshStats, resists, type Side, type Unit,
+  attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, hostile, inAttackRange, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
 export { expToNext } from './exp.ts';
@@ -94,6 +96,10 @@ export type BattleEvent =
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
+  /** 地上新冒出一个宝箱【新】（好汉聚义刷宝箱、小头目掉药） */
+  | { type: 'chest'; x: number; y: number; item: number }
+  /** 毒圈变了【新】（好汉聚义）：现在的圈和下一个圈 */
+  | { type: 'zone'; zone: Zone; next: Zone | null }
   | { type: 'end'; result: 'won' | 'lost'; text: string }
   /** 蹴鞠【新】：球滚过 path 停在 (x, y)；result 见 BallResult；by = 拦下球的人；score = 进球后的比分 */
   | { type: 'ball'; path: Cell[]; x: number; y: number; result: BallResult['kind'] | 'place'; by?: number; text?: string; score?: Record<Team, number> };
@@ -234,6 +240,8 @@ export interface StageInput {
   drinks?: Record<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
   /** 劝酒时说的话（单位序号 → 台词，轮着说）【新】 */
   toasts?: Record<number, string[]>;
+  /** 好汉聚义（吃鸡，§15.31）【新】：规则，和各单位的阵营号（ACT 序号 → 阵营；参赛好汉各自一号，小头目共用 NPC_TEAM） */
+  royale?: { rules: RoyaleRules; teams: Record<number, number> };
 }
 
 /**
@@ -298,6 +306,11 @@ export class Battle {
   readonly items: GroundItem[] = [];
   /** 蹴鞠关的场上状态；不是蹴鞠关为 null */
   cuju: CujuState | null = null;
+  /** 好汉聚义的场上状态（毒圈、出局顺序）；不是吃鸡关为 null */
+  royale: RoyaleState | null = null;
+  readonly royaleRules?: RoyaleRules;
+  /** 吃鸡：地图上最大的一块可走区域（刷宝箱、挑圆心用） */
+  private royaleArea: Cell[] = [];
   turn = 0;
   phase: Side = 'player';
   turnLimit = 0;
@@ -446,7 +459,9 @@ export class Battle {
       }
       if (mode === 6 || mode === 9) this.ambushers.add(a.index);
       if (a.group && !this.groups.has(a.group)) this.groups.set(a.group, a.index);
-      const statSide = input.cuju ? 'player' : a.side;
+      const team = input.royale?.teams[a.index];
+      // 蹴鞠两队、吃鸡的参赛好汉都按我方算属性（一样的移动力加成、命中必杀不打折）
+      const statSide = input.cuju || (team !== undefined && team !== NPC_TEAM) ? 'player' : a.side;
       const stats = computeStats(cls, level, slots, this.data, false, forge, [], statSide);
       const hpMultiplier = input.hpMultipliers?.[a.index] ?? 1;
       if (!Number.isFinite(hpMultiplier) || hpMultiplier <= 0) throw new Error(`单位 ${a.index} 的体力倍率必须为正数`);
@@ -457,6 +472,7 @@ export class Battle {
         ...(hpMultiplier !== 1 ? { hpMultiplier } : {}),
         ...(input.extraSkills?.[a.index]?.length ? { extraSkills: [...input.extraSkills[a.index]] } : {}),
         ...(statSide !== a.side ? { statSide } : {}),
+        ...(team !== undefined ? { team } : {}),
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
         movementRemaining: stats.move, forcedMarch: false, acted: false, ended: false, turnStart: null,
@@ -464,6 +480,10 @@ export class Battle {
     }
     this.hadPlayers = this.units.some((u) => u.side === 'player' && !this.offstage.has(u.uid));
     if (input.cuju) this.setupCuju(input.cuju);
+    if (input.royale) {
+      this.royaleRules = input.royale.rules;
+      this.setupRoyale();
+    }
     for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
   }
 
@@ -492,7 +512,7 @@ export class Battle {
     return this.active().find((u) => u.x === x && u.y === y);
   }
   foesOf(u: Unit) {
-    return this.active().filter((t) => !this.spectators.has(t.uid) && isFoe(u.side, t.side));
+    return this.active().filter((t) => !this.spectators.has(t.uid) && hostile(u, t));
   }
   /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，林间截囚的宋江）【新】 */
   isBound(u: Unit) {
@@ -596,7 +616,7 @@ export class Battle {
       if (this.spectators.has(t.uid)) return false;
       const pos = t === u ? at : t;
       if (skill.drug && t.stunTurns > 0) return false; // 已经麻翻的不用再劝
-      return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side))
+      return area.has(key(pos.x, pos.y)) && (heal ? !hostile(u, t) : hostile(u, t))
         && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
   }
@@ -847,7 +867,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed],
+      spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed],
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
     });
   }
@@ -909,6 +929,7 @@ export class Battle {
     this.refused = s.refused ?? {};
     this.drugged = new Set(s.drugged ?? []);
     if (this.cuju && s.cuju) this.cuju = s.cuju;
+    if (this.royale && s.royale) this.royale = s.royale;
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
     this.stealthOver = s.stealthOver ?? false;
@@ -931,6 +952,10 @@ export class Battle {
     if (t > 1) this.runTurnTriggers(t - 1);
     if (this.status !== 'playing') return;
     if (this.cuju && this.cujuClock(t)) return;
+    if (this.royale) {
+      this.royaleTick(t);
+      if (this.status !== 'playing') return;
+    }
     if (this.turnLimit && t > this.turnLimit) return this.finish('lost', '限制回合數已到，未完成任務，遊戲失敗！');
     // 火势蔓延【新】：每回合开始烧开一圈（有人站着的格子不点着）
     const fire = this.fire;
@@ -1155,7 +1180,7 @@ export class Battle {
    */
   itemTargets(u: Unit, slot: number): Unit[] {
     if (!this.usableSlots(u).includes(slot)) return [];
-    return this.active().filter((t) => dist(u, t) <= 1 && !isFoe(u.side, t.side));
+    return this.active().filter((t) => dist(u, t) <= 1 && !hostile(u, t));
   }
 
   /** 使用道具：不算行动、不消耗移动力、不限次数（原版 0x409798 → 0x408dc0 → 0x4094e0，不碰行动结束标志） */
@@ -1319,7 +1344,7 @@ export class Battle {
     this.emit(script ? { type: 'move', uid: u.uid, path, facing: u.facing, script } : { type: 'move', uid: u.uid, path, facing: u.facing });
     // 原版只有我方在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），踩上宝箱才拾起。
     // 重制版【新：负责人 2026-11-12】：只有我方，走到宝箱上或上下左右相邻的格子（路过也算）就自动打开
-    if (u.side !== 'player') return;
+    if (u.side !== 'player' && !this.royale) return; // 吃鸡：谁都能开宝箱
     const full = new Set<GroundItem>();
     for (const c of path.slice(1))
       for (const g of this.items.filter((g) => dist(g, c) <= 1)) if (!full.has(g) && !this.pickup(u, g)) full.add(g);
@@ -1333,7 +1358,7 @@ export class Battle {
     if (g.item > 200 || !this.items.includes(g)) return false;
     const slot = freeBagSlot(u.slots);
     if (slot < 0) {
-      this.emit({ type: 'message', text: `${u.name}的道具已滿，打不開寶箱。` });
+      if (u.side === 'player') this.emit({ type: 'message', text: `${u.name}的道具已滿，打不開寶箱。` });
       return false;
     }
     this.items.splice(this.items.indexOf(g), 1);
@@ -1490,6 +1515,7 @@ export class Battle {
     this.emit({ type: 'die', uid: t.uid });
     this.emit({ type: 'message', text: `${t.name}戰敗了。` });
     this.pendingDeaths.push(t.classId);
+    if (this.royale) return this.royaleOut(t, u);
     if (u.side === 'player' && t.side === 'enemy') {
       const gold = killGold(t.classId, this.data, this.rng);
       if (gold) {
@@ -1516,7 +1542,8 @@ export class Battle {
 
   /** src 为 null 表示调用方已经自己统计过 */
   private gainExp(u: Unit, n: number, src: ExpSource | null) {
-    if (u.side !== 'player' || !n) return;
+    // 吃鸡不涨经验：升级会回满体力，对 AI 不公平
+    if (u.side !== 'player' || !n || this.royale) return;
     if (src) this.tallyExp(src, n);
     u.exp += n;
     while (u.exp >= expToNext(u.level)) {
@@ -1608,8 +1635,21 @@ export class Battle {
     return this.flush();
   }
 
+  /** 试打工具：我方回合里让 AI 替这个人行动（好汉聚义用吃鸡 AI） */
+  aiAct(u: Unit): BattleEvent[] {
+    this.out = [];
+    if (!this.canAct(u) || u.acted) return [];
+    this.runAi(u);
+    return this.flush();
+  }
+
   private runAi(u: Unit) {
-    const plan = planAi(this, u);
+    // 吃鸡：吃药不算行动，吃完照样走、打（AI 单独一套，要跑圈）
+    if (this.royale) {
+      const slot = royaleHealSlot(this, u);
+      if (slot >= 0) this.applyItem(u, slot);
+    }
+    const plan = this.royale ? planRoyale(this, u) : planAi(this, u);
     if (plan.healSlot !== undefined) {
       this.applyItem(u, plan.healSlot);
     } else {
@@ -1633,6 +1673,7 @@ export class Battle {
 
   private afterAction() {
     if (this.status !== 'playing') return;
+    if (this.royale && this.royaleEnd()) return;
     while (this.pendingDeaths.length) {
       const c = this.pendingDeaths.shift()!;
       // 每倒下一次只执行一个还没执行过的区块：Train1/2 有 25 个"王進死亡"区块，每次被打倒说一句、换下一个分身上场
@@ -1698,7 +1739,7 @@ export class Battle {
     this.runCondBlocks();
     if (this.status !== 'playing') return;
     // 选人关没被选上的人这一关不再登场，不算
-    if (this.hadPlayers && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
+    if (this.hadPlayers && !this.royale && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
       this.finish('lost', '我方全軍覆沒。');
   }
 
@@ -2518,6 +2559,144 @@ export class Battle {
     }
     this.status = result;
     this.emit({ type: 'end', result, text });
+  }
+
+  // ───────────── 好汉聚义【新】（吃鸡，docs/game-design.md §15.31，负责人 2026-11-22） ─────────────
+
+  private setupRoyale() {
+    const r = this.royaleRules!;
+    this.royaleArea = mainArea(this.board);
+    // 参赛好汉不带药：随身物品栏清空，装备照等级表（编译关卡时配好）
+    for (const u of this.units)
+      if (u.team !== undefined && u.team !== NPC_TEAM)
+        for (const k of BAG_SLOTS) {
+          u.slots[k] = 0;
+          u.forge[k] = 0;
+        }
+    this.royale = { zone: firstZone(this.royaleArea), next: null, shrinkAt: 1 + r.shrinkEvery, step: 0, out: [] };
+    this.planShrink();
+    this.spawnChests(r.chestStart, false);
+  }
+
+  /** 试打工具：我方好汉倒下后接着打到只剩一人（看整局多长） */
+  royaleWatch = false;
+
+  /** 还活着的参赛好汉（小头目不算） */
+  royaleHeroes(): Unit[] {
+    return this.units.filter((u) => u.alive && u.team !== undefined && u.team !== NPC_TEAM);
+  }
+
+  /** 还要几回合缩圈（不再缩了为 null） */
+  royaleCountdown(): number | null {
+    const st = this.royale;
+    return st?.next ? Math.max(0, st.shrinkAt - this.turn) : null;
+  }
+
+  /** 公布下一个圈（radii 用完就不再缩） */
+  private planShrink() {
+    const st = this.royale!, r = this.royaleRules!;
+    const radius = r.radii[st.step];
+    st.next = radius === undefined ? null : nextZone(this.royaleArea, st.zone, Math.min(radius, st.zone.r), this.rng);
+  }
+
+  /**
+   * 回合开始：圈外的人先掉血（最大体力的 1/damageDivisor，能掉死），再缩圈、公布下一个圈，再刷宝箱。
+   * 先掉血后缩圈：缩圈那一回合新落到圈外的人还有一个回合往里跑（下一个圈早就公布了）。
+   */
+  private royaleTick(t: number) {
+    const st = this.royale!, r = this.royaleRules!;
+    const dead: Unit[] = [];
+    let hurt = 0;
+    for (const u of this.active()) {
+      if (this.spectators.has(u.uid) || inZone(st.zone, u)) continue;
+      const hp0 = u.hp;
+      u.hp = Math.max(0, u.hp - Math.max(1, Math.floor(u.stats.maxHp / r.damageDivisor)));
+      hurt++;
+      this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '毒圈' });
+      if (u.hp <= 0) dead.push(u);
+    }
+    if (hurt) this.emit({ type: 'message', text: `圈外 ${hurt} 人中了毒，各掉 1/${r.damageDivisor} 体力。` });
+    for (const u of dead) {
+      u.alive = false;
+      u.defending = false;
+      this.emit({ type: 'die', uid: u.uid });
+      this.emit({ type: 'message', text: `${u.name}倒在了毒圈里。` });
+      this.pendingDeaths.push(u.classId);
+      this.royaleOut(u, null);
+    }
+    if (dead.length) this.afterAction();
+    if (this.status !== 'playing') return;
+    if (st.next && t >= st.shrinkAt) {
+      st.zone = st.next;
+      st.step++;
+      st.shrinkAt = t + r.shrinkEvery;
+      this.planShrink();
+      this.emit({ type: 'zone', zone: st.zone, next: st.next });
+      this.emit({ type: 'message', text: `毒圈缩小了！${st.next ? `下一圈已经标出，${r.shrinkEvery} 回合后再缩。` : '这是最后一圈。'}` });
+    }
+    if (t > 1 && r.chestEvery > 0 && (t - 1) % r.chestEvery === 0) this.spawnChests(r.chestCount, true);
+  }
+
+  /** 在下一个圈里（没有就现在的圈）随机的空格上刷宝箱 */
+  private spawnChests(n: number, announce: boolean) {
+    const st = this.royale!, r = this.royaleRules!;
+    if (!r.chestItems.length || n <= 0) return;
+    const busy = new Set([...this.active().map((u) => key(u.x, u.y)), ...this.items.map((g) => key(g.x, g.y))]);
+    const free = (z: Zone) => this.royaleArea.filter((c) => inZone(z, c) && !busy.has(key(c.x, c.y)));
+    let cells = free(st.next ?? st.zone);
+    if (!cells.length) cells = free(st.zone);
+    let placed = 0;
+    for (; placed < n && cells.length; placed++) {
+      const c = cells.splice(this.rng.int(cells.length), 1)[0];
+      const item = r.chestItems[this.rng.int(r.chestItems.length)];
+      this.items.push({ x: c.x, y: c.y, item, hidden: false });
+      if (announce) this.emit({ type: 'chest', x: c.x, y: c.y, item });
+    }
+    if (announce && placed) this.emit({ type: 'message', text: `地上冒出了 ${placed} 个宝箱。` });
+  }
+
+  /** 有人出局：小头目掉药（打倒他的人包里有空就直接拿到，否则落在地上成宝箱）；好汉记进出局顺序 */
+  private royaleOut(t: Unit, by: Unit | null) {
+    const st = this.royale!;
+    if (t.team === NPC_TEAM) {
+      const drops = this.royaleRules!.npcs.drops;
+      if (!drops.length) return;
+      const item = drops[this.rng.int(drops.length)];
+      const name = this.tr(itemOf(this.data, item)?.name ?? '');
+      const slot = by && by.alive && by.team !== NPC_TEAM ? freeBagSlot(by.slots) : -1;
+      if (by && slot >= 0) {
+        by.slots[slot] = item;
+        by.forge[slot] = 0;
+        this.emit({ type: 'message', text: `${by.name}从${t.name}身上搜出了${name}。` });
+        return;
+      }
+      const taken = new Set([...this.active().map((u) => key(u.x, u.y)), ...this.items.map((g) => key(g.x, g.y))]);
+      const c = this.board.nearestFree(t.x, t.y, taken);
+      if (!c) return;
+      this.items.push({ x: c.x, y: c.y, item, hidden: false });
+      this.emit({ type: 'chest', x: c.x, y: c.y, item });
+      this.emit({ type: 'message', text: `${t.name}掉下了${name}。` });
+      return;
+    }
+    st.out.push(t.uid);
+    this.emit({ type: 'message', text: `${t.name}出局${by ? `（被${by.name}打倒）` : ''}，还剩 ${this.royaleHeroes().length} 位好汉。` });
+  }
+
+  /** 胜负：我方的好汉倒下就输（报名次），对手全部出局就赢 */
+  private royaleEnd(): boolean {
+    const me = this.units.find((u) => u.side === 'player' && u.team !== undefined);
+    if (!me) return false;
+    const left = this.royaleHeroes();
+    if (!me.alive && this.royaleWatch && left.length > 1) return false;
+    if (!me.alive) {
+      this.finish('lost', `${me.name}倒下了，名列第 ${left.length + 1} 名（共 ${this.units.filter((u) => u.team !== undefined && u.team !== NPC_TEAM).length} 人）。`);
+      return true;
+    }
+    if (left.length === 1) {
+      this.finish('won', `${me.name}力压群雄，成为最后站着的好汉！`);
+      return true;
+    }
+    return false;
   }
 
   // ───────────── 蹴鞠【新】（docs/game-design.md §15.25，负责人 2026-11-20） ─────────────

@@ -23,7 +23,12 @@ import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
 import { insertTavern } from './packs/tavern.ts';
-import { compileStage, stageClasses, stageKind } from './packs/build.ts';
+import { compileStage, stageClasses, stageKind, type PackRuntime } from './packs/build.ts';
+import { royalePool, royaleStage } from './packs/royale.ts';
+import { levelKit } from './rules/equipment.ts';
+import { computeStats } from './rules/unit.ts';
+import { BAG_SLOTS } from './rules/data.ts';
+import type { FileSource } from './rules/load.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
@@ -68,6 +73,36 @@ function writeSave(c: CampaignState) {
   } catch {
     /* 隐私模式等：不存档也能玩 */
   }
+}
+
+/** 好汉聚义上次选的好汉（职业号） */
+const ROYALE_PICK_KEY = 'shuihu.juyi.pick';
+function loadRoyalePick(): number | undefined {
+  try {
+    const v = localStorage.getItem(ROYALE_PICK_KEY);
+    return v === null ? undefined : Number(v);
+  } catch {
+    return undefined;
+  }
+}
+function saveRoyalePick(id: number) {
+  try {
+    localStorage.setItem(ROYALE_PICK_KEY, String(id));
+  } catch {
+    /* 隐私模式 */
+  }
+}
+/** 选将面板上每位好汉 30 级、按等级表配装、不带药时的属性 */
+function royaleCards(rt: PackRuntime, files: FileSource, tr: (s: string) => string) {
+  const level = rt.stages.find((s) => s.royale)?.royale?.level ?? 30;
+  return royalePool(rt, files, tr).map((h) => {
+    const cls = rt.data.classes[h.classId];
+    const slots = cls.defaultItems.slice();
+    levelKit(rt.data, cls, level, slots);
+    for (const k of BAG_SLOTS) slots[k] = 0;
+    const s = computeStats(cls, level, slots, rt.data, false, [], [], 'player');
+    return { classId: h.classId, name: h.name, hp: s.maxHp, attack: s.attack, defense: s.defense, move: s.move, skills: cls.skills.length };
+  });
 }
 
 function startGame(assets: Assets) {
@@ -399,9 +434,19 @@ function startGame(assets: Assets) {
       setHere(value);
       if (pack?.rt.id !== ref.pack) pack = await openPack(assets, ref.pack);
       const rt = pack.rt;
-      const stage = rt.stages.find((s) => s.id === ref.stage);
+      let stage = rt.stages.find((s) => s.id === ref.stage);
       if (!stage) throw new Error(`外传里没有关卡 ${ref.stage}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
+      // 好汉聚义（§15.31）：先选好汉，再随机对手、摆好开局（预载要知道有哪些职业）
+      if (stage.royale) {
+        setupEl.hidden = true;
+        const pick = await ui.pickHero(royaleCards(rt, assets.files, assets.tr), loadRoyalePick());
+        if (ticket !== loading) return;
+        saveRoyalePick(pick);
+        setupEl.hidden = false;
+        stage = royaleStage(rt, stage, assets.files, { pick, seed, text: assets.tr });
+      }
+      const st = stage;
       const classes = stageClasses(rt, stage);
       await preloadStage(pa, stageMapName(stage.map), progress, classes, stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
       if (ticket !== loading) return;
@@ -411,7 +456,7 @@ function startGame(assets: Assets) {
       chapterSting(`pack:${rt.id}`);
       const data = {
         assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed,
-        makeInput: () => compileStage(rt, stage, assets.files, { seed, text: assets.tr }),
+        makeInput: () => compileStage(rt, st, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
       if (scene()) scene()!.scene.restart(data);

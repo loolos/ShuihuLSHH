@@ -205,6 +205,9 @@ code { color: var(--ink); }
 #unit-pick-list small i { font-style: normal; white-space: nowrap; margin-right: 0.6em; }
 #unit-pick-list .tag { float: right; font-size: 12px; color: #1b1610; background: var(--accent); border-radius: 3px; padding: 0 4px; margin-left: 6px; }
 #unit-pick-ok { align-self: center; min-width: 140px; }
+#unit-pick-row { display: flex; justify-content: center; gap: 12px; }
+#unit-pick-random { min-width: 110px; }
+#unit-pick-row #unit-pick-ok { min-width: 110px; }
 #unit-pick-ok:disabled { opacity: 0.45; cursor: default; }
 @media (max-width: 640px) {
   #unit-pick { padding: 8px; }

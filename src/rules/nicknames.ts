@@ -139,3 +139,6 @@ export function splitNickname(name: string, extra?: Readonly<Record<string, stri
   for (const [bare, nick] of Object.entries(NICKNAMES)) if (nick && name === nick + bare) return [nick, bare];
   return ['', name];
 }
+
+/** 一百单八将（NICKNAMES 的前 108 项，按石碣排座次）：好汉聚义（§15.31）的参赛名单按它挑 */
+export const STARS_108: ReadonlySet<string> = new Set(Object.keys(NICKNAMES).slice(0, 108));
