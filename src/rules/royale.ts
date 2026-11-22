@@ -46,6 +46,9 @@ export interface RoyaleState {
   step: number;
   /** 出局顺序（uid，先出局的在前） */
   out: number[];
+  /** 各人亲手打倒的好汉数、小头目数（uid → 人数；被毒死的不算谁的） */
+  kills: Record<number, number>;
+  npcKills: Record<number, number>;
 }
 
 /** 小头目的阵营号（他们之间不打）；参赛好汉的阵营号是各自的单位序号 */
