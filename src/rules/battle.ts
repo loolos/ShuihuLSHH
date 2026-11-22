@@ -2076,6 +2076,8 @@ export class Battle {
         case 17: {
           // 动作位（EXE 0x411580，按这个顺序）：8 改 AI 模式；4 设 AI 目标点；0x10 设 AI 目标角色；2 退场；1 走到 (14, 15)
           if (!sel || !sel.alive) break;
+          // args.awake【新】（杯酒救铁牛）：只对醒着的人（没被麻翻、没昏迷）
+          if (op.args?.awake && sel.stunTurns > 0) break;
           const v = op.value;
           if (v & 8) {
             sel.ai.mode = mode;

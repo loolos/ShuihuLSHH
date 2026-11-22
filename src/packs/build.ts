@@ -511,8 +511,9 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       case 'leave':
         // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
+        // ['leave', 谁, {awake: true}]：只在他醒着时退场（麻翻、昏迷的留在原地）【新】
         select(a[0]);
-        op(17, 2);
+        op(17, 2, (a[1] as { awake?: boolean } | undefined)?.awake ? { args: { awake: true } } : {});
         break;
       case 'move':
         select(a[0]);
