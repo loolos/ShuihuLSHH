@@ -4,7 +4,7 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buffLabel, buildClasses, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { buffLabel, buildClasses, EQUIP_SLOTS, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { attackSkill, computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
@@ -530,6 +530,39 @@ describe('战斗流程', () => {
     expect([p.x, p.y]).toEqual([0, 0]);
     expect(b.canAct(p)).toBe(true);
     expect(p.forcedMarch).toBe(false);
+  });
+
+  it('移动触发剧情后不能撤销，其他走过的人也一样', () => {
+    const near = { index: 0, head: [], trigger: { kind: 'near' as const, char: 0, uid: 2 }, cond: { type: 0, arg: 0 }, ops: [{ op: 13, flag: null, value: 0, text: '多謝！' }] };
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 5), act(2, 0, 'ally', 4, 0), act(3, 1, 'enemy', 9, 9, 0x800)], blocks: [near], data, seed: 1 });
+    b.begin();
+    const [p, q] = [b.unit(0)!, b.unit(1)!];
+    b.move(q, 1, 5);
+    expect(b.canUndo(q)).toBe(true);
+    const ev = b.move(p, 3, 0);
+    expect(ev.some((e) => e.type === 'say')).toBe(true);
+    expect(b.canUndo(p)).toBe(false);
+    expect(b.canUndo(q)).toBe(false);
+  });
+
+  it('原位被人占了、给了道具或被用了道具就不能撤销', () => {
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 0, 'player', 0, 3), act(2, 1, 'enemy', 9, 9, 0x800)], blocks: [], data, seed: 1 });
+    b.begin();
+    const [p, q] = [b.unit(0)!, b.unit(1)!];
+    b.move(p, 2, 0);
+    b.move(q, 0, 0);
+    expect(b.canUndo(p)).toBe(false); // q 站在 p 的原位
+    b.undoMove(q);
+    expect(b.canUndo(p)).toBe(true);
+    // q 走到 p 身边，p 给 q 一件东西：两人都不能撤销
+    b.move(q, 2, 1);
+    const slot = p.slots.length - 1;
+    p.slots[slot] = 1;
+    q.slots.fill(0, EQUIP_SLOTS);
+    expect(b.giveTargets(p, slot)).toContain(q);
+    b.giveItem(p, slot, q);
+    expect(b.canUndo(p)).toBe(false);
+    expect(b.canUndo(q)).toBe(false);
   });
 
   it('我方全员行动完毕：昏迷、阵亡的人不算', () => {
