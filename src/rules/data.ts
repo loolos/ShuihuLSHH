@@ -18,7 +18,7 @@ export interface SkillDef extends ClassSkill {
   targetShape?: 'diamond';
   /** 集气技可指定一名同阵营队友为目标；不含施放者本人。 */
   chargeTarget?: 'ally';
-  /** 蒙汗药酒【新】（朱富药酒救李逵）：不伤人、必定喝下，敌人麻翻这么多回合；单位的 drink 设定可以推辞或改回合数 */
+  /** 蒙汗药酒【新】（杯酒救铁牛）：不伤人、必定喝下，敌人麻翻这么多回合；单位的 drink 设定可以推辞或改回合数 */
   drug?: number;
   /** 远程技能的距离伤害系数：[最近、最远]；未指定用通用50%→10%。 */
   rangedDamage?: [number, number];

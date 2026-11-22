@@ -226,7 +226,7 @@ export interface StageInput {
   names?: Record<number, string>;
   /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
   cuju?: CujuRules;
-  /** 酒席【新】（朱富药酒救李逵）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
+  /** 酒席【新】（杯酒救铁牛）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
   banquet?: { flag: number; sight: number };
   /** 劝酒【新】：ACT 索引 → 推辞几次、麻翻几回合、只喝谁劝的（职业号） */
   drinks?: Record<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
@@ -1435,7 +1435,7 @@ export class Battle {
   }
 
   /**
-   * 劝酒（蒙汗药酒）【新】（朱富药酒救李逵）：不掷命中、不伤人；目标喝下就麻翻（stunTurns），
+   * 劝酒（蒙汗药酒）【新】（杯酒救铁牛）：不掷命中、不伤人；目标喝下就麻翻（stunTurns），
    * 单位的 drink 设定可以推辞几次、只喝某些人劝的酒（李云只认徒弟朱富）、改麻翻的回合数。
    */
   private serveDrug(u: Unit, skill: SkillDef, targets: Unit[], area: Cell[], cell: Cell) {
