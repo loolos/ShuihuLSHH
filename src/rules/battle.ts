@@ -1940,6 +1940,8 @@ export class Battle {
         // 训练关选人后其余人退场，所以出场的人被打倒就是"全灭"，触发"回合 25 或我方全灭"的过关区块
         if (c.arg === 0x400) return !this.units.some((u) => u.side === 'player' && u.alive && u.present);
         if (c.arg === 0xff) return !this.units.some((u) => u.side === 'enemy' && u.alive && u.present);
+        // 0xfe【新】（杯酒救铁牛）：被蒙汗药麻翻、还睡着的敌人不算
+        if (c.arg === 0xfe) return !this.units.some((u) => u.side === 'enemy' && u.alive && u.present && !(this.drugged.has(u.uid) && u.stunTurns > 0));
         return !find(c.arg);
       case 2:
         return false; // 伏兵号令后由 signal() 执行（推测）

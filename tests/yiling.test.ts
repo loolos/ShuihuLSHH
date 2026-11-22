@@ -146,7 +146,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     zg.x = 18; zg.y = 10; after(b);
     expect(lk.stunTurns).toBe(0);
     expect(get('a1').ai.mode).toBe(0);
-    for (const u of stage.units) if (u.side === 'enemy') kill(get(u.id));
+    // 麻翻还睡着的不用打倒；但李云得打倒或劝降
+    const sleeper = get('c1');
+    sleeper.stunTurns = 8; (b as unknown as { drugged: Set<number> }).drugged.add(sleeper.uid);
+    for (const u of stage.units) if (u.side === 'enemy' && u.id !== 'c1') kill(get(u.id));
     after(b);
     expect(b.status).toBe('won');
   });
@@ -177,13 +180,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     const { b, get } = open('zhufu');
     const ly = get('liyun');
     get('b1').stunTurns = 8; // 麻翻的土兵不跑，继续睡
+    (b as unknown as { drugged: Set<number> }).drugged.add(get('b1').uid);
     ly.hp = Math.floor(ly.stats.maxHp * 0.4);
     after(b);
     const zf = get('zhufu');
     zf.x = 20; zf.y = 11; after(b);
     expect(b.status).toBe('playing');
-    expect(get('b1').present).toBe(true);
-    kill(get('b1'));
+    expect(get('b1').present).toBe(true); // 还睡着，不用打倒也能过关
     expect(ly.side).toBe('ally');
     for (const id of ['a1', 'a6', 'b2', 'b6']) expect(get(id).present, id).toBe(false);
     const hunters = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'].map(get);
