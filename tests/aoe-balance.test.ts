@@ -1,4 +1,4 @@
-import { areaCells, learnedSkills } from '../src/rules/skills.ts';
+import { areaCells, castCells, learnedSkills } from '../src/rules/skills.ts';
 import { attackParts } from '../src/rules/combat.ts';
 import { Board } from '../src/rules/board.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -46,6 +46,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
       expect(s).toMatchObject({learnLevel:[7,10,15,22][i],mpCost:[50,75,110,150][i],power:[25,40,50,65][i],hitMod:5+5*i,type:0,area:3+2*i});
       expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
       expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20,y:21})).toHaveLength(3+2*i);
+      // LV3、LV4 可选周围 8 格，斜着放时一线斜着走；LV1、LV2 仍只四向
+      const cells=castCells(new Board(40,40),{x:20,y:20},[1,1],s.targetShape);
+      expect(cells).toHaveLength(i<2?4:8);
+      if(i>=2)expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:21,y:21})).toEqual(Array.from({length:3+2*i},(_,k)=>({x:21+k,y:21+k})));
     });
     for(let level=1;level<=30;level++){
       const skills=learnedSkills({classId:0,level}as Unit,d).filter(s=>s.name.startsWith('千軍萬馬'));

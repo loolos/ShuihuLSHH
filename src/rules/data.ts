@@ -14,8 +14,8 @@ export interface SkillDef extends ClassSkill {
   fxTint?: number;
   /** 出手音效用的技能号（s<号>.mp3）；扩展包技能借原版技能的声音，不填就用 skillId */
   soundId?: number;
-  /** 指定技能可在曼哈顿距离内选点；默认保持原版四向直线。 */
-  targetShape?: 'diamond';
+  /** 指定技能可在曼哈顿距离内选点（diamond），或沿八个方向（含斜向）直线选点（eight，线形范围随之斜着走）；默认保持原版四向直线。 */
+  targetShape?: 'diamond' | 'eight';
   /** 集气技可指定一名同阵营队友为目标；不含施放者本人。 */
   chargeTarget?: 'ally';
   /** 蒙汗药酒【新】（杯酒救铁牛）：不伤人、必定喝下，敌人麻翻这么多回合；单位的 drink 设定可以推辞或改回合数 */
