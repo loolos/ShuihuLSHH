@@ -39,6 +39,21 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
       const tier=[8,12,22,28].filter(n=>n<=level).length;expect(skills).toHaveLength(tier?1:0);if(tier)expect(skills[0]).toBe(tiers[tier-1]);
     }
   });
+  it('千军万马四阶：命中+5/+10/+15/+20、三四阶两段、一线3/5/7/9格、22级换成LV4',()=>{
+    const d=loadPackFromDisk('mainline').data;
+    const tiers=d.classes[0].skills.filter(s=>[4,5,6,1310].includes(s.skillId));expect(tiers).toHaveLength(4);
+    tiers.forEach((s,i)=>{
+      expect(s).toMatchObject({learnLevel:[7,10,15,22][i],mpCost:[50,75,110,150][i],power:[25,40,50,65][i],hitMod:5+5*i,type:0,area:3+2*i});
+      expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
+      expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20,y:21})).toHaveLength(3+2*i);
+    });
+    for(let level=1;level<=30;level++){
+      const skills=learnedSkills({classId:0,level}as Unit,d).filter(s=>s.name.startsWith('千軍萬馬'));
+      const tier=[7,10,15,22].filter(n=>n<=level).length;expect(skills).toHaveLength(tier?1:0);if(tier)expect(skills[0]).toBe(tiers[tier-1]);
+    }
+    // 敌方版武龍不受影响
+    for(const c of d.classes.filter(c=>c.id>=18))expect(c.skills.some(s=>s.skillId===1310)).toBe(false);
+  });
   it('主线与江州的对应扩展技能同步，非审定技能保留', () => {
     for (const pack of ['mainline']) {
       const p = loadPackFromDisk(pack);

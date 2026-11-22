@@ -6,6 +6,7 @@ export const HERO_AOE_COSTS: Readonly<Record<number, Readonly<Record<number, num
     4: 50, // 千軍萬馬LV1
     5: 75, // 千軍萬馬LV2
     6: 110, // 千軍萬馬LV3
+    1310: 150, // 千軍萬馬LV4
     10: 75, // 萬夫莫敵LV1
     11: 115, // 萬夫莫敵LV2
     12: 170, // 萬夫莫敵LV3
