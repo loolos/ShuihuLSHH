@@ -284,7 +284,7 @@ export const packStageName = (pack: string, stage: string) => `pack:${pack}/${st
 /** 关卡里会出现的全部职业（开场的单位，加上剧本 transform 换成的职业），预载动画用 */
 /** 选关里标「战役」还是「剧情」：有主动出手的敌人，或者要打倒敌人才过关（杯酒救铁牛开场敌人都坐着吃酒）就是战役 */
 export function stageKind(stage: PackStageJson): '战役' | '剧情' {
-  return stage.units.some((u) => u.side === 'enemy' && u.ai !== 8) || stage.script.some((b) => b.on === 'enemiesDefeated' || b.on === 'allEnemiesDefeated') ? '战役' : '剧情';
+  return stage.units.some((u) => u.side === 'enemy' && u.ai !== 8) || stage.script.some((b) => b.on === 'enemiesDefeated' || b.on === 'allEnemiesDefeated' || b.on === 'awakeEnemiesDefeated') ? '战役' : '剧情';
 }
 
 export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
@@ -443,9 +443,9 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   let trigger: PasTrigger;
   let cond: PasBlock['cond'] = { type: 0, arg: 0 };
   if (on === 'start') trigger = { kind: 'turn', turn: 0 };
-  else if (on === 'enemiesDefeated' || on === 'allEnemiesDefeated') {
+  else if (on === 'enemiesDefeated' || on === 'allEnemiesDefeated' || on === 'awakeEnemiesDefeated') {
     trigger = { kind: 'cond' };
-    cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
+    cond = on === 'allEnemiesDefeated' ? { type: 102, arg: 0 } : { type: 1, arg: on === 'awakeEnemiesDefeated' ? 0xfe : 0xff }; // 102 含隐藏增援；原版 1/0xFF 只数在场敌人
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
     cond = andAll([cond, ...flagConds(b, r)]);
   }

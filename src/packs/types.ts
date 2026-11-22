@@ -260,6 +260,8 @@ export type PackTrigger =
   | 'enemiesDefeated'
   /** 本关全部敌人战败，包含尚未登场的隐藏增援。 */
   | 'allEnemiesDefeated'
+  /** 同 enemiesDefeated，但被蒙汗药麻翻、还睡着的敌人不算【新】（杯酒救铁牛） */
+  | 'awakeEnemiesDefeated'
   | { turn: number }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
