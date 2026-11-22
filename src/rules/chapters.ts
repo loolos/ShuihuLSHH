@@ -58,8 +58,9 @@ export const CHAPTERS: ChapterDef[] = [
   // 江上擒黄文炳只用对白，穆家庄割黄文炳为过场；黄门山收四人先不做
   { name: '智取无为军', stages: ['mainline/wuweijun', 'mainline/jiehuang'] },
   // 负责人 2026-11-21：还道村受天书（原著第 42 回）：宋江独自回乡被赵能、赵得追进还道村玄女庙，黑尘怪风吹散土兵，
-  // 玄女授三卷天书；李逵、刘唐、石勇、李立和黄门山的欧鹏、陶宗旺（友军）杀进庙来
-  { name: '还道村受天书', stages: ['mainline/banqu', 'mainline/huandaocun'] },
+  // 玄女授三卷天书；李逵、刘唐、石勇、李立和黄门山的欧鹏、陶宗旺（友军）杀进庙来；
+  // 回山之后父子团圆、宋江讲天书、公孙胜辞行回蓟州（过场 tuanyuan）
+  { name: '还道村受天书', stages: ['mainline/banqu', 'mainline/huandaocun', 'mainline/tuanyuan'] },
 ];
 
 /**
