@@ -37,7 +37,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('秦明霹雳�
   });
   it('固定四向选点、装备不扩范围，6/18/25/32级换招，保留双段并按范围调整耗气', () => {
     expect(skills.map(s=>s.mpCost)).toEqual([30,50,75,105]);
-    expect(skills.map(s=>s.power)).toEqual([20,35,50,65]);
+    expect(skills.map(s=>s.power)).toEqual([10,25,40,55]); // 命中 −10 改从威力扣
+    expect(skills.map(s=>s.hitMod)).toEqual([0,0,0,0]);
     expect(skills.map(s=>s.learnLevel)).toEqual([6,18,25,32]);
     for(const s of skills) {
       expect(s.hits.map(h=>h.percent)).toEqual([50,50]);

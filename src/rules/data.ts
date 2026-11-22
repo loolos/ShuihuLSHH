@@ -206,6 +206,22 @@ export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(c
 }
 
 /**
+ * 好汉技能一律没有命中修正【新】（负责人 2026-11-22："尽量不要让任何好汉的技能是靠命中的"）：
+ * 职业号 0–17 的全部技能（含后加的分级、后期技、自定技能）和扩展包里标了 `hero` 的职业，命中修正最后都改成 0。
+ * - 负修正：威力下降等额，最低 1（同 noHeroHitPenalty，负责人原话"扣下去的部分从威力减"）。
+ * - 正修正：按期望伤害折成威力，每 4 点命中修正 +1 威力（四舍五入）。正面打同级杂兵时命中率本来就有 92–94%，
+ *   +30 只把命中率抬到 97% 左右，折算下来约 +4–9 威力（tools 估算见 PR）；+10 → +3，+30 → +8，+40 → +10。
+ * 集气、回复类（类型 8 / 9 / 11，威力字段另有用途）只清命中修正，不动威力。
+ */
+export const HERO_HIT_TO_POWER = 4;
+export function heroSkillNoHitMod<T extends Pick<SkillDef, 'power' | 'hitMod' | 'type'>>(s: T): T {
+  if (!s.hitMod) return s;
+  if (s.type === 8 || s.type === 9 || s.type === 11) return { ...s, hitMod: 0 };
+  const power = s.hitMod < 0 ? Math.max(1, s.power + s.hitMod) : s.power + Math.round(s.hitMod / HERO_HIT_TO_POWER);
+  return { ...s, power, hitMod: 0 };
+}
+
+/**
  * 技能改名（技能号 → 名字，繁体，LV 后缀照旧）【新】：隐藏技（负责人 2026-11-13 嫌"古武術"重名太多）。
  * 原版朱武、阮氏三雄、吳用的隐藏技都叫"古武術LV1–3"；按人物和招式形状各取一个名字，敌方同职业单位一起改。
  */
@@ -385,7 +401,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...lateHeroSkills(r.id, all),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
-      ]).map(s => balanceHeroAoe(r.id, s)),
+      ]).map(s => balanceHeroAoe(r.id, s)).map((s) => (r.id < HERO_CLASS_COUNT ? heroSkillNoHitMod(s) : s)),
     };
   });
 }

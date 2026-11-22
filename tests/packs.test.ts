@@ -41,7 +41,7 @@ describe.skipIf(!has)('黄信镇三山与寒锋五叠',()=>{
     }
     for(const [level,rank] of [[3,0],[4,1],[15,1],[16,2],[20,3]]){const learned=learnedSkills({classId:cls.id,level} as Unit,rt.data).filter(s=>s.name.startsWith('镇三山'));expect(learned.map(s=>s.name)).toEqual(rank?[`镇三山LV${rank}`]:[]);}
     const five=cls.skills.find(s=>s.name==='寒锋五叠')!;
-    expect([five.power,five.hitMod,five.mpCost,five.rangeMax,five.area,five.castCycles,five.castSpeed]).toEqual([50,20,45,1,1,5,4]);
+    expect([five.power,five.hitMod,five.mpCost,five.rangeMax,five.area,five.castCycles,five.castSpeed]).toEqual([55,0,45,1,1,5,4]);
     expect(five.hits.map(h=>h.frame)).toEqual([11,40,69,98,127]);expect(five.hits.map(h=>h.percent)).toEqual([20,20,20,20,20]);
     expect(cls.skills.map(s=>[s.name,s.learnLevel])).toContainEqual(['聚气',12]);
     const s=aoe[2],edge=areaCells(board,{x:0,y:3},s,{x:0,y:0});expect(edge).toHaveLength(2);expect(edge.every(c=>board.inBounds(c.x,c.y))).toBe(true);

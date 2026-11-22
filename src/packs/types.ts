@@ -32,6 +32,8 @@ export interface PackClassJson {
   weaponType?: number;
   /** 默认装备与随身物品：原版道具号，或本包道具的字符串 id */
   items?: (number | string)[];
+  /** 好汉（我方可操作的人物）：技能不带命中修正，载入时改成 0 并折算威力（heroSkillNoHitMod，负责人 2026-11-22） */
+  hero?: boolean;
   /** 第一项是普通攻击 */
   skills: PackSkillJson[];
   /** 形象：包里的精灵图条（SheetSprite），或者借原版职业的动画并换色（BorrowSprite） */
