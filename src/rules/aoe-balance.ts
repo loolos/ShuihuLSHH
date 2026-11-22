@@ -60,6 +60,8 @@ export const HERO_AOE_COSTS: Readonly<Record<number, Readonly<Record<number, num
     103: 135, // 鏟惡除奸LV3
     1211: 100, // 回马扫阵
     1003: 70, // 風雪交加
+    1002: 60, // 懷璧其罪LV3（前方三格）
+    1009: 75, // 懷璧其罪LV4（前方三格）
   },
   12: {
     107: 75, // 天王托塔LV1

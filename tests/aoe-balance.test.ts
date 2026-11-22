@@ -48,3 +48,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     }
   });
 });
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('林沖 懷璧其罪 LV3/LV4', () => {
+  it('LV3、LV4 打施放点及左右各一格（选身前相邻格即前方三格），30 级学会 LV4', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const tiers = d.classes[11].skills.filter((s) => s.name.startsWith('懷璧其罪'));
+    expect(tiers.map((s) => [s.name, s.learnLevel, s.mpCost])).toEqual([
+      ['懷璧其罪LV1', 9, 30], ['懷璧其罪LV2', 18, 40], ['懷璧其罪LV3', 24, 60], ['懷璧其罪LV4', 30, 75],
+    ]);
+    const board = new Board(40, 40);
+    for (const s of tiers.slice(2)) {
+      expect(areaCells(board, { x: 20, y: 20 }, s, { x: 20, y: 19 })).toEqual(
+        expect.arrayContaining([{ x: 19, y: 19 }, { x: 20, y: 19 }, { x: 21, y: 19 }]));
+      expect(areaCells(board, { x: 20, y: 20 }, s, { x: 20, y: 19 })).toHaveLength(3);
+    }
+    expect(areaCells(board, { x: 20, y: 20 }, tiers[1], { x: 20, y: 19 })).toHaveLength(1);
+    const at30 = learnedSkills({ classId: 11, level: 30 } as Unit, d).filter((s) => s.name.startsWith('懷璧其罪'));
+    expect(at30.map((s) => s.name)).toEqual(['懷璧其罪LV4']);
+  });
+});
