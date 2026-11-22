@@ -370,6 +370,58 @@
    "hidden": true
   },
   {
+   "id": "n9",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n10",
+   "class": 40,
+   "side": "enemy",
+   "x": 2,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n11",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "n12",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
    "id": "guanjia",
    "class": 38,
    "side": "enemy",
@@ -485,6 +537,45 @@
    "ai": 0,
    "name": "庄客弓手",
    "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s9",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s10",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "s11",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
    "hidden": true
   }
  ],
@@ -695,6 +786,22 @@
      "n8"
     ],
     [
+     "appear",
+     "n9"
+    ],
+    [
+     "appear",
+     "n10"
+    ],
+    [
+     "appear",
+     "n11"
+    ],
+    [
+     "appear",
+     "n12"
+    ],
+    [
      "say",
      "shixiu",
      "后面也来了！哥哥，背靠背，休被他们围住！"
@@ -796,6 +903,18 @@
     [
      "appear",
      "s8"
+    ],
+    [
+     "appear",
+     "s9"
+    ],
+    [
+     "appear",
+     "s10"
+    ],
+    [
+     "appear",
+     "s11"
     ],
     [
      "say",
@@ -988,6 +1107,38 @@
      {
       "pct": -20
      }
+    ],
+    [
+     "buff",
+     "n9",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n10",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n11",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n12",
+     "attack",
+     {
+      "pct": -20
+     }
     ]
    ]
   },
@@ -1064,6 +1215,30 @@
     [
      "buff",
      "s8",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s9",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s10",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s11",
      "attack",
      {
       "pct": -20
