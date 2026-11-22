@@ -8,7 +8,7 @@ import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { loadStage, loadStageMap, stageMap } from '../rules/load.ts';
 import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
-import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText } from '../rules/skills.ts';
+import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText, skillTags } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { music } from './music.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
@@ -818,7 +818,9 @@ export class BattleScene extends Phaser.Scene {
       return [
         ...b.skillsOf(u).map(({ skill, usable, hasTarget }) => ({
           label: `${this.assets.tr(skill.name)} ${skill.mpCost}`,
-          note: [skillBonusText(skill), usable && !hasTarget ? '范围内无目标' : ''].filter(Boolean).join('　'),
+          note: skillBonusText(skill),
+          // 技能类型标签放在加成那一行下面；范围内没有目标再加「无目标」（负责人 2026-11-22）【新】
+          tags: [...skillTags(skill), ...(usable && !hasTarget ? ['无目标'] : [])],
           enabled: usable,
           run: () => this.select({ kind: 'skill', u, skill }),
         })),

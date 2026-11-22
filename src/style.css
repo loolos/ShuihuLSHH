@@ -150,6 +150,16 @@ code { color: var(--ink); }
 #cmd button:disabled { opacity: 0.4; cursor: default; }
 #cmd button small { display: block; font-size: 12px; color: var(--muted); line-height: 1.3; }
 #cmd button.on small { color: #3a2c1c; }
+/* 技能类型标签（回旋 / 单体 / 远程 / 范围 / 回气 / 回复 / 无目标） */
+#cmd button .skill-tags, #cmd-float button .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
+.skill-tag { display: inline-block; padding: 0 4px; border-radius: 3px; font-size: 10px; line-height: 14px; color: #fff; white-space: nowrap; }
+.skill-tag-spin { background: #8a4fc0; }
+.skill-tag-single { background: #b8452f; }
+.skill-tag-ranged { background: #2f74b8; }
+.skill-tag-area { background: #c07a1a; }
+.skill-tag-charge { background: #b89a1a; }
+.skill-tag-heal { background: #3a9a4a; }
+.skill-tag-none { background: #6a6a6a; }
 #cmd { max-height: calc(100vh - 70px); overflow-y: auto; }
 #unit-panel .item-detail { margin-top: 6px; padding-top: 6px; border-top: 1px solid #4a3b29; max-width: 300px; }
 #unit-panel .item-detail b { color: var(--accent); }
@@ -303,6 +313,7 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
   #cmd-float { padding: 4px; gap: 3px; }
   #cmd-float button { font-size: 14px; min-width: 56px; min-height: 30px; padding: 2px 8px; }
   #cmd-float button small { font-size: 11px; max-width: 160px; }
+  .skill-tag { font-size: 9px; line-height: 13px; padding: 0 3px; }
   #cmd button { flex: 1 1 auto; min-width: 56px; min-height: 32px; font-size: 14px; text-align: center; padding: 2px 6px; }
   #dialog { bottom: 8px; padding: 8px 12px 22px; min-height: 90px; }
   #dialog-text, #dialog-who { font-size: 15px; }

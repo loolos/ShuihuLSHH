@@ -197,3 +197,30 @@ export function skillBonusText(s: SkillDef): string {
   if (s.stun) parts.push(`昏${s.stun}%`);
   return parts.join(' ');
 }
+
+/** 技能类型标签【新】（负责人 2026-11-22）：技能菜单里加成那一行下面的彩色小标签 */
+export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '无目标';
+
+const openBoard = { inBounds: () => true } as unknown as Board;
+
+/**
+ * 从技能数据推导标签（所有技能，含扩展包、关卡临时技能都自动有）：
+ * - 回气：集气 / 援气（类型 8）；回复：回复体力（类型 9 / 11）
+ * - 回旋：以施放者自身为中心（迴旋技类型 2、施放距离 0 的伤害技）
+ * - 远程：能在 2 格以外施放（施放距离上限 ≥ 2），或遠程技（类型 10）、穿透技
+ * - 范围 / 单体：在空地上按作用范围算格数，多于 1 格为范围，否则单体；回旋技不再另标范围
+ * 「无目标」是当下状态，由界面按范围内有没有目标另加。
+ */
+export function skillTags(s: SkillDef): SkillTag[] {
+  const tags: SkillTag[] = [];
+  const from = { x: 0, y: 0 };
+  const self = s.type === 2 || s.rangeMax <= 0;
+  const at = self ? from : { x: 0, y: -Math.max(1, s.rangeMin) };
+  const cells = areaCells(openBoard, from, s, at).length;
+  if (isChargeSkill(s)) return ['回气'];
+  if (isHealSkill(s)) tags.push('回复');
+  else if (self) tags.push('回旋');
+  if (!isSupportSkill(s) && (s.type === 10 || s.pierce || s.rangeMax >= 2)) tags.push('远程');
+  if (!tags.includes('回旋')) tags.push(cells > 1 ? '范围' : '单体');
+  return tags;
+}
