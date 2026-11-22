@@ -15,7 +15,7 @@ import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
-import { firstZone, inZone, mainArea, nextZone, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
+import { firstZone, inZone, mainArea, nextZone, openCells, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
 import { planRoyale, royaleHealSlot } from './royale-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import type { StageRules } from '../formats/stage-json.ts';
@@ -2565,7 +2565,10 @@ export class Battle {
 
   private setupRoyale() {
     const r = this.royaleRules!;
-    this.royaleArea = mainArea(this.board);
+    // 宝箱只刷在开阔的格子上（不刷到地图边上石头后面的角落）
+    const area = mainArea(this.board);
+    const open = openCells(this.board, area);
+    this.royaleArea = open.length ? open : area;
     // 参赛好汉不带药：随身物品栏清空，装备照等级表（编译关卡时配好）
     for (const u of this.units)
       if (u.team !== undefined && u.team !== NPC_TEAM)
@@ -2573,7 +2576,7 @@ export class Battle {
           u.slots[k] = 0;
           u.forge[k] = 0;
         }
-    this.royale = { zone: firstZone(this.royaleArea), next: null, shrinkAt: 1 + r.shrinkEvery, step: 0, out: [] };
+    this.royale = { zone: firstZone(area), next: null, shrinkAt: 1 + r.shrinkEvery, step: 0, out: [] };
     this.planShrink();
     this.spawnChests(r.chestStart, false);
   }
