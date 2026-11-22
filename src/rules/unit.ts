@@ -41,6 +41,8 @@ export interface Unit {
   hpMultiplier?: number;
   /** 按哪一方算属性（移动力的等级加成只给我方）；蹴鞠两队都按我方算，免得一边跑得快【新】 */
   statSide?: Side;
+  /** 各自为战的阵营号【新】（好汉聚义，§15.31）：设了的人只和同号的人一伙，不看 side */
+  team?: number;
   /** 潜行关里还没发现我方的哨兵【新】：被从背后打伤害 ×3、侧面 ×2（负责人 2026-11-19） */
   unaware?: boolean;
   mp: number;
@@ -187,6 +189,9 @@ export function inAttackRange(a: { x: number; y: number }, t: { x: number; y: nu
 export const resists = (u: Unit, stat: 'resistPoison' | 'resistStun') => u.buffs.some((b) => b.stat === stat);
 
 export const isFoe = (a: Side, b: Side) => (a === 'enemy') !== (b === 'enemy');
+/** 两人是不是对头：都设了阵营号（各自为战，§15.31）就比阵营号，否则按 side */
+export const hostile = (a: { side: Side; team?: number }, b: { side: Side; team?: number }) =>
+  a.team !== undefined && b.team !== undefined ? a.team !== b.team : isFoe(a.side, b.side);
 export const dist = (a: { x: number; y: number }, b: { x: number; y: number }) => Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
 
 /** 从 a 看向 b 的朝向（取差值较大的轴） */

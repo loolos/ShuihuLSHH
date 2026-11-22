@@ -3311,6 +3311,7 @@
     "stages/fachang.json",
     "stages/bailongmiao.json", "stages/wuweijun.json", "stages/jiehuang.json", "stages/banqu.json", "stages/huandaocun.json", "stages/tuanyuan.json", "stages/yiling.json", "stages/caozhuang.json", "stages/zhufu.json",
     "stages/yinmachuan.json", "stages/changjie.json", "stages/jieyi.json", "stages/shapeiruhai.json", "stages/cuipingshan.json", "stages/zhujiadian.json",
-    "stages/cuju.json"
+    "stages/cuju.json",
+    "stages/juyi.json"
   ]
 }

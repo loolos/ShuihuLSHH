@@ -187,6 +187,15 @@ export interface PackStageJson {
   map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][]; /** 封死的格子（关着的大门），剧本 ["unseal", 格子] 打开【新】（智取无为军） */ seal?: [number, number][] };
   /** 蹴鞠关（§15.25）【新】：攻击只能踢球；球场、球门、开球点、几球获胜、回合数 */
   cuju?: import('../rules/cuju.ts').CujuRules;
+  /**
+   * 好汉聚义（吃鸡，§15.31）【新】：玩家从出场过的好汉里选一人，另外随机 opponents 人，各自为战，活到最后获胜。
+   * 参赛好汉和小头目在开打前按地图自动摆（src/packs/royale.ts），units 里只写别的东西（通常为空）。
+   * 道具写原版道具号或本包道具 id；小头目的职业写原版职业号或本包职业 id。
+   */
+  royale?: Omit<import('../rules/royale.ts').RoyaleRules, 'chestItems' | 'npcs'> & {
+    chestItems: (number | string)[];
+    npcs: { classes: (number | string)[]; count: number; level: number; drops: (number | string)[] };
+  };
   /** 主线包里的独立外传【新】：不进章节表，列在选关的「外传」组，等级固定、不碰主线存档（蹴鞠） */
   sideStory?: boolean;
   /**
@@ -250,6 +259,8 @@ export interface PackUnitJson {
   skills?: (string | number)[];
   /** 显示的名字，不填用职业名 */
   name?: string;
+  /** 各自为战的阵营号【新】（好汉聚义）：设了的人只和同号的人一伙、不看 side；参赛好汉各自一号，小头目共用 -1 */
+  team?: number;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */
   items?: (number | string)[];
 }

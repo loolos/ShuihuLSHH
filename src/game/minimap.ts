@@ -35,6 +35,16 @@ export function zoneCorners(z: { x1: number; y1: number; x2: number; y2: number 
   return [at(z.x1 - 0.5, z.y1 - 0.5), at(z.x2 + 0.5, z.y1 - 0.5), at(z.x2 + 0.5, z.y2 + 0.5), at(z.x1 - 0.5, z.y2 + 0.5)];
 }
 
+/** 毒圈（格子坐标的圆，圆心 + 半径，多算半格同 royale.ts inZone）在世界坐标里的一圈点（等距投影后是个扁椭圆） */
+export function ringPoints(z: { x: number; y: number; r: number }, n = 72) {
+  const out: { x: number; y: number }[] = [];
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2, gx = z.x + (z.r + 0.5) * Math.cos(a), gy = z.y + (z.r + 0.5) * Math.sin(a);
+    out.push({ x: (gx - gy) * HALF_W, y: (gx + gy) * HALF_H });
+  }
+  return out;
+}
+
 export interface MiniLayout {
   /** 世界坐标 → 小地图像素的缩放 */
   scale: number;
@@ -204,12 +214,43 @@ export class Minimap {
   }
 
   /** 每帧：目标区域、人物、宝物、镜头范围（世界坐标矩形） */
-  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }, zones: MiniZone[] = [], fire: readonly { x: number; y: number }[] = []) {
+  draw(marks: MiniMark[], view: { x: number; y: number; width: number; height: number }, zones: MiniZone[] = [], fire: readonly { x: number; y: number }[] = [], ring: { zone: { x: number; y: number; r: number }; next: { x: number; y: number; r: number } | null } | null = null) {
     if (!this.open) return;
     const l = this.layout;
     const g = this.top.getContext('2d')!;
     g.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     g.clearRect(0, 0, l.width, l.height);
+    // 好汉聚义的毒圈【新】：地图范围里圈外的部分染紫，现在的圈紫线、下一个圈白线
+    if (ring) {
+      const poly = (pts: { x: number; y: number }[]) => pts.map((p) => worldToMini(l, p.x, p.y)).forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
+      const map = zoneCorners({ x1: 0, y1: 0, x2: this.src.width - 1, y2: this.src.height - 1 });
+      g.save();
+      g.beginPath();
+      poly(map);
+      g.closePath();
+      g.clip();
+      g.beginPath();
+      poly(map);
+      g.closePath();
+      poly(ringPoints(ring.zone));
+      g.closePath();
+      g.fillStyle = 'rgba(160,80,240,0.35)';
+      g.fill('evenodd');
+      g.restore();
+      const line = (z: { x: number; y: number; r: number }, color: string) => {
+        g.beginPath();
+        poly(ringPoints(z));
+        g.closePath();
+        g.lineWidth = 3;
+        g.strokeStyle = 'rgba(0,0,0,0.6)';
+        g.stroke();
+        g.lineWidth = 1.5;
+        g.strokeStyle = color;
+        g.stroke();
+      };
+      line(ring.zone, '#b070ff');
+      if (ring.next) line(ring.next, '#ffffff');
+    }
     // 着火的格子【新】（火烧草料场）：橙红色
     if (fire.length) {
       g.fillStyle = 'rgba(255,96,16,0.75)';

@@ -60,7 +60,7 @@ export const CRIT_HALF = 70;
 /** 敌方名将（不是杂兵、小头目模板的敌方人物）计算必杀率时 x 打八折【新】（负责人 2026-11-13："适当调低敌方英雄的必杀率"） */
 export const ENEMY_HERO_CRIT = 0.8;
 
-export const isEnemyHero = (u: Unit): boolean => u.side === 'enemy' && !GRUNT_CLASSES.has(u.classId) && !OFFICER_CLASSES.has(u.classId);
+export const isEnemyHero = (u: Unit): boolean => u.side === 'enemy' && u.team === undefined && !GRUNT_CLASSES.has(u.classId) && !OFFICER_CLASSES.has(u.classId);
 
 export function critChance(att: Unit, skill: SkillDef): number {
   const x = Math.max(0, att.stats.crit + skill.critMod) * (isEnemyHero(att) ? ENEMY_HERO_CRIT : 1);

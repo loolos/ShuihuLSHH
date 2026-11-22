@@ -112,8 +112,8 @@ export class BattleUI {
   }
 
   /** 全队经验池（击倒经验的 35%，胜利后结算）【新】（负责人 2026-11-13） */
-  setTeamExp(n: number) {
-    $('team-exp').textContent = `全队经验 ${n}`;
+  setTeamExp(n: number | null) {
+    $('team-exp').textContent = n === null ? '' : `全队经验 ${n}`;
   }
 
   setEndTurnEnabled(on: boolean) {
@@ -284,6 +284,69 @@ export class BattleUI {
   }
   hideResult() {
     $('result').hidden = true;
+  }
+
+  /**
+   * 好汉聚义选将【新】（§15.31）：借选人面板，列出全部可选的好汉（30 级时的属性），点一个再按「出战」；「随机」随便挑一个。
+   * preset：默认选中的（上次选的）。返回选中的职业号。
+   */
+  pickHero(heroes: { classId: number; name: string; hp: number; attack: number; defense: number; move: number; skills: number }[], preset?: number): Promise<number> {
+    let chosen = heroes.some((h) => h.classId === preset) ? preset! : heroes[0].classId;
+    const list = $('unit-pick-list');
+    const ok = $<HTMLButtonElement>('unit-pick-ok');
+    $('unit-pick-title').textContent = '好汉聚义 · 选一位好汉';
+    $('unit-pick-hint').textContent = `共 ${heroes.length} 位出场过的好汉；另外随机 15 位做对手，各自为战，活到最后获胜。`;
+    const cards = heroes.map((h) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      const face = this.portrait(h.classId);
+      const [nick, bare] = splitNickname(this.tr(h.name), this.extraNicknames);
+      b.innerHTML = `${face ? `<img alt="" src="${face}">` : ''}<span><b>${nick ? `<small style="display:inline">${esc(nick)} </small>` : ''}${esc(bare)}</b>
+        <small><i>体 ${h.hp}</i> <i>攻 ${h.attack}</i> <i>防 ${h.defense}</i></small><small><i>移 ${h.move}</i> <i>招式 ${h.skills}</i></small></span>`;
+      b.dataset.cls = String(h.classId);
+      b.onclick = (e) => {
+        e.stopPropagation();
+        chosen = h.classId;
+        void sound.sfx('m01');
+        refresh();
+      };
+      return b;
+    });
+    const random = document.createElement('button');
+    random.type = 'button';
+    random.textContent = '随机';
+    random.id = 'unit-pick-random';
+    const refresh = () => {
+      for (const b of cards) b.classList.toggle('on', Number(b.dataset.cls) === chosen);
+      ok.disabled = false;
+    };
+    list.replaceChildren(...cards);
+    ok.textContent = '出战';
+    // 「随机」和「出战」并排（结束后把「确定」放回原处）
+    const row = document.createElement('div');
+    row.id = 'unit-pick-row';
+    ok.before(row);
+    row.append(random, ok);
+    refresh();
+    cards.find((b) => Number(b.dataset.cls) === chosen)?.scrollIntoView({ block: 'nearest' });
+    $('unit-pick').hidden = false;
+    return new Promise((r) => {
+      const done = (id: number) => {
+        $('unit-pick').hidden = true;
+        row.before(ok);
+        row.remove();
+        ok.textContent = '确定';
+        r(id);
+      };
+      ok.onclick = (e) => {
+        e.stopPropagation();
+        done(chosen);
+      };
+      random.onclick = (e) => {
+        e.stopPropagation();
+        done(heroes[Math.floor(Math.random() * heroes.length)].classId);
+      };
+    });
   }
 
   /**

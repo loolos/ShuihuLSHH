@@ -14,7 +14,7 @@ import { music } from './music.ts';
 import { attackSkill, type Unit } from '../rules/unit.ts';
 import { ensureSkill, frameToCanvas, prefetchSkills, type Assets } from './assets.ts';
 import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
-import { Minimap, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
+import { Minimap, ringPoints, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
 import { dirIndex, FIXED_FX, FX_BLAZE, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
@@ -27,6 +27,7 @@ import type { BattleUI, Command } from './ui.ts';
 import { prisonCartCanvas } from './prison-cart.ts';
 import { packFaceUrl } from './packs.ts';
 import { CujuView } from './cuju-view.ts';
+import { inZone, NPC_TEAM, type Zone } from '../rules/royale.ts';
 import type { KickPreview } from '../rules/battle.ts';
 
 export interface BattleSceneData {
@@ -70,6 +71,8 @@ const APPEAR_SPREAD_MS = 400;
 const PHASE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 // 友军墨绿（负责人 2026-11-13：原来的蓝色和经验条太像）
 const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as const;
+/** 好汉聚义的毒圈颜色 */
+const POISON_COLOR = 0xa050f0;
 /** 胜负条件区域的颜色【新】：撤退出口青色、敌人逃跑出口品红，和阵营色、宝箱黄都分得开 */
 const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' } } as const;
 const MP_COLOR = 0xe0c040;
@@ -123,11 +126,16 @@ export class BattleScene extends Phaser.Scene {
   private overlay!: Phaser.GameObjects.Graphics;
   /** 地图上的撤退出口等区域（Battle.objectiveZones），变了才重画 */
   private zoneG!: Phaser.GameObjects.Graphics;
+  /** 好汉聚义的毒圈（圈外紫色、现在的圈紫线、下一个圈白线） */
+  private ringG!: Phaser.GameObjects.Graphics;
   private zoneSig = '';
   private zones: MiniZone[] = [];
   /** 火势蔓延【新】：着火的格子和格子上的火焰 */
   private fireCells: Cell[] = [];
   private fireSprites = new Map<string, Phaser.GameObjects.Sprite>();
+  /** 好汉聚义：画面上的毒圈（跟着回放走，'zone' 事件更新） */
+  private ring: { zone: Zone; next: Zone | null } | null = null;
+  private ringSig = '';
   private minimap: Minimap | null = null;
   private hoverG!: Phaser.GameObjects.Graphics;
   private mode: Mode = { kind: 'idle' };
@@ -182,6 +190,8 @@ export class BattleScene extends Phaser.Scene {
     this.fast = false;
     this.cujuView = null;
     this.playingSide = 'player';
+    this.ring = null;
+    this.ringSig = '';
   }
 
   create() {
@@ -226,6 +236,7 @@ export class BattleScene extends Phaser.Scene {
         });
       }
     this.zoneG = this.add.graphics().setDepth(-1.5);
+    this.ringG = this.add.graphics().setDepth(-1.6);
     this.zoneSig = '';
     this.overlay = this.add.graphics().setDepth(-1);
     this.hoverG = this.add.graphics().setDepth(-0.5);
@@ -237,6 +248,7 @@ export class BattleScene extends Phaser.Scene {
     this.syncSeals();
     this.drawChests();
     this.placeBall();
+    this.ring = this.battle.royale && { zone: this.battle.royale.zone, next: this.battle.royale.next };
     for (const u of this.battle.units) if (u.present) this.spawn(u);
 
     // 相机：可拖动范围覆盖整张地图
@@ -299,6 +311,11 @@ export class BattleScene extends Phaser.Scene {
 
   /** 顶栏：回合、阶段，蹴鞠关加上比分 */
   private setTurn(turn: number, limit: number, phase: string) {
+    // 好汉聚义：剩几人、几回合后缩圈
+    if (this.battle.royale) {
+      const cd = this.battle.royaleCountdown();
+      return this.ui.setTurn(turn, limit, `${phase}　剩 ${this.battle.royaleHeroes().length} 人　${cd === null ? '最后一圈' : cd <= 1 ? '下回合缩圈' : `${cd} 回合后缩圈`}`);
+    }
     const c = this.battle.cuju;
     if (!c) return this.ui.setTurn(turn, limit, phase);
     const extra = turn > c.rules.turns ? '（加时）' : '';
@@ -307,17 +324,20 @@ export class BattleScene extends Phaser.Scene {
 
   /** 地图上还没被拾起的宝物画成宝箱 */
   private drawChests() {
+    for (const g of this.battle.items) if (!g.hidden) this.addChest(g);
+  }
+
+  /** 画一个宝箱（好汉聚义开打后也会冒出来） */
+  private addChest(g: { x: number; y: number; item: number }) {
     const chest = this.assets.grid.frame(4);
     const chestKey = textureFor(this, 'grid:4', () => frameToCanvas(chest, this.assets.palette));
-    for (const g of this.battle.items) {
-      if (g.hidden || !itemOf(this.assets.data, g.item)) continue;
-      const p = cellToWorld(g.x, g.y);
-      const img = this.add
-        .image(p.x, p.y, chestKey)
-        .setOrigin(chest.anchorX / Math.max(1, chest.width), chest.anchorY / Math.max(1, chest.height))
-        .setDepth(depthOf(g.x, g.y, 7));
-      this.groundItems.set(`${g.x},${g.y}`, img);
-    }
+    if (!itemOf(this.assets.data, g.item) || this.groundItems.has(`${g.x},${g.y}`)) return;
+    const p = cellToWorld(g.x, g.y);
+    const img = this.add
+      .image(p.x, p.y, chestKey)
+      .setOrigin(chest.anchorX / Math.max(1, chest.width), chest.anchorY / Math.max(1, chest.height))
+      .setDepth(depthOf(g.x, g.y, 7));
+    this.groundItems.set(`${g.x},${g.y}`, img);
   }
 
   // ───────────── 单位精灵 ─────────────
@@ -650,6 +670,7 @@ export class BattleScene extends Phaser.Scene {
   update() {
     this.placeFloat();
     this.drawZones();
+    this.drawRing();
     this.drawMinimap();
     this.syncGhosts();
   }
@@ -729,6 +750,25 @@ export class BattleScene extends Phaser.Scene {
           if (watcherSees(w, { x, y }, w.r) && this.battle.board.passable(x, y)) this.diamond(g, { x, y }, w.spotted ? 0xff4040 : 0xffd040, 0.2);
   }
 
+  /** 好汉聚义的毒圈【新】：圈外的格子染紫，现在的圈画紫线，下一个圈（提前公布）画白线；变了才重画 */
+  private drawRing() {
+    const r = this.ring;
+    const sig = r ? JSON.stringify(r) : '';
+    if (sig === this.ringSig) return;
+    this.ringSig = sig;
+    const g = this.ringG.clear();
+    if (!r) return;
+    const b = this.battle.board;
+    for (let y = 0; y < b.height; y++) for (let x = 0; x < b.width; x++) if (b.onGround(x, y) && !inZone(r.zone, { x, y })) this.diamond(g, { x, y }, POISON_COLOR, 0.3);
+    const circle = (z: Zone, color: number, width: number) => {
+      const pts = ringPoints(z).map((p) => new Phaser.Math.Vector2(p.x, p.y));
+      g.lineStyle(width + 3, 0x000000, 0.45).strokePoints(pts, true);
+      g.lineStyle(width, color, 0.95).strokePoints(pts, true);
+    };
+    circle(r.zone, POISON_COLOR, 3);
+    if (r.next) circle(r.next, 0xffffff, 2);
+  }
+
   /** 小地图上的人物（按画面上的位置，回放期间跟着动）、宝箱和镜头范围 */
   private drawMinimap() {
     const mm = this.minimap;
@@ -743,11 +783,12 @@ export class BattleScene extends Phaser.Scene {
     const units = this.battle.units.filter((u) => this.sprites.has(u.uid)).sort((a, b) => order[a.side] - order[b.side]);
     for (const u of units) {
       const v = this.vs(u);
-      marks.push({ x: v.x, y: v.y, color: `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
+      // 好汉聚义的小头目画成橙色，和对手好汉分开
+      marks.push({ x: v.x, y: v.y, color: u.team === NPC_TEAM ? '#f0a030' : `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
     }
     // 蹴鞠：球画成白点
     if (this.cujuView) marks.push({ x: this.cujuView.cell.x, y: this.cujuView.cell.y, color: '#ffffff' });
-    mm.draw(marks, this.cameras.main.worldView, this.zones, this.fireCells);
+    mm.draw(marks, this.cameras.main.worldView, this.zones, this.fireCells, this.ring);
   }
 
   private commands(m: Mode): Command[] | null {
@@ -925,6 +966,7 @@ export class BattleScene extends Phaser.Scene {
     this.syncSeals();
     this.drawChests();
     this.placeBall();
+    this.ring = b.royale && { zone: b.royale.zone, next: b.royale.next };
     for (const u of b.units) if (u.present && u.alive) this.spawn(u);
     this.endSound = false;
     this.ui.message(`时光倒流：回到第 ${turn} 回合开始。`);
@@ -1152,6 +1194,12 @@ export class BattleScene extends Phaser.Scene {
       case 'fire':
         this.syncFire(e.cells, true);
         break;
+      case 'chest':
+        this.addChest(e);
+        break;
+      case 'zone':
+        this.ring = { zone: e.zone, next: e.next };
+        break;
       case 'flourish':
         break;
       case 'shot': {
@@ -1260,7 +1308,7 @@ export class BattleScene extends Phaser.Scene {
       for (const [uid, s] of this.sprites) s.cart?.setVisible(this.battle.isBound(this.battle.unit(uid)!));
       const b = this.battle;
       this.setTurn(b.turn, b.turnLimit, PHASE_NAME[b.phase]);
-      this.ui.setTeamExp(b.teamExp);
+      this.ui.setTeamExp(b.royale ? null : b.teamExp); // 好汉聚义不涨经验
       this.ui.setEndTurnEnabled(b.status === 'playing' && b.phase === 'player');
       this.ui.setRewind(b.rewindTarget());
       if (this.mode.kind !== 'idle' || b.cuju) this.redraw();
@@ -1962,6 +2010,13 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'fire':
         this.syncFire(e.cells, this.fast);
+        break;
+      case 'chest':
+        this.addChest(e);
+        break;
+      case 'zone':
+        this.ring = { zone: e.zone, next: e.next };
+        if (!this.fast) this.cameras.main.flash(250, 120, 40, 160);
         break;
       case 'gust':
         if (!this.fast) await this.gust(e.x, e.y, e.radius, e.style);

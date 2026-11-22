@@ -39,6 +39,7 @@
 | `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
 | `node --experimental-transform-types tools/check-facing.ts [--side] [--fix]` | 查关卡开场朝向：开场就在场上的人背对最近的对手就列出来（扩展包关卡、改过的原版关卡；原版本来的朝向、潜行哨兵不算），`--fix` 直接改 JSON（负责人 2026-11-21：士兵要看着要抓的人） |
 | `node --experimental-transform-types tools/sim-cuju.ts [局数]` | 蹴鞠外传试打：双方都交给蹴鞠 AI，打印胜率、比分、出界 / 拦截次数（§15.25） |
+| `node --experimental-transform-types tools/sim-royale.ts [局数] [玩家职业号]` | 好汉聚义（吃鸡外传）试打：玩家也交给吃鸡 AI，打印吃鸡率、名次、回合数、毒死 / 开宝箱数（§15.31；`WATCH=1` 玩家倒下后打完整局） |
 | `node --experimental-transform-types tools/charge-anim.ts [--all]` | 列出所有职业（原版 + 扩展包）集气技的施放时长（默认只列被加快的） |
 | `npm run i18n -- ids\|sync\|check …` | 多语言（`docs/game-design.md` §10.3）：给关卡剧本文字分配固定编号、同步 `gamedata/lang/<语言>/` 的译文文件、列出未翻 / 过期句数 |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |

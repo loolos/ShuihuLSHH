@@ -50,9 +50,9 @@ function consider(b: Battle, choice: Choice, option: Option, compare: (a: Option
  * 扫描所有合法移动落点、已学会且气力足够的攻击技和施放点。
  * 30%：预计击倒人数 → 期望伤害 → 目标体力低 → 初始距离近。
  * 70%：范围攻击覆盖人数 → 期望总伤害，同分随机；仅单体可用时先等概率抽目标，再选高伤招式。
- * 治疗、跟随、警戒及脚本指定目标等约束仍由外层模式控制。
+ * 治疗、跟随、警戒及脚本指定目标等约束仍由外层模式控制。standOk：只考虑这些出手位置。
  */
-export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move): AiPlan | null {
+export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.move, standOk?: (c: Cell) => boolean): AiPlan | null {
   const legacy = b.rng.chance(LEGACY_ATTACK_PERCENT);
   const reach = b.reachOf(u, budget);
   const basic = attackSkill(u, b.data);
@@ -69,6 +69,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
     || c.target.hp - a.target.hp || dist(u, c.target) - dist(u, a.target) || Number(a.pref) - Number(c.pref);
 
   for (const n of reach.values()) {
+    if (standOk && !standOk(n)) continue; // 只从这些格子出手（吃鸡：不站到毒圈外）
     const at = { x: n.x, y: n.y };
     const self = { ...u, x: n.x, y: n.y };
     for (const skill of skills)
@@ -143,7 +144,7 @@ function healIfLow(b: Battle, u: Unit): AiPlan | null {
 }
 
 /** 体力低于一半时用回复技（原地施放）【新】 */
-function healSkill(b: Battle, u: Unit): AiPlan | null {
+export function healSkill(b: Battle, u: Unit): AiPlan | null {
   if (u.hp >= u.stats.maxHp / 2) return null;
   const s = learnedSkills(u, b.data).find((k) => isHealSkill(k) && k.mpCost <= u.mp);
   const cell = s && b.skillTargets(u, s).find((c) => b.affected(u, s, c).includes(u));
@@ -151,7 +152,7 @@ function healSkill(b: Battle, u: Unit): AiPlan | null {
 }
 
 /** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
-function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
+export function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
   if (plan.skill || u.mp >= u.stats.maxMp / 2) return plan;
   const s = learnedSkills(u, b.data).find(isSelfChargeSkill);
   if (!s) return plan;
