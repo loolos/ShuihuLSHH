@@ -285,8 +285,8 @@ export type PackTrigger =
   | { near: string; by?: string; playerPhase?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
   | { flag: string }
-  /** 目标生命低于最大值的 below%（可配 if / unless） */
-  | { hp: string; below: number }
+  /** 目标生命低于最大值的 below%（可配 if / unless）；spare = 区块没执行时这人挨打至少留 1 点体力，不会在触发前被一下打死 */
+  | { hp: string; below: number; spare?: boolean }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number }
   /** 这个人刚做了某个操作（教学关，§15.26）：只看操作发生那一刻，可配 if / unless */

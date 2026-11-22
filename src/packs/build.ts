@@ -479,7 +479,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
   } else if ('hp' in on) {
     const target = r.unitRef(on.hp).act;
-    trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below };
+    trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below, ...(on.spare ? { spare: true } : {}) };
   } else if ('did' in on) {
     if (!DID_ACTIONS.includes(on.action)) fail(`第 ${index} 个区块：did 的操作只能是 ${DID_ACTIONS.join(' / ')}`);
     const who = r.unitRef(on.did).act;

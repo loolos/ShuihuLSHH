@@ -533,7 +533,8 @@
   {
    "on": {
     "hp": "dengfei",
-    "below": 30
+    "below": 30,
+    "spare": true
    },
    "unless": "met",
    "do": [
