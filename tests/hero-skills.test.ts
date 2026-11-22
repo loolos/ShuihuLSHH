@@ -48,7 +48,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     }
   });
   it('武松普攻2段、重拳3段、鸳鸯4段：动画真正循环相应次数，命中各落在一次出拳内',()=> {
-    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,50,40],['擒虎镇岳LV2',4,60,50],['擒虎镇岳LV3',5,70,60],['玉环鸳鸯脚',4,40,55]] as const) {
+    for(const [name,cycles,power,cost] of [['伏虎拳',2,0,0],['擒虎镇岳LV1',3,53,40],['擒虎镇岳LV2',4,65,50],['擒虎镇岳LV3',5,78,60],['玉环鸳鸯脚',4,45,55]] as const) {
       const s=skill('wusong',name),look=main.looks.get(main.classIds.get('wusong')!)!;
       const action=main.sheets[look.sheet].actions[look.actions[s.group+3]];
       expect(attackParts(s)).toHaveLength(cycles);expect(s).toMatchObject({power,mpCost:cost});
@@ -93,7 +93,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     const b=battle('likui');b.begin();const u=b.units[0],s=skill('likui','裂石连斩');
     b.units[1].x=12;b.units[1].y=10;b.units[2].x=12;b.units[2].y=11;
     expect(b.skillTargets(u,s)).toContainEqual({x:12,y:10});expect(b.affected(u,s,{x:12,y:10})).toHaveLength(1);
-    expect(s).toMatchObject({rangeMax:2,power:25,mpCost:30,stun:30});expect(attackParts(s)).toHaveLength(2);
+    expect(s).toMatchObject({rangeMax:2,power:30,mpCost:30,stun:30,hitMod:0});expect(attackParts(s)).toHaveLength(2);
     expect(areaCells(board,from,skill('likui','旋风卷岳'),{x:16,y:15})).toHaveLength(4);
     u.mp=0;const charge=skill('likui','沉息蓄锋');b.useSkill(u,charge,u);expect(u.mp).toBe(Math.floor(u.stats.maxMp/2));
   });

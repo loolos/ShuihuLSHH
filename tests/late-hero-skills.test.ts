@@ -18,7 +18,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
   const d=loadPackFromDisk(pack).data,tiers=d.classes[16].skills.filter(s=>s.skillId===135||[1306,1307,1308].includes(s.skillId));
   expect(tiers).toHaveLength(4);
   tiers.forEach((s,i)=>{
-   expect(s).toMatchObject({learnLevel:[4,14,22,30][i],power:20+i*5,mpCost:40+i*10,hitMod:i*5,critMod:5+i*5,poison:0,stun:0,soundId:135});
+   expect(s).toMatchObject({learnLevel:[4,14,22,30][i],power:[20,26,33,39][i],mpCost:40+i*10,hitMod:0,critMod:5+i*5,poison:0,stun:0,soundId:135});
    expect(attackParts(s)).toHaveLength(i+1);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
    const center={x:10,y:10},cells=areaCells(board,center,s,center);
    const expected=Array.from({length:i+1},(_,k)=>k+1).flatMap(n=>[{x:10+n,y:10},{x:10-n,y:10},{x:10,y:10+n},{x:10,y:10-n}]);
@@ -50,7 +50,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
  });
  it('晁盖29级远程大十字9格，三段100%伤害，10%昏迷且不重复加回气',()=>{
   const c=data.classes[12],s=c.skills.find(s=>s.name==='天王震岳')!;
-  expect(s).toMatchObject({skillId:1213,learnLevel:29,rangeMin:2,rangeMax:5,mpCost:105,power:20,hitMod:5,critMod:-5,stun:10,poison:0,damageScale:1,targetShape:'diamond',fxTint:0xffcc66});
+  expect(s).toMatchObject({skillId:1213,learnLevel:29,rangeMin:2,rangeMax:5,mpCost:105,power:21,hitMod:0,critMod:-5,stun:10,poison:0,damageScale:1,targetShape:'diamond',fxTint:0xffcc66});
   expect(s.hits.map(h=>h.percent)).toEqual([30,30,40]);
   expect(c.skills.filter(s=>s.type===8)).toHaveLength(1);
   expect(areaCells(board,{x:10,y:15},s,{x:10,y:10}).map(c=>`${c.x},${c.y}`).sort()).toEqual(['10,10','9,10','8,10','11,10','12,10','10,9','10,8','10,11','10,12'].sort());

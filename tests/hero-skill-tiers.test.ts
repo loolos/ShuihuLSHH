@@ -9,12 +9,12 @@ import type { Unit } from '../src/rules/unit.ts';
 describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('黑虎偷心与生不如死三级',()=>{
  const data=loadPackFromDisk('mainline').data;
  for(const [cls,name,levels,powers,costs,counts]of [
-  [13,'黑虎偷心',[8,20,28],[40,55,75],[20,30,40],[2,3,4]],
-  [9,'生不如死',[24,27,30],[40,60,80],[20,30,40],[3,4,5]],
+  [13,'黑虎偷心',[8,20,28],[40,56,78],[20,30,40],[2,3,4]],
+  [9,'生不如死',[24,27,30],[40,61,83],[20,30,40],[3,4,5]],
  ]as const){
   it(`${name}原等级起逐阶替换，威力/耗气/段数递增且范围不变`,()=>{
    const skills=data.classes[cls].skills.filter(s=>s.name.startsWith(name));expect(skills).toHaveLength(3);
-   expect(skills.map(s=>s.learnLevel)).toEqual(levels);expect(skills.map(s=>s.power)).toEqual(powers);expect(skills.map(s=>s.mpCost)).toEqual(costs);expect(skills.map(s=>s.hits.length)).toEqual(counts);expect(skills.map(s=>s.hitMod)).toEqual([0,5,10]);
+   expect(skills.map(s=>s.learnLevel)).toEqual(levels);expect(skills.map(s=>s.power)).toEqual(powers);expect(skills.map(s=>s.mpCost)).toEqual(costs);expect(skills.map(s=>s.hits.length)).toEqual(counts);expect(skills.map(s=>s.hitMod)).toEqual([0,0,0]);
    const u={classId:cls,level:1,x:10,y:10,facing:0,side:'player',stats:{attack:150,crit:10,rangeBonus:0}}as Unit;
    const t={...u,x:10,y:9,stats:{...u.stats,defense:100}};
    let damage=0;
