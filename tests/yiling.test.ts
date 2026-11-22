@@ -117,6 +117,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     expect(get('a2').ai.mode).toBe(0);
     expect(get('c1').ai.mode).toBe(0);
     expect(get('caotaigong').ai.mode).toBe(4);
+    // 一开打两个酒保就退场
+    expect([get('jiubao1').present, get('jiubao2').present]).toEqual([false, false]);
   });
 
   it('李云只喝朱富劝的酒，还要推辞一次，喝了只麻翻两回合', () => {

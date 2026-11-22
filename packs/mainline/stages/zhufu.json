@@ -740,6 +740,31 @@
     },
     {
       "on": {
+        "flag": "alarm"
+      },
+      "do": [
+        [
+          "say",
+          "jiubao1",
+          "动刀子了！小的们只会筛酒，主人家，俺们先躲一躲！"
+        ],
+        [
+          "say",
+          "jiubao2",
+          "等等俺——酒钱回头再算！"
+        ],
+        [
+          "leave",
+          "jiubao1"
+        ],
+        [
+          "leave",
+          "jiubao2"
+        ]
+      ]
+    },
+    {
+      "on": {
         "turn": 6
       },
       "if": "liyun-out",
