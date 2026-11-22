@@ -80,7 +80,8 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
   if(cls===0&&[4,5,6].includes(s.skillId)){
    const tier=s.skillId-4;
    const two=[{frame:8,percent:50,dir:0},{frame:12,percent:50,dir:0}];
-   const updated={...s,hitMod:5*(tier+1),hits:tier===2?two:s.hits};
+   // LV3、LV4 可选周围 8 格（含斜向），斜着放时一线也斜着走（负责人 2026-11-22）
+   const updated={...s,hitMod:5*(tier+1),hits:tier===2?two:s.hits,targetShape:tier===2?'eight' as const:undefined};
    if(tier!==2)return [updated];
    return [updated,{...updated,skillId:1310,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
     learnLevel:22,mpCost:150,power:65,area:9,hitMod:20,hits:two.map(h=>({...h}))}];

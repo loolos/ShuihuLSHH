@@ -88,13 +88,16 @@ export function castCells(board: Board, at: Cell, [lo, hi]: [number, number], sh
   }
   const out: Cell[] = [];
   if (lo === 0) out.push({ x: at.x, y: at.y });
-  for (const d of DIRS)
+  for (const d of shape === 'eight' ? [...DIRS, ...DIAGONALS] : DIRS)
     for (let k = Math.max(1, lo); k <= hi; k++) {
       const x = at.x + d.x * k, y = at.y + d.y * k;
       if (board.inBounds(x, y)) out.push({ x, y });
     }
   return out;
 }
+
+/** 四个斜方向（targetShape 'eight' 用） */
+const DIAGONALS = [{ x: -1, y: -1 }, { x: 1, y: -1 }, { x: -1, y: 1 }, { x: 1, y: 1 }];
 
 /** 穿透技（SkillDef.pierce）的直线长度：至少 area 格；装备射程让施放点更远时延长到施放点 */
 export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): number {
@@ -127,9 +130,13 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
     case 0:
     case 5:
     case 6:
-    case 10:
-      for (let i = 0; i < size; i++) add(at.x + dir.x * i, at.y + dir.y * i);
+    case 10: {
+      // 八向选点的技能选在斜线上时，线也斜着走（武龍 千軍萬馬LV3/LV4，负责人 2026-11-22）
+      const dx = at.x - from.x, dy = at.y - from.y;
+      const step = s.targetShape === 'eight' && dx && Math.abs(dx) === Math.abs(dy) ? { x: Math.sign(dx), y: Math.sign(dy) } : dir;
+      for (let i = 0; i < size; i++) add(at.x + step.x * i, at.y + step.y * i);
       break;
+    }
     case 1:
       for (let i = 0; i < size; i++) {
         const cx = at.x + dir.x * i, cy = at.y + dir.y * i;
