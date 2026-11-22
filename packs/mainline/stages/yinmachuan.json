@@ -1,0 +1,832 @@
+{
+ "id": "yinmachuan",
+ "title": "饮马川",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 500
+ },
+ "map": {
+  "base": "N-add03",
+  "crop": [
+   6,
+   8,
+   22,
+   22
+  ]
+ },
+ "bgm": [
+  "battle",
+  "rock"
+ ],
+ "units": [
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 4,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "name": "武龙"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 3,
+   "y": 18,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 5,
+   "y": 18,
+   "level": 30,
+   "facing": 0,
+   "name": "林冲"
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "side": "player",
+   "x": 4,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "name": "锦豹子杨林"
+  },
+  {
+   "id": "peixuan",
+   "class": 36,
+   "side": "ally",
+   "x": 11,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "name": "铁面孔目裴宣",
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "enemy",
+   "x": 8,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "火眼狻猊邓飞",
+   "levelOffset": 2,
+   "hpMultiplier": 2
+  },
+  {
+   "id": "a1",
+   "class": 44,
+   "side": "enemy",
+   "x": 7,
+   "y": 2,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a2",
+   "class": 45,
+   "side": "enemy",
+   "x": 8,
+   "y": 2,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a3",
+   "class": 44,
+   "side": "enemy",
+   "x": 9,
+   "y": 2,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a4",
+   "class": 45,
+   "side": "enemy",
+   "x": 7,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a5",
+   "class": 44,
+   "side": "enemy",
+   "x": 9,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a6",
+   "class": 34,
+   "side": "enemy",
+   "x": 8,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "a7",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "name": "邓飞亲随",
+   "levelOffset": 0
+  },
+  {
+   "id": "mengkang",
+   "class": 55,
+   "side": "enemy",
+   "x": 20,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "玉幡竿孟康",
+   "levelOffset": 0,
+   "hpMultiplier": 1.3,
+   "hidden": true
+  },
+  {
+   "id": "b1",
+   "class": 44,
+   "side": "enemy",
+   "x": 19,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "b2",
+   "class": 45,
+   "side": "enemy",
+   "x": 18,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "b3",
+   "class": 44,
+   "side": "enemy",
+   "x": 19,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "b4",
+   "class": 45,
+   "side": "enemy",
+   "x": 20,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "b5",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "喽啰弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "b6",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "喽啰弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c1",
+   "class": 44,
+   "side": "enemy",
+   "x": 3,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c2",
+   "class": 45,
+   "side": "enemy",
+   "x": 4,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c3",
+   "class": 44,
+   "side": "enemy",
+   "x": 3,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c4",
+   "class": 45,
+   "side": "enemy",
+   "x": 4,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "饮马川喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c5",
+   "class": 34,
+   "side": "enemy",
+   "x": 1,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "喽啰弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c6",
+   "class": 34,
+   "side": "enemy",
+   "x": 1,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "喽啰弓手",
+   "levelOffset": -2,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州道上 · 饮马川"
+    ],
+    [
+     "narrate",
+     "却说公孙胜回蓟州探母，说定百日便回，如今过了期限，杳无音信。宋江放心不下，便差神行太保戴宗往蓟州走一遭。武龙、林冲也要同去：一来路上多个照应，二来久不见公孙先生，也想讨他一杯茶吃。"
+    ],
+    [
+     "narrate",
+     "三人拴了甲马，行到沂水县界，在一家酒店里撞见一条好汉，正是彰德府人锦豹子杨林。他曾在路上遇着公孙胜，受了一封书，叫他去投梁山泊。四人说起来，都是一路，便结伴同行。"
+    ],
+    [
+     "narrate",
+     "行到一个去处，四面都是高山，中间一条驿路，唤做饮马川。只听得山坡上一声锣响，闪出一二百个小喽啰来，拦住去路。"
+    ],
+    [
+     "say",
+     "dengfei",
+     "兀那过路的！留下买路钱，放你们过去；牙缝里迸半个不字，教你吃俺这条铁链！"
+    ],
+    [
+     "say",
+     "linchong",
+     "又是剪径的。戴院长，林某开路，你们跟上。"
+    ],
+    [
+     "say",
+     "daizong",
+     "且慢动手。这伙人马不少，莫教他们围住了——众位把甲马拴紧，脚下快些！"
+    ],
+    [
+     "buff",
+     "hero",
+     "move",
+     {
+      "add": 2,
+      "turns": 3
+     }
+    ],
+    [
+     "buff",
+     "linchong",
+     "move",
+     {
+      "add": 2,
+      "turns": 3
+     }
+    ],
+    [
+     "buff",
+     "yanglin",
+     "move",
+     {
+      "add": 2,
+      "turns": 3
+     }
+    ],
+    [
+     "say",
+     "yanglin",
+     "（那为首的红眼汉子……好生面熟。且凑近些看个仔细。）"
+    ],
+    [
+     "objective",
+     "甲马：武龙、林冲、杨林前 3 回合移动 +2\n胜：杨林在回合结束时站在邓飞身边（认出旧相识），或把邓飞打到三成体力以下\n败：武龙、戴宗或杨林倒下；超过 10 回合"
+    ],
+    [
+     "turnLimit",
+     10
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "unless": "met",
+   "do": [
+    [
+     "narrate",
+     "东边林子里又是一声唿哨，一个白净长大的汉子领着一伙喽啰抄了出来。"
+    ],
+    [
+     "appear",
+     "mengkang"
+    ],
+    [
+     "appear",
+     "b1"
+    ],
+    [
+     "appear",
+     "b2"
+    ],
+    [
+     "appear",
+     "b3"
+    ],
+    [
+     "appear",
+     "b4"
+    ],
+    [
+     "appear",
+     "b5"
+    ],
+    [
+     "appear",
+     "b6"
+    ],
+    [
+     "say",
+     "mengkang",
+     "邓飞哥哥，小弟来也！休放走了这几个！"
+    ],
+    [
+     "say",
+     "hero",
+     "东边也有人！林兄，咱们别被夹在中间。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": "met",
+   "do": [
+    [
+     "narrate",
+     "西边小路上转出一队伏兵，截住了退路。"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "say",
+     "c1",
+     "后路也堵上了，看你们往哪里走！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "dengfei",
+    "by": "yanglin",
+    "atTurnEnd": true
+   },
+   "unless": "met",
+   "do": [
+    [
+     "say",
+     "yanglin",
+     "且住！那使铁链的，可不是盖天军襄阳府的邓飞兄弟么？"
+    ],
+    [
+     "say",
+     "dengfei",
+     "咦……你、你是杨林哥哥！"
+    ],
+    [
+     "flag",
+     "met"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "dengfei",
+    "below": 30
+   },
+   "unless": "met",
+   "do": [
+    [
+     "say",
+     "dengfei",
+     "好厉害的汉子！你们到底是哪路好汉，报个名来！"
+    ],
+    [
+     "say",
+     "yanglin",
+     "且住！这声音……你可是盖天军襄阳府的邓飞兄弟？"
+    ],
+    [
+     "say",
+     "dengfei",
+     "你、你是杨林哥哥！"
+    ],
+    [
+     "flag",
+     "met"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "met"
+   },
+   "do": [
+    [
+     "standDown",
+     "dengfei",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a1",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a2",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a3",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a4",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a5",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a6",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a7",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "mengkang",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b1",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b2",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b3",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b4",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b5",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b6",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c1",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c2",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c3",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c4",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c5",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c6",
+     {
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "dengfei",
+     "孩儿们，都住手！是自家兄弟！"
+    ],
+    [
+     "say",
+     "yanglin",
+     "这位是梁山泊神行太保戴院长，这两位是豹子头林教头，还有关西的武龙兄弟。"
+    ],
+    [
+     "say",
+     "dengfei",
+     "原来是梁山泊的头领！小弟有眼不识泰山，多有冲撞。孟康兄弟，快请寨主下山相见！"
+    ],
+    [
+     "appear",
+     "peixuan"
+    ],
+    [
+     "say",
+     "peixuan",
+     "小可裴宣，京兆府人氏，原是本府六案孔目。只因为人刚直，断案不肯徇私，人都叫我铁面孔目。"
+    ],
+    [
+     "say",
+     "peixuan",
+     "新任知府要我替他屈断一桩人命官司，我不肯依。他便寻个由头，反把我刺配沙门岛。路过此地，亏得邓飞、孟康两位兄弟劫了囚车，救我上山，推我做了寨主。"
+    ],
+    [
+     "say",
+     "linchong",
+     "……一个刚直不肯徇私，便被刺配。林某当年在白虎堂，也是这般被人安了个罪名。"
+    ],
+    [
+     "say",
+     "linchong",
+     "这世道，好人做不得官，只得落草。裴兄，林某懂你。"
+    ],
+    [
+     "say",
+     "hero",
+     "我也是替人打抱不平，就被满城张榜捉拿。官字两个口，从来只有他们说的理。"
+    ],
+    [
+     "say",
+     "peixuan",
+     "两位也是这般遭际……若梁山泊肯收留，裴宣情愿带着两位兄弟，同去替天行道。"
+    ],
+    [
+     "say",
+     "daizong",
+     "宋公明哥哥最爱结识好汉，晁天王也必欢喜。等小弟从蓟州回来，便引众位上山。"
+    ],
+    [
+     "narrate",
+     "当夜饮马川杀牛宰马，管待四人。次日戴宗、武龙、林冲、杨林辞了三位头领，取路望蓟州而来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "戴宗倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "yanglin"
+   },
+   "do": [
+    [
+     "defeat",
+     "杨林倒下了……没人认得邓飞，这场厮杀再也停不下来。"
+    ]
+   ]
+  }
+ ]
+}
