@@ -30,9 +30,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('吕方、郭
     expect(castCells(board, me, castRange(unit('lvfang'), ring, rt.data))).toEqual([me]);
     expect(areaCells(board, me, ring, me).map(key).sort()).toEqual(['-1,-1', '-1,0', '-1,1', '0,-1', '0,1', '1,-1', '1,0', '1,1']);
     expect(areaCells(board, me, cross, me).map(key).sort()).toEqual(['-1,0', '-2,0', '0,-1', '0,-2', '0,1', '0,2', '1,0', '2,0']);
-    // 吕方重必杀，郭盛带昏迷（好汉技能不带命中修正，原来的命中加成折成了威力）
+    // 吕方重必杀，郭盛重命中带昏迷
     expect(cls('lvfang').skills[1].critMod).toBeGreaterThan(cls('guosheng').skills[1].critMod);
-    expect([cls('guosheng').skills[1].hitMod, cls('lvfang').skills[1].hitMod]).toEqual([0, 0]);
+    expect(cls('guosheng').skills[1].hitMod).toBeGreaterThan(cls('lvfang').skills[1].hitMod);
     expect(cls('guosheng').skills[1].stun).toBeGreaterThan(0);
   });
 

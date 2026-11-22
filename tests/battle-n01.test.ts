@@ -79,9 +79,9 @@ describe.skipIf(!has)('N01', () => {
     const cls = data.classes[3];
     const basic = basicAttack(cls)!;
     const s = cls.skills.find((k) => k.skillId === 33)!;
-    expect(s.power).toBe(28); // 25 + 命中 +10 折算（好汉技能不带命中修正）
-    expect(cls.skills.find((k) => k.skillId === 34)!.power).toBe(50);
-    expect(cls.skills.find((k) => k.skillId === 35)!.power).toBe(73);
+    expect(s.power).toBe(25);
+    expect(cls.skills.find((k) => k.skillId === 34)!.power).toBe(45);
+    expect(cls.skills.find((k) => k.skillId === 35)!.power).toBe(65);
     expect(s.mpCost).toBe(15);
     // 2 级史進（初始装备）打同级杂兵：期望伤害至少高 30%
     const unit = (classId: number, y: number, facing: number) => {
@@ -99,10 +99,10 @@ describe.skipIf(!has)('N01', () => {
     expect(avg(s)).toBeGreaterThan(avg(basic) * 1.3);
   });
 
-  it('好汉技能没有命中修正：负的威力下降等额（最低 1），正的每 4 点折 1 威力；敌方职业不变', () => {
-    for (const c of data.classes.slice(0, 18)) for (const k of c.skills) expect(k.hitMod, `${c.name} ${k.name}`).toBe(0);
+  it('好汉技能不扣命中，威力下降等额（最低 1）；敌方职业不变', () => {
+    for (const c of data.classes.slice(0, 18)) for (const k of c.skills) expect(k.hitMod).toBeGreaterThanOrEqual(0);
     const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
-    expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([88, 0]); // 魯智深 佛光普照 70 / −20 → 80 / +30（耗气审阅）→ 88 / 0
+    expect([by(16, 138).power, by(16, 138).hitMod]).toEqual([80, 30]); // 魯智深 佛光普照 70 / −20
     expect([by(16, 133).power, by(16, 133).hitMod]).toEqual([10, 0]); // 魯智深 普攻 三世因果 20 / −10
     expect(by(4, 51).power).toBe(1); // 白勝 通殺LV1 10 / −15
     expect([by(46, 21).power, by(46, 21).hitMod]).toEqual([50, -10]); // 敌方公孫勝 天雷滅敵正法 不变
@@ -112,7 +112,7 @@ describe.skipIf(!has)('N01', () => {
   it('耗气审阅调整只改好汉，敌方版好汉照原版', () => {
     const by = (cls: number, id: number) => data.classes[cls].skills.find((k) => k.skillId === id)!;
     expect([by(3, 40).mpCost, by(16, 138).mpCost, by(5, 62).mpCost]).toEqual([65, 70, 115]); // 龍騰九天、佛光普照、奇門遁甲LV3
-    expect([48, 49, 50].map((id) => [by(4, id).mpCost, by(4, id).power, by(4, id).hitMod])).toEqual([[30, 43, 0], [30, 55, 0], [30, 68, 0]]); // 監守自盜LV1–3（命中 +10/+20/+30 折成威力）
+    expect([48, 49, 50].map((id) => [by(4, id).mpCost, by(4, id).power, by(4, id).hitMod])).toEqual([[30, 40, 10], [30, 50, 20], [30, 60, 30]]); // 監守自盜LV1–3
     expect([by(13, 115).power, by(13, 115).mpCost, by(13, 115).hits.length]).toEqual([40, 20, 2]); // 黑虎偷心
     expect([by(3, 34).hits.length, by(3, 35).hits.length]).toEqual([2, 3]); // 龍爭虎鬥LV2 / LV3
     expect(by(9, 81).hits.map((h) => [h.frame, h.percent])).toEqual([[18, 30], [25, 30], [28, 40]]); // 生不如死 三段
@@ -133,7 +133,7 @@ describe.skipIf(!has)('N01', () => {
 
   it('武龍 隔山打虎：原版数值，拆成 4 段各 25%，每段单独判定', () => {
     const s = data.classes[0].skills.find((k) => k.skillId === 8)!;
-    expect([s.power, s.hitMod, s.critMod, s.mpCost]).toEqual([70, 0, 50, 30]); // 命中 +40 折成威力 +10
+    expect([s.power, s.hitMod, s.critMod, s.mpCost]).toEqual([60, 40, 50, 30]);
     expect(s.hits.map((h) => h.percent)).toEqual([25, 25, 25, 25]);
     const c = data.classes[0];
     const slots = [...c.defaultItems, 0, 0, 0, 0, 0, 0, 0].slice(0, 7);

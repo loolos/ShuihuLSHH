@@ -29,7 +29,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('王英三岔
     expect(skills.map(s=>s.learnLevel)).toEqual([6,14,22,30]);
     expect(skills.map(s=>s.mpCost)).toEqual([30,55,80,105]);
     for (const s of skills) {
-      expect(s).toMatchObject({power:28,hitMod:0,poison:20,stun:0,critMod:0});
+      expect(s).toMatchObject({power:20,hitMod:30,poison:20,stun:0,critMod:0});
       expect(castRange({classId:cid,stats:{rangeBonus:10}} as Unit,s,rt.data)).toEqual([1,1]);
     }
     for (const level of [1,6,13,14,21,22,29,30,40]) {
