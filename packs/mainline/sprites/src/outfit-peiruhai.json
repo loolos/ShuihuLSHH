@@ -1,0 +1,23 @@
+{"default": [214, 172, 136],
+ "shading": {"ao": 0.4, "edge": 0.2, "fold_scale": 3.5, "fold_strength": 0.35, "fold_distortion": 2.5},
+ "rules": [
+  {"bones": ["foot_.*", "ball_.*"], "color": [40, 36, 34], "inflate": 0.006}
+ ],
+ "layers": [
+  {"name": "僧袍", "bones": ["spine_0[123]", "clavicle_.*", "neck_01", "upperarm_.*", "lowerarm_.*", "pelvis", "thigh_.*", "calf_.*"],
+   "when": "z > 0.14 and z < 1.50 and ax < 0.62",
+   "offset": "0.03 + (0.10 * (0.95 - z) if z < 0.95 else 0) + (0.45 * (ax - 0.40) if ax > 0.40 else 0)",
+   "thickness": 0.012, "color": [150, 146, 136], "folds": 0.9,
+   "colors": [
+    {"when": "ax > 0.58 or z < 0.19", "color": [96, 92, 86]},
+    {"when": "y < -0.02 and z > 1.20 and abs(x + (1.47 - z) * 0.35) < 0.025", "color": [96, 92, 86]}
+   ]},
+  {"name": "袈裟", "bones": ["spine_0[123]", "clavicle_l", "upperarm_l", "pelvis", "thigh_.*"],
+   "when": "z > 0.55 and z < 1.52 and ax < 0.34 and x > -0.06 - (1.50 - z) * 0.55",
+   "offset": "0.05 + (0.10 * (0.95 - z) if z < 0.95 else 0)",
+   "thickness": 0.01, "color": [158, 52, 36], "folds": 0.6,
+   "colors": [
+    {"when": "abs(x + 0.06 + (1.50 - z) * 0.55) < 0.03 or z < 0.6", "color": [205, 160, 60]}
+   ]}
+ ],
+ "props": []}
