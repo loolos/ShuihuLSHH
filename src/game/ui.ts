@@ -15,8 +15,13 @@ export interface Command {
   on?: boolean;
   /** 按钮下面的小字（道具效果等） */
   note?: string;
+  /** 小字下面一行的彩色标签（技能类型：回旋、单体、远程、范围、回气、回复、无目标） */
+  tags?: string[];
   run: () => void;
 }
+
+/** 标签颜色（style.css 的 .tag-*） */
+const TAG_CLASS: Record<string, string> = { 回旋: 'spin', 单体: 'single', 远程: 'ranged', 范围: 'area', 回气: 'charge', 回复: 'heal', 无目标: 'none' };
 
 const SIDE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 
@@ -195,6 +200,17 @@ export class BattleUI {
           const n = document.createElement('small');
           n.textContent = this.tr(c.note);
           b.append(n);
+        }
+        if (c.tags?.length) {
+          const row = document.createElement('span');
+          row.className = 'skill-tags';
+          for (const t of c.tags) {
+            const chip = document.createElement('span');
+            chip.className = `skill-tag skill-tag-${TAG_CLASS[t] ?? 'none'}`;
+            chip.textContent = this.tr(t);
+            row.append(chip);
+          }
+          b.append(row);
         }
         b.disabled = c.enabled === false;
         if (c.on) b.classList.add('on');
