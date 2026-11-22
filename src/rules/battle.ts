@@ -10,7 +10,7 @@ import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type A
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
-import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillsLearnedAt } from './skills.ts';
+import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
@@ -232,6 +232,8 @@ export interface StageInput {
   banquet?: { flag: number; sight: number };
   /** 劝酒【新】：ACT 索引 → 推辞几次、麻翻几回合、只喝谁劝的（职业号） */
   drinks?: Record<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
+  /** 劝酒时说的话（单位序号 → 台词，轮着说）【新】 */
+  toasts?: Record<number, string[]>;
 }
 
 /**
@@ -276,6 +278,7 @@ export class Battle {
   private readonly stealth?: { lose: string; flag?: number };
   private readonly banquet?: { flag: number; sight: number };
   private readonly drinks: ReadonlyMap<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
+  private readonly toasts: ReadonlyMap<number, string[]>;
   /** 劝酒【新】：已经推辞过几次（uid → 次数） */
   private refused: Record<number, number> = {};
   /** 被蒙汗药麻翻、还没醒的人（醒来时提示、触发 did wake） */
@@ -377,6 +380,7 @@ export class Battle {
     this.stealth = input.stealth;
     this.banquet = input.banquet;
     this.drinks = new Map(Object.entries(input.drinks ?? {}).map(([k, v]) => [Number(k), v]));
+    this.toasts = new Map(Object.entries(input.toasts ?? {}).map(([k, v]) => [Number(k), v]));
     this.sealed = input.sealed ?? [];
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     if (input.fire) this.fire = new Fire(input.fire, input.board);
@@ -1443,6 +1447,12 @@ export class Battle {
    */
   private serveDrug(u: Unit, skill: SkillDef, targets: Unit[], area: Cell[], cell: Cell) {
     this.noteDid(u, 'skill');
+    // 劝酒的台词轮着说（第几次劝酒按本关用过的劝酒技能数，倒流也一样）；劝有 drink 设定的人（李云）由剧本自己写台词
+    const lines = this.toasts.get(u.uid);
+    if (lines?.length && !targets.some((t) => this.drinks.has(t.uid))) {
+      const n = (this.used[u.uid] ?? []).filter((id) => skillById(this.data, id)?.drug).length - 1;
+      this.emit({ type: 'say', uid: u.uid, speaker: u.name, text: lines[Math.max(0, n) % lines.length] });
+    }
     this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter: false });
     if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
     this.emit({ type: 'message', text: `${u.name}使出${this.tr(skill.name)}！` });
