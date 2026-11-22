@@ -109,6 +109,10 @@ describe.skipIf(!has)('好汉聚义', () => {
     npc.hp = 1;
     (b as unknown as { kill(u: unknown, t: unknown): void }).kill(me, npc);
     expect(me.slots.slice(3).some((id) => stage.royale!.npcs.drops.includes(id))).toBe(true);
+    expect(b.royaleKills(me)).toEqual({ heroes: 0, npcs: 1 });
+    const foe = b.royaleHeroes().find((u) => u !== me)!;
+    (b as unknown as { kill(u: unknown, t: unknown): void }).kill(me, foe);
+    expect(b.royaleKills(me)).toEqual({ heroes: 1, npcs: 1 });
   });
 
   it('整局对打：AI 会跑圈，最后只剩一位好汉', () => {

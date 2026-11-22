@@ -2576,7 +2576,7 @@ export class Battle {
           u.slots[k] = 0;
           u.forge[k] = 0;
         }
-    this.royale = { zone: firstZone(area), next: null, shrinkAt: 1 + r.shrinkEvery, step: 0, out: [] };
+    this.royale = { zone: firstZone(area), next: null, shrinkAt: 1 + r.shrinkEvery, step: 0, out: [], kills: {}, npcKills: {} };
     this.planShrink();
     this.spawnChests(r.chestStart, false);
   }
@@ -2661,6 +2661,10 @@ export class Battle {
   /** 有人出局：小头目掉药（打倒他的人包里有空就直接拿到，否则落在地上成宝箱）；好汉记进出局顺序 */
   private royaleOut(t: Unit, by: Unit | null) {
     const st = this.royale!;
+    if (by && by !== t) {
+      const tally = t.team === NPC_TEAM ? (st.npcKills ??= {}) : (st.kills ??= {});
+      tally[by.uid] = (tally[by.uid] ?? 0) + 1;
+    }
     if (t.team === NPC_TEAM) {
       const drops = this.royaleRules!.npcs.drops;
       if (!drops.length) return;
@@ -2685,6 +2689,16 @@ export class Battle {
     this.emit({ type: 'message', text: `${t.name}出局${by ? `（被${by.name}打倒）` : ''}，还剩 ${this.royaleHeroes().length} 位好汉。` });
   }
 
+  private killText(u: Unit) {
+    const k = this.royaleKills(u);
+    return `亲手击败 ${k.heroes} 位好汉${k.npcs ? `、${k.npcs} 个小头目` : ''}`;
+  }
+
+  /** 这个人亲手打倒的好汉数、小头目数 */
+  royaleKills(u: Unit): { heroes: number; npcs: number } {
+    return { heroes: this.royale?.kills?.[u.uid] ?? 0, npcs: this.royale?.npcKills?.[u.uid] ?? 0 };
+  }
+
   /** 胜负：我方的好汉倒下就输（报名次），对手全部出局就赢 */
   private royaleEnd(): boolean {
     const me = this.units.find((u) => u.side === 'player' && u.team !== undefined);
@@ -2692,11 +2706,11 @@ export class Battle {
     const left = this.royaleHeroes();
     if (!me.alive && this.royaleWatch && left.length > 1) return false;
     if (!me.alive) {
-      this.finish('lost', `${me.name}倒下了，名列第 ${left.length + 1} 名（共 ${this.units.filter((u) => u.team !== undefined && u.team !== NPC_TEAM).length} 人）。`);
+      this.finish('lost', `${me.name}倒下了，名列第 ${left.length + 1} 名（共 ${this.units.filter((u) => u.team !== undefined && u.team !== NPC_TEAM).length} 人），${this.killText(me)}。`);
       return true;
     }
     if (left.length === 1) {
-      this.finish('won', `${me.name}力压群雄，成为最后站着的好汉！`);
+      this.finish('won', `${me.name}力压群雄，成为最后站着的好汉！${this.killText(me)}。`);
       return true;
     }
     return false;

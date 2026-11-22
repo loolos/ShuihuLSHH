@@ -310,11 +310,18 @@ export class BattleScene extends Phaser.Scene {
   }
 
   /** 顶栏：回合、阶段，蹴鞠关加上比分 */
+  /** 好汉聚义：有人倒下时马上刷新顶栏（剩几人、击败几人） */
+  private refreshRoyaleBar() {
+    if (this.battle.royale) this.setTurn(this.battle.turn, this.battle.turnLimit, PHASE_NAME[this.playingSide] + (this.playingSide === 'player' ? '' : '　▸▸ 快进中'));
+  }
+
   private setTurn(turn: number, limit: number, phase: string) {
     // 好汉聚义：剩几人、几回合后缩圈
     if (this.battle.royale) {
       const cd = this.battle.royaleCountdown();
-      return this.ui.setTurn(turn, limit, `${phase}　剩 ${this.battle.royaleHeroes().length} 人　${cd === null ? '最后一圈' : cd <= 1 ? '下回合缩圈' : `${cd} 回合后缩圈`}`);
+      const me = this.battle.units.find((u) => u.side === 'player');
+      const k = me ? this.battle.royaleKills(me) : { heroes: 0, npcs: 0 };
+      return this.ui.setTurn(turn, limit, `${phase}　剩 ${this.battle.royaleHeroes().length} 人　击败 ${k.heroes}${k.npcs ? `（小头目 ${k.npcs}）` : ''}　${cd === null ? '最后一圈' : cd <= 1 ? '下回合缩圈' : `${cd} 回合后缩圈`}`);
     }
     const c = this.battle.cuju;
     if (!c) return this.ui.setTurn(turn, limit, phase);
@@ -1178,6 +1185,7 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'die':
       case 'leave': {
+        if (e.type === 'die') this.refreshRoyaleBar();
         const s = this.sprites.get(e.uid);
         s?.bar.destroy();
         s?.cart?.destroy();
@@ -1896,6 +1904,7 @@ export class BattleScene extends Phaser.Scene {
       }
       case 'die':
       case 'leave': {
+        if (e.type === 'die') this.refreshRoyaleBar();
         if (e.type === 'die') {
           // 原版 0x404c80：我方（阵营 0）倒下播 m13「戰敗了！」；敌方（阵营 2）只在掉落道具时播 m14，友军不出声。
           // 重制版敌方倒下一律播 m14（负责人 2026-11-12：敌方不该用 m13，可以给一个专门的声音）【新】
