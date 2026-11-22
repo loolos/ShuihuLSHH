@@ -1419,6 +1419,7 @@ export class Battle {
       const name = this.tr(skill.name);
       let healed = 0;
       for (const t of targets) {
+        if (t !== u) t.turnStart = null; // 被队友的回复 / 集气技照顾到，就不能再撤销移动（同给别人用道具）【新】（负责人 2026-11-22）
         const hp0 = t.hp, mp0 = t.mp;
         const div = Math.max(1, skill.power);
         if (isChargeSkill(skill)) t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / div));
