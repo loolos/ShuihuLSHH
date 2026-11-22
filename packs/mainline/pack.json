@@ -3302,7 +3302,7 @@
     "stages/zhuanshang.json",
     "stages/jiaxin.json",
     "stages/fachang.json",
-    "stages/bailongmiao.json", "stages/wuweijun.json", "stages/jiehuang.json", "stages/banqu.json", "stages/huandaocun.json", "stages/tuanyuan.json", "stages/yiling.json", "stages/zhufu.json",
+    "stages/bailongmiao.json", "stages/wuweijun.json", "stages/jiehuang.json", "stages/banqu.json", "stages/huandaocun.json", "stages/tuanyuan.json", "stages/yiling.json", "stages/caozhuang.json", "stages/zhufu.json",
     "stages/cuju.json"
   ]
 }

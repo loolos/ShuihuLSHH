@@ -44,6 +44,8 @@ export interface Unit {
   /** 潜行关里还没发现我方的哨兵【新】：被从背后打伤害 ×3、侧面 ×2（负责人 2026-11-19） */
   unaware?: boolean;
   mp: number;
+  /** 本关临时会的技能号【新】（朱贵扮酒保会劝酒）：不随结算带出本关 */
+  extraSkills?: number[];
   stats: Stats;
   /** 7 个道具槽，0 = 空；前 3 格是装备栏（武器、衣服、头饰），见 data.ts EQUIP_SLOTS */
   slots: number[];

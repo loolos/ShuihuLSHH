@@ -27,8 +27,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
 
   it('两关接在父子团圆后面，单位站在可通行的格子上、互不重叠', () => {
     expect(chapterOf('mainline/yiling')).toBe(27);
+    expect(chapterOf('mainline/caozhuang')).toBe(27);
     expect(chapterOf('mainline/zhufu')).toBe(27);
-    for (const id of ['yiling', 'zhufu']) {
+    for (const id of ['yiling', 'caozhuang', 'zhufu']) {
       const { b, stage } = open(id);
       const seen = new Set<string>();
       for (const u of stage.units) {
@@ -52,6 +53,24 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     expect(b.status).toBe('playing');
     kill(get('tiger')); after(b);
     expect(b.status).toBe('won');
+  });
+
+  it('曹庄醉缚是过场：演完就过关', () => {
+    const { b } = open('caozhuang');
+    expect(b.status).toBe('won');
+  });
+
+  it('朱贵扮店小二，只在这一关会劝酒', () => {
+    const { b, get } = open('zhufu');
+    const zg = get('zhugui'), g = get('b1');
+    const jiu = skill(b, zg, '劝酒');
+    expect(jiu).toBeDefined();
+    zg.x = 10; zg.y = 17;
+    b.useSkill(zg, jiu, g);
+    expect(g.stunTurns).toBe(8);
+    expect(flagged(b)).toBe(false);
+    // 换一关（或这一关之外）就没有了
+    expect(learnedSkills({ ...zg, extraSkills: undefined }, b.data).some((s) => s.name === '劝酒')).toBe(false);
   });
 
   it('沂岭的老虎比景阳冈那只弱得多', () => {

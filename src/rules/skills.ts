@@ -38,7 +38,23 @@ export function learnedSkills(u: Unit, data: GameData): SkillDef[] {
     const had = best.get(k);
     if (!had || s.learnLevel >= had.learnLevel) best.set(k, s);
   }
+  for (const id of u.extraSkills ?? []) {
+    const extra = skillById(data, id);
+    if (extra && !best.has(skillBaseName(extra.name))) best.set(skillBaseName(extra.name), extra);
+  }
   return [...best.values()];
+}
+
+const skillIndex = new WeakMap<GameData, Map<number, SkillDef>>();
+/** 按技能号找技能（关卡临时教的技能用，如朱贵扮酒保的劝酒） */
+export function skillById(data: GameData, id: number): SkillDef | undefined {
+  let m = skillIndex.get(data);
+  if (!m) {
+    m = new Map();
+    for (const c of data.classes) for (const s of c?.skills?.slice(1) ?? []) if (!m.has(s.skillId)) m.set(s.skillId, s);
+    skillIndex.set(data, m);
+  }
+  return m.get(id);
 }
 
 /** 这一级新领悟的技能（原版升级时 0x406a89 逐项比较习得等级 == 新等级） */
