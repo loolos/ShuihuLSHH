@@ -98,7 +98,7 @@
       "facing": 1,
       "ai": 8,
       "levelOffset": 2,
-      "hpMultiplier": 3,
+      "hpMultiplier": 1.5,
       "name": "青眼虎李云",
       "drink": {
         "refuse": 1,
