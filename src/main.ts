@@ -23,7 +23,7 @@ import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
 import { insertTavern } from './packs/tavern.ts';
-import { compileStage, stageClasses } from './packs/build.ts';
+import { compileStage, stageClasses, stageKind } from './packs/build.ts';
 import { isPackValue, listPacks, markPackCleared, openPack, packCleared, packFaceUrl, packStageName, parsePackValue, type PackAssets } from './game/packs.ts';
 import { inheritAssets, newCampaign, nextByHeader, nextStages, joinLevel, parseCampaign, partyOf, pendingInsert, replayInsertProgress, recordResult, type CampaignState, type InsertEntry } from './rules/campaign.ts';
 
@@ -91,7 +91,7 @@ function startGame(assets: Assets) {
   if (chapterErrors.length) console.warn(`章节表（src/rules/chapters.ts）有问题：\n${chapterErrors.join('\n')}`);
   const inserts: (InsertEntry & { pov: boolean; title: string; kind: string; townAfter?: number })[] = insertPlaces().flatMap((p) => {
     const s = packStages.get(p.ref.toLowerCase());
-    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: s.units.some((u) => u.side === 'enemy' && u.ai !== 8) ? '战役' : '剧情' }] : [];
+    return s ? [{ ...p, pov: !!s.pov, title: s.title, townAfter: s.townAfter, kind: stageKind(s) }] : [];
   });
   const insValue = (ref: string) => `ins:${ref}`;
   /** 续篇城镇（townAfter）之后接哪一段：章节表里紧跟它的插关 */
