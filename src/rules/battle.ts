@@ -226,6 +226,10 @@ export interface StageInput {
   names?: Record<number, string>;
   /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
   cuju?: CujuRules;
+  /** 酒席【新】（朱富药酒救李逵）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
+  banquet?: { flag: number; sight: number };
+  /** 劝酒【新】：ACT 索引 → 推辞几次、麻翻几回合、只喝谁劝的（职业号） */
+  drinks?: Record<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
 }
 
 /**
@@ -268,6 +272,12 @@ export class Battle {
   private readonly watchTrust: ReadonlyMap<number, number[]>;
   private readonly patrols: Map<number, { x: number; y: number }[]>;
   private readonly stealth?: { lose: string; flag?: number };
+  private readonly banquet?: { flag: number; sight: number };
+  private readonly drinks: ReadonlyMap<number, { refuse: number; turns?: number; by?: number[]; light?: boolean }>;
+  /** 劝酒【新】：已经推辞过几次（uid → 次数） */
+  private refused: Record<number, number> = {};
+  /** 被蒙汗药麻翻、还没醒的人（醒来时提示、触发 did wake） */
+  private drugged = new Set<number>();
   /** 发现了我方的哨兵：uid → 要在第几回合的我方回合结束前打倒他（否则判负），即发现时的下一回合【新】 */
   spotters: Record<number, number> = {};
   readonly prisonCarts: ReadonlySet<number>;
@@ -363,6 +373,8 @@ export class Battle {
     this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
+    this.banquet = input.banquet;
+    this.drinks = new Map(Object.entries(input.drinks ?? {}).map(([k, v]) => [Number(k), v]));
     this.sealed = input.sealed ?? [];
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     if (input.fire) this.fire = new Fire(input.fire, input.board);
@@ -576,6 +588,7 @@ export class Battle {
     return this.active().filter((t) => {
       if (this.spectators.has(t.uid)) return false;
       const pos = t === u ? at : t;
+      if (skill.drug && t.stunTurns > 0) return false; // 已经麻翻的不用再劝
       return area.has(key(pos.x, pos.y)) && (heal ? !isFoe(u.side, t.side) : isFoe(u.side, t.side))
         && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
@@ -828,7 +841,7 @@ export class Battle {
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
       spotters: this.spotters, cuju: this.cuju, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed],
-      fought: [...this.fought], duelist: this.duelist,
+      fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
     });
   }
 
@@ -886,6 +899,8 @@ export class Battle {
     this.lastHitBy = s.lastHitBy ?? {};
     this.fought = new Set(s.fought ?? []);
     this.duelist = s.duelist ?? null;
+    this.refused = s.refused ?? {};
+    this.drugged = new Set(s.drugged ?? []);
     if (this.cuju && s.cuju) this.cuju = s.cuju;
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
@@ -935,6 +950,11 @@ export class Battle {
       if (u.hp !== hp0 || u.mp !== mp0) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, mpDelta: u.mp - mp0 });
       if (u.poisonTurns > 0 && --u.poisonTurns === 0) refreshStats(u, this.data);
       if (u.stunTurns > 0) u.stunTurns--;
+      // 蒙汗药的劲过了【新】
+      if (u.stunTurns === 0 && this.drugged.delete(u.uid)) {
+        this.emit({ type: 'status', uid: u.uid, text: '醒過來了' });
+        this.noteDid(u, 'wake');
+      }
       if (u.panicTurns && --u.panicTurns === 0) this.emit({ type: 'status', uid: u.uid, text: '回過神來' });
       if (u.buffs.length) {
         // 0 表示本关持续；限时效果扣到 0 时立即移除，不转成本关持续。
@@ -943,6 +963,8 @@ export class Battle {
       }
     }
     if (burned.length) this.emit({ type: 'message', text: `${burned.join('、')}離火太近，被燒傷了。` });
+    this.checkDid();
+    if (this.status !== 'playing') return;
     this.startPhase('player');
   }
 
@@ -1331,6 +1353,8 @@ export class Battle {
     const basic = skill === attackSkill(u, this.data);
     // 教学关的 did 触发：从背后 / 侧面出手（flank）记在 attack / skill 前面，先判「打到背后了」再判「出手了」
     const did = counter ? 'counter' : basic ? 'attack' : 'skill';
+    if (skill.drug) return this.serveDrug(u, skill, targets, area, cell);
+    if (this.banquet && u.side === 'player' && !this.flags.has(this.banquet.flag)) this.checkAlarm(targets);
     if (isSupportSkill(skill)) {
       this.noteDid(u, did);
       this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter });
@@ -1392,6 +1416,12 @@ export class Battle {
         refreshStats(t, this.data);
         this.emit({ type: 'status', uid: t.uid, text: '中毒了！' });
       }
+      // 只吃了一点药酒的人（李云）挨打就醒【新】
+      if (r.damage > 0 && this.drinks.get(t.uid)?.light && this.drugged.delete(t.uid)) {
+        t.stunTurns = 0;
+        this.emit({ type: 'status', uid: t.uid, text: '醒過來了' });
+        this.noteDid(t, 'wake');
+      }
       if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun')) {
         t.stunTurns = this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
@@ -1402,6 +1432,42 @@ export class Battle {
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
+  }
+
+  /**
+   * 劝酒（蒙汗药酒）【新】（朱富药酒救李逵）：不掷命中、不伤人；目标喝下就麻翻（stunTurns），
+   * 单位的 drink 设定可以推辞几次、只喝某些人劝的酒（李云只认徒弟朱富）、改麻翻的回合数。
+   */
+  private serveDrug(u: Unit, skill: SkillDef, targets: Unit[], area: Cell[], cell: Cell) {
+    this.noteDid(u, 'skill');
+    this.emit({ type: 'attack', uid: u.uid, skill, cell, area, facing: u.facing, hits: [], counter: false });
+    if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+    this.emit({ type: 'message', text: `${u.name}使出${this.tr(skill.name)}！` });
+    let exp = 0;
+    for (const t of targets) {
+      const d = this.drinks.get(t.uid);
+      const picky = !!d?.by?.length && !d.by.includes(u.classId);
+      if (picky || (d && (this.refused[t.uid] ?? 0) < d.refuse)) {
+        if (!picky) this.refused[t.uid] = (this.refused[t.uid] ?? 0) + 1;
+        this.emit({ type: 'status', uid: t.uid, text: '推辭不飲' });
+        this.noteDid(t, 'refuse');
+        continue;
+      }
+      t.stunTurns = Math.max(t.stunTurns, d?.turns ?? skill.drug ?? 1);
+      t.defending = false;
+      this.drugged.add(t.uid);
+      this.emit({ type: 'status', uid: t.uid, text: '麻翻了！' });
+      this.noteDid(t, 'drunk');
+      if (u.side === 'player') exp += hitExp(Math.floor(t.stats.maxHp / 4), this.rng);
+    }
+    if (exp && u.alive) this.gainExp(u, exp, 'hit');
+  }
+
+  /** 酒席上动手【新】：被打的人身边 sight 格内有醒着的敌人（自己醒着也算），就惊动了（设上 banquet.flag） */
+  private checkAlarm(targets: Unit[]) {
+    const b = this.banquet!;
+    const awake = this.active().filter((w) => w.side === 'enemy' && w.stunTurns === 0 && !this.spectators.has(w.uid));
+    if (targets.some((t) => t.side === 'enemy' && awake.some((w) => dist(w, t) <= b.sight))) this.flags.add(b.flag);
   }
 
   /** dmgExp：击倒那一下的伤害经验，并入击倒经验一起按 65/35 分 */

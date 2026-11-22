@@ -1,0 +1,135 @@
+// 第二十七章「沂岭杀四虎」（docs/game-design.md §15.29）：沂岭杀四虎；朱富酒店下蒙汗药（劝酒、酒席上动手会惊动旁人）救李逵、劝李云入伙
+import fs from 'node:fs';
+import path from 'node:path';
+import { describe, expect, it } from 'vitest';
+import { Battle } from '../src/rules/battle.ts';
+import { compileStage } from '../src/packs/build.ts';
+import { chapterOf } from '../src/rules/chapters.ts';
+import { learnedSkills } from '../src/rules/skills.ts';
+import type { Unit } from '../src/rules/unit.ts';
+import { loadPackFromDisk } from '../tools/sim-pack.ts';
+import { DATA, NodeFiles } from '../tools/sim-lib.ts';
+import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七章 沂岭杀四虎', () => {
+  useDiskCustomMaps();
+  const rt = loadPackFromDisk('mainline'), files = new NodeFiles(DATA);
+  const open = (id: string) => {
+    const stage = rt.stages.find((s) => s.id === id)!;
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1 }));
+    b.begin();
+    return { b, stage, get: (uid: string) => b.units[stage.units.findIndex((u) => u.id === uid)] };
+  };
+  const after = (b: Battle) => (b as unknown as { afterAction: () => void }).afterAction();
+  const kill = (u: Unit) => { u.hp = 0; u.alive = false; u.present = false; };
+  const flagged = (b: Battle) => (b as unknown as { flags: Set<number> }).flags.size > 0;
+  const skill = (b: Battle, u: Unit, name: string) => learnedSkills(u, b.data).find((s) => s.name === name)!;
+
+  it('两关接在父子团圆后面，单位站在可通行的格子上、互不重叠', () => {
+    expect(chapterOf('mainline/yiling')).toBe(27);
+    expect(chapterOf('mainline/zhufu')).toBe(27);
+    for (const id of ['yiling', 'zhufu']) {
+      const { b, stage } = open(id);
+      const seen = new Set<string>();
+      for (const u of stage.units) {
+        expect(b.board.passable(u.x, u.y), `${id} ${u.id}`).toBe(true);
+        expect(seen.has(`${u.x},${u.y}`), `${id} ${u.id} 重叠`).toBe(false);
+        seen.add(`${u.x},${u.y}`);
+      }
+    }
+  });
+
+  it('沂岭：先两只小虎，打完母大虫出洞，再起一阵风跳出吊睛白额虎，四虎杀尽过关', () => {
+    const { b, get } = open('yiling');
+    expect(b.status).toBe('playing');
+    expect([get('cub1').present, get('cub2').present, get('tigress').present, get('tiger').present]).toEqual([true, true, false, false]);
+    expect(get('niang').present).toBe(false);
+    kill(get('cub1')); kill(get('cub2')); after(b);
+    expect(get('tigress').present).toBe(true);
+    expect(get('tiger').present).toBe(false);
+    kill(get('tigress')); after(b);
+    expect(get('tiger').present).toBe(true);
+    expect(b.status).toBe('playing');
+    kill(get('tiger')); after(b);
+    expect(b.status).toBe('won');
+  });
+
+  it('沂岭的老虎比景阳冈那只弱得多', () => {
+    const { get } = open('yiling');
+    const jy = open('jingyanggang').get('tiger');
+    expect(get('tiger').stats.maxHp).toBeLessThan(jy.stats.maxHp * 0.6);
+    expect(get('tigress').stats.maxHp).toBeLessThan(jy.stats.maxHp * 0.5);
+    expect(get('tiger').stats.attack).toBeLessThan(jy.stats.attack * 0.85);
+  });
+
+  it('劝酒：不伤人、麻翻土兵，不惊动人；打麻翻了、身边没人醒着的也不惊动', () => {
+    const { b, get } = open('zhufu');
+    const jb = get('jiubao2'), g = get('b1');
+    const jiu = skill(b, jb, '劝酒');
+    jb.x = 10; jb.y = 17;
+    const hp = g.hp;
+    b.useSkill(jb, jiu, g);
+    expect(g.hp).toBe(hp);
+    expect(g.stunTurns).toBe(8);
+    expect(flagged(b)).toBe(false);
+    expect(get('b2').ai.mode).toBe(8);
+    // 已经麻翻的不能再劝
+    expect(b.affected(get('jiubao1'), skill(b, get('jiubao1'), '劝酒'), g)).toEqual([]);
+    // 把乙队都麻翻，再打其中一个：身边两格没人醒着，不惊动
+    for (const id of ['b2', 'b3', 'b4', 'b5', 'b6']) get(id).stunTurns = 8;
+    const zf = get('zhufu');
+    zf.x = 10; zf.y = 17; zf.acted = false; jb.x = 13; jb.y = 15;
+    b.attack(zf, get('b1'));
+    expect(flagged(b)).toBe(false);
+  });
+
+  it('打醒着的人就惊动：押解的人都动起来，曹太公往板桥跑', () => {
+    const { b, get } = open('zhufu');
+    const zf = get('zhufu');
+    zf.x = 17; zf.y = 9;
+    b.attack(zf, get('a1'));
+    expect(get('a2').ai.mode).toBe(0);
+    expect(get('c1').ai.mode).toBe(0);
+    expect(get('caotaigong').ai.mode).toBe(4);
+  });
+
+  it('李云只喝朱富劝的酒，还要推辞一次，喝了只麻翻两回合', () => {
+    const { b, get } = open('zhufu');
+    const ly = get('liyun'), jb = get('jiubao1'), zf = get('zhufu');
+    jb.x = 20; jb.y = 11;
+    b.useSkill(jb, skill(b, jb, '劝酒'), ly);
+    expect(ly.stunTurns).toBe(0);
+    jb.x = 13; jb.y = 15; zf.x = 20; zf.y = 11;
+    const jiu = skill(b, zf, '劝酒');
+    b.useSkill(zf, jiu, ly);
+    expect(ly.stunTurns).toBe(0);
+    zf.acted = false; zf.ended = false; zf.mp = zf.stats.maxMp;
+    b.useSkill(zf, jiu, ly);
+    expect(ly.stunTurns).toBe(2);
+    expect(flagged(b)).toBe(true); // 推辞过一次（剧本标志），没有惊动
+    expect(get('a1').ai.mode).toBe(8);
+  });
+
+  it('朱贵走到李逵身边割断绳索：李逵能动了，同时惊动众人；李逵、朱富到西北小路回合结束过关', () => {
+    const { b, get } = open('zhufu');
+    const lk = get('likui');
+    expect(lk.stunTurns).toBeGreaterThan(0);
+    const zg = get('zhugui');
+    zg.x = 18; zg.y = 10; after(b);
+    expect(lk.stunTurns).toBe(0);
+    expect(get('a1').ai.mode).toBe(0);
+    lk.x = 1; lk.y = 1; const zf = get('zhufu'); zf.x = 2; zf.y = 1;
+    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(50);
+    expect(b.status).toBe('won');
+  });
+
+  it('李云血少了，朱富走到身边就劝得他入伙', () => {
+    const { b, get } = open('zhufu');
+    const ly = get('liyun');
+    ly.hp = Math.floor(ly.stats.maxHp * 0.4);
+    after(b);
+    const zf = get('zhufu');
+    zf.x = 20; zf.y = 11; after(b);
+    expect(b.status).toBe('won');
+  });
+});

@@ -56,7 +56,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
   const legacy = b.rng.chance(LEGACY_ATTACK_PERCENT);
   const reach = b.reachOf(u, budget);
   const basic = attackSkill(u, b.data);
-  const skills = [basic, ...learnedSkills(u, b.data).filter(s => !isSupportSkill(s) && s.mpCost <= u.mp)];
+  const skills = [basic, ...learnedSkills(u, b.data).filter(s => !isSupportSkill(s) && !s.drug && s.mpCost <= u.mp)];
   const foes = b.aiFoesOf(u);
   const loneVolley: Choice = { best: null, ties: 0 };
   let bestLegacy: Option | null = null;
@@ -195,7 +195,7 @@ function foesWithin(b: Battle, u: Unit, radius: number) {
  */
 export function alertRadius(b: Battle, u: Unit): number {
   const skills = [attackSkill(u, b.data), ...learnedSkills(u, b.data)].filter(
-    (s): s is SkillDef => !!s && !isSupportSkill(s) && !s.volley && s.mpCost <= u.mp,
+    (s): s is SkillDef => !!s && !isSupportSkill(s) && !s.volley && !s.drug && s.mpCost <= u.mp,
   );
   const reach = Math.max(0, ...skills.map((s) => castRange(u, s, b.data)[1] + s.area));
   return u.stats.move + reach;
