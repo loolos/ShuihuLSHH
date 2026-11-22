@@ -1,0 +1,22 @@
+{
+  "N-add10#1": {"zh":"两位教头，请较量一棒。","t":"Instructors, please have a bout with the staff."},
+  "N-add10#2": {"zh":"来，来，来！让我看看你有没有本事！","t":"Come on, come on, come on! Let's see if you've got any skill!"},
+  "N-add10#3": {"zh":"(这个洪教头必定是柴大官人的师父；我若是一棒打翻了他，对柴大官人的面子上不好看...该如何是好？)","t":"(This Instructor Hong must be Lord Chai's teacher. If I knock him down with one blow, Lord Chai will lose face... What should I do?)"},
+  "N-add10#4": {"zh":"林武师，这位洪教头到这里也不久；在这里也没有遇上对手。林武师请尽全力，小可正要看看两位教头的本事。","t":"Master Lin, Instructor Hong hasn't been here long, and he hasn't met his match here. Please give it everything; I want to see what both of you can do."},
+  "N-add10#5": {"zh":"(原来不是柴大官人的师父！那我可以不用手下留情了。)","t":"(So he's not Lord Chai's teacher! Then I needn't hold back.)"},
+  "N-add10#6": {"zh":"来，来，来！","t":"Come on, come on, come on!"},
+  "N-add10#7": {"zh":"洪师父，请指教。","t":"Master Hong, please teach me."},
+  "N-add10#8": {"zh":"二位教头比试，非比其他，这锭银子权为利物。哪位赢了，便拿了去。","t":"A bout between two instructors is no ordinary contest. Let this ingot of silver be the prize. Whoever wins takes it."},
+  "N-add10#9": {"zh":"限制回合数 --- 10","t":"Turn limit --- 10"},
+  "N-add10#10": {"zh":"胜利条件   --- 打败洪教头","t":"Victory --- Defeat Instructor Hong"},
+  "N-add10#11": {"zh":"失败条件   --- 林冲死亡","t":"Defeat --- Lin Chong dies"},
+  "N-add10#12": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N-add10#13": {"zh":"林冲败于洪教头棒下，众好汉再无颜面寄住府中，遂告别柴进，继续着亡命的生涯；林冲遭此重挫之后，从此郁郁寡欢，众人再也闯不出名堂，于是分道扬镳，四散而去........","t":"Lin Chong fell to Instructor Hong's staff. Too ashamed to stay at the manor, the heroes took leave of Chai Jin and went on living as fugitives. After this blow Lin Chong was never happy again, the group never made a name for themselves, and they went their separate ways........"},
+  "N-add10#14": {"zh":"林冲把棒一横，那棒直扫着洪教头臁儿骨上，洪教头撇了棒，扑地倒了。","t":"Lin Chong swept his staff sideways and caught Instructor Hong right across the shins. Hong dropped his staff and fell flat."},
+  "N-add10#15": {"zh":"呜啊！","t":"Waaah!"},
+  "N-add10#16": {"zh":"洪师父，承让了。","t":"Master Hong, thank you for the bout."},
+  "N-add10#17": {"zh":"你...你以为这样子就结束了吗！徒弟们！给我上！给我狠狠地打！","t":"Y... you think this is over? Disciples! Get him! Beat him hard!"},
+  "N-add10#18": {"zh":"洪教头！你在干什么！","t":"Instructor Hong! What are you doing!"},
+  "N-add10#19": {"zh":"少罗唆！我要把这个林冲的四肢打断才甘心！","t":"Shut up! I won't rest until I've broken every one of this Lin Chong's limbs!"},
+  "N-add10#20": {"zh":"一场恶战即将开始。","t":"A fierce battle is about to begin."}
+}
