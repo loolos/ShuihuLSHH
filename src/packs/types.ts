@@ -244,6 +244,8 @@ export interface PackUnitJson {
   patrol?: [number, number][];
   /** 劝酒【新】：refuse = 头几次推辞不喝；turns = 麻翻几回合（覆盖技能的 drug）；by = 只肯喝这些职业劝的酒（别人劝一律推辞） */
   drink?: { refuse?: number; turns?: number; by?: (string | number)[]; /** 只吃了一点：挨打就醒 */ light?: boolean };
+  /** 劝酒时说的话，轮着说【新】 */
+  toasts?: string[];
   /** 本关临时会的技能【新】（技能 id），只在这一关有，如朱贵扮酒保会劝酒 */
   skills?: (string | number)[];
   /** 显示的名字，不填用职业名 */

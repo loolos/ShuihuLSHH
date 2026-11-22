@@ -66,8 +66,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     const jiu = skill(b, zg, '劝酒');
     expect(jiu).toBeDefined();
     zg.x = 10; zg.y = 17;
-    b.useSkill(zg, jiu, g);
+    const ev = b.useSkill(zg, jiu, g);
     expect(g.stunTurns).toBe(8);
+    // 劝酒时说一句台词（扮店小二的口吻）
+    expect(ev.find((e) => e.type === 'say')).toMatchObject({ uid: zg.uid, text: '热酒热肉管够，都是我家主人孝敬的！' });
     expect(flagged(b)).toBe(false);
     // 换一关（或这一关之外）就没有了
     expect(learnedSkills({ ...zg, extraSkills: undefined }, b.data).some((s) => s.name === '劝酒')).toBe(false);
@@ -129,26 +131,36 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     expect(get('a1').ai.mode).toBe(8);
   });
 
-  it('朱贵走到李逵身边割断绳索：李逵能动了，同时惊动众人；李逵、朱富到西北小路回合结束过关', () => {
-    const { b, get } = open('zhufu');
+  it('朱贵走到李逵身边割断绳索：李逵能动了，同时惊动众人；把敌人都打倒就过关', () => {
+    const { b, stage, get } = open('zhufu');
     const lk = get('likui');
     expect(lk.stunTurns).toBeGreaterThan(0);
     const zg = get('zhugui');
     zg.x = 18; zg.y = 10; after(b);
     expect(lk.stunTurns).toBe(0);
     expect(get('a1').ai.mode).toBe(0);
-    lk.x = 1; lk.y = 1; const zf = get('zhufu'); zf.x = 2; zf.y = 1;
-    (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(50);
+    for (const u of stage.units) if (u.side === 'enemy') kill(get(u.id));
+    after(b);
     expect(b.status).toBe('won');
   });
 
-  it('李云血少了，朱富走到身边就劝得他入伙', () => {
+  it('李云血少了，朱富走到身边就劝他入伙：土兵逃散、李云成了友军，还要打倒猎户才过关', () => {
     const { b, get } = open('zhufu');
     const ly = get('liyun');
     ly.hp = Math.floor(ly.stats.maxHp * 0.4);
     after(b);
     const zf = get('zhufu');
     zf.x = 20; zf.y = 11; after(b);
+    expect(b.status).toBe('playing');
+    expect(ly.side).toBe('ally');
+    for (const id of ['a1', 'a6', 'b1', 'b6']) expect(get(id).present, id).toBe(false);
+    const hunters = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'].map(get);
+    expect(hunters.every((h) => h.present && h.ai.mode === 0)).toBe(true);
+    expect(get('caotaigong').ai.mode).toBe(4);
+    for (const h of hunters) kill(h);
+    kill(get('caotaigong'));
+    after(b);
     expect(b.status).toBe('won');
   });
+
 });
