@@ -149,6 +149,28 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     expect(b.status).toBe('won');
   });
 
+  it('李云还麻翻着时救出李逵，台词不一样：李云不喊「有奸细」', () => {
+    const { b, get } = open('zhufu');
+    const ly = get('liyun'), zf = get('zhufu');
+    zf.x = 20; zf.y = 11;
+    const jiu = skill(b, zf, '劝酒');
+    b.useSkill(zf, jiu, ly);
+    zf.acted = false; zf.ended = false; zf.mp = zf.stats.maxMp;
+    b.useSkill(zf, jiu, ly);
+    expect(ly.stunTurns).toBe(2);
+    const zg = get('zhugui');
+    zg.x = 18; zg.y = 10;
+    const out = (b as unknown as { out: { type: string; text?: string }[] }).out;
+    out.length = 0;
+    after(b);
+    const texts = out.filter((e) => e.type === 'say' || e.type === 'narrate').map((e) => e.text ?? '').join('|');
+    expect(get('likui').stunTurns).toBe(0);
+    expect(get('a1').ai.mode).toBe(0);
+    expect(texts).toContain('李都头还醉着');
+    expect(texts).toContain('叫唤不醒');
+    expect(texts).not.toContain('有奸细');
+  });
+
   it('李云血少了，朱富走到身边就劝他入伙：土兵逃散、李云成了友军，还要打倒猎户才过关', () => {
     const { b, get } = open('zhufu');
     const ly = get('liyun');

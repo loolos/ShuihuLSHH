@@ -2354,7 +2354,8 @@ export class Battle {
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:
-          this.flags.add(op.value);
+          if (op.args?.clear) this.flags.delete(op.value);
+          else this.flags.add(op.value);
           break;
         // 105 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；106 解开
         case 105:

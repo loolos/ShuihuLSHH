@@ -467,6 +467,10 @@
         [
           "narrate",
           "李云推却不过，略吃了两口。不多时，只见李云头重脚轻，扑地倒了。他吃得少，药力只怕不长。"
+        ],
+        [
+          "flag",
+          "liyun-out"
         ]
       ]
     },
@@ -485,6 +489,11 @@
           "setAi",
           "liyun",
           0
+        ],
+        [
+          "flag",
+          "liyun-out",
+          false
         ]
       ]
     },
@@ -492,6 +501,10 @@
       "on": {
         "flag": "alarm"
       },
+      "unless": [
+        "liyun-out",
+        "alarm-said"
+      ],
       "do": [
         [
           "say",
@@ -501,6 +514,127 @@
         [
           "narrate",
           "还醒着的土兵、猎户一齐跳将起来，拿起枪棒。曹太公见势头不好，往县城那边的板桥便跑。"
+        ],
+        [
+          "flag",
+          "alarm-said"
+        ],
+        [
+          "setAi",
+          "liyun",
+          0
+        ],
+        [
+          "setAi",
+          "a1",
+          0
+        ],
+        [
+          "setAi",
+          "a2",
+          0
+        ],
+        [
+          "setAi",
+          "a3",
+          0
+        ],
+        [
+          "setAi",
+          "a4",
+          0
+        ],
+        [
+          "setAi",
+          "a5",
+          0
+        ],
+        [
+          "setAi",
+          "a6",
+          0
+        ],
+        [
+          "setAi",
+          "b1",
+          0
+        ],
+        [
+          "setAi",
+          "b2",
+          0
+        ],
+        [
+          "setAi",
+          "b3",
+          0
+        ],
+        [
+          "setAi",
+          "b4",
+          0
+        ],
+        [
+          "setAi",
+          "b5",
+          0
+        ],
+        [
+          "setAi",
+          "b6",
+          0
+        ],
+        [
+          "setAi",
+          "c1",
+          0
+        ],
+        [
+          "setAi",
+          "c2",
+          0
+        ],
+        [
+          "setAi",
+          "c3",
+          0
+        ],
+        [
+          "setAi",
+          "c4",
+          0
+        ],
+        [
+          "setAi",
+          "c5",
+          0
+        ],
+        [
+          "setAi",
+          "c6",
+          0
+        ],
+        [
+          "setAi",
+          "caotaigong",
+          4
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "alarm"
+      },
+      "if": "liyun-out",
+      "unless": "alarm-said",
+      "do": [
+        [
+          "narrate",
+          "李云醉倒在地，叫唤不醒。醒着的土兵、猎户乱嚷「都头着了道儿了」，一齐跳将起来，拿起枪棒。曹太公见势头不好，往县城那边的板桥便跑。"
+        ],
+        [
+          "flag",
+          "alarm-said"
         ],
         [
           "setAi",
@@ -608,7 +742,27 @@
       "on": {
         "turn": 6
       },
+      "if": "liyun-out",
       "unless": "alarm",
+      "do": [
+        [
+          "narrate",
+          "日头偏西，土兵们见都头醉倒了叫不醒，都起了疑心，嚷道：「这酒有古怪！」"
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "unless": [
+        "alarm",
+        "liyun-out"
+      ],
       "do": [
         [
           "say",
@@ -631,6 +785,61 @@
         "by": "zhugui",
         "playerPhase": true
       },
+      "if": "liyun-out",
+      "unless": "freed",
+      "do": [
+        [
+          "cleanse",
+          "likui"
+        ],
+        [
+          "say",
+          "likui",
+          "朱贵哥哥！快把俺的绳索割了——"
+        ],
+        [
+          "say",
+          "zhugui",
+          "低声！李都头还醉着哩。趁他没醒，快走！"
+        ],
+        [
+          "narrate",
+          "朱贵割断麻索。李逵夺过一把朴刀，看了看醉倒在地的李云。"
+        ],
+        [
+          "say",
+          "likui",
+          "这都头睡得倒香！先砍了曹太公那老驴，回头再来理会他。"
+        ],
+        [
+          "buff",
+          "likui",
+          "attack",
+          {
+            "pct": 20,
+            "turns": 3
+          }
+        ],
+        [
+          "flag",
+          "freed"
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "likui",
+        "by": "zhugui",
+        "playerPhase": true
+      },
+      "unless": [
+        "liyun-out",
+        "freed"
+      ],
       "do": [
         [
           "cleanse",
