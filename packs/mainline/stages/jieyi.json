@@ -258,6 +258,22 @@
      "杨雄家 · 两个月后"
     ],
     [
+     "leave",
+     "daizong"
+    ],
+    [
+     "leave",
+     "hero"
+    ],
+    [
+     "leave",
+     "linchong"
+    ],
+    [
+     "leave",
+     "yanglin"
+    ],
+    [
      "appear",
      "qiaoyun"
     ],
@@ -424,6 +440,26 @@
     [
      "leave",
      "pangong"
+    ],
+    [
+     "narrate",
+     "石秀出了杨雄家，径投戴宗等人下处来。"
+    ],
+    [
+     "appear",
+     "daizong"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "appear",
+     "yanglin"
     ],
     [
      "move",
