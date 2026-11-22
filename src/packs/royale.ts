@@ -5,7 +5,7 @@ import type { StageInput } from '../rules/battle.ts';
 import type { FileSource } from '../rules/load.ts';
 import { buildT2S, stageJson, stageNames } from '../rules/load.ts';
 import { STARS_108 } from '../rules/nicknames.ts';
-import { firstZone, mainArea, NPC_TEAM, spreadCells } from '../rules/royale.ts';
+import { firstZone, mainArea, NPC_TEAM, openCells, spreadCells } from '../rules/royale.ts';
 import { Rng } from '../rules/rng.ts';
 import { facingTowards } from '../rules/unit.ts';
 import { stageBoard, type PackRuntime } from './build.ts';
@@ -64,7 +64,9 @@ export function royaleStage(rt: PackRuntime, stage: PackStageJson, files: FileSo
   const board = stageBoard(files, stage);
   const area = mainArea(board);
   const centre = firstZone(area);
-  const cells = spreadCells(board, area, heroes.length + r.npcs.count, rng, stage.units.map((u) => ({ x: u.x, y: u.y })));
+  // 只在开阔、离地图边远一点的格子出生（最远点采样会把人推到地图最外面一圈的角落里）
+  const open = openCells(board, area);
+  const cells = spreadCells(board, open.length >= heroes.length + r.npcs.count ? open : area, heroes.length + r.npcs.count, rng, stage.units.map((u) => ({ x: u.x, y: u.y })));
   const byCentre = [...cells].sort((a, b) => Math.hypot(a.x - centre.x, a.y - centre.y) - Math.hypot(b.x - centre.x, b.y - centre.y));
   const npcCells = byCentre.slice(0, Math.min(r.npcs.count, Math.max(0, cells.length - heroes.length)));
   const heroCells = cells.filter((c) => !npcCells.includes(c));

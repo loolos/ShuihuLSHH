@@ -82,6 +82,21 @@ export function mainArea(board: Board): Cell[] {
   return best;
 }
 
+/**
+ * 开阔的格子：离地图边至少 margin 格，周围 5×5 里至少 minOpen 格可走（且连通）。
+ * 出生点、宝箱只放在这里（负责人 2026-11-22：N01 边上一圈石头后面的角落看着进不去，出生点不能挑到那里）。
+ */
+export function openCells(board: Board, area: Cell[], margin = 5, minOpen = 18): Cell[] {
+  const w = board.width;
+  const inArea = new Set(area.map((c) => c.y * w + c.x));
+  return area.filter((c) => {
+    if (c.x < margin || c.y < margin || c.x >= w - margin || c.y >= board.height - margin) return false;
+    let n = 0;
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) if (inArea.has((c.y + dy) * w + c.x + dx)) n++;
+    return n >= minOpen;
+  });
+}
+
 /** 开局的圈：圆心在可走区域的重心附近（取最近的可走格），半径盖住全部可走格 */
 export function firstZone(area: Cell[]): Zone {
   const mx = area.reduce((s, c) => s + c.x, 0) / area.length, my = area.reduce((s, c) => s + c.y, 0) / area.length;

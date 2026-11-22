@@ -66,6 +66,10 @@ describe.skipIf(!has)('好汉聚义', () => {
     expect(b.items.length).toBe(stage.royale!.chestStart);
     // 出生点不重叠
     expect(new Set(b.units.map((u) => `${u.x},${u.y}`)).size).toBe(b.units.length);
+    // 不出生、不刷宝箱在地图边上（N01 边上一圈在石头后面）
+    for (const c of [...b.units, ...b.items]) {
+      expect(Math.min(c.x, c.y, b.board.width - 1 - c.x, b.board.height - 1 - c.y)).toBeGreaterThanOrEqual(5);
+    }
   });
 
   it('下一个圈整个落在现在的圈里', () => {
