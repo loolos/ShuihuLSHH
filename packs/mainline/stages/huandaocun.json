@@ -101,6 +101,16 @@
    "hpMultiplier": 1.3
   },
   {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "ally",
+   "x": 18,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "hidden": true
+  },
+  {
    "id": "xuannv",
    "class": "xuannv-xiang",
    "side": "ally",
@@ -691,6 +701,97 @@
    "levelOffset": -1,
    "hidden": true,
    "facing": 0
+  },
+  {
+   "id": "g1",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g2",
+   "class": 33,
+   "side": "enemy",
+   "x": 16,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g3",
+   "class": 32,
+   "side": "enemy",
+   "x": 17,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g4",
+   "class": 33,
+   "side": "enemy",
+   "x": 18,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g5",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 1,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g6",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 1,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "土兵弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "g7",
+   "class": 43,
+   "side": "enemy",
+   "x": 19,
+   "y": 3,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": -1,
+   "hidden": true
   }
  ],
  "script": [
@@ -993,6 +1094,10 @@
      "taozongwang"
     ],
     [
+     "appear",
+     "luzhishen"
+    ],
+    [
      "say",
      "likui",
      "哥哥休慌！铁牛来也！"
@@ -1006,6 +1111,48 @@
      "say",
      "oupeng",
      "小弟摩云金翅欧鹏，和九尾龟陶宗旺兄弟在黄门山落草，久闻哥哥大名，这番投奔山寨，晁天王教我们一同来接哥哥。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家刚好路过此地，听得庙里厮杀，说是官兵要拿宋公明哥哥——直娘贼！洒家也来凑个热闹！"
+    ],
+    [
+     "say",
+     "oupeng",
+     "原来是花和尚鲁大师！来得正好，一同杀进去！"
+    ],
+    [
+     "narrate",
+     "正殿东边也追来一伙土兵，正撞上鲁智深。"
+    ],
+    [
+     "appear",
+     "g1"
+    ],
+    [
+     "appear",
+     "g2"
+    ],
+    [
+     "appear",
+     "g3"
+    ],
+    [
+     "appear",
+     "g4"
+    ],
+    [
+     "appear",
+     "g5"
+    ],
+    [
+     "appear",
+     "g6"
+    ],
+    [
+     "appear",
+     "g7"
     ],
     [
      "say",
@@ -1057,6 +1204,10 @@
      "taozongwang"
     ],
     [
+     "appear",
+     "luzhishen"
+    ],
+    [
      "say",
      "likui",
      "哥哥休慌！铁牛来也！"
@@ -1070,6 +1221,48 @@
      "say",
      "oupeng",
      "小弟摩云金翅欧鹏，和九尾龟陶宗旺兄弟在黄门山落草，久闻哥哥大名，这番投奔山寨，晁天王教我们一同来接哥哥。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家刚好路过此地，听得庙里厮杀，说是官兵要拿宋公明哥哥——直娘贼！洒家也来凑个热闹！"
+    ],
+    [
+     "say",
+     "oupeng",
+     "原来是花和尚鲁大师！来得正好，一同杀进去！"
+    ],
+    [
+     "narrate",
+     "正殿东边也追来一伙土兵，正撞上鲁智深。"
+    ],
+    [
+     "appear",
+     "g1"
+    ],
+    [
+     "appear",
+     "g2"
+    ],
+    [
+     "appear",
+     "g3"
+    ],
+    [
+     "appear",
+     "g4"
+    ],
+    [
+     "appear",
+     "g5"
+    ],
+    [
+     "appear",
+     "g6"
+    ],
+    [
+     "appear",
+     "g7"
     ],
     [
      "say",

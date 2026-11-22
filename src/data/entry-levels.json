@@ -123,6 +123,12 @@
     "mainline/yiling": {"likui":40},
     "mainline/caozhuang": {"likui":41},
     "mainline/zhufu": {"zhufu":37,"zhugui":33,"jiubao":37,"likui":41},
+    "mainline/yinmachuan": {"0":47,"11":32,"39":39,"daizong":38},
+    "mainline/changjie": {"0":48,"11":33,"39":39,"shixiu":40,"yangxiong":40,"daizong":39},
+    "mainline/jieyi": {"0":48,"11":34,"39":39,"shixiu":40,"daizong":39,"yangxiong":40},
+    "mainline/shapeiruhai": {"shixiu":40,"daizong":39,"shixiu-tuo":40},
+    "mainline/cuipingshan": {"0":48,"11":34,"39":39,"shixiu":40,"yangxiong":40,"shiqian":40,"daizong":39},
+    "mainline/zhujiadian": {"0":48,"16":33,"yangxiong":40,"shixiu":40,"shiqian":40,"wusong":36},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":20,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }
