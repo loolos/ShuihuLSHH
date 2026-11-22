@@ -401,7 +401,7 @@
         ],
         [
           "objective",
-          "劝降：把李云打到体力不足四成，再让朱富走到他身边，就劝得他入伙，土兵随即逃散，只剩猎户"
+          "劝降：把李云打到体力不足四成，再让朱富走到他身边，就劝得他入伙，醒着的土兵随即逃散（麻翻的还睡着），再打倒剩下的敌人"
         ],
         [
           "objective",
@@ -1018,55 +1018,91 @@
         ],
         [
           "narrate",
-          "土兵们见都头也反了，发声喊，丢了枪棒四散逃命去了。"
+          "醒着的土兵见都头也反了，发声喊，丢了枪棒四散逃命去了；麻翻的还躺在地上打呼。"
         ],
         [
           "leave",
-          "a1"
+          "a1",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "a2"
+          "a2",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "a3"
+          "a3",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "a4"
+          "a4",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "a5"
+          "a5",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "a6"
+          "a6",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b1"
+          "b1",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b2"
+          "b2",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b3"
+          "b3",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b4"
+          "b4",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b5"
+          "b5",
+          {
+            "awake": true
+          }
         ],
         [
           "leave",
-          "b6"
+          "b6",
+          {
+            "awake": true
+          }
         ],
         [
           "say",
@@ -1110,7 +1146,163 @@
         ],
         [
           "objective",
-          "胜利条件：打倒剩下的猎户（曹太公逃过板桥就不追了）"
+          "胜利条件：打倒剩下的猎户和还睡着的土兵（土兵醒了就跑，曹太公逃过板桥就不追了）"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a1",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a2",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a2"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a3",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a3"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a4",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a5",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a5"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "a6",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "a6"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b1",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b1"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b2",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b2"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b3",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b3"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b4",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b4"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b5",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b5"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "b6",
+        "action": "wake"
+      },
+      "if": "liyun-join",
+      "do": [
+        [
+          "leave",
+          "b6"
         ]
       ]
     },

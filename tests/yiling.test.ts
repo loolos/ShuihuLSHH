@@ -176,13 +176,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
   it('李云血少了，朱富走到身边就劝他入伙：土兵逃散、李云成了友军，还要打倒猎户才过关', () => {
     const { b, get } = open('zhufu');
     const ly = get('liyun');
+    get('b1').stunTurns = 8; // 麻翻的土兵不跑，继续睡
     ly.hp = Math.floor(ly.stats.maxHp * 0.4);
     after(b);
     const zf = get('zhufu');
     zf.x = 20; zf.y = 11; after(b);
     expect(b.status).toBe('playing');
+    expect(get('b1').present).toBe(true);
+    kill(get('b1'));
     expect(ly.side).toBe('ally');
-    for (const id of ['a1', 'a6', 'b1', 'b6']) expect(get(id).present, id).toBe(false);
+    for (const id of ['a1', 'a6', 'b2', 'b6']) expect(get(id).present, id).toBe(false);
     const hunters = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'].map(get);
     expect(hunters.every((h) => h.present && h.ai.mode === 0)).toBe(true);
     expect(get('caotaigong').ai.mode).toBe(4);
