@@ -1,0 +1,15 @@
+{
+  "N07#1": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N07#2": {"zh":"胜利条件   --- 打败陆谦","t":"Victory --- Defeat Lu Qian"},
+  "N07#3": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
+  "N07#4": {"zh":"失败条件二 --- 林冲死亡","t":"Defeat 2 --- Lin Chong dies"},
+  "N07#5": {"zh":"敌军增援了！","t":"Enemy reinforcements!"},
+  "N07#6": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N07#7": {"zh":"%N中伏身亡，众好汉相继伏诛，林冲在数十名官兵围攻之下，拼尽全力掷出手中长枪，刺中陆谦肩头，随即遭官兵乱刀砍死........","t":"%N died in the ambush and the heroes fell one by one. Surrounded by dozens of soldiers, Lin Chong hurled his spear with all his strength and pierced Lu Qian's shoulder, then was hacked to death........"},
+  "N07#8": {"zh":"林冲遇害，众好汉败逃，鲁智深、史进等人相继被擒杀，%N下落不明，从此江湖上再没听过这号人物........","t":"Lin Chong was killed and the heroes fled. Lu Zhishen, Shi Jin and the others were caught and killed one after another. %N vanished, and the rivers and lakes never heard of him again........"},
+  "N07#9": {"zh":"哼...失败了。撤退！撤退！","t":"Hmph... it failed. Fall back! Fall back!"},
+  "N07#10": {"zh":"陆谦！不要逃！","t":"Lu Qian! Don't run!"},
+  "N07#11": {"zh":"算了，穷寇莫追。林教头，现在还是赶路要紧。","t":"Let it go. Don't chase a beaten foe. Instructor Lin, getting on the road matters more now."},
+  "N07#12": {"zh":"(...没想到连陆谦也被高俅收买了；要是跟着他回到东京...后果真是不堪设想。)","t":"(...Who'd have thought Gao Qiu had bought even Lu Qian. If I'd gone back to Kaifeng with him... I can't bear to think of it.)"},
+  "N07#13": {"zh":"陆谦用计失败。","t":"Lu Qian's scheme fails."}
+}

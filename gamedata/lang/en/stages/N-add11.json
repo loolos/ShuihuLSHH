@@ -1,0 +1,10 @@
+{
+  "N-add11#1": {"zh":"站住！你们这几个朝廷钦犯，想走去哪里呀？","t":"Halt! Where do you think you're going, you fugitives of the court?"},
+  "N-add11#2": {"zh":"那么快就追来了，这些狗官吏简直跟苍蝇一样讨厌啊！","t":"Caught up already? These dog officials are as annoying as flies!"},
+  "N-add11#3": {"zh":"限制回合数 --- 40","t":"Turn limit --- 40"},
+  "N-add11#4": {"zh":"胜利条件   --- 打败所有敌人","t":"Victory --- Defeat all enemies"},
+  "N-add11#5": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add11#6": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N-add11#7": {"zh":"%N死亡，群龙无首，四下逃散，最终仍为官兵捕获，押解回东京，无一得以善终........","t":"%N died. Leaderless, the group scattered, but the soldiers caught them anyway and took them back to Kaifeng. None came to a good end........"},
+  "N-add11#8": {"zh":"经过一场恶战，大家终于逃脱了官兵的追捕。","t":"After a fierce battle, everyone finally escaped the soldiers' pursuit."}
+}
