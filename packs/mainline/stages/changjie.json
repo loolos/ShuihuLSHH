@@ -1,0 +1,774 @@
+{
+ "id": "changjie",
+ "title": "长街遇石秀",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 400
+ },
+ "map": {
+  "custom": "zishijie"
+ },
+ "bgm": [
+  "battle",
+  "rock"
+ ],
+ "units": [
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 26,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "name": "拼命三郎石秀"
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 12,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "name": "病关索杨雄"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 15,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "name": "武龙",
+   "hidden": true
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 14,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "hidden": true
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 16,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "name": "林冲",
+   "hidden": true
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "side": "player",
+   "x": 17,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "name": "锦豹子杨林",
+   "hidden": true
+  },
+  {
+   "id": "zhangbao",
+   "class": 38,
+   "side": "enemy",
+   "x": 10,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "踢杀羊张保",
+   "levelOffset": 2,
+   "hpMultiplier": 2.5
+  },
+  {
+   "id": "a1",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "a2",
+   "class": 33,
+   "side": "enemy",
+   "x": 12,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "a3",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "a4",
+   "class": 33,
+   "side": "enemy",
+   "x": 11,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "a5",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 10,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "a6",
+   "class": 33,
+   "side": "enemy",
+   "x": 13,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "军汉",
+   "levelOffset": -2
+  },
+  {
+   "id": "b1",
+   "class": 23,
+   "side": "enemy",
+   "x": 20,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "泼皮",
+   "levelOffset": -3
+  },
+  {
+   "id": "b2",
+   "class": 23,
+   "side": "enemy",
+   "x": 20,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "泼皮",
+   "levelOffset": -3
+  },
+  {
+   "id": "b3",
+   "class": 22,
+   "side": "enemy",
+   "x": 21,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "泼皮",
+   "levelOffset": -3
+  },
+  {
+   "id": "b4",
+   "class": 22,
+   "side": "enemy",
+   "x": 21,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 2,
+   "name": "泼皮",
+   "levelOffset": -3
+  },
+  {
+   "id": "c1",
+   "class": 32,
+   "side": "enemy",
+   "x": 1,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c2",
+   "class": 33,
+   "side": "enemy",
+   "x": 1,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c3",
+   "class": 32,
+   "side": "enemy",
+   "x": 1,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c4",
+   "class": 33,
+   "side": "enemy",
+   "x": 0,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c5",
+   "class": 32,
+   "side": "enemy",
+   "x": 0,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "c6",
+   "class": 33,
+   "side": "enemy",
+   "x": 0,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "军汉",
+   "levelOffset": -2,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "bind",
+     "yangxiong"
+    ],
+    [
+     "title",
+     "蓟州城 · 长街"
+    ],
+    [
+     "narrate",
+     "戴宗、武龙、林冲、杨林到了蓟州，城里城外寻了两日，并不见公孙胜的踪迹。这日四人在街边茶坊里坐地，只见一簇人吹吹打打，簇拥着一个节级过来。"
+    ],
+    [
+     "narrate",
+     "那人是河南人氏，姓杨名雄，在蓟州做两院押狱兼行刑刽子。因他一身好武艺，面貌微黄，人都叫他病关索。今日决刑回来，众相识与他挂红贺喜，送回家去。"
+    ],
+    [
+     "say",
+     "zhangbao",
+     "节级拜揖！小人张保，久闻节级大名。今日得了许多花红，借百十贯钱与兄弟们使用！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "我又不曾认得你，如何借钱与你？"
+    ],
+    [
+     "say",
+     "zhangbao",
+     "你今日诈得百姓许多财物，如何不借我些？兄弟们，与我抢！"
+    ],
+    [
+     "narrate",
+     "众军汉一拥上前，抢了花红缎匹，两三个把杨雄劈胸揪住，扯住了两只手，动弹不得。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "你们这伙泼皮，敢在青天白日下行凶！放手！"
+    ],
+    [
+     "narrate",
+     "正闹间，东街口一条大汉挑着一担柴过来，看见众人围住杨雄，放下柴担，分开人众。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "你们因甚打这节级？"
+    ],
+    [
+     "say",
+     "b1",
+     "你这打柴的，干你甚事！滚开！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "路见不平，俺偏要管！"
+    ],
+    [
+     "objective",
+     "被揪住：杨雄被军汉揪住动不了，石秀走到他身边才能替他挣脱\n胜：石秀救下杨雄，并打倒踢杀羊张保\n败：石秀、杨雄或武龙倒下；超过 12 回合"
+    ],
+    [
+     "turnLimit",
+     12
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "yangxiong",
+    "by": "shixiu",
+    "playerPhase": true
+   },
+   "unless": "freed",
+   "do": [
+    [
+     "cleanse",
+     "yangxiong"
+    ],
+    [
+     "say",
+     "shixiu",
+     "节级，俺来也！"
+    ],
+    [
+     "narrate",
+     "石秀一把揪住两个军汉，一拳一个打翻在地。杨雄挣脱了手，抖擞精神。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "好兄弟！看我收拾这厮！"
+    ],
+    [
+     "buff",
+     "yangxiong",
+     "attack",
+     {
+      "pct": 20,
+      "turns": 3
+     }
+    ],
+    [
+     "setAi",
+     "a1",
+     0
+    ],
+    [
+     "setAi",
+     "a2",
+     0
+    ],
+    [
+     "setAi",
+     "a3",
+     0
+    ],
+    [
+     "setAi",
+     "a4",
+     0
+    ],
+    [
+     "setAi",
+     "a5",
+     0
+    ],
+    [
+     "setAi",
+     "a6",
+     0
+    ],
+    [
+     "setAi",
+     "zhangbao",
+     0
+    ],
+    [
+     "flag",
+     "freed"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "茶坊里戴宗四人看得分明。"
+    ],
+    [
+     "appear",
+     "daizong"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "appear",
+     "yanglin"
+    ],
+    [
+     "say",
+     "daizong",
+     "好一条汉子！武龙兄弟、林教头，咱们帮他一把，休教他吃亏。"
+    ],
+    [
+     "say",
+     "linchong",
+     "以多欺少，又是吃公家饭的……走！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": "done",
+   "do": [
+    [
+     "narrate",
+     "西街口一阵喧嚷，又一伙军汉听说张保在此闹事，赶来帮手。"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "say",
+     "c1",
+     "张大哥，兄弟们来也！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zhangbao"
+   },
+   "do": [
+    [
+     "say",
+     "zhangbao",
+     "哎哟……好汉饶命！"
+    ],
+    [
+     "flag",
+     "zbdown"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "zbdown"
+   },
+   "if": "freed",
+   "do": [
+    [
+     "flag",
+     "done"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "freed"
+   },
+   "if": "zbdown",
+   "do": [
+    [
+     "flag",
+     "done"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "done"
+   },
+   "do": [
+    [
+     "standDown",
+     "a1",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a2",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a3",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a4",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a5",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a6",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b1",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b2",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b3",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "b4",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c1",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c2",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c3",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c4",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c5",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "c6",
+     {
+      "reward": true,
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "cleanse",
+     "yangxiong"
+    ],
+    [
+     "narrate",
+     "那伙军汉见张保吃打，一哄都散了。杨雄要追去讨回花红，却被一伙做公的拦着说话，一时走不脱。"
+    ],
+    [
+     "say",
+     "daizong",
+     "壮士好拳脚！小可与几位兄弟在这里看了半日，佩服，佩服。请到酒店里吃三杯。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "小人姓石名秀，金陵建康府人氏。自小学得些枪棒，一生执意，路见不平，便要去舍命相护，人都唤小人做拼命三郎。随叔父来此贩羊马，叔父半途亡故，消折了本钱，流落在此卖柴度日。"
+    ],
+    [
+     "say",
+     "linchong",
+     "好一个拼命三郎。今日若不是你，那节级不知要吃多少亏。"
+    ],
+    [
+     "narrate",
+     "四人邀石秀到巷口酒店里坐了，饮了几杯。戴宗暗想：这样的好汉，正该引上梁山。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "shixiu"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "yangxiong"
+   },
+   "do": [
+    [
+     "defeat",
+     "杨雄倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}

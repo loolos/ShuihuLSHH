@@ -1,0 +1,1214 @@
+{
+ "id": "zhujiadian",
+ "title": "火烧祝家店",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 1000
+ },
+ "map": {
+  "custom": "baihu-cundian"
+ },
+ "tint": "night",
+ "bgm": [
+  "battle",
+  "rock"
+ ],
+ "units": [
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 12,
+   "y": 16,
+   "level": 30,
+   "facing": 3,
+   "name": "武龙"
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 11,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "name": "病关索杨雄"
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 12,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "name": "拼命三郎石秀"
+  },
+  {
+   "id": "shiqian",
+   "class": "shiqian",
+   "side": "player",
+   "x": 10,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "name": "鼓上蚤时迁"
+  },
+  {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "player",
+   "x": 1,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "鲁智深"
+  },
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "side": "player",
+   "x": 2,
+   "y": 3,
+   "level": 30,
+   "facing": 3,
+   "hidden": true
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "ally",
+   "x": 1,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "火眼狻猊邓飞",
+   "levelOffset": 1,
+   "hpMultiplier": 1.5
+  },
+  {
+   "id": "mengkang",
+   "class": 55,
+   "side": "ally",
+   "x": 1,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "玉幡竿孟康",
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "peixuan",
+   "class": 36,
+   "side": "ally",
+   "x": 0,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "铁面孔目裴宣",
+   "hpMultiplier": 1.3
+  },
+  {
+   "id": "ym1",
+   "class": 44,
+   "side": "ally",
+   "x": 0,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "饮马川喽啰",
+   "levelOffset": -1
+  },
+  {
+   "id": "ym2",
+   "class": 45,
+   "side": "ally",
+   "x": 1,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "饮马川喽啰",
+   "levelOffset": -1
+  },
+  {
+   "id": "ym3",
+   "class": 44,
+   "side": "ally",
+   "x": 0,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "饮马川喽啰",
+   "levelOffset": -1
+  },
+  {
+   "id": "ym4",
+   "class": 45,
+   "side": "ally",
+   "x": 0,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "饮马川喽啰",
+   "levelOffset": -1
+  },
+  {
+   "id": "xiaoer",
+   "class": 35,
+   "side": "enemy",
+   "x": 14,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家店小二",
+   "levelOffset": -2
+  },
+  {
+   "id": "huoji1",
+   "class": 37,
+   "side": "enemy",
+   "x": 15,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "店伙",
+   "levelOffset": -2
+  },
+  {
+   "id": "huoji2",
+   "class": 37,
+   "side": "enemy",
+   "x": 19,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "店伙",
+   "levelOffset": -2
+  },
+  {
+   "id": "huoji3",
+   "class": 37,
+   "side": "enemy",
+   "x": 19,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "店伙",
+   "levelOffset": -2
+  },
+  {
+   "id": "jiaotou",
+   "class": 39,
+   "side": "enemy",
+   "x": 28,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄教头",
+   "levelOffset": 1,
+   "hpMultiplier": 1.5
+  },
+  {
+   "id": "e1",
+   "class": 19,
+   "side": "enemy",
+   "x": 27,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e2",
+   "class": 40,
+   "side": "enemy",
+   "x": 27,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e3",
+   "class": 19,
+   "side": "enemy",
+   "x": 27,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e4",
+   "class": 41,
+   "side": "enemy",
+   "x": 28,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e5",
+   "class": 20,
+   "side": "enemy",
+   "x": 28,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 29,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "e7",
+   "class": 34,
+   "side": "enemy",
+   "x": 29,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n1",
+   "class": 19,
+   "side": "enemy",
+   "x": 7,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n2",
+   "class": 40,
+   "side": "enemy",
+   "x": 8,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n3",
+   "class": 19,
+   "side": "enemy",
+   "x": 9,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n4",
+   "class": 41,
+   "side": "enemy",
+   "x": 10,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 8,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 9,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n7",
+   "class": 34,
+   "side": "enemy",
+   "x": 7,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "n8",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "guanjia",
+   "class": 38,
+   "side": "enemy",
+   "x": 8,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄总管",
+   "levelOffset": 1,
+   "hpMultiplier": 1.5
+  },
+  {
+   "id": "s1",
+   "class": 19,
+   "side": "enemy",
+   "x": 8,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s2",
+   "class": 40,
+   "side": "enemy",
+   "x": 9,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s3",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s4",
+   "class": 20,
+   "side": "enemy",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 9,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 10,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s7",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 11,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "s8",
+   "class": 34,
+   "side": "enemy",
+   "x": 12,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -2,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "郓州 · 独龙冈下祝家店 · 夜"
+    ],
+    [
+     "narrate",
+     "杨雄、石秀、时迁、武龙四人行到郓州地面，天色已晚，投一个村店歇宿。店门前挂着一面招牌，上写「祝家店」。店里只有酒，没有肉卖。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "小二哥，你这店里怎地放着这许多朴刀？"
+    ],
+    [
+     "say",
+     "xiaoer",
+     "这是我家主人祝家庄的。庄上有五七百人家，都是佃户，各家分下两把朴刀。防梁山泊的好汉来借粮。"
+    ],
+    [
+     "narrate",
+     "到了半夜，时迁去后面净手，见笼里关着一只报晓的公鸡，便悄悄提了，在溪边宰了，烧一锅汤，四人分着吃了。"
+    ],
+    [
+     "say",
+     "xiaoer",
+     "（起来不见了鸡）你们这伙贼！偷了我店里报晓的鸡！那是祝家庄的鸡，你们要死了！"
+    ],
+    [
+     "say",
+     "shiqian",
+     "见鬼了！我自路上买的，几时见你的鸡？"
+    ],
+    [
+     "say",
+     "xiaoer",
+     "你们是梁山泊的贼！伙计们，打这厮，再去庄上叫人！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "既然撕破了脸，索性放一把火，把那些朴刀都烧了，教他们拿什么来厮杀！"
+    ],
+    [
+     "objective",
+     "放火：走到店里的朴刀架 (13–15, 12–14) 就放火烧店；烧掉朴刀，后来的庄客攻击 −20%\n胜：打退三路庄客（打倒全部敌人）\n败：杨雄、石秀或武龙倒下；超过 20 回合"
+    ],
+    [
+     "turnLimit",
+     20
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     13,
+     12,
+     15,
+     14
+    ],
+    "label": "朴刀架"
+   },
+   "unless": "burned",
+   "do": [
+    [
+     "narrate",
+     "石秀拿了草把，就灶里点着，往店里的草屋上四下一点，又把朴刀架推翻在火里。霎时间火焰冲天，那几十把朴刀都烧坏了。"
+    ],
+    [
+     "fire",
+     [
+      [
+       13,
+       13
+      ],
+      [
+       14,
+       13
+      ],
+      [
+       15,
+       13
+      ],
+      [
+       14,
+       12
+      ],
+      [
+       14,
+       14
+      ]
+     ],
+     {
+      "panic": 3,
+      "turns": 1
+     }
+    ],
+    [
+     "say",
+     "yangxiong",
+     "好！朴刀没了，看他们拿什么来！"
+    ],
+    [
+     "flag",
+     "burned"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "祝家庄上听得店里起火，早有一伙庄客点着火把，从东边板桥上赶来。"
+    ],
+    [
+     "appear",
+     "jiaotou"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "appear",
+     "e7"
+    ],
+    [
+     "say",
+     "jiaotou",
+     "哪里来的贼人，敢烧祝家的店！拿下了，解上州去请赏！"
+    ],
+    [
+     "flag",
+     "waveE"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "北边冈上又是一片火把，一伙庄客拿着挠钩、套索，绕到店后来了。"
+    ],
+    [
+     "appear",
+     "n1"
+    ],
+    [
+     "appear",
+     "n2"
+    ],
+    [
+     "appear",
+     "n3"
+    ],
+    [
+     "appear",
+     "n4"
+    ],
+    [
+     "appear",
+     "n5"
+    ],
+    [
+     "appear",
+     "n6"
+    ],
+    [
+     "appear",
+     "n7"
+    ],
+    [
+     "appear",
+     "n8"
+    ],
+    [
+     "say",
+     "shixiu",
+     "后面也来了！哥哥，背靠背，休被他们围住！"
+    ],
+    [
+     "flag",
+     "waveN"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "西边路上一阵喊声，一彪人马打着火把杀来——却是饮马川的好汉！"
+    ],
+    [
+     "appear",
+     "dengfei"
+    ],
+    [
+     "appear",
+     "mengkang"
+    ],
+    [
+     "appear",
+     "peixuan"
+    ],
+    [
+     "appear",
+     "ym1"
+    ],
+    [
+     "appear",
+     "ym2"
+    ],
+    [
+     "appear",
+     "ym3"
+    ],
+    [
+     "appear",
+     "ym4"
+    ],
+    [
+     "say",
+     "dengfei",
+     "杨林哥哥说你们几位往这条路上来，我们收拾了山寨，正要往梁山泊去，远远望见火光，便抄过来了！"
+    ],
+    [
+     "say",
+     "peixuan",
+     "诸位休慌，饮马川兄弟在此！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "narrate",
+     "南边芦苇里伏着一伙挠钩手。时迁在暗处走得急，被两把挠钩搭住，拖进芦苇里去了。"
+    ],
+    [
+     "say",
+     "shiqian",
+     "哥哥救我——！"
+    ],
+    [
+     "leave",
+     "shiqian"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "时迁兄弟！"
+    ],
+    [
+     "appear",
+     "guanjia"
+    ],
+    [
+     "appear",
+     "s1"
+    ],
+    [
+     "appear",
+     "s2"
+    ],
+    [
+     "appear",
+     "s3"
+    ],
+    [
+     "appear",
+     "s4"
+    ],
+    [
+     "appear",
+     "s5"
+    ],
+    [
+     "appear",
+     "s6"
+    ],
+    [
+     "appear",
+     "s7"
+    ],
+    [
+     "appear",
+     "s8"
+    ],
+    [
+     "say",
+     "guanjia",
+     "拿住了一个！其余的也休放走！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，人多救不得，先杀退了这伙，再想法子救他！"
+    ],
+    [
+     "flag",
+     "waveS"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "do": [
+    [
+     "narrate",
+     "北边路上，一胖一瘦两条大汉大踏步赶来：一个提着禅杖，一个提着两口戒刀。"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家和武二郎正要上梁山泊去看宋公明兄弟，半路上望见这里火起——哪个是武龙兄弟？"
+    ],
+    [
+     "say",
+     "wusong",
+     "武龙哥哥！小弟来也！这伙庄客，交给武松！"
+    ],
+    [
+     "say",
+     "hero",
+     "师兄、二郎来得正好！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "waveE"
+   },
+   "if": "burned",
+   "do": [
+    [
+     "buff",
+     "jiaotou",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e1",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e2",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e3",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e4",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e5",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e6",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "e7",
+     "attack",
+     {
+      "pct": -20
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "waveN"
+   },
+   "if": "burned",
+   "do": [
+    [
+     "buff",
+     "n1",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n2",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n3",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n4",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n5",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n6",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n7",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "n8",
+     "attack",
+     {
+      "pct": -20
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "waveS"
+   },
+   "if": "burned",
+   "do": [
+    [
+     "buff",
+     "guanjia",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s1",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s2",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s3",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s4",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s5",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s6",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s7",
+     "attack",
+     {
+      "pct": -20
+     }
+    ],
+    [
+     "buff",
+     "s8",
+     "attack",
+     {
+      "pct": -20
+     }
+    ]
+   ]
+  },
+  {
+   "on": "allEnemiesDefeated",
+   "if": "waveS",
+   "do": [
+    [
+     "narrate",
+     "天色微明，祝家庄的庄客死的死，逃的逃，都退回冈上去了。祝家店烧成了一片白地。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "时迁兄弟被他们拿去了……都怪我们不小心。"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "怕他怎地！洒家这便杀上冈去，把那庄子打个稀烂！"
+    ],
+    [
+     "say",
+     "dengfei",
+     "师父且慢。小弟听说那庄上四下里都是盘陀路，又有三个村坊互相救应，硬闯只怕吃亏。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "先投梁山泊，求晁天王、宋公明哥哥发兵来救时迁兄弟，才是正理。"
+    ],
+    [
+     "narrate",
+     "众人沿路正走，林子里转出一个人来，认得杨雄，纳头便拜——却是鬼脸儿杜兴。杜兴道：「如今小人在东村李家庄扑天雕李应大官人庄上做主管。李大官人和祝家庄有生死之誓，写一封书去，不怕他不放人。」"
+    ],
+    [
+     "narrate",
+     "欲知李应讨人如何，祝家庄放是不放，且听下回分解。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "yangxiong"
+   },
+   "do": [
+    [
+     "defeat",
+     "杨雄倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "shixiu"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}
