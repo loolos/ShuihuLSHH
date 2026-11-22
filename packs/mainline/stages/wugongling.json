@@ -9,11 +9,7 @@
     "custom": "wugongling"
   },
   "tint": "night",
-  "bgm": [
-    "night",
-    "eerie",
-    "nightduel"
-  ],
+  "bgm": ["night", "eerie", "nightduel"],
   "units": [
     {
       "id": "wusong", "facing": 0,

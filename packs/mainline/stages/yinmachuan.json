@@ -14,10 +14,7 @@
    22
   ]
  },
- "bgm": [
-  "battle",
-  "rock"
- ],
+ "bgm": ["march", "battle2"],
  "units": [
   {
    "id": "hero",

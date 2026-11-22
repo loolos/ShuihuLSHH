@@ -15,10 +15,7 @@
   ]
  },
  "tint": "dusk",
- "bgm": [
-  "battle",
-  "rock"
- ],
+ "bgm": ["battle", "escape"],
  "units": [
   {
    "id": "daizong",

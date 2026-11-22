@@ -8,10 +8,7 @@
   "map": {
     "custom": "guanfu"
   },
-  "bgm": [
-    "story",
-    "sad"
-  ],
+  "bgm": ["songjiang", "sad", "story"],
   "units": [
     {
       "id": "songjiang",

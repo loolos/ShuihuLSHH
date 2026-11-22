@@ -8,9 +8,7 @@
   "map": {
     "base": "Act14-2"
   },
-  "bgm": [
-    "story"
-  ],
+  "bgm": ["songjiang", "brothers", "liangshan"],
   "units": [
     {
       "id": "chaogai",

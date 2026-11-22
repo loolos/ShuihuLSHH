@@ -6,6 +6,7 @@
     "gold": 300
   },
   "map": {
+    "bgm": ["escape", "night"],
     "base": "N-add05"
   },
   "tint": "night",

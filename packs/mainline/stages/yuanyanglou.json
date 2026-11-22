@@ -8,10 +8,7 @@
   "map": {
     "custom": "guanfu"
   },
-  "bgm": [
-    "eerie",
-    "tense"
-  ],
+  "bgm": ["nightduel", "tense"],
   "units": [
     {
       "id": "wusong",

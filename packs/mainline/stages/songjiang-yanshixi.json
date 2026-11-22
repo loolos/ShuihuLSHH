@@ -3,6 +3,7 @@
  "id": "songjiang-yanshixi",
   "title": "坐楼杀惜",
   "map": {
+    "bgm": ["songjiang", "eerie", "sad"],
     "base": "Act5-2"
   },
   "bgm": "story",

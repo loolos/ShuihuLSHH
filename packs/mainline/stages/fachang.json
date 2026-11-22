@@ -4,11 +4,7 @@
   "map": {
     "base": "N05"
   },
-  "bgm": [
-    "rescue",
-    "boss",
-    "tense"
-  ],
+  "bgm": ["rescue", "boss", "tense"],
   "units": [
     {
       "id": "likui",

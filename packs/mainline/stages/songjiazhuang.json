@@ -15,10 +15,7 @@
       15
     ]
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["escape", "battle2"],
   "units": [
     {
       "id": "songjiang",

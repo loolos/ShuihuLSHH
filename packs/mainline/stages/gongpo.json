@@ -8,10 +8,7 @@
   "map": {
     "base": "N02"
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["manor", "fire", "army"],
   "units": [
     {
       "id": "qinming",

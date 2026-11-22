@@ -6,10 +6,7 @@
   "map": {
     "base": "Train1"
   },
-  "bgm": [
-    "tense",
-    "army"
-  ],
+  "bgm": ["march", "army"],
   "units": [
     {
       "id": "yangzhi",

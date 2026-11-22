@@ -8,10 +8,7 @@
  "map": {
   "custom": "zishijie"
  },
- "bgm": [
-  "battle",
-  "rock"
- ],
+ "bgm": ["battle", "rock"],
  "units": [
   {
    "id": "shixiu",

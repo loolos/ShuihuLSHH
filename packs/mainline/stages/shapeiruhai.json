@@ -9,10 +9,7 @@
   "custom": "zishijie"
  },
  "tint": "night",
- "bgm": [
-  "story",
-  "battle"
- ],
+ "bgm": ["maze", "night", "eerie"],
  "stealth": {
   "lose": "巡夜的人敲起锣来，满巷都惊动了……裴如海缩回门里，再不肯出来。",
   "flag": "spotted"

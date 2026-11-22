@@ -8,10 +8,7 @@
   "map": {
     "base": "Act3-2"
   },
-  "bgm": [
-    "eerie",
-    "brothers"
-  ],
+  "bgm": ["brothers", "story"],
   "units": [
     {
       "id": "songjiang",

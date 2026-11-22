@@ -8,10 +8,7 @@
   "map": {
     "custom": "baihu-cundian"
   },
-  "bgm": [
-    "brothers",
-    "liangshan"
-  ],
+  "bgm": ["liangshan", "sad"],
   "units": [
     {
       "id": "songjiang",

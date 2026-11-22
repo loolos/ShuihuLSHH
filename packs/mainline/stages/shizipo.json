@@ -8,10 +8,7 @@
   "map": {
     "base": "Act5-2"
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["inn", "eerie"],
   "units": [
     {
       "id": "wusong",

@@ -9,10 +9,7 @@
   "custom": "xuannvmiao"
  },
  "tint": "dusk",
- "bgm": [
-  "eerie",
-  "battle"
- ],
+ "bgm": ["eerie", "battle"],
  "units": [
   {
    "id": "songjiang",

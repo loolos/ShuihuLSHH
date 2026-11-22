@@ -9,10 +9,7 @@
     "custom": "dukou-chuan"
   },
   "tint": "night",
-  "bgm": [
-    "sad",
-    "story"
-  ],
+  "bgm": ["naval", "eerie"],
   "units": [
     {
       "id": "songjiang",

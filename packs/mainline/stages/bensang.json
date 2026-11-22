@@ -15,10 +15,7 @@
     ]
   },
   "tint": "dusk",
-  "bgm": [
-    "sad",
-    "battle"
-  ],
+  "bgm": ["tense", "sad"],
   "units": [
     {
       "id": "songjiang",

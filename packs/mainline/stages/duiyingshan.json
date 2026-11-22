@@ -8,10 +8,7 @@
   "map": {
     "custom": "wugongling"
   },
-  "bgm": [
-    "brothers",
-    "story"
-  ],
+  "bgm": ["nightduel", "brothers"],
   "units": [
     {
       "id": "songjiang",

@@ -18,10 +18,7 @@
       ]
     ]
   },
-  "bgm": [
-    "eerie",
-    "tense"
-  ],
+  "bgm": ["eerie", "tense"],
   "units": [
     {
       "id": "wusong",

@@ -9,10 +9,7 @@
     "custom": "zishijie"
   },
   "tint": "night",
-  "bgm": [
-    "story",
-    "eerie"
-  ],
+  "bgm": ["town", "eerie"],
   "units": [
     {
       "id": "songjiang",

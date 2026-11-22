@@ -15,10 +15,7 @@
    22
   ]
  },
- "bgm": [
-  "boss",
-  "tense"
- ],
+ "bgm": ["boss", "tense"],
  "units": [
   {
    "id": "wusong",

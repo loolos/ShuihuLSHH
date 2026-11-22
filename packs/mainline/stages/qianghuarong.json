@@ -8,10 +8,7 @@
   "map": {
     "custom": "guanfu"
   },
-  "bgm": [
-    "rescue",
-    "battle"
-  ],
+  "bgm": ["rescue", "battle"],
   "units": [
     {
       "id": "huarong",
