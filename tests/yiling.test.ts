@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
-import { compileStage } from '../src/packs/build.ts';
+import { compileStage, stageKind } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import { learnedSkills } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -53,6 +53,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十七
     expect(b.status).toBe('playing');
     kill(get('tiger')); after(b);
     expect(b.status).toBe('won');
+  });
+
+  it('选关里沂岭、杯酒救铁牛标战役，曹庄醉缚标剧情', () => {
+    const kind = (id: string) => stageKind(rt.stages.find((s) => s.id === id)!);
+    expect([kind('yiling'), kind('caozhuang'), kind('zhufu'), kind('chuanhuoer')]).toEqual(['战役', '剧情', '战役', '剧情']);
   });
 
   it('曹庄醉缚是过场：演完就过关', () => {

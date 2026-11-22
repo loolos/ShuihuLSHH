@@ -282,6 +282,11 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
 export const packStageName = (pack: string, stage: string) => `pack:${pack}/${stage}`;
 
 /** 关卡里会出现的全部职业（开场的单位，加上剧本 transform 换成的职业），预载动画用 */
+/** 选关里标「战役」还是「剧情」：有主动出手的敌人，或者要打倒敌人才过关（杯酒救铁牛开场敌人都坐着吃酒）就是战役 */
+export function stageKind(stage: PackStageJson): '战役' | '剧情' {
+  return stage.units.some((u) => u.side === 'enemy' && u.ai !== 8) || stage.script.some((b) => b.on === 'enemiesDefeated' || b.on === 'allEnemiesDefeated') ? '战役' : '剧情';
+}
+
 export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
   const ref = (v: unknown) => (typeof v === 'number' ? v : rt.classIds.get(String(v)));
   const list = stage.units.map((u) => ref(u.class));
