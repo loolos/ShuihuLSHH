@@ -46,6 +46,8 @@ export interface BattleSceneData {
   makeInput?: () => StageInput;
   /** 天色滤镜（扩展包关卡的 tint，§15.15） */
   tint?: StageTint;
+  /** 剧情关（过场）：不画「本回合已行动」的变灰（负责人 2026-11-22） */
+  story?: boolean;
 }
 
 type Mode =
@@ -102,6 +104,7 @@ export class BattleScene extends Phaser.Scene {
   /** 画哪张地图（原版关卡 = 关卡名；扩展包关卡借的原版地图） */
   private mapName = 'N01';
   private tint: StageTint | undefined;
+  private story = false;
   /** 当前的天色滤镜（剧情里可以换，扩展包指令 tint） */
   private tintFilter?: Phaser.Filters.Controller;
   private makeInput?: () => StageInput;
@@ -176,6 +179,7 @@ export class BattleScene extends Phaser.Scene {
     // 原版关卡的地图写在关卡 JSON 里（柳树下用狮子楼裁图）
     this.mapName = data.map ?? (data.assets.files ? stageMap(data.assets.files, data.stage) : data.stage);
     this.tint = data.tint;
+    this.story = !!data.story;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
@@ -396,9 +400,9 @@ export class BattleScene extends Phaser.Scene {
     this.drawBar(u);
   }
 
-  /** 我方本回合已经行动完（待机的不算：待机不结束行动，见 §2.5） */
+  /** 我方本回合已经行动完（待机的不算：待机不结束行动，见 §2.5）；剧情关不算，过场里人物不变灰 */
   private actedDone(u: Unit) {
-    return u.side === 'player' && u.ended && this.battle.phase === 'player';
+    return !this.story && u.side === 'player' && u.ended && this.battle.phase === 'player';
   }
 
   /**
