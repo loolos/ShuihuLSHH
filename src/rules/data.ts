@@ -232,8 +232,8 @@ const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100
 
 /**
  * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
- * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
- * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）；1008 晁蓋 天王八荒式（周身技，三段）。
+ * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96；LV4 是 1009）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
+ * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）；1008 晁蓋 天王八荒式（周身技，三段）；1009 林沖 懷璧其罪 LV4。
  */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
@@ -245,7 +245,9 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   }],
   11: [
     extraSkill({ name: '懷璧其罪LV2', skillId: 1001, type: 6, group: 1, learnLevel: 18, mpCost: 40, power: 40, rangeMax: 2, hitMod: 5, critMod: 20, soundId: 96, hits: split([11, 11]) }),
-    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 6, group: 1, learnLevel: 24, mpCost: 50, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
+    // LV3、LV4（负责人 2026-11-22）：横扫施放点及左右各一格（类型 13）；施放点选身前相邻格就是前方三格（左前、正前、右前），射程仍 1–2。耗气见 HERO_AOE_COSTS
+    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 13, group: 1, learnLevel: 24, mpCost: 60, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
+    extraSkill({ name: '懷璧其罪LV4', skillId: 1009, type: 13, group: 1, learnLevel: 30, mpCost: 75, power: 70, rangeMax: 2, hitMod: 10, critMod: 30, soundId: 96, hits: split([11, 11]) }),
     // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
     extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
   ],
