@@ -63,7 +63,7 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '还道村受天书', stages: ['mainline/banqu', 'mainline/huandaocun', 'mainline/tuanyuan'] },
   // 负责人 2026-11-22：李逵取娘（原著第 43 回）：李鬼剪径、背娘过岭为开场过场，沂岭杀四虎（老虎比景阳冈弱得多）；
   // 朱富酒店下蒙汗药（新动作「劝酒」，酒席上动手会惊动旁人）救出李逵，李云可劝入伙
-  { name: '沂岭杀四虎', stages: ['mainline/yiling', 'mainline/zhufu'] },
+  { name: '沂岭杀四虎', stages: ['mainline/yiling', 'mainline/caozhuang', 'mainline/zhufu'] },
 ];
 
 /**

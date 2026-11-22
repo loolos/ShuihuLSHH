@@ -224,6 +224,8 @@ export interface StageInput {
   aiPrefer?: Record<number, number[]>;
   /** 扩展包【新】：单位显示的名字（ACT 序号 → 名字），不填用职业名 */
   names?: Record<number, string>;
+  /** 本关临时会的技能（单位序号 → 技能号）【新】 */
+  extraSkills?: Record<number, number[]>;
   /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
   cuju?: CujuRules;
   /** 酒席【新】（杯酒救铁牛）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
@@ -449,6 +451,7 @@ export class Battle {
         uid: a.index, classId: a.type, name: input.names?.[a.index] ?? this.charName(a.type), side: a.side, x: a.x, y: a.y, facing: a.facing & 3,
         level, exp, hp: stats.maxHp, mp: stats.maxMp, stats, slots, forge, gold: 0,
         ...(hpMultiplier !== 1 ? { hpMultiplier } : {}),
+        ...(input.extraSkills?.[a.index]?.length ? { extraSkills: [...input.extraSkills[a.index]] } : {}),
         ...(statSide !== a.side ? { statSide } : {}),
         ai: { mode, target: a.extra[0], point: { x: a.extra[1], y: a.extra[2] } },
         present: !hidden && !this.ambushers.has(a.index), alive: true, defending: false, poisonTurns: 0, stunTurns: 0, buffs: [],
