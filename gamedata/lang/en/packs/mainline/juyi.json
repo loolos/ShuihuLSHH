@@ -1,0 +1,7 @@
+{
+  "mainline/juyi#1": {"zh":"少华山下，荒岭野林。江湖上传开一句话：天下好汉，今日在此聚义——只是这一回不排座次，只论谁能站到最后。十六位好汉各占一处，林子里还有几伙官军小头目把守着伤药。","t":"Below Mount Shaohua, in wild hills and forest. Word has spread through the rivers and lakes: today the heroes of the land gather here. Only this time there's no seating by rank; what counts is who's left standing. Sixteen heroes each hold a spot, and a few bands of army officers guard the medicine in the woods."},
+  "mainline/juyi#2": {"zh":"既然来了，便没有退的道理。看谁笑到最后！","t":"Now that I'm here, there's no backing down. Let's see who laughs last!"},
+  "mainline/juyi#3": {"zh":"十六位好汉各自为战（人人都是对头），活到最后的人获胜；你的好汉倒下就输。所有人 30 级、按等级配好装备，开局身上不带药。","t":"Sixteen heroes, every one for himself (everyone is your enemy). The last one alive wins; if your hero falls, you lose. Everyone is level 30 with gear for their level, and starts with no medicine."},
+  "mainline/juyi#4": {"zh":"毒圈：圈外的人每回合开始掉最大体力的 1/5（能掉死）。第 6 回合起每 5 回合缩一次，下一圈提前用白线标出，快缩圈时赶紧往里走。","t":"Poison zone: anyone outside it loses 1/5 of max HP at the start of each turn (it can kill). From turn 6 it shrinks every 5 turns; the next zone is marked with a white line in advance, so head inward when it's about to shrink."},
+  "mainline/juyi#5": {"zh":"宝箱：开局和之后每 3 回合在下一圈里刷出，装着小药；走到宝箱上或旁边一格就打开。小头目守着各自那一片，走近才动手，打倒能搜出伤药。吃药不算行动。","t":"Chests: they appear inside the next zone at the start and every 3 turns after, holding small potions; step on or next to one to open it. Officers guard their own patch and only attack when you come near; defeat them to find wound salve. Using medicine doesn't cost your action."}
+}

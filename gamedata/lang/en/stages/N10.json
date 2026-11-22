@@ -1,0 +1,14 @@
+{
+  "N10#1": {"zh":"洒家认得那厮！邓龙那撮鸟就在寺里，只要打死了他，这些喽啰自然四散。","t":"I know that bastard! That lout Deng Long is in the temple. Kill him and these bandits will scatter on their own."},
+  "N10#2": {"zh":"限制回合数 --- 40","t":"Turn limit --- 40"},
+  "N10#3": {"zh":"胜利条件   --- 打败『金眼虎』邓龙","t":"Victory --- Defeat 'Golden-eyed Tiger' Deng Long"},
+  "N10#4": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
+  "N10#5": {"zh":"失败条件二 --- 杨志死亡","t":"Defeat 2 --- Yang Zhi dies"},
+  "N10#6": {"zh":"敌军增援了！","t":"Enemy reinforcements!"},
+  "N10#7": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N10#8": {"zh":"%N死于乱刀之下，众人奋力欲杀出重围，无奈敌众我寡，功败垂成，尸骨被邓龙等人弃于山谷喂狗........","t":"%N died under a flurry of blades. The others fought hard to break out, but were outnumbered and fell just short. Deng Long and his men threw their bodies into the valley for the dogs........"},
+  "N10#9": {"zh":"杨志不幸战死，%N与众人逃往山下，途中遇见狼群，一干人等无力再战，终成狼群腹中美食........","t":"Yang Zhi fell in battle. %N and the others fled down the mountain, met a pack of wolves on the way, had no strength left to fight, and ended up as the wolves' dinner........"},
+  "N10#10": {"zh":"『金眼虎』邓龙倒在地上，再也起不来了。","t":"'Golden-eyed Tiger' Deng Long fell to the ground and never got up again."},
+  "N10#11": {"zh":"大王死了！别打了，别打了，小的们愿降！","t":"The Great King is dead! Stop fighting, stop! We surrender!"},
+  "N10#12": {"zh":"打死了『金眼虎』邓龙，众喽啰纷纷跪地投降，宝珠寺从此归了众好汉。","t":"With 'Golden-eyed Tiger' Deng Long dead, the bandits knelt and surrendered one after another. From then on, Treasure Pearl Temple belonged to the heroes."}
+}
