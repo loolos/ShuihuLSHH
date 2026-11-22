@@ -14,7 +14,7 @@
       26
     ]
   },
-  "bgm": ["comic", "battle2"],
+  "bgm": ["market", "comic", "battle2"],
   "units": [
     {
       "id": "wusong", "facing": 0,

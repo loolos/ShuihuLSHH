@@ -6,7 +6,7 @@
     "gold": 400
   },
   "map": {
-    "bgm": ["comic", "battle"],
+    "bgm": ["market", "comic", "battle"],
     "base": "N-add02"
   },
   "tint": "dusk",
