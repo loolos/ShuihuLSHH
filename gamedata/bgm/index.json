@@ -31,7 +31,16 @@
   "ambush": "ambush.mp3",
   "join": "join.mp3",
   "chapter": "chapter.mp3",
-  "ending": "ending.mp3"
+  "ending": "ending.mp3",
+  "songjiang": "songjiang.mp3",
+  "maze": "maze.mp3",
+  "manor": "manor.mp3",
+  "heist": "heist.mp3",
+  "sorcery": "sorcery.mp3",
+  "market": "market.mp3",
+  "cavalry": "cavalry.mp3",
+  "lament": "lament.mp3",
+  "intrigue": "intrigue.mp3"
  },
  "stages": {
   "n01": [
@@ -136,6 +145,7 @@
    "brothers"
   ],
   "act5-3": [
+   "market",
    "tense",
    "story"
   ],
@@ -149,10 +159,12 @@
    "tense"
   ],
   "act6-2": [
+   "intrigue",
    "inn",
    "tense"
   ],
   "n-add08": [
+   "cavalry",
    "army",
    "battle"
   ],
@@ -161,10 +173,12 @@
    "sad"
   ],
   "n06": [
+   "cavalry",
    "boss",
    "army"
   ],
   "act7-1": [
+   "lament",
    "sad",
    "story"
   ],
@@ -197,6 +211,7 @@
    "boss"
   ],
   "act9-1": [
+   "intrigue",
    "eerie",
    "night"
   ],
@@ -214,6 +229,7 @@
    "night"
   ],
   "act10-2": [
+   "lament",
    "sad",
    "story"
   ],
@@ -248,6 +264,7 @@
    "nightduel"
   ],
   "n-add14": [
+   "cavalry",
    "army",
    "rock"
   ],
@@ -288,6 +305,7 @@
    "inn"
   ],
   "act14-3": [
+   "intrigue",
    "tense",
    "eerie"
   ],

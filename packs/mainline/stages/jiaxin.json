@@ -7,7 +7,7 @@
     "gold": 500
   },
   "map": {
-    "bgm": ["tense", "jiangzhou"],
+    "bgm": ["intrigue", "tense", "jiangzhou"],
     "base": "N-add08"
   },
   "bgm": "battle",
