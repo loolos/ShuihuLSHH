@@ -540,7 +540,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(21, 0, { text: String(a[0]) });
         break;
       case 'flag':
-        op(103, r.flagRef(a[0]));
+        // ['flag', 名字] 设上；['flag', 名字, false] 清掉【新】
+        op(103, r.flagRef(a[0]), a[1] === false ? { args: { clear: true } } : {});
         break;
       case 'borrowEquip':
       case 'setEquip':
