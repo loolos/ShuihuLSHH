@@ -1,0 +1,9 @@
+{
+  "mainline/cuju#1": {"zh":"东京城外，高太尉府的鞠场。太尉高俅当年凭一脚好气毬得了端王青眼，从此平步青云；今日他摆下擂台，夸口天下没人踢得过他的齐云社。","t":"Outside Kaifeng, the cuju field of Marshal Gao's manor. Years ago Gao Qiu won Prince Duan's favour with one fine kick of the ball and rose straight to the top. Today he has set up a challenge, boasting that no one under heaven can beat his Qiyun Club."},
+  "mainline/cuju#2": {"zh":"哪里来的一伙粗汉，也敢下场？输了便把脑袋留下！","t":"Where did this gang of ruffians come from, daring to take the field? Lose, and you leave your heads behind!"},
+  "mainline/cuju#3": {"zh":"高俅！今日不论刀枪，只在这鞠场上见个高低。","t":"Gao Qiu! Today no blades or spears. We settle it on this field."},
+  "mainline/cuju#4": {"zh":"小弟在史家庄也踢过几脚气毬，今日便打头阵！","t":"I've kicked a ball or two at Shi Family Village. I'll lead the charge today!"},
+  "mainline/cuju#5": {"zh":"这皮毬打不得人？那铁牛只好拿它出气了！","t":"Can't hit people with this leather ball? Then Iron Ox will just have to take it out on the ball!"},
+  "mainline/cuju#6": {"zh":"先进 3 球获胜；12 回合后领先也获胜，平局加时 3 回合，先进球者胜。","t":"First to 3 goals wins. After 12 turns the side ahead wins; if tied, 3 turns of extra time, next goal wins."},
+  "mainline/cuju#7": {"zh":"攻击、技能只能踢球：伤害定远近，命中定准头。对方站在球路上会拦下球；出界本回合立刻结束。","t":"Attacks and skills can only kick the ball: damage sets the distance, hit sets the accuracy. An opponent in the ball's path blocks it; going out of bounds ends your turn at once."}
+}
