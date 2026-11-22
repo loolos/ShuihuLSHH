@@ -8,7 +8,7 @@ import type { StageInput } from '../rules/battle.ts';
 import { Board } from '../rules/board.ts';
 import type { ClassDef, GameData, SkillDef } from '../rules/data.ts';
 import { loadStageMap, stageMapName, terrain, type FileSource } from '../rules/load.ts';
-import { SLOT_COUNT } from '../rules/data.ts';
+import { SLOT_COUNT, heroSkillNoHitMod } from '../rules/data.ts';
 import { levelKit } from '../rules/equipment.ts';
 import type { Member } from '../rules/campaign.ts';
 import type { RecolorGroup } from './recolor.ts';
@@ -222,7 +222,7 @@ function packClass(c: PackClassJson, id: number, skills: SkillDef[], itemRef: (v
     weaponType: c.weaponType ?? 0,
     goldCap: 0,
     defaultItems: items,
-    skills,
+    skills: c.hero ? skills.map(heroSkillNoHitMod) : skills,
   };
 }
 

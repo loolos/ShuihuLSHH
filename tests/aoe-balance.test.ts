@@ -22,7 +22,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     for (const cls of rt.data.classes.filter(c => c.id >= 18)) {
       for (const skill of cls.skills) expect(balanceHeroAoe(cls.id, skill)).toBe(skill);
     }
-    expect(rt.data.classes[9].skills.find(s => s.skillId === 84)?.hitMod).toBe(15);
+    expect(rt.data.classes[9].skills.find(s => s.skillId === 84)?.hitMod).toBe(0);
     const costs = rt.data.classes[12].skills.filter(s => s.skillId >= 107 && s.skillId <= 111).map(s => s.mpCost);
     expect(costs).toEqual([75, 100, 120, 140, 160]);
   });
@@ -30,7 +30,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     const d=loadPackFromDisk(pack).data;
     const tiers=d.classes[0].skills.filter(s=>[10,11,12,1309].includes(s.skillId));expect(tiers).toHaveLength(4);
     tiers.forEach((s,i)=>{
-      expect(s).toMatchObject({learnLevel:[8,12,22,28][i],mpCost:[75,115,170,210][i],power:35+10*i,critMod:20+5*i,hitMod:5+5*i,type:1,area:5+i,poison:0,stun:0});
+      expect(s).toMatchObject({learnLevel:[8,12,22,28][i],mpCost:[75,115,170,210][i],power:[36,48,59,70][i],critMod:20+5*i,hitMod:0,type:1,area:5+i,poison:0,stun:0});
       expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
       for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]])expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20+dx,y:20+dy})).toHaveLength([13,18,25,32][i]);
     });
