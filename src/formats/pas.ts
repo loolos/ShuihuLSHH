@@ -104,7 +104,7 @@ export type PasTrigger =
  * 教学关判的操作：move 移动；attack 普通攻击；skill 用技能（含回气、回复）；flank 从背后或侧面出手；
  * defend 防御；guard 防御中被人打（命中或闪开都算）；counter 反击；rest 休息；item 用道具；give 给予道具。
  */
-export type DidAction = 'move' | 'attack' | 'skill' | 'flank' | 'defend' | 'guard' | 'counter' | 'rest' | 'item' | 'give';
+export type DidAction = 'move' | 'attack' | 'skill' | 'flank' | 'defend' | 'guard' | 'counter' | 'rest' | 'item' | 'give' | 'drunk' | 'refuse' | 'wake';
 
 /**
  * 区块的触发条件树（EXE 0x411410 递归解析，叶子由 0x411220 求值）。节点 = {u16 参数个数标记, u16 A, u16 B, u16 组合}，

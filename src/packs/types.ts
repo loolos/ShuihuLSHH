@@ -119,6 +119,8 @@ export interface PackSkillJson {
   rangeMax?: number;
   area?: number;
   stun?: number;
+  /** 蒙汗药酒【新】：不伤人、必定喝下，敌人麻翻这么多回合（已经麻翻的不能再劝）；用在没被麻翻的人身上以外的攻击，见关卡 banquet */
+  drug?: number;
   poison?: number;
   hitMod?: number;
   critMod?: number;
@@ -187,6 +189,11 @@ export interface PackStageJson {
   cuju?: import('../rules/cuju.ts').CujuRules;
   /** 主线包里的独立外传【新】：不进章节表，列在选关的「外传」组，等级固定、不碰主线存档（蹴鞠） */
   sideStory?: boolean;
+  /**
+   * 酒席【新】（朱富药酒救李逵）：标志 flag 没设上之前，我方对敌人出手（劝酒以外的攻击、技能），
+   * 只要目标身边 sight 格（默认 2）内有醒着的敌人（目标自己醒着也算），就设上 flag（惊动了押解的人）；打已经麻翻、身边没人醒着的不惊动
+   */
+  banquet?: { flag: string; sight?: number };
   /** 天色滤镜（§15.15）：夜、雪、黄昏；只改画面，不改规则 */
   tint?: 'night' | 'snow' | 'dusk';
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
@@ -235,6 +242,8 @@ export interface PackUnitJson {
   trusts?: (string | number)[];
   /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
   patrol?: [number, number][];
+  /** 劝酒【新】：refuse = 头几次推辞不喝；turns = 麻翻几回合（覆盖技能的 drug）；by = 只肯喝这些职业劝的酒（别人劝一律推辞） */
+  drink?: { refuse?: number; turns?: number; by?: (string | number)[]; /** 只吃了一点：挨打就醒 */ light?: boolean };
   /** 显示的名字，不填用职业名 */
   name?: string;
   /** 装备与物品，覆盖职业默认（7 格：武器、衣服、头饰、物品×4） */

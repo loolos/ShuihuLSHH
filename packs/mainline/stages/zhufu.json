@@ -1,0 +1,781 @@
+{
+  "id": "zhufu",
+  "title": "朱富药酒救李逵",
+  "dynamicLevels": true,
+  "rewards": {
+    "gold": 900
+  },
+  "map": {
+    "custom": "baihu-cundian"
+  },
+  "bgm": [
+    "story",
+    "battle"
+  ],
+  "banquet": {
+    "flag": "alarm",
+    "sight": 2
+  },
+  "units": [
+    {
+      "id": "zhufu",
+      "class": "zhufu",
+      "side": "player",
+      "x": 14,
+      "y": 12,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "zhugui",
+      "class": "zhugui",
+      "side": "player",
+      "x": 16,
+      "y": 9,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "jiubao1",
+      "class": "jiubao",
+      "side": "player",
+      "x": 11,
+      "y": 12,
+      "level": 30,
+      "facing": 1,
+      "name": "酒保"
+    },
+    {
+      "id": "jiubao2",
+      "class": "jiubao",
+      "side": "player",
+      "x": 13,
+      "y": 15,
+      "level": 30,
+      "facing": 1,
+      "name": "酒保"
+    },
+    {
+      "id": "likui",
+      "class": "likui",
+      "side": "player",
+      "x": 19,
+      "y": 10,
+      "level": 30,
+      "facing": 3
+    },
+    {
+      "id": "liyun",
+      "class": "liyun",
+      "side": "enemy",
+      "x": 20,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "ai": 8,
+      "levelOffset": 2,
+      "hpMultiplier": 3,
+      "name": "青眼虎李云",
+      "drink": {
+        "refuse": 1,
+        "turns": 2,
+        "by": [
+          "zhufu"
+        ],
+        "light": true
+      }
+    },
+    {
+      "id": "a1",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 9,
+      "level": 30,
+      "facing": 2,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "a2",
+      "class": 33,
+      "side": "enemy",
+      "x": 20,
+      "y": 9,
+      "level": 30,
+      "facing": 2,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "a3",
+      "class": 32,
+      "side": "enemy",
+      "x": 18,
+      "y": 11,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "a4",
+      "class": 33,
+      "side": "enemy",
+      "x": 19,
+      "y": 12,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "a5",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 10,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "a6",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 11,
+      "level": 30,
+      "facing": 1,
+      "name": "土兵弓手",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b1",
+      "class": 33,
+      "side": "enemy",
+      "x": 10,
+      "y": 18,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b2",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 18,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b3",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 18,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b4",
+      "class": 34,
+      "side": "enemy",
+      "x": 10,
+      "y": 19,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵弓手",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b5",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 19,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "b6",
+      "class": 34,
+      "side": "enemy",
+      "x": 8,
+      "y": 19,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵弓手",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c1",
+      "class": 49,
+      "side": "enemy",
+      "x": 5,
+      "y": 11,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c2",
+      "class": 49,
+      "side": "enemy",
+      "x": 5,
+      "y": 12,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c3",
+      "class": 49,
+      "side": "enemy",
+      "x": 6,
+      "y": 12,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c4",
+      "class": 49,
+      "side": "enemy",
+      "x": 4,
+      "y": 11,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c5",
+      "class": 49,
+      "side": "enemy",
+      "x": 4,
+      "y": 12,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "c6",
+      "class": 49,
+      "side": "enemy",
+      "x": 4,
+      "y": 13,
+      "level": 30,
+      "facing": 3,
+      "name": "猎户",
+      "ai": 8,
+      "levelOffset": -2
+    },
+    {
+      "id": "caotaigong",
+      "class": 27,
+      "side": "enemy",
+      "x": 3,
+      "y": 12,
+      "level": 30,
+      "facing": 3,
+      "ai": 8,
+      "levelOffset": -4,
+      "name": "曹太公",
+      "point": [
+        29,
+        11
+      ]
+    }
+  ],
+  "script": [
+    {
+      "on": "start",
+      "do": [
+        [
+          "bind",
+          "likui"
+        ],
+        [
+          "title",
+          "沂水县西 · 朱富酒店"
+        ],
+        [
+          "narrate",
+          "朱富连夜宰了两口猪、一腔羊，蒸了一担馒头，将大桶装了好酒，酒里都下了蒙汗药，同朱贵带两个火家，在县西路口僻静去处摆下，专等押解的人来。"
+        ],
+        [
+          "narrate",
+          "巳牌时分，青眼虎李云押着李逵，曹太公带着猎户，三十个土兵一路行来。朱富赶上前去，拦住叫道——"
+        ],
+        [
+          "say",
+          "zhufu",
+          "师父且喜！小弟将些酒肉，在此与师父贺喜，路上解渴。"
+        ],
+        [
+          "say",
+          "liyun",
+          "贤弟何劳如此远接？……既到了这里，众人也走得乏了，便歇一歇。"
+        ],
+        [
+          "narrate",
+          "李云原是朱富的师父，一身好本事，只是不吃酒。众土兵、猎户见了酒肉，都放下枪棒，三五成群坐着吃将起来。"
+        ],
+        [
+          "say",
+          "likui",
+          "（朱贵哥哥？……那个笑面皮的便是他兄弟了。铁牛且不做声。）"
+        ],
+        [
+          "say",
+          "zhugui",
+          "兄弟，酒里的药够七八个时辰。只是李都头不吃酒，须得你亲手去劝，他只吃你的。"
+        ],
+        [
+          "say",
+          "zhufu",
+          "哥哥放心。只是动起手来，休叫他们旁边醒着的看见。"
+        ],
+        [
+          "objective",
+          "胜利条件：救出李逵，李逵和朱富一起走到西北角的小路；或者劝得李云入伙"
+        ],
+        [
+          "objective",
+          "失败条件：李逵或朱富倒下，或超过 25 回合"
+        ],
+        [
+          "objective",
+          "提示：朱富、酒保的「劝酒」能麻翻人，不伤人也不惊动人。朱贵走到李逵身边就割断绳索。对醒着的人、或者身边两格内有人醒着时出手，都会惊动押解的人；第 6 回合众人吃罢酒就要上路"
+        ],
+        [
+          "turnLimit",
+          25
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "liyun",
+        "action": "refuse"
+      },
+      "unless": "liyun-asked",
+      "do": [
+        [
+          "say",
+          "liyun",
+          "贤弟休怪，我是不吃酒的。"
+        ],
+        [
+          "say",
+          "zhufu",
+          "师父不吃酒，须吃些肉。……徒弟一点孝心，师父好歹吃这一盏！"
+        ],
+        [
+          "flag",
+          "liyun-asked"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "liyun",
+        "action": "drunk"
+      },
+      "do": [
+        [
+          "say",
+          "liyun",
+          "……也罢，只吃一盏。"
+        ],
+        [
+          "narrate",
+          "李云推却不过，略吃了两口。不多时，只见李云头重脚轻，扑地倒了。他吃得少，药力只怕不长。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "did": "liyun",
+        "action": "wake"
+      },
+      "do": [
+        [
+          "say",
+          "liyun",
+          "……中了这厮们的计了！好个朱富！"
+        ],
+        [
+          "setAi",
+          "liyun",
+          0
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "alarm"
+      },
+      "do": [
+        [
+          "say",
+          "liyun",
+          "有奸细！众人休吃了，看好那黑厮！"
+        ],
+        [
+          "narrate",
+          "还醒着的土兵、猎户一齐跳将起来，拿起枪棒。曹太公见势头不好，往县城那边的板桥便跑。"
+        ],
+        [
+          "setAi",
+          "liyun",
+          0
+        ],
+        [
+          "setAi",
+          "a1",
+          0
+        ],
+        [
+          "setAi",
+          "a2",
+          0
+        ],
+        [
+          "setAi",
+          "a3",
+          0
+        ],
+        [
+          "setAi",
+          "a4",
+          0
+        ],
+        [
+          "setAi",
+          "a5",
+          0
+        ],
+        [
+          "setAi",
+          "a6",
+          0
+        ],
+        [
+          "setAi",
+          "b1",
+          0
+        ],
+        [
+          "setAi",
+          "b2",
+          0
+        ],
+        [
+          "setAi",
+          "b3",
+          0
+        ],
+        [
+          "setAi",
+          "b4",
+          0
+        ],
+        [
+          "setAi",
+          "b5",
+          0
+        ],
+        [
+          "setAi",
+          "b6",
+          0
+        ],
+        [
+          "setAi",
+          "c1",
+          0
+        ],
+        [
+          "setAi",
+          "c2",
+          0
+        ],
+        [
+          "setAi",
+          "c3",
+          0
+        ],
+        [
+          "setAi",
+          "c4",
+          0
+        ],
+        [
+          "setAi",
+          "c5",
+          0
+        ],
+        [
+          "setAi",
+          "c6",
+          0
+        ],
+        [
+          "setAi",
+          "caotaigong",
+          4
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 6
+      },
+      "unless": "alarm",
+      "do": [
+        [
+          "say",
+          "liyun",
+          "天色不早，众人吃够了，收拾上路！"
+        ],
+        [
+          "narrate",
+          "朱富再劝时，土兵们都要动身，看出了破绽。"
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "likui",
+        "by": "zhugui",
+        "playerPhase": true
+      },
+      "do": [
+        [
+          "cleanse",
+          "likui"
+        ],
+        [
+          "say",
+          "likui",
+          "朱贵哥哥！快把俺的绳索割了——"
+        ],
+        [
+          "narrate",
+          "李逵挣断了麻索，夺过一把朴刀，大吼一声，跳将起来。"
+        ],
+        [
+          "say",
+          "likui",
+          "曹太公那老驴、李鬼的婆娘，一个也休想走脱！"
+        ],
+        [
+          "buff",
+          "likui",
+          "attack",
+          {
+            "pct": 20,
+            "turns": 3
+          }
+        ],
+        [
+          "flag",
+          "freed"
+        ],
+        [
+          "flag",
+          "alarm"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": "caotaigong",
+        "area": [
+          27,
+          9,
+          29,
+          14
+        ]
+      },
+      "do": [
+        [
+          "narrate",
+          "曹太公过了板桥，一溜烟逃回县里去了。"
+        ],
+        [
+          "leave",
+          "caotaigong"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "caotaigong"
+      },
+      "do": [
+        [
+          "say",
+          "likui",
+          "你这老驴灌俺酒、绑俺去请赏，今日也吃俺一刀！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "liyun",
+        "below": 40
+      },
+      "do": [
+        [
+          "say",
+          "liyun",
+          "这黑厮好生了得！"
+        ],
+        [
+          "flag",
+          "liyun-low"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "hp": "liyun",
+        "below": 25
+      },
+      "unless": "liyun-join",
+      "do": [
+        [
+          "standDown",
+          "liyun"
+        ],
+        [
+          "say",
+          "liyun",
+          "罢了……李云抵敌不住。"
+        ],
+        [
+          "flag",
+          "liyun-low"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "near": "liyun",
+        "by": "zhufu"
+      },
+      "if": "liyun-low",
+      "do": [
+        [
+          "say",
+          "zhufu",
+          "师父听禀：小弟多蒙错爱，指教枪棒。今日事急，只得用计救了李大哥。师父失陷了犯人，回县去如何见知县？不如同上梁山泊，投奔宋公明入伙。"
+        ],
+        [
+          "say",
+          "liyun",
+          "……我家中又无老小，回去必吃官司。罢！只得随你们去休！"
+        ],
+        [
+          "say",
+          "likui",
+          "早说便是！险些吃俺砍了。"
+        ],
+        [
+          "flag",
+          "liyun-join"
+        ],
+        [
+          "victory",
+          "青眼虎李云纳头便拜，随朱富、朱贵、李逵一同投梁山泊来。宋江、晁盖大喜，就请李云、朱富坐了交椅。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "enter": [
+          "likui",
+          "zhufu"
+        ],
+        "area": [
+          0,
+          0,
+          3,
+          3
+        ],
+        "label": "小路",
+        "atTurnEnd": true
+      },
+      "if": "freed",
+      "do": [
+        [
+          "narrate",
+          "朱富、朱贵引着李逵，抄小路望梁山泊便走。李云醒来，赶来时只见一地麻翻的土兵。他回县去必吃官司，寻思半晌，只得也赶上梁山泊来。"
+        ],
+        [
+          "victory",
+          "宋江见李逵回来，又添了青眼虎李云、笑面虎朱富两个好汉，大喜，筵席庆贺。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "likui"
+      },
+      "do": [
+        [
+          "defeat",
+          "李逵倒下了……"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "dead": "zhufu"
+      },
+      "do": [
+        [
+          "defeat",
+          "朱富倒下了……"
+        ]
+      ]
+    }
+  ]
+}

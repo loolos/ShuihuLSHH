@@ -266,6 +266,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     rangeMax: s.rangeMax ?? t.rangeMax,
     area: s.area ?? t.area,
     stun: s.stun ?? t.stun,
+    ...(s.drug ? { drug: s.drug } : {}),
     poison: s.poison ?? t.poison,
     hitMod: s.hitMod ?? t.hitMod,
     critMod: s.critMod ?? t.critMod,
@@ -362,7 +363,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -423,7 +424,7 @@ function takeLineId(step: unknown[]): string | undefined {
 }
 
 const NARRATOR = 0xffffffff;
-const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give'];
+const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give', 'drunk', 'refuse', 'wake'];
 
 /** if / unless 写成数组时：每个标志都要设上 / 都没设（AND）【新】 */
 function flagConds(b: PackBlockJson, r: Refs): PasCond[] {
