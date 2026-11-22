@@ -1,0 +1,376 @@
+{
+ "id": "shapeiruhai",
+ "title": "智杀裴如海",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 500
+ },
+ "map": {
+  "custom": "zishijie"
+ },
+ "tint": "night",
+ "bgm": [
+  "story",
+  "battle"
+ ],
+ "stealth": {
+  "lose": "巡夜的人敲起锣来，满巷都惊动了……裴如海缩回门里，再不肯出来。",
+  "flag": "spotted"
+ },
+ "units": [
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 25,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "name": "拼命三郎石秀"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 26,
+   "y": 10,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "sxt",
+   "class": "shixiu-tuo",
+   "side": "player",
+   "x": 27,
+   "y": 0,
+   "level": 30,
+   "hidden": true,
+   "name": "石秀"
+  },
+  {
+   "id": "toutuo",
+   "class": "toutuo",
+   "side": "enemy",
+   "x": 2,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     2,
+     8
+    ],
+    [
+     9,
+     7
+    ]
+   ],
+   "watch": 2,
+   "name": "胡道人",
+   "levelOffset": -3
+  },
+  {
+   "id": "peiruhai",
+   "class": "peiruhai",
+   "side": "enemy",
+   "x": 10,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-tuo"
+   ],
+   "name": "海阇黎裴如海",
+   "levelOffset": -3,
+   "hidden": true
+  },
+  {
+   "id": "xun1",
+   "class": 32,
+   "side": "enemy",
+   "x": 4,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     4,
+     11
+    ],
+    [
+     22,
+     11
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-tuo"
+   ],
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun2",
+   "class": 33,
+   "side": "enemy",
+   "x": 17,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "patrol": [
+    [
+     17,
+     6
+    ],
+    [
+     17,
+     10
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-tuo"
+   ],
+   "name": "巡夜军士",
+   "levelOffset": -1
+  },
+  {
+   "id": "xun3",
+   "class": 37,
+   "side": "enemy",
+   "x": 20,
+   "y": 7,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     20,
+     7
+    ],
+    [
+     13,
+     7
+    ]
+   ],
+   "watch": 2,
+   "trusts": [
+    "shixiu-tuo"
+   ],
+   "name": "打更的",
+   "levelOffset": -2
+  },
+  {
+   "id": "xun4",
+   "class": 32,
+   "side": "enemy",
+   "x": 8,
+   "y": 12,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-tuo"
+   ],
+   "name": "巡夜军士",
+   "levelOffset": -1
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州 · 杨雄家后巷 · 四更"
+    ],
+    [
+     "narrate",
+     "石秀辞了杨雄，只在近巷寻个客店安歇。当夜四更，石秀和戴宗悄悄摸到杨雄家后巷。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "那头陀每日五更来敲木鱼报晓，贼秃听得木鱼响，便从后门溜出来。先拿住那头陀。"
+    ],
+    [
+     "say",
+     "daizong",
+     "巡夜的军士来回走动，休教他们看见。从背后摸过去，一下打翻，不叫他出声。"
+    ],
+    [
+     "objective",
+     "潜行：巡夜的人正前方有警戒范围（地上黄色），被看见、或打了人没一回合内打倒，就算惊动\n第一步：悄悄打倒巷口敲木鱼的头陀胡道人（从背后偷袭伤害 ×3）\n败：惊动了巡夜的人；石秀或戴宗倒下；超过 15 回合（天亮）"
+    ],
+    [
+     "turnLimit",
+     15
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "toutuo"
+   },
+   "do": [
+    [
+     "narrate",
+     "石秀从背后一把揪住头陀，喝道：「不要挣扎！若高则声，便杀了你！」问出了实情，一刀结果了他，剥下衣裳、拿了木鱼。"
+    ],
+    [
+     "transform",
+     "shixiu",
+     "shixiu-tuo",
+     "石秀"
+    ],
+    [
+     "say",
+     "shixiu",
+     "戴院长，我穿了这身僧衣，那贼秃只当是头陀。你远远跟着，休叫人看见。"
+    ],
+    [
+     "objective",
+     "换衣：石秀穿着头陀的僧衣，巡夜的人和裴如海都当他是头陀；戴宗仍会被看见\n第二步：石秀走到杨雄家后门 (9–12, 6–8)，回合结束时敲木鱼，引裴如海出来，打倒他\n败：惊动了巡夜的人；石秀或戴宗倒下；超过 15 回合（天亮）"
+    ],
+    [
+     "flag",
+     "dressed"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "sxt",
+    "area": [
+     9,
+     6,
+     12,
+     8
+    ],
+    "atTurnEnd": true,
+    "label": "后门"
+   },
+   "if": "dressed",
+   "unless": "called",
+   "do": [
+    [
+     "narrate",
+     "石秀在杨雄家后门外，把木鱼「笃笃笃」敲了三下。"
+    ],
+    [
+     "appear",
+     "peiruhai"
+    ],
+    [
+     "say",
+     "peiruhai",
+     "（开了后门）头陀，你今日怎地来得这般早？……天还未明哩。"
+    ],
+    [
+     "setAi",
+     "peiruhai",
+     13
+    ],
+    [
+     "flag",
+     "called"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "peiruhai"
+   },
+   "do": [
+    [
+     "say",
+     "peiruhai",
+     "你……你不是胡道……"
+    ],
+    [
+     "narrate",
+     "石秀剥了裴如海的衣服，把刀放在头陀身边，做成两人厮杀而死的模样，将头陀的衣服卷了，一并揣在怀里。"
+    ],
+    [
+     "say",
+     "daizong",
+     "天快亮了，快走！"
+    ],
+    [
+     "objective",
+     "第三步：石秀、戴宗都从东街口 (26–27, 6–11) 撤走（回合结束时都在里面）\n败：惊动了巡夜的人；石秀或戴宗倒下；超过 15 回合（天亮）"
+    ],
+    [
+     "flag",
+     "killed"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "sxt",
+     "daizong"
+    ],
+    "area": [
+     26,
+     6,
+     27,
+     11
+    ],
+    "atTurnEnd": true,
+    "label": "撤退"
+   },
+   "if": "killed",
+   "do": [
+    [
+     "narrate",
+     "次日一早，卖糕粥的王公经过巷口，绊倒在两具尸首上，满城都传：一个和尚、一个头陀，不知为甚自相杀死在杨雄家后巷。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "shixiu"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "sxt"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "戴宗倒下了……"
+    ]
+   ]
+  }
+ ]
+}

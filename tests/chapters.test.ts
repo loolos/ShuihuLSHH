@@ -83,8 +83,9 @@ describe('章节表', () => {
     expect(chapterLabel(26)).toBe('第二十六章 还道村受天书');
     expect(chapterOf('mainline/zhufu')).toBe(27);
     expect(chapterOf('mainline/yinmachuan')).toBe(28);
+    expect(chapterOf('mainline/zhujiadian')).toBe(29);
     expect(chapterLabel(27)).toBe('第二十七章 沂岭杀四虎');
-    expect(CHAPTERS).toHaveLength(28);
+    expect(CHAPTERS).toHaveLength(29);
   });
 });
 

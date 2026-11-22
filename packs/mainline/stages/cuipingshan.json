@@ -1,0 +1,372 @@
+{
+ "id": "cuipingshan",
+ "title": "翠屏山",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "townAfter": 11,
+ "map": {
+  "base": "N-add04a",
+  "crop": [
+   8,
+   8,
+   20,
+   20
+  ]
+ },
+ "bgm": [
+  "story"
+ ],
+ "units": [
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "x": 12,
+   "y": 8,
+   "facing": 1,
+   "name": "拼命三郎石秀",
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "x": 4,
+   "y": 12,
+   "facing": 3,
+   "name": "病关索杨雄",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "qiaoyun",
+   "class": 30,
+   "x": 3,
+   "y": 13,
+   "facing": 3,
+   "name": "潘巧云",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "yinger",
+   "class": 31,
+   "x": 3,
+   "y": 11,
+   "facing": 3,
+   "name": "迎儿",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "shiqian",
+   "class": "shiqian",
+   "x": 15,
+   "y": 4,
+   "facing": 2,
+   "name": "鼓上蚤时迁",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "x": 16,
+   "y": 12,
+   "facing": 1,
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "x": 16,
+   "y": 11,
+   "facing": 1,
+   "name": "武龙",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "x": 17,
+   "y": 12,
+   "facing": 1,
+   "name": "林冲",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "x": 17,
+   "y": 11,
+   "facing": 1,
+   "name": "锦豹子杨林",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州 · 州桥"
+    ],
+    [
+     "narrate",
+     "巷里和尚、头陀自相杀死的事传遍了蓟州城。杨雄听了，心里早明白了八九分。走到州桥边，背后一个人叫道：「哥哥，哪里去？」回头看时，正是石秀。"
+    ],
+    [
+     "appear",
+     "yangxiong"
+    ],
+    [
+     "move",
+     "yangxiong",
+     11,
+     9
+    ],
+    [
+     "face",
+     "shixiu",
+     "yangxiong"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟，我一时听了那贱人的言语，错怪了你，休要见责。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，兄弟不是这般人。你看这是甚么——（取出和尚、头陀的衣裳）"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "……原来如此！兄弟，我今夜便去碎割了这贱人！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥差了。你又没拿着真奸，如何杀得人？倘或兄弟胡说，岂不错杀了人？哥哥只推说去东门外翠屏山还香愿，把嫂嫂和迎儿带来，兄弟在山上等着，当面对个明白。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "好，便依兄弟。"
+    ],
+    [
+     "leave",
+     "yangxiong"
+    ],
+    [
+     "title",
+     "蓟州东门外 · 翠屏山"
+    ],
+    [
+     "narrate",
+     "次日，杨雄引着潘巧云、迎儿上了翠屏山。这山上都是古墓，四下里冷冷清清，不见一个人影。石秀早在半山腰的松树下等着。"
+    ],
+    [
+     "appear",
+     "yangxiong"
+    ],
+    [
+     "appear",
+     "qiaoyun"
+    ],
+    [
+     "appear",
+     "yinger"
+    ],
+    [
+     "move",
+     "yangxiong",
+     11,
+     9
+    ],
+    [
+     "move",
+     "qiaoyun",
+     10,
+     10
+    ],
+    [
+     "move",
+     "yinger",
+     9,
+     9
+    ],
+    [
+     "face",
+     "shixiu",
+     "qiaoyun"
+    ],
+    [
+     "say",
+     "shixiu",
+     "嫂嫂拜揖。"
+    ],
+    [
+     "say",
+     "qiaoyun",
+     "叔叔怎地也在这里？"
+    ],
+    [
+     "say",
+     "shixiu",
+     "嫂嫂，你且看这包衣裳——认得么？"
+    ],
+    [
+     "say",
+     "qiaoyun",
+     "……我不认得。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "（拔出刀来）迎儿！你实说，饶你一命；有半句虚言，先剁你做肉泥！"
+    ],
+    [
+     "say",
+     "yinger",
+     "官人饶命！都是娘子和那海阇黎……每日叫胡道人五更敲木鱼，和尚便从后门出去……都是真的！娘子还叫我休对官人说……"
+    ],
+    [
+     "say",
+     "qiaoyun",
+     "……我的不是了。你看我旧日夫妻之面，饶恕了这一遍。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，今日三面说得明白了，任从哥哥心下如何措置。"
+    ],
+    [
+     "narrate",
+     "杨雄怒火冲天，再不听她分说。翠屏山上一阵风过，松林里静了下来——潘巧云和迎儿都死在了杨雄刀下。"
+    ],
+    [
+     "leave",
+     "qiaoyun"
+    ],
+    [
+     "leave",
+     "yinger"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟，如今我们杀了人，蓟州是住不得了。投奔哪里去才好？"
+    ],
+    [
+     "say",
+     "shixiu",
+     "前日结识的戴院长，正是梁山泊的头领。他再三邀我入伙，我们便去投梁山泊！"
+    ],
+    [
+     "appear",
+     "shiqian"
+    ],
+    [
+     "say",
+     "shiqian",
+     "清平世界，荡荡乾坤，把人割了，却去投奔梁山泊入伙！我听得多时了！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "什么人？！"
+    ],
+    [
+     "move",
+     "shiqian",
+     13,
+     7
+    ],
+    [
+     "say",
+     "shiqian",
+     "节级休慌。小人时迁，高唐州人氏，在这里只做些飞檐走壁、跳篱骗马的勾当，人都叫小人鼓上蚤。今日在这山里掘些古坟，寻两分东西……"
+    ],
+    [
+     "say",
+     "shiqian",
+     "两位好汉要上梁山，带挈小人同去走一遭，如何？"
+    ],
+    [
+     "say",
+     "shixiu",
+     "既是好汉中人物，同去何妨。"
+    ],
+    [
+     "appear",
+     "daizong"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "appear",
+     "yanglin"
+    ],
+    [
+     "move",
+     "daizong",
+     13,
+     10
+    ],
+    [
+     "move",
+     "hero",
+     14,
+     9
+    ],
+    [
+     "say",
+     "daizong",
+     "我在山下望风，事情都听见了。公孙先生寻不着，小可须得先回山寨报个信；顺路去饮马川，叫裴宣、邓飞、孟康三位收拾上山。林教头、杨林兄弟同我先走。"
+    ],
+    [
+     "say",
+     "linchong",
+     "武龙兄弟，你和他们三个一路走，路上照应。"
+    ],
+    [
+     "say",
+     "hero",
+     "放心。我陪三位兄弟走大路，在梁山泊相会。"
+    ],
+    [
+     "narrate",
+     "戴宗拴上甲马，带着林冲、杨林先去了。杨雄、石秀、时迁和武龙收拾包裹，取路望郓州而来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

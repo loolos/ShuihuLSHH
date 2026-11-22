@@ -28,6 +28,8 @@ export interface SimOrder {
 export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   // 力擒金眼虎：七个喽啰头目一开场就专追杨志，他别冲在前面
   N10: [{ char: 14, turns: [1, 3], act: 'back' }],
+  // 长街遇石秀：只有石秀能替杨雄挣脱，先让他直奔杨雄（133 = 主线包职业 shixiu，包里职业只往后加，编号不变）
+  'mainline/changjie': [{ char: 133, turns: [1, 8], act: { to: [13, 9] } }],
 };
 
 export const AUTO_TURNS = 2;

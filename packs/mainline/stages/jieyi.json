@@ -1,0 +1,466 @@
+{
+ "id": "jieyi",
+ "title": "结义·海阇黎",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "zishijie"
+ },
+ "bgm": [
+  "story"
+ ],
+ "units": [
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "x": 15,
+   "y": 6,
+   "facing": 2,
+   "name": "拼命三郎石秀",
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "x": 14,
+   "y": 6,
+   "facing": 2,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "x": 16,
+   "y": 6,
+   "facing": 2,
+   "name": "武龙",
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "x": 14,
+   "y": 8,
+   "facing": 3,
+   "name": "林冲",
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "x": 16,
+   "y": 8,
+   "facing": 1,
+   "name": "锦豹子杨林",
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "x": 24,
+   "y": 9,
+   "facing": 1,
+   "name": "病关索杨雄",
+   "hidden": true,
+   "side": "player",
+   "level": 30
+  },
+  {
+   "id": "gong1",
+   "class": 36,
+   "x": 25,
+   "y": 8,
+   "facing": 1,
+   "name": "做公的",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "gong2",
+   "class": 36,
+   "x": 25,
+   "y": 10,
+   "facing": 1,
+   "name": "做公的",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "pangong",
+   "class": 24,
+   "x": 11,
+   "y": 6,
+   "facing": 2,
+   "name": "潘公",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "qiaoyun",
+   "class": 30,
+   "x": 10,
+   "y": 6,
+   "facing": 2,
+   "name": "潘巧云",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "yinger",
+   "class": 31,
+   "x": 9,
+   "y": 6,
+   "facing": 2,
+   "name": "迎儿",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "peiruhai",
+   "class": "peiruhai",
+   "x": 3,
+   "y": 8,
+   "facing": 3,
+   "name": "海阇黎裴如海",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  },
+  {
+   "id": "toutuo",
+   "class": "toutuo",
+   "x": 7,
+   "y": 9,
+   "facing": 3,
+   "name": "胡道人",
+   "hidden": true,
+   "side": "ally",
+   "level": 30,
+   "ai": 8
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州城 · 巷口酒店"
+    ],
+    [
+     "narrate",
+     "五人在酒店里正吃得入港，只听得街上闹嚷嚷的——杨雄打发了做公的，带着二十来个人，一路寻将来。"
+    ],
+    [
+     "appear",
+     "yangxiong"
+    ],
+    [
+     "appear",
+     "gong1"
+    ],
+    [
+     "appear",
+     "gong2"
+    ],
+    [
+     "move",
+     "yangxiong",
+     17,
+     7
+    ],
+    [
+     "face",
+     "yangxiong",
+     "shixiu"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "大哥何处不寻你，却在这里吃酒！小弟一时被那厮封住了手，施展不得，多亏大哥救了我这场便宜。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "节级休怪。小人路见不平，便要管，不值甚么。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "似你这般好汉，不嫌杨雄微贱，我便和你结义做个弟兄，如何？"
+    ],
+    [
+     "narrate",
+     "石秀大喜，便拜杨雄为兄。杨雄年长两岁，石秀做了兄弟。众人置酒相庆，戴宗、武龙、林冲、杨林也在席上做了个见证。"
+    ],
+    [
+     "say",
+     "daizong",
+     "（低声）武龙兄弟，公孙先生一时寻不着，这两个都是好汉。咱们且在城里住几日，一面打听公孙先生，一面看看这兄弟俩。"
+    ],
+    [
+     "say",
+     "hero",
+     "正合我意。"
+    ],
+    [
+     "leave",
+     "gong1"
+    ],
+    [
+     "leave",
+     "gong2"
+    ],
+    [
+     "appear",
+     "pangong"
+    ],
+    [
+     "move",
+     "pangong",
+     13,
+     7
+    ],
+    [
+     "say",
+     "pangong",
+     "我是杨雄的丈人潘公。原是屠户出身，只因年老做不得了，只有这个女婿。叔叔若肯帮我开个肉铺，却是好也。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "小人在家时，也是屠户家出身，会杀牲口。"
+    ],
+    [
+     "narrate",
+     "自此石秀在潘公后门开了一个肉铺，杀猪宰羊，生意兴旺。"
+    ],
+    [
+     "title",
+     "杨雄家 · 两个月后"
+    ],
+    [
+     "appear",
+     "qiaoyun"
+    ],
+    [
+     "appear",
+     "yinger"
+    ],
+    [
+     "narrate",
+     "杨雄的浑家姓潘，小字巧云，原嫁了本府王押司，王押司死了，才改嫁杨雄。这日是王押司二周年忌日，请了报恩寺的僧人来家做功德。"
+    ],
+    [
+     "appear",
+     "peiruhai"
+    ],
+    [
+     "move",
+     "peiruhai",
+     9,
+     8
+    ],
+    [
+     "face",
+     "peiruhai",
+     "qiaoyun"
+    ],
+    [
+     "say",
+     "peiruhai",
+     "贤妹，小僧裴如海，特来与王押司做好事。（拜了又拜）"
+    ],
+    [
+     "say",
+     "qiaoyun",
+     "师兄何必多礼。（笑）"
+    ],
+    [
+     "narrate",
+     "那和尚是报恩寺的阇黎，人都叫他海阇黎。他与潘巧云眉来眼去，一个说「贤妹」，一个叫「师兄」。石秀在门前看了，心中早有八分疑忌。"
+    ],
+    [
+     "face",
+     "shixiu",
+     "peiruhai"
+    ],
+    [
+     "say",
+     "shixiu",
+     "（这贼秃好生无礼！嫂嫂也不是个良善的……我且留心看着。）"
+    ],
+    [
+     "leave",
+     "peiruhai"
+    ],
+    [
+     "title",
+     "杨雄家后巷 · 五更"
+    ],
+    [
+     "narrate",
+     "一连几夜，杨雄在牢里当值不回家。石秀睡不着，五更时分只听得巷口一个头陀敲着木鱼，高声叫佛。"
+    ],
+    [
+     "appear",
+     "toutuo"
+    ],
+    [
+     "say",
+     "toutuo",
+     "普度众生，救苦救难，诸佛菩萨……"
+    ],
+    [
+     "narrate",
+     "石秀从门缝里张时，只见一个人戴顶头巾，从杨雄家后门闪了出去——正是那海阇黎。"
+    ],
+    [
+     "leave",
+     "toutuo"
+    ],
+    [
+     "say",
+     "shixiu",
+     "原来如此！哥哥这般豪杰，却讨了这个淫妇！"
+    ],
+    [
+     "title",
+     "州桥下酒楼"
+    ],
+    [
+     "leave",
+     "qiaoyun"
+    ],
+    [
+     "leave",
+     "yinger"
+    ],
+    [
+     "move",
+     "yangxiong",
+     13,
+     8
+    ],
+    [
+     "face",
+     "shixiu",
+     "yangxiong"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，兄弟有句话说。嫂嫂和那报恩寺的海阇黎……每日五更，那头陀敲木鱼为号，和尚便从后门出去。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "……这贱人怎敢如此！今晚我便回去问她。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥且休声张。今晚只推当值，三更后再来敲门，便见分晓。"
+    ],
+    [
+     "narrate",
+     "杨雄当晚却被知府留住吃酒，喝得大醉回家，指着潘巧云骂了一场，又说漏了嘴。"
+    ],
+    [
+     "appear",
+     "qiaoyun"
+    ],
+    [
+     "move",
+     "qiaoyun",
+     12,
+     7
+    ],
+    [
+     "say",
+     "qiaoyun",
+     "（哭）你那结义的好兄弟，趁你不在家，倒来调戏我……我不好说与你知道！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "……他怎地是这般人！"
+    ],
+    [
+     "narrate",
+     "次日杨雄叫潘公把肉铺拆了，砧头肉案都收了。石秀看了，心中明白。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "嫂嫂反咬一口，哥哥一时被她瞒了。我若与他争，倒教他出丑。我且退一步，看这贼秃几时露出马脚。"
+    ],
+    [
+     "leave",
+     "qiaoyun"
+    ],
+    [
+     "leave",
+     "yangxiong"
+    ],
+    [
+     "leave",
+     "pangong"
+    ],
+    [
+     "move",
+     "shixiu",
+     15,
+     6
+    ],
+    [
+     "face",
+     "shixiu",
+     "daizong"
+    ],
+    [
+     "say",
+     "daizong",
+     "石秀兄弟，你待如何？"
+    ],
+    [
+     "say",
+     "shixiu",
+     "小弟今夜便去杨雄家后巷，等那头陀和贼秃出来，拿个真赃，与哥哥分说明白。"
+    ],
+    [
+     "say",
+     "daizong",
+     "我脚程快，同你走一遭，替你望风。武龙兄弟、林教头，你们只在店里等着，休教人起疑。"
+    ],
+    [
+     "say",
+     "linchong",
+     "好。若有动静，我们便来接应。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}
