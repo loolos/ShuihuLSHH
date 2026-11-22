@@ -8,10 +8,7 @@
   "map": {
     "custom": "laocheng"
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["jiangzhou", "story"],
   "units": [
     {
       "id": "wusong",

@@ -8,10 +8,7 @@
   "map": {
     "custom": "guanfu"
   },
-  "bgm": [
-    "eerie",
-    "story"
-  ],
+  "bgm": ["eerie", "story"],
   "units": [
     {
       "id": "huarong",

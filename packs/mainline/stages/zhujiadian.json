@@ -9,10 +9,7 @@
   "custom": "baihu-cundian"
  },
  "tint": "night",
- "bgm": [
-  "battle",
-  "rock"
- ],
+ "bgm": ["manor", "fire", "army"],
  "units": [
   {
    "id": "hero",

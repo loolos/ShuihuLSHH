@@ -6,6 +6,7 @@
     "gold": 400
   },
   "map": {
+    "bgm": ["comic", "battle"],
     "base": "N-add02"
   },
   "tint": "dusk",

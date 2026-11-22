@@ -15,10 +15,7 @@
       20
     ]
   },
-  "bgm": [
-    "battle",
-    "tense"
-  ],
+  "bgm": ["march", "battle"],
   "units": [
     {
       "id": "huarong",

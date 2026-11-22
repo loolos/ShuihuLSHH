@@ -6,6 +6,7 @@
     "gold": 500
   },
   "map": {
+    "bgm": ["heist", "battle", "rock"],
     "base": "N-add16",
     "crop": [
       4,

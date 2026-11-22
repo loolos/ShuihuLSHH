@@ -8,10 +8,7 @@
   "map": {
     "base": "Act5-2"
   },
-  "bgm": [
-    "inn",
-    "story"
-  ],
+  "bgm": ["inn", "story"],
   "units": [
     {
       "id": "wusong",

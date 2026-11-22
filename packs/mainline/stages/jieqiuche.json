@@ -9,11 +9,7 @@
   "map": {
     "base": "N-add07"
   },
-  "bgm": [
-    "rescue",
-    "army",
-    "battle2"
-  ],
+  "bgm": ["heist", "army", "rescue"],
   "units": [
     {
       "id": "hero",

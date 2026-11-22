@@ -3,7 +3,7 @@
   "title": "鞠场争锋",
   "sideStory": true,
   "map": { "custom": "jucheng" },
-  "bgm": ["battle", "rock"],
+  "bgm": ["comic", "march"],
   "cuju": {
     "field": [2, 2, 28, 16],
     "goals": { "player": { "x": 1, "y1": 7, "y2": 11 }, "enemy": { "x": 29, "y1": 7, "y2": 11 } },

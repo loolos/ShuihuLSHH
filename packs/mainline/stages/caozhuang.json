@@ -8,9 +8,7 @@
   "map": {
     "base": "Act8-1"
   },
-  "bgm": [
-    "story"
-  ],
+  "bgm": ["comic", "inn"],
   "units": [
     {
       "id": "likui",

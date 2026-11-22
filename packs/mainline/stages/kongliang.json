@@ -9,10 +9,7 @@
     "custom": "baihu-cundian"
   },
   "tint": "dusk",
-  "bgm": [
-    "comic",
-    "battle"
-  ],
+  "bgm": ["comic", "battle"],
   "units": [
     {
       "id": "wusong",

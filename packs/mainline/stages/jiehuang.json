@@ -9,9 +9,7 @@
   "base": "N-add05"
  },
  "tint": "dusk",
- "bgm": [
-  "story"
- ],
+ "bgm": ["eerie", "story"],
  "units": [
   {
    "id": "songjiang",

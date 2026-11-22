@@ -19,10 +19,7 @@
    ]
   ]
  },
- "bgm": [
-  "story",
-  "sad"
- ],
+ "bgm": ["story", "sad"],
  "units": [
   {
    "id": "wusong",

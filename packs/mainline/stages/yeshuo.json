@@ -9,10 +9,7 @@
     "base": "Act3-2"
   },
   "tint": "night",
-  "bgm": [
-    "sad",
-    "brothers"
-  ],
+  "bgm": ["sad", "brothers"],
   "units": [
     {
       "id": "songjiang",

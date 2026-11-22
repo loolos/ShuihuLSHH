@@ -15,10 +15,7 @@
     ]
   },
   "tint": "night",
-  "bgm": [
-    "night",
-    "battle"
-  ],
+  "bgm": ["night", "battle2"],
   "units": [
     {
       "id": "songjiang",

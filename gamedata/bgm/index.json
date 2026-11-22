@@ -34,170 +34,135 @@
   "ending": "ending.mp3"
  },
  "stages": {
-  "n-add01": [
-   "rescue",
-   "tense",
-   "boss"
-  ],
-  "n-add04b": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n04": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n05": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n06": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n07": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n08": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n09": [
-   "fire",
-   "boss",
-   "tense"
-  ],
-  "n10": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n11": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n14": [
-   "tense",
-   "boss",
-   "army"
-  ],
-  "n-add16": [
-   "tense",
-   "boss",
-   "army"
-  ],
   "n01": [
    "escape",
-   "army",
+   "army"
+  ],
+  "n-add01": [
+   "rescue",
    "tense"
   ],
-  "n03": [
-   "army",
+  "n-add02": [
    "battle",
-   "tense"
+   "rock"
   ],
-  "n-add04a": [
-   "army",
-   "battle",
-   "tense"
+  "act2-2": [
+   "story",
+   "brothers"
   ],
-  "n-add08": [
-   "army",
-   "battle",
-   "tense"
+  "act2-3": [
+   "tense",
+   "story"
   ],
-  "n-add09a": [
-   "army",
-   "battle",
-   "tense"
-  ],
-  "n-add11": [
-   "escape",
-   "army",
-   "tense"
-  ],
-  "n-add14": [
-   "army",
-   "battle",
-   "tense"
-  ],
-  "n12": [
-   "escape",
-   "army",
-   "tense"
-  ],
-  "n-add15": [
-   "escape",
-   "army",
-   "tense"
-  ],
-  "n13": [
-   "naval",
-   "army",
-   "tense"
+  "n02": [
+   "battle2",
+   "rock"
   ],
   "n-add03": [
    "night",
-   "rock",
    "battle"
   ],
-  "n-add05": [
-   "night",
-   "rock",
+  "act3-1": [
+   "heist",
+   "sad",
+   "story"
+  ],
+  "act3-2": [
+   "brothers",
+   "story"
+  ],
+  "act3-3": [
+   "maze",
+   "eerie",
+   "tense"
+  ],
+  "n03": [
+   "manor",
+   "fire",
+   "army"
+  ],
+  "act3-4": [
+   "brothers",
+   "liangshan"
+  ],
+  "n-add04a": [
+   "army",
    "battle"
   ],
-  "act4-2": [
-   "comic",
-   "inn"
+  "n-add04b": [
+   "rock",
+   "battle2"
   ],
   "act5-1a": [
    "night",
    "eerie"
   ],
-  "act10-1": [
-   "night",
-   "eerie"
+  "n-add05": [
+   "battle",
+   "rock"
   ],
-  "act11-1a": [
-   "night",
-   "eerie"
+  "act4-2": [
+   "comic",
+   "inn"
   ],
-  "n-add09b": [
-   "battle2",
+  "act4-3": [
+   "inn",
+   "comic"
+  ],
+  "n04": [
+   "manor",
+   "boss",
+   "army"
+  ],
+  "act5-1": [
+   "story",
+   "sad"
+  ],
+  "n-add06": [
    "rock",
+   "comic",
    "battle"
   ],
-  "n-add10": [
-   "battle2",
-   "rock",
-   "battle"
+  "train1": [
+   "march",
+   "rock"
   ],
-  "n-add12": [
-   "battle2",
-   "rock",
-   "battle"
+  "n-add07": [
+   "battle",
+   "battle2"
   ],
-  "n-add13": [
-   "battle2",
+  "act5-2": [
    "rock",
-   "battle"
+   "brothers"
   ],
-  "train2": [
+  "act5-3": [
+   "tense",
+   "story"
+  ],
+  "n05": [
    "battle2",
-   "rock",
+   "boss"
+  ],
+  "act6-1": [
+   "maze",
+   "eerie",
+   "tense"
+  ],
+  "act6-2": [
+   "inn",
+   "tense"
+  ],
+  "n-add08": [
+   "army",
    "battle"
   ],
   "act6-3": [
-   "sad",
-   "story"
+   "tense",
+   "sad"
+  ],
+  "n06": [
+   "boss",
+   "army"
   ],
   "act7-1": [
    "sad",
@@ -207,67 +172,128 @@
    "eerie",
    "night"
   ],
+  "n07": [
+   "boss",
+   "tense"
+  ],
+  "n-add09a": [
+   "army",
+   "march"
+  ],
+  "n-add09b": [
+   "escape",
+   "battle2"
+  ],
+  "act8-1": [
+   "inn",
+   "brothers"
+  ],
+  "n-add10": [
+   "comic",
+   "rock"
+  ],
+  "n08": [
+   "battle",
+   "boss"
+  ],
   "act9-1": [
    "eerie",
    "night"
   ],
-  "act14-2": [
-   "liangshan",
-   "brothers"
+  "n09": [
+   "fire",
+   "boss"
   ],
-  "n-add02": [
-   "battle",
-   "rock",
-   "march",
-   "battle2"
+  "n-add11": [
+   "escape",
+   "army"
   ],
-  "n02": [
-   "battle",
-   "rock",
-   "march",
-   "battle2"
-  ],
-  "n-add06": [
-   "battle",
-   "rock",
-   "march",
-   "battle2"
-  ],
-  "n-add07": [
-   "battle",
-   "rock",
-   "march",
-   "battle2"
-  ],
-  "train1": [
-   "battle",
-   "rock",
-   "march",
-   "battle2"
-  ],
-  "act4-3": [
+  "act10-1": [
+   "heist",
    "comic",
-   "inn"
+   "night"
   ],
-  "act5-1": [
-   "comic",
-   "inn"
+  "act10-2": [
+   "sad",
+   "story"
+  ],
+  "n-add12": [
+   "battle2",
+   "rock"
+  ],
+  "act11-1a": [
+   "night",
+   "eerie"
+  ],
+  "n10": [
+   "boss",
+   "tense"
+  ],
+  "act11-1": [
+   "tense",
+   "story"
+  ],
+  "act11-2": [
+   "songjiang",
+   "eerie",
+   "tense"
+  ],
+  "n-add13": [
+   "manor",
+   "battle",
+   "battle2"
+  ],
+  "n11": [
+   "boss",
+   "nightduel"
+  ],
+  "n-add14": [
+   "army",
+   "rock"
+  ],
+  "n12": [
+   "escape",
+   "fire"
+  ],
+  "act13-1": [
+   "story",
+   "comic"
+  ],
+  "n-add15": [
+   "army",
+   "escape"
   ],
   "act13-2": [
    "reeds",
    "story"
   ],
-  "act3-4": [
-   "brothers",
-   "story"
-  ],
-  "act5-2": [
-   "brothers",
-   "story"
+  "n13": [
+   "naval",
+   "army"
   ],
   "act14-1": [
    "brothers",
-   "story"
+   "liangshan"
+  ],
+  "n-add16": [
+   "tense",
+   "army"
+  ],
+  "train2": [
+   "march",
+   "battle2"
+  ],
+  "act14-2": [
+   "liangshan",
+   "inn"
+  ],
+  "act14-3": [
+   "tense",
+   "eerie"
+  ],
+  "n14": [
+   "boss",
+   "tense"
   ]
  }
 }

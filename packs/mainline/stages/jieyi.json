@@ -8,9 +8,7 @@
  "map": {
   "custom": "zishijie"
  },
- "bgm": [
-  "story"
- ],
+ "bgm": ["brothers", "eerie"],
  "units": [
   {
    "id": "shixiu",

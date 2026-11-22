@@ -15,9 +15,7 @@
    20
   ]
  },
- "bgm": [
-  "story"
- ],
+ "bgm": ["sad", "eerie"],
  "units": [
   {
    "id": "shixiu",

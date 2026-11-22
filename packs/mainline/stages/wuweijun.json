@@ -6,6 +6,7 @@
   "gold": 600
  },
  "map": {
+  "bgm": ["maze", "night", "fire"],
   "custom": "wuweijun",
   "seal": [
    [

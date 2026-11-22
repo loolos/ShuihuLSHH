@@ -3,7 +3,7 @@
   "title": "好汉聚义",
   "sideStory": true,
   "map": { "base": "N01" },
-  "bgm": ["battle", "rock"],
+  "bgm": ["boss", "battle2"],
   "royale": {
     "level": 30,
     "opponents": 15,

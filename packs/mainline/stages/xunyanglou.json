@@ -4,10 +4,7 @@
   "map": {
     "custom": "jiulou"
   },
-  "bgm": [
-    "inn",
-    "jiangzhou"
-  ],
+  "bgm": ["inn", "jiangzhou"],
   "units": [
     {
       "id": "songjiang",

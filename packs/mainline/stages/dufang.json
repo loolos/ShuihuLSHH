@@ -6,6 +6,7 @@
     "gold": 200
   },
   "map": {
+    "bgm": ["comic", "battle2"],
     "custom": "zishijie"
   },
   "bgm": "battle",

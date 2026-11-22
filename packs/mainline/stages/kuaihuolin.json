@@ -14,10 +14,7 @@
       26
     ]
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["comic", "battle2"],
   "units": [
     {
       "id": "wusong", "facing": 0,

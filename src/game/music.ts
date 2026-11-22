@@ -181,7 +181,6 @@ class MusicPlayer {
   /** 这一关该放哪首（战斗关一般是 2–3 首轮流放的歌单，负责人 2026-11-12 要求） */
   async stageTrack(mapName: string): Promise<string | string[]> {
     const idx = await this.loadIndex();
-    if (mapName.toLowerCase() === 'act5-2') return ['battle', 'rock'];
     const named = idx?.stages?.[mapName] ?? idx?.stages?.[mapName.toLowerCase()];
     if (named) return named;
     if (/^act/i.test(mapName)) return ['story', 'brothers'];

@@ -6,6 +6,7 @@
     "gold": 300
   },
   "map": {
+    "bgm": ["naval", "battle"],
     "custom": "dukou-yuchuan"
   },
   "bgm": "battle",

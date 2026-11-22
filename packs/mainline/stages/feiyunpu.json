@@ -9,10 +9,7 @@
   "map": {
     "custom": "dukou"
   },
-  "bgm": [
-    "battle",
-    "rock"
-  ],
+  "bgm": ["escape", "battle2"],
   "units": [
     {
       "id": "wusong",

@@ -8,10 +8,7 @@
   "map": {
     "custom": "laocheng"
   },
-  "bgm": [
-    "jiangzhou",
-    "story"
-  ],
+  "bgm": ["jiangzhou", "story"],
   "units": [
     {
       "id": "songjiang",

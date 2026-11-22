@@ -8,10 +8,7 @@
   "map": {
     "base": "Act4-2"
   },
-  "bgm": [
-    "brothers",
-    "story"
-  ],
+  "bgm": ["brothers", "story"],
   "units": [
     {
       "id": "wusong",

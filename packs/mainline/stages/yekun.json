@@ -9,10 +9,7 @@
     "base": "N-add04a"
   },
   "tint": "night",
-  "bgm": [
-    "night",
-    "tense"
-  ],
+  "bgm": ["night", "tense"],
   "units": [
     {
       "id": "songjiang",

@@ -8,7 +8,7 @@
     "base": "Act7-1a",
     "crop": [16, 32, 18, 18]
   },
-  "bgm": ["eerie", "battle"],
+  "bgm": ["rescue", "eerie"],
   "units": [
     {
       "id": "hero",

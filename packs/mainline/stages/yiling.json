@@ -15,10 +15,7 @@
     ]
   },
   "tint": "dusk",
-  "bgm": [
-    "eerie",
-    "tiger"
-  ],
+  "bgm": ["tiger", "eerie"],
   "units": [
     {
       "id": "likui",

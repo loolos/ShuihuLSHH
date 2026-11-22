@@ -8,10 +8,7 @@
   "map": {
     "custom": "baihu-cundian"
   },
-  "bgm": [
-    "story",
-    "battle"
-  ],
+  "bgm": ["inn", "rescue"],
   "banquet": {
     "flag": "alarm",
     "sight": 2
