@@ -49,6 +49,11 @@ export function addStartItems(stage: string, classId: number, slots: number[]) {
   }
 }
 
+/** 走进回合结束才生效的区域时的提示（不算触发剧情，还能撤销移动） */
+const AREA_HINT = '回合结束时生效';
+/** 教学提示里不改局面的事件 */
+const SOFT_EVENTS = new Set<BattleEvent['type']>(['say', 'narrate', 'objective', 'subtitle', 'focus', 'wait', 'sound', 'message']);
+
 export type BattleEvent =
   | { type: 'say'; uid: number | null; speaker: string; text: string }
   | { type: 'narrate'; text: string }
@@ -320,6 +325,10 @@ export class Battle {
   private condAtTurnEnd = false;
   /** 回合结束才生效的区域已经提示过的「区块:回合」【新】 */
   private areaHinted = new Set<string>();
+  /** 正在执行教学提示（did 区块）【新】 */
+  private teaching = false;
+  /** 教学提示里只是说话的事件：不让这次移动锁住撤销【新】 */
+  private soft = new WeakSet<BattleEvent>();
   status: 'playing' | 'won' | 'lost' = 'playing';
   objectives: string[] = [];
   private blocks: PasBlock[];
@@ -1028,6 +1037,7 @@ export class Battle {
     return o;
   }
   private emit(e: BattleEvent) {
+    if (this.teaching && SOFT_EVENTS.has(e.type)) this.soft.add(e);
     this.out.push(e);
   }
 
@@ -1049,11 +1059,24 @@ export class Battle {
     } else u.movementRemaining -= n.cost;
     if (u.side === 'player') this.noteDid(u, 'move');
     this.afterAction();
+    // 移动中出了任何事（剧情区块、被哨兵发现、开宝箱、提示以外的消息……），这次移动就定下来，不能撤销【新】（负责人 2026-11-22）
+    if (this.out.some((e) => !(e.type === 'move' && e.uid === u.uid) && !(e.type === 'status' && e.text === AREA_HINT) && !this.soft.has(e))) u.turnStart = null;
     return this.flush();
   }
 
+  /**
+   * 撤销移动【新】（负责人 2026-11-22）：本回合移动过、还没出手；原来的格子没被别人占住；
+   * 移动后没有触发剧情、没开宝箱、没用 / 给 / 收道具（这些都会清掉 turnStart，见 lockUndo、move、pickup、useItem、giveItem）。
+   */
   canUndo(u: Unit) {
-    return !!u.turnStart && !u.acted && u.side === this.phase && this.status === 'playing';
+    const s = u.turnStart;
+    if (!s || u.acted || u.side !== this.phase || this.status !== 'playing') return false;
+    return !this.units.some((t) => t !== u && t.alive && t.present && t.x === s.x && t.y === s.y);
+  }
+
+  /** 剧情一发生，本回合这一方已经走过的人都不能再撤销移动（剧情可能已经按他们的位置改了局面）【新】 */
+  private lockUndo() {
+    for (const t of this.units) if (t.side === this.phase) t.turnStart = null;
   }
   undoMove(u: Unit): BattleEvent[] {
     if (!this.canUndo(u)) return [];
@@ -1190,6 +1213,7 @@ export class Battle {
     this.applyItem(u, slot, target);
     this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
+    target.turnStart = null; // 用在别人身上：对方也不能再撤销移动
     this.noteDid(u, 'item');
     this.checkDid();
     return this.flush();
@@ -1221,6 +1245,7 @@ export class Battle {
     target.forge[k] = u.forge[slot] ?? 0;
     this.clearSlot(u, slot);
     u.turnStart = null;
+    target.turnStart = null; // 收东西的人也不能再撤销移动（负责人 2026-11-22）
     this.emit({ type: 'message', text: `${u.name}把${this.tr(it.name)}交給了${target.name}。` });
     this.noteDid(u, 'give');
     this.checkDid();
@@ -1714,7 +1739,7 @@ export class Battle {
         const key = `${b.index}:${this.turn}`;
         if (who && who.side === 'player' && this.phase === 'player' && !this.areaHinted.has(key)) {
           this.areaHinted.add(key);
-          this.emit({ type: 'status', uid: who.uid, text: '回合结束时生效' });
+          this.emit({ type: 'status', uid: who.uid, text: AREA_HINT });
         }
         continue;
       }
@@ -1782,7 +1807,7 @@ export class Battle {
         const key = `${b.index}:${this.turn}`;
         if (this.phase === 'player' && !this.areaHinted.has(key) && this.flagsOk(b)) {
           this.areaHinted.add(key);
-          this.emit({ type: 'status', uid: by.uid, text: '回合结束时生效' });
+          this.emit({ type: 'status', uid: by.uid, text: AREA_HINT });
         }
         continue;
       }
@@ -1868,7 +1893,13 @@ export class Battle {
         if (t.kind !== 'did' || t.action !== action || this.fired.has(b.index)) continue;
         if (t.uid !== undefined ? t.uid !== uid : t.char !== u.classId) continue;
         if (!this.flagsOk(b)) continue;
-        this.runBlock(b);
+        // 教学提示（did 区块）只是讲解刚做的操作，说话、旁白不锁撤销移动；真改了局面（登场、退场……）的照样锁
+        this.teaching = true;
+        try {
+          this.runBlock(b);
+        } finally {
+          this.teaching = false;
+        }
         if (this.status !== 'playing') break;
       }
     }
@@ -1922,6 +1953,7 @@ export class Battle {
       // 挨了打也就惊醒了（偷袭没一下打倒，他照样喊）
       if (!seen && w.hp >= w.stats.maxHp) continue;
       this.spotters[uid] = this.turn + 1;
+      this.lockUndo();
       w.unaware = false;
       w.ai.mode = 0;
       this.emit({ type: 'status', uid, text: '发现' });
@@ -2034,6 +2066,7 @@ export class Battle {
   private runBlock(b: PasBlock) {
     if (this.fired.has(b.index)) return;
     this.fired.add(b.index);
+    if (!this.teaching) this.lockUndo();
     const textOf = (i: number) => {
       const orig = b.ops[i].text ?? '';
       let t = orig;
