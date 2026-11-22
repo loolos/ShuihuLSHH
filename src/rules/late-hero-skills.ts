@@ -75,6 +75,16 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
    return [updated,{...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
     learnLevel:28,mpCost:210,power:65,area:8,hitMod:20,critMod:35}];
   }
+  // 千軍萬馬（武龍，类型 0 落点往前一线）：负责人 2026-11-22 加 LV4，命中 +5/+10/+15/+20，
+  // LV3、LV4 两段（与萬夫莫敵同一出手动作第 3 组，第 8、12 帧各 50%）；LV4 一线 9 格（3/5/7 → 9），22 级，威力 65，耗气见 HERO_AOE_COSTS
+  if(cls===0&&[4,5,6].includes(s.skillId)){
+   const tier=s.skillId-4;
+   const two=[{frame:8,percent:50,dir:0},{frame:12,percent:50,dir:0}];
+   const updated={...s,hitMod:5*(tier+1),hits:tier===2?two:s.hits};
+   if(tier!==2)return [updated];
+   return [updated,{...updated,skillId:1310,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
+    learnLevel:22,mpCost:150,power:65,area:9,hitMod:20,hits:two.map(h=>({...h}))}];
+  }
   if(cls===16&&s.skillId===135){
    const frames=[12,13,15,17],weights=[[100],[50,50],[30,30,40],[25,25,25,25]];
    return [4,14,22,30].map((level,i)=>({...s,skillId:i===0?135:1305+i,soundId:s.soundId??s.skillId,
