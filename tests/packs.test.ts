@@ -380,18 +380,28 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     // 开场分三波（负责人 2026-11-23），伏兵只要能走到其中一波就行
     const reach = b.board.distanceField(b.units.filter((u) => u.side === 'player' && u.present).map((u) => ({ x: u.x, y: u.y })));
     const W = b.board.width;
+    // 石秀到了以后谁都不能被木栅关死：每个好汉都走得到南边村口（负责人 2026-11-23）
+    const toCamp = (x = 13, y = 37) => {
+      expect(b.board.passable(x, y)).toBe(true);
+      const f = b.board.distanceField([{ x, y }]);
+      for (const u of b.units) if (u.side === 'player' && u.present && u.alive) expect(f[u.y * W + u.x], `第 ${b.turn} 回合 ${u.name}`).toBeLessThan(Infinity);
+    };
     for (const e of seals) for (const c of e.type === 'seal' ? e.cells : []) expect(b.board.passable(c.x, c.y)).toBe(false);
     const ambush = b.units.filter((u) => u.side === 'enemy' && u.present && u.alive);
     expect(ambush.length).toBe(12);
     for (const u of ambush) expect(reach[u.y * W + u.x], u.name).toBeLessThan(Infinity);
     const judeng = b.units.find((u) => u.classId === rt.classIds.get('judeng'))!;
     expect(judeng.present).toBe(false);
+    // 石秀来之前栅栏也不能把人关死（伏兵可以挡路）：都走得到迷宫南边靠村口的路口
+    for (let t = 1; t <= 4; t++) { advance(b, t); toCamp(12, 31); }
     advance(b, 5);
     expect(b.units.find((u) => u.classId === rt.classIds.get('shixiu'))!.present).toBe(true);
     expect(judeng.present).toBe(true);
+    toCamp();
     // 举灯庄客站在围栏里，近身打不到
     const ring = [[-1, 0], [1, 0], [0, -1], [0, 1]].filter(([dx, dy]) => b.board.passable(judeng.x + dx, judeng.y + dy));
     expect(ring).toEqual([]);
+    for (let t = 6; t <= 8; t++) { advance(b, t); toCamp(); }
   });
   it('石秀探庄（§15.32.5）：巡庄庄客认得卖柴的不惊动，但走到他眼前就被拦下盘问，这回合走不了', () => {
     const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));

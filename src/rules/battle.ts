@@ -2672,14 +2672,24 @@ export class Battle {
     const want = a.count ?? 1;
     const chosen: typeof sites = [];
     const hit: Unit[] = [];
+    // reach：连同已挑的几处一起堵上以后，每个好汉都还走得到 reach 这一格才挑
+    const keeps = (o: (typeof sites)[number]) => {
+      if (!a.reach) return true;
+      const cells = [...chosen, o].flatMap((v) => v.s.cells).map((c) => c.y * W + c.x).filter((i) => !this.board.blocked[i]);
+      for (const i of cells) this.board.blocked[i] = 1;
+      const f = this.board.distanceField([a.reach]);
+      for (const i of cells) this.board.blocked[i] = 0;
+      return heroes.every((h) => Number.isFinite(f[h.y * W + h.x]));
+    };
     for (const o of sites) {
       if (chosen.length >= want) break;
+      if (!keeps(o)) continue;
       const h = nearestHero(o.s);
       if (hit.some((v) => Math.abs(v.x - h.x) + Math.abs(v.y - h.y) <= 4)) continue;
       chosen.push(o);
       hit.push(h);
     }
-    for (const o of sites) if (chosen.length < want && !chosen.includes(o)) chosen.push(o);
+    for (const o of sites) if (chosen.length < want && !chosen.includes(o) && keeps(o)) chosen.push(o);
     for (const [k, { s, d }] of chosen.entries()) {
       const tile = s.tile ?? a.tile;
       for (const c of s.cells) {
@@ -2733,8 +2743,25 @@ export class Battle {
     }
   }
 
+  /** 登场格：从 u 的位置走得到、没人占、路最短的格子（盘陀路石秀到宋江身边，别出在墙那边）；起点不可走就交给 nearestFree */
+  private nearestReachableFree(u: Unit): Cell | null {
+    if (!this.board.passable(u.x, u.y)) return null;
+    const W = this.board.width;
+    const occ = this.occupied(u);
+    if (!occ.has(key(u.x, u.y))) return { x: u.x, y: u.y };
+    const f = this.board.distanceField([{ x: u.x, y: u.y }]);
+    let best: Cell | null = null;
+    let bd = Infinity;
+    for (let y = 0; y < this.board.height; y++)
+      for (let x = 0; x < W; x++) {
+        const d = f[y * W + x];
+        if (d < bd && d > 0 && this.board.passable(x, y) && !occ.has(key(x, y))) { bd = d; best = { x, y }; }
+      }
+    return best;
+  }
+
   private appear(u: Unit) {
-    const c = this.board.nearestFree(u.x, u.y, this.occupied(u)) ?? u;
+    const c = this.nearestReachableFree(u) ?? this.board.nearestFree(u.x, u.y, this.occupied(u)) ?? u;
     u.x = c.x;
     u.y = c.y;
     u.present = true;
