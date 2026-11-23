@@ -18,8 +18,8 @@ describe('关卡名字', () => {
     }
   });
   it('按原版标题拼出章节和类别', () => {
-    expect(stageLabel('第3章 戰役2', 'N-add04b')).toMatchObject({ chapter: 3, chapterLabel: '第三章 夜走华阴县', short: '战役二 山径斗毛贼', full: '第三章 战役二 · 山径斗毛贼' });
-    expect(stageLabel('第5章 訓練', 'Train1').short).toBe('训练 延安府练武');
+    expect(stageLabel('第3章 戰役2', 'N-add04b')).toMatchObject({ chapter: 3, chapterLabel: '第三章 夜走华阴县', short: '战役二 山径收草寇', full: '第三章 战役二 · 山径收草寇' });
+    expect(stageLabel('第5章 訓練', 'Train1').short).toBe('训练 延安府传艺');
     expect(stageLabel('第2章3-3', 'Act3-3').short).toBe('剧情 李吉告密');
   });
 });

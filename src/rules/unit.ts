@@ -62,7 +62,7 @@ export interface Unit {
   defending: boolean;
   poisonTurns: number;
   stunTurns: number;
-  /** 逃窜还剩几回合【新】（大破何涛放火，指令 124）：乱走，不攻击、不防御 */
+  /** 逃窜还剩几回合【新】（怒破何观察放火，指令 124）：乱走，不攻击、不防御 */
   panicTurns?: number;
   /** 道具带来的限时效果（增益、抗毒、抗昏） */
   buffs: Buff[];

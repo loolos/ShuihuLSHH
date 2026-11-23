@@ -25,7 +25,7 @@ export interface StageRules {
   /** 火势蔓延【新】（火烧草料场）：见 src/rules/fire.ts */
   fire?: FireRules;
   /**
-   * 手下留情【新】（东溪村突围：朱仝放晁盖，负责人 2026-11-21）：角色 by 打角色 target 只是做样子，必定"打中"但没有伤害、
+   * 手下留情【新】（夜走东溪村：朱仝放晁盖，负责人 2026-11-21）：角色 by 打角色 target 只是做样子，必定"打中"但没有伤害、
    * 不中毒眩晕；by 的 AI 专找 target 打。第一次打到时设标志 flag（剧本用条件 100 接着演对白）。
    */
   feint?: { by: number; target: number; flag?: number };

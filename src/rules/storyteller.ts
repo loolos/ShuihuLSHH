@@ -39,7 +39,7 @@ export interface Tale {
   /** 好汉在队里：说完后的互动，然后二选一（好汉这时还没入伙的故事没有这两项） */
   present?: TaleLine[];
   choice?: { title: string; text: string; options: TaleOption[] };
-  /** 好汉入过伙就算在队里（上一关他是友军、不算出场时用，例：东溪村突围里的晁盖） */
+  /** 好汉入过伙就算在队里（上一关他是友军、不算出场时用，例：夜走东溪村里的晁盖） */
   joined?: boolean;
 }
 

@@ -27,11 +27,11 @@ describe('多语言查表（§10.3）', () => {
   });
 
   it('界面文字：整段、模板（{n} 数字、{s} 再查一次）、按空白分词', () => {
-    addTable('en', { terms: { 我方: 'Player', '第 {n} / {n} 回合 · {s}': 'Turn {n} / {n} · {s}', '{s}的攻击落空了。': "{s}'s attack missed.", 士兵: 'Soldier', 战役一: 'Battle 1', 护母突围: 'Breaking Out' } });
+    addTable('en', { terms: { 我方: 'Player', '第 {n} / {n} 回合 · {s}': 'Turn {n} / {n} · {s}', '{s}的攻击落空了。': "{s}'s attack missed.", 士兵: 'Soldier', 战役一: 'Battle 1', 护母奔延安: 'Breaking Out' } });
     setLang('en');
     expect(text('第 3 / 50 回合 · 我方')).toBe('Turn 3 / 50 · Player');
     expect(text('士兵的攻击落空了。')).toBe("Soldier's attack missed.");
-    expect(text('战役一 护母突围 ▾')).toBe('Battle 1 Breaking Out ▾');
+    expect(text('战役一 护母奔延安 ▾')).toBe('Battle 1 Breaking Out ▾');
     expect(term('没有的词')).toBe('没有的词');
   });
 

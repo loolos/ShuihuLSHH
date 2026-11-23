@@ -536,7 +536,7 @@ export class Battle {
   foesOf(u: Unit) {
     return this.active().filter((t) => !this.spectators.has(t.uid) && hostile(u, t));
   }
-  /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，林间截囚的宋江）【新】 */
+  /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，青州道劫囚的宋江）【新】 */
   isBound(u: Unit) {
     return u.stunTurns >= BOUND_TURNS - 1000; // 每回合照常减 1，留足余量
   }
@@ -681,12 +681,12 @@ export class Battle {
     for (const b of this.blocks) if (!this.fired.has(b.index) && b.cond && wins(b)) for (const f of flagLeaves(b.cond)) winFlags.add(f);
     for (const b of this.blocks) {
       if (this.fired.has(b.index)) continue;
-      // 只设标志的区域（大破何涛放火点：几个人都能点）标志已经设上了，就不再标出【新】
+      // 只设标志的区域（怒破何观察放火点：几个人都能点）标志已经设上了，就不再标出【新】
       if (b.ops.length && b.ops.every((o) => o.op === 103 && this.flags.has(o.value))) continue;
       // 敌人走进去就退场（火烧草料场：富安、洪教头从侧门逃走）也标成敌逃【新】
       const flees = (b: (typeof this.blocks)[number]) =>
         b.trigger.kind === 'area' && b.ops.some((o) => o.op === 17 && o.value & 2) && this.units.some((u) => b.trigger.kind === 'area' && u.classId === b.trigger.char && u.side === 'enemy');
-      // 放火点（指令 124，大破何涛）不是胜利条件，也标出来【新】
+      // 放火点（指令 124，怒破何观察）不是胜利条件，也标出来【新】
       const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : b.trigger.kind === 'area' && b.trigger.label ? 'goal' /* 写了字的区域（智取无为军的探查点）也标出【新】 */ : null;
       if (!kind) continue;
       const t = b.trigger;
@@ -1800,7 +1800,7 @@ export class Battle {
       }
       if (this.status !== 'playing') return;
     }
-    // 体力区块刚设了标志（山径斗毛贼：头领伤重才能劝降），身边的人不用再动一下就能触发【新】
+    // 体力区块刚设了标志（山径收草寇：头领伤重才能劝降），身边的人不用再动一下就能触发【新】
     if (hpFired && !this.checkNear()) return;
     this.runCondBlocks();
     if (this.status !== 'playing') return;
@@ -1874,7 +1874,7 @@ export class Battle {
 
   private turnTriggers(param: number) {
     this.turnParam = param;
-    // 区域触发 atTurnEnd【新】（强闯二龙山，负责人 2026-11-20；2026-11-21 推广到撤退、好汉登场等关）：回合结束才看人到没到，
+    // 区域触发 atTurnEnd【新】（智赚二龙山，负责人 2026-11-20；2026-11-21 推广到撤退、好汉登场等关）：回合结束才看人到没到，
     // 下回合开始时大家一起行动。条件树里的坐标判断（N12 晁盖撤退）由 cond 区块的 atTurnEnd 管，见 evalCond 的条件 4
     for (const b of this.blocks) {
       const t = b.trigger;
@@ -2061,7 +2061,7 @@ export class Battle {
         return this.flags.has(c.arg);
       case 101:
         return !this.flags.has(c.arg);
-      // 103：编号 arg 的那个人已经倒下（强闯二龙山：打倒山门头领）【新】
+      // 103：编号 arg 的那个人已经倒下（智赚二龙山：打倒山门头领）【新】
       case 103:
         return !!this.units.find((u) => u.uid === c.arg && !u.alive);
       // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
@@ -2167,7 +2167,7 @@ export class Battle {
         case 12:
           // 1001 起为 1000 + ACT 编组号（N-add03 开场 1006 = 王進下令、1007/1008 = 莊客应答；N03 第 11 回合 1030–1037 = 编组 30–37 的伏兵）
           if (op.value > 1000 && op.value < 0x10000) sel = this.unit(this.groups.get(op.value - 1000) ?? -1);
-          // args.side / stunned【新】（强闯二龙山倒戈、混乱时喽啰喊话）：只挑这一方在场的、还呆着的人，nth 挑第几个；没有就只剩名字没人
+          // args.side / stunned【新】（智赚二龙山倒戈、混乱时喽啰喊话）：只挑这一方在场的、还呆着的人，nth 挑第几个；没有就只剩名字没人
           else if (op.value <= 1000) {
             const a = op.args;
             const hits = this.units.filter(
@@ -2180,7 +2180,7 @@ export class Battle {
           selName = sel ? sel.name : op.value <= 1000 ? this.charName(op.value) : '';
           if (sel && op.actor?.action === 'show') {
             if (sel.present && sel.alive) break; // 本来就在场：不挪位置
-            // near 也可以是只在对白里露面（show）的人（东溪村突围：朱仝站到雷横旁边）【新】
+            // near 也可以是只在对白里露面（show）的人（夜走东溪村：朱仝站到雷横旁边）【新】
             const shownNear = [...this.shown].map(([uid, c]) => ({ u: this.units.find((x) => x.uid === uid)!, c })).find(({ u }) => u.classId === op.actor!.near)?.c;
             const near = this.active().find(u => u.classId === op.actor!.near) ?? shownNear ?? sel;
             const taken = this.occupied();
@@ -2354,11 +2354,11 @@ export class Battle {
           break;
         // 121 收手（扩展包【新】，梁山截路被宋江劝住的喽啰）：改成友军、原地不动、不能被选中，不再算敌人
         case 121: {
-          // 已经归顺 / 收手过的不再收手（山径斗毛贼：被别的头领带走归顺的手下）
+          // 已经归顺 / 收手过的不再收手（山径收草寇：被别的头领带走归顺的手下）
           if (!sel || !sel.alive || !sel.present || sel.side !== 'enemy') break;
           // 劝住也算击败：身边的我方（梁山截路里是宋江）按正常击败算法拿经验（负责人 2026-11-20）【新】
           // args.reward（负责人 2026-11-20）：身边没有我方时算最后打到他的人、再不行算最近的我方，照正常打倒给经验；
-          // args.goldPct：再交出击退银子的这么多百分比（只有反劫剪径贼给 150）；args.leave：收手后直接离开地图；
+          // args.goldPct：再交出击退银子的这么多百分比（只有剪径赤松林给 150）；args.leave：收手后直接离开地图；
           // args.quiet：不飘「收手」字
           const s0 = sel, a = op.args ?? {};
           const players = this.active().filter((t) => t.side === 'player');
@@ -2416,7 +2416,7 @@ export class Battle {
           }
           break;
         }
-        // 124 放火【新】（大破何涛，负责人 2026-11-21）：args.cells 上冒火（只是画面，不挡路、不烧人）；
+        // 124 放火【新】（怒破何观察，负责人 2026-11-21）：args.cells 上冒火（只是画面，不挡路、不烧人）；
         // 离火（区块的区域，或 args.x / y）最近的 args.panic 个敌人逃窜 args.turns 回合（乱走、不攻击），args.spare 列的职业不会逃窜。
         // 之后的指令 13 由离火最近的敌人（先挑逃窜的）来喊
         case 124: {
@@ -2517,7 +2517,7 @@ export class Battle {
         // 105 绑住（扩展包【新】，劫法场的宋江、戴宗）：当成一直昏迷，不能行动，照样会挨打；106 解开
         case 105:
           if (!sel) break;
-          // args.turns【新】：只呆住几回合（强闯二龙山山门守军措手不及），text 是头上的字；不在场、已倒下的不算
+          // args.turns【新】：只呆住几回合（智赚二龙山山门守军措手不及），text 是头上的字；不在场、已倒下的不算
           if (op.args?.turns && (!sel.alive || !sel.present)) break;
           sel.stunTurns = op.args?.turns ?? BOUND_TURNS;
           if (sel.side === this.phase) sel.ended = true;
@@ -2573,8 +2573,8 @@ export class Battle {
         case 115: {
           if (!sel || !op.text) break;
           const from = sel.side, s0 = sel;
-          // args.nearest【新】（山径斗毛贼，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
-          // args.fraction：改成按比例（强闯二龙山：头领倒下，剩下的小兵一半归顺）；args.crewOnly：只换手下，不换选中的人本身（头领已倒下）
+          // args.nearest【新】（山径收草寇，负责人 2026-11-20）：连带身边 range 格内最近的 nearest 个同阵营手下（classes 限定职业）一起换
+          // args.fraction：改成按比例（智赚二龙山：头领倒下，剩下的小兵一半归顺）；args.crewOnly：只换手下，不换选中的人本身（头领已倒下）
           const frac = op.args?.fraction, range = op.args?.range ?? 3, classes = op.args?.classes, only = op.args?.only; // only：只在这些编号里挑（开场就在的守军，不含增援）
           const pool = op.args?.nearest || frac
             ? this.active()

@@ -1,4 +1,4 @@
-// 前十五章换花样的关（docs/game-design.md §9.2.1）：误斗庄客、斗托塔天王、强闯二龙山、反劫剪径贼、山径斗毛贼、大破何涛、力擒金眼虎、叫阵晁家庄
+// 前十五章换花样的关（docs/game-design.md §9.2.1）：庄前误交锋、斗托塔天王、智赚二龙山、剪径赤松林、山径收草寇、怒破何观察、双夺宝珠寺、叫阵晁家庄
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -33,7 +33,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     b.move(p, g.x, g.y);
   };
 
-  it('误斗庄客：庄客体力不到四成就收手，武龙走到刘太公身边即过关', () => {
+  it('庄前误交锋：庄客体力不到四成就收手，武龙走到刘太公身边即过关', () => {
     const b = make('N-add05');
     const tg = cls(b, 27);
     expect(tg.present).toBe(true);
@@ -44,7 +44,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     const gold0 = b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0);
     poke(b);
     expect(z.side).toBe('ally');
-    // 收手的离开地图，照打倒给经验，但不交银子（只有反劫剪径贼交）
+    // 收手的离开地图，照打倒给经验，但不交银子（只有剪径赤松林交）
     expect(z.present).toBe(false);
     expect(b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0)).toBe(gold0);
     expect(b.status).toBe('playing');
@@ -79,7 +79,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect([46, 52, 61, 50].every((c) => cls(b, c).present)).toBe(true);
   });
 
-  it('强闯二龙山：押鲁智深到山门前翻脸，好汉与伏兵一起杀出', () => {
+  it('智赚二龙山：押鲁智深到山门前翻脸，好汉与伏兵一起杀出', () => {
     const b = make('N-add12');
     const lu = cls(b, 16), yang = cls(b, 14);
     expect(lu.stunTurns).toBeGreaterThan(100); // 被绑
@@ -103,7 +103,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(foes().some((u) => u.ai.mode === 8)).toBe(false);
   });
 
-  it('强闯二龙山：混进山门，头领营地呆一回合、伏兵在南边起点杀出；打倒山门头领一半喽啰归顺', () => {
+  it('智赚二龙山：混进山门，头领营地呆一回合、伏兵在南边起点杀出；打倒山门头领一半喽啰归顺', () => {
     const b = make('N-add12');
     const yang = cls(b, 14);
     place(b, yang, 22, 9);
@@ -145,7 +145,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.status).toBe('playing');
   });
 
-  it('强闯二龙山：路上先动手就被识破，同样翻脸', () => {
+  it('智赚二龙山：路上先动手就被识破，同样翻脸', () => {
     const b = make('N-add12');
     const z = b.units.find((u) => u.side === 'enemy' && u.present)!;
     z.hp -= 1;
@@ -155,7 +155,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.status).toBe('playing');
   });
 
-  it('反劫剪径贼：喽啰体力不到一半求饶，打倒头领即过关', () => {
+  it('剪径赤松林：喽啰体力不到一半求饶，打倒头领即过关', () => {
     const b = make('N-add07');
     const z = b.units.find((u) => u.side === 'enemy' && u.classId === 44 && u.present)!;
     const gold0 = b.units.filter((u) => u.side === 'player').reduce((n, u) => n + u.gold, 0);
@@ -179,7 +179,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(ev.some((e) => e.type === 'message' && e.text.startsWith('收手的敵人一共交出銀子'))).toBe(true);
   });
 
-  it('山径斗毛贼：头领伤重后朱武过去劝降，头领带手下归顺', () => {
+  it('山径收草寇：头领伤重后朱武过去劝降，头领带手下归顺', () => {
     const b = make('N-add04b');
     const boss = b.units.find((u) => u.classId === 65 && u.present)!;
     const before = b.units.filter((u) => u.side === 'enemy').length;
@@ -200,7 +200,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(b.status).toBe('playing');
   });
 
-  it('山径斗毛贼：杨春自己把头领打到一半以下，当场就劝降，不用别人再动', () => {
+  it('山径收草寇：杨春自己把头领打到一半以下，当场就劝降，不用别人再动', () => {
     const b = make('N-add04b');
     const boss = b.units.find((u) => u.classId === 65 && u.present)!;
     const yang = cls(b, 15);
@@ -214,7 +214,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(boss.side).toBe('ally');
   });
 
-  it('山径斗毛贼：一次最多带四个，多出来的手下照样要打', () => {
+  it('山径收草寇：一次最多带四个，多出来的手下照样要打', () => {
     const b = make('N-add04b');
     const boss = b.units.find((u) => u.classId === 65 && u.present)!;
     // 把六个手下都摆到头领身边
@@ -231,7 +231,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(men.filter((u) => u.side === 'enemy').length).toBe(2);
   });
 
-  it('大破何涛：哪位好汉都能放火，火起冒火焰、附近官兵逃窜三回合；放火不过关，打光两波增援才过关', () => {
+  it('怒破何观察：哪位好汉都能放火，火起冒火焰、附近官兵逃窜三回合；放火不过关，打光两波增援才过关', () => {
     const b = make('N-add14');
     expect(b.objectives.some((l) => l.includes('打败所有敌人'))).toBe(true);
     const spots = () => b.objectiveZones().filter((z) => z.kind === 'goal' && z.label === '放火');
@@ -290,7 +290,7 @@ describe.skipIf(!has)('前十五章换花样的关', () => {
     expect(fled.filter((u) => u.alive).every((u) => !u.panicTurns)).toBe(true);
   });
 
-  it('力擒金眼虎：打倒邓龙即过关，其余喽啰投降', () => {
+  it('双夺宝珠寺：打倒邓龙即过关，其余喽啰投降', () => {
     const b = make('N10');
     expect(b.objectives.some((l) => l.includes('邓龙'))).toBe(true);
     const deng = cls(b, 62), me = cls(b, 0);

@@ -246,7 +246,7 @@ describe.skipIf(!has)('主线续篇：景阳冈（武松打虎，原外传）', 
   });
 });
 
-describe.skipIf(!has)('主线插关：赤发鬼夜战插翅虎', () => {
+describe.skipIf(!has)('主线插关：醉卧灵官殿', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
   const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
@@ -320,7 +320,7 @@ describe.skipIf(!has)('主线插关：赤发鬼夜战插翅虎', () => {
   });
 });
 
-describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8）', () => {
+describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8）', () => {
   const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
   const tr = has ? buildT2S(files) : (s: string) => s;
   const base = has ? loadGameData(files, tr) : (null as never);
@@ -1094,7 +1094,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     invalid.script[0].do.unshift(['shoot','huarong',-1,11,'越界']);
     expect(() => compileStage(rt,invalid,files)).toThrow(/shoot/);
   });
-  it('林间截囚先押车行进，再让九名伏兵现身，保留两辆囚车及后续回合救援', () => {
+  it('青州道劫囚先押车行进，再让九名伏兵现身，保留两辆囚车及后续回合救援', () => {
     const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
     const get = (id: string) => b.units[s.units.findIndex(u => u.id === id)];
     const ambushers = ['hero', 'likui', 'wangying', 'yanshun', 'zhengtianshou', 'ally-1', 'ally-2', 'ally-3', 'ally-4'];
@@ -1122,7 +1122,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(b.isBound(get('songjiang'))).toBe(true);
   });
 
-  it('林间截囚使用反劫剪径贼原图，全体落点互不重叠且与囚车道路连通，近旁援手可走到宋江身边', () => {
+  it('青州道劫囚使用剪径赤松林原图，全体落点互不重叠且与囚车道路连通，近旁援手可走到宋江身边', () => {
     const s = stage('jieqiuche'), input = compileStage(rt, s, files), b = new Battle(input);
     expect(s.map).toEqual({base:'N-add07'});
     expect([b.board.width,b.board.height]).toEqual([36,36]);
@@ -1336,7 +1336,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const after=recordPackResult(c,b,rt);expect(after.gold).toBe(4321);expect(after.members.find(m=>m.classId===0)).toMatchObject(c.members[0]);
     for(const id of ['huarong','huangxin','qinming'])expect(after.companions![`mainline/${id}`]).toEqual(c.companions![`mainline/${id}`]);
   });
-  it('夜困霹雳使用官道遇伏兵地图与明亮夜色，陷坑和两侧伏兵全部连通，南路第4回合增援', () => {
+  it('夜困霹雳使用关西道遇伏地图与明亮夜色，陷坑和两侧伏兵全部连通，南路第4回合增援', () => {
     const s = stage('yekun'), input = compileStage(rt, s, files), b = new Battle(input);
     expect(s.map).toEqual({ base: 'N-add04a' });
     expect(s.tint).toBe('night');
