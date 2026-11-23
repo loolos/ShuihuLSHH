@@ -102,6 +102,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -128,6 +129,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -154,6 +156,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -180,6 +183,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -206,6 +210,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -232,6 +237,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -258,6 +264,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -284,6 +291,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "巡庄庄客",
    "levelOffset": -1
   },
@@ -388,6 +396,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "守庄庄客",
    "levelOffset": -1
   },
@@ -404,6 +413,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "守庄庄客",
    "levelOffset": -1
   },
@@ -420,6 +430,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "守庄庄客",
    "levelOffset": -1
   },
@@ -436,6 +447,7 @@
    "trusts": [
     "shixiu-chai"
    ],
+   "question": true,
    "name": "守庄庄客",
    "levelOffset": -1
   }
@@ -465,7 +477,7 @@
     ],
     [
      "objective",
-     "潜行：教头正前方有警戒范围（地上黄色），被他看见、或打了人没在一回合内打倒，就算惊动；巡庄的庄客只当你是卖柴的\n第一步：找到西边林外的钟离老人（地图上标「钟离老人家」），问路\n败：惊动了庄上；石秀倒下；超过 16 回合（天黑）"
+     "潜行：教头正前方有警戒范围（地上黄色），被他看见、或打了人没在一回合内打倒，就算惊动；巡庄的庄客当你是卖柴的，不会惊动，但走进他们眼前会被拦下盘问，这回合就走不了了（盘问过的人两回合内放行）\n第一步：找到西边林外的钟离老人（地图上标「钟离老人家」），问路\n败：惊动了庄上；石秀倒下；超过 16 回合（天黑）"
     ],
     [
      "turnLimit",

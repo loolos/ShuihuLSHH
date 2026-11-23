@@ -201,6 +201,8 @@ export interface StageInput {
   watchers?: Record<number, number>;
   /** 哨兵认得的职业（ACT 索引 → 职业号），这些人进了范围不算被发现【新】 */
   watchTrust?: Record<number, number[]>;
+  /** 认得人的哨兵会盘问【新】（石秀探庄巡庄庄客）：认得的人进了警戒范围不算被发现，但被拦下盘问，这回合剩下的行动作废（每回合每个哨兵对每人只盘问一次） */
+  watchQuestion?: number[];
   /** 潜行关【新】：AI 13 巡逻的路线（ACT 索引 → 依次走过的格子，走完回到第一个） */
   patrols?: Record<number, { x: number; y: number }[]>;
   /** 潜行关【新】：被发现后没在期限内打倒发现的人就判负；flag：被发现时设上的剧本标志 */
@@ -284,11 +286,17 @@ export type ExpSource = 'hit' | 'counter' | 'taken' | 'dodge' | 'heal' | 'item' 
 /** 被绑（指令 103）的昏迷回合数：足够大，等剧本 104 解开 */
 const BOUND_TURNS = 9999;
 
+/** 哨兵盘问时说的话（石秀探庄） */
+const QUESTIONS = ['站住！卖柴的，你往哪里去？', '兀那汉子，哪里来的？把担子放下看看！', '卖柴的，这条路不许乱走！', '你是哪个村的？怎地面生？']
+
 export class Battle {
   readonly spectators: ReadonlySet<number>;
   /** 潜行关的哨兵：uid → 警戒半径【新】 */
   readonly watchers: ReadonlyMap<number, number>;
   private readonly watchTrust: ReadonlyMap<number, number[]>;
+  private readonly watchQuestion: ReadonlySet<number>;
+  /** 「哨兵:被盘问的人」→ 盘问的回合；盘问过以后两回合内放行 */
+  private questioned = new Map<string, number>();
   private readonly patrols: Map<number, { x: number; y: number }[]>;
   private readonly stealth?: { lose: string; flag?: number };
   private readonly banquet?: { flag: number; sight: number };
@@ -402,6 +410,7 @@ export class Battle {
     this.spectators = new Set(input.spectators ?? []);
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
     this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
+    this.watchQuestion = new Set(input.watchQuestion ?? []);
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.banquet = input.banquet;
@@ -1053,11 +1062,18 @@ export class Battle {
     this.out = [];
     if (!this.canMove(u)) return [];
     const reach = this.reachOf(u, u.movementRemaining + (u.forcedMarch ? 0 : forcedExtra(u)));
-    const n = reach.get(key(x, y));
+    let n = reach.get(key(x, y));
     if (!n || n.cost === 0) return [];
     if (!u.turnStart) u.turnStart = { x: u.x, y: u.y, facing: u.facing, movement: u.movementRemaining };
+    let path = pathTo(reach, x, y);
+    // 盘问【新】：走进会盘问的哨兵眼前，就在那一格被拦下（后面的路不走了）
+    const stop = this.questionStop(u, path);
+    if (stop > 0 && stop < path.length - 1) {
+      path = path.slice(0, stop + 1);
+      n = reach.get(key(path[stop].x, path[stop].y))!;
+    }
     const forced = n.cost > u.movementRemaining;
-    this.walk(u, pathTo(reach, x, y));
+    this.walk(u, path);
     if (forced) {
       u.forcedMarch = true;
       u.movementRemaining = 0;
@@ -1068,6 +1084,24 @@ export class Battle {
     // 移动中出了任何事（剧情区块、被哨兵发现、开宝箱、提示以外的消息……），这次移动就定下来，不能撤销【新】（负责人 2026-11-22）
     if (this.out.some((e) => !(e.type === 'move' && e.uid === u.uid) && !(e.type === 'status' && e.text === AREA_HINT) && !this.soft.has(e))) u.turnStart = null;
     return this.flush();
+  }
+
+  /** 这条路上第一格被会盘问、这回合还会拦人的哨兵看见的位置（0 = 没有） */
+  private questionStop(u: Unit, path: { x: number; y: number }[]): number {
+    if (u.side !== 'player' || !this.watchQuestion.size || this.stealthOver) return 0;
+    for (let i = 1; i < path.length; i++)
+      for (const [uid, r] of this.watchers) {
+        const w = this.units[uid];
+        if (!this.watchQuestion.has(uid) || !w?.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0 || uid in this.spotters) continue;
+        if (!this.watchTrust.get(uid)?.includes(u.classId) || !this.mayQuestion(uid, u.uid)) continue;
+        if (watcherSees(w, path[i], r)) return i;
+      }
+    return 0;
+  }
+
+  private mayQuestion(watcher: number, who: number) {
+    const last = this.questioned.get(`${watcher}:${who}`);
+    return last === undefined || this.turn - last > 2;
   }
 
   /**
@@ -1957,6 +1991,21 @@ export class Battle {
       const seen = this.units.find(
         (t) => (t.side === 'player' || t.side === 'ally') && t.alive && t.present && !this.spectators.has(t.uid) && !this.watchTrust.get(uid)?.includes(t.classId) && watcherSees(w, t, r),
       );
+      // 盘问【新】：认得的人走进会盘问的哨兵眼前（我方回合），拦下问话，这回合剩下的行动作废
+      if (!seen && w.hp >= w.stats.maxHp && this.watchQuestion.has(uid) && this.phase === 'player') {
+        const asked = this.units.find(
+          (t) => t.side === 'player' && t.alive && t.present && this.watchTrust.get(uid)?.includes(t.classId) && this.mayQuestion(uid, t.uid) && watcherSees(w, t, r),
+        );
+        if (asked) {
+          this.questioned.set(`${uid}:${asked.uid}`, this.turn);
+          this.lockUndo();
+          asked.acted = true;
+          asked.ended = true;
+          asked.movementRemaining = 0;
+          this.emit({ type: 'status', uid: asked.uid, text: '盘问' });
+          this.emit({ type: 'say', uid, speaker: w.name, text: QUESTIONS[(this.turn + uid) % QUESTIONS.length] });
+        }
+      }
       // 挨了打也就惊醒了（偷袭没一下打倒，他照样喊）
       if (!seen && w.hp >= w.stats.maxHp) continue;
       this.spotters[uid] = this.turn + 1;

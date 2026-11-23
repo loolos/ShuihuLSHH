@@ -131,8 +131,10 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
             // 每个哨兵现在和下回合可能站的位置、朝向（巡逻的沿直线往目标点走，走到了会掉头），半径多留 2 格给跟着走的公人
             // 有跟着走的友军（公人）时半径多留 2 格，没有就多留 1 格
             const pad = b.active().some((x) => x.side === 'ally') ? 2 : 1;
-            // 认得这人是自己人的哨兵（石秀探庄巡庄庄客认卖柴的）不算眼睛
-            const eyes = b.watchZones().filter((w) => !input.watchTrust?.[w.uid]?.includes(u.classId)).flatMap((w) => {
+            // 认得这人是自己人的哨兵（石秀探庄巡庄庄客认卖柴的）不算眼睛；会盘问的另算「软眼睛」：能绕就绕，绕不过去再硬走
+            const trusted = (w: { uid: number }) => !!input.watchTrust?.[w.uid]?.includes(u.classId);
+            const soft = b.watchZones().filter((w) => trusted(w) && input.watchQuestion?.includes(w.uid)).map((w) => ({ x: w.x, y: w.y, facing: w.facing, r: w.r }));
+            const eyes = b.watchZones().filter((w) => !trusted(w)).flatMap((w) => {
               const g = b.units[w.uid], route = b.patrolOf(g);
               const out = [{ x: w.x, y: w.y, facing: w.facing, r: w.r + pad }];
               if (!route) return out;
@@ -148,7 +150,10 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
             const field = b.board.distanceField([{ x: goal.x, y: goal.y }]);
             const d = (c: { x: number; y: number }) => field[c.y * b.board.width + c.x];
             const safe = b.moveRange(u).green.filter((c) => !eyes.some((e) => watcherSees(e, c, e.r) || dist(e, c) <= 1));
-            const c = safe.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
+            const calm = safe.filter((c) => !soft.some((e) => watcherSees(e, c, e.r)));
+            const best = (cs: { x: number; y: number }[]) => cs.reduce((a, g) => (d(g) < d(a) ? g : a), { x: u.x, y: u.y });
+            const c0 = best(calm);
+            const c = d(c0) < d(u) ? c0 : best(safe);
             if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
             if (b.canAct(u)) ev.push(...b.defend(u));
             continue;
@@ -233,6 +238,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
       if (process.env.TRACE_POS) console.log(`  回合 ${b.turn}:`, b.units.filter((u) => u.side === 'player' && u.present).map((u) => `${u.name}(${u.x},${u.y})`).join(' '), '发现', JSON.stringify(b.spotters));
       if (b.status === 'playing') ev.push(...b.endPlayerPhase());
     }
+    if (process.env.TRACE_STATUS) for (const e of ev) if ((e as { type: string }).type === 'status') console.log('  ', b.turn, JSON.stringify(e));
     if (process.env.TRACE) for (const e of ev) if (e.type === 'attack') console.log('  ', b.units.find((u) => u.uid === e.uid)!.classId, e.skill.name, e.hits.map((h) => `${h.uid}:${JSON.stringify(h.result)}`).join(' '));
     const said = ev.filter((e) => e.type === 'narrate' || e.type === 'say').map((e) => ('text' in e ? e.text : '').slice(0, 8));
     if (b.status === 'won') wins++;

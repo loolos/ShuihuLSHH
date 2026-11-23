@@ -253,6 +253,8 @@ export interface PackUnitJson {
   watch?: number;
   /** 潜行关哨兵认得的人（职业）：他们进了警戒范围也不算被发现（黄文炳家门子认得侯健）【新】 */
   trusts?: (string | number)[];
+  /** 认得的人（trusts）走进警戒范围时拦下盘问：不算被发现，但这回合剩下的行动作废（石秀探庄巡庄庄客）【新】 */
+  question?: boolean;
   /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
   patrol?: [number, number][];
   /** 劝酒【新】：refuse = 头几次推辞不喝；turns = 麻翻几回合（覆盖技能的 drug）；by = 只肯喝这些职业劝的酒（别人劝一律推辞） */
