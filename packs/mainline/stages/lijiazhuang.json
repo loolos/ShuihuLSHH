@@ -31,7 +31,7 @@
   {
    "id": "duxing",
    "class": "duxing",
-   "side": "player",
+   "side": "ally",
    "x": 35,
    "y": 31,
    "level": 30,
@@ -134,8 +134,8 @@
    "id": "zhubiao",
    "class": "zhubiao",
    "side": "enemy",
-   "x": 29,
-   "y": 27,
+   "x": 9,
+   "y": 23,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -154,7 +154,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a2",
@@ -166,7 +167,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a3",
@@ -178,7 +180,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a4",
@@ -190,7 +193,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a5",
@@ -202,7 +206,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a6",
@@ -214,7 +219,8 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a7",
@@ -226,7 +232,8 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "a8",
@@ -238,7 +245,8 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b1",
@@ -250,7 +258,8 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b2",
@@ -262,7 +271,8 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b3",
@@ -274,7 +284,8 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b4",
@@ -286,7 +297,8 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b5",
@@ -298,7 +310,8 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "b6",
@@ -310,14 +323,15 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "hidden": true
   },
   {
    "id": "jiaotou",
    "class": 39,
    "side": "enemy",
-   "x": 10,
-   "y": 23,
+   "x": 21,
+   "y": 32,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -330,8 +344,8 @@
    "id": "c1",
    "class": "naogou",
    "side": "enemy",
-   "x": 11,
-   "y": 22,
+   "x": 22,
+   "y": 31,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -343,8 +357,8 @@
    "id": "c2",
    "class": "naogou",
    "side": "enemy",
-   "x": 11,
-   "y": 24,
+   "x": 22,
+   "y": 33,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -356,8 +370,8 @@
    "id": "c3",
    "class": 19,
    "side": "enemy",
-   "x": 11,
-   "y": 21,
+   "x": 23,
+   "y": 30,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -369,8 +383,8 @@
    "id": "c4",
    "class": 19,
    "side": "enemy",
-   "x": 11,
-   "y": 25,
+   "x": 23,
+   "y": 32,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -382,8 +396,8 @@
    "id": "c5",
    "class": 40,
    "side": "enemy",
-   "x": 10,
-   "y": 21,
+   "x": 23,
+   "y": 34,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -395,8 +409,8 @@
    "id": "c6",
    "class": 20,
    "side": "enemy",
-   "x": 10,
-   "y": 22,
+   "x": 21,
+   "y": 31,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -408,8 +422,8 @@
    "id": "c7",
    "class": 34,
    "side": "enemy",
-   "x": 10,
-   "y": 24,
+   "x": 21,
+   "y": 33,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -421,8 +435,8 @@
    "id": "d1",
    "class": 43,
    "side": "enemy",
-   "x": 50,
-   "y": 40,
+   "x": 44,
+   "y": 36,
    "level": 30,
    "facing": 1,
    "ai": 10,
@@ -435,8 +449,8 @@
    "id": "d2",
    "class": 43,
    "side": "enemy",
-   "x": 51,
-   "y": 39,
+   "x": 45,
+   "y": 35,
    "level": 30,
    "facing": 1,
    "ai": 10,
@@ -449,8 +463,8 @@
    "id": "d3",
    "class": 43,
    "side": "enemy",
-   "x": 52,
-   "y": 38,
+   "x": 46,
+   "y": 34,
    "level": 30,
    "facing": 1,
    "ai": 10,
@@ -463,8 +477,8 @@
    "id": "d4",
    "class": 41,
    "side": "enemy",
-   "x": 50,
-   "y": 42,
+   "x": 44,
+   "y": 38,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -476,8 +490,8 @@
    "id": "d5",
    "class": 41,
    "side": "enemy",
-   "x": 51,
-   "y": 41,
+   "x": 45,
+   "y": 37,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -489,8 +503,8 @@
    "id": "d6",
    "class": 40,
    "side": "enemy",
-   "x": 52,
-   "y": 40,
+   "x": 46,
+   "y": 36,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -502,8 +516,8 @@
    "id": "d7",
    "class": 34,
    "side": "enemy",
-   "x": 53,
-   "y": 39,
+   "x": 47,
+   "y": 35,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -515,8 +529,8 @@
    "id": "d8",
    "class": 34,
    "side": "enemy",
-   "x": 53,
-   "y": 41,
+   "x": 47,
+   "y": 37,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -528,8 +542,8 @@
    "id": "e1",
    "class": 19,
    "side": "enemy",
-   "x": 40,
-   "y": 52,
+   "x": 30,
+   "y": 45,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -542,8 +556,8 @@
    "id": "e2",
    "class": 40,
    "side": "enemy",
-   "x": 41,
-   "y": 52,
+   "x": 31,
+   "y": 45,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -556,8 +570,8 @@
    "id": "e3",
    "class": 19,
    "side": "enemy",
-   "x": 42,
-   "y": 52,
+   "x": 32,
+   "y": 45,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -570,8 +584,8 @@
    "id": "e4",
    "class": 41,
    "side": "enemy",
-   "x": 40,
-   "y": 53,
+   "x": 30,
+   "y": 46,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -584,8 +598,8 @@
    "id": "e5",
    "class": 20,
    "side": "enemy",
-   "x": 41,
-   "y": 53,
+   "x": 31,
+   "y": 46,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -598,8 +612,8 @@
    "id": "e6",
    "class": 34,
    "side": "enemy",
-   "x": 42,
-   "y": 53,
+   "x": 32,
+   "y": 46,
    "level": 30,
    "facing": 0,
    "ai": 10,
@@ -749,6 +763,82 @@
     [
      "say",
      "liying",
+     "祝家庄的听着！叫祝彪那厮出来说话！"
+    ],
+    [
+     "narrate",
+     "庄门大开，祝彪骑一匹白马，领着一伙庄客抢出庄来，在冈前一字摆开。北边庄门也转出一队马军，在侧翼列阵。"
+    ],
+    [
+     "move",
+     "zhubiao",
+     29,
+     27
+    ],
+    [
+     "appear",
+     "a1"
+    ],
+    [
+     "appear",
+     "a2"
+    ],
+    [
+     "appear",
+     "a3"
+    ],
+    [
+     "appear",
+     "a4"
+    ],
+    [
+     "appear",
+     "a5"
+    ],
+    [
+     "appear",
+     "a6"
+    ],
+    [
+     "appear",
+     "a7"
+    ],
+    [
+     "appear",
+     "a8"
+    ],
+    [
+     "appear",
+     "b1"
+    ],
+    [
+     "appear",
+     "b2"
+    ],
+    [
+     "appear",
+     "b3"
+    ],
+    [
+     "appear",
+     "b4"
+    ],
+    [
+     "appear",
+     "b5"
+    ],
+    [
+     "appear",
+     "b6"
+    ],
+    [
+     "face",
+     "zhubiao",
+     "liying"
+    ],
+    [
+     "say",
+     "liying",
      "祝彪！你如何扯了我的书，辱我名讳？"
     ],
     [
@@ -808,14 +898,14 @@
     [
      "wound",
      "liying",
-     30
+     45
     ],
     [
      "buff",
      "liying",
      "move",
      {
-      "add": -3
+      "add": -1
      }
     ],
     [
@@ -825,18 +915,12 @@
     ],
     [
      "narrate",
-     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+     "那一箭正中李应臂膊，李应翻身落马。众人急忙抢上前去扶起，夺了马匹。"
     ],
     [
      "defect",
      "liying",
      "ally"
-    ],
-    [
-     "move",
-     "liying",
-     38,
-     33
     ],
     [
      "setAi",
@@ -846,7 +930,7 @@
     [
      "say",
      "shixiu",
-     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+     "大官人中箭了！哥哥，我们护着大官人回庄！"
     ],
     [
      "say",
@@ -855,7 +939,7 @@
     ],
     [
      "narrate",
-     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+     "冈下埋伏的一伙挠钩手跟着教头抢出来，要来拿李应。"
     ],
     [
      "appear",
@@ -938,14 +1022,14 @@
     [
      "wound",
      "liying",
-     30
+     45
     ],
     [
      "buff",
      "liying",
      "move",
      {
-      "add": -3
+      "add": -1
      }
     ],
     [
@@ -955,18 +1039,12 @@
     ],
     [
      "narrate",
-     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+     "那一箭正中李应臂膊，李应翻身落马。众人急忙抢上前去扶起，夺了马匹。"
     ],
     [
      "defect",
      "liying",
      "ally"
-    ],
-    [
-     "move",
-     "liying",
-     38,
-     33
     ],
     [
      "setAi",
@@ -976,7 +1054,7 @@
     [
      "say",
      "shixiu",
-     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+     "大官人中箭了！哥哥，我们护着大官人回庄！"
     ],
     [
      "say",
@@ -985,7 +1063,7 @@
     ],
     [
      "narrate",
-     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+     "冈下埋伏的一伙挠钩手跟着教头抢出来，要来拿李应。"
     ],
     [
      "appear",
@@ -1069,14 +1147,14 @@
     [
      "wound",
      "liying",
-     30
+     45
     ],
     [
      "buff",
      "liying",
      "move",
      {
-      "add": -3
+      "add": -1
      }
     ],
     [
@@ -1086,18 +1164,12 @@
     ],
     [
      "narrate",
-     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+     "那一箭正中李应臂膊，李应翻身落马。众人急忙抢上前去扶起，夺了马匹。"
     ],
     [
      "defect",
      "liying",
      "ally"
-    ],
-    [
-     "move",
-     "liying",
-     38,
-     33
     ],
     [
      "setAi",
@@ -1107,7 +1179,7 @@
     [
      "say",
      "shixiu",
-     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+     "大官人中箭了！哥哥，我们护着大官人回庄！"
     ],
     [
      "say",
@@ -1116,7 +1188,7 @@
     ],
     [
      "narrate",
-     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+     "冈下埋伏的一伙挠钩手跟着教头抢出来，要来拿李应。"
     ],
     [
      "appear",
@@ -1200,14 +1272,14 @@
     [
      "wound",
      "liying",
-     30
+     45
     ],
     [
      "buff",
      "liying",
      "move",
      {
-      "add": -3
+      "add": -1
      }
     ],
     [
@@ -1217,18 +1289,12 @@
     ],
     [
      "narrate",
-     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+     "那一箭正中李应臂膊，李应翻身落马。众人急忙抢上前去扶起，夺了马匹。"
     ],
     [
      "defect",
      "liying",
      "ally"
-    ],
-    [
-     "move",
-     "liying",
-     38,
-     33
     ],
     [
      "setAi",
@@ -1238,7 +1304,7 @@
     [
      "say",
      "shixiu",
-     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+     "大官人中箭了！哥哥，我们护着大官人回庄！"
     ],
     [
      "say",
@@ -1247,7 +1313,7 @@
     ],
     [
      "narrate",
-     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+     "冈下埋伏的一伙挠钩手跟着教头抢出来，要来拿李应。"
     ],
     [
      "appear",
@@ -1299,7 +1365,7 @@
    "do": [
     [
      "narrate",
-     "祝家庄的一队马军早从冈后绕出来，拦在回李家庄的路上。"
+     "祝家庄的一队马军从冈后绕出来，拦在回李家庄的路上。"
     ],
     [
      "appear",
@@ -1352,7 +1418,7 @@
    "do": [
     [
      "narrate",
-     "南边林子里一声锣响，又抢出一伙庄客来，直扑李应。"
+     "南边一声锣响，又抢出一伙庄客来，直扑李应。"
     ],
     [
      "appear",
