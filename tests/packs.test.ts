@@ -377,7 +377,8 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     const sj = b.units.find((u) => u.classId === rt.classIds.get('sj-fugitive'))!;
     const seals = ev.filter((e) => e.type === 'seal');
     expect(seals.length).toBe(2);
-    const reach = b.board.distanceField([{ x: sj.x, y: sj.y }]);
+    // 开场分三波（负责人 2026-11-23），伏兵只要能走到其中一波就行
+    const reach = b.board.distanceField(b.units.filter((u) => u.side === 'player' && u.present).map((u) => ({ x: u.x, y: u.y })));
     const W = b.board.width;
     for (const e of seals) for (const c of e.type === 'seal' ? e.cells : []) expect(b.board.passable(c.x, c.y)).toBe(false);
     const ambush = b.units.filter((u) => u.side === 'enemy' && u.present && u.alive);

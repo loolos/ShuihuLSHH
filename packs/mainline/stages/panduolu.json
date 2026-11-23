@@ -811,8 +811,8 @@
    "id": "songjiang",
    "class": "sj-fugitive",
    "side": "player",
-   "x": 23,
-   "y": 12,
+   "x": 22,
+   "y": 11,
    "level": 30,
    "facing": 1
   },
@@ -820,8 +820,8 @@
    "id": "hero",
    "class": 0,
    "side": "player",
-   "x": 24,
-   "y": 12,
+   "x": 23,
+   "y": 11,
    "level": 30,
    "facing": 1
   },
@@ -839,8 +839,8 @@
    "id": "likui",
    "class": "likui",
    "side": "player",
-   "x": 23,
-   "y": 11,
+   "x": 32,
+   "y": 16,
    "level": 30,
    "facing": 1,
    "name": "李逵"
@@ -849,8 +849,8 @@
    "id": "yangxiong",
    "class": "yangxiong",
    "side": "player",
-   "x": 24,
-   "y": 11,
+   "x": 27,
+   "y": 26,
    "level": 30,
    "facing": 1,
    "name": "病关索杨雄"
@@ -859,8 +859,8 @@
    "id": "qinming",
    "class": "qinming",
    "side": "player",
-   "x": 23,
-   "y": 13,
+   "x": 33,
+   "y": 16,
    "level": 30,
    "facing": 1,
    "name": "霹雳火秦明"
@@ -869,8 +869,8 @@
    "id": "huangxin",
    "class": "huangxin",
    "side": "player",
-   "x": 21,
-   "y": 11,
+   "x": 23,
+   "y": 12,
    "level": 30,
    "facing": 1,
    "name": "镇三山黄信"
@@ -879,8 +879,8 @@
    "id": "wangying",
    "class": "wangying",
    "side": "player",
-   "x": 24,
-   "y": 13,
+   "x": 32,
+   "y": 17,
    "level": 30,
    "facing": 1,
    "name": "矮脚虎王英"
@@ -889,8 +889,8 @@
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 22,
-   "y": 13,
+   "x": 28,
+   "y": 26,
    "level": 30,
    "facing": 1,
    "name": "神行太保戴宗"
@@ -899,8 +899,8 @@
    "id": "lijun",
    "class": "lijun",
    "side": "player",
-   "x": 20,
-   "y": 12,
+   "x": 27,
+   "y": 27,
    "level": 30,
    "facing": 1,
    "name": "混江龙李俊"
@@ -2157,9 +2157,13 @@
      "忽听得庄上一个号炮直飞起去，四下里喊声大举，来路上早被庄客用鹿角、木栅塞住了。"
     ],
     [
+     "narrate",
+     "黑地里人马一阵大乱，众好汉被冲散在林子里，分作了三处。"
+    ],
+    [
      "say",
      "songjiang",
-     "中计了！众兄弟休要乱走，且杀出去再说！"
+     "中计了！众兄弟休要乱走，各自往我这里靠拢，杀出去再说！"
     ],
     [
      "objective",
