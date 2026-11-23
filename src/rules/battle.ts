@@ -2663,7 +2663,23 @@ export class Battle {
       .filter((o) => Number.isFinite(o.d) && o.d >= (a.min ?? 2))
       .sort((p, q) => p.d - q.d);
     const groupUnits = (a.groups ?? []).map((g) => this.unit(this.groups.get(g) ?? -1)).filter((u): u is Unit => !!u && u.alive && !u.present);
-    const chosen = sites.slice(0, a.count ?? 1);
+    // 一次设几处时，尽量各找不同的好汉（分散的几波人各挨一处），找不够再照远近补
+    const heroField = new Map(heroes.map((h) => [h.uid, this.board.distanceField([{ x: h.x, y: h.y }])]));
+    const nearestHero = (st: (typeof sites)[number]['s']) => heroes.reduce((b, h) => {
+      const dd = (v: Unit) => Math.min(...st.cells.map((c) => heroField.get(v.uid)![c.y * W + c.x]));
+      return dd(h) < dd(b) ? h : b;
+    });
+    const want = a.count ?? 1;
+    const chosen: typeof sites = [];
+    const hit: Unit[] = [];
+    for (const o of sites) {
+      if (chosen.length >= want) break;
+      const h = nearestHero(o.s);
+      if (hit.some((v) => Math.abs(v.x - h.x) + Math.abs(v.y - h.y) <= 4)) continue;
+      chosen.push(o);
+      hit.push(h);
+    }
+    for (const o of sites) if (chosen.length < want && !chosen.includes(o)) chosen.push(o);
     for (const [k, { s, d }] of chosen.entries()) {
       const tile = s.tile ?? a.tile;
       for (const c of s.cells) {
@@ -2674,21 +2690,38 @@ export class Battle {
         this.trapSeals.push({ x: c.x, y: c.y, ...(tile !== undefined ? { tile } : {}) });
       }
       this.emit({ type: 'seal', cells: s.cells.map((c) => ({ x: c.x, y: c.y })), ...(tile !== undefined ? { tile } : {}) });
-      // 伏兵：分到这处的人，从路障靠我方一侧（离我方比路障近）的空格里，挑离路障最近的
+      // 伏兵：分到这处的人前后包抄离路障最近的好汉（负责人 2026-11-23：别挤在一处，从前后围上来）。
+      // 以那人为中心，走 3–6 步的空格里取两个落点：一个靠路障（前），一个离前点最远（后）；人马交替分到两边。
       const mine = groupUnits.filter((_, n) => n % chosen.length === k);
       if (!mine.length) continue;
       const fromSite = this.board.distanceField(s.cells.map((c) => ({ x: c.x, y: c.y })));
+      const target = heroes.reduce((b, v) => (fromSite[v.y * W + v.x] < fromSite[b.y * W + b.x] ? v : b));
+      const fromT = this.board.distanceField([{ x: target.x, y: target.y }]);
       const occ = this.occupied();
-      const cands: Cell[] = [];
-      for (let y = 0; y < this.board.height; y++)
-        for (let x = 0; x < W; x++) {
-          const i = y * W + x;
-          if (!this.board.passable(x, y) || occ.has(key(x, y)) || !(dHero[i] < d) || !Number.isFinite(fromSite[i])) continue;
-          cands.push({ x, y });
-        }
-      cands.sort((p, q) => fromSite[p.y * W + p.x] - fromSite[q.y * W + q.x] || dHero[q.y * W + q.x] - dHero[p.y * W + p.x]);
+      // 落点不够（好汉被路障关在小块地方）就放宽距离，最后退到贴身
+      let near: Cell[] = [];
+      for (const [lo, hi, gap] of [[3, 6, 2], [3, 9, 2], [2, 12, 1], [1, 99, 1]]) {
+        near = [];
+        for (let y = 0; y < this.board.height; y++)
+          for (let x = 0; x < W; x++) {
+            const i = y * W + x;
+            if (!this.board.passable(x, y) || occ.has(key(x, y)) || !(fromT[i] >= lo && fromT[i] <= hi) || !(dHero[i] >= gap)) continue;
+            near.push({ x, y });
+          }
+        if (near.length >= mine.length) break;
+      }
+      if (!near.length) continue;
+      const front = near.reduce((b, c) => (fromSite[c.y * W + c.x] < fromSite[b.y * W + b.x] ? c : b));
+      const far = (c: Cell) => (c.x - front.x) ** 2 + (c.y - front.y) ** 2;
+      const back = near.reduce((b, c) => (far(c) > far(b) ? c : b));
+      const used = new Set<string>();
+      const pick = (anchor: Cell) => {
+        const c = near.filter((v) => !used.has(key(v.x, v.y))).sort((p, q) => Math.abs(p.x - anchor.x) + Math.abs(p.y - anchor.y) - (Math.abs(q.x - anchor.x) + Math.abs(q.y - anchor.y)) || fromT[q.y * W + q.x] - fromT[p.y * W + p.x])[0];
+        if (c) used.add(key(c.x, c.y));
+        return c;
+      };
       for (const [n, u] of mine.entries()) {
-        const c = cands[n];
+        const c = pick(n % 2 === 0 ? front : back);
         if (!c) break;
         u.x = c.x;
         u.y = c.y;
