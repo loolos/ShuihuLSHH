@@ -48,6 +48,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(insertTownIntro('mainline/yekun').map((l) => l.actor)).toEqual(['huarong', 'sj-fugitive', 'wangying']);
   });
 
+  it('有专名的插关城镇都有自己的入城对白，不落到阳谷的宋江、武松对白（负责人 2026-11-23：独龙冈下寨照抄了阳谷）', () => {
+    const yanggu = JSON.stringify(insertTownIntro('mainline/none'));
+    for (const next of ['mainline/shiyong', 'mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu']) {
+      expect(insertTownName(next), next).not.toBe('阳谷整备');
+      expect(JSON.stringify(insertTownIntro(next)), next).not.toBe(yanggu);
+    }
+    const actors = new Set(rt.stages.find((s) => s.id === 'panduolu')!.units.filter((u) => u.side === 'player' && !u.hidden).map((u) => u.class));
+    for (const l of insertTownIntro('mainline/panduolu')) expect(actors.has(l.actor), l.actor).toBe(true);
+  });
+
   it('江州牢城、浔阳楼演完就过关；浔阳楼只演到蔡九差戴宗上东京，梁山泊整备挪到假信露馅之后', () => {
     expect(open('jiangzhou-laocheng').b.status).toBe('won');
     const x = open('xunyanglou');

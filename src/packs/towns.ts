@@ -38,6 +38,11 @@ export function insertTownIntro(next: string): { actor: string; text: string }[]
     { actor: 'sj-fugitive', text: '鲁大师、武二郎、杨制使已自回山。我等且在山下村坊补些药品，整顿兵器，提防官军。' },
     { actor: 'wangying', text: '山寨里有的是金银，兄弟们只管去置办！' },
   ];
+  if (next === 'mainline/panduolu') return [
+    { actor: 'sj-fugitive', text: '石秀、杨林两个兄弟去探路，到这早晚还不见回来。庄上又点起灯来，只怕凶多吉少。' },
+    { actor: 'likui', text: '哥哥等甚么！铁牛先杀进去，把那祝家庄砍个干净，两个兄弟自然救出来了！' },
+    { actor: 'sj-fugitive', text: '也罢，等不得了。众兄弟且在寨里补些药品，整顿兵器，今夜便进兵。遇着岔路，千万莫要乱走。' },
+  ];
   if (next === 'mainline/zhujiadian') return [
     { actor: 'yangxiong', text: '出了蓟州地界，追兵是不会来了。前面是郓州，再走几日便到梁山泊。' },
     { actor: 'shiqian', text: '哥哥，小弟身上一文也无，路上的盘缠、刀枪伤药，都靠二位哥哥置办了。嘿嘿。' },
