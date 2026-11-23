@@ -512,14 +512,14 @@
   },
   {
    "id": "s7",
-   "class": "naogou",
+   "class": 19,
    "side": "enemy",
    "x": 15,
    "y": 0,
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "挠钩手",
+   "name": "祝家庄庄客",
    "levelOffset": -2,
    "hidden": true
   },
@@ -573,6 +573,32 @@
    "ai": 0,
    "name": "祝家庄马军",
    "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h1",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 19,
+   "y": 3,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "h2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 20,
+   "y": 3,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -2,
    "hidden": true
   }
  ],
@@ -849,7 +875,47 @@
    "do": [
     [
      "narrate",
-     "北边林子里伏着一伙挠钩手。时迁在暗处走得急，被两把挠钩搭住，拖进林子里去了。"
+     "时迁趁乱摸黑走开几步，不想暗处伏着一伙挠钩手。"
+    ],
+    [
+     "focus",
+     "shiqian"
+    ],
+    [
+     "appear",
+     "h1",
+     {
+      "near": "shiqian"
+     }
+    ],
+    [
+     "appear",
+     "h2",
+     {
+      "near": "shiqian"
+     }
+    ],
+    [
+     "act",
+     "h1",
+     "attack",
+     "shiqian"
+    ],
+    [
+     "act",
+     "h2",
+     "attack",
+     "shiqian"
+    ],
+    [
+     "act",
+     "shiqian",
+     "hurt",
+     "h1"
+    ],
+    [
+     "bind",
+     "shiqian"
     ],
     [
      "say",
@@ -857,8 +923,28 @@
      "哥哥救我——！"
     ],
     [
+     "narrate",
+     "两把挠钩搭住时迁，拖进北边林子里去了。"
+    ],
+    [
      "leave",
      "shiqian"
+    ],
+    [
+     "standDown",
+     "h1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h2",
+     {
+      "leave": true,
+      "quiet": true
+     }
     ],
     [
      "say",
