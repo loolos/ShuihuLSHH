@@ -12,8 +12,8 @@
 
 | 目录 | 动作 |
 |---|---|
-| `wusong/` | idle 待机、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
-| `likui/` | idle 待机（持斧）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、crouch-idle 蹲伏（防御 / 运气）、death01 倒地、roll 翻滚 |
+| `wusong/` | idle 待机（抱臂，UAL2 `Idle_FoldArms_Loop`）、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
+| `likui/` | idle 待机（单手举斧，`Pistol_Idle_Loop`）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、crouch-idle 蹲伏（防御 / 运气）、death01 倒地、roll 翻滚 |
 | `peiruhai/` | 裴如海（光头和尚）：idle 待机、walk 走、hit-chest 受击、punch-jab 出拳（念珠）、crouch-idle 蹲伏（防御）、death01 倒地。服装 `src/outfit-peiruhai.json`，`--height 1.72`，其余参数同武松 |
 | `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json` |
 | `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
@@ -32,9 +32,9 @@
 
 ```sh
 uv venv --python 3.13 venv && uv pip install --python venv bpy==5.2.4
-venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/wusong --scale-by mesh --height 1.75 --ppm 50 \
+venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/wusong --anims UAL1_Standard.glb,UAL2_Standard.glb --scale-by mesh --height 1.75 --ppm 50 \
   --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-wusong.json \
-  --actions Idle_Loop,Walk_Loop,Hit_Chest,Punch_Jab,Punch_Cross,Death01,Roll,Crouch_Idle_Loop
+  --actions Idle_FoldArms_Loop,Walk_Loop,Hit_Chest,Punch_Jab,Punch_Cross,Death01,Roll,Crouch_Idle_Loop
 # 模型里没有踢腿：用 --poses 按关键帧自拼（Kick_R、Kick_L），渲染后 kick-rl = Kick_R 8 帧 + Kick_L 8 帧横向拼接
 venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/kick --scale-by mesh --height 1.75 --ppm 50 \
   --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-wusong.json \
@@ -46,9 +46,9 @@ venv/bin/python tools/render-sprites.py tiger.glb out/tiger --length 2.2 --ppm 5
 李逵（`punch-cross` 双斧连劈单独用 `src/outfit-likui-thrust.json` 渲染，斧柄顺着手臂朝前；劈砍 `sword-attack` 每帧在 `sprites.json` 里改成 100 ms）：
 
 ```sh
-venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui --scale-by mesh --height 1.85 --ppm 50 \
+venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui --anims UAL1_Standard.glb,UAL2_Standard.glb --scale-by mesh --height 1.85 --ppm 50 \
   --frames 8 --samples 12 --ambient 0.5 --sun 3.5 --toon 3 --outline --outfit packs/mainline/sprites/src/outfit-likui.json \
-  --actions Sword_Idle,Walk_Loop,Hit_Chest,Sword_Attack,Punch_Cross,Crouch_Idle_Loop,Death01,Roll
+  --actions Pistol_Idle_Loop,Walk_Loop,Hit_Chest,Sword_Attack,Punch_Cross,Crouch_Idle_Loop,Death01,Roll
 venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui-thrust ...同上参数... \
   --outfit packs/mainline/sprites/src/outfit-likui-thrust.json --actions Punch_Cross
 ```

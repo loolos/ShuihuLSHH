@@ -10,16 +10,16 @@
  "ppm": 50.0,
  "actions": {
   "idle": {
-   "source": "Idle_Loop",
+   "source": "Spell_Simple_Idle_Loop",
    "front": {
     "file": "idle-front.png",
     "frames": 8,
-    "ms": 312
+    "ms": 262
    },
    "back": {
     "file": "idle-back.png",
     "frames": 8,
-    "ms": 312
+    "ms": 262
    }
   },
   "walk": {
