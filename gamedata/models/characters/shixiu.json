@@ -93,6 +93,105 @@
      92,
      158
     ]
+   },
+   {
+    "name": "护心镜",
+    "bone": "spine_03",
+    "shape": "sphere",
+    "radius": 0.065,
+    "at": [
+     0,
+     -0.2,
+     1.27
+    ],
+    "scale": [
+     1,
+     0.25,
+     1
+    ],
+    "color": [
+     196,
+     150,
+     70
+    ]
+   }
+  ],
+  "layers": [
+   {
+    "name": "皮甲",
+    "bones": [
+     "spine_0[123]",
+     "clavicle_.*",
+     "pelvis"
+    ],
+    "when": "0.98 < z < 1.40 and ax < 0.19",
+    "offset": "0.06",
+    "thickness": 0.012,
+    "color": [
+     86,
+     58,
+     40
+    ],
+    "folds": 0,
+    "colors": [
+     {
+      "when": "int(z * 40) % 2 == 0",
+      "color": [
+       54,
+       36,
+       26
+      ]
+     }
+    ]
+   },
+   {
+    "name": "护肩",
+    "bones": [
+     "clavicle_.*",
+     "upperarm_.*"
+    ],
+    "when": "z > 1.33 and 0.15 < ax < 0.32",
+    "offset": "0.065",
+    "thickness": 0.012,
+    "color": [
+     86,
+     58,
+     40
+    ],
+    "colors": [
+     {
+      "when": "int(ax * 45) % 2 == 0",
+      "color": [
+       54,
+       36,
+       26
+      ]
+     }
+    ]
+   },
+   {
+    "name": "护腕",
+    "bones": [
+     "lowerarm_.*"
+    ],
+    "when": "0.60 < ax < 0.75",
+    "offset": 0.025,
+    "thickness": 0.01,
+    "color": [
+     54,
+     36,
+     26
+    ],
+    "colors": [
+     {
+      "when": "abs(ax - 0.61) < 0.012 or abs(ax - 0.74) < 0.012",
+      "color": [
+       196,
+       150,
+       70
+      ]
+     }
+    ]
    }
   ]
  },

@@ -49,7 +49,7 @@
    }
   },
   "idle": {
-   "source": "Idle_Loop",
+   "source": "Idle_FoldArms_Loop",
    "front": {
     "file": "idle-front.png",
     "frames": 8,
@@ -113,76 +113,64 @@
     "ms": 167
    }
   },
-"punch-two": {
-  "source": "Punch_Jab × 2",
-  "front": {
+  "punch-two": {
+   "source": "Punch_Jab × 2",
+   "front": {
     "file": "punch-jab-front.png",
     "frames": 8,
     "ms": 85,
     "cycles": 2
-  },
-  "back": {
+   },
+   "back": {
     "file": "punch-jab-back.png",
     "frames": 8,
     "ms": 85,
     "cycles": 2
-  }
-},
-"punch-three": {
-  "source": "Punch_Jab × 3",
-  "front": {
+   }
+  },
+  "punch-three": {
+   "source": "Punch_Jab × 3",
+   "front": {
     "file": "punch-jab-front.png",
     "frames": 8,
     "ms": 80,
     "cycles": 3
-  },
-  "back": {
+   },
+   "back": {
     "file": "punch-jab-back.png",
     "frames": 8,
     "ms": 80,
     "cycles": 3
-  }
-},
-"kick": {
-  "source": "Kick_R（--poses 自拼）",
-  "front": {"file": "kick-r-front.png", "frames": 8, "ms": 80},
-  "back": {"file": "kick-r-back.png", "frames": 8, "ms": 80}
-},
-"kick-four": {
-  "source": "Kick_R + Kick_L（--poses 自拼）× 2，左右交替 4 脚",
-  "front": {"file": "kick-rl-front.png", "frames": 16, "ms": 65, "cycles": 2},
-  "back": {"file": "kick-rl-back.png", "frames": 16, "ms": 65, "cycles": 2}
-},
-"punch-four": {
-  "source": "Punch_Cross × 4",
-  "front": {
-    "file": "punch-cross-front.png",
-    "frames": 8,
-    "ms": 65,
-    "cycles": 4
+   }
   },
-  "back": {
-    "file": "punch-cross-back.png",
+  "kick": {
+   "source": "Kick_R（--poses 自拼）",
+   "front": {
+    "file": "kick-r-front.png",
     "frames": 8,
-    "ms": 65,
-    "cycles": 4
-  }
-},
-"punch-wave": {
-  "source": "Punch_Cross × 2",
-  "front": {
-    "file": "punch-cross-front.png",
+    "ms": 80
+   },
+   "back": {
+    "file": "kick-r-back.png",
     "frames": 8,
-    "ms": 80,
-    "cycles": 2
+    "ms": 80
+   }
   },
-  "back": {
-    "file": "punch-cross-back.png",
-    "frames": 8,
-    "ms": 80,
+  "kick-four": {
+   "source": "Kick_R + Kick_L（--poses 自拼）× 2，左右交替 4 脚",
+   "front": {
+    "file": "kick-rl-front.png",
+    "frames": 16,
+    "ms": 65,
     "cycles": 2
-  }
-},
+   },
+   "back": {
+    "file": "kick-rl-back.png",
+    "frames": 16,
+    "ms": 65,
+    "cycles": 2
+   }
+  },
   "punch-four": {
    "source": "Punch_Jab × 4",
    "front": {
@@ -196,6 +184,21 @@
     "frames": 8,
     "ms": 60,
     "cycles": 4
+   }
+  },
+  "punch-wave": {
+   "source": "Punch_Cross × 2",
+   "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
+   },
+   "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 80,
+    "cycles": 2
    }
   },
   "punch-five": {

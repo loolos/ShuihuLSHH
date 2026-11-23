@@ -142,7 +142,7 @@
  "frames": 8,
  "poses": "packs/mainline/sprites/src/poses-wusong.json",
  "actions": {
-  "idle": "Idle_Loop",
+  "idle": "Spell_Simple_Idle_Loop",
   "walk": "Walk_Loop",
   "hit-chest": "Hit_Chest",
   "crouch-idle": "Crouch_Idle_Loop",
