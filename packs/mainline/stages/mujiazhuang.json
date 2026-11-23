@@ -6,11 +6,10 @@
     "gold": 300
   },
   "map": {
-    "bgm": ["escape", "night"],
     "base": "N-add05"
   },
   "tint": "night",
-  "bgm": "battle",
+  "bgm": ["escape", "night"],
   "stealth": {
     "lose": "庄客喊醒了全庄，穆家兄弟带人围了上来……",
     "flag": "spotted"

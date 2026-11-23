@@ -6,10 +6,9 @@
     "gold": 400
   },
   "map": {
-    "bgm": ["battle2", "inn"],
     "custom": "dukou-yuchuan"
   },
-  "bgm": "battle",
+  "bgm": ["battle2", "inn"],
   "units": [
     {
       "id": "daizong",

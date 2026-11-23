@@ -6,7 +6,6 @@
     "gold": 500
   },
   "map": {
-    "bgm": ["heist", "battle", "rock"],
     "base": "N-add16",
     "crop": [
       4,
@@ -15,7 +14,7 @@
       24
     ]
   },
-  "bgm": "battle",
+  "bgm": ["heist", "battle", "rock"],
   "units": [
     {
       "id": "daizong",

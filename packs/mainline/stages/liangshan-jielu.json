@@ -6,7 +6,6 @@
     "gold": 300
   },
   "map": {
-    "bgm": ["liangshan", "battle2"],
     "base": "N-add16",
     "crop": [
       6,
@@ -15,7 +14,7 @@
       20
     ]
   },
-  "bgm": "battle",
+  "bgm": ["liangshan", "battle2"],
   "units": [
     {
       "id": "songjiang",

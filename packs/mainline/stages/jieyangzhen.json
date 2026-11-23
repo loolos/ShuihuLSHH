@@ -6,11 +6,10 @@
     "gold": 400
   },
   "map": {
-    "bgm": ["market", "comic", "battle"],
     "base": "N-add02"
   },
   "tint": "dusk",
-  "bgm": "battle",
+  "bgm": ["market", "comic", "battle"],
   "units": [
     {
       "id": "songjiang",

@@ -7,10 +7,9 @@
   },
   "townAfter": 11,
   "map": {
-    "bgm": ["rescue", "eerie"],
     "custom": "jieyangling"
   },
-  "bgm": "battle",
+  "bgm": ["rescue", "eerie"],
   "units": [
     {
       "id": "songjiang",

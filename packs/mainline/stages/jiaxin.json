@@ -7,10 +7,9 @@
     "gold": 500
   },
   "map": {
-    "bgm": ["intrigue", "tense", "jiangzhou"],
     "base": "N-add08"
   },
-  "bgm": "battle",
+  "bgm": ["intrigue", "tense", "jiangzhou"],
   "units": [
     {
       "id": "daizong",

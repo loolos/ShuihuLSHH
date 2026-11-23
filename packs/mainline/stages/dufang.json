@@ -6,10 +6,9 @@
     "gold": 200
   },
   "map": {
-    "bgm": ["market", "comic", "battle2"],
     "custom": "zishijie"
   },
-  "bgm": "battle",
+  "bgm": ["market", "comic", "battle2"],
   "units": [
     {
       "id": "songjiang",
