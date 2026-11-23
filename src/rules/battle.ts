@@ -2136,7 +2136,12 @@ export class Battle {
             this.emit({ type: 'leave', uid: sel.uid });
           }
           // 被点名的隐藏人物随之登场（EXE 0x41154b：标志 0x20000 时调用 0x408430），埋伏中的不受影响
-          if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) this.appear(sel);
+          if (sel && !op.quiet && !sel.present && sel.alive && !this.ambushers.has(sel.uid)) {
+            // args.toward【新】（火烧祝家店：挠钩手钩走时迁）：登场在这个人身边，不在自己的开场格
+            const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
+            if (t?.present) (sel.x = t.x), (sel.y = t.y);
+            this.appear(sel);
+          }
           break;
         case 13:
           this.emit({ type: 'say', uid: sel?.uid ?? null, speaker: selName, text: textOf(i) });

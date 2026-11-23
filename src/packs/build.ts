@@ -509,9 +509,13 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         else select(a[0]);
         op(13, 0, { text: String(a[1]) });
         break;
-      case 'appear':
-        select(a[0]);
+      case 'appear': {
+        // ['appear', 谁, {near: 另一个人}]：登场在那个人身边最近的空格（挠钩手从林子里窜出来钩人）【新】
+        const near = (a[1] as { near?: unknown } | undefined)?.near;
+        if (near === undefined) select(a[0]);
+        else op(12, 1000 + r.unitRef(a[0]).act.group, { args: { toward: r.unitRef(near).act.group } });
         break;
+      }
       case 'show':
         // ['show', 谁, 站在谁身边（可省）] 剧情临时出镜：已倒下或退场的人回到地图上说话，只放画面，不复活、不改胜负（战后对话用）
         ops.push({ op: 12, flag: 1, value: 1000 + r.unitRef(a[0]).act.group, quiet: true, actor: { action: 'show', ...(a[1] !== undefined ? { near: r.charOf(String(a[1])) } : {}) } });
