@@ -23,7 +23,7 @@ import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
 import { insertTavern } from './packs/tavern.ts';
-import { compileStage, stageClasses, stageKind, type PackRuntime } from './packs/build.ts';
+import { compileStage, stageClasses, stageKind, stageSealTiles, type PackRuntime } from './packs/build.ts';
 import { royalePool, royaleStage } from './packs/royale.ts';
 import { levelKit } from './rules/equipment.ts';
 import { computeStats } from './rules/unit.ts';
@@ -448,7 +448,7 @@ function startGame(assets: Assets) {
       }
       const st = stage;
       const classes = stageClasses(rt, stage);
-      await preloadStage(pa, stageMapName(stage.map), progress, classes, stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
+      await preloadStage(pa, stageMapName(stage.map), progress, classes, [...(stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []), ...stageSealTiles(stage)]);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];
@@ -503,7 +503,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
-      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage), stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []);
+      await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage), [...(stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []), ...stageSealTiles(stage)]);
       if (ticket !== loading) return;
       setupEl.hidden = true;
       packBgm = stage.bgm ?? ['battle', 'rock'];

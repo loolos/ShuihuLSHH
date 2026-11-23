@@ -86,6 +86,8 @@ export type BattleEvent =
   | { type: 'uproot'; cells: { x: number; y: number }[] }
   /** 指令 127 打开封死的格子（门板消失）【新】 */
   | { type: 'unseal'; cells: { x: number; y: number }[] }
+  /** 剧本临时摆路障（指令 129，盘陀路）：这些格子被路障堵住，画面上摆 tile 号地上物【新】 */
+  | { type: 'seal'; cells: { x: number; y: number }[]; tile?: number }
   | { type: 'flourish'; uid: number; facing: number }
   | { type: 'shot'; uid: number; x: number; y: number; facing: number; target?: number; text: string }
   | { type: 'act'; uid: number; action: 'attack' | 'hurt' | 'defend'; facing: number }
@@ -204,7 +206,7 @@ export interface StageInput {
   /** 潜行关【新】：被发现后没在期限内打倒发现的人就判负；flag：被发现时设上的剧本标志 */
   stealth?: { lose: string; flag?: number };
   /** 扩展包 map.seal 封死的格子（打开的记在 Battle.unsealed，读档 / 倒流时据此恢复）【新】 */
-  sealed?: { x: number; y: number }[];
+  sealed?: { x: number; y: number; /** 画面上摆的地上物（路障），不填就是地图本来的图块（门板） */ tile?: number }[];
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
   /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
@@ -337,7 +339,9 @@ export class Battle {
   private blaze: Cell[] = [];
   /** 潜行结束【新】（智取无为军：骗开大门以后，指令 125）：哨兵不再警戒、发现也不再判负 */
   private stealthOver = false;
-  private sealed: { x: number; y: number }[] = [];
+  private sealed: { x: number; y: number; tile?: number }[] = [];
+  /** 剧本临时摆的路障（指令 129，盘陀路）：跟着倒流、读档保存【新】 */
+  private trapSeals: { x: number; y: number; tile?: number }[] = [];
   /** 已打开的封死格子（y * 宽 + x） */
   private unsealed = new Set<number>();
   /** 剧本区块是否已经触发过（试打工具用） */
@@ -876,7 +880,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed],
+      spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
     });
   }
@@ -943,7 +947,9 @@ export class Battle {
     this.blaze = s.blaze ?? [];
     this.stealthOver = s.stealthOver ?? false;
     this.unsealed = new Set(s.unsealed ?? []);
-    for (const c of this.sealed) {
+    for (const c of this.trapSeals) this.board.blocked[c.y * this.board.width + c.x] = 0;
+    this.trapSeals = (s.trapSeals ?? []).map((c: { x: number; y: number; tile?: number }) => ({ ...c }));
+    for (const c of [...this.sealed, ...this.trapSeals]) {
       const i = c.y * this.board.width + c.x;
       this.board.blocked[i] = this.unsealed.has(i) ? 0 : 1;
     }
@@ -1819,8 +1825,8 @@ export class Battle {
   }
 
   /** map.seal 封死的格子和现在开没开（画面据此显示 / 隐藏门板） */
-  sealState(): { x: number; y: number; open: boolean }[] {
-    return this.sealed.map((c) => ({ ...c, open: this.unsealed.has(c.y * this.board.width + c.x) }));
+  sealState(): { x: number; y: number; tile?: number; open: boolean }[] {
+    return [...this.sealed, ...this.trapSeals].map((c) => ({ ...c, open: this.unsealed.has(c.y * this.board.width + c.x) }));
   }
 
   private runTurnTriggers(param: number) {
@@ -2427,6 +2433,11 @@ export class Battle {
           }
           this.emit({ type: 'unseal', cells: (op.args?.cells ?? []).map((c) => ({ x: c.x, y: c.y })) });
           break;
+        // 129 就近摆路障、放伏兵【新】（盘陀路：举灯庄客照灯号叫人）：在离我方最近（至少 min 步）的路口候选里挑 count 处，
+        // 堵上路障，groups 里还没登场的人从路障靠我方的一侧杀出来
+        case 129:
+          this.trap(op.args ?? {});
+          break;
         case 125:
           this.stealthOver = true;
           this.spotters = {};
@@ -2583,6 +2594,58 @@ export class Battle {
       ...(args?.keep ? { watch: true } : {}),
     };
     this.emit({ type: 'pick', pick: this.pendingPick });
+  }
+
+  /** 指令 129：就近摆路障、放伏兵（盘陀路）【新】 */
+  private trap(a: NonNullable<PasOp['args']>) {
+    const W = this.board.width;
+    const heroes = this.units.filter((u) => u.side === 'player' && u.present && u.alive && !this.spectators.has(u.uid));
+    if (!heroes.length) return;
+    const dHero = this.board.distanceField(heroes.map((u) => ({ x: u.x, y: u.y })));
+    const taken = this.occupied();
+    const sealedNow = new Set([...this.sealed, ...this.trapSeals].map((c) => c.y * W + c.x).filter((i) => !this.unsealed.has(i)));
+    const sites = (a.sites ?? [])
+      .filter((s) => !(s.tag && a.exclude?.includes(s.tag)))
+      .filter((s) => s.cells.every((c) => this.board.inBounds(c.x, c.y) && !sealedNow.has(c.y * W + c.x) && !taken.has(key(c.x, c.y))))
+      .map((s) => ({ s, d: Math.min(...s.cells.map((c) => dHero[c.y * W + c.x])) }))
+      .filter((o) => Number.isFinite(o.d) && o.d >= (a.min ?? 2))
+      .sort((p, q) => p.d - q.d);
+    const groupUnits = (a.groups ?? []).map((g) => this.unit(this.groups.get(g) ?? -1)).filter((u): u is Unit => !!u && u.alive && !u.present);
+    const chosen = sites.slice(0, a.count ?? 1);
+    for (const [k, { s, d }] of chosen.entries()) {
+      const tile = s.tile ?? a.tile;
+      for (const c of s.cells) {
+        const i = c.y * W + c.x;
+        this.unsealed.delete(i);
+        this.board.blocked[i] = 1;
+        this.trapSeals = this.trapSeals.filter((t) => t.x !== c.x || t.y !== c.y);
+        this.trapSeals.push({ x: c.x, y: c.y, ...(tile !== undefined ? { tile } : {}) });
+      }
+      this.emit({ type: 'seal', cells: s.cells.map((c) => ({ x: c.x, y: c.y })), ...(tile !== undefined ? { tile } : {}) });
+      // 伏兵：分到这处的人，从路障靠我方一侧（离我方比路障近）的空格里，挑离路障最近的
+      const mine = groupUnits.filter((_, n) => n % chosen.length === k);
+      if (!mine.length) continue;
+      const fromSite = this.board.distanceField(s.cells.map((c) => ({ x: c.x, y: c.y })));
+      const occ = this.occupied();
+      const cands: Cell[] = [];
+      for (let y = 0; y < this.board.height; y++)
+        for (let x = 0; x < W; x++) {
+          const i = y * W + x;
+          if (!this.board.passable(x, y) || occ.has(key(x, y)) || !(dHero[i] < d) || !Number.isFinite(fromSite[i])) continue;
+          cands.push({ x, y });
+        }
+      cands.sort((p, q) => fromSite[p.y * W + p.x] - fromSite[q.y * W + q.x] || dHero[q.y * W + q.x] - dHero[p.y * W + p.x]);
+      for (const [n, u] of mine.entries()) {
+        const c = cands[n];
+        if (!c) break;
+        u.x = c.x;
+        u.y = c.y;
+        this.ambushers.delete(u.uid);
+        this.appear(u);
+        const h = heroes.reduce((b, v) => (Math.abs(v.x - u.x) + Math.abs(v.y - u.y) < Math.abs(b.x - u.x) + Math.abs(b.y - u.y) ? v : b));
+        u.facing = facingTowards(u, h);
+      }
+    }
   }
 
   private appear(u: Unit) {

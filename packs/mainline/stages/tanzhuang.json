@@ -1,0 +1,714 @@
+{
+ "id": "tanzhuang",
+ "title": "石秀探庄",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 400
+ },
+ "townAfter": 11,
+ "map": {
+  "custom": "panduolu"
+ },
+ "tint": "dusk",
+ "bgm": [
+  "maze",
+  "eerie",
+  "tense"
+ ],
+ "stealth": {
+  "lose": "教头一声锣响，四下庄客一齐围将上来……石秀寡不敌众，被挠钩拖翻了。",
+  "flag": "spotted"
+ },
+ "units": [
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 13,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "name": "拼命三郎石秀"
+  },
+  {
+   "id": "zhongli",
+   "class": "zhongli",
+   "side": "ally",
+   "x": 0,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "钟离老人"
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "side": "ally",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "hidden": true,
+   "name": "锦豹子杨林"
+  },
+  {
+   "id": "n1",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "n2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "p1",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 32,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     13,
+     32
+    ],
+    [
+     23,
+     32
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p2",
+   "class": 40,
+   "side": "enemy",
+   "x": 8,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     8,
+     22
+    ],
+    [
+     18,
+     22
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p3",
+   "class": 41,
+   "side": "enemy",
+   "x": 3,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     3,
+     22
+    ],
+    [
+     3,
+     12
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p4",
+   "class": 19,
+   "side": "enemy",
+   "x": 18,
+   "y": 17,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     18,
+     17
+    ],
+    [
+     28,
+     17
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p5",
+   "class": 40,
+   "side": "enemy",
+   "x": 13,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     13,
+     12
+    ],
+    [
+     28,
+     12
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p6",
+   "class": 20,
+   "side": "enemy",
+   "x": 28,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     28,
+     22
+    ],
+    [
+     28,
+     32
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p7",
+   "class": 41,
+   "side": "enemy",
+   "x": 8,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     8,
+     27
+    ],
+    [
+     8,
+     32
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "p8",
+   "class": 19,
+   "side": "enemy",
+   "x": 33,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     33,
+     12
+    ],
+    [
+     33,
+     27
+    ]
+   ],
+   "watch": 3,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "巡庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "j1",
+   "class": 39,
+   "side": "enemy",
+   "x": 18,
+   "y": 22,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "patrol": [
+    [
+     18,
+     22
+    ],
+    [
+     18,
+     32
+    ]
+   ],
+   "watch": 4,
+   "name": "巡庄教头"
+  },
+  {
+   "id": "j3",
+   "class": 39,
+   "side": "enemy",
+   "x": 13,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "patrol": [
+    [
+     13,
+     17
+    ],
+    [
+     13,
+     27
+    ]
+   ],
+   "watch": 4,
+   "name": "巡庄教头"
+  },
+  {
+   "id": "j4",
+   "class": 39,
+   "side": "enemy",
+   "x": 8,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     8,
+     12
+    ],
+    [
+     18,
+     12
+    ]
+   ],
+   "watch": 4,
+   "name": "巡庄教头"
+  },
+  {
+   "id": "j2",
+   "class": 39,
+   "side": "enemy",
+   "x": 23,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "patrol": [
+    [
+     23,
+     17
+    ],
+    [
+     23,
+     27
+    ]
+   ],
+   "watch": 4,
+   "name": "巡庄教头"
+  },
+  {
+   "id": "s1",
+   "class": 40,
+   "side": "enemy",
+   "x": 8,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "守庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "s2",
+   "class": 19,
+   "side": "enemy",
+   "x": 28,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "守庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "s3",
+   "class": 40,
+   "side": "enemy",
+   "x": 21,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "守庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "s4",
+   "class": 19,
+   "side": "enemy",
+   "x": 22,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "trusts": [
+    "shixiu-chai"
+   ],
+   "name": "守庄庄客",
+   "levelOffset": -1
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "独龙冈 · 祝家庄外"
+    ],
+    [
+     "transform",
+     "shixiu",
+     "shixiu-chai",
+     "石秀"
+    ],
+    [
+     "narrate",
+     "石秀挑着一担柴，扮作卖柴的，先往祝家庄去探路。只见林子里路径曲折多杂，四下里湾环相似，树木丛密，难认路头。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "好一片盘陀路！走来走去只在林子里转。听说西边林外有户人家，且去问个路。"
+    ],
+    [
+     "objective",
+     "潜行：教头正前方有警戒范围（地上黄色），被他看见、或打了人没在一回合内打倒，就算惊动；巡庄的庄客只当你是卖柴的\n第一步：找到西边林外的钟离老人（地图上标「钟离老人家」），问路\n败：惊动了庄上；石秀倒下；超过 16 回合（天黑）"
+    ],
+    [
+     "turnLimit",
+     16
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     0,
+     25,
+     1,
+     31
+    ],
+    "label": "钟离老人家"
+   },
+   "unless": "asked",
+   "do": [
+    [
+     "face",
+     "zhongli",
+     "shixiu"
+    ],
+    [
+     "say",
+     "shixiu",
+     "老爹，小人是贩枣子的客人，消折了本钱，挑柴来卖。借问这庄上的路如何走？"
+    ],
+    [
+     "say",
+     "zhongli",
+     "你快走，别处躲避！这里早晚要大厮杀，梁山泊的人马就要来打庄了。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "老爹，小人是外乡人，路生，出不去，怎生是好？"
+    ],
+    [
+     "say",
+     "zhongli",
+     "我这村里的路，有首诗说：『好个祝家庄，尽是盘陀路。容易入得来，只是出不去。』"
+    ],
+    [
+     "say",
+     "zhongli",
+     "你只看有白杨树便可转弯，不问路道阔狭，但有白杨树的转湾便是活路，没那树时都是死路。如别的树木转湾，也不是活路。"
+    ],
+    [
+     "say",
+     "zhongli",
+     "若走差了，左来右去，只走不出去。更兼死路里地下埋藏着竹签、铁蒺藜，若是走差了，踏着飞签，准定吃捉了。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "多谢老爹指点！小人去认一认那几株白杨树，天黑前再回来投宿。"
+    ],
+    [
+     "flag",
+     "asked"
+    ],
+    [
+     "objective",
+     "第二步：照老人说的，把三处白杨树路口（地图上标「白杨树」）都走一遍记下来，再回到钟离老人家躲起来（回合结束时在里面）\n败：惊动了庄上；石秀倒下；超过 16 回合（天黑）"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     2,
+     21,
+     4,
+     23
+    ],
+    "label": "白杨树"
+   },
+   "if": "asked",
+   "unless": "tree1",
+   "do": [
+    [
+     "flag",
+     "tree1"
+    ],
+    [
+     "narrate",
+     "石秀把这处白杨树的转湾记在心里。"
+    ],
+    [
+     "narrate",
+     "只听得庄前一片喧闹。石秀远远望去，只见一伙庄客押着一个人过去。"
+    ],
+    [
+     "appear",
+     "yanglin"
+    ],
+    [
+     "focus",
+     "yanglin"
+    ],
+    [
+     "appear",
+     "n1",
+     {
+      "near": "yanglin"
+     }
+    ],
+    [
+     "appear",
+     "n2",
+     {
+      "near": "yanglin"
+     }
+    ],
+    [
+     "say",
+     "n1",
+     "拿住了一个细作！扮作解魇法师，一路只问路径，明明是梁山泊的贼！"
+    ],
+    [
+     "bind",
+     "yanglin"
+    ],
+    [
+     "say",
+     "yanglin",
+     "（石秀兄弟，休来救我，快去报与哥哥……）"
+    ],
+    [
+     "leave",
+     "yanglin"
+    ],
+    [
+     "standDown",
+     "n1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "n2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "shixiu",
+     "杨林哥哥被他拿了……如今出头，只白白送了性命。且记下路，回去报信！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     2,
+     16,
+     4,
+     18
+    ],
+    "label": "白杨树"
+   },
+   "if": "asked",
+   "unless": "tree2",
+   "do": [
+    [
+     "flag",
+     "tree2"
+    ],
+    [
+     "narrate",
+     "又是一株白杨树。石秀暗暗记下。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     7,
+     16,
+     9,
+     18
+    ],
+    "label": "白杨树"
+   },
+   "if": "asked",
+   "unless": "tree3",
+   "do": [
+    [
+     "flag",
+     "tree3"
+    ],
+    [
+     "narrate",
+     "第三株白杨树也记下了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     0,
+     25,
+     1,
+     31
+    ],
+    "label": "钟离老人家",
+    "atTurnEnd": true
+   },
+   "if": [
+    "tree1",
+    "tree2",
+    "tree3"
+   ],
+   "do": [
+    [
+     "say",
+     "zhongli",
+     "客人回来了？今夜庄上满村都点起灯来，你且在我家后屋躲一夜，明日再走。"
+    ],
+    [
+     "narrate",
+     "当夜，只见冈上一碗红灯高高挑起，庄兵都望着那灯行事。石秀在老人后屋看得分明，暗暗记在心里。"
+    ],
+    [
+     "narrate",
+     "次日，宋江不见二人回报，又听说杨林被拿，便亲自引军杀奔祝家庄来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

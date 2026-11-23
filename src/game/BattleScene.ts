@@ -125,6 +125,8 @@ export class BattleScene extends Phaser.Scene {
   /** 地上物的遮挡索引，和被挡住的人物的虚影（按单位 uid；key 记下上次判断时的位置和帧，没变就不重算） */
   private occluders = new OccluderIndex();
   private upperImages = new Map<string, Phaser.GameObjects.Image[]>();
+  /** 关卡摆的路障（map.seal 带图块号、剧本指令 129）：格子 → 图【新】 */
+  private sealImages = new Map<string, Phaser.GameObjects.Image>();
   private ghosts = new Map<number, { img: Phaser.GameObjects.Image; key: string; cover: number | null }>();
   private overlay!: Phaser.GameObjects.Graphics;
   /** 地图上的撤退出口等区域（Battle.objectiveZones），变了才重画 */
@@ -186,6 +188,7 @@ export class BattleScene extends Phaser.Scene {
     this.groundItems = new Map();
     this.occluders = new OccluderIndex();
     this.upperImages = new Map();
+    this.sealImages = new Map();
     this.ghosts = new Map();
     this.mode = { kind: 'idle' };
     this.busy = false;
@@ -1147,7 +1150,24 @@ export class BattleScene extends Phaser.Scene {
 
   /** 封死的门（扩展包 map.seal）：开了的格子把门板藏起来，倒流回去再显示 */
   private syncSeals(fade = false) {
-    for (const c of this.battle.sealState()) {
+    const state = this.battle.sealState();
+    // 关卡摆的路障：没有了（倒流到摆之前）就拿掉，关着就画出来，打开了就淡出
+    const tiled = new Map(state.filter((c) => c.tile !== undefined).map((c) => [`${c.x},${c.y}`, c]));
+    for (const [key, image] of this.sealImages) if (!tiled.has(key)) (image.destroy(), this.sealImages.delete(key));
+    for (const [key, c] of tiled) {
+      let image = this.sealImages.get(key);
+      if (!c.open) {
+        if (!image) this.sealImages.set(key, (image = this.sealImageAt(c.x, c.y, c.tile!)));
+        image.setVisible(true).setAlpha(1);
+      } else if (image) {
+        const img = image;
+        this.sealImages.delete(key);
+        if (fade) this.tweens.add({ targets: img, alpha: 0, duration: 500, onComplete: () => img.destroy() });
+        else img.destroy();
+      }
+    }
+    for (const c of state) {
+      if (c.tile !== undefined) continue;
       const key = `${c.x},${c.y}`;
       for (const image of this.upperImages.get(key) ?? []) {
         if (image.visible === !c.open && image.alpha === 1) continue;
@@ -1157,6 +1177,13 @@ export class BattleScene extends Phaser.Scene {
       if (c.open) this.occluders.remove(key);
     }
     this.cellCover.clear();
+  }
+
+  private sealImageAt(x: number, y: number, tile: number) {
+    const fr = this.assets.upper.frame(tile);
+    const p = cellToWorld(x, y, 0);
+    const key = textureFor(this, `upper:${tile}`, () => frameToCanvas(fr, this.assets.palette));
+    return this.add.image(p.x, p.y, key).setOrigin(fr.anchorX / Math.max(1, fr.width), fr.anchorY / Math.max(1, fr.height)).setDepth(depthOf(x, y, 1));
   }
 
   private removeTree(cells: {x:number;y:number}[]) {
@@ -1203,6 +1230,7 @@ export class BattleScene extends Phaser.Scene {
         this.removeTree(e.cells).forEach(image=>image.destroy());
         break;
       case 'unseal':
+      case 'seal':
         this.syncSeals();
         break;
       case 'fire':
@@ -1935,6 +1963,17 @@ export class BattleScene extends Phaser.Scene {
         await this.banner(tr(e.text));
         break;
       // 剧情演出（扩展包指令 109–113）
+      case 'seal': {
+        // 剧本临时摆路障（盘陀路）：镜头移过去，路障淡入
+        const c = e.cells[Math.floor(e.cells.length / 2)];
+        if (c) await this.focus(c.x, c.y, 300);
+        sound.hurt(false);
+        const before = new Set(this.sealImages.keys());
+        this.syncSeals();
+        for (const [key, image] of this.sealImages) if (!before.has(key)) image.setAlpha(0) && this.tweens.add({ targets: image, alpha: 1, duration: 350 });
+        await new Promise<void>((resolve) => this.time.delayedCall(400, resolve));
+        break;
+      }
       case 'unseal': {
         const c = e.cells[Math.floor(e.cells.length / 2)];
         if (c) await this.focus(c.x, c.y, 300);

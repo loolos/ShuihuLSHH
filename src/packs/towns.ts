@@ -4,11 +4,11 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备' };
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
-const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian']);
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu']);
 /** 下一战里中途才来的我方（隐藏开场）不进城镇名单：独龙冈整备只有杨雄、石秀、时迁、武龙，鲁智深、武松半路赶到 */
-const OPENING_ONLY = new Set(['mainline/zhujiadian']);
+const OPENING_ONLY = new Set(['mainline/zhujiadian', 'mainline/panduolu']);
 export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
