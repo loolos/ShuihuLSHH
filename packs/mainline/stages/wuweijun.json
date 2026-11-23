@@ -6,7 +6,6 @@
   "gold": 600
  },
  "map": {
-  "bgm": ["maze", "night", "fire"],
   "custom": "wuweijun",
   "seal": [
    [
@@ -60,7 +59,7 @@
   ]
  },
  "tint": "night",
- "bgm": "battle",
+ "bgm": ["maze", "night", "fire"],
  "stealth": {
   "lose": "巡夜军士敲起锣来，满城都惊动了，众人只得退出城去……",
   "flag": "spotted"

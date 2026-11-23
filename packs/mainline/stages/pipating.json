@@ -6,10 +6,9 @@
     "gold": 300
   },
   "map": {
-    "bgm": ["naval", "battle"],
     "custom": "dukou-yuchuan"
   },
-  "bgm": "battle",
+  "bgm": ["naval", "battle"],
   "units": [
     {
       "id": "likui",
