@@ -38,7 +38,8 @@
  "frames": 8,
  "actions": {"idle": "Sword_Idle", "slash-combo": {"from": "Sword_Regular_Combo", "frames": 12, "ms": 80}},
  "concat": {"kick-rl": {"of": ["kick-r", "kick-l"]}},        // 几条拼成一条
- "alias": {"slash-two": {"of": "slash-a", "ms": 85, "cycles": 2}}   // 同一条图换速度 / 重复
+ "alias": {"slash-two": {"of": "slash-a", "ms": 85, "cycles": 2}},  // 同一条图换速度 / 重复
+ "render": {"toonRange": [0.75, 1.15]}   // 可省：平涂明暗最暗 / 最亮档（默认 0.55 / 1.05），调高人物整体更亮
 }
 ```
 

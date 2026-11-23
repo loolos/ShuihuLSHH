@@ -148,6 +148,8 @@ def main():
                '--actions', ','.join(src)]
         if opt.get('toon'):
             cmd += ['--toon', str(opt['toon'])]
+            if opt.get('toonRange'):
+                cmd += ['--toon-range', ','.join(map(str, opt['toonRange']))]
         if opt.get('outline'):
             cmd.append('--outline')
         if poses:
