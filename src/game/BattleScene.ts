@@ -199,6 +199,11 @@ export class BattleScene extends Phaser.Scene {
     this.playingSide = 'player';
     this.ring = null;
     this.ringSig = '';
+    // 上一关的撤退 / 敌逃区域和着火格子不能带进下一关（本关一个区域都没有时 drawZones 不会重算，小地图会一直画旧的）
+    this.zones = [];
+    this.zoneSig = '';
+    this.fireCells = [];
+    this.fireSprites = new Map();
   }
 
   create() {
