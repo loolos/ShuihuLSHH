@@ -2484,6 +2484,7 @@ export class Battle {
             this.unsealed.add(i);
           }
           this.emit({ type: 'unseal', cells: (op.args?.cells ?? []).map((c) => ({ x: c.x, y: c.y })) });
+          if (op.args?.reach) this.openTrapsToward(op.args.reach);
           break;
         // 129 就近摆路障、放伏兵【新】（盘陀路：举灯庄客照灯号叫人）：在离我方最近（至少 min 步）的路口候选里挑 count 处，
         // 堵上路障，groups 里还没登场的人从路障靠我方的一侧杀出来
@@ -2648,6 +2649,33 @@ export class Battle {
     this.emit({ type: 'pick', pick: this.pendingPick });
   }
 
+  /** 127 + reach【新】（盘陀路石秀带路，负责人 2026-11-23）：一处一处拽开 trap 设下的路障，直到原来能走的每一格路都通得到 goal；只开需要的 */
+  private openTrapsToward(goal: Cell) {
+    const W = this.board.width;
+    const closed = () => this.trapSeals.map((c) => c.y * W + c.x).filter((i) => !this.unsealed.has(i) && this.board.blocked[i]);
+    // 连在一起的路障格算一处
+    const pieces: number[][] = [];
+    for (const i of closed()) {
+      const p = pieces.find((q) => q.some((j) => Math.abs((j % W) - (i % W)) + Math.abs(Math.floor(j / W) - Math.floor(i / W)) === 1));
+      if (p) p.push(i); else pieces.push([i]);
+    }
+    const all = pieces.flat();
+    for (const i of all) this.board.blocked[i] = 0;
+    const want = this.board.distanceField([goal]);
+    for (const i of all) this.board.blocked[i] = 1;
+    const opened: Cell[] = [];
+    for (let guard = 0; guard < pieces.length; guard++) {
+      const f = this.board.distanceField([goal]);
+      const shut = new Set(all.filter((i) => this.board.blocked[i]));
+      if (want.every((d, i) => !Number.isFinite(d) || shut.has(i) || Number.isFinite(f[i]))) break;
+      const nb = (i: number) => [i - 1, i + 1, i - W, i + W];
+      const p = pieces.find((q) => this.board.blocked[q[0]] && q.some((i) => nb(i).some((j) => Number.isFinite(f[j]))) && q.some((i) => nb(i).some((j) => !shut.has(j) && Number.isFinite(want[j]) && !Number.isFinite(f[j]))));
+      if (!p) break;
+      for (const i of p) { this.board.blocked[i] = 0; this.unsealed.add(i); opened.push({ x: i % W, y: Math.floor(i / W) }); }
+    }
+    if (opened.length) this.emit({ type: 'unseal', cells: opened });
+  }
+
   /** 指令 129：就近摆路障、放伏兵（盘陀路）【新】 */
   private trap(a: NonNullable<PasOp['args']>) {
     const W = this.board.width;
@@ -2675,11 +2703,14 @@ export class Battle {
     // reach：连同已挑的几处一起堵上以后，每个好汉都还走得到 reach 这一格才挑
     const keeps = (o: (typeof sites)[number]) => {
       if (!a.reach) return true;
+      // 不光好汉站的格子：原来通得到出口的每一格路，堵上以后也都要还通得到（负责人 2026-11-23：所有的路都至少能到出口）
       const cells = [...chosen, o].flatMap((v) => v.s.cells).map((c) => c.y * W + c.x).filter((i) => !this.board.blocked[i]);
+      const before = this.board.distanceField([a.reach]);
       for (const i of cells) this.board.blocked[i] = 1;
       const f = this.board.distanceField([a.reach]);
       for (const i of cells) this.board.blocked[i] = 0;
-      return heroes.every((h) => Number.isFinite(f[h.y * W + h.x]));
+      const shut = new Set(cells);
+      return before.every((d, i) => !Number.isFinite(d) || shut.has(i) || Number.isFinite(f[i])) && heroes.every((h) => Number.isFinite(f[h.y * W + h.x]));
     };
     for (const o of sites) {
       if (chosen.length >= want) break;

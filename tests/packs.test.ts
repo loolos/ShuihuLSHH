@@ -380,11 +380,16 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     // 开场分三波（负责人 2026-11-23），伏兵只要能走到其中一波就行
     const reach = b.board.distanceField(b.units.filter((u) => u.side === 'player' && u.present).map((u) => ({ x: u.x, y: u.y })));
     const W = b.board.width;
-    // 石秀到了以后谁都不能被木栅关死：每个好汉都走得到南边村口（负责人 2026-11-23）
+    // 石秀到了以后谁都不能被木栅关死：每个好汉、每格路都走得到南边村口（负责人 2026-11-23）
     const toCamp = (x = 13, y = 37) => {
       expect(b.board.passable(x, y)).toBe(true);
       const f = b.board.distanceField([{ x, y }]);
       for (const u of b.units) if (u.side === 'player' && u.present && u.alive) expect(f[u.y * W + u.x], `第 ${b.turn} 回合 ${u.name}`).toBeLessThan(Infinity);
+      // 迷宫里每一格路都通得到村口（负责人 2026-11-23：石秀来之前可以关死，来了以后每条路都要能到出口；正中围栏里的望楼除外）
+      for (let yy = 11; yy <= 33; yy++) for (let xx = 2; xx <= 34; xx++) {
+        if (xx >= 15 && xx < 22 && yy >= 19 && yy < 26) continue;
+        if (b.board.passable(xx, yy)) expect(f[yy * W + xx], `第 ${b.turn} 回合 (${xx},${yy})`).toBeLessThan(Infinity);
+      }
     };
     for (const e of seals) for (const c of e.type === 'seal' ? e.cells : []) expect(b.board.passable(c.x, c.y)).toBe(false);
     const ambush = b.units.filter((u) => u.side === 'enemy' && u.present && u.alive);
@@ -392,8 +397,6 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     for (const u of ambush) expect(reach[u.y * W + u.x], u.name).toBeLessThan(Infinity);
     const judeng = b.units.find((u) => u.classId === rt.classIds.get('judeng'))!;
     expect(judeng.present).toBe(false);
-    // 石秀来之前栅栏也不能把人关死（伏兵可以挡路）：都走得到迷宫南边靠村口的路口
-    for (let t = 1; t <= 4; t++) { advance(b, t); toCamp(12, 31); }
     advance(b, 5);
     expect(b.units.find((u) => u.classId === rt.classIds.get('shixiu'))!.present).toBe(true);
     expect(judeng.present).toBe(true);

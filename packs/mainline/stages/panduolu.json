@@ -965,7 +965,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g12",
@@ -978,7 +978,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g13",
@@ -991,7 +991,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g14",
@@ -1004,7 +1004,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g15",
@@ -1017,7 +1017,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g16",
@@ -1030,7 +1030,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g21",
@@ -1043,7 +1043,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g22",
@@ -1056,7 +1056,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g23",
@@ -1069,7 +1069,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g24",
@@ -1082,7 +1082,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g25",
@@ -1095,7 +1095,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g26",
@@ -1108,7 +1108,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g31",
@@ -1134,7 +1134,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g33",
@@ -1147,7 +1147,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g34",
@@ -1160,7 +1160,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g35",
@@ -1173,7 +1173,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g36",
@@ -1186,7 +1186,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g41",
@@ -1199,7 +1199,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g42",
@@ -1212,7 +1212,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g43",
@@ -1225,7 +1225,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g44",
@@ -1238,7 +1238,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g45",
@@ -1251,7 +1251,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g46",
@@ -1264,7 +1264,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g51",
@@ -1277,7 +1277,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g52",
@@ -1290,7 +1290,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g53",
@@ -1303,7 +1303,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g54",
@@ -1316,7 +1316,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g55",
@@ -1329,7 +1329,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g56",
@@ -1342,7 +1342,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g61",
@@ -1368,7 +1368,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g63",
@@ -1381,7 +1381,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g64",
@@ -1394,7 +1394,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g65",
@@ -1407,7 +1407,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g66",
@@ -1420,7 +1420,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g71",
@@ -1433,7 +1433,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g72",
@@ -1446,7 +1446,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g73",
@@ -1459,7 +1459,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g74",
@@ -1472,7 +1472,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g75",
@@ -1485,7 +1485,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g76",
@@ -1498,7 +1498,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g81",
@@ -1511,7 +1511,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g82",
@@ -1524,7 +1524,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g83",
@@ -1537,7 +1537,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g84",
@@ -1550,7 +1550,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g85",
@@ -1563,7 +1563,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g86",
@@ -1576,7 +1576,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g91",
@@ -1589,7 +1589,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g92",
@@ -1602,7 +1602,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g93",
@@ -1615,7 +1615,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g94",
@@ -1628,7 +1628,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g95",
@@ -1641,7 +1641,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g96",
@@ -1654,7 +1654,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g101",
@@ -1667,7 +1667,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g102",
@@ -1680,7 +1680,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g103",
@@ -1693,7 +1693,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g104",
@@ -1706,7 +1706,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g105",
@@ -1719,7 +1719,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g106",
@@ -1732,7 +1732,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g111",
@@ -1745,7 +1745,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g112",
@@ -1758,7 +1758,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g113",
@@ -1771,7 +1771,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g114",
@@ -1784,7 +1784,7 @@
    "ai": 0,
    "hidden": true,
    "name": "祝家庄庄客",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g115",
@@ -1797,7 +1797,7 @@
    "ai": 0,
    "hidden": true,
    "name": "庄客弓手",
-   "levelOffset": 0
+   "levelOffset": 1
   },
   {
    "id": "g116",
@@ -1810,7 +1810,7 @@
    "ai": 0,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": 0
+   "levelOffset": 1
   }
  ],
  "script": [
@@ -1882,11 +1882,7 @@
       "g26"
      ],
      {
-      "count": 2,
-      "reach": [
-       12,
-       31
-      ]
+      "count": 2
      }
     ],
     [
@@ -2002,11 +1998,7 @@
       "g36"
      ],
      {
-      "count": 1,
-      "reach": [
-       12,
-       31
-      ]
+      "count": 1
      }
     ]
    ]
@@ -2032,11 +2024,7 @@
       "g46"
      ],
      {
-      "count": 1,
-      "reach": [
-       12,
-       31
-      ]
+      "count": 1
      }
     ]
    ]
@@ -2062,11 +2050,7 @@
       "g116"
      ],
      {
-      "count": 1,
-      "reach": [
-       12,
-       31
-      ]
+      "count": 1
      }
     ]
    ]
@@ -2132,18 +2116,6 @@
        24
       ],
       [
-       5,
-       21
-      ],
-      [
-       5,
-       22
-      ],
-      [
-       5,
-       23
-      ],
-      [
        2,
        29
       ],
@@ -2193,42 +2165,6 @@
       ],
       [
        10,
-       21
-      ],
-      [
-       10,
-       22
-      ],
-      [
-       10,
-       23
-      ],
-      [
-       7,
-       29
-      ],
-      [
-       8,
-       29
-      ],
-      [
-       9,
-       29
-      ],
-      [
-       10,
-       26
-      ],
-      [
-       10,
-       27
-      ],
-      [
-       10,
-       28
-      ],
-      [
-       10,
        31
       ],
       [
@@ -2264,54 +2200,6 @@
        13
       ],
       [
-       15,
-       21
-      ],
-      [
-       15,
-       22
-      ],
-      [
-       15,
-       23
-      ],
-      [
-       15,
-       26
-      ],
-      [
-       15,
-       27
-      ],
-      [
-       15,
-       28
-      ],
-      [
-       15,
-       31
-      ],
-      [
-       15,
-       32
-      ],
-      [
-       15,
-       33
-      ],
-      [
-       17,
-       14
-      ],
-      [
-       18,
-       14
-      ],
-      [
-       19,
-       14
-      ],
-      [
        20,
        11
       ],
@@ -2322,222 +2210,6 @@
       [
        20,
        13
-      ],
-      [
-       20,
-       16
-      ],
-      [
-       20,
-       17
-      ],
-      [
-       20,
-       18
-      ],
-      [
-       20,
-       21
-      ],
-      [
-       20,
-       22
-      ],
-      [
-       20,
-       23
-      ],
-      [
-       17,
-       29
-      ],
-      [
-       18,
-       29
-      ],
-      [
-       19,
-       29
-      ],
-      [
-       20,
-       26
-      ],
-      [
-       20,
-       27
-      ],
-      [
-       20,
-       28
-      ],
-      [
-       25,
-       11
-      ],
-      [
-       25,
-       12
-      ],
-      [
-       25,
-       13
-      ],
-      [
-       25,
-       16
-      ],
-      [
-       25,
-       17
-      ],
-      [
-       25,
-       18
-      ],
-      [
-       25,
-       21
-      ],
-      [
-       25,
-       22
-      ],
-      [
-       25,
-       23
-      ],
-      [
-       22,
-       29
-      ],
-      [
-       23,
-       29
-      ],
-      [
-       24,
-       29
-      ],
-      [
-       25,
-       31
-      ],
-      [
-       25,
-       32
-      ],
-      [
-       25,
-       33
-      ],
-      [
-       30,
-       11
-      ],
-      [
-       30,
-       12
-      ],
-      [
-       30,
-       13
-      ],
-      [
-       30,
-       16
-      ],
-      [
-       30,
-       17
-      ],
-      [
-       30,
-       18
-      ],
-      [
-       27,
-       24
-      ],
-      [
-       28,
-       24
-      ],
-      [
-       29,
-       24
-      ],
-      [
-       27,
-       29
-      ],
-      [
-       28,
-       29
-      ],
-      [
-       29,
-       29
-      ],
-      [
-       30,
-       31
-      ],
-      [
-       30,
-       32
-      ],
-      [
-       30,
-       33
-      ],
-      [
-       32,
-       14
-      ],
-      [
-       33,
-       14
-      ],
-      [
-       34,
-       14
-      ],
-      [
-       32,
-       19
-      ],
-      [
-       33,
-       19
-      ],
-      [
-       34,
-       19
-      ],
-      [
-       32,
-       24
-      ],
-      [
-       33,
-       24
-      ],
-      [
-       34,
-       24
-      ],
-      [
-       32,
-       29
-      ],
-      [
-       33,
-       29
-      ],
-      [
-       34,
-       29
       ],
       [
        12,
@@ -2551,7 +2223,13 @@
        14,
        34
       ]
-     ]
+     ],
+     {
+      "reach": [
+       13,
+       37
+      ]
+     }
     ],
     [
      "narrate",
@@ -2586,7 +2264,7 @@
     ],
     [
      "narrate",
-     "石秀在前引路，看白杨树转弯，把各处挡路的木栅都拽开了，往南杀出一条路来。"
+     "石秀在前引路，看白杨树转弯，拽开挡路的几处木栅，往南杀出一条路来。"
     ],
     [
      "say",
