@@ -275,7 +275,8 @@ describe.skipIf(!has)('主线插关：醉卧灵官殿', () => {
     expect(lt.buffs.some((x) => x.stat === 'agility' && x.value < 0 && x.turns <= 3)).toBe(true);
     expect(lh.buffs.some((x) => x.stat === 'crit' && x.value < 0)).toBe(true);
     expect(ev.some((e) => e.type === 'say' && /赤发鬼/.test(e.text))).toBe(true);
-    expect(ev.some((e) => e.type === 'say' && !e.speaker && /武龙/.test(e.text) && /按下不表/.test(e.text))).toBe(true);
+    // 「武龙杀退追骑，暂且按下」挪到本章第一段大名府斗武开头（2026-11-23），这里不再跳回主角团
+    expect(ev.some((e) => e.type === 'say' && !e.speaker && /武龙/.test(e.text))).toBe(false);
   });
 
   it('第 4 回合士兵增援，第 7 回合吴用、晁盖赶到，过关', () => {

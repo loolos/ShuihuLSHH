@@ -54,9 +54,8 @@ export function insertTownIntro(next: string): { actor: string; text: string }[]
     { actor: 'huarong', text: '诸位且在山上补齐药品，整顿兵器。下山之后，便要一路杀进江州了。' },
   ];
   if (next === 'mainline/jieyangzhen') return [
-    { actor: 'lijun', text: '哥哥受了一场惊恐。前面便是揭阳镇，小弟送哥哥一程，过了镇子再回岭上。' },
-    { actor: 'sj-fugitive', text: '多得兄弟相救。既如此，且在岭下店中补些药物，整顿了再走。' },
-    { actor: 'lijun', text: '揭阳镇上有一霸，哥哥路过时休要与人争闲气。' },
+    { actor: 'lijun', text: '哥哥在小弟家歇了这几日，棒疮也好些了。岭下店里刀枪药物都有，缺甚么只管置办。' },
+    { actor: 'sj-fugitive', text: '多得兄弟相救。也好，路上用得着的，都置办齐了再走。' },
   ];
   if (next === 'mainline/shiyong') return [
     { actor: 'huarong', text: '前面便是村镇。两位且补些衣药，整顿兵刃，再同大队上路。' },
@@ -66,9 +65,9 @@ export function insertTownIntro(next: string): { actor: string; text: string }[]
   return next === 'mainline/yuanyanglou' ? [
     { actor: 'sj-fugitive', text: '前面便是孟州城。诸位先到街边补齐药品，整顿兵器，再去寻那三个主谋。' },
     { actor: 'wusong', text: '好！买齐所需，便去鸳鸯楼问个明白，休叫那伙贼人又害旁人！' },
-  ] : [
+  ] : next === 'mainline/shizipo' ? [
     { actor: 'sj-fugitive', text: '二郎，你既要依文投营，哥哥不拦。只是孟州路远，我与武龙陪你走一程，也好从中照应。' },
     { actor: 'wusong', text: '哥哥肯这般相待，武松感激不尽。只是不可坏了公人的差事。' },
     { actor: 'sj-fugitive', text: '只照应盘缠行李，不劫官差。且在城中置办些衣药，再一同上路。' },
-  ];
+  ] : []; // 没登记的城镇不说话，免得落到阳谷的对白（负责人 2026-11-23）
 }
