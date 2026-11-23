@@ -18,6 +18,7 @@
 | `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json` |
 | `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
 | `daizong/` | 戴宗（褐短褂、幞头、腿绑甲马）：idle、walk、hit-chest、crouch-idle（聚气 / 防御）、death01、roll、punch-jab、punch-two（×2）、punch-cross、kick-r / kick-l / kick-rl（左右踢）、ninja-jump 腾跃、slide 滑铲。配方 `characters/daizong.json` |
+| `husanniang/` | 扈三娘步战造型（配色对齐骑马版：青绿战袍、红围巾、金盔红缨、日月双刀；女假人）：idle（双刀护身）、walk、hit-chest、defend、death01、roll、slash-a/b/c、slash-combo、heavy-combo、dash、crouch-idle。还没有职业用它（战斗里仍是骑兵 43 换色），配方 `characters/husanniang.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 
 ## 来源与授权
