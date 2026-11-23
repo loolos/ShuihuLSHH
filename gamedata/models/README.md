@@ -48,6 +48,27 @@
 
 UAL 两个库只有刀剑、拳脚、投掷类动作。枪、棍、大刀、弓用 `poses/weapons.json` 自拼：服装里写了 `weapon` 时，`render-sprites.py` 会在骨架上加两根兵器骨骼——普通动作（走、待机、受击）里兵器挂在手上；带 `weapon` 的自拼动作里兵器按世界坐标单独摆（`at` 握点、`dir` 兵器指向、`up`），两只手的前臂用 IK 自动去握 `grips` 指定的位置（数字 = 沿兵器轴离握点多远；弓的右手写 `[横, 沿弓轴, 前后]`）。要用这些动作，配方里写 `"poses": "poses/weapons.json"`，再在 `actions` 里映射，如 `"spear-thrust": "Spear_Thrust"`。新动作照 `weapons.json` 的写法加关键帧。
 
+## Mixamo 动作（不进 repo）
+
+Mixamo（Adobe 免费动捕库）的授权不许公开原文件，所以原文件和转好的动作库都放项目文件夹 `/mnt/project-files/shuihu-design/models/mixamo/`（每个云端 thread 都能读），repo 里只放渲染出来的图条。
+
+| 动作库 | 前缀 | 内容 |
+|---|---|---|
+| `mixamo/mixamo-great-sword.glb` | `GS_` | Great Sword Pack：双手大剑待机、劈砍 ×5、旋身斩、跳劈、滑步斩、格挡、受击、倒地… |
+| `mixamo/mixamo-sword-shield.glb` | `SS_` | Sword and Shield Pack：单手刀（盾）攻击 ×4、劈砍 ×4、格挡、踢、受击、倒地… |
+| `mixamo/mixamo-longbow.glb` | `BOW_` | Pro Longbow Pack：拉弓瞄准、放箭后坐、抽箭、闪避、近身踢打、受击、倒地… |
+| `mixamo/mixamo-axe.glb` | `AXE_` | Pro Melee Axe Pack：下劈、横斩、反手、360 旋斩（高 / 低）、三种连击、跳斩、战吼、格挡、受击… |
+
+动作名 = 前缀 + 原文件名（小写、符号换成下划线），如 `GS_great_sword_slash_4`、`AXE_standing_melee_attack_downward`。配方里加 `"extraAnims": ["mixamo/mixamo-axe.glb"]` 就能用（`render-character.py` 会到项目文件夹找；别的位置用环境变量 `SHUIHU_PRIVATE_MODELS` 指定）。
+
+新下载的 Mixamo 包（FBX、With Skin、30 fps）先放进同一个文件夹，再转换：
+
+```sh
+python tools/retarget-mixamo.py /mnt/project-files/shuihu-design/models/mixamo/mixamo-<名字>.glb 解压目录/*.fbx --prefix XX_
+```
+
+转换时人原地做动作（去掉骨盆的水平位移，免得跑出格子）；要保留冲刺位移加 `--keep-travel`。
+
 ## 渲染
 
 ```sh

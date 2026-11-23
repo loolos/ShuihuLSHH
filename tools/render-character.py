@@ -29,8 +29,12 @@ def load_json(path):
         return json.load(f)
 
 
+# 不能进公开 repo 的原料（如 Mixamo 转出来的动作库）放项目文件夹，云端每个 thread 都能读
+PRIVATE = os.environ.get('SHUIHU_PRIVATE_MODELS', '/mnt/project-files/shuihu-design/models')
+
+
 def resolve(base_dir, p):
-    for d in (base_dir, MODELS, ROOT):
+    for d in (base_dir, MODELS, ROOT, PRIVATE):
         q = os.path.join(d, p)
         if os.path.exists(q):
             return q
@@ -116,7 +120,7 @@ def main():
         opt['samples'] = args.samples
 
     body = resolve(recipe_dir, r.get('model') or BODIES[r.get('body', 'male')])
-    libs = [resolve(recipe_dir, a) for a in r.get('anims', ANIM_LIBS)]
+    libs = [resolve(recipe_dir, a) for a in r.get('anims', ANIM_LIBS) + r.get('extraAnims', [])]
     tmp = tempfile.mkdtemp(prefix='render-character-')
     outfit_path = os.path.join(tmp, 'outfit.json')
     json.dump(outfit, open(outfit_path, 'w', encoding='utf-8'), ensure_ascii=False)
