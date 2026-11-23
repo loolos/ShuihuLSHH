@@ -389,9 +389,17 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     advance(b, 5);
     expect(b.units.find((u) => u.classId === rt.classIds.get('shixiu'))!.present).toBe(true);
     expect(judeng.present).toBe(true);
+    // 石秀到了以后谁都不能被木栅关死：每个好汉都走得到南边村口（负责人 2026-11-23）
+    const toCamp = () => {
+      expect(b.board.passable(13, 37)).toBe(true);
+      const f = b.board.distanceField([{ x: 13, y: 37 }]);
+      for (const u of b.units) if (u.side === 'player' && u.present && u.alive) expect(f[u.y * W + u.x], `第 ${b.turn} 回合 ${u.name}`).toBeLessThan(Infinity);
+    };
+    toCamp();
     // 举灯庄客站在围栏里，近身打不到
     const ring = [[-1, 0], [1, 0], [0, -1], [0, 1]].filter(([dx, dy]) => b.board.passable(judeng.x + dx, judeng.y + dy));
     expect(ring).toEqual([]);
+    for (let t = 6; t <= 8; t++) { advance(b, t); toCamp(); }
   });
   it('石秀探庄（§15.32.5）：巡庄庄客认得卖柴的不惊动，但走到他眼前就被拦下盘问，这回合走不了', () => {
     const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));
