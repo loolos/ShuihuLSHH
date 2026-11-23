@@ -306,6 +306,7 @@ export type PackTrigger =
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
  * ["setAi", 单位, 模式] 改 AI 模式；
+ * ["wound", 单位, 百分比] 剧情受伤：生命降到最大值的这个百分比（已经更低就不动，至少留 1 点），飘「重伤」【新】（李应中箭）；
  * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
  * ["gust", {style, radius, turns, panic, spare, x, y, focus}] 黑尘（dust）/ 怪风（wind）：区域中心（或 x, y）radius 格内的敌人逃窜 turns 回合；
  * ["stealthEnd"] 潜行结束：哨兵不再警戒，发现也不再判负；

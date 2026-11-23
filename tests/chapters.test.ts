@@ -84,8 +84,10 @@ describe('章节表', () => {
     expect(chapterOf('mainline/zhufu')).toBe(27);
     expect(chapterOf('mainline/yinmachuan')).toBe(28);
     expect(chapterOf('mainline/zhujiadian')).toBe(29);
+    expect(chapterOf('mainline/lijiazhuang')).toBe(30);
+    expect(chapterLabel(30)).toBe('第三十章 三打祝家庄');
     expect(chapterLabel(27)).toBe('第二十七章 沂岭杀四虎');
-    expect(CHAPTERS).toHaveLength(29);
+    expect(CHAPTERS).toHaveLength(30);
   });
 });
 
