@@ -34,7 +34,10 @@ function runtime(pack: string) {
     { ...basic, skillId: 227, name: '集氣技', type: 8, group: 2, mpCost: 0, power: 2, rangeMin: 0, rangeMax: 0, area: 0, hits: [] },
   ] };
   const data: GameData = { classes, items: [], charNames: classes.map((c) => c?.name ?? ''), heroName: '队友' };
-  return buildPack(data, { ...packOf(pack), classes: [configOf(pack)], items: [], stages: [] }, [], {});
+  const sp = configOf(pack).sprite;
+  const sheet = 'sheet' in sp ? sp.sheet : null;
+  const sheets = sheet ? { [sheet]: JSON.parse(fs.readFileSync(`packs/${pack}/${sheet}/sprites.json`, 'utf8')) } : {};
+  return buildPack(data, { ...packOf(pack), classes: [configOf(pack)], items: [], stages: [] }, [], sheets);
 }
 
 const act = (index: number, type: number, side: ActUnit['side'], x: number, y: number, level = 20): ActUnit => ({

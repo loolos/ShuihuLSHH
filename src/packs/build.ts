@@ -240,7 +240,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     const dirs = [...new Set(t.hits.map((h) => h.dir))];
     const at = s.hitAt ?? [0.5];
     hits = t.hits.length
-      ? dirs.flatMap((dir) => at.map((f, i) => ({ frame: hitFrame(f, strip), percent: i < at.length - 1 ? Math.floor(100 / at.length) : 100 - Math.floor(100 / at.length) * (at.length - 1), dir })))
+      ? dirs.flatMap((dir) => at.map((f, i) => ({ frame: hitFrame(f, strip), percent: s.hitPercent?.[i] ?? (i < at.length - 1 ? Math.floor(100 / at.length) : 100 - Math.floor(100 / at.length) * (at.length - 1)), dir })))
       : [];
   } else group = typeof s.anim === 'number' ? s.anim : t.group; // 借原版动画：原版第几个出手动作
   return {

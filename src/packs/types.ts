@@ -94,6 +94,8 @@ export interface PackSkillJson {
   anim: string | number;
   /** 在出手动画的什么位置命中（0–1，一段一个数）；借原版动画的职业不用写 */
   hitAt?: number[];
+  /** 和 hitAt 一一对应的伤害百分比（合计 100）；省略 = 平均分 */
+  hitPercent?: number[];
   power?: number;
   mpCost?: number;
   learnLevel?: number;

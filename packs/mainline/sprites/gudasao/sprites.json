@@ -1,0 +1,182 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "Idle_Loop",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 312
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 312
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit-chest": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-chest-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-chest-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "defend": {
+   "source": "Sword_Block",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 154
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 154
+   }
+  },
+  "death01": {
+   "source": "Death01",
+   "front": {
+    "file": "death01-front.png",
+    "frames": 8,
+    "ms": 300
+   },
+   "back": {
+    "file": "death01-back.png",
+    "frames": 8,
+    "ms": 300
+   }
+  },
+  "roll": {
+   "source": "Roll",
+   "front": {
+    "file": "roll-front.png",
+    "frames": 8,
+    "ms": 183
+   },
+   "back": {
+    "file": "roll-back.png",
+    "frames": 8,
+    "ms": 183
+   }
+  },
+  "slash-a": {
+   "source": "Sword_Regular_A",
+   "front": {
+    "file": "slash-a-front.png",
+    "frames": 8,
+    "ms": 54
+   },
+   "back": {
+    "file": "slash-a-back.png",
+    "frames": 8,
+    "ms": 54
+   }
+  },
+  "slash-b": {
+   "source": "Sword_Regular_B",
+   "front": {
+    "file": "slash-b-front.png",
+    "frames": 8,
+    "ms": 67
+   },
+   "back": {
+    "file": "slash-b-back.png",
+    "frames": 8,
+    "ms": 67
+   }
+  },
+  "slash-c": {
+   "source": "Sword_Regular_C",
+   "front": {
+    "file": "slash-c-front.png",
+    "frames": 8,
+    "ms": 120
+   },
+   "back": {
+    "file": "slash-c-back.png",
+    "frames": 8,
+    "ms": 120
+   }
+  },
+  "slash-combo": {
+   "source": "Sword_Regular_Combo",
+   "front": {
+    "file": "slash-combo-front.png",
+    "frames": 12,
+    "ms": 130
+   },
+   "back": {
+    "file": "slash-combo-back.png",
+    "frames": 12,
+    "ms": 130
+   }
+  },
+  "heavy-combo": {
+   "source": "Sword_Heavy_Combo",
+   "front": {
+    "file": "heavy-combo-front.png",
+    "frames": 12,
+    "ms": 140
+   },
+   "back": {
+    "file": "heavy-combo-back.png",
+    "frames": 12,
+    "ms": 140
+   }
+  },
+  "dash": {
+   "source": "Sword_Dash",
+   "front": {
+    "file": "dash-front.png",
+    "frames": 8,
+    "ms": 120
+   },
+   "back": {
+    "file": "dash-back.png",
+    "frames": 8,
+    "ms": 120
+   }
+  },
+  "throw": {
+   "source": "OverhandThrow",
+   "front": {
+    "file": "throw-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "throw-back.png",
+    "frames": 8,
+    "ms": 110
+   }
+  }
+ }
+}

@@ -18,16 +18,27 @@
   "roll": "Roll",
   "slash-a": "Sword_Regular_A",
   "slash-b": "Sword_Regular_B",
-  "slash-c": "Sword_Regular_C",
+  "slash-c": {
+   "from": "Sword_Regular_C",
+   "ms": 120
+  },
   "slash-combo": {
    "from": "Sword_Regular_Combo",
-   "frames": 12
+   "frames": 12,
+   "ms": 130
   },
   "heavy-combo": {
    "from": "Sword_Heavy_Combo",
-   "frames": 12
+   "frames": 12,
+   "ms": 140
   },
-  "dash": "Sword_Dash",
-  "throw": "OverhandThrow"
+  "dash": {
+   "from": "Sword_Dash",
+   "ms": 120
+  },
+  "throw": {
+   "from": "OverhandThrow",
+   "ms": 110
+  }
  }
 }
