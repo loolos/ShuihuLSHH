@@ -186,7 +186,9 @@ export interface PackStageJson {
   /** 地图：借原版地图（地表、地上物、通行都照原版），或用重制版自拼地图 */
   /** base：借用的原版地图；custom：自拼地图 packs/maps/<名字>.json（§15.15）；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
    *  open：改成可通行的格子 [[x, y], …]（坐标同单位，例如让人从原版堵死的大门走出来） */
-  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][]; /** 封死的格子（关着的大门），剧本 ["unseal", 格子] 打开【新】（智取无为军） */ seal?: [number, number][] };
+  map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][]; /** 封死的格子（关着的大门），剧本 ["unseal", 格子] 打开【新】（智取无为军）；第三项写地上物图块号时画面上在这格摆它（盘陀路的路障），不写就用地图本来的图块 */ seal?: ([number, number] | [number, number, number])[] };
+  /** 路障候选路口【新】（盘陀路）：剧本 ["trap", …] 从这里挑离我方最近的堵上；tag 给 exclude 用 */
+  traps?: { cells: [number, number][]; tag?: string; /** 这处路障的图块（不填用 trap 指令的 tile） */ tile?: number }[];
   /** 蹴鞠关（§15.25）【新】：攻击只能踢球；球场、球门、开球点、几球获胜、回合数 */
   cuju?: import('../rules/cuju.ts').CujuRules;
   /**
@@ -310,6 +312,8 @@ export type PackTrigger =
  * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
  * ["gust", {style, radius, turns, panic, spare, x, y, focus}] 黑尘（dust）/ 怪风（wind）：区域中心（或 x, y）radius 格内的敌人逃窜 turns 回合；
  * ["stealthEnd"] 潜行结束：哨兵不再警戒，发现也不再判负；
+ * ["trap", [伏兵…], {count, min, exclude, tile}] 就近摆路障、放伏兵【新】（盘陀路，指令 129）：从关卡 traps 的候选路口里挑离我方最近（至少 min 步）的 count 处
+ *   堵上路障（画 tile 号地上物，["unseal", 格子] 可再打开），列出的人里没登场的从路障靠我方一侧杀出来；exclude = 跳过这些 tag 的路口；
  * ["standDown", 单位, 参数（可省）] 收手：敌人不再参战，原地不动（改成友军、不能被选中，不算敌军全灭）；参数 {reward: 身边没我方也照打倒给经验, leave: 收手后离开地图, quiet: 不飘字（一起收手时一起淡出）, goldPct: 交出击退银子的百分之几}
  */
 export type PackOpJson = [string, ...unknown[]];

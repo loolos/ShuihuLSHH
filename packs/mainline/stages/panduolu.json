@@ -1,0 +1,2497 @@
+{
+ "id": "panduolu",
+ "title": "盘陀路",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 900
+ },
+ "map": {
+  "custom": "panduolu",
+  "seal": [
+   [
+    7,
+    10,
+    580
+   ],
+   [
+    8,
+    10,
+    580
+   ],
+   [
+    9,
+    10,
+    580
+   ],
+   [
+    27,
+    10,
+    580
+   ],
+   [
+    28,
+    10,
+    580
+   ],
+   [
+    29,
+    10,
+    580
+   ],
+   [
+    12,
+    34,
+    580
+   ],
+   [
+    13,
+    34,
+    580
+   ],
+   [
+    14,
+    34,
+    580
+   ],
+   [
+    27,
+    34,
+    580
+   ],
+   [
+    28,
+    34,
+    580
+   ],
+   [
+    29,
+    34,
+    580
+   ],
+   [
+    1,
+    26,
+    579
+   ],
+   [
+    1,
+    27,
+    579
+   ],
+   [
+    1,
+    28,
+    579
+   ],
+   [
+    35,
+    16,
+    579
+   ],
+   [
+    35,
+    17,
+    579
+   ],
+   [
+    35,
+    18,
+    579
+   ],
+   [
+    17,
+    21,
+    539
+   ],
+   [
+    17,
+    22,
+    549
+   ],
+   [
+    17,
+    23,
+    539
+   ],
+   [
+    18,
+    21,
+    550
+   ],
+   [
+    18,
+    23,
+    550
+   ],
+   [
+    19,
+    21,
+    539
+   ],
+   [
+    19,
+    22,
+    549
+   ],
+   [
+    19,
+    23,
+    539
+   ]
+  ]
+ },
+ "tint": "night",
+ "bgm": [
+  "maze",
+  "ambush",
+  "night"
+ ],
+ "traps": [
+  {
+   "cells": [
+    [
+     2,
+     14
+    ],
+    [
+     3,
+     14
+    ],
+    [
+     4,
+     14
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     5,
+     11
+    ],
+    [
+     5,
+     12
+    ],
+    [
+     5,
+     13
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     2,
+     19
+    ],
+    [
+     3,
+     19
+    ],
+    [
+     4,
+     19
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     2,
+     24
+    ],
+    [
+     3,
+     24
+    ],
+    [
+     4,
+     24
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     5,
+     21
+    ],
+    [
+     5,
+     22
+    ],
+    [
+     5,
+     23
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     2,
+     29
+    ],
+    [
+     3,
+     29
+    ],
+    [
+     4,
+     29
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     5,
+     31
+    ],
+    [
+     5,
+     32
+    ],
+    [
+     5,
+     33
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     7,
+     14
+    ],
+    [
+     8,
+     14
+    ],
+    [
+     9,
+     14
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     10,
+     16
+    ],
+    [
+     10,
+     17
+    ],
+    [
+     10,
+     18
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     10,
+     21
+    ],
+    [
+     10,
+     22
+    ],
+    [
+     10,
+     23
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     7,
+     29
+    ],
+    [
+     8,
+     29
+    ],
+    [
+     9,
+     29
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     10,
+     26
+    ],
+    [
+     10,
+     27
+    ],
+    [
+     10,
+     28
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     10,
+     31
+    ],
+    [
+     10,
+     32
+    ],
+    [
+     10,
+     33
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     12,
+     14
+    ],
+    [
+     13,
+     14
+    ],
+    [
+     14,
+     14
+    ]
+   ],
+   "tag": "route",
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     15,
+     11
+    ],
+    [
+     15,
+     12
+    ],
+    [
+     15,
+     13
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     15,
+     21
+    ],
+    [
+     15,
+     22
+    ],
+    [
+     15,
+     23
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     15,
+     26
+    ],
+    [
+     15,
+     27
+    ],
+    [
+     15,
+     28
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     15,
+     31
+    ],
+    [
+     15,
+     32
+    ],
+    [
+     15,
+     33
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     17,
+     14
+    ],
+    [
+     18,
+     14
+    ],
+    [
+     19,
+     14
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     20,
+     11
+    ],
+    [
+     20,
+     12
+    ],
+    [
+     20,
+     13
+    ]
+   ],
+   "tag": "route",
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     20,
+     16
+    ],
+    [
+     20,
+     17
+    ],
+    [
+     20,
+     18
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     20,
+     21
+    ],
+    [
+     20,
+     22
+    ],
+    [
+     20,
+     23
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     17,
+     29
+    ],
+    [
+     18,
+     29
+    ],
+    [
+     19,
+     29
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     20,
+     26
+    ],
+    [
+     20,
+     27
+    ],
+    [
+     20,
+     28
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     25,
+     11
+    ],
+    [
+     25,
+     12
+    ],
+    [
+     25,
+     13
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     25,
+     16
+    ],
+    [
+     25,
+     17
+    ],
+    [
+     25,
+     18
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     25,
+     21
+    ],
+    [
+     25,
+     22
+    ],
+    [
+     25,
+     23
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     22,
+     29
+    ],
+    [
+     23,
+     29
+    ],
+    [
+     24,
+     29
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     25,
+     31
+    ],
+    [
+     25,
+     32
+    ],
+    [
+     25,
+     33
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     30,
+     11
+    ],
+    [
+     30,
+     12
+    ],
+    [
+     30,
+     13
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     30,
+     16
+    ],
+    [
+     30,
+     17
+    ],
+    [
+     30,
+     18
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     27,
+     24
+    ],
+    [
+     28,
+     24
+    ],
+    [
+     29,
+     24
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     27,
+     29
+    ],
+    [
+     28,
+     29
+    ],
+    [
+     29,
+     29
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     30,
+     31
+    ],
+    [
+     30,
+     32
+    ],
+    [
+     30,
+     33
+    ]
+   ],
+   "tile": 579
+  },
+  {
+   "cells": [
+    [
+     32,
+     14
+    ],
+    [
+     33,
+     14
+    ],
+    [
+     34,
+     14
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     32,
+     19
+    ],
+    [
+     33,
+     19
+    ],
+    [
+     34,
+     19
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     32,
+     24
+    ],
+    [
+     33,
+     24
+    ],
+    [
+     34,
+     24
+    ]
+   ],
+   "tile": 580
+  },
+  {
+   "cells": [
+    [
+     32,
+     29
+    ],
+    [
+     33,
+     29
+    ],
+    [
+     34,
+     29
+    ]
+   ],
+   "tile": 580
+  }
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 24,
+   "y": 12,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "huarong",
+   "class": "huarong",
+   "side": "player",
+   "x": 22,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "name": "花荣"
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 23,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "name": "李逵"
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 24,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "name": "病关索杨雄"
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "side": "player",
+   "x": 23,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "name": "霹雳火秦明"
+  },
+  {
+   "id": "huangxin",
+   "class": "huangxin",
+   "side": "player",
+   "x": 21,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "name": "镇三山黄信"
+  },
+  {
+   "id": "wangying",
+   "class": "wangying",
+   "side": "player",
+   "x": 24,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "name": "矮脚虎王英"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 22,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "name": "神行太保戴宗"
+  },
+  {
+   "id": "lijun",
+   "class": "lijun",
+   "side": "player",
+   "x": 20,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "name": "混江龙李俊"
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 3,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "hidden": true
+  },
+  {
+   "id": "judeng",
+   "class": "judeng",
+   "side": "enemy",
+   "x": 18,
+   "y": 22,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "举灯庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "h1",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 22,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "h2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 22,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "g11",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g12",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g13",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g14",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g15",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g16",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g21",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g22",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g23",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g24",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g25",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g26",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g31",
+   "class": 39,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄教头",
+   "levelOffset": 2
+  },
+  {
+   "id": "g32",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g33",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g34",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g35",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g36",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g41",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g42",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g43",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g44",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g45",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g46",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g51",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g52",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g53",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g54",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g55",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g56",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g61",
+   "class": 39,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄教头",
+   "levelOffset": 2
+  },
+  {
+   "id": "g62",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g63",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g64",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g65",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g66",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g71",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g72",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g73",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g74",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g75",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g76",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g81",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g82",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g83",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g84",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g85",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g86",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g91",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g92",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g93",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g94",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g95",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g96",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g101",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g102",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g103",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g104",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g105",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g106",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g111",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g112",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g113",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g114",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g115",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g116",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "独龙冈 · 盘陀路"
+    ],
+    [
+     "narrate",
+     "宋江引着前军，趁黄昏直杀到独龙冈前。祝家庄上不见一个人，也不见一点灯火，只闻得林子里鸦雀乱叫。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "怎地这般寂静？莫不是有计？"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥怕甚么！铁牛先杀进去，砍翻那鸟庄门！"
+    ],
+    [
+     "say",
+     "huarong",
+     "哥哥，这条路弯弯曲曲，走来走去只在林子里转，看不见庄门在哪里。"
+    ],
+    [
+     "narrate",
+     "忽听得庄上一个号炮直飞起去，四下里喊声大举，来路上早被庄客用鹿角、木栅塞住了。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "中计了！众兄弟休要乱走，且杀出去再说！"
+    ],
+    [
+     "objective",
+     "找路杀出盘陀路\n败：宋江或武龙倒下；超过 20 回合"
+    ],
+    [
+     "turnLimit",
+     20
+    ],
+    [
+     "narrate",
+     "林子里不知哪里，一碗红灯晃了晃，往这边一指。"
+    ],
+    [
+     "trap",
+     [
+      "g11",
+      "g12",
+      "g13",
+      "g14",
+      "g15",
+      "g16",
+      "g21",
+      "g22",
+      "g23",
+      "g24",
+      "g25",
+      "g26"
+     ],
+     {
+      "count": 2
+     }
+    ],
+    [
+     "say",
+     "g11",
+     "梁山泊的贼，走不脱了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "黄信骑马当先寻路，不提防路边草里横起一条绊马索。"
+    ],
+    [
+     "focus",
+     "huangxin"
+    ],
+    [
+     "appear",
+     "h1",
+     {
+      "near": "huangxin"
+     }
+    ],
+    [
+     "appear",
+     "h2",
+     {
+      "near": "huangxin"
+     }
+    ],
+    [
+     "act",
+     "h1",
+     "attack",
+     "huangxin"
+    ],
+    [
+     "act",
+     "h2",
+     "attack",
+     "huangxin"
+    ],
+    [
+     "act",
+     "huangxin",
+     "hurt",
+     "h1"
+    ],
+    [
+     "bind",
+     "huangxin"
+    ],
+    [
+     "say",
+     "huangxin",
+     "哥哥小心！路边有绊马索——"
+    ],
+    [
+     "narrate",
+     "黄信连人带马绊翻，几把挠钩一齐搭住，拖进林子里去了。"
+    ],
+    [
+     "leave",
+     "huangxin"
+    ],
+    [
+     "standDown",
+     "h1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "songjiang",
+     "黄信兄弟！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "林子里不知哪里，一碗红灯晃了晃，往这边一指。"
+    ],
+    [
+     "trap",
+     [
+      "g31",
+      "g32",
+      "g33",
+      "g34",
+      "g35",
+      "g36"
+     ],
+     {
+      "count": 1
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "林子里不知哪里，一碗红灯晃了晃，往这边一指。"
+    ],
+    [
+     "trap",
+     [
+      "g41",
+      "g42",
+      "g43",
+      "g44",
+      "g45",
+      "g46"
+     ],
+     {
+      "count": 1
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "林子里不知哪里，一碗红灯晃了晃，往这边一指。"
+    ],
+    [
+     "trap",
+     [
+      "g111",
+      "g112",
+      "g113",
+      "g114",
+      "g115",
+      "g116"
+     ],
+     {
+      "count": 1
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "flag",
+     "shixiuCame"
+    ],
+    [
+     "narrate",
+     "忽见林子里一人飞奔过来，正是石秀。"
+    ],
+    [
+     "appear",
+     "shixiu",
+     {
+      "near": "songjiang"
+     }
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥休慌！兄弟已知路了！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "石秀兄弟！你从哪里来？"
+    ],
+    [
+     "say",
+     "shixiu",
+     "庄上钟离老人说与小弟：只看有白杨树便可转弯，不问路道阔狭，但有白杨树的转湾便是活路，没那树时都是死路。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "小弟昨夜已把白杨树一株株记下了。跟我来，往南出村口！"
+    ],
+    [
+     "unseal",
+     [
+      [
+       2,
+       14
+      ],
+      [
+       3,
+       14
+      ],
+      [
+       4,
+       14
+      ],
+      [
+       5,
+       11
+      ],
+      [
+       5,
+       12
+      ],
+      [
+       5,
+       13
+      ],
+      [
+       2,
+       19
+      ],
+      [
+       3,
+       19
+      ],
+      [
+       4,
+       19
+      ],
+      [
+       2,
+       24
+      ],
+      [
+       3,
+       24
+      ],
+      [
+       4,
+       24
+      ],
+      [
+       2,
+       29
+      ],
+      [
+       3,
+       29
+      ],
+      [
+       4,
+       29
+      ],
+      [
+       5,
+       31
+      ],
+      [
+       5,
+       32
+      ],
+      [
+       5,
+       33
+      ],
+      [
+       7,
+       14
+      ],
+      [
+       8,
+       14
+      ],
+      [
+       9,
+       14
+      ],
+      [
+       10,
+       16
+      ],
+      [
+       10,
+       17
+      ],
+      [
+       10,
+       18
+      ],
+      [
+       10,
+       31
+      ],
+      [
+       10,
+       32
+      ],
+      [
+       10,
+       33
+      ],
+      [
+       12,
+       14
+      ],
+      [
+       13,
+       14
+      ],
+      [
+       14,
+       14
+      ],
+      [
+       15,
+       11
+      ],
+      [
+       15,
+       12
+      ],
+      [
+       15,
+       13
+      ],
+      [
+       20,
+       11
+      ],
+      [
+       20,
+       12
+      ],
+      [
+       20,
+       13
+      ],
+      [
+       12,
+       34
+      ],
+      [
+       13,
+       34
+      ],
+      [
+       14,
+       34
+      ]
+     ]
+    ],
+    [
+     "narrate",
+     "石秀在前引路，看白杨树转弯，拽开挡路的木栅，往南杀出一条路来。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥再看那冈上——庄兵只看那碗红灯行事。我们往东，他把灯望东扯；往西，便望西扯。"
+    ],
+    [
+     "appear",
+     "judeng"
+    ],
+    [
+     "focus",
+     "judeng"
+    ],
+    [
+     "say",
+     "huarong",
+     "原来如此！待小弟一箭射下那碗灯来！"
+    ],
+    [
+     "objective",
+     "跟着石秀，看白杨树转弯，撤到村口（地图上标出的「村口」区域）：回合结束时宋江在区域里就过关；打倒冈上的举灯庄客，庄客就不能再照灯号设伏\n败：宋江、武龙或石秀倒下；超过 20 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "冈上那碗红灯又晃了晃，两路伏兵一齐杀出。"
+    ],
+    [
+     "trap",
+     [
+      "g51",
+      "g52",
+      "g53",
+      "g54",
+      "g55",
+      "g56",
+      "g61",
+      "g62",
+      "g63",
+      "g64",
+      "g65",
+      "g66"
+     ],
+     {
+      "count": 2,
+      "exclude": [
+       "route"
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "冈上那碗红灯又晃了晃，两路伏兵一齐杀出。"
+    ],
+    [
+     "trap",
+     [
+      "g71",
+      "g72",
+      "g73",
+      "g74",
+      "g75",
+      "g76",
+      "g81",
+      "g82",
+      "g83",
+      "g84",
+      "g85",
+      "g86"
+     ],
+     {
+      "count": 2,
+      "exclude": [
+       "route"
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "冈上那碗红灯又晃了晃，两路伏兵一齐杀出。"
+    ],
+    [
+     "trap",
+     [
+      "g91",
+      "g92",
+      "g93",
+      "g94",
+      "g95",
+      "g96",
+      "g101",
+      "g102",
+      "g103",
+      "g104",
+      "g105",
+      "g106"
+     ],
+     {
+      "count": 2,
+      "exclude": [
+       "route"
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "judeng"
+   },
+   "do": [
+    [
+     "flag",
+     "lampDown"
+    ],
+    [
+     "narrate",
+     "那碗红灯从冈上直落下来，四下里伏兵不见了灯号，都没了主张。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "好！没了灯号，看他们还埋伏得成！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "songjiang",
+    "area": [
+     11,
+     35,
+     37,
+     39
+    ],
+    "label": "村口",
+    "atTurnEnd": true
+   },
+   "if": "shixiuCame",
+   "do": [
+    [
+     "narrate",
+     "宋江引着众人跟着石秀，看白杨树转弯，杀出了盘陀路，退到村口下寨。"
+    ],
+    [
+     "title",
+     "独龙冈 · 营中"
+    ],
+    [
+     "narrate",
+     "点起人马，不见了黄信；石秀又说，杨林扮作解魇法师进庄，昨日也被拿了。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "折了两个兄弟，祝家庄又这般难打……"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，东边李家庄李应和祝家庄已翻了脸，何不去请他相助？"
+    ],
+    [
+     "narrate",
+     "次日，宋江备了礼物，带花荣、杨雄、石秀去李家庄求见李应。杜兴出来说：大官人带伤在床，不便相见，送了些酒礼出来。原来李应怕和梁山泊扯上干系，不肯出面。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "既是如此，我们只好再打祝家庄，救出黄信、杨林、时迁三个兄弟。"
+    ],
+    [
+     "narrate",
+     "欲知二打祝家庄胜败如何，且听下回分解。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "shixiu"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  }
+ ]
+}

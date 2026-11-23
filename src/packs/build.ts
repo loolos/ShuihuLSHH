@@ -295,6 +295,14 @@ export function stageClasses(rt: PackRuntime, stage: PackStageJson): number[] {
   return [...new Set(list.filter((c): c is number => c !== undefined))];
 }
 
+/** 关卡另外要画的地上物：map.seal 第三项和剧本 trap 的路障图块（进关前一并下载）【新】 */
+export function stageSealTiles(stage: PackStageJson): number[] {
+  const list = (stage.map.seal ?? []).flatMap((c) => (c.length > 2 ? [c[2]!] : []));
+  for (const t of stage.traps ?? []) if (t.tile !== undefined) list.push(t.tile);
+  for (const b of stage.script) for (const step of b.do) if (step[0] === 'trap') { const t = (step[2] as { tile?: number } | undefined)?.tile; if (typeof t === 'number') list.push(t); }
+  return [...new Set(list)];
+}
+
 /** 把关卡 JSON 编译成 StageInput：单位 → ACT 记录，剧本 → PasBlock（新指令 100 起，见 battle.ts） */
 /** 关卡的棋盘（地图 + 通行，含 map.open / map.seal） */
 export function stageBoard(files: FileSource, stage: PackStageJson): Board {
@@ -305,7 +313,7 @@ export function stageBoard(files: FileSource, stage: PackStageJson): Board {
     if (!board.onGround(x, y)) fail(`${stage.id}: map.open (${x},${y}) 不在地面上`);
     board.blocked[y * board.width + x] = 0;
   }
-  for (const [x, y] of stage.map.seal ?? []) {
+  for (const [x, y] of (stage.map.seal ?? []).map(([x, y]) => [x, y])) {
     if (!board.inBounds(x, y)) fail(`${stage.id}: map.seal (${x},${y}) 出界`);
     board.blocked[y * board.width + x] = 1;
   }
@@ -371,13 +379,13 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const classRef = (v: unknown) => (typeof v === 'number' ? v : (rt.classIds.get(String(v)) ?? fail(`${stage.id}: 没有职业 ${String(v)}`)));
   const flagIds = new Map<string, number>();
   const flagRef = (v: unknown) => flagIds.get(String(v)) ?? flagIds.set(String(v), flagIds.size + 1).get(String(v))!;
-  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, traps: stage.traps, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y]) => ({ x, y })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -427,6 +435,8 @@ interface Refs {
   unitRef: (id: unknown) => { json: PackUnitJson; act: ActUnit };
   skillRef: (id: unknown) => number;
   itemRef: (v: unknown) => number;
+  /** 关卡的路障候选路口（stage.traps，指令 129 用） */
+  traps?: PackStageJson['traps'];
   /** 多语言编号前缀「包/关卡」（§10.3）：剧本步骤末尾的 "#n" 编成「包/关卡#n」 */
   tidBase?: string;
 }
@@ -688,6 +698,19 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         const cells = (a[0] as [number, number][] | undefined) ?? [];
         if (!Array.isArray(cells) || !cells.length) fail(`第 ${index} 个区块：unseal 要写成 ["unseal", [[x, y], …]]`);
         ops.push({ op: 127, flag: null, value: 0, args: { cells: cells.map(([x, y]) => ({ x, y })) } });
+        break;
+      }
+      case 'trap': {
+        // ['trap', [伏兵…], {count, min, exclude, tile}] 就近摆路障、放伏兵（指令 129，盘陀路）【新】：
+        // 在 stage.traps 的候选路口里挑离我方最近（至少 min 步，默认 2）的 count 处（默认 1）堵上路障（画 tile 号地上物），
+        // 列出的人里还没登场的从路障靠我方的一侧杀出来；exclude 写路口的 tag，跳过这些路口（石秀带路以后不再堵正路）
+        const who = (a[0] as unknown[] | undefined) ?? [];
+        const o = (a[1] ?? {}) as { count?: number; min?: number; exclude?: string[]; tile?: number };
+        if (!r.traps?.length) fail(`第 ${index} 个区块：trap 要先在关卡里写 traps（候选路口）`);
+        if (!Array.isArray(who)) fail(`第 ${index} 个区块：trap 要写成 ["trap", [伏兵…], {选项}]`);
+        const sites = r.traps!.map((t) => ({ cells: t.cells.map(([x, y]) => ({ x, y })), ...(t.tag ? { tag: t.tag } : {}), ...(t.tile !== undefined ? { tile: t.tile } : {}) }));
+        const args = Object.fromEntries(Object.entries({ sites, groups: who.map((w) => r.unitRef(w).act.group), count: o.count, min: o.min, exclude: o.exclude, tile: o.tile }).filter(([, v]) => v !== undefined));
+        ops.push({ op: 129, flag: null, value: 0, args });
         break;
       }
       case 'stealthEnd':

@@ -66,7 +66,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
   for (let seed = 1; seed <= Number(n); seed++) {
     const input = make(seed);
     const b = new Battle(input);
-    const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && x.ops.some((o) => o.op === 29));
+    const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && !(x.trigger.side && x.trigger.flagged) && x.ops.some((o) => o.op === 29));
     const gt = goalBlock?.trigger.kind === 'area' ? goalBlock.trigger : null;
     let goal = gt ? { who: gt.chars ?? [gt.char], x: (gt.x1 + gt.x2) >> 1, y: (gt.y1 + gt.y2) >> 1, x1: Math.min(gt.x1, gt.x2), x2: Math.max(gt.x1, gt.x2), y1: Math.min(gt.y1, gt.y2), y2: Math.max(gt.y1, gt.y2) } : null;
     const inGoal = (c: { x: number; y: number }) => !!goal && c.x >= goal.x1 && c.x <= goal.x2 && c.y >= goal.y1 && c.y <= goal.y2;
@@ -131,7 +131,8 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
             // 每个哨兵现在和下回合可能站的位置、朝向（巡逻的沿直线往目标点走，走到了会掉头），半径多留 2 格给跟着走的公人
             // 有跟着走的友军（公人）时半径多留 2 格，没有就多留 1 格
             const pad = b.active().some((x) => x.side === 'ally') ? 2 : 1;
-            const eyes = b.watchZones().flatMap((w) => {
+            // 认得这人是自己人的哨兵（石秀探庄巡庄庄客认卖柴的）不算眼睛
+            const eyes = b.watchZones().filter((w) => !input.watchTrust?.[w.uid]?.includes(u.classId)).flatMap((w) => {
               const g = b.units[w.uid], route = b.patrolOf(g);
               const out = [{ x: w.x, y: w.y, facing: w.facing, r: w.r + pad }];
               if (!route) return out;
