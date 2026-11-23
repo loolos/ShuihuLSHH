@@ -1991,17 +1991,20 @@ export class Battle {
       const seen = this.units.find(
         (t) => (t.side === 'player' || t.side === 'ally') && t.alive && t.present && !this.spectators.has(t.uid) && !this.watchTrust.get(uid)?.includes(t.classId) && watcherSees(w, t, r),
       );
-      // 盘问【新】：认得的人走进会盘问的哨兵眼前（我方回合），拦下问话，这回合剩下的行动作废
-      if (!seen && w.hp >= w.stats.maxHp && this.watchQuestion.has(uid) && this.phase === 'player') {
+      // 盘问【新】：认得的人走进会盘问的哨兵眼前，拦下问话。我方回合：这回合剩下的行动作废；
+      // 敌方回合（巡逻的走过来看见他）：下个我方回合整回合动不了（负责人 2026-11-23）
+      if (!seen && w.hp >= w.stats.maxHp && this.watchQuestion.has(uid)) {
         const asked = this.units.find(
           (t) => t.side === 'player' && t.alive && t.present && this.watchTrust.get(uid)?.includes(t.classId) && this.mayQuestion(uid, t.uid) && watcherSees(w, t, r),
         );
         if (asked) {
           this.questioned.set(`${uid}:${asked.uid}`, this.turn);
           this.lockUndo();
-          asked.acted = true;
-          asked.ended = true;
-          asked.movementRemaining = 0;
+          if (this.phase === 'player') {
+            asked.acted = true;
+            asked.ended = true;
+            asked.movementRemaining = 0;
+          } else asked.stunTurns = Math.max(asked.stunTurns, 2); // 回合开始减 1，剩 1 → 下个我方回合跳过
           this.emit({ type: 'status', uid: asked.uid, text: '盘问' });
           this.emit({ type: 'say', uid, speaker: w.name, text: QUESTIONS[(this.turn + uid) % QUESTIONS.length] });
         }
