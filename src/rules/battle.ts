@@ -2762,8 +2762,17 @@ export class Battle {
         if (c) used.add(key(c.x, c.y));
         return c;
       };
+      // scatter：一个个散开站，每人挑离已站好的人最远的格子（开场第一波，负责人 2026-11-23：尽量分散）
+      const spread = (): Cell | undefined => {
+        const placed = near.filter((v) => used.has(key(v.x, v.y)));
+        if (!placed.length) return pick(front);
+        const gap = (c: Cell) => Math.min(...placed.map((v) => Math.abs(v.x - c.x) + Math.abs(v.y - c.y)));
+        const c = near.filter((v) => !used.has(key(v.x, v.y))).sort((p, q) => gap(q) - gap(p))[0];
+        if (c) used.add(key(c.x, c.y));
+        return c;
+      };
       for (const [n, u] of mine.entries()) {
-        const c = pick(n % 2 === 0 ? front : back);
+        const c = a.scatter ? spread() : pick(n % 2 === 0 ? front : back);
         if (!c) break;
         u.x = c.x;
         u.y = c.y;
