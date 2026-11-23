@@ -695,9 +695,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       }
       case 'unseal': {
         // ['unseal', [[x, y], …]] 打开 map.seal 封死的格子（侯健骗开黄文炳家大门）（指令 127）【新】
+        // ['unseal', [[x, y], …], {reach: [x, y]}]：另外再拽开几处 trap 设下的路障，直到原来能走的每一格路都通得到 (x, y)（盘陀路石秀带路）
         const cells = (a[0] as [number, number][] | undefined) ?? [];
         if (!Array.isArray(cells) || !cells.length) fail(`第 ${index} 个区块：unseal 要写成 ["unseal", [[x, y], …]]`);
-        ops.push({ op: 127, flag: null, value: 0, args: { cells: cells.map(([x, y]) => ({ x, y })) } });
+        const reach = (a[1] as { reach?: [number, number] } | undefined)?.reach;
+        ops.push({ op: 127, flag: null, value: 0, args: { cells: cells.map(([x, y]) => ({ x, y })), ...(reach ? { reach: { x: reach[0], y: reach[1] } } : {}) } });
         break;
       }
       case 'trap': {
