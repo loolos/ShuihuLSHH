@@ -83,7 +83,7 @@
   {
    "id": "luzhishen",
    "class": 16,
-   "side": "ally",
+   "side": "player",
    "x": 38,
    "y": 34,
    "level": 30,
@@ -93,7 +93,7 @@
   {
    "id": "wusong",
    "class": "wusong",
-   "side": "ally",
+   "side": "player",
    "x": 37,
    "y": 35,
    "level": 30,

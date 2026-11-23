@@ -71,7 +71,7 @@ export const CHAPTERS: ChapterDef[] = [
   // 之后进城镇「独龙冈整备」；火烧祝家店是大仗，饮马川三人当友军来救，鲁智深、武松中途赶到，时迁被挠钩拖走
   { name: '大闹翠屏山', stages: ['mainline/shapeiruhai', 'mainline/cuipingshan', 'mainline/zhujiadian'] },
   // 负责人 2026-11-23：三打祝家庄（原著第 47–50 回）。开头小关扑天雕李应：李应两封书讨时迁不成，到冈前与祝彪对阵，
-  // 中了回马箭，转友军往回撤，杨雄、石秀等断后护送；鲁智深、武松和饮马川三人做友军。三打本身还没做
+  // 中了回马箭，转友军往回撤，杨雄、石秀等断后护送；鲁智深、武松是我方，饮马川三人做友军。三打本身还没做
   { name: '三打祝家庄', stages: ['mainline/lijiazhuang'] },
 ];
 
