@@ -1813,6 +1813,162 @@
    "levelOffset": 1
   },
   {
+   "id": "g121",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g122",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客头目",
+   "levelOffset": 2
+  },
+  {
+   "id": "g123",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g124",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g125",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "g126",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 1
+  },
+  {
+   "id": "g131",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g132",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客头目",
+   "levelOffset": 2
+  },
+  {
+   "id": "g133",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g134",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "g135",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "g136",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 1
+  },
+  {
    "id": "gd1",
    "class": 39,
    "side": "enemy",
@@ -2089,7 +2245,7 @@
    "do": [
     [
      "narrate",
-     "林子里不知哪里，一碗红灯晃了晃，往这边一指。"
+     "红灯连晃了三晃，林子里三处一齐杀出伏兵来。"
     ],
     [
      "trap",
@@ -2099,10 +2255,22 @@
       "g33",
       "g34",
       "g35",
-      "g36"
+      "g36",
+      "g121",
+      "g122",
+      "g123",
+      "g124",
+      "g125",
+      "g126",
+      "g131",
+      "g132",
+      "g133",
+      "g134",
+      "g135",
+      "g136"
      ],
      {
-      "count": 1
+      "count": 3
      }
     ]
    ]
