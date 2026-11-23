@@ -358,7 +358,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
       ['jingyanggang', undefined, true],
       ['tiaolian', undefined, true],
       ['shizilou', undefined, false],
-      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong','bensang','toushou','liangshan-jielu','liangshan-songbie','jieyangling','jieyangzhen','mujiazhuang','chuanhuoer','jiangzhou-laocheng','dufang','pipating','xunyanglou','zhuguidian','liangshan-dingji','zhuanshang','jiaxin','fachang','bailongmiao','wuweijun','jiehuang','banqu','huandaocun','tuanyuan','yiling','caozhuang','zhufu','yinmachuan','changjie','jieyi','shapeiruhai','cuipingshan','zhujiadian'].map(id => [id,undefined,false]),
+      ...['shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong','bensang','toushou','liangshan-jielu','liangshan-songbie','jieyangling','jieyangzhen','mujiazhuang','chuanhuoer','jiangzhou-laocheng','dufang','pipating','xunyanglou','zhuguidian','liangshan-dingji','zhuanshang','jiaxin','fachang','bailongmiao','wuweijun','jiehuang','banqu','huandaocun','tuanyuan','yiling','caozhuang','zhufu','yinmachuan','changjie','jieyi','shapeiruhai','cuipingshan','zhujiadian','lijiazhuang'].map(id => [id,undefined,false]),
     ]);
     const cutscenes = ['xihuamen', 'songjiang-yanshixi', 'chaijin-liubin', 'tiaolian', 'shizipo','anpingzhai','zhangfu','xingzhe','kongjiazhuang','xingjiutang','yuanxiao','zhizhan','yeshuo','duiyingshan','shiyong','toushou','liangshan-songbie','chuanhuoer','jiangzhou-laocheng','xunyanglou','liangshan-dingji', 'jiehuang', 'tuanyuan', 'caozhuang', 'jieyi', 'cuipingshan'];
     for (const s of rt.stages.filter((x) => !cutscenes.includes(x.id))) {
@@ -371,7 +371,7 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
 
   it('武松四段（§15.12）：接在义释宋公明后面；单位和 move 的目标格都可通行；过场里每个 move 都走得到；过场演完就过关', () => {
     const after = insertPlaces().filter((p) => p.after === 'N14').map((p) => p.ref.slice('mainline/'.length));
-    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong','bensang','toushou','liangshan-jielu','liangshan-songbie','jieyangling','jieyangzhen','mujiazhuang','chuanhuoer','jiangzhou-laocheng','dufang','pipating','xunyanglou','zhuguidian','liangshan-dingji','zhuanshang','jiaxin','fachang','bailongmiao','wuweijun','jiehuang','banqu','huandaocun','tuanyuan','yiling','caozhuang','zhufu','yinmachuan','changjie','jieyi','shapeiruhai','cuipingshan','zhujiadian']);
+    expect(after).toEqual(['songjiang-yanshixi', 'songjiazhuang', 'chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou', 'shizipo','anpingzhai','kuaihuolin','zhangfu','feiyunpu','yuanyanglou','xingzhe','wugongling','kongliang','kongjiazhuang','qingfengshan','xingjiutang','yuanxiao','qianghuarong','zhizhan','jieqiuche','yekun','yeshuo','gongpo','duiyingshan','liufeng','shiyong','bensang','toushou','liangshan-jielu','liangshan-songbie','jieyangling','jieyangzhen','mujiazhuang','chuanhuoer','jiangzhou-laocheng','dufang','pipating','xunyanglou','zhuguidian','liangshan-dingji','zhuanshang','jiaxin','fachang','bailongmiao','wuweijun','jiehuang','banqu','huandaocun','tuanyuan','yiling','caozhuang','zhufu','yinmachuan','changjie','jieyi','shapeiruhai','cuipingshan','zhujiadian','lijiazhuang']);
     for (const id of ['chaijin-liubin', 'jingyanggang', 'tiaolian', 'shizilou']) {
       const stage = stageOf(id);
       const b = new Battle(compileStage(rt, stage, files, { seed: 1, text: tr }));
@@ -1603,7 +1603,8 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/caozhuang')).toBe('mainline/zhufu');
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/zhufu')).toBe('mainline/yinmachuan');
     expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/yinmachuan')).toBe('mainline/changjie');
-    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/zhujiadian')).toBeUndefined();
+    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/zhujiadian')).toBe('mainline/lijiazhuang');
+    expect(pendingInsert({version:1,stage:1,gold:0,members:[]},list,'N14','after','mainline/lijiazhuang')).toBeUndefined();
     expect(stage('shizilou').townAfter).toBe(11);
   });
   it('飞云浦等待后续增援不提前胜；鸳鸯楼三首领与守卫全灭且援兵到齐才胜',()=> {
@@ -1671,3 +1672,35 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
    const jumped=inheritAssets(previous,{version:1,stage:40,gold:100000,members:[{classId:0,level:29,exp:0,slots:[10,90,120,156]}]});
    expect(jumped.gold).toBe(19);expect(jumped.members[0].slots).toEqual(previous.members[0].slots);expect(jumped.members[0].forge).toEqual(previous.members[0].forge);expect(jumped.members[0].level).toBe(29);
  });
+
+describe.skipIf(!has)('三打祝家庄：扑天雕李应', () => {
+  const files = has ? new NodeFiles(DATA) : (null as unknown as NodeFiles);
+  const tr = has ? buildT2S(files) : (s: string) => s;
+  const rt = has ? loadPackFromDisk('mainline', loadGameData(files, tr)) : (null as never);
+  const start = () => {
+    const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'lijiazhuang')!, files, { seed: 1, text: tr }));
+    b.begin();
+    return { b, ly: b.units.find((u) => u.classId === rt.classIds.get('liying'))!, zb: b.units.find((u) => u.classId === rt.classIds.get('zhubiao'))! };
+  };
+  it('开场李应归玩家操作；第 3 回合中回马箭：生命降到三成、落马移动 −3、转友军往回撤，庄门杀出援兵', () => {
+    const { b, ly } = start();
+    expect(ly.side).toBe('player');
+    const move0 = ly.stats.move;
+    const ev: BattleEvent[] = [];
+    while (b.turn < 3 && b.status === 'playing') ev.push(...b.endPlayerPhase());
+    expect(ly.side).toBe('ally');
+    expect(ly.alive).toBe(true);
+    expect(ly.hp).toBeLessThanOrEqual(Math.round(ly.stats.maxHp * 0.3));
+    expect(ly.stats.move).toBe(move0 - 3); // 转友军后还按我方好汉算属性
+    expect(ly.ai.mode).toBe(4);
+    expect(ev.some((e) => e.type === 'status' && e.uid === ly.uid && e.text === '重傷')).toBe(true);
+    expect(b.units.some((u) => u.side === 'enemy' && u.present && u.name === '祝家庄教头')).toBe(true);
+  });
+  it('剧情受伤不会把已经更低的生命抬高，也不会打死人', () => {
+    const { b, ly } = start();
+    ly.hp = 1;
+    while (b.turn < 3 && b.status === 'playing') b.endPlayerPhase();
+    expect(ly.hp).toBe(1);
+    expect(ly.alive).toBe(true);
+  });
+});

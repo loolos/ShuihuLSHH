@@ -1,0 +1,1453 @@
+{
+ "id": "lijiazhuang",
+ "title": "扑天雕李应",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 800
+ },
+ "map": {
+  "base": "N-add14"
+ },
+ "bgm": [
+  "escape",
+  "manor",
+  "battle"
+ ],
+ "units": [
+  {
+   "id": "liying",
+   "class": "liying",
+   "side": "player",
+   "x": 33,
+   "y": 30,
+   "level": 30,
+   "facing": 1,
+   "name": "扑天雕李应",
+   "point": [
+    50,
+    50
+   ]
+  },
+  {
+   "id": "duxing",
+   "class": "duxing",
+   "side": "player",
+   "x": 35,
+   "y": 31,
+   "level": 30,
+   "facing": 1,
+   "name": "鬼脸儿杜兴"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 36,
+   "y": 33,
+   "level": 30,
+   "facing": 1,
+   "name": "武龙"
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 35,
+   "y": 33,
+   "level": 30,
+   "facing": 1,
+   "name": "病关索杨雄"
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 36,
+   "y": 32,
+   "level": 30,
+   "facing": 1,
+   "name": "拼命三郎石秀"
+  },
+  {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "ally",
+   "x": 38,
+   "y": 34,
+   "level": 30,
+   "facing": 1,
+   "name": "鲁智深"
+  },
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "side": "ally",
+   "x": 37,
+   "y": 35,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "ally",
+   "x": 39,
+   "y": 36,
+   "level": 30,
+   "facing": 1,
+   "name": "火眼狻猊邓飞",
+   "hpMultiplier": 1.1
+  },
+  {
+   "id": "mengkang",
+   "class": 55,
+   "side": "ally",
+   "x": 40,
+   "y": 35,
+   "level": 30,
+   "facing": 1,
+   "name": "玉幡竿孟康"
+  },
+  {
+   "id": "peixuan",
+   "class": 36,
+   "side": "ally",
+   "x": 38,
+   "y": 36,
+   "level": 30,
+   "facing": 1,
+   "name": "铁面孔目裴宣"
+  },
+  {
+   "id": "zhubiao",
+   "class": "zhubiao",
+   "side": "enemy",
+   "x": 29,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝彪",
+   "enemyRank": "leader",
+   "levelOffset": 2,
+   "hpMultiplier": 2.2
+  },
+  {
+   "id": "a1",
+   "class": 19,
+   "side": "enemy",
+   "x": 28,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a2",
+   "class": 40,
+   "side": "enemy",
+   "x": 28,
+   "y": 26,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a3",
+   "class": 41,
+   "side": "enemy",
+   "x": 28,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a4",
+   "class": 19,
+   "side": "enemy",
+   "x": 28,
+   "y": 29,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a5",
+   "class": 40,
+   "side": "enemy",
+   "x": 27,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a6",
+   "class": 34,
+   "side": "enemy",
+   "x": 26,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "a7",
+   "class": 34,
+   "side": "enemy",
+   "x": 26,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "a8",
+   "class": 20,
+   "side": "enemy",
+   "x": 26,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "b1",
+   "class": 43,
+   "side": "enemy",
+   "x": 37,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "b2",
+   "class": 43,
+   "side": "enemy",
+   "x": 39,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "b3",
+   "class": 43,
+   "side": "enemy",
+   "x": 41,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1
+  },
+  {
+   "id": "b4",
+   "class": 41,
+   "side": "enemy",
+   "x": 38,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "b5",
+   "class": 41,
+   "side": "enemy",
+   "x": 40,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "b6",
+   "class": 34,
+   "side": "enemy",
+   "x": 39,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "jiaotou",
+   "class": 39,
+   "side": "enemy",
+   "x": 10,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄教头",
+   "enemyRank": "leader",
+   "hpMultiplier": 1.4
+  },
+  {
+   "id": "c1",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 11,
+   "y": 24,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "挠钩手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c3",
+   "class": 19,
+   "side": "enemy",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c4",
+   "class": 19,
+   "side": "enemy",
+   "x": 11,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c5",
+   "class": 40,
+   "side": "enemy",
+   "x": 10,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c6",
+   "class": 20,
+   "side": "enemy",
+   "x": 10,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c7",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 24,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d1",
+   "class": 43,
+   "side": "enemy",
+   "x": 50,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "d2",
+   "class": 43,
+   "side": "enemy",
+   "x": 51,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "d3",
+   "class": 43,
+   "side": "enemy",
+   "x": 52,
+   "y": 38,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "d4",
+   "class": 41,
+   "side": "enemy",
+   "x": 50,
+   "y": 42,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d5",
+   "class": 41,
+   "side": "enemy",
+   "x": 51,
+   "y": 41,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d6",
+   "class": 40,
+   "side": "enemy",
+   "x": 52,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d7",
+   "class": 34,
+   "side": "enemy",
+   "x": 53,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d8",
+   "class": 34,
+   "side": "enemy",
+   "x": 53,
+   "y": 41,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "e1",
+   "class": 19,
+   "side": "enemy",
+   "x": 40,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "e2",
+   "class": 40,
+   "side": "enemy",
+   "x": 41,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "e3",
+   "class": 19,
+   "side": "enemy",
+   "x": 42,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "e4",
+   "class": 41,
+   "side": "enemy",
+   "x": 40,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "e5",
+   "class": 20,
+   "side": "enemy",
+   "x": 41,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 42,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 10,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "liying"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "郓州 · 李家庄"
+    ],
+    [
+     "narrate",
+     "杜兴引着杨雄、石秀、武龙三人来到独龙冈前东边的李家庄。庄主扑天雕李应，使一条浑铁点钢枪，背藏五口飞刀，百步取人，神出鬼没。"
+    ],
+    [
+     "say",
+     "duxing",
+     "这独龙冈上三个村坊：中间祝家庄，西边扈家庄，东边便是我们李家庄。三村结下生死誓愿，同心共意，但有吉凶，递相救应。"
+    ],
+    [
+     "say",
+     "liying",
+     "既是杜主管的旧识，便是我的朋友。我写一封书，叫祝家庄放了那个时迁便是。"
+    ],
+    [
+     "narrate",
+     "李应修了一封书，差一个副主管送去。午后回来说：祝家庄只是不放，要解上州去。"
+    ],
+    [
+     "say",
+     "liying",
+     "怪哉！他三家村里结生死之交，书到便当依允，如何恁地？杜主管，你亲自去走一遭。"
+    ],
+    [
+     "narrate",
+     "李应亲笔写了书札，使个图书印记，交与杜兴。杜兴骑马去了，近晚方回，气得紫涨了面皮，半晌说不得话。"
+    ],
+    [
+     "say",
+     "duxing",
+     "祝彪那厮把大官人的书扯得粉碎，喝叫把小人叉出庄门，还骂大官人「休要讨死，要与梁山泊贼人通同，一发捉了解官」！"
+    ],
+    [
+     "say",
+     "liying",
+     "这厮无礼！庄客，备我的马来！"
+    ],
+    [
+     "title",
+     "独龙冈 · 祝家庄前"
+    ],
+    [
+     "narrate",
+     "李应披挂上马，点起三百庄客，杨雄、石秀、武龙随后，直奔祝家庄来。鲁智深、武松和饮马川三位头领本要先上梁山报信，也一齐赶来助阵。"
+    ],
+    [
+     "say",
+     "liying",
+     "祝彪！你如何扯了我的书，辱我名讳？"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "李应！你和梁山贼人往来，谁不知道？今日送上门来，正好一发拿了！"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "这厮好大口气！洒家来会你！"
+    ],
+    [
+     "objective",
+     "随李应到独龙冈前，向祝家庄讨还时迁\n败：李应、杨雄、石秀或武龙倒下；超过 15 回合"
+    ],
+    [
+     "turnLimit",
+     15
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": "wounded",
+   "do": [
+    [
+     "flag",
+     "wounded"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "李应！你要死么？看枪！"
+    ],
+    [
+     "narrate",
+     "两个斗了十七八合，祝彪拨回马便走。李应纵马赶去，祝彪把枪横担在马上，左手拈弓，右手取箭，搭上箭，拽满弓，觑得较亲，背翻身一箭——"
+    ],
+    [
+     "focus",
+     "liying"
+    ],
+    [
+     "shoot",
+     "zhubiao",
+     "liying",
+     ""
+    ],
+    [
+     "act",
+     "liying",
+     "hurt"
+    ],
+    [
+     "wound",
+     "liying",
+     30
+    ],
+    [
+     "buff",
+     "liying",
+     "move",
+     {
+      "add": -3
+     }
+    ],
+    [
+     "say",
+     "liying",
+     "啊——！"
+    ],
+    [
+     "narrate",
+     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+    ],
+    [
+     "defect",
+     "liying",
+     "ally"
+    ],
+    [
+     "move",
+     "liying",
+     38,
+     33
+    ],
+    [
+     "setAi",
+     "liying",
+     4
+    ],
+    [
+     "say",
+     "shixiu",
+     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟说得是。祝家这厮好不歹毒！"
+    ],
+    [
+     "narrate",
+     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+    ],
+    [
+     "appear",
+     "jiaotou"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "appear",
+     "c7"
+    ],
+    [
+     "say",
+     "jiaotou",
+     "三郎射中了！拿住李应，连那两个梁山贼一发拿了！"
+    ],
+    [
+     "objective",
+     "护送受伤的李应退回李家庄（地图上标出的「李家庄」区域）：回合结束时李应在区域里就过关；打倒全部敌人也过关\n败：李应、杨雄、石秀或武龙倒下；超过 15 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "zhubiao",
+    "by": "liying"
+   },
+   "unless": "wounded",
+   "do": [
+    [
+     "flag",
+     "wounded"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "李应！你要死么？看枪！"
+    ],
+    [
+     "narrate",
+     "两个斗了十七八合，祝彪拨回马便走。李应纵马赶去，祝彪把枪横担在马上，左手拈弓，右手取箭，搭上箭，拽满弓，觑得较亲，背翻身一箭——"
+    ],
+    [
+     "focus",
+     "liying"
+    ],
+    [
+     "shoot",
+     "zhubiao",
+     "liying",
+     ""
+    ],
+    [
+     "act",
+     "liying",
+     "hurt"
+    ],
+    [
+     "wound",
+     "liying",
+     30
+    ],
+    [
+     "buff",
+     "liying",
+     "move",
+     {
+      "add": -3
+     }
+    ],
+    [
+     "say",
+     "liying",
+     "啊——！"
+    ],
+    [
+     "narrate",
+     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+    ],
+    [
+     "defect",
+     "liying",
+     "ally"
+    ],
+    [
+     "move",
+     "liying",
+     38,
+     33
+    ],
+    [
+     "setAi",
+     "liying",
+     4
+    ],
+    [
+     "say",
+     "shixiu",
+     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟说得是。祝家这厮好不歹毒！"
+    ],
+    [
+     "narrate",
+     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+    ],
+    [
+     "appear",
+     "jiaotou"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "appear",
+     "c7"
+    ],
+    [
+     "say",
+     "jiaotou",
+     "三郎射中了！拿住李应，连那两个梁山贼一发拿了！"
+    ],
+    [
+     "objective",
+     "护送受伤的李应退回李家庄（地图上标出的「李家庄」区域）：回合结束时李应在区域里就过关；打倒全部敌人也过关\n败：李应、杨雄、石秀或武龙倒下；超过 15 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhubiao",
+    "below": 60,
+    "spare": true
+   },
+   "unless": "wounded",
+   "do": [
+    [
+     "flag",
+     "wounded"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "李应！你要死么？看枪！"
+    ],
+    [
+     "narrate",
+     "两个斗了十七八合，祝彪拨回马便走。李应纵马赶去，祝彪把枪横担在马上，左手拈弓，右手取箭，搭上箭，拽满弓，觑得较亲，背翻身一箭——"
+    ],
+    [
+     "focus",
+     "liying"
+    ],
+    [
+     "shoot",
+     "zhubiao",
+     "liying",
+     ""
+    ],
+    [
+     "act",
+     "liying",
+     "hurt"
+    ],
+    [
+     "wound",
+     "liying",
+     30
+    ],
+    [
+     "buff",
+     "liying",
+     "move",
+     {
+      "add": -3
+     }
+    ],
+    [
+     "say",
+     "liying",
+     "啊——！"
+    ],
+    [
+     "narrate",
+     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+    ],
+    [
+     "defect",
+     "liying",
+     "ally"
+    ],
+    [
+     "move",
+     "liying",
+     38,
+     33
+    ],
+    [
+     "setAi",
+     "liying",
+     4
+    ],
+    [
+     "say",
+     "shixiu",
+     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟说得是。祝家这厮好不歹毒！"
+    ],
+    [
+     "narrate",
+     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+    ],
+    [
+     "appear",
+     "jiaotou"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "appear",
+     "c7"
+    ],
+    [
+     "say",
+     "jiaotou",
+     "三郎射中了！拿住李应，连那两个梁山贼一发拿了！"
+    ],
+    [
+     "objective",
+     "护送受伤的李应退回李家庄（地图上标出的「李家庄」区域）：回合结束时李应在区域里就过关；打倒全部敌人也过关\n败：李应、杨雄、石秀或武龙倒下；超过 15 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "liying",
+    "below": 40,
+    "spare": true
+   },
+   "unless": "wounded",
+   "do": [
+    [
+     "flag",
+     "wounded"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "李应！你要死么？看枪！"
+    ],
+    [
+     "narrate",
+     "两个斗了十七八合，祝彪拨回马便走。李应纵马赶去，祝彪把枪横担在马上，左手拈弓，右手取箭，搭上箭，拽满弓，觑得较亲，背翻身一箭——"
+    ],
+    [
+     "focus",
+     "liying"
+    ],
+    [
+     "shoot",
+     "zhubiao",
+     "liying",
+     ""
+    ],
+    [
+     "act",
+     "liying",
+     "hurt"
+    ],
+    [
+     "wound",
+     "liying",
+     30
+    ],
+    [
+     "buff",
+     "liying",
+     "move",
+     {
+      "add": -3
+     }
+    ],
+    [
+     "say",
+     "liying",
+     "啊——！"
+    ],
+    [
+     "narrate",
+     "那一箭正中李应臂膊，李应翻身落马。庄客们急忙扶起，夺了马匹，抢着往后退。"
+    ],
+    [
+     "defect",
+     "liying",
+     "ally"
+    ],
+    [
+     "move",
+     "liying",
+     38,
+     33
+    ],
+    [
+     "setAi",
+     "liying",
+     4
+    ],
+    [
+     "say",
+     "shixiu",
+     "大官人中箭了！哥哥，我们断后，教庄客扶大官人回去！"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "兄弟说得是。祝家这厮好不歹毒！"
+    ],
+    [
+     "narrate",
+     "祝家庄庄门大开，一伙挠钩手跟着教头抢出来，要来拿李应。"
+    ],
+    [
+     "appear",
+     "jiaotou"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "appear",
+     "c7"
+    ],
+    [
+     "say",
+     "jiaotou",
+     "三郎射中了！拿住李应，连那两个梁山贼一发拿了！"
+    ],
+    [
+     "objective",
+     "护送受伤的李应退回李家庄（地图上标出的「李家庄」区域）：回合结束时李应在区域里就过关；打倒全部敌人也过关\n败：李应、杨雄、石秀或武龙倒下；超过 15 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "祝家庄的一队马军早从冈后绕出来，拦在回李家庄的路上。"
+    ],
+    [
+     "appear",
+     "d1"
+    ],
+    [
+     "appear",
+     "d2"
+    ],
+    [
+     "appear",
+     "d3"
+    ],
+    [
+     "appear",
+     "d4"
+    ],
+    [
+     "appear",
+     "d5"
+    ],
+    [
+     "appear",
+     "d6"
+    ],
+    [
+     "appear",
+     "d7"
+    ],
+    [
+     "appear",
+     "d8"
+    ],
+    [
+     "say",
+     "d1",
+     "李应休走！留下命来！"
+    ],
+    [
+     "say",
+     "wusong",
+     "前面也有截路的！哥哥们护着大官人，武松去开路！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "narrate",
+     "南边林子里一声锣响，又抢出一伙庄客来，直扑李应。"
+    ],
+    [
+     "appear",
+     "e1"
+    ],
+    [
+     "appear",
+     "e2"
+    ],
+    [
+     "appear",
+     "e3"
+    ],
+    [
+     "appear",
+     "e4"
+    ],
+    [
+     "appear",
+     "e5"
+    ],
+    [
+     "appear",
+     "e6"
+    ],
+    [
+     "say",
+     "duxing",
+     "大官人当心！林子里有埋伏！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhubiao",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "zhubiao",
+     "好厉害的梁山贼……收兵，回庄！"
+    ],
+    [
+     "narrate",
+     "祝彪见势头不好，拨回马望庄里便走，吊桥拽起，庄门紧闭。"
+    ],
+    [
+     "standDown",
+     "zhubiao",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ],
+    [
+     "flag",
+     "zhubiaoFled"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "liying",
+    "area": [
+     47,
+     47,
+     53,
+     53
+    ],
+    "label": "李家庄",
+    "atTurnEnd": true
+   },
+   "if": "wounded",
+   "do": [
+    [
+     "flag",
+     "home"
+    ]
+   ]
+  },
+  {
+   "on": "allEnemiesDefeated",
+   "if": "wounded",
+   "do": [
+    [
+     "flag",
+     "home"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "home"
+   },
+   "do": [
+    [
+     "narrate",
+     "众人护着李应退回李家庄，祝家庄的人马也不敢追来。"
+    ],
+    [
+     "title",
+     "李家庄 · 当晚"
+    ],
+    [
+     "narrate",
+     "李应拔了箭，敷上金疮药，在后堂歇息。杨雄、石秀、武龙入来问安。"
+    ],
+    [
+     "say",
+     "liying",
+     "不想祝彪这厮如此无礼，又暗箭伤人。祝家庄既翻了脸，这事我李家庄也救不得了。"
+    ],
+    [
+     "say",
+     "duxing",
+     "大官人的意思，二位还是投梁山泊去，请晁、宋二头领起兵来救时迁兄弟。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "大官人为我们受了这一箭，此恩不敢忘。小弟这便和哥哥上梁山泊去。"
+    ],
+    [
+     "say",
+     "yangxiong",
+     "只是累了大官人，我们心里过意不去。"
+    ],
+    [
+     "say",
+     "liying",
+     "休如此说。我身上有伤，不能远送，你们路上小心。"
+    ],
+    [
+     "narrate",
+     "次日，杨雄、石秀、武龙辞了李应、杜兴，取路投梁山泊来。鲁智深、武松和饮马川三位头领也一同上路。"
+    ],
+    [
+     "narrate",
+     "欲知梁山泊肯不肯起兵，三打祝家庄如何厮杀，且听下回分解。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "liying"
+   },
+   "do": [
+    [
+     "defeat",
+     "李应倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "yangxiong"
+   },
+   "do": [
+    [
+     "defeat",
+     "杨雄倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "shixiu"
+   },
+   "do": [
+    [
+     "defeat",
+     "石秀倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}

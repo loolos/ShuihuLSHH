@@ -690,6 +690,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // ['stealthEnd'] 潜行结束：哨兵不再警戒，已经发现的也不再判负（智取无为军骗开大门以后）【新】
         op(125);
         break;
+      case 'wound': {
+        // ['wound', 谁, 百分比] 剧情受伤（指令 128，李应中祝彪的回马箭）：生命降到最大值的这个百分比（已经更低就不动，至少留 1 点），不结算经验【新】
+        const pct = Number(a[1]);
+        if (!(pct > 0 && pct < 100)) fail(`第 ${index} 个区块：wound 的百分比要在 1–99 之间`);
+        select(a[0]);
+        op(128, pct);
+        break;
+      }
       case 'setAi':
         // ['setAi', 谁, 模式] 改 AI 模式（揭阳岭放哨的火家看见人才跑回店里）【新】
         select(a[0]);

@@ -2427,6 +2427,16 @@ export class Battle {
           this.spotters = {};
           for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = false;
           break;
+        // 128 剧情受伤（扩展包【新】，李应中祝彪的回马箭）：生命降到最大值的 value%，已经更低就不动，至少留 1 点
+        case 128: {
+          if (!sel?.present || !sel.alive) break;
+          const hp = Math.max(1, Math.min(sel.hp, Math.round((sel.stats.maxHp * op.value) / 100)));
+          const delta = hp - sel.hp;
+          sel.hp = hp;
+          this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta });
+          this.emit({ type: 'status', uid: sel.uid, text: '重傷' });
+          break;
+        }
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
@@ -2505,9 +2515,14 @@ export class Battle {
             : [];
           const crew = pool.slice(0, frac ? Math.round(pool.length * frac) : (op.args?.nearest ?? 0));
           for (const u of op.args?.crewOnly ? crew : [sel, ...crew]) {
+            // 我方好汉转成友军（李应中箭后自己往回撤）：还按我方好汉算属性，免得移动、体力跟着换成友军模板【新】
+            if (from === 'player' && op.text !== 'player' && !u.statSide) {
+              u.statSide = 'player';
+              refreshStats(u, this.data);
+            }
             u.side = op.text as Unit['side'];
             u.ended = true;
-            this.emit({ type: 'status', uid: u.uid, text: op.value === 1 ? '被擒' : this.spectators.has(u.uid) ? (u.side === 'ally' ? '观战' : '归队') : u.side === 'enemy' ? '倒戈' : '歸順' });
+            this.emit({ type: 'status', uid: u.uid, text: op.value === 1 ? '被擒' : this.spectators.has(u.uid) ? (u.side === 'ally' ? '观战' : '归队') : u.side === 'enemy' ? '倒戈' : from === 'player' ? '撤離' : '歸順' });
             // 观战/归队不换模型，避免重复播放逐人淡出淡入。
             if (!this.spectators.has(u.uid)) this.emit({ type: 'look', uid: u.uid, classId: u.classId });
           }
