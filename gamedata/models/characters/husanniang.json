@@ -8,81 +8,57 @@
  ],
  "remove": [
   "围裙",
-  "头花"
+  "头花",
+  "发髻",
+  "金钗"
  ],
  "colors": {
   "短袄": {
    "color": [
-    186,
-    44,
-    48
+    54,
+    140,
+    118
    ],
    "colors": [
     [
-     200,
-     160,
-     60
+     214,
+     172,
+     64
     ],
     [
-     200,
-     160,
-     60
+     24,
+     96,
+     74
     ]
    ]
   },
   "长裙": {
    "color": [
-    160,
-    36,
-    42
+    24,
+    96,
+    74
    ],
    "colors": [
     [
-     200,
-     160,
-     60
+     214,
+     172,
+     64
     ]
    ]
   },
   "鞋": [
-   110,
-   40,
-   30
+   226,
+   220,
+   204
   ],
   "镯子": [
-   200,
-   160,
-   60
+   214,
+   172,
+   64
   ]
  },
  "add": {
   "layers": [
-   {
-    "name": "胸甲",
-    "bones": [
-     "spine_0[123]",
-     "clavicle_.*"
-    ],
-    "when": "1.00 < z < 1.42 and ax < 0.20",
-    "offset": "0.06 + (0.04 * (1 - abs(z - 1.05) / 0.08) if abs(z - 1.05) < 0.08 else 0)",
-    "thickness": 0.012,
-    "color": [
-     206,
-     166,
-     62
-    ],
-    "folds": 0,
-    "colors": [
-     {
-      "when": "int(z * 45) % 2 == 0",
-      "color": [
-       160,
-       120,
-       40
-      ]
-     }
-    ]
-   },
    {
     "name": "护肩",
     "bones": [
@@ -90,8 +66,8 @@
      "upperarm_.*"
     ],
     "when": "z > 1.30 and 0.14 < ax < 0.34",
-    "offset": "0.07",
-    "thickness": 0.012,
+    "offset": "0.05",
+    "thickness": 0.008,
     "color": [
      206,
      166,
@@ -109,52 +85,18 @@
     ]
    },
    {
-    "name": "裙甲",
-    "bones": [
-     "pelvis",
-     "thigh_.*",
-     "spine_01"
-    ],
-    "when": "0.60 < z < 0.99 and (y < 0.02 or ax > 0.12)",
-    "offset": "0.09 + (0.13 * (0.95 - z) if z < 0.95 else 0)",
-    "thickness": 0.012,
-    "color": [
-     206,
-     166,
-     62
-    ],
-    "colors": [
-     {
-      "when": "int(z * 30) % 2 == 0",
-      "color": [
-       160,
-       120,
-       40
-      ]
-     },
-     {
-      "when": "z < 0.64",
-      "color": [
-       186,
-       44,
-       48
-      ]
-     }
-    ]
-   },
-   {
     "name": "狮蛮带",
     "bones": [
      "spine_01",
      "pelvis"
     ],
     "when": "0.97 <= z <= 1.03",
-    "offset": 0.12,
-    "thickness": 0.015,
+    "offset": 0.1,
+    "thickness": 0.02,
     "color": [
-     120,
-     30,
-     30
+     196,
+     40,
+     36
     ],
     "colors": [
      {
@@ -166,27 +108,87 @@
       ]
      }
     ]
+   },
+   {
+    "name": "红围巾",
+    "bones": [
+     "neck_01",
+     "spine_03",
+     "clavicle_.*"
+    ],
+    "when": "1.38 < z < 1.51 and ax < 0.11",
+    "offset": 0.04,
+    "thickness": 0.012,
+    "color": [
+     196,
+     40,
+     36
+    ],
+    "folds": 0.5
    }
   ],
   "props": [
    {
-    "name": "金冠",
+    "name": "金盔",
     "bone": "Head",
-    "shape": "box",
+    "shape": "sphere",
+    "radius": 0.115,
     "at": [
      0,
-     0.02,
-     1.93
+     0.01,
+     1.72
     ],
     "scale": [
-     0.06,
-     0.03,
-     0.05
+     1,
+     1.05,
+     0.85
     ],
     "color": [
-     220,
-     180,
-     70
+     214,
+     172,
+     64
+    ]
+   },
+   {
+    "name": "盔檐",
+    "bone": "Head",
+    "shape": "sphere",
+    "radius": 0.125,
+    "at": [
+     0,
+     0.01,
+     1.68
+    ],
+    "scale": [
+     1,
+     1.05,
+     0.15
+    ],
+    "color": [
+     160,
+     120,
+     40
+    ]
+   },
+   {
+    "name": "盔缨",
+    "bone": "Head",
+    "shape": "sphere",
+    "radius": 0.04,
+    "at": [
+     0,
+     0.03,
+     1.85
+    ],
+    "scale": [
+     1,
+     1,
+     1.5
+    ],
+    "color": [
+     196,
+     40,
+     36
     ]
    },
    {
@@ -205,9 +207,34 @@
      1
     ],
     "color": [
-     176,
-     36,
-     40
+     196,
+     40,
+     36
+    ]
+   },
+   {
+    "name": "围巾尾",
+    "bone": "spine_03",
+    "shape": "box",
+    "at": [
+     0.05,
+     -0.16,
+     1.3
+    ],
+    "scale": [
+     0.05,
+     0.02,
+     0.12
+    ],
+    "rot": [
+     10,
+     0,
+     10
+    ],
+    "color": [
+     196,
+     40,
+     36
     ]
    }
   ]
@@ -215,7 +242,7 @@
  "out": "packs/mainline/sprites/husanniang",
  "frames": 8,
  "actions": {
-  "idle": "Sword_Idle",
+  "idle": "Idle_Shield_Loop",
   "walk": "Walk_Loop",
   "hit-chest": "Hit_Chest",
   "defend": "Sword_Block",
@@ -234,5 +261,11 @@
   },
   "dash": "Sword_Dash",
   "crouch-idle": "Crouch_Idle_Loop"
+ },
+ "render": {
+  "toonRange": [
+   0.7,
+   1.1
+  ]
  }
 }
