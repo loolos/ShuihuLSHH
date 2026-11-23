@@ -405,6 +405,15 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     const ring = [[-1, 0], [1, 0], [0, -1], [0, 1]].filter(([dx, dy]) => b.board.passable(judeng.x + dx, judeng.y + dy));
     expect(ring).toEqual([]);
     for (let t = 6; t <= 8; t++) { advance(b, t); toCamp(); }
+    // 走到中间灯杆台附近，守灯的伏兵现身（负责人 2026-11-23）
+    const guards = b.units.filter((u) => u.name.startsWith('守灯'));
+    expect(guards.length).toBe(8);
+    expect(guards.some((u) => u.present)).toBe(false);
+    const lj = b.units.find((u) => u.side === 'player' && u.present && u.alive && u.classId !== rt.classIds.get('sj-fugitive'))!;
+    const spot = [[15, 19], [16, 19], [21, 19], [15, 25], [21, 25], [18, 19], [18, 25]].find(([x, y]) => b.board.passable(x, y) && !b.units.some((u) => u.present && u.x === x && u.y === y))!;
+    lj.x = spot[0]; lj.y = spot[1];
+    advance(b, 10);
+    expect(guards.every((u) => u.present || !u.alive)).toBe(true);
   });
   it('石秀探庄（§15.32.5）：巡庄庄客认得卖柴的不惊动，但走到他眼前就被拦下盘问，这回合走不了', () => {
     const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));
