@@ -839,8 +839,8 @@
    "id": "likui",
    "class": "likui",
    "side": "player",
-   "x": 32,
-   "y": 16,
+   "x": 3,
+   "y": 30,
    "level": 30,
    "facing": 1,
    "name": "李逵"
@@ -859,8 +859,8 @@
    "id": "qinming",
    "class": "qinming",
    "side": "player",
-   "x": 33,
-   "y": 16,
+   "x": 4,
+   "y": 30,
    "level": 30,
    "facing": 1,
    "name": "霹雳火秦明"
@@ -879,8 +879,8 @@
    "id": "wangying",
    "class": "wangying",
    "side": "player",
-   "x": 32,
-   "y": 17,
+   "x": 3,
+   "y": 31,
    "level": 30,
    "facing": 1,
    "name": "矮脚虎王英"
@@ -2142,7 +2142,8 @@
       "g26"
      ],
      {
-      "count": 2
+      "count": 3,
+      "scatter": true
      }
     ],
     [

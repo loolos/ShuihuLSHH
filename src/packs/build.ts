@@ -708,11 +708,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // 列出的人里还没登场的从路障靠我方的一侧杀出来；exclude 写路口的 tag，跳过这些路口（石秀带路以后不再堵正路）；
         // reach: [x, y] 设障以后每个好汉都还得走得到这一格，会把人关死的路口不挑（石秀到后，村口）
         const who = (a[0] as unknown[] | undefined) ?? [];
-        const o = (a[1] ?? {}) as { count?: number; min?: number; exclude?: string[]; tile?: number; reach?: [number, number] };
+        const o = (a[1] ?? {}) as { count?: number; min?: number; exclude?: string[]; tile?: number; reach?: [number, number]; scatter?: boolean };
         if (!r.traps?.length) fail(`第 ${index} 个区块：trap 要先在关卡里写 traps（候选路口）`);
         if (!Array.isArray(who)) fail(`第 ${index} 个区块：trap 要写成 ["trap", [伏兵…], {选项}]`);
         const sites = r.traps!.map((t) => ({ cells: t.cells.map(([x, y]) => ({ x, y })), ...(t.tag ? { tag: t.tag } : {}), ...(t.tile !== undefined ? { tile: t.tile } : {}) }));
-        const args = Object.fromEntries(Object.entries({ sites, groups: who.map((w) => r.unitRef(w).act.group), count: o.count, min: o.min, exclude: o.exclude, tile: o.tile, reach: o.reach ? { x: o.reach[0], y: o.reach[1] } : undefined }).filter(([, v]) => v !== undefined));
+        const args = Object.fromEntries(Object.entries({ sites, groups: who.map((w) => r.unitRef(w).act.group), count: o.count, min: o.min, exclude: o.exclude, tile: o.tile, reach: o.reach ? { x: o.reach[0], y: o.reach[1] } : undefined, scatter: o.scatter || undefined }).filter(([, v]) => v !== undefined));
         ops.push({ op: 129, flag: null, value: 0, args });
         break;
       }

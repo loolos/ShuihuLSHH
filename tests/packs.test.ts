@@ -376,7 +376,12 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     while (b.pendingChoice) ev.push(...b.answer(0));
     const sj = b.units.find((u) => u.classId === rt.classIds.get('sj-fugitive'))!;
     const seals = ev.filter((e) => e.type === 'seal');
-    expect(seals.length).toBe(2);
+    // 开场三处各一组，伏兵各自散开站，不挤在一起；李逵这一波在地图左边（负责人 2026-11-23）
+    expect(seals.length).toBe(3);
+    const first = b.units.filter((u) => u.side === 'enemy' && u.present && u.alive);
+    for (const u of first) for (const v of first) if (u !== v) expect(Math.abs(u.x - v.x) + Math.abs(u.y - v.y)).toBeGreaterThanOrEqual(2);
+    const lk = b.units.find((u) => u.classId === rt.classIds.get('likui'))!;
+    expect(lk.x - lk.y).toBeLessThan(-20);
     // 开场分三波（负责人 2026-11-23），伏兵只要能走到其中一波就行
     const reach = b.board.distanceField(b.units.filter((u) => u.side === 'player' && u.present).map((u) => ({ x: u.x, y: u.y })));
     const W = b.board.width;
