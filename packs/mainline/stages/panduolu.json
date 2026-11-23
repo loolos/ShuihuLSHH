@@ -969,7 +969,7 @@
   },
   {
    "id": "g12",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -977,8 +977,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g13",
@@ -1047,7 +1047,7 @@
   },
   {
    "id": "g22",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1055,8 +1055,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g23",
@@ -1125,7 +1125,7 @@
   },
   {
    "id": "g32",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1133,8 +1133,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g33",
@@ -1203,7 +1203,7 @@
   },
   {
    "id": "g42",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1211,8 +1211,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g43",
@@ -1281,7 +1281,7 @@
   },
   {
    "id": "g52",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1289,8 +1289,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g53",
@@ -1359,7 +1359,7 @@
   },
   {
    "id": "g62",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1367,8 +1367,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g63",
@@ -1437,7 +1437,7 @@
   },
   {
    "id": "g72",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1445,8 +1445,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g73",
@@ -1515,7 +1515,7 @@
   },
   {
    "id": "g82",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1523,8 +1523,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g83",
@@ -1593,7 +1593,7 @@
   },
   {
    "id": "g92",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1601,8 +1601,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g93",
@@ -1671,7 +1671,7 @@
   },
   {
    "id": "g102",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1679,8 +1679,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g103",
@@ -1749,7 +1749,7 @@
   },
   {
    "id": "g112",
-   "class": 40,
+   "class": "zhuangtou",
    "side": "enemy",
    "x": 0,
    "y": 0,
@@ -1757,8 +1757,8 @@
    "facing": 0,
    "ai": 0,
    "hidden": true,
-   "name": "祝家庄庄客",
-   "levelOffset": 1
+   "name": "庄客头目",
+   "levelOffset": 2
   },
   {
    "id": "g113",
@@ -1959,11 +1959,11 @@
     ],
     [
      "objective",
-     "找路杀出盘陀路\n败：宋江或武龙倒下；超过 20 回合"
+     "找路杀出盘陀路\n败：宋江或武龙倒下；超过 16 回合"
     ],
     [
      "turnLimit",
-     20
+     16
     ],
     [
      "narrate",
@@ -2390,7 +2390,7 @@
     ],
     [
      "objective",
-     "跟着石秀，看白杨树转弯，撤到村口（地图上标出的「村口」区域）：回合结束时宋江在区域里就过关；打倒冈上的举灯庄客，庄客就不能再照灯号设伏\n败：宋江、武龙或石秀倒下；超过 20 回合"
+     "跟着石秀，看白杨树转弯，撤到村口（地图上标出的「村口」区域）：回合结束时宋江在区域里就过关；打倒冈上的举灯庄客，庄客就不能再照灯号设伏\n败：宋江、武龙或石秀倒下；超过 16 回合"
     ]
    ]
   },
@@ -2580,6 +2580,24 @@
     [
      "narrate",
      "那碗红灯从冈上直落下来，四下里伏兵不见了灯号，都没了主张。"
+    ],
+    [
+     "gust",
+     {
+      "style": "none",
+      "x": 18,
+      "y": 22,
+      "radius": 99,
+      "turns": 2,
+      "spare": [
+       39,
+       "zhuangtou"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "庄兵们乱叫：「灯呢？往哪边去？」一时东奔西撞，只有教头和头目还喝住了几个。"
     ],
     [
      "say",

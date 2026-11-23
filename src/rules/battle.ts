@@ -2457,7 +2457,8 @@ export class Battle {
           const radius = a.radius ?? 3;
           const d = (u: Cell) => Math.abs(u.x - at.x) + Math.abs(u.y - at.y);
           if (a.focus) this.emit({ type: 'focus', x: at.x, y: at.y });
-          this.emit({ type: 'gust', x: at.x, y: at.y, radius, style: a.style === 'wind' ? 'wind' : 'dust' });
+          // style none【新】（盘陀路灯落）：没有风尘画面，只让人乱逃
+          if (a.style !== 'none') this.emit({ type: 'gust', x: at.x, y: at.y, radius, style: a.style === 'wind' ? 'wind' : 'dust' });
           const foes = this.active()
             .filter((u) => u.side === 'enemy' && !this.spectators.has(u.uid) && !this.isBound(u) && d(u) <= radius)
             .sort((p, q) => d(p) - d(q) || p.uid - q.uid);
