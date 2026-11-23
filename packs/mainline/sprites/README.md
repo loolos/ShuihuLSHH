@@ -15,6 +15,9 @@
 | `wusong/` | idle 待机、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
 | `likui/` | idle 待机（持斧）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、crouch-idle 蹲伏（防御 / 运气）、death01 倒地、roll 翻滚 |
 | `peiruhai/` | 裴如海（光头和尚）：idle 待机、walk 走、hit-chest 受击、punch-jab 出拳（念珠）、crouch-idle 蹲伏（防御）、death01 倒地。服装 `src/outfit-peiruhai.json`，`--height 1.72`，其余参数同武松 |
+| `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json` |
+| `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
+| `daizong/` | 戴宗（褐短褂、幞头、腿绑甲马）：idle、walk、hit-chest、crouch-idle（聚气 / 防御）、death01、roll、punch-jab、punch-two（×2）、punch-cross、kick-r / kick-l / kick-rl（左右踢）、ninja-jump 腾跃、slide 滑铲。配方 `characters/daizong.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 
 ## 来源与授权
@@ -23,7 +26,7 @@
 - **李逵**：同一个 `UAL1_Standard.glb`，CC0 1.0。坎肩、红腰带、宽裤、裹腿、发髻、络腮胡、两把板斧由 `src/outfit-likui.json` 生成（原在江州外传包，外传删除后搬到这里）。
 - **老虎**：Sketchfab 上 planeta-elefante 的「Tiger」模型。授权 CC BY 4.0，**游戏里要署名**（制作人员名单写：Tiger model by planeta-elefante, CC BY 4.0）。
 
-模型文件本身不入库。要重新渲染，先把模型下载到本地。
+2026-11-23 起通用假人和动作库已入库（`gamedata/models/`），新人物按配方用 `tools/render-character.py` 渲染，见 `gamedata/models/README.md`。
 
 ## 重新生成
 

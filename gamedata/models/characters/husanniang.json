@@ -1,0 +1,238 @@
+{
+ "name": "扈三娘（步战）",
+ "body": "female",
+ "height": 1.68,
+ "outfit": [
+  "outfits/female-base.json",
+  "outfits/weapon-shuangdao.json"
+ ],
+ "remove": [
+  "围裙",
+  "头花"
+ ],
+ "colors": {
+  "短袄": {
+   "color": [
+    186,
+    44,
+    48
+   ],
+   "colors": [
+    [
+     200,
+     160,
+     60
+    ],
+    [
+     200,
+     160,
+     60
+    ]
+   ]
+  },
+  "长裙": {
+   "color": [
+    160,
+    36,
+    42
+   ],
+   "colors": [
+    [
+     200,
+     160,
+     60
+    ]
+   ]
+  },
+  "鞋": [
+   110,
+   40,
+   30
+  ],
+  "镯子": [
+   200,
+   160,
+   60
+  ]
+ },
+ "add": {
+  "layers": [
+   {
+    "name": "胸甲",
+    "bones": [
+     "spine_0[123]",
+     "clavicle_.*"
+    ],
+    "when": "1.00 < z < 1.42 and ax < 0.20",
+    "offset": "0.06 + (0.04 * (1 - abs(z - 1.05) / 0.08) if abs(z - 1.05) < 0.08 else 0)",
+    "thickness": 0.012,
+    "color": [
+     206,
+     166,
+     62
+    ],
+    "folds": 0,
+    "colors": [
+     {
+      "when": "int(z * 45) % 2 == 0",
+      "color": [
+       160,
+       120,
+       40
+      ]
+     }
+    ]
+   },
+   {
+    "name": "护肩",
+    "bones": [
+     "clavicle_.*",
+     "upperarm_.*"
+    ],
+    "when": "z > 1.30 and 0.14 < ax < 0.34",
+    "offset": "0.07",
+    "thickness": 0.012,
+    "color": [
+     206,
+     166,
+     62
+    ],
+    "colors": [
+     {
+      "when": "int(ax * 40) % 2 == 0",
+      "color": [
+       160,
+       120,
+       40
+      ]
+     }
+    ]
+   },
+   {
+    "name": "裙甲",
+    "bones": [
+     "pelvis",
+     "thigh_.*",
+     "spine_01"
+    ],
+    "when": "0.60 < z < 0.99 and (y < 0.02 or ax > 0.12)",
+    "offset": "0.09 + (0.13 * (0.95 - z) if z < 0.95 else 0)",
+    "thickness": 0.012,
+    "color": [
+     206,
+     166,
+     62
+    ],
+    "colors": [
+     {
+      "when": "int(z * 30) % 2 == 0",
+      "color": [
+       160,
+       120,
+       40
+      ]
+     },
+     {
+      "when": "z < 0.64",
+      "color": [
+       186,
+       44,
+       48
+      ]
+     }
+    ]
+   },
+   {
+    "name": "狮蛮带",
+    "bones": [
+     "spine_01",
+     "pelvis"
+    ],
+    "when": "0.97 <= z <= 1.03",
+    "offset": 0.12,
+    "thickness": 0.015,
+    "color": [
+     120,
+     30,
+     30
+    ],
+    "colors": [
+     {
+      "when": "y < 0 and ax < 0.05",
+      "color": [
+       220,
+       180,
+       70
+      ]
+     }
+    ]
+   }
+  ],
+  "props": [
+   {
+    "name": "金冠",
+    "bone": "Head",
+    "shape": "box",
+    "at": [
+     0,
+     0.02,
+     1.93
+    ],
+    "scale": [
+     0.06,
+     0.03,
+     0.05
+    ],
+    "color": [
+     220,
+     180,
+     70
+    ]
+   },
+   {
+    "name": "套索",
+    "bone": "pelvis",
+    "shape": "sphere",
+    "radius": 0.07,
+    "at": [
+     0.2,
+     0.02,
+     0.92
+    ],
+    "scale": [
+     0.4,
+     1,
+     1
+    ],
+    "color": [
+     176,
+     36,
+     40
+    ]
+   }
+  ]
+ },
+ "out": "packs/mainline/sprites/husanniang",
+ "frames": 8,
+ "actions": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "hit-chest": "Hit_Chest",
+  "defend": "Sword_Block",
+  "death01": "Death01",
+  "roll": "Roll",
+  "slash-a": "Sword_Regular_A",
+  "slash-b": "Sword_Regular_B",
+  "slash-c": "Sword_Regular_C",
+  "slash-combo": {
+   "from": "Sword_Regular_Combo",
+   "frames": 12
+  },
+  "heavy-combo": {
+   "from": "Sword_Heavy_Combo",
+   "frames": 12
+  },
+  "dash": "Sword_Dash",
+  "crouch-idle": "Crouch_Idle_Loop"
+ }
+}

@@ -1,0 +1,197 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "Idle_Loop",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 312
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 312
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit-chest": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-chest-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-chest-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "crouch-idle": {
+   "source": "Crouch_Idle_Loop",
+   "front": {
+    "file": "crouch-idle-front.png",
+    "frames": 8,
+    "ms": 367
+   },
+   "back": {
+    "file": "crouch-idle-back.png",
+    "frames": 8,
+    "ms": 367
+   }
+  },
+  "death01": {
+   "source": "Death01",
+   "front": {
+    "file": "death01-front.png",
+    "frames": 8,
+    "ms": 300
+   },
+   "back": {
+    "file": "death01-back.png",
+    "frames": 8,
+    "ms": 300
+   }
+  },
+  "roll": {
+   "source": "Roll",
+   "front": {
+    "file": "roll-front.png",
+    "frames": 8,
+    "ms": 183
+   },
+   "back": {
+    "file": "roll-back.png",
+    "frames": 8,
+    "ms": 183
+   }
+  },
+  "punch-jab": {
+   "source": "Punch_Jab",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 108
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 108
+   }
+  },
+  "punch-cross": {
+   "source": "Punch_Cross",
+   "front": {
+    "file": "punch-cross-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "punch-cross-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "kick-r": {
+   "source": "Kick_R",
+   "front": {
+    "file": "kick-r-front.png",
+    "frames": 8,
+    "ms": 104
+   },
+   "back": {
+    "file": "kick-r-back.png",
+    "frames": 8,
+    "ms": 104
+   }
+  },
+  "kick-l": {
+   "source": "Kick_L",
+   "front": {
+    "file": "kick-l-front.png",
+    "frames": 8,
+    "ms": 104
+   },
+   "back": {
+    "file": "kick-l-back.png",
+    "frames": 8,
+    "ms": 104
+   }
+  },
+  "ninja-jump": {
+   "source": "NinjaJump_Start",
+   "front": {
+    "file": "ninja-jump-front.png",
+    "frames": 8,
+    "ms": 121
+   },
+   "back": {
+    "file": "ninja-jump-back.png",
+    "frames": 8,
+    "ms": 121
+   }
+  },
+  "slide": {
+   "source": "Slide_Start",
+   "front": {
+    "file": "slide-front.png",
+    "frames": 8,
+    "ms": 104
+   },
+   "back": {
+    "file": "slide-back.png",
+    "frames": 8,
+    "ms": 104
+   }
+  },
+  "kick-rl": {
+   "source": "Kick_R + Kick_L",
+   "front": {
+    "file": "kick-rl-front.png",
+    "frames": 16,
+    "ms": 70
+   },
+   "back": {
+    "file": "kick-rl-back.png",
+    "frames": 16,
+    "ms": 70
+   }
+  },
+  "punch-two": {
+   "source": "Punch_Jab × 2",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 85,
+    "cycles": 2
+   }
+  }
+ }
+}

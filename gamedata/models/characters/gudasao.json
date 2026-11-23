@@ -2,7 +2,10 @@
  "name": "顾大嫂",
  "body": "female",
  "height": 1.65,
- "outfit": ["outfits/female-base.json", "outfits/weapon-knives.json"],
+ "outfit": [
+  "outfits/female-base.json",
+  "outfits/weapon-knives.json"
+ ],
  "colors": {},
  "out": "packs/mainline/sprites/gudasao",
  "frames": 8,
@@ -15,9 +18,27 @@
   "roll": "Roll",
   "slash-a": "Sword_Regular_A",
   "slash-b": "Sword_Regular_B",
-  "slash-c": "Sword_Regular_C",
-  "slash-combo": {"from": "Sword_Regular_Combo", "frames": 12},
-  "heavy-combo": {"from": "Sword_Heavy_Combo", "frames": 12},
-  "dash": "Sword_Dash"
+  "slash-c": {
+   "from": "Sword_Regular_C",
+   "ms": 120
+  },
+  "slash-combo": {
+   "from": "Sword_Regular_Combo",
+   "frames": 12,
+   "ms": 130
+  },
+  "heavy-combo": {
+   "from": "Sword_Heavy_Combo",
+   "frames": 12,
+   "ms": 140
+  },
+  "dash": {
+   "from": "Sword_Dash",
+   "ms": 120
+  },
+  "throw": {
+   "from": "OverhandThrow",
+   "ms": 110
+  }
  }
 }

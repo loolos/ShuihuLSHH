@@ -1068,27 +1068,35 @@
         "id": "dz-quan",
         "name": "神行拳",
         "from": 221,
-        "anim": 0
+        "anim": "punch-two",
+        "hitAt": [
+          0.275,
+          0.775
+        ]
       },
       {
         "id": "dz-xuanfeng",
         "name": "旋风腿",
         "from": 225,
-        "anim": 1,
+        "anim": "kick-rl",
         "power": 20,
-        "mpCost": 30
+        "mpCost": 30,
+        "hitAt": [
+          0.26,
+          0.76
+        ]
       },
       {
         "id": "dz-juqi",
         "name": "甲马聚气",
         "from": 227,
-        "anim": 2
+        "anim": "crouch-idle"
       },
       {
         "id": "dz-duqi",
         "name": "神行渡气",
         "from": 227,
-        "anim": 2,
+        "anim": "crouch-idle",
         "learnLevel": 8,
         "mpCost": 30,
         "power": 2,
@@ -1101,7 +1109,7 @@
         "id": "dz-tazhen1",
         "name": "疾风踏阵LV1",
         "from": 225,
-        "anim": 1,
+        "anim": "ninja-jump",
         "learnLevel": 12,
         "type": 15,
         "rangeMin": 1,
@@ -1114,19 +1122,15 @@
         "stun": 0,
         "poison": 0,
         "effect": 20,
-        "hits": [
-          {
-            "frame": 14,
-            "percent": 100,
-            "dir": 0
-          }
+        "hitAt": [
+          0.7
         ]
       },
       {
         "id": "dz-tazhen2",
         "name": "疾风踏阵LV2",
         "from": 225,
-        "anim": 1,
+        "anim": "ninja-jump",
         "learnLevel": 20,
         "type": 15,
         "rangeMin": 1,
@@ -1139,19 +1143,15 @@
         "stun": 0,
         "poison": 0,
         "effect": 20,
-        "hits": [
-          {
-            "frame": 14,
-            "percent": 100,
-            "dir": 0
-          }
+        "hitAt": [
+          0.7
         ]
       },
       {
         "id": "dz-tazhen3",
         "name": "疾风踏阵LV3",
         "from": 225,
-        "anim": 1,
+        "anim": "ninja-jump",
         "learnLevel": 28,
         "type": 15,
         "rangeMin": 1,
@@ -1164,62 +1164,17 @@
         "stun": 0,
         "poison": 0,
         "effect": 20,
-        "hits": [
-          {
-            "frame": 14,
-            "percent": 100,
-            "dir": 0
-          }
+        "hitAt": [
+          0.7
         ]
       }
     ],
     "sprite": {
-      "fromClass": 38,
-      "recolor": [
-        {
-          "src": [
-            [
-              16,
-              31
-            ]
-          ],
-          "dst": [
-            160,
-            175
-          ],
-          "k": 0.95
-        },
-        {
-          "src": [
-            [
-              185,
-              191
-            ],
-            [
-              48,
-              63
-            ]
-          ],
-          "dst": [
-            16,
-            31
-          ],
-          "k": 0.5
-        },
-        {
-          "src": [
-            [
-              192,
-              199
-            ]
-          ],
-          "dst": [
-            144,
-            159
-          ],
-          "k": 0.6
-        }
-      ]
+      "sheet": "sprites/daizong",
+      "idle": "idle",
+      "walk": "walk",
+      "hurt": "hit-chest",
+      "defend": "crouch-idle"
     },
     "face": {
       "file": "faces/daizong.png"
@@ -3259,7 +3214,8 @@
   {"id": "jiubao", "name": "酒保", "hero": true, "base": {"hp": 60, "mp": 60, "attack": 30, "defense": 12, "hit": 60, "agility": 25, "crit": 0}, "move": 4, "weaponType": 0, "items": [0, 89, 0], "skills": [{"id": "jb-tui", "name": "推搡", "from": 194, "anim": 0}, {"id": "jb-jiu", "name": "劝酒", "from": 194, "anim": 0, "power": 0, "mpCost": 45, "drug": 8, "rangeMin": 1, "rangeMax": 1, "area": 1}], "sprite": {"fromClass": 35}, "face": {"fromHead": 35}},
   {"id": "liyun", "name": "李云", "base": {"hp": 130, "mp": 110, "attack": 66, "defense": 28, "hit": 95, "agility": 40, "crit": 15}, "move": 5, "weaponType": 0, "items": [0, 85, 0], "skills": [{"id": "ly-quan", "name": "青眼虎拳", "from": 221, "anim": 0}, {"id": "ly-xuan", "name": "猛虎回身", "from": 225, "anim": 1, "power": 20, "mpCost": 30}, {"id": "ly-qi", "name": "凝神", "from": 227, "anim": 2}], "sprite": {"fromClass": 38, "recolor": [{"src": [[16, 31]], "dst": [80, 95], "k": 0.85}]}, "face": {"fromHead": 38}},
   {"id": "yangxiong", "name": "杨雄", "hero": true, "base": {"hp": 120, "mp": 100, "attack": 68, "defense": 28, "hit": 90, "agility": 32, "crit": 14}, "move": 5, "weaponType": 6, "items": [0, 85, 0], "skills": [{"id": "yx-dao", "name": "鬼头刀", "from": 119, "anim": 0}, {"id": "yx-suo", "name": "押狱锁拿", "from": 122, "anim": 2, "learnLevel": 4, "type": 7, "power": 25, "mpCost": 35, "hitMod": 40, "critMod": 0, "stun": 50}, {"id": "yx-xing1", "name": "行刑刀LV1", "from": 125, "anim": 1, "learnLevel": 8, "type": 7, "rangeMin": 1, "rangeMax": 1, "areaPattern": [[0, 0], [0, 1], [0, 2], [-1, 1], [1, 1]], "power": 30, "mpCost": 45, "hitMod": 0, "effect": 37, "effect2": 0, "effect3": 47, "hits": [{"frame": 9, "percent": 30, "dir": 0}, {"frame": 13, "percent": 30, "dir": 0}, {"frame": 18, "percent": 40, "dir": 0}]}, {"id": "yx-qi", "name": "押狱聚气", "from": 124, "anim": 4, "learnLevel": 10}, {"id": "yx-zhan", "name": "斩首示众", "from": 123, "anim": 3, "learnLevel": 14, "power": 70, "mpCost": 70, "hitMod": 50, "critMod": 40, "hits": [{"frame": 27, "percent": 100}], "effect": 38, "effect2": 0, "effect3": 51}, {"id": "yx-xing2", "name": "行刑刀LV2", "from": 126, "anim": 1, "learnLevel": 18, "type": 7, "rangeMin": 1, "rangeMax": 1, "areaPattern": [[0, 0], [0, 1], [0, 2], [-1, 1], [1, 1]], "power": 45, "mpCost": 80, "hitMod": 0, "effect": 37, "effect2": 0, "effect3": 47, "hits": [{"frame": 9, "percent": 30, "dir": 0}, {"frame": 13, "percent": 30, "dir": 0}, {"frame": 18, "percent": 40, "dir": 0}]}, {"id": "yx-xing3", "name": "行刑刀LV3", "from": 127, "anim": 1, "learnLevel": 26, "type": 7, "rangeMin": 1, "rangeMax": 1, "areaPattern": [[0, 0], [0, 1], [0, 2], [-1, 1], [1, 1]], "power": 65, "mpCost": 120, "hitMod": 0, "effect": 37, "effect2": 0, "effect3": 47, "hits": [{"frame": 9, "percent": 30, "dir": 0}, {"frame": 13, "percent": 30, "dir": 0}, {"frame": 18, "percent": 40, "dir": 0}]}], "sprite": {"fromClass": 14, "recolor": [{"src": [[64, 95], [112, 127]], "dst": [50, 55], "k": 1.5}, {"src": [[73, 79], [89, 95], [121, 127]], "dst": [54, 55], "k": 1.0}, {"src": [[76, 79], [92, 95], [124, 127]], "dst": [167, 171], "k": 1.2}]}, "face": {"file": "faces/yangxiong.png"}},
-  {"id": "shixiu", "name": "石秀", "hero": true, "base": {"hp": 115, "mp": 90, "attack": 72, "defense": 25, "hit": 92, "agility": 40, "crit": 18}, "move": 6, "weaponType": 6, "items": [0, 85, 0], "skills": [{"id": "sx-dao", "name": "朴刀", "from": 215, "anim": 0, "power": 15}, {"id": "sx-pin", "name": "拼命三刀", "from": 218, "anim": 2, "learnLevel": 1, "power": 35, "mpCost": 30, "type": 7, "rangeMin": 1, "rangeMax": 1, "areaPattern": [[0, 0], [-1, 0], [1, 0], [-1, 1], [1, 1]], "hits": [{"frame": 6, "percent": 30, "dir": 0}, {"frame": 14, "percent": 30, "dir": 0}, {"frame": 22, "percent": 40, "dir": 0}]}, {"id": "sx-chai", "name": "劈柴刀法", "from": 217, "anim": 1, "learnLevel": 4, "power": 40, "mpCost": 30}, {"id": "sx-heng", "name": "路见不平", "from": 218, "anim": 2, "learnLevel": 8, "power": 30, "mpCost": 45}, {"id": "sx-qi", "name": "聚气", "from": 220, "anim": 4, "learnLevel": 10}, {"id": "sx-lian1", "name": "连环劈LV1", "from": 219, "anim": 3, "learnLevel": 12, "type": 0, "area": 3, "power": 25, "mpCost": 55}, {"id": "sx-she", "name": "舍命一击", "from": 219, "anim": 3, "learnLevel": 16, "power": 90, "mpCost": 50, "hitMod": -25, "critMod": 50}, {"id": "sx-lian2", "name": "连环劈LV2", "from": 219, "anim": 3, "learnLevel": 20, "type": 0, "area": 4, "power": 35, "mpCost": 100}, {"id": "sx-lian3", "name": "连环劈LV3", "from": 219, "anim": 3, "learnLevel": 28, "type": 0, "area": 5, "power": 60, "mpCost": 135}], "sprite": {"fromClass": 71, "recolor": [{"src": [[48, 63], [224, 239]], "dst": [144, 156], "k": 1.0}, {"src": [[64, 95], [112, 127]], "dst": [16, 31], "k": 0.6}, {"src": [[32, 47], [12, 12]], "dst": [144, 156], "k": 0.8}, {"src": [[160, 175]], "dst": [144, 156], "k": 0.8}]}, "face": {"file": "faces/shixiu.png"}},
+  {"id": "shixiu", "name": "石秀", "hero": true, "base": {"hp": 115, "mp": 90, "attack": 72, "defense": 25, "hit": 92, "agility": 40, "crit": 18}, "move": 6, "weaponType": 6, "items": [0, 85, 0], "skills": [{"id": "sx-dao", "name": "朴刀", "from": 215, "anim": "slash-a", "power": 15, "hitAt": [0.45]}, {"id": "sx-pin", "name": "拼命三刀", "from": 218, "anim": "slash-combo", "learnLevel": 1, "power": 35, "mpCost": 30, "type": 7, "rangeMin": 1, "rangeMax": 1, "areaPattern": [[0, 0], [-1, 0], [1, 0], [-1, 1], [1, 1]], "hitAt": [0.27, 0.52, 0.77], "hitPercent": [30, 30, 40]}, {"id": "sx-chai", "name": "劈柴刀法", "from": 217, "anim": "slash-c", "learnLevel": 4, "power": 40, "mpCost": 30, "hitAt": [0.35]}, {"id": "sx-heng", "name": "路见不平", "from": 218, "anim": "slash-b", "learnLevel": 8, "power": 30, "mpCost": 45, "hitAt": [0.6]}, {"id": "sx-qi", "name": "聚气", "from": 220, "anim": "defend", "learnLevel": 10}, {"id": "sx-lian1", "name": "连环劈LV1", "from": 219, "anim": "heavy-combo", "learnLevel": 12, "type": 0, "area": 3, "power": 25, "mpCost": 55, "hitAt": [0.2, 0.45, 0.75]}, {"id": "sx-she", "name": "舍命一击", "from": 219, "anim": "dash", "learnLevel": 16, "power": 90, "mpCost": 50, "hitMod": -25, "critMod": 50, "hitAt": [0.4]}, {"id": "sx-lian2", "name": "连环劈LV2", "from": 219, "anim": "heavy-combo", "learnLevel": 20, "type": 0, "area": 4, "power": 35, "mpCost": 100, "hitAt": [0.2, 0.45, 0.75]}, {"id": "sx-lian3", "name": "连环劈LV3", "from": 219, "anim": "heavy-combo", "learnLevel": 28, "type": 0, "area": 5, "power": 60, "mpCost": 135, "hitAt": [0.2, 0.45, 0.75]}], "sprite": {"sheet": "sprites/shixiu", "idle": "idle", "walk": "walk", "hurt": "hit-chest", "defend": "defend"}, "face": {"file": "faces/shixiu.png"}},
+  {"id": "gudasao", "name": "顾大嫂", "hero": true, "base": {"hp": 120, "mp": 80, "attack": 68, "defense": 24, "hit": 82, "agility": 38, "crit": 14}, "move": 5, "weaponType": 6, "items": [0, 85, 0], "skills": [{"id": "gds-dao", "name": "双刀", "from": 215, "anim": "slash-a", "hitAt": [0.45]}, {"id": "gds-pu", "name": "母大虫扑食", "from": 218, "anim": "dash", "hitAt": [0.4], "learnLevel": 1, "power": 30, "mpCost": 25, "rangeMin": 1, "rangeMax": 2}, {"id": "gds-lian", "name": "双刀连斩", "from": 218, "anim": "slash-combo", "hitAt": [0.27, 0.52, 0.77], "learnLevel": 4, "power": 35, "mpCost": 30}, {"id": "gds-fei", "name": "飞刀", "from": 48, "anim": "throw", "hitAt": [0.5], "learnLevel": 8, "power": 30, "mpCost": 30, "rangeMin": 2, "rangeMax": 4}, {"id": "gds-qi", "name": "聚气", "from": 220, "anim": "defend", "learnLevel": 10}, {"id": "gds-xian", "name": "石碓翻腿", "from": 219, "anim": "heavy-combo", "hitAt": [0.2, 0.45, 0.75], "learnLevel": 16, "power": 60, "mpCost": 60, "stun": 30}], "sprite": {"sheet": "sprites/gudasao", "idle": "idle", "walk": "walk", "hurt": "hit-chest", "defend": "defend"}, "face": null},
   {"id": "shiqian", "name": "时迁", "hero": true, "base": {"hp": 75, "mp": 70, "attack": 45, "defense": 18, "hit": 95, "agility": 60, "crit": 12}, "move": 7, "weaponType": 6, "items": [0, 85, 0], "skills": [{"id": "sq-quan", "name": "鼓上蚤", "from": 45, "anim": 0}, {"id": "sq-tou", "name": "偷鸡摸狗", "from": 47, "anim": 1, "learnLevel": 1, "power": 30, "mpCost": 25, "critMod": 30}, {"id": "sq-shi1", "name": "飞石LV1", "from": 48, "anim": 2, "learnLevel": 4, "power": 35, "mpCost": 20, "hitMod": 10, "rangedDamage": [1, 0.6]}, {"id": "sq-mi", "name": "迷魂香", "from": 51, "anim": 2, "learnLevel": 12, "power": 10, "mpCost": 40, "stun": 40, "hitMod": 0}, {"id": "sq-shi2", "name": "飞石LV2", "from": 49, "anim": 2, "learnLevel": 15, "power": 45, "mpCost": 30, "hitMod": 20, "rangedDamage": [1, 0.6]}, {"id": "sq-shi3", "name": "飞石LV3", "from": 50, "anim": 2, "learnLevel": 24, "power": 55, "mpCost": 40, "hitMod": 30, "rangedDamage": [1, 0.6]}], "sprite": {"fromClass": 4, "recolor": [{"src": [[16, 31]], "dst": [96, 111], "k": 0.6}]}, "face": {"file": "faces/shiqian.png"}},
   {"id": "peiruhai", "name": "裴如海", "base": {"hp": 70, "mp": 40, "attack": 30, "defense": 15, "hit": 60, "agility": 25, "crit": 0}, "move": 4, "weaponType": 0, "items": [0, 0, 0], "skills": [{"id": "prh-quan", "name": "念珠", "from": 221, "anim": "punch-jab", "hitAt": [0.5]}], "sprite": {"sheet": "sprites/peiruhai", "idle": "idle", "walk": "walk", "hurt": "hit-chest", "defend": "crouch-idle"}, "face": {"fromHead": 28}},
   {"id": "toutuo", "name": "胡道人", "base": {"hp": 60, "mp": 30, "attack": 30, "defense": 12, "hit": 60, "agility": 25, "crit": 0}, "move": 4, "weaponType": 0, "items": [0, 0, 0], "skills": [{"id": "tt-quan", "name": "木鱼槌", "from": 86, "anim": 0}], "sprite": {"fromClass": 10, "recolor": [{"src": [[224, 239], [48, 63], [96, 111]], "dst": [16, 31], "k": 0.6}, {"src": [[64, 95]], "dst": [160, 175], "k": 0.8}]}, "face": {"fromHead": 70}},

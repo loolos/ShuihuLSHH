@@ -2,20 +2,100 @@
  "name": "石秀",
  "body": "male",
  "height": 1.78,
- "outfit": ["outfits/male-base.json", "outfits/weapon-podao.json"],
+ "outfit": [
+  "outfits/male-base.json",
+  "outfits/weapon-podao.json"
+ ],
  "colors": {
-  "头巾": [52, 60, 112],
-  "中衣": [226, 220, 204],
-  "短褂": {"color": [46, 54, 100], "colors": [[28, 32, 64], [28, 32, 64], [226, 220, 204]]},
-  "腰带": [150, 118, 76],
-  "腰带结": [150, 118, 76],
-  "腰带垂": [150, 118, 76],
-  "宽裤": [78, 70, 62],
-  "裹腿": [150, 140, 118]
+  "头巾": [
+   52,
+   60,
+   112
+  ],
+  "中衣": [
+   226,
+   220,
+   204
+  ],
+  "短褂": {
+   "color": [
+    46,
+    54,
+    100
+   ],
+   "colors": [
+    [
+     28,
+     32,
+     64
+    ],
+    [
+     28,
+     32,
+     64
+    ],
+    [
+     226,
+     220,
+     204
+    ]
+   ]
+  },
+  "腰带": [
+   150,
+   118,
+   76
+  ],
+  "腰带结": [
+   150,
+   118,
+   76
+  ],
+  "腰带垂": [
+   150,
+   118,
+   76
+  ],
+  "宽裤": [
+   78,
+   70,
+   62
+  ],
+  "裹腿": [
+   150,
+   140,
+   118
+  ]
  },
- "add": {"props": [
-  {"name": "头巾带", "bone": "Head", "shape": "box", "at": [0.04, 0.10, 1.83], "scale": [0.03, 0.12, 0.02], "rot": [-35, 0, 0], "color": [52, 60, 112]}
- ]},
+ "add": {
+  "props": [
+   {
+    "name": "头巾带",
+    "bone": "Head",
+    "shape": "box",
+    "at": [
+     0.04,
+     0.1,
+     1.83
+    ],
+    "scale": [
+     0.03,
+     0.12,
+     0.02
+    ],
+    "rot": [
+     -35,
+     0,
+     0
+    ],
+    "color": [
+     52,
+     60,
+     112
+    ]
+   }
+  ]
+ },
  "out": "packs/mainline/sprites/shixiu",
  "frames": 8,
  "actions": {
@@ -27,9 +107,23 @@
   "roll": "Roll",
   "slash-a": "Sword_Regular_A",
   "slash-b": "Sword_Regular_B",
-  "slash-c": "Sword_Regular_C",
-  "slash-combo": {"from": "Sword_Regular_Combo", "frames": 12},
-  "heavy-combo": {"from": "Sword_Heavy_Combo", "frames": 12},
-  "dash": "Sword_Dash"
+  "slash-c": {
+   "from": "Sword_Regular_C",
+   "ms": 120
+  },
+  "slash-combo": {
+   "from": "Sword_Regular_Combo",
+   "frames": 12,
+   "ms": 130
+  },
+  "heavy-combo": {
+   "from": "Sword_Heavy_Combo",
+   "frames": 12,
+   "ms": 140
+  },
+  "dash": {
+   "from": "Sword_Dash",
+   "ms": 120
+  }
  }
 }
