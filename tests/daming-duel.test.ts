@@ -16,6 +16,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA,'Data/Human.hum')))('大名府斗�
   const check=(b:Battle)=>(b as unknown as {afterAction:()=>void}).afterAction();
   it('第十章先教场再赤发鬼、三阮，连续及直接选关均能接续', () => {
     expect(chapterOf('mainline/daming-duel')).toBe(10);
+    const opening=JSON.stringify(s.script.find(x=>x.on==='start')!.do);expect(opening).toMatch(/武龙一干好汉杀退了追骑[^"]*按下不表/);
     const sequence=chapterSequence().filter(x=>x.chapter===10).map(x=>x.key);
     expect(sequence.slice(0,4)).toEqual(['mainline/daming-duel','mainline/chifagui','mainline/sanruan','Act10-1']);
     const places=insertPlaces();expect(places.find(p=>p.ref==='mainline/daming-duel')?.before).toBe('Act10-1');

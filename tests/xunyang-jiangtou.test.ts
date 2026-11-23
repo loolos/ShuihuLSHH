@@ -4,7 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
-import { chapterOf } from '../src/rules/chapters.ts';
+import { chapterOf, chapterSequence } from '../src/rules/chapters.ts';
 import { planAi } from '../src/rules/ai.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
@@ -49,13 +49,28 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
   });
 
   it('有专名的插关城镇都有自己的入城对白，不落到阳谷的宋江、武松对白（负责人 2026-11-23：独龙冈下寨照抄了阳谷）', () => {
-    const yanggu = JSON.stringify(insertTownIntro('mainline/none'));
+    const yanggu = JSON.stringify(insertTownIntro('mainline/shizipo'));
+    expect(insertTownIntro('mainline/none')).toEqual([]);
     for (const next of ['mainline/shiyong', 'mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu']) {
       expect(insertTownName(next), next).not.toBe('阳谷整备');
       expect(JSON.stringify(insertTownIntro(next)), next).not.toBe(yanggu);
     }
     const actors = new Set(rt.stages.find((s) => s.id === 'panduolu')!.units.filter((u) => u.side === 'player' && !u.hidden).map((u) => u.class));
     for (const l of insertTownIntro('mainline/panduolu')) expect(actors.has(l.actor), l.actor).toBe(true);
+  });
+
+  it('每个续篇城镇（townAfter）都有入城对白，不留空也不串到别的城镇（负责人 2026-11-23：去城镇的对白放在城镇里）', () => {
+    const seq = chapterSequence().map((x) => x.key);
+    const seen = new Map<string, string>();
+    for (const s of rt.stages.filter((x) => x.townAfter)) {
+      const i = seq.indexOf(`mainline/${s.id}`);
+      expect(i, s.id).toBeGreaterThanOrEqual(0);
+      const next = seq[i + 1];
+      const lines = JSON.stringify(insertTownIntro(next));
+      expect(insertTownIntro(next).length, next).toBeGreaterThan(0);
+      expect(seen.get(lines), next).toBeUndefined();
+      seen.set(lines, next);
+    }
   });
 
   it('江州牢城、浔阳楼演完就过关；浔阳楼只演到蔡九差戴宗上东京，梁山泊整备挪到假信露馅之后', () => {
