@@ -1,0 +1,1360 @@
+{
+ "id": "yizhangqing",
+ "title": "一丈青",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 1000
+ },
+ "map": {
+  "base": "N-add14"
+ },
+ "bgm": [
+  "cavalry",
+  "battle",
+  "manor"
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 35,
+   "y": 35,
+   "level": 30,
+   "facing": 1,
+   "name": "宋江"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 33,
+   "y": 33,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 32,
+   "y": 31,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 34,
+   "y": 32,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 33,
+   "y": 30,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "oupeng",
+   "class": 65,
+   "side": "player",
+   "x": 31,
+   "y": 37,
+   "level": 30,
+   "facing": 1,
+   "name": "摩云金翅欧鹏"
+  },
+  {
+   "id": "malin",
+   "class": "malin",
+   "side": "player",
+   "x": 32,
+   "y": 38,
+   "level": 30,
+   "facing": 1,
+   "name": "铁笛仙马麟"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 36,
+   "y": 37,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "lijun",
+   "class": "lijun",
+   "side": "player",
+   "x": 37,
+   "y": 36,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "wangying",
+   "class": "wangying",
+   "side": "player",
+   "x": 26,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "name": "矮脚虎王英"
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 48,
+   "y": 47,
+   "level": 30,
+   "facing": 0,
+   "name": "豹子头林冲",
+   "hidden": true
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "side": "ally",
+   "x": 48,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "name": "霹雳火秦明"
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "ally",
+   "x": 50,
+   "y": 14,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "name": "火眼狻猊邓飞"
+  },
+  {
+   "id": "luan",
+   "class": "luantingyu",
+   "side": "enemy",
+   "x": 48,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "铁棒栾廷玉",
+   "enemyRank": "leader",
+   "levelOffset": 2,
+   "hpMultiplier": 2.5
+  },
+  {
+   "id": "ng1",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 46,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "ng2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 47,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "ng3",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "ng4",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": -1
+  },
+  {
+   "id": "zhulong",
+   "class": "zhulong",
+   "side": "enemy",
+   "x": 16,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝龙",
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "hpMultiplier": 1.4
+  },
+  {
+   "id": "a1",
+   "class": 19,
+   "side": "enemy",
+   "x": 18,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a2",
+   "class": 40,
+   "side": "enemy",
+   "x": 18,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a3",
+   "class": 19,
+   "side": "enemy",
+   "x": 18,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a4",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "a5",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "a6",
+   "class": 20,
+   "side": "enemy",
+   "x": 17,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "zhubiao",
+   "class": "zhubiao",
+   "side": "enemy",
+   "x": 9,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝彪",
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "hpMultiplier": 2.0,
+   "hidden": true
+  },
+  {
+   "id": "b1",
+   "class": 43,
+   "side": "enemy",
+   "x": 14,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b2",
+   "class": 43,
+   "side": "enemy",
+   "x": 15,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b3",
+   "class": 43,
+   "side": "enemy",
+   "x": 14,
+   "y": 29,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b4",
+   "class": 41,
+   "side": "enemy",
+   "x": 13,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b5",
+   "class": 41,
+   "side": "enemy",
+   "x": 15,
+   "y": 30,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b6",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 30,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "husanniang",
+   "class": "husanniang",
+   "side": "enemy",
+   "x": 13,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "target": "songjiang",
+   "name": "一丈青扈三娘",
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "hpMultiplier": 2.0,
+   "hidden": true
+  },
+  {
+   "id": "h1",
+   "class": 43,
+   "side": "enemy",
+   "x": 11,
+   "y": 42,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "songjiang"
+  },
+  {
+   "id": "h2",
+   "class": 43,
+   "side": "enemy",
+   "x": 11,
+   "y": 46,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true,
+   "target": "songjiang"
+  },
+  {
+   "id": "h3",
+   "class": 43,
+   "side": "enemy",
+   "x": 9,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h4",
+   "class": 41,
+   "side": "enemy",
+   "x": 10,
+   "y": 43,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h5",
+   "class": 41,
+   "side": "enemy",
+   "x": 10,
+   "y": 45,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h6",
+   "class": 34,
+   "side": "enemy",
+   "x": 8,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c1",
+   "class": 19,
+   "side": "enemy",
+   "x": 42,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c2",
+   "class": 40,
+   "side": "enemy",
+   "x": 43,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c3",
+   "class": 41,
+   "side": "enemy",
+   "x": 42,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c4",
+   "class": 20,
+   "side": "enemy",
+   "x": 44,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c5",
+   "class": 34,
+   "side": "enemy",
+   "x": 41,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "c6",
+   "class": 39,
+   "side": "enemy",
+   "x": 43,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄教头",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d1",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 31,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d2",
+   "class": 40,
+   "side": "enemy",
+   "x": 14,
+   "y": 32,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d3",
+   "class": 41,
+   "side": "enemy",
+   "x": 13,
+   "y": 33,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d4",
+   "class": 20,
+   "side": "enemy",
+   "x": 14,
+   "y": 34,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d5",
+   "class": 34,
+   "side": "enemy",
+   "x": 15,
+   "y": 32,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d6",
+   "class": 34,
+   "side": "enemy",
+   "x": 15,
+   "y": 34,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "独龙冈下寨"
+    ],
+    [
+     "narrate",
+     "宋江折了黄信、杨林，又知道石秀探得的白杨树路径，与众头领商议再打祝家庄。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "前番只因路径不熟，误中奸计。今番我自领一路人马打他庄前，秦明、邓飞领一路打他庄后。林冲兄弟守住营寨，接应两路。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，庄里路径小弟已记得了，见白杨树便转。"
+    ],
+    [
+     "say",
+     "likui",
+     "这番铁牛要砍翻那鸟庄门！"
+    ],
+    [
+     "title",
+     "独龙冈 · 祝家庄前"
+    ],
+    [
+     "narrate",
+     "宋江引军直抵冈前，只见庄门开处，祝朝奉的长子祝龙领一队庄客，在庄前一字摆开。庄后喊声起处，秦明、邓飞撞着了祝家庄的教师铁棒栾廷玉。"
+    ],
+    [
+     "say",
+     "zhulong",
+     "梁山泊的草寇，前番饶你走了，今番又来讨死！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "祝龙！你家无故辱我梁山，又拿了我两个兄弟，今日特来讨个公道！"
+    ],
+    [
+     "objective",
+     "攻打祝家庄前门，打退祝龙的人马\n败：宋江或武龙倒下；超过 20 回合"
+    ],
+    [
+     "turnLimit",
+     20
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "narrate",
+     "忽听得西南上一片喊声，一彪马军飞也似杀来。当先一员女将，正是扈家庄的一丈青扈三娘，骑一匹青鬃马，轮两口日月双刀。"
+    ],
+    [
+     "appear",
+     "husanniang"
+    ],
+    [
+     "focus",
+     "husanniang"
+    ],
+    [
+     "appear",
+     "h1"
+    ],
+    [
+     "appear",
+     "h2"
+    ],
+    [
+     "appear",
+     "h3"
+    ],
+    [
+     "appear",
+     "h4"
+    ],
+    [
+     "appear",
+     "h5"
+    ],
+    [
+     "appear",
+     "h6"
+    ],
+    [
+     "say",
+     "husanniang",
+     "哪个是宋江？敢来犯我独龙冈！"
+    ],
+    [
+     "say",
+     "wangying",
+     "好个女将！让小弟去拿她来！"
+    ],
+    [
+     "approach",
+     "wangying",
+     "husanniang"
+    ],
+    [
+     "act",
+     "wangying",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "wangying"
+    ],
+    [
+     "narrate",
+     "王英是个好色之徒，听得是个女将，指望一合便拿得来。斗不到十合，手颤脚麻，枪法便乱了。一丈青拍马向前，把王英提离雕鞍，活捉去了。"
+    ],
+    [
+     "bind",
+     "wangying"
+    ],
+    [
+     "say",
+     "wangying",
+     "哎呀——！"
+    ],
+    [
+     "leave",
+     "wangying"
+    ],
+    [
+     "say",
+     "songjiang",
+     "王英兄弟被拿了！欧鹏、马麟，快去敌住那女将！"
+    ],
+    [
+     "say",
+     "oupeng",
+     "哥哥放心！"
+    ],
+    [
+     "objective",
+     "一丈青扈三娘带扈家庄马军从西南杀来，专找宋江！护住宋江；把扈三娘打到三成以下，林冲就能活捉她\n败：宋江或武龙倒下；超过 20 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "focus",
+     "qinming"
+    ],
+    [
+     "say",
+     "luan",
+     "秦明，你也是一条好汉，如何做了强人？"
+    ],
+    [
+     "say",
+     "qinming",
+     "少说闲话！看棒！"
+    ],
+    [
+     "act",
+     "qinming",
+     "attack",
+     "luan"
+    ],
+    [
+     "narrate",
+     "两个斗了二十余合，栾廷玉卖个破绽，拖着铁棒往荒草里便走。秦明性急，纵马赶去。"
+    ],
+    [
+     "move",
+     "luan",
+     48,
+     2
+    ],
+    [
+     "move",
+     "qinming",
+     48,
+     4
+    ],
+    [
+     "narrate",
+     "只听得一声锣响，荒草里拽起绊马索来，连人和马都绊翻了。"
+    ],
+    [
+     "act",
+     "qinming",
+     "hurt"
+    ],
+    [
+     "appear",
+     "ng1",
+     {
+      "near": "qinming"
+     }
+    ],
+    [
+     "appear",
+     "ng2",
+     {
+      "near": "qinming"
+     }
+    ],
+    [
+     "bind",
+     "qinming"
+    ],
+    [
+     "say",
+     "ng1",
+     "拿住霹雳火了！"
+    ],
+    [
+     "leave",
+     "qinming"
+    ],
+    [
+     "standDown",
+     "ng1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "ng2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "dengfei",
+     "秦明哥哥！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "庄后也折了秦明！这祝家庄好生厉害……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "focus",
+     "dengfei"
+    ],
+    [
+     "narrate",
+     "邓飞见秦明被拿，舞着铁链赶去救时，草里又是一声锣响。"
+    ],
+    [
+     "move",
+     "dengfei",
+     49,
+     4
+    ],
+    [
+     "act",
+     "dengfei",
+     "hurt"
+    ],
+    [
+     "appear",
+     "ng3",
+     {
+      "near": "dengfei"
+     }
+    ],
+    [
+     "appear",
+     "ng4",
+     {
+      "near": "dengfei"
+     }
+    ],
+    [
+     "bind",
+     "dengfei"
+    ],
+    [
+     "narrate",
+     "两边挠钩一齐搭住，把邓飞也拖翻捉了去。"
+    ],
+    [
+     "leave",
+     "dengfei"
+    ],
+    [
+     "standDown",
+     "ng3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "ng4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "luan",
+     "庄客们，随我杀奔庄前，捉那宋江！"
+    ],
+    [
+     "appear",
+     "c1"
+    ],
+    [
+     "appear",
+     "c2"
+    ],
+    [
+     "appear",
+     "c3"
+    ],
+    [
+     "appear",
+     "c4"
+    ],
+    [
+     "appear",
+     "c5"
+    ],
+    [
+     "appear",
+     "c6"
+    ],
+    [
+     "say",
+     "luan",
+     "这两个且押回庄去，我自去报与祝朝奉。"
+    ],
+    [
+     "standDown",
+     "luan",
+     {
+      "leave": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "appear",
+     "zhubiao"
+    ],
+    [
+     "appear",
+     "b1"
+    ],
+    [
+     "appear",
+     "b2"
+    ],
+    [
+     "appear",
+     "b3"
+    ],
+    [
+     "appear",
+     "b4"
+    ],
+    [
+     "appear",
+     "b5"
+    ],
+    [
+     "appear",
+     "b6"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "宋江！前番走了你，今番休想再走！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": "linCame",
+   "do": [
+    [
+     "flag",
+     "linCame"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "focus",
+     "linchong"
+    ],
+    [
+     "say",
+     "linchong",
+     "哥哥休慌！林冲来也！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "林冲兄弟来得好！那女将好生了得，兄弟替我拿下她！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "narrate",
+     "庄门又开，一队庄客抢出来。"
+    ],
+    [
+     "appear",
+     "d1"
+    ],
+    [
+     "appear",
+     "d2"
+    ],
+    [
+     "appear",
+     "d3"
+    ],
+    [
+     "appear",
+     "d4"
+    ],
+    [
+     "appear",
+     "d5"
+    ],
+    [
+     "appear",
+     "d6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "husanniang",
+    "below": 30,
+    "spare": true
+   },
+   "if": "linCame",
+   "do": [
+    [
+     "flag",
+     "captured"
+    ],
+    [
+     "approach",
+     "linchong",
+     "husanniang"
+    ],
+    [
+     "say",
+     "linchong",
+     "兀那婆娘走哪里去！"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "linchong"
+    ],
+    [
+     "act",
+     "linchong",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "narrate",
+     "一丈青飞刀来斗林冲。林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟过马来。"
+    ],
+    [
+     "bind",
+     "husanniang"
+    ],
+    [
+     "say",
+     "linchong",
+     "哥哥，拿住了！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "且绑了，连夜送上山去，交与我父亲宋太公收管，休得伤犯她！"
+    ],
+    [
+     "leave",
+     "husanniang"
+    ],
+    [
+     "say",
+     "songjiang",
+     "天色已晚，众兄弟随我退回营寨！"
+    ],
+    [
+     "objective",
+     "已捉住扈三娘。护着宋江撤回东南的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "husanniang",
+    "below": 30,
+    "spare": true
+   },
+   "unless": [
+    "linCame",
+    "captured"
+   ],
+   "do": [
+    [
+     "flag",
+     "captured"
+    ],
+    [
+     "flag",
+     "linCame"
+    ],
+    [
+     "appear",
+     "linchong",
+     {
+      "near": "husanniang"
+     }
+    ],
+    [
+     "focus",
+     "linchong"
+    ],
+    [
+     "say",
+     "linchong",
+     "兀那婆娘走哪里去！"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "linchong"
+    ],
+    [
+     "act",
+     "linchong",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "narrate",
+     "一丈青飞刀来斗林冲。林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟过马来。"
+    ],
+    [
+     "bind",
+     "husanniang"
+    ],
+    [
+     "say",
+     "linchong",
+     "哥哥，拿住了！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "且绑了，连夜送上山去，交与我父亲宋太公收管，休得伤犯她！"
+    ],
+    [
+     "leave",
+     "husanniang"
+    ],
+    [
+     "say",
+     "songjiang",
+     "天色已晚，众兄弟随我退回营寨！"
+    ],
+    [
+     "objective",
+     "已捉住扈三娘。护着宋江撤回东南的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhubiao",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "zhubiao",
+     "好厉害……收兵，回庄！"
+    ],
+    [
+     "standDown",
+     "zhubiao",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "luan",
+    "below": 50,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "luan",
+     "梁山泊果然有些好汉。且回庄去！"
+    ],
+    [
+     "standDown",
+     "luan",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "songjiang",
+    "area": [
+     44,
+     44,
+     53,
+     53
+    ],
+    "label": "梁山营寨",
+    "atTurnEnd": true
+   },
+   "if": "captured",
+   "do": [
+    [
+     "narrate",
+     "宋江收拾人马，退回营寨。这一阵拿了一丈青，却又折了王英、秦明、邓飞三个兄弟。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "祝家庄未曾打得，倒折了五六个兄弟，教我如何去见晁天王！"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "武龙倒下了……"
+    ]
+   ]
+  }
+ ]
+}

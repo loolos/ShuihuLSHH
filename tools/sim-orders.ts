@@ -30,6 +30,8 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   N10: [{ char: 14, turns: [1, 3], act: 'back' }],
   // 长街遇石秀：只有石秀能替杨雄挣脱，先让他直奔杨雄（133 = 主线包职业 shixiu，包里职业只往后加，编号不变）
   'mainline/changjie': [{ char: 133, turns: [1, 8], act: { to: [13, 9] } }],
+  // 一丈青：扈三娘专找宋江（72 = 主线包职业 sj-fugitive），宋江别冲到前面
+  'mainline/yizhangqing': [{ char: 72, turns: [1, 20], act: 'back' }],
 };
 
 export const AUTO_TURNS = 2;
@@ -94,6 +96,11 @@ function autoBack(b: Battle, u: Unit, ev: unknown[]): boolean {
  * 给这个人套开局指令；走完了（本回合不用再管他）返回 true。
  * walkTo：调用方的"走到某格然后防御"
  */
+/** 这一回合关卡有没有给这个角色下指令 */
+export function hasOrder(stageKey: string, char: number, turn: number): boolean {
+  return !!STAGE_ORDERS[stageKey]?.some((o) => o.char === char && turn >= o.turns[0] && turn <= o.turns[1]);
+}
+
 export function applyOrders(b: Battle, u: Unit, stageKey: string, ev: unknown[], walkTo: (x: number, y: number) => void): boolean {
   const order = STAGE_ORDERS[stageKey]?.find(
     (o) => o.char === u.classId && ((b.turn >= o.turns[0] && b.turn <= o.turns[1]) || (o.hpBelow !== undefined && u.hp < u.stats.maxHp * o.hpBelow)),

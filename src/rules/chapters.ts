@@ -75,6 +75,9 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-23：一打祝家庄。过场梁山议兵（晁盖要斩杨雄、石秀，宋江劝下领兵）；潜行小关石秀探庄（卖柴进庄，钟离老人说白杨树，
   // 杨林被拿）；大仗盘陀路（处处连通的迷宫，红灯庄客照灯号就近设路障伏兵，第 5 回合石秀带路，撤到村口；宋江求见李应只用旁白）
   { name: '一打祝家庄', stages: ['mainline/lijiazhuang', 'mainline/yibing', 'mainline/tanzhuang', 'mainline/panduolu'] },
+  // 负责人 2026-11-23：二打祝家庄。大仗一丈青（扈三娘专追宋江，王英、秦明、邓飞被拿都是剧本演出，扈三娘打到三成林冲活捉，宋江撤回营寨）；
+  // 过场扈成请和（吴用带吕方、郭盛、三阮到，扈成答应不救祝家）
+  { name: '二打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
 ];
 
 /**

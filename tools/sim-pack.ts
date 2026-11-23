@@ -16,7 +16,7 @@ import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
-import { applyOrders } from './sim-orders.ts';
+import { applyOrders, hasOrder } from './sim-orders.ts';
 
 useDiskCustomMaps(); // 自拼地图 packs/maps/*.json（§15.15）
 
@@ -161,7 +161,9 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         }
         // 关卡要求某几个人走到区域（劫法场逃到出口）：这几个人一律往区域走
         // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
-        if (goal && goal.who.includes(u.classId)) {
+        // 过关区域还没启用（剧本标志没设）而关卡给这人下了指令（一丈青：扈三娘没捉住前宋江别先跑回营寨）：先照指令走
+        const gtIdle = !!gt?.flagged && !(b as unknown as { flagsOk(x: unknown): boolean }).flagsOk(goalBlock);
+        if (goal && goal.who.includes(u.classId) && !(gtIdle && hasOrder(stageKey, u.classId, b.turn))) {
           // 这回合走得进区域就直接进去（还道村宋江钻神帐）【新】
           const inReach = b.moveRange(u).green.find((c) => inGoal(c) && !b.active().some((o) => o !== u && o.x === c.x && o.y === c.y));
           if (inReach && !inGoal(u)) { ev.push(...b.move(u, inReach.x, inReach.y)); if (b.canAct(u)) ev.push(...b.defend(u)); }
