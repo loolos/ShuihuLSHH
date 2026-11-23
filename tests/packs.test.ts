@@ -391,6 +391,29 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     const ring = [[-1, 0], [1, 0], [0, -1], [0, 1]].filter(([dx, dy]) => b.board.passable(judeng.x + dx, judeng.y + dy));
     expect(ring).toEqual([]);
   });
+  it('石秀探庄（§15.32.5）：巡庄庄客认得卖柴的不惊动，但走到他眼前就被拦下盘问，这回合走不了', () => {
+    const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));
+    b.begin();
+    while (b.pendingChoice) b.answer(0);
+    const sx = b.units.find((u) => u.side === 'player')!;
+    const p1 = b.units.find((u) => u.name === '巡庄庄客')!;
+    // 把石秀放到这个庄客正前方几格外，再往他面前走
+    const dirs = [[0, -1], [-1, 0], [0, 1], [1, 0]];
+    const [dx, dy] = dirs[p1.facing];
+    let placed = false;
+    for (let k = 6; k >= 4 && !placed; k--) {
+      const x = p1.x + dx * k, y = p1.y + dy * k;
+      if (b.board.passable(x, y) && !b.units.some((u) => u.present && u.x === x && u.y === y)) { sx.x = x; sx.y = y; placed = true; }
+    }
+    expect(placed).toBe(true);
+    const target = b.moveRange(sx).green.filter((c) => Math.abs(c.x - p1.x) + Math.abs(c.y - p1.y) <= 2)[0];
+    expect(target).toBeDefined();
+    const ev = b.move(sx, target.x, target.y);
+    expect(ev.some((e) => e.type === 'status' && e.text === '盘问')).toBe(true);
+    expect(b.status).toBe('playing');
+    expect(b.canAct(sx)).toBe(false);
+    expect(Object.keys(b.spotters)).toEqual([]);
+  });
   it('二打祝家庄一丈青（§15.32.8）：王英、秦明、邓飞按回合被拿；扈三娘打到三成由林冲活捉，之后宋江撤回营寨才过关', () => {
     const b = new Battle(compileStage(rt, stageOf('yizhangqing'), files, { seed: 1, text: tr }));
     b.begin();
