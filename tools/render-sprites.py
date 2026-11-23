@@ -34,7 +34,7 @@ def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument('model')
     p.add_argument('out')
-    p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'shuihu', 'Data', 'Default.pal'))
+    p.add_argument('--palette', default=os.path.join(os.path.dirname(__file__), '..', 'gamedata', 'original', 'Data', 'Default.pal'))
     p.add_argument('--ppm', type=float, default=50)
     p.add_argument('--height', type=float, help='把模型缩放到这个身高（米）')
     p.add_argument('--length', type=float, help='把模型缩放到这个身长（米，四足动物）')
@@ -50,6 +50,7 @@ def parse_args():
     p.add_argument('--toon', type=int, default=0, help='平涂明暗档数（如 3）；0 = 照常的连续明暗。需要 --outfit')
     p.add_argument('--outline', action='store_true', help='外轮廓和衣物分界画深色描边')
     p.add_argument('--poses', help='自拼动作 JSON：在已有动作的某一帧上按世界坐标轴转动骨骼、打关键帧，生成新动作（如踢腿，见 make_actions）')
+    p.add_argument('--anims', help='从别的 glb/fbx 借动作（逗号分隔）：骨骼名相同的模型直接通用（如 UAL2 女假人 Mannequin_F 没有动作，借 UAL1/UAL2 的）')
     p.add_argument('--outfit', help='上色方案 JSON：按骨骼给通用假人模型的各部位上色（见 apply_outfit）')
     return p.parse_args(argv)
 
@@ -351,6 +352,26 @@ def pose_points(scene):
     return pts
 
 
+def import_anims(paths):
+    """把别的文件里的动作导进来，再删掉随之导入的物体，只留动作（骨骼名要一致）。同名动作以先导入的为准。"""
+    for path in paths:
+        before = set(bpy.data.objects)
+        have = {a.name for a in bpy.data.actions}
+        if os.path.splitext(path)[1].lower() == '.fbx':
+            bpy.ops.import_scene.fbx(filepath=path)
+        else:
+            bpy.ops.import_scene.gltf(filepath=path)
+        for a in list(bpy.data.actions):
+            if a.name not in have:
+                if '.' in a.name and a.name.rsplit('.', 1)[0] in have:
+                    bpy.data.actions.remove(a)
+                else:
+                    a.use_fake_user = True
+        for o in set(bpy.data.objects) - before:
+            bpy.data.objects.remove(o, do_unlink=True)
+        print(f'从 {os.path.basename(path)} 借了动作，现在共 {len(bpy.data.actions)} 个')
+
+
 def setup_scene(args):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     ext = os.path.splitext(args.model)[1].lower()
@@ -360,6 +381,8 @@ def setup_scene(args):
         bpy.ops.import_scene.fbx(filepath=args.model)
     else:
         raise SystemExit(f'不支持的模型格式：{ext}')
+    if args.anims:
+        import_anims(args.anims.split(','))
     if args.outfit:
         apply_outfit(args.outfit)
     scene = bpy.context.scene
