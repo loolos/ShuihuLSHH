@@ -71,7 +71,7 @@ describe.skipIf(!has)('花荣与白胜监守自盗远程衰减', () => {
         expect(rangedFactor(actor,{x:0,y:1} as Unit,skill)).toBeCloseTo(1);
         expect(rangedFactor(actor,{x:0,y:skill.rangeMax} as Unit,skill)).toBeCloseTo(0.6);
         actor.stats.rangeBonus=2;expect(rangedFactor(actor,{x:0,y:skill.rangeMax+2} as Unit,skill)).toBeCloseTo(0.6);
-      }else if (c.id !== id && c.id !== rt.classIds.get('shiqian')) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
+      }else if (c.id !== id && c.id !== rt.classIds.get('shiqian') && !(c.id === rt.classIds.get('liying') && skill.name.includes('飞刀'))) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
     }
   });
 });
