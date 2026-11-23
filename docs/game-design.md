@@ -3795,4 +3795,4 @@ npm test
 
 #### 15.32.10 新职业（第三十一章，造型占位）
 
-造型另一个 thread 在定，这里先各借一个现成模型换色（负责人 2026-11-23：一人一个模型）：扈三娘 `husanniang`（骑兵 43 换青绿 80–95；日月双刀、双刀连斩、红锦套索〔眩晕〕）；祝龙 `zhulong`（38 换赭红 176–191；祝家枪、长枪突刺）；栾廷玉 `luantingyu`（教头 39 压暗灰；铁棒、飞锤〔眩晕〕）；马麟 `malin`（好汉，41 换青绿压暗；大滚刀、双刀滚斩、铁笛〔范围眩晕〕）；扈成 `hucheng`（何涛 54 换沙黄，只在过场出现）。头像先借底子的，提示词见项目文件 `shuihu-design/prompts/portraits-erda-zhujiazhuang.md`。原著引文（林冲「轻舒猿臂，款扭狼腰」活捉一丈青等）按第 48–49 回改写，逐字【待核】。
+造型另一个 thread 在定，这里先各借一个现成模型换色（负责人 2026-11-23：一人一个模型）：扈三娘 `husanniang`（骑兵 43 换青绿 80–95；日月双刀、双刀连斩、红锦套索〔眩晕〕）；祝龙 `zhulong`（38 换赭红 176–191；祝家枪、长枪突刺）；栾廷玉 `luantingyu`（教头 39 压暗灰；铁棒、飞锤〔眩晕〕）；马麟 `malin`（好汉，41 换青绿压暗；大滚刀、双刀滚斩、铁笛〔范围眩晕〕）；扈成 `hucheng`（何涛 54 换沙黄，只在过场出现）。头像由负责人 2026-11-23 用 AI 生成（提示词见项目文件 `shuihu-design/prompts/portraits-erda-zhujiazhuang.md`，不写画家名字；`faces/husanniang|zhulong|luantingyu|malin|hucheng.png`，原图在 `faces/src/`，`make-portrait.py --black 10`，框 840×1122）；石秀探庄的钟离老人 `zhongli` 同批（`faces/zhongli.png`）。原著引文（林冲「轻舒猿臂，款扭狼腰」活捉一丈青等）按第 48–49 回改写，逐字【待核】。
