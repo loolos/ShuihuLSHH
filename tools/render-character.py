@@ -50,6 +50,8 @@ def merge_outfit(recipe, recipe_dir):
         out['shading'].update(o.get('shading', {}))
         for k in ('rules', 'layers', 'props'):
             out[k] += copy.deepcopy(o.get(k, []))
+        if o.get('weapon'):
+            out['weapon'] = copy.deepcopy(o['weapon'])  # 双手兵器（见 render-sprites.py build_weapon），后面的覆盖前面的
     remove = set(recipe.get('remove', []))
     for k in ('rules', 'layers', 'props'):
         out[k] = [p for p in out[k] if p.get('name') not in remove]
@@ -118,7 +120,14 @@ def main():
     tmp = tempfile.mkdtemp(prefix='render-character-')
     outfit_path = os.path.join(tmp, 'outfit.json')
     json.dump(outfit, open(outfit_path, 'w', encoding='utf-8'), ensure_ascii=False)
-    poses = resolve(recipe_dir, r['poses']) if r.get('poses') else None
+    poses = None
+    if r.get('poses'):  # 可写多个，合并成一份
+        plist = r['poses'] if isinstance(r['poses'], list) else [r['poses']]
+        merged = {'actions': []}
+        for pp in plist:
+            merged['actions'] += load_json(resolve(recipe_dir, pp))['actions']
+        poses = os.path.join(tmp, 'poses.json')
+        json.dump(merged, open(poses, 'w', encoding='utf-8'), ensure_ascii=False)
 
     # 帧数不同的动作分批渲染
     groups = {}

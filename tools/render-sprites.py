@@ -233,6 +233,104 @@ def apply_outfit(path):
         bpy.context.view_layer.update()
         ob.matrix_world = mw
 
+    if cfg.get('weapon'):
+        build_weapon(arm, cfg['weapon'], lin, outfit_material('Weapon'))
+
+
+WPN_TINY = 1e-4
+
+
+def build_weapon(arm, w, lin, mat):
+    """双手兵器（枪、棍、弓、大刀）：在骨架上加几根骨骼，让兵器能脱离手单独做动画、两只手用 IK 去握。
+      wpn_hand：挂在 hand（默认 hand_r）上，普通动作（走、待机、受击）里兵器跟着这只手；
+      wpn_free：挂在 root 上，--poses 里写了 weapon 的动作由它按世界坐标摆兵器，两手前臂的 IK 去够 grip_r / grip_l；
+      两根骨骼各挂一份兵器网格，用骨骼缩放（1 或几乎为 0）决定显示哪一份。
+    JSON（outfit 的 "weapon"）：
+      {"hand": "hand_r", "grip": [x,y,z]（静止姿势里握点的世界坐标）, "dir": [0,-1,0]（静止时兵器指向）, "up": [0,0,1],
+       "parts": [{"from": 米, "to": 米, "shape": "cylinder"|"box"|"cone", "radius": 米, "size": [宽,厚], "off": [x,z], "color": [r,g,b]}]}
+      parts 沿兵器轴（握点为 0，指向枪尖为正）摆放；off 是横向偏移（弓臂弯曲用）。"""
+    from mathutils import Matrix
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode='EDIT')
+    eb = arm.data.edit_bones
+    inv = arm.matrix_world.inverted()
+    grip = inv @ Vector(w.get('grip', [-0.80, -0.03, 1.43]))
+    d = Vector(w.get('dir', [0, -1, 0])).normalized()
+    up = Vector(w.get('up', [0, 0, 1]))
+    hand = w.get('hand', 'hand_r')
+
+    def add(name, parent, head, direction):
+        b = eb.new(name)
+        b.head = head
+        b.tail = head + direction * 0.1
+        b.align_roll(up)
+        b.parent = eb[parent] if parent else None
+        b.use_deform = False
+        return b
+    root_name = 'root' if 'root' in eb else None
+    add('wpn_hand', hand, grip, d)
+    add('wpn_free', root_name, Vector((0, 0, 0)), d)
+    add('grip_r', 'wpn_free', Vector((0, 0, 0)), d)
+    add('grip_l', 'wpn_free', Vector((0, 0, 0)), d)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    for side in ('r', 'l'):
+        c = arm.pose.bones[f'lowerarm_{side}'].constraints.new('IK')
+        c.name = 'WpnIK'
+        c.target = arm
+        c.subtarget = f'grip_{side}'
+        c.chain_count = 2
+        c.influence = 0
+    bpy.context.view_layer.update()
+
+    for bone in ('wpn_hand', 'wpn_free'):
+        pb = arm.pose.bones[bone]
+        bm = arm.matrix_world @ arm.data.bones[bone].matrix_local  # 静止姿势的骨骼坐标系：Y = 兵器轴
+        for i, part in enumerate(w['parts']):
+            a, b = part['from'], part['to']
+            L = b - a
+            ox, oz = part.get('off', [0, 0])
+            shape = part.get('shape', 'cylinder')
+            if shape == 'box':
+                sw, st = part.get('size', [0.03, 0.01])
+                bpy.ops.mesh.primitive_cube_add(size=1)
+                ob = bpy.context.active_object
+                ob.scale = (st, L, sw)
+            else:
+                r = part.get('radius', 0.016)
+                if shape == 'cone':
+                    bpy.ops.mesh.primitive_cone_add(radius1=r, radius2=0, depth=L, vertices=10)
+                else:
+                    bpy.ops.mesh.primitive_cylinder_add(radius=r, depth=L, vertices=10)
+                ob = bpy.context.active_object
+                ob.rotation_euler = (-math.pi / 2, 0, 0)  # 圆柱 / 圆锥沿 Z → 沿 Y（尖朝 +Y）
+            local = Matrix.Translation((ox, (a + b) / 2, oz)) @ ob.matrix_basis
+            ob.name = f'Wpn_{bone}_{i}'
+            ob.matrix_world = bm @ local
+            bpy.context.view_layer.update()
+            attr = ob.data.color_attributes.new('Outfit', 'FLOAT_COLOR', 'POINT')
+            for dd in attr.data:
+                dd.color = lin(part['color'])
+            ob.data.materials.append(mat)
+            mw = ob.matrix_world.copy()
+            ob.parent = arm
+            ob.parent_type = 'BONE'
+            ob.parent_bone = bone
+            bpy.context.view_layer.update()
+            ob.matrix_world = mw
+    arm.pose.bones['wpn_free'].scale = (WPN_TINY,) * 3  # 网格挂好之后再缩，不然父子关系会把缩放抵消掉
+    bpy.context.view_layer.update()
+    print('兵器骨骼已加：', len(w['parts']), '段')
+
+
+def reset_weapon(arm):
+    """切换动作前把兵器骨骼和 IK 复位成「兵器在手上」；带兵器的自拼动作有自己的关键帧，会覆盖这里"""
+    if 'wpn_free' not in arm.pose.bones:
+        return
+    arm.pose.bones['wpn_free'].scale = (WPN_TINY,) * 3
+    arm.pose.bones['wpn_hand'].scale = (1, 1, 1)
+    for side in ('r', 'l'):
+        arm.pose.bones[f'lowerarm_{side}'].constraints['WpnIK'].influence = 0
+
 
 def make_actions(path, scene):
     """模型里没有的动作（如踢腿）用关键帧拼出来。
@@ -261,10 +359,12 @@ def make_actions(path, scene):
         bpy.context.view_layer.update()
         pose0 = {pb.name: (pb.location.copy(), pb.rotation_quaternion.copy(), pb.scale.copy()) for pb in arm.pose.bones}
         act = bpy.data.actions.new(a['name'])
+        act.use_fake_user = True
         set_action(arm, act)
         n = a.get('frames', 24)
         for key in a['keys']:
             frame = 1 + round(key['t'] * n)
+            reset_weapon(arm)
             for pb in arm.pose.bones:
                 pb.rotation_mode = 'QUATERNION'
                 loc, rot, scl = pose0[pb.name]
@@ -282,6 +382,36 @@ def make_actions(path, scene):
                     mw = Matrix.Translation(key['move'][name]) @ mw
                 pb.matrix = arm.matrix_world.inverted() @ mw
                 bpy.context.view_layer.update()
+            if a.get('weapon'):
+                # 兵器单独摆：wpn_free 显示，wpn_hand 隐藏，两手 IK 去握
+                wk = {**a['weapon'], **key.get('weapon', {})}
+                wpn = arm.pose.bones['wpn_free']
+                y = Vector(wk['dir']).normalized()
+                x = y.cross(Vector(wk.get('up', [0, 0, 1]))).normalized()
+                z = x.cross(y)
+                m = Matrix((x, y, z)).transposed().to_4x4()
+                m.translation = Vector(wk['at'])
+                wpn.matrix = arm.matrix_world.inverted() @ m
+                wpn.scale = (1, 1, 1)
+                arm.pose.bones['wpn_hand'].scale = (WPN_TINY,) * 3
+                bpy.context.view_layer.update()
+                for side in ('r', 'l'):
+                    g = wk.get('grips', {}).get(side)
+                    c = arm.pose.bones[f'lowerarm_{side}'].constraints['WpnIK']
+                    gb = arm.pose.bones[f'grip_{side}']
+                    if g is None:
+                        c.influence = 0
+                    else:
+                        c.influence = 1
+                        g = g if isinstance(g, list) else [0, g, 0]  # 数字 = 沿兵器轴的位置
+                        gb.location = (0, 0, 0)
+                        bpy.context.view_layer.update()
+                        gm = arm.matrix_world @ wpn.matrix
+                        gm2 = gm.copy()
+                        gm2.translation = gm @ Vector((g[0], g[1], g[2]))
+                        gb.matrix = arm.matrix_world.inverted() @ gm2
+                    c.keyframe_insert('influence', frame=frame)
+                    bpy.context.view_layer.update()
             for pb in arm.pose.bones:
                 for path_ in ('location', 'rotation_quaternion', 'scale'):
                     pb.keyframe_insert(path_, frame=frame)
@@ -289,6 +419,7 @@ def make_actions(path, scene):
 
 
 def set_action(arm, act):
+    reset_weapon(arm)
     arm.animation_data_create()
     arm.animation_data.action = act
     if hasattr(arm.animation_data, 'action_suitable_slots') and arm.animation_data.action_suitable_slots:
@@ -300,7 +431,7 @@ def evaluated_bounds(scene):
     dg = bpy.context.evaluated_depsgraph_get()
     xs, ys, zs = [], [], []
     for o in scene.objects:
-        if o.type != 'MESH' or o.is_shadow_catcher:
+        if o.type != 'MESH' or o.is_shadow_catcher or o.name.startswith('Wpn_'):
             continue
         ev = o.evaluated_get(dg)
         me = ev.to_mesh()
@@ -348,6 +479,8 @@ def pose_points(scene):
     pts = []
     for arm in [o for o in scene.objects if o.type == 'ARMATURE']:
         for pb in arm.pose.bones:
+            if pb.name.startswith(('wpn_', 'grip_')):
+                continue
             pts.append(arm.matrix_world @ pb.head)
     return pts
 

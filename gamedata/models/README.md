@@ -13,6 +13,8 @@
 | `outfits/male-base.json` | 男性服装底版（头巾、白中衣、交领短褂、腰带、宽裤、裹腿、发髻） |
 | `outfits/female-base.json` | 女性服装底版（短袄、围裙、长裙、发髻、金钗、头花、镯子） |
 | `outfits/weapon-*.json` | 兵器：`weapon-knives` 双短刀，`weapon-podao` 朴刀 |
+| `outfits/weapon-spear\|staff\|dadao\|bow.json` | 双手兵器（长枪、齐眉棍、长柄大刀、弓）：写在服装的 `weapon` 里，渲染时会在骨架上加兵器骨骼（见下） |
+| `poses/weapons.json` | 自拼的兵器动作：`Spear_` / `Staff_` / `Blade_` 加 `Idle`、`Thrust`（突刺）、`Sweep`（横扫）、`Smash`（下劈），`Bow_Shoot`（拉弓放箭） |
 | `characters/<id>.json` | 人物配方 |
 
 所有动作名：`python3 -c "import json,struct;d=open('gamedata/models/UAL2_Standard.glb','rb').read();n=struct.unpack('<I',d[12:16])[0];print([a['name'] for a in json.loads(d[20:20+n])['animations']])"`，也可以在 <https://quaternius.com/animviewer.html> 里看。
@@ -41,6 +43,10 @@
 ```
 
 换个颜色做新人物：复制一份配方，改 `colors` 和 `out`，再渲染一次。
+
+## 双手兵器
+
+UAL 两个库只有刀剑、拳脚、投掷类动作。枪、棍、大刀、弓用 `poses/weapons.json` 自拼：服装里写了 `weapon` 时，`render-sprites.py` 会在骨架上加两根兵器骨骼——普通动作（走、待机、受击）里兵器挂在手上；带 `weapon` 的自拼动作里兵器按世界坐标单独摆（`at` 握点、`dir` 兵器指向、`up`），两只手的前臂用 IK 自动去握 `grips` 指定的位置（数字 = 沿兵器轴离握点多远；弓的右手写 `[横, 沿弓轴, 前后]`）。要用这些动作，配方里写 `"poses": "poses/weapons.json"`，再在 `actions` 里映射，如 `"spear-thrust": "Spear_Thrust"`。新动作照 `weapons.json` 的写法加关键帧。
 
 ## 渲染
 
