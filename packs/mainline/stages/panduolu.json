@@ -849,8 +849,8 @@
    "id": "yangxiong",
    "class": "yangxiong",
    "side": "player",
-   "x": 27,
-   "y": 26,
+   "x": 2,
+   "y": 11,
    "level": 30,
    "facing": 1,
    "name": "病关索杨雄"
@@ -889,8 +889,8 @@
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 28,
-   "y": 26,
+   "x": 3,
+   "y": 11,
    "level": 30,
    "facing": 1,
    "name": "神行太保戴宗"
@@ -899,8 +899,8 @@
    "id": "lijun",
    "class": "lijun",
    "side": "player",
-   "x": 27,
-   "y": 27,
+   "x": 2,
+   "y": 12,
    "level": 30,
    "facing": 1,
    "name": "混江龙李俊"
@@ -1811,6 +1811,110 @@
    "hidden": true,
    "name": "挠钩手",
    "levelOffset": 1
+  },
+  {
+   "id": "gd1",
+   "class": 39,
+   "side": "enemy",
+   "x": 15,
+   "y": 21,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯教头",
+   "levelOffset": 2
+  },
+  {
+   "id": "gd2",
+   "class": 39,
+   "side": "enemy",
+   "x": 21,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯教头",
+   "levelOffset": 2
+  },
+  {
+   "id": "gd3",
+   "class": 19,
+   "side": "enemy",
+   "x": 17,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "gd4",
+   "class": 40,
+   "side": "enemy",
+   "x": 19,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "gd5",
+   "class": 41,
+   "side": "enemy",
+   "x": 17,
+   "y": 25,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "gd6",
+   "class": 20,
+   "side": "enemy",
+   "x": 19,
+   "y": 25,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "gd7",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 23,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "gd8",
+   "class": 34,
+   "side": "enemy",
+   "x": 20,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "name": "守灯弓手",
+   "levelOffset": 1
   }
  ],
  "script": [
@@ -2404,6 +2508,63 @@
        37
       ]
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "player",
+    "area": [
+     13,
+     17,
+     23,
+     27
+    ],
+    "atTurnEnd": true
+   },
+   "if": "shixiuCame",
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "灯杆台四下里一声梆子响，守灯的庄兵从暗处一齐钻了出来。"
+    ],
+    [
+     "appear",
+     "gd1"
+    ],
+    [
+     "appear",
+     "gd2"
+    ],
+    [
+     "appear",
+     "gd3"
+    ],
+    [
+     "appear",
+     "gd4"
+    ],
+    [
+     "appear",
+     "gd5"
+    ],
+    [
+     "appear",
+     "gd6"
+    ],
+    [
+     "appear",
+     "gd7"
+    ],
+    [
+     "appear",
+     "gd8"
+    ],
+    [
+     "say",
+     "gd1",
+     "护住红灯！一个也休放过去！"
     ]
    ]
   },
