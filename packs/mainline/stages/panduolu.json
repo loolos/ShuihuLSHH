@@ -1811,6 +1811,318 @@
    "hidden": true,
    "name": "挠钩手",
    "levelOffset": 0
+  },
+  {
+   "id": "g121",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g122",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g123",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g124",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g125",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g126",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g131",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g132",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g133",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g134",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g135",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g136",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g141",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g142",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g143",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g144",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g145",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g146",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g151",
+   "class": 19,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g152",
+   "class": 40,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g153",
+   "class": 41,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g154",
+   "class": 20,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 0
+  },
+  {
+   "id": "g155",
+   "class": 34,
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 0
+  },
+  {
+   "id": "g156",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "挠钩手",
+   "levelOffset": 0
   }
  ],
  "script": [
@@ -2375,6 +2687,76 @@
       "g104",
       "g105",
       "g106"
+     ],
+     {
+      "count": 2,
+      "exclude": [
+       "route"
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "冈上那碗红灯又晃了晃，两路伏兵一齐杀出。"
+    ],
+    [
+     "trap",
+     [
+      "g121",
+      "g122",
+      "g123",
+      "g124",
+      "g125",
+      "g126",
+      "g131",
+      "g132",
+      "g133",
+      "g134",
+      "g135",
+      "g136"
+     ],
+     {
+      "count": 2,
+      "exclude": [
+       "route"
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "unless": "lampDown",
+   "do": [
+    [
+     "narrate",
+     "冈上那碗红灯又晃了晃，两路伏兵一齐杀出。"
+    ],
+    [
+     "trap",
+     [
+      "g141",
+      "g142",
+      "g143",
+      "g144",
+      "g145",
+      "g146",
+      "g151",
+      "g152",
+      "g153",
+      "g154",
+      "g155",
+      "g156"
      ],
      {
       "count": 2,

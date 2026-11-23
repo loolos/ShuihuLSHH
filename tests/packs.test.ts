@@ -414,6 +414,22 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、吴用说三阮（§15.8
     expect(b.canAct(sx)).toBe(false);
     expect(Object.keys(b.spotters)).toEqual([]);
   });
+  it('石秀探庄（§15.32.5）：敌方回合巡逻庄客看见石秀，下个我方回合石秀整回合动不了', () => {
+    const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));
+    b.begin();
+    while (b.pendingChoice) b.answer(0);
+    const sx = b.units.find((u) => u.side === 'player')!;
+    const p1 = b.units.find((u) => u.name === '巡庄庄客')!;
+    const [dx, dy] = [[0, -1], [-1, 0], [0, 1], [1, 0]][p1.facing];
+    const spot = [2, 1, 3].map((k) => ({ x: p1.x + dx * k, y: p1.y + dy * k })).find((c) => b.board.passable(c.x, c.y) && !b.units.some((u) => u.present && u.x === c.x && u.y === c.y))!;
+    expect(spot).toBeDefined();
+    sx.x = spot.x; sx.y = spot.y;
+    const ev = b.endPlayerPhase();
+    expect(ev.some((e) => e.type === 'status' && e.text === '盘问')).toBe(true);
+    expect(b.status).toBe('playing');
+    expect(b.turn).toBe(2);
+    expect(b.canAct(sx)).toBe(false);
+  });
   it('二打祝家庄一丈青（§15.32.8）：王英、秦明、邓飞按回合被拿；扈三娘打到三成由林冲活捉，之后宋江撤回营寨才过关', () => {
     const b = new Battle(compileStage(rt, stageOf('yizhangqing'), files, { seed: 1, text: tr }));
     b.begin();
