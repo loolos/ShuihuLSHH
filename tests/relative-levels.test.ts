@@ -29,7 +29,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/ShuiHu.exe`))('完整流程等级',()=>{
    for(const stage of rt.stages){const party=new Map(stage.units.filter(u=>u.side==='player').map(u=>{const id=typeof u.class==='number'?u.class:rt.classIds.get(u.class)!;return[id,member(id,lv)]}));check(compileStage(rt,stage,files,{party,joinLevel:lv+10}));}
   }
  });
- it('大破何涛不再把已有主角抬到30，保留经验与打铁',()=>{
+ it('怒破何观察不再把已有主角抬到30，保留经验与打铁',()=>{
   const m=member(0,24),input=loadStage(files,data,'N-add14',{party:new Map([[0,m]])}),b=new Battle(input),u=b.units.find(u=>u.classId===0&&u.side==='player')!;
   expect(u.level).toBe(24);expect(u.exp).toBe(73);expect(u.forge.slice(0,3)).toEqual([2,1,0]);expect(u.slots.slice(0,m.slots.length)).toEqual(m.slots);
  });

@@ -204,7 +204,7 @@ export function alertRadius(b: Battle, u: Unit): number {
 
 export function planAi(b: Battle, u: Unit): AiPlan {
   if (b.spectators.has(u.uid)) return {};
-  // 【新】逃窜（大破何涛放火，负责人 2026-11-21）：在移动范围里随便挑一格乱走，不攻击、不用技能、不防御
+  // 【新】逃窜（怒破何观察放火，负责人 2026-11-21）：在移动范围里随便挑一格乱走，不攻击、不用技能、不防御
   if (u.panicTurns) {
     const reach = b.reachOf(u, u.stats.move);
     const cells = [...reach.values()];
@@ -214,11 +214,11 @@ export function planAi(b: Battle, u: Unit): AiPlan {
   // 模式 5 跟随的 w8 = 0 是主角（角色 0）：N12 晁蓋就是这样跟着主角走的【推测：EXE 0x40c360 按角色号查找，0 也是合法角色号】。
   // 其它模式的 0 仍当"没指定"。
   const target = u.ai.target || u.ai.mode === 5 ? b.unitByChar(u.ai.target) : undefined;
-  // 手下留情（rules.feint，东溪村突围的朱仝）【新】：那个人到了警戒范围就专找他做样子打
+  // 手下留情（rules.feint，夜走东溪村的朱仝）【新】：那个人到了警戒范围就专找他做样子打
   const feint = b.tune?.feint;
   if (feint && u.classId === feint.by && u.present) {
     const t = b.unitByChar(feint.target);
-    // 走得到、打得着才去（其余时候照自己的模式，东溪村突围的朱仝是迎击）
+    // 走得到、打得着才去（其余时候照自己的模式，夜走东溪村的朱仝是迎击）
     if (t && t.alive && t.present && Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= alertRadius(b, u)) return bestAttack(b, u, t) ?? approach(b, u, [t]);
   }
   switch (u.ai.mode) {

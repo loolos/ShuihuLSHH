@@ -677,7 +677,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       }
       case 'fire': {
-        // ['fire', [[x, y], ...], {panic, turns, spare, focus}] 放火（指令 124，同大破何涛）：这些格子冒火，离火最近的 panic 个敌人逃窜 turns 回合【新】
+        // ['fire', [[x, y], ...], {panic, turns, spare, focus}] 放火（指令 124，同怒破何观察）：这些格子冒火，离火最近的 panic 个敌人逃窜 turns 回合【新】
         const cells = Array.isArray(a[0]) ? (a[0] as unknown[]).map((c) => (Array.isArray(c) && c.length === 2 ? { x: Number(c[0]), y: Number(c[1]) } : fail(`第 ${index} 个区块：fire 的格子要写成 [x, y]`))) : fail(`第 ${index} 个区块：fire 要写格子列表`);
         const o = (a[1] ?? {}) as { panic?: number; turns?: number; spare?: unknown[]; focus?: boolean };
         ops.push({ op: 124, flag: null, value: 0, args: { cells, ...(o.panic ? { panic: o.panic } : {}), ...(o.turns ? { turns: o.turns } : {}), ...(o.spare ? { spare: o.spare.map(r.classRef) } : {}), ...(o.focus ? { focus: true } : {}) } });

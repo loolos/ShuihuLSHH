@@ -513,7 +513,7 @@ describe.skipIf(!has)('N01', () => {
     return x.flush();
   };
 
-  it('N12 东溪村突围：埋伏的朱仝不算"已死"；晁蓋到达安全地带或打倒朱仝才过关', () => {
+  it('N12 夜走东溪村：埋伏的朱仝不算"已死"；晁蓋到达安全地带或打倒朱仝才过关', () => {
     const start = () => {
       const b = new Battle(loadStage(files, data, 'N12', { seed: 1, text: tr }));
       b.begin();

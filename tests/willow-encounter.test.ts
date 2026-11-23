@@ -14,7 +14,7 @@ import{stageLabel}from'../src/game/stage-names.ts';
 import{recordResult}from'../src/rules/campaign.ts';
 import{planAi}from'../src/rules/ai.ts';
 import{OccluderIndex,coarseMask}from'../src/game/occlusion.ts';
-describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('柳下逢知己',()=>{
+describe.skipIf(!fs.existsSync(`${DATA}/Map/Act5-2.act`))('倒拔垂杨柳',()=>{
  const files=new NodeFiles(DATA),data=loadGameData(files),input=()=>loadStage(files,data,'Act5-2',{seed:2});
  it('原串关换用狮子楼裁图，只有鲁智深参战，四名泼皮，其余五人旁观且不可攻击',()=>{
   expect(stageMap(files,'Act5-2')).toBe(WILLOW_MAP);expect(loadStageMap(files,stageMap(files,'Act5-2'))!.map).toEqual(loadStageMap(files,WILLOW_MAP)!.map);

@@ -71,7 +71,7 @@ describe('章节表', () => {
     // 负责人 2026-11-16：蜈蚣岭、孔亮两章合成第十八章「行者武松」，后面各章减一
     expect(chapterOf('mainline/kongliang')).toBe(18);
     expect(chapterOf('mainline/kongjiazhuang')).toBe(18);
-    expect(chapterLabel(18)).toBe('第十八章 行者武松');
+    expect(chapterLabel(18)).toBe('第十八章 夜走蜈蚣岭');
     expect(chapterOf('mainline/qingfengshan')).toBe(19);
     expect(chapterOf('mainline/jieqiuche')).toBe(19);
     expect(chapterOf('mainline/yekun')).toBe(20);
@@ -88,7 +88,7 @@ describe('章节表', () => {
     expect(chapterLabel(30)).toBe('第三十章 一打祝家庄');
     expect(chapterOf('mainline/panduolu')).toBe(30);
     expect(chapterOf('mainline/yizhangqing')).toBe(31);
-    expect(chapterLabel(31)).toBe('第三十一章 二打祝家庄');
+    expect(chapterLabel(31)).toBe('第三十一章 两打祝家庄');
     expect(chapterLabel(27)).toBe('第二十七章 沂岭杀四虎');
     expect(CHAPTERS).toHaveLength(31);
   });
@@ -113,7 +113,7 @@ describe.skipIf(!fs.existsSync(EXE))('章节表与原版', () => {
     }
   });
   it('原版关卡的分章和 EXE 标题里的"第N章"一致，负责人调整过的除外（再调整时把它加进 moved）', () => {
-    // 负责人调整过的：#234 两关归第七章；沧州设毒计（原第八章）、摆脱追骑（原第十章）归第九章
+    // 负责人调整过的：#234 两关归第七章；沧州设毒计（原第八章）、雪夜脱重围（原第十章）归第九章
     const moved: Record<string, number> = { 'act7-1a': 7, 'n-add09a': 7, 'act9-1': 9, 'n-add11': 9 };
     for (const s of stages) expect(chapterOf(s.mapName), s.mapName).toBe(moved[s.mapName.toLowerCase()] ?? Number(/第\s*(\d+)\s*章/.exec(s.title)?.[1]));
   });

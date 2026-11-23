@@ -26,14 +26,14 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '大闹桃花村', stages: ['N-add05', 'Act4-2', 'Act4-3', 'N04', 'Act5-1'] },
   { name: '东京遇林冲', stages: ['mainline/wawasi', 'N-add06', 'Train1', 'N-add07', 'Act5-2', 'Act5-3', 'N05', 'Act6-1', 'Act6-2'] },
   { name: '误入白虎堂', stages: ['N-add08', 'Act6-3', 'N06', 'Act7-1'] },
-  // 负责人 2026-11-15（#234）：野猪林义援、陆谦拦路、关前遇盘查（及其后的城镇 沧州城）归第七章
+  // 负责人 2026-11-15（#234）：野猪林义援、陆谦拦路、刺配沧州道（及其后的城镇 沧州城）归第七章
   { name: '大闹野猪林', stages: ['mainline/zhizhulin', 'Act7-1a', 'N07', 'N-add09a'] },
   { name: '柴门招豪客', stages: ['N-add09b', 'Act8-1', 'N-add10', 'N08'] },
-  // 负责人 2026-11-15：沧州设毒计、摆脱追骑（及中间的城镇 黄泥冈前）归第九章
+  // 负责人 2026-11-15：沧州设毒计、雪夜脱重围（及中间的城镇 黄泥冈前）归第九章
   { name: '风雪山神庙', stages: ['Act9-1', 'N09', 'N-add11'] },
   { name: '青面兽杨志', stages: ['mainline/daming-duel', 'mainline/chifagui', 'mainline/sanruan', 'Act10-1', 'Act10-2', 'N-add12', 'Act11-1a', 'N10', 'Act11-1', 'Act11-2'] },
   { name: '认义东溪村', stages: ['N-add13', 'N11'] },
-  { name: '义释晁天王', stages: ['N-add14', 'N12', 'Act13-1'] },
+  { name: '私放晁天王', stages: ['N-add14', 'N12', 'Act13-1'] },
   { name: '石碣村三雄', stages: ['N-add15', 'Act13-2', 'N13', 'Act14-1'] },
   { name: '投奔梁山泊', stages: ['N-add16', 'Train2', 'Act14-2', 'Act14-3'] },
   { name: '梁山泊聚义', stages: ['N14', 'mainline/songjiang-yanshixi', 'mainline/songjiazhuang'] },
@@ -43,11 +43,11 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-16：鸳鸯楼后众人散去，武龙、李逵、花荣随武松；十字坡扮行者为开场剧情，蜈蚣岭夜战（原著第 31–32 回）；
   // 接着村店醉打孔亮一场仗，落溪被擒、孔家庄相认、瑞龙镇分路为剧情（原著第 32 回，方案 A）。
   // 负责人 2026-11-16 把原第十八章 夜走蜈蚣岭、第十九章 醉打孔亮 合成一章
-  { name: '行者武松', stages: ['mainline/xingzhe', 'mainline/wugongling', 'mainline/kongliang', 'mainline/kongjiazhuang'] },
+  { name: '夜走蜈蚣岭', stages: ['mainline/xingzhe', 'mainline/wugongling', 'mainline/kongliang', 'mainline/kongjiazhuang'] },
   // 负责人 2026-11-16：清风寨上半（原著第 32–34 回）：清风山被擒相认、元宵被诬、花荣抢人、掷盏为号、劫囚车（二龙山三人来援）
   { name: '大闹清风寨', stages: ['mainline/qingfengshan', 'mainline/xingjiutang', 'mainline/yuanxiao', 'mainline/qianghuarong', 'mainline/zhizhan', 'mainline/jieqiuche'] },
   // 负责人 2026-11-16：清风寨下半（原著第 34–35 回）：夜困秦明、夜说秦明与许婚、攻破清风寨（秦明劝降黄信，新）、对影山射戟、石勇送信与梁山聚义
-  { name: '霹雳火秦明', stages: ['mainline/yekun', 'mainline/yeshuo', 'mainline/gongpo', 'mainline/duiyingshan', 'mainline/liufeng', 'mainline/shiyong'] },
+  { name: '夜走瓦砾场', stages: ['mainline/yekun', 'mainline/yeshuo', 'mainline/gongpo', 'mainline/duiyingshan', 'mainline/liufeng', 'mainline/shiyong'] },
   // 负责人 2026-11-19：宋江刺配江州（原著第 36 回）：奔丧归庄（选项）、梁山截路（宋江劝住）、梁山送别、揭阳岭（限时救人）；武龙受吴用之托一路暗中护送
   { name: '刺配江州', stages: ['mainline/bensang', 'mainline/toushou', 'mainline/liangshan-jielu', 'mainline/liangshan-songbie', 'mainline/jieyangling', 'mainline/jieyangzhen', 'mainline/mujiazhuang', 'mainline/chuanhuoer'] },
   { name: '浔阳江头', stages: ['mainline/jiangzhou-laocheng', 'mainline/dufang', 'mainline/pipating', 'mainline/xunyanglou'] },
@@ -77,7 +77,7 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '一打祝家庄', stages: ['mainline/lijiazhuang', 'mainline/yibing', 'mainline/tanzhuang', 'mainline/panduolu'] },
   // 负责人 2026-11-23：二打祝家庄。大仗一丈青（扈三娘专追宋江，王英、秦明、邓飞被拿都是剧本演出，扈三娘打到三成林冲活捉，宋江撤回营寨）；
   // 过场扈成请和（吴用带吕方、郭盛、三阮到，扈成答应不救祝家）
-  { name: '二打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
+  { name: '两打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
 ];
 
 /**
