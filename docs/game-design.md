@@ -1725,6 +1725,8 @@ packs/wusong/
 
 **自拼动作**（`--poses 动作.json`）：模型里没有的动作（如 UAL1 没有踢腿）用关键帧拼。每个关键帧从某个已有动作的某一帧出发，按世界坐标轴转动骨骼（人物正面朝 −Y、右手在 −X、Z 向上；绕 X 转负角 = 往前抬），`move` 可整体平移骨骼（起跳、压低重心）。武松的右脚 / 左脚正踢在 `packs/mainline/sprites/src/poses-wusong.json`，拼成左右交替 4 脚给「玉环鸳鸯脚」用（2026-11-15，负责人选定）。左脚是前脚，静止时大腿已经前倾，所以抬腿角度比右脚少 25°。
 
+**通用模型与人物配方**（负责人 2026-11-23 要求：男女通用、以后换色重复用）：原料入库在 `gamedata/models/`（游戏运行时不读）。身体：男 = UAL1 假人，女 = UAL2 附带的女假人 `Mannequin_F.glb`（没有动作，但骨骼和 UAL1 / UAL2 完全相同，`render-sprites.py --anims` 直接借两库共 80 多个动作，含 UAL2 的剑术连招、格挡、冲刺）。服装底版 `outfits/male-base.json`（武松的分层服装）、`female-base.json`（短袄、围裙、长裙、发髻），兵器 `weapon-*.json`。每个人物一份配方 `characters/<id>.json`：选身体和底版、按部件名换色 / 去掉 / 追加、动作名映射，`tools/render-character.py 配方` 一次渲染整套并写进 `packs/<包>/sprites/<id>/`。写法见 `gamedata/models/README.md`。UBC 的精细身体在 65 像素下看不出区别，没有采用；它的发型是西式的，也没采用。首批配方：顾大嫂（女，双短刀）、石秀（朴刀）、戴宗（幞头、腿绑甲马，拳脚）。
+
 **道具模型**：outfit JSON 的 `props` 除了球体，还可以写 `"shape": "box"`（单位立方体，按 `scale` 定长宽高）、`"shape": "cylinder"`（`radius`、`depth`），`rot` 是角度。挂到骨骼（如 `hand_r`）上。李逵的两把板斧 = 圆柱斧柄 + 扁盒斧刃（`packs/jiangzhou/sprites/src/outfit-likui.json`）。
 
 **已知问题**

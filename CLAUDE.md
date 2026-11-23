@@ -10,7 +10,7 @@
   - `gamedata/maps/<地图>.json`：原版地图（与 `packs/maps` 自拼地图同一种格式），新关卡用 `map.base` 引用或拿来改。
   - `gamedata/tables/`：EXE 静态表、职业（Human.hum）、道具（Goods.dab）、地形通行、繁→简对照。职业和道具的重制版改动目前仍在 `src/rules/data.ts`。
   - `gamedata/sprites/`（人物动画 `man/<职业>/<动作>.png`、特效 `effects/<组>.png`）、`gamedata/tiles/`（地图图块、格子光标）、`gamedata/portraits/`（头像）、`gamedata/icons/`（道具图标）：8 位索引色 PNG，调色板是原版 Default.pal（`tables/palette.json`），0 号透明。编辑时必须保持索引色和同一调色板（换色、透明色键都靠索引）。帧的格子大小和锚点在旁边的目录 JSON 里，格式见 `docs/binary-formats.md` §15。
-- 临时的提取产物（预览 PNG、调试用 JSON 等）写到被忽略的 `extracted/`。要入库的导出数据只放在 `gamedata/` 下的约定目录（`stages/`、`maps/`、`tables/`、`sprites/`、`tiles/`、`portraits/`、`icons/`、`sound/`）。译文在 `gamedata/lang/<语言>/`（§10.3）；剧本指令上的 `"id"` 是译文用的固定编号，改对白时保留，复制指令时别带上。
+- 临时的提取产物（预览 PNG、调试用 JSON 等）写到被忽略的 `extracted/`。要入库的导出数据只放在 `gamedata/` 下的约定目录（`stages/`、`maps/`、`tables/`、`sprites/`、`tiles/`、`portraits/`、`icons/`、`sound/`；3D 渲染精灵的原料（假人、动作库、服装底版、人物配方）在 `models/`，游戏运行时不读）。译文在 `gamedata/lang/<语言>/`（§10.3）；剧本指令上的 `"id"` 是译文用的固定编号，改对白时保留，复制指令时别带上。
 - 仓库已于 2026-11-12 公开（为了 GitHub Pages），README 有免责声明；`gamedata/original/` 里的原版文件（含历史）负责人决定开发完成后再清理，不必再提。`gamedata/` 下的 JSON（关卡、地图、数据表、图像目录）随代码打包（`src/platform/gamedata-json.ts`）；PNG 图像不放进构建产物或 `public/`，网页版运行时按需从本仓库 main 分支的 `gamedata/` 下载（负责人 2026-11-12 决定从仓库下载），缓存在 IndexedDB。不再支持让玩家选本机原版目录，也不再有附带原版文件的内部试玩页面（`loadBundled`）。
 - 涉及原版的结论要写明证据（文件、偏移、EXE 地址）；推测要标明。
 
@@ -42,6 +42,7 @@
 | `node --experimental-transform-types tools/sim-royale.ts [局数] [玩家职业号]` | 好汉聚义（吃鸡外传）试打：玩家也交给吃鸡 AI，打印吃鸡率、名次、回合数、毒死 / 开宝箱数（§15.31；`WATCH=1` 玩家倒下后打完整局） |
 | `node --experimental-transform-types tools/charge-anim.ts [--all]` | 列出所有职业（原版 + 扩展包）集气技的施放时长（默认只列被加快的） |
 | `npm run i18n -- ids\|sync\|check …` | 多语言（`docs/game-design.md` §10.3）：给关卡剧本文字分配固定编号、同步 `gamedata/lang/<语言>/` 的译文文件、列出未翻 / 过期句数 |
+| `python tools/render-character.py gamedata/models/characters/<人物>.json [--only 动作 --frames 3 --samples 8 --out 目录]` | 按人物配方用 3D 假人渲染整套精灵图条（需要 `bpy`；配方和换色写法见 `gamedata/models/README.md`） |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
 | `node --experimental-transform-types tools/compose-map.ts [名字]` | 按 `tools/map-recipes/` 的配方拼新地图，写 `packs/maps/*.json`（§15.15，见配方目录的 README） |
 

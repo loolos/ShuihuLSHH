@@ -1,0 +1,215 @@
+{
+ "default": [
+  222,
+  176,
+  140
+ ],
+ "shading": {
+  "ao": 0.4,
+  "edge": 0.2,
+  "fold_scale": 3.5,
+  "fold_strength": 0.35,
+  "fold_distortion": 2.5
+ },
+ "rules": [
+  {
+   "bones": [
+    "Head"
+   ],
+   "when": "z > 1.70 or (y > 0.0 and z > 1.58)",
+   "color": [
+    20,
+    16,
+    16
+   ],
+   "inflate": 0.012,
+   "name": "头发"
+  },
+  {
+   "bones": [
+    "foot_.*",
+    "ball_.*"
+   ],
+   "color": [
+    40,
+    30,
+    26
+   ],
+   "inflate": 0.006,
+   "name": "鞋"
+  },
+  {
+   "bones": [
+    "lowerarm_.*"
+   ],
+   "when": "0.62 < ax < 0.70",
+   "color": [
+    214,
+    170,
+    58
+   ],
+   "inflate": 0.012,
+   "name": "镯子"
+  }
+ ],
+ "layers": [
+  {
+   "name": "长裙",
+   "bones": [
+    "pelvis",
+    "thigh_.*",
+    "calf_.*",
+    "spine_01"
+   ],
+   "when": "z > 0.11 and z < 1.0",
+   "offset": "0.04 + (0.13 * (0.95 - z) if z < 0.95 else 0)",
+   "thickness": 0.012,
+   "color": [
+    46,
+    56,
+    92
+   ],
+   "folds": 1.0,
+   "colors": [
+    {
+     "when": "z < 0.16",
+     "color": [
+      28,
+      32,
+      56
+     ]
+    }
+   ]
+  },
+  {
+   "name": "短袄",
+   "bones": [
+    "spine_0[123]",
+    "clavicle_.*",
+    "neck_01",
+    "upperarm_.*",
+    "lowerarm_.*",
+    "pelvis"
+   ],
+   "when": "z > 0.80 and z < 1.52 and ax < 0.62",
+   "offset": "0.03 + (0.05 * (1 - abs(z - 1.0) / 0.2) if abs(z - 1.0) < 0.2 else 0) + (0.07 * (0.80 + 0.12 - z) if z < 0.92 else 0) + (0.35 * (ax - 0.40) if ax > 0.40 else 0)",
+   "thickness": 0.012,
+   "color": [
+    150,
+    42,
+    34
+   ],
+   "folds": 0.7,
+   "colors": [
+    {
+     "when": "ax > 0.58 or z < 0.84",
+     "color": [
+      70,
+      34,
+      26
+     ]
+    },
+    {
+     "when": "y < -0.02 and z > 1.18 and abs(x + (1.50 - z) * 0.35) < 0.025",
+     "color": [
+      70,
+      34,
+      26
+     ]
+    }
+   ]
+  },
+  {
+   "name": "围裙",
+   "bones": [
+    "pelvis",
+    "thigh_.*",
+    "spine_01"
+   ],
+   "when": "y < -0.02 and z > 0.42 and z < 0.98 and ax < 0.17",
+   "offset": "0.10 + (0.13 * (0.95 - z) if z < 0.95 else 0)",
+   "thickness": 0.01,
+   "color": [
+    176,
+    160,
+    122
+   ],
+   "folds": 0.5,
+   "colors": [
+    {
+     "when": "z > 0.94",
+     "color": [
+      96,
+      70,
+      40
+     ]
+    }
+   ]
+  }
+ ],
+ "props": [
+  {
+   "bone": "Head",
+   "shape": "sphere",
+   "radius": 0.07,
+   "at": [
+    0,
+    0.04,
+    1.85
+   ],
+   "scale": [
+    1.1,
+    1,
+    0.75
+   ],
+   "color": [
+    20,
+    16,
+    16
+   ],
+   "name": "发髻"
+  },
+  {
+   "bone": "Head",
+   "shape": "box",
+   "at": [
+    -0.05,
+    0.04,
+    1.89
+   ],
+   "scale": [
+    0.16,
+    0.012,
+    0.012
+   ],
+   "rot": [
+    0,
+    -20,
+    0
+   ],
+   "color": [
+    214,
+    170,
+    58
+   ],
+   "name": "金钗"
+  },
+  {
+   "bone": "Head",
+   "shape": "sphere",
+   "radius": 0.018,
+   "at": [
+    0.07,
+    0.02,
+    1.88
+   ],
+   "color": [
+    196,
+    40,
+    40
+   ],
+   "name": "头花"
+  }
+ ],
+ "_说明": "女性底版（顾大嫂初版）：头发、鞋、镯子、长裙（colors: [裙摆]）、短袄（colors: [袖口下摆, 领口]）、围裙（colors: [围裙腰带]）、发髻、金钗、头花。坐标是 UAL2 女假人 Mannequin_F 静止姿势。"
+}
