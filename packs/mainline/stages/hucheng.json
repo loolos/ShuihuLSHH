@@ -1,0 +1,289 @@
+{
+ "id": "hucheng",
+ "title": "扈成请和",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "panduolu",
+  "crop": [
+   10,
+   28,
+   30,
+   12
+  ]
+ },
+ "tint": "dusk",
+ "bgm": [
+  "camp",
+  "intrigue",
+  "brothers"
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 13,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "宋江"
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "ally",
+   "x": 12,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "吴用"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 14,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "ally",
+   "x": 12,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "林冲"
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 15,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 15,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 16,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "lvfang",
+   "class": "lvfang",
+   "side": "ally",
+   "x": 10,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "吕方",
+   "hidden": true
+  },
+  {
+   "id": "guosheng",
+   "class": "guosheng",
+   "side": "ally",
+   "x": 10,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "郭盛",
+   "hidden": true
+  },
+  {
+   "id": "ruanxiaoer",
+   "class": 7,
+   "side": "ally",
+   "x": 10,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "阮小二",
+   "hidden": true
+  },
+  {
+   "id": "ruanxiaowu",
+   "class": 8,
+   "side": "ally",
+   "x": 10,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "阮小五",
+   "hidden": true
+  },
+  {
+   "id": "ruanxiaoqi",
+   "class": 9,
+   "side": "ally",
+   "x": 11,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "阮小七",
+   "hidden": true
+  },
+  {
+   "id": "hucheng",
+   "class": "hucheng",
+   "side": "ally",
+   "x": 26,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "飞天虎扈成",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "独龙冈下 · 梁山营寨"
+    ],
+    [
+     "narrate",
+     "宋江连夜差人把一丈青送上梁山泊，交与宋太公收管。正在营中纳闷，忽报军师吴用引着吕方、郭盛并阮家三兄弟，带五百人马到来。"
+    ],
+    [
+     "appear",
+     "lvfang"
+    ],
+    [
+     "appear",
+     "guosheng"
+    ],
+    [
+     "appear",
+     "ruanxiaoer"
+    ],
+    [
+     "appear",
+     "ruanxiaowu"
+    ],
+    [
+     "appear",
+     "ruanxiaoqi"
+    ],
+    [
+     "say",
+     "wuyong",
+     "晁头领听说哥哥前两番失利，特差小生领这几位兄弟来助阵。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "军师来得正好！祝家庄路径曲折，前后两番折了黄信、秦明、邓飞、王英、杨林，教我好生烦恼。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥宽心。小生来时，已有一条计在此，早晚便有个机会，教那祝家庄里应外合。"
+    ],
+    [
+     "narrate",
+     "正说之间，小校报道：「扈家庄扈太公的儿子扈成，牵牛担酒，特来求见。」"
+    ],
+    [
+     "appear",
+     "hucheng"
+    ],
+    [
+     "approach",
+     "hucheng",
+     "songjiang"
+    ],
+    [
+     "face",
+     "hucheng",
+     "songjiang"
+    ],
+    [
+     "say",
+     "hucheng",
+     "小人扈成，拜见宋头领。舍妹年幼不省事，冒犯了虎威，今被擒捉，望乞将军宽恕。舍妹原许祝家庄祝彪为妻，是小人家的不是。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "你妹子拿了我王英兄弟，又把我梁山兄弟一般看承？你若要她回去，先把王矮虎还我。"
+    ],
+    [
+     "say",
+     "hucheng",
+     "王英头领已被祝家拿去了，不在小人庄上……"
+    ],
+    [
+     "say",
+     "wuyong",
+     "扈成，你若要你妹子，只依我一件事：今后祝家庄但有甚么事，你扈家庄不许去救应。若有祝家庄的人投你庄上，你便拿了解来。那时还你妹子。"
+    ],
+    [
+     "say",
+     "hucheng",
+     "小人从今再不敢去救应他。若有祝家庄的人投来，就缚在这里送纳。"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥，这厮的妹子拿了王矮虎，却来讨好！依铁牛说，一发砍了干净！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "铁牛休胡说！扈成，你且回去，我自有分晓。"
+    ],
+    [
+     "leave",
+     "hucheng"
+    ],
+    [
+     "narrate",
+     "扈成拜谢去了。吴用对宋江说：「这一着断了祝家庄的一只臂膀。如今只等那个机会。」"
+    ],
+    [
+     "narrate",
+     "原来这个机会，却在登州。欲知后事如何，且听下回分解。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}
