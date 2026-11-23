@@ -48,6 +48,7 @@ def parse_args():
     p.add_argument('--sun', type=float, default=2.5, help='主光强度')
     p.add_argument('--ambient', type=float, default=0.9, help='环境光强度（小一点明暗对比更强）')
     p.add_argument('--toon', type=int, default=0, help='平涂明暗档数（如 3）；0 = 照常的连续明暗。需要 --outfit')
+    p.add_argument('--toon-range', default='0.55,1.05', help='平涂明暗最暗档,最亮档（固有色的倍数；调高人物整体更亮）')
     p.add_argument('--outline', action='store_true', help='外轮廓和衣物分界画深色描边')
     p.add_argument('--poses', help='自拼动作 JSON：在已有动作的某一帧上按世界坐标轴转动骨骼、打关键帧，生成新动作（如踢腿，见 make_actions）')
     p.add_argument('--anims', help='从别的 glb/fbx 借动作（逗号分隔）：骨骼名相同的模型直接通用（如 UAL2 女假人 Mannequin_F 没有动作，借 UAL1/UAL2 的）')
@@ -647,13 +648,13 @@ def lum(rgb):
     return rgb[..., 0] * 0.299 + rgb[..., 1] * 0.587 + rgb[..., 2] * 0.114
 
 
-def toon(lit, flat, bands, do_outline):
-    """亮度比（光照 / 固有色）分成几档：最暗 0.55，最亮 1.05，中间均分；颜色 = 固有色 × 档位。"""
+def toon(lit, flat, bands, do_outline, lo=0.55, hi=1.05):
+    """亮度比（光照 / 固有色）分成几档：最暗 lo，最亮 hi，中间均分；颜色 = 固有色 × 档位。"""
     out = lit.copy()
     body = lit[..., 3] > 0.5
     ratio = lum(lit[..., :3]) / np.maximum(lum(flat[..., :3]), 1e-3)
     cuts = np.linspace(0.35, 0.95, bands)[1:]          # 分界
-    levels = np.linspace(0.55, 1.05, bands)
+    levels = np.linspace(lo, hi, bands)
     lv = levels[np.searchsorted(cuts, ratio)]
     out[..., :3] = np.where(body[..., None], np.clip(flat[..., :3] * lv[..., None], 0, 1), lit[..., :3])
     return outline(out, flat) if do_outline else out
@@ -716,7 +717,7 @@ def main():
                     print('DEBUG', name, dir_name, k, 'lo', tuple(round(v, 2) for v in lo), 'origin px', round(o.x * CW, 1), round((1 - o.y) * CH, 1))
                 img = render_frame(scene, tmp)
                 if args.toon:
-                    img = toon(img, render_flat(scene, tmp), args.toon, args.outline)
+                    img = toon(img, render_flat(scene, tmp), args.toon, args.outline, *map(float, args.toon_range.split(',')))
                 elif args.outline:
                     img = outline(img, None)
                 idx = quantize(img, pal, usable)
