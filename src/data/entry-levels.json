@@ -129,7 +129,7 @@
     "mainline/shapeiruhai": {"shixiu":36,"daizong":39,"shixiu-tuo":38},
     "mainline/cuipingshan": {"0":48,"11":34,"39":39,"shixiu":36,"yangxiong":36,"shiqian":39,"daizong":40},
     "mainline/zhujiadian": {"0":48,"16":33,"yangxiong":36,"shixiu":36,"shiqian":39,"wusong":36},
-    "mainline/lijiazhuang": {"0":48,"liying":41,"duxing":41,"yangxiong":37,"shixiu":37},
+    "mainline/lijiazhuang": {"0":48,"16":34,"liying":39,"yangxiong":37,"shixiu":37,"wusong":37},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":20,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }

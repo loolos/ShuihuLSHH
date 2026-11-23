@@ -1680,9 +1680,11 @@ describe.skipIf(!has)('三打祝家庄：扑天雕李应', () => {
   const start = () => {
     const b = new Battle(compileStage(rt, rt.stages.find((s) => s.id === 'lijiazhuang')!, files, { seed: 1, text: tr }));
     b.begin();
+    // 测试不操作我方：其他好汉加厚血，免得武龙等先倒下判负
+    for (const u of b.units) if (u.side === 'player' && u.classId !== rt.classIds.get('liying')) u.stats.maxHp = u.hp = 99999;
     return { b, ly: b.units.find((u) => u.classId === rt.classIds.get('liying'))!, zb: b.units.find((u) => u.classId === rt.classIds.get('zhubiao'))! };
   };
-  it('开场李应归玩家操作；第 3 回合中回马箭：生命降到三成、落马移动 −3、转友军往回撤，庄门杀出援兵', () => {
+  it('开场李应归玩家操作；第 3 回合中回马箭：生命降到四成半、落马移动 −1、转友军，冈下杀出援兵', () => {
     const { b, ly } = start();
     expect(ly.side).toBe('player');
     const move0 = ly.stats.move;
@@ -1690,8 +1692,8 @@ describe.skipIf(!has)('三打祝家庄：扑天雕李应', () => {
     while (b.turn < 3 && b.status === 'playing') ev.push(...b.endPlayerPhase());
     expect(ly.side).toBe('ally');
     expect(ly.alive).toBe(true);
-    expect(ly.hp).toBeLessThanOrEqual(Math.round(ly.stats.maxHp * 0.3));
-    expect(ly.stats.move).toBe(move0 - 3); // 转友军后还按我方好汉算属性
+    expect(ly.hp).toBeLessThanOrEqual(Math.round(ly.stats.maxHp * 0.45));
+    expect(ly.stats.move).toBe(move0 - 1); // 转友军后还按我方好汉算属性
     expect(ly.ai.mode).toBe(4);
     expect(ev.some((e) => e.type === 'status' && e.uid === ly.uid && e.text === '重傷')).toBe(true);
     expect(b.units.some((u) => u.side === 'enemy' && u.present && u.name === '祝家庄教头')).toBe(true);
@@ -1699,6 +1701,7 @@ describe.skipIf(!has)('三打祝家庄：扑天雕李应', () => {
   it('剧情受伤不会把已经更低的生命抬高，也不会打死人', () => {
     const { b, ly } = start();
     ly.hp = 1;
+    ly.x = 53; ly.y = 53; // 放到敌人够不着的角落
     while (b.turn < 3 && b.status === 'playing') b.endPlayerPhase();
     expect(ly.hp).toBe(1);
     expect(ly.alive).toBe(true);
