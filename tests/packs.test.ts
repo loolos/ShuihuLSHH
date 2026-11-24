@@ -419,6 +419,16 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     lj.x = spot[0]; lj.y = spot[1];
     advance(b, 10);
     expect(guards.every((u) => u.present || !u.alive)).toBe(true);
+    // 射掉举灯庄客以后，村口出现最后一波埋伏：8 人，3 个马军，都在村口、走得到好汉（负责人 2026-11-23）
+    const lw = b.units.filter((u) => u.side === 'enemy' && u.alive && !u.present && u.x >= 11 && u.y >= 36);
+    expect(lw.length).toBe(8);
+    expect(lw.filter((u) => u.name === '祝家庄马军').length).toBe(3);
+    judeng.hp = 0; judeng.alive = false; judeng.present = false;
+    (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(judeng.classId);
+    advance(b, 11);
+    expect(lw.every((u) => u.present && u.y >= 35)).toBe(true);
+    const fromHeroes = b.board.distanceField(b.units.filter((u) => u.side === 'player' && u.present && u.alive).map((u) => ({ x: u.x, y: u.y })));
+    for (const u of lw) expect(fromHeroes[u.y * W + u.x], u.name).toBeLessThan(Infinity);
   });
   it('石秀探庄（§15.32.5）：巡庄庄客认得卖柴的不惊动，但走到他眼前就被拦下盘问，这回合走不了', () => {
     const b = new Battle(compileStage(rt, stageOf('tanzhuang'), files, { seed: 1, text: tr }));

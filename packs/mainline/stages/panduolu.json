@@ -2071,6 +2071,110 @@
    "hidden": true,
    "name": "守灯弓手",
    "levelOffset": 1
+  },
+  {
+   "id": "lw1",
+   "class": 19,
+   "side": "enemy",
+   "x": 12,
+   "y": 37,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "lw2",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 13,
+   "y": 37,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客头目",
+   "levelOffset": 2
+  },
+  {
+   "id": "lw3",
+   "class": 20,
+   "side": "enemy",
+   "x": 14,
+   "y": 37,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄庄客",
+   "levelOffset": 1
+  },
+  {
+   "id": "lw4",
+   "class": 34,
+   "side": "enemy",
+   "x": 12,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "lw5",
+   "class": 34,
+   "side": "enemy",
+   "x": 14,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "庄客弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "lw6",
+   "class": 43,
+   "side": "enemy",
+   "x": 11,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "lw7",
+   "class": 43,
+   "side": "enemy",
+   "x": 15,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "lw8",
+   "class": 43,
+   "side": "enemy",
+   "x": 16,
+   "y": 37,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "name": "祝家庄马军",
+   "levelOffset": 2
   }
  ],
  "script": [
@@ -2772,6 +2876,56 @@
      "say",
      "songjiang",
      "好！没了灯号，看他们还埋伏得成！"
+    ],
+    [
+     "narrate",
+     "不料村口林子边早伏下一队马步军，见灯落了，呐喊一声，堵住了出路。"
+    ],
+    [
+     "appear",
+     "lw1"
+    ],
+    [
+     "appear",
+     "lw2"
+    ],
+    [
+     "appear",
+     "lw3"
+    ],
+    [
+     "appear",
+     "lw4"
+    ],
+    [
+     "appear",
+     "lw5"
+    ],
+    [
+     "appear",
+     "lw6"
+    ],
+    [
+     "appear",
+     "lw7"
+    ],
+    [
+     "appear",
+     "lw8"
+    ],
+    [
+     "focus",
+     "lw2"
+    ],
+    [
+     "say",
+     "lw2",
+     "庄主早有吩咐：灯若有失，便守住村口，休放一个出去！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，村口还有一队拦路的，杀过去便是！"
     ]
    ]
   },
