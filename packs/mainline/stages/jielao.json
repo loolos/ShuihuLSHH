@@ -152,6 +152,38 @@
    "enemyRank": "leader"
   },
   {
+   "id": "luzhishen",
+   "class": 16,
+   "side": "player",
+   "x": 21,
+   "y": 21,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "鲁智深"
+  },
+  {
+   "id": "wusong",
+   "class": "wusong",
+   "side": "player",
+   "x": 22,
+   "y": 21,
+   "level": 30,
+   "facing": 1,
+   "hidden": true
+  },
+  {
+   "id": "yangzhi",
+   "class": 14,
+   "side": "player",
+   "x": 21,
+   "y": 22,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "杨志"
+  },
+  {
    "id": "xl0",
    "class": 32,
    "side": "enemy",
@@ -239,7 +271,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "ya1",
@@ -251,7 +283,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "ya2",
@@ -263,7 +295,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "ya3",
@@ -275,7 +307,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "ya4",
@@ -287,7 +319,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "ya5",
@@ -299,7 +331,7 @@
    "facing": 1,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb0",
@@ -311,7 +343,7 @@
    "facing": 2,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb1",
@@ -323,7 +355,7 @@
    "facing": 2,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb2",
@@ -335,7 +367,7 @@
    "facing": 2,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb3",
@@ -347,7 +379,7 @@
    "facing": 2,
    "ai": 8,
    "name": "狱卒",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb4",
@@ -359,7 +391,7 @@
    "facing": 2,
    "ai": 8,
    "name": "弓手",
-   "levelOffset": -3
+   "levelOffset": 0
   },
   {
    "id": "yb5",
@@ -371,7 +403,91 @@
    "facing": 2,
    "ai": 8,
    "name": "弓手",
-   "levelOffset": -3
+   "levelOffset": 0
+  },
+  {
+   "id": "zb0",
+   "class": 33,
+   "side": "enemy",
+   "x": 20,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb1",
+   "class": 33,
+   "side": "enemy",
+   "x": 20,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb2",
+   "class": 33,
+   "side": "enemy",
+   "x": 20,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb3",
+   "class": 43,
+   "side": "enemy",
+   "x": 20,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵骑兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb4",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb5",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "zb6",
+   "class": 43,
+   "side": "enemy",
+   "x": 21,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵骑兵",
+   "levelOffset": 1
   },
   {
    "id": "menguan",
@@ -394,7 +510,8 @@
    "level": 30,
    "facing": 0,
    "hidden": true,
-   "name": "州兵"
+   "name": "州兵",
+   "levelOffset": 1
   },
   {
    "id": "mg1",
@@ -405,7 +522,8 @@
    "level": 30,
    "facing": 0,
    "hidden": true,
-   "name": "州兵"
+   "name": "州兵",
+   "levelOffset": 1
   },
   {
    "id": "mg2",
@@ -416,7 +534,8 @@
    "level": 30,
    "facing": 0,
    "hidden": true,
-   "name": "州兵"
+   "name": "州兵",
+   "levelOffset": 1
   },
   {
    "id": "mg3",
@@ -427,7 +546,8 @@
    "level": 30,
    "facing": 0,
    "hidden": true,
-   "name": "州兵弓手"
+   "name": "州兵弓手",
+   "levelOffset": 1
   },
   {
    "id": "mg4",
@@ -438,7 +558,8 @@
    "level": 30,
    "facing": 0,
    "hidden": true,
-   "name": "州兵弓手"
+   "name": "州兵弓手",
+   "levelOffset": 1
   }
  ],
  "script": [
@@ -767,6 +888,506 @@
   },
   {
    "on": {
+    "turn": 5
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "go",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 8
    },
    "do": [
@@ -779,7 +1400,7 @@
     ],
     [
      "narrate",
-     "州衙里得了消息，一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
     ],
     [
      "appear",
@@ -808,6 +1429,384 @@
     [
      "objective",
      "打倒州兵都头，拒马才拽得开"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "go",
+   "unless": "helpers",
+   "do": [
+    [
+     "focus",
+     21,
+     21
+    ],
+    [
+     "narrate",
+     "忽听得营墙东南角一声大喝，三条大汉跳将下来！"
+    ],
+    [
+     "appear",
+     "luzhishen"
+    ],
+    [
+     "appear",
+     "wusong"
+    ],
+    [
+     "appear",
+     "yangzhi"
+    ],
+    [
+     "say",
+     "luzhishen",
+     "洒家听得有人要在牢里害好汉，特地赶来凑个热闹！"
+    ],
+    [
+     "say",
+     "wusong",
+     "大嫂托人捎信到二龙山，武二岂有不来的道理。"
+    ],
+    [
+     "say",
+     "yangzhi",
+     "我三个只在营外等这一声。兄弟们，杀！"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我请的帮手到了！伯伯，营门关了也不怕，打开一条路出去！"
+    ],
+    [
+     "flag",
+     "helpers"
     ]
    ]
   },
