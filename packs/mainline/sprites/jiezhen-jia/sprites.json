@@ -1,0 +1,91 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "Idle_Loop",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 312
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 312
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "defend": {
+   "source": "Crouch_Idle_Loop",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 367
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 367
+   }
+  },
+  "ram": {
+   "source": "Shield_Dash",
+   "front": {
+    "file": "ram-front.png",
+    "frames": 8,
+    "ms": 80
+   },
+   "back": {
+    "file": "ram-back.png",
+    "frames": 8,
+    "ms": 80
+   }
+  },
+  "spin": {
+   "source": "AXE_standing_melee_attack_360_low",
+   "front": {
+    "file": "spin-front.png",
+    "frames": 10,
+    "ms": 90
+   },
+   "back": {
+    "file": "spin-back.png",
+    "frames": 10,
+    "ms": 90
+   }
+  }
+ }
+}

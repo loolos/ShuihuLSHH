@@ -1,0 +1,203 @@
+{
+ "name": "解宝（双尾蝎）",
+ "body": "male",
+ "height": 1.87,
+ "outfit": [
+  "outfits/male-base.json",
+  "outfits/weapon-gangcha.json"
+ ],
+ "remove": [
+  "中衣",
+  "短褂"
+ ],
+ "colors": {
+  "skin": [
+   184,
+   124,
+   84
+  ],
+  "头巾": [
+   96,
+   128,
+   40
+  ],
+  "宽裤": [
+   84,
+   100,
+   44
+  ],
+  "裹腿": {
+   "color": [
+    170,
+    160,
+    130
+   ],
+   "colors": [
+    [
+     60,
+     72,
+     24
+    ]
+   ]
+  },
+  "腰带": [
+   60,
+   72,
+   24
+  ],
+  "腰带结": [
+   60,
+   72,
+   24
+  ],
+  "腰带垂": [
+   60,
+   72,
+   24
+  ]
+ },
+ "add": {
+  "layers": [
+   {
+    "name": "虎皮坎肩",
+    "bones": [
+     "spine_0[123]",
+     "clavicle_.*",
+     "upperarm_.*",
+     "pelvis"
+    ],
+    "when": "z > 0.86 and z < 1.54 and ax < 0.30 and not (y < -0.03 and ax < 0.11 + (1.50 - z) * 0.25)",
+    "offset": "0.025 + (0.15 * (1.0 - z) if z < 1.0 else 0)",
+    "thickness": 0.012,
+    "color": [
+     204,
+     176,
+     90
+    ],
+    "folds": 0.6,
+    "colors": [
+     {
+      "when": "z < 0.90",
+      "color": [
+       60,
+       48,
+       24
+      ]
+     },
+     {
+      "when": "int(z * 32) % 3 == 0 and int((x + 2) * 32 + int(z * 32) * 1.5) % 3 == 0",
+      "color": [
+       60,
+       48,
+       24
+      ]
+     }
+    ]
+   },
+   {
+    "name": "兽皮裙",
+    "bones": [
+     "pelvis",
+     "thigh_.*",
+     "spine_01"
+    ],
+    "when": "0.70 < z < 0.97 and (y < 0.03 or ax > 0.10)",
+    "offset": "0.06 + (0.10 * (0.95 - z) if z < 0.95 else 0)",
+    "thickness": 0.012,
+    "color": [
+     204,
+     176,
+     90
+    ],
+    "folds": 0.5,
+    "colors": [
+     {
+      "when": "z < 0.73",
+      "color": [
+       60,
+       48,
+       24
+      ]
+     },
+     {
+      "when": "int(z * 32) % 3 == 0 and int((x + 2) * 32 + int(z * 32) * 1.5) % 3 == 0",
+      "color": [
+       60,
+       48,
+       24
+      ]
+     }
+    ]
+   }
+  ],
+  "props": [
+   {
+    "name": "巾尾",
+    "bone": "Head",
+    "shape": "box",
+    "at": [
+     0.03,
+     0.13,
+     1.7
+    ],
+    "scale": [
+     0.05,
+     0.025,
+     0.16
+    ],
+    "rot": [
+     25,
+     0,
+     10
+    ],
+    "color": [
+     96,
+     128,
+     40
+    ]
+   }
+  ]
+ },
+ "poses": "poses/weapons.json",
+ "out": "packs/mainline/sprites/jiebao",
+ "frames": 8,
+ "actions": {
+  "idle": "Staff_Idle",
+  "walk": "Walk_Loop",
+  "hit": "Hit_Chest",
+  "defend": "Sword_Block",
+  "thrust": {
+   "from": "Staff_Thrust",
+   "ms": 65
+  },
+  "sweep": {
+   "from": "Staff_Sweep",
+   "ms": 75
+  },
+  "smash": {
+   "from": "Staff_Smash",
+   "ms": 75
+  },
+  "chest-thump": {
+   "from": "AXE_standing_taunt_chest_thump",
+   "ms": 110
+  }
+ },
+ "render": {
+  "toonRange": [
+   0.75,
+   1.15
+  ]
+ },
+ "extraAnims": [
+  "mixamo/mixamo-axe.glb"
+ ],
+ "concat": {
+  "two-tail": {
+   "of": [
+    "sweep",
+    "smash"
+   ]
+  }
+ }
+}

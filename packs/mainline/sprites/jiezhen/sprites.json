@@ -1,0 +1,143 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "Spear_Idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "defend": {
+   "source": "Sword_Block",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 154
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 154
+   }
+  },
+  "thrust": {
+   "source": "Spear_Thrust",
+   "front": {
+    "file": "thrust-front.png",
+    "frames": 8,
+    "ms": 70
+   },
+   "back": {
+    "file": "thrust-back.png",
+    "frames": 8,
+    "ms": 70
+   }
+  },
+  "smash": {
+   "source": "Spear_Smash",
+   "front": {
+    "file": "smash-front.png",
+    "frames": 8,
+    "ms": 75
+   },
+   "back": {
+    "file": "smash-back.png",
+    "frames": 8,
+    "ms": 75
+   }
+  },
+  "sweep": {
+   "source": "Spear_Sweep",
+   "front": {
+    "file": "sweep-front.png",
+    "frames": 8,
+    "ms": 75
+   },
+   "back": {
+    "file": "sweep-back.png",
+    "frames": 8,
+    "ms": 75
+   }
+  },
+  "power-up": {
+   "source": "GS_great_sword_power_up",
+   "front": {
+    "file": "power-up-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "power-up-back.png",
+    "frames": 8,
+    "ms": 110
+   }
+  },
+  "two-head": {
+   "source": "Spear_Thrust + Spear_Smash",
+   "front": {
+    "file": "two-head-front.png",
+    "frames": 16,
+    "ms": 70
+   },
+   "back": {
+    "file": "two-head-back.png",
+    "frames": 16,
+    "ms": 70
+   }
+  },
+  "shoot": {
+   "source": "Bow_Shoot",
+   "front": {
+    "file": "shoot-front.png",
+    "frames": 8,
+    "ms": 90
+   },
+   "back": {
+    "file": "shoot-back.png",
+    "frames": 8,
+    "ms": 90
+   }
+  }
+ }
+}

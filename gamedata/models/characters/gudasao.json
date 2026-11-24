@@ -39,6 +39,14 @@
   "throw": {
    "from": "OverhandThrow",
    "ms": 110
+  },
+  "spin": {
+   "from": "AXE_standing_melee_attack_360_high",
+   "frames": 10,
+   "ms": 90
   }
- }
+ },
+ "extraAnims": [
+  "mixamo/mixamo-axe.glb"
+ ]
 }

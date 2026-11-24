@@ -15,11 +15,14 @@
 | `wusong/` | idle 待机（抱臂，UAL2 `Idle_FoldArms_Loop`）、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
 | `likui/` | idle 待机（单手举斧，`Pistol_Idle_Loop`）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、crouch-idle 蹲伏（防御 / 运气）、death01 倒地、roll 翻滚 |
 | `peiruhai/` | 裴如海（光头和尚）：idle 待机、walk 走、hit-chest 受击、punch-jab 出拳（念珠）、crouch-idle 蹲伏（防御）、death01 倒地。服装 `src/outfit-peiruhai.json`，`--height 1.72`，其余参数同武松 |
-| `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json` |
+| `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json`；spin（Mixamo 斧包 360 度旋斩，母大虫旋刀） |
 | `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
 | `daizong/` | 戴宗（褐短褂、幞头、腿绑甲马）：idle、walk、hit-chest、crouch-idle（聚气 / 防御）、death01、roll、punch-jab、punch-two（×2）、punch-cross、kick-r / kick-l / kick-rl（左右踢）、ninja-jump 腾跃、slide 滑铲。配方 `characters/daizong.json` |
 | `husanniang/` | 扈三娘步战造型（配色对齐骑马版：青绿战袍、红围巾、金盔红缨、日月双刀；女假人）：idle（双刀护身）、walk、hit-chest、defend、death01、roll、slash-a/b/c、slash-combo、heavy-combo、dash、crouch-idle。还没有职业用它（战斗里仍是骑兵 43 换色），配方 `characters/husanniang.json` |
 | `sunli/` | 孙立（病尉迟：乌铁甲罩蓝紫战袍、紫抹额、络腮胡，右手竹节钢鞭；动作借 Mixamo 单手斧包 `AXE_`）：idle（持鞭站立）、walk、hit、defend（格挡）、strike（钢鞭下砸）、combo（单鞭连环）、battlecry（聚气）、leap（跃起砸地，病尉迟枪）、spin（旋身两鞭，鞭枪双绝）、shoot（左手持弓放箭，弯弓压阵；这一条另用 `characters/sunli-bow.json` 渲染，把钢鞭换成弓）。配方 `characters/sunli.json` |
+| `jiezhen/` | 解珍（橙头巾、虎皮坎肩 / 虎皮裙、浑铁点钢叉）：idle（Spear_Idle）、walk、hit、defend、thrust、smash、sweep、two-head（刺 + 砸）、power-up（聚气）、shoot（窝弓药箭，`jiezhen-bow.json` 换弓渲染）。配方 `characters/jiezhen.json` |
+| `jiebao/` | 解宝（绿头巾、豹斑皮坎肩、绿裤、钢叉）：idle（Staff_Idle）、walk、hit、defend、thrust、sweep、smash、two-tail（扫 + 砸）、chest-thump（聚气）。配方 `characters/jiebao.json` |
+| `jiezhen-jia/`、`jiebao-jia/` | 带枷的解珍、解宝（去掉钢叉，脖子上套木枷）：idle、walk、hit、defend、ram（枷撞）、spin（枷打）。配方 `characters/jiezhen-jia.json`、`jiebao-jia.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 
 ## 来源与授权

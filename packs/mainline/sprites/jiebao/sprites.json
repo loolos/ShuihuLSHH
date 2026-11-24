@@ -1,0 +1,130 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "Staff_Idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "walk": {
+   "source": "Walk_Loop",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit": {
+   "source": "Hit_Chest",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 42
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 42
+   }
+  },
+  "defend": {
+   "source": "Sword_Block",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 154
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 154
+   }
+  },
+  "thrust": {
+   "source": "Staff_Thrust",
+   "front": {
+    "file": "thrust-front.png",
+    "frames": 8,
+    "ms": 65
+   },
+   "back": {
+    "file": "thrust-back.png",
+    "frames": 8,
+    "ms": 65
+   }
+  },
+  "sweep": {
+   "source": "Staff_Sweep",
+   "front": {
+    "file": "sweep-front.png",
+    "frames": 8,
+    "ms": 75
+   },
+   "back": {
+    "file": "sweep-back.png",
+    "frames": 8,
+    "ms": 75
+   }
+  },
+  "smash": {
+   "source": "Staff_Smash",
+   "front": {
+    "file": "smash-front.png",
+    "frames": 8,
+    "ms": 75
+   },
+   "back": {
+    "file": "smash-back.png",
+    "frames": 8,
+    "ms": 75
+   }
+  },
+  "chest-thump": {
+   "source": "AXE_standing_taunt_chest_thump",
+   "front": {
+    "file": "chest-thump-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "chest-thump-back.png",
+    "frames": 8,
+    "ms": 110
+   }
+  },
+  "two-tail": {
+   "source": "Staff_Sweep + Staff_Smash",
+   "front": {
+    "file": "two-tail-front.png",
+    "frames": 16,
+    "ms": 75
+   },
+   "back": {
+    "file": "two-tail-back.png",
+    "frames": 16,
+    "ms": 75
+   }
+  }
+ }
+}
