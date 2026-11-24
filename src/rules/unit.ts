@@ -47,6 +47,8 @@ export interface Unit {
   unaware?: boolean;
   /** 伪装【新】（劫牢的顾大嫂、三打混进庄里的孙立一伙，负责人 2026-11-23）：敌人认不出、不打他；主动出手打敌人（劝酒、吹曲这类不伤人的不算）就被识破 */
   disguised?: boolean;
+  /** 伪装时移动力加减【新】（伪装的顾大嫂 −3）：refreshStats 按 disguised 算进 stats.move，最低 1 */
+  disguiseMove?: number;
   mp: number;
   /** 本关临时会的技能号【新】（朱贵扮酒保会劝酒）：不随结算带出本关 */
   extraSkills?: number[];
@@ -158,6 +160,7 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
 export function refreshStats(u: Unit, data: GameData) {
   u.stats = computeStats(data.classes[u.classId], u.level, u.slots, data, u.poisonTurns > 0, u.forge, u.buffs, u.statSide ?? u.side);
   u.stats.maxHp = Math.max(1, Math.round(u.stats.maxHp * (u.hpMultiplier ?? 1)));
+  if (u.disguised && u.disguiseMove) u.stats.move = Math.max(1, u.stats.move + u.disguiseMove);
   u.hp = Math.min(u.hp, u.stats.maxHp);
   u.mp = Math.min(u.mp, u.stats.maxMp);
 }

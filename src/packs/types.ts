@@ -269,6 +269,8 @@ export interface PackUnitJson {
   question?: boolean;
   /** 伪装【新】（劫牢的顾大嫂、三打的孙立一伙）：敌人认不出、不打他；主动出手打敌人就被识破 */
   disguise?: boolean;
+  /** 伪装时移动力加减【新】（负责人 2026-11-24：伪装的顾大嫂 −3，不能走太快）；去掉伪装就恢复 */
+  disguiseMove?: number;
   /** 看得穿伪装【新】（劫牢的包节级）：正前方这么多格以内的伪装的人（trusts 里的职业除外）当场识破 */
   seer?: number;
   /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
