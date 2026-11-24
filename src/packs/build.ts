@@ -489,7 +489,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     // enter: "player"：我方任何一个在场的人走进去都算（智取无为军的探查点、放火点）【新】
     const anyone = on.enter === 'player';
     const who = anyone ? [0] : Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
-    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
+    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.pass ? { pass: true } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
