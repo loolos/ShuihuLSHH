@@ -2348,7 +2348,19 @@ export class Battle {
             if (sel.present) this.hide(sel, false);
           } else if (v & 1 && sel.present) {
             const reach = this.reachOf(sel, 99);
-            const path = reach.has(key(px, py)) ? pathTo(reach, px, py) : [];
+            let path = reach.has(key(px, py)) && !this.occupied(sel).has(key(px, py)) ? pathTo(reach, px, py) : [];
+            // args.nearFree【新】：目标格被占了或走不到，就去离它最近（同样近取路短）的空格
+            if (path.length <= 1 && op.args?.nearFree && (sel.x !== px || sel.y !== py)) {
+              const taken = this.occupied(sel);
+              let bestD = Infinity;
+              for (const k of reach.keys()) {
+                if (taken.has(k)) continue;
+                const [x, y] = k.split(',').map(Number);
+                const d = Math.abs(x - px) + Math.abs(y - py);
+                const p = pathTo(reach, x, y);
+                if (d < bestD || (d === bestD && p.length < path.length)) { bestD = d; path = p; }
+              }
+            }
             if (path.length > 1) this.walk(sel, path, true);
           }
           break;
