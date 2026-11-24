@@ -96,6 +96,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(gu.disguised).toBe(false);
   });
 
+  it('劫牢：伪装的人路过包节级眼前也被识破，就停在被看见的那一格', () => {
+    const { b, get } = open('jielao');
+    const gu = get('gudasao'), bj = get('baoji');
+    bj.facing = 2;
+    put(gu, bj.x - 3, bj.y + 2);
+    b.move(gu, bj.x + 3, bj.y + 2);
+    expect(gu.disguised).toBe(false);
+    expect(gu.x === bj.x + 3 && gu.y === bj.y + 2).toBe(false);
+    expect(Math.abs(gu.x - bj.x) + Math.abs(gu.y - bj.y)).toBeLessThanOrEqual(3);
+  });
+
   it('劫牢：乐和临时会长吹铁叫子（三格内两回合不动），不破伪装；巡逻兵丁也看得穿伪装', () => {
     const { b, get } = open('jielao');
     const lh = get('lehe'), bj = get('baoji');

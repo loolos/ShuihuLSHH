@@ -1092,7 +1092,9 @@ export class Battle {
     if (!u.turnStart) u.turnStart = { x: u.x, y: u.y, facing: u.facing, movement: u.movementRemaining };
     let path = pathTo(reach, x, y);
     // 盘问【新】：走进会盘问的哨兵眼前，就在那一格被拦下（后面的路不走了）
-    const stop = this.questionStop(u, path);
+    // 伪装的人路过看得穿伪装的人眼前，也在那一格停下、被识破（负责人 2026-11-24：不只看停下的位置）【新】
+    const stops = [this.questionStop(u, path), this.seerStop(u, path)].filter((i) => i > 0);
+    const stop = stops.length ? Math.min(...stops) : 0;
     if (stop > 0 && stop < path.length - 1) {
       path = path.slice(0, stop + 1);
       n = reach.get(key(path[stop].x, path[stop].y))!;
@@ -1124,6 +1126,18 @@ export class Battle {
         const w = this.units[uid];
         if (!this.watchQuestion.has(uid) || !w?.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0 || uid in this.spotters) continue;
         if (!this.watchTrust.get(uid)?.includes(u.classId) || !this.mayQuestion(uid, u.uid)) continue;
+        if (watcherSees(w, path[i], r)) return i;
+      }
+    return 0;
+  }
+
+  /** 伪装的人这条路上第一格走进看得穿伪装的人（劫牢的包节级、巡逻兵丁）视线的位置（0 = 没有）【新】 */
+  private seerStop(u: Unit, path: { x: number; y: number }[]): number {
+    if (!u.disguised || !this.seers.size) return 0;
+    for (let i = 1; i < path.length; i++)
+      for (const [uid, r] of this.seers) {
+        const w = this.unit(uid);
+        if (!w || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0 || this.watchTrust.get(uid)?.includes(u.classId)) continue;
         if (watcherSees(w, path[i], r)) return i;
       }
     return 0;
