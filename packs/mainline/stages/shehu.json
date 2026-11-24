@@ -1,0 +1,544 @@
+{
+ "id": "shehu",
+ "title": "登州山射虎",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 300
+ },
+ "map": {
+  "base": "N-add06",
+  "crop": [
+   8,
+   4,
+   24,
+   26
+  ]
+ },
+ "bgm": [
+  "eerie",
+  "tiger"
+ ],
+ "units": [
+  {
+   "id": "jiezhen",
+   "class": "jiezhen",
+   "side": "player",
+   "x": 2,
+   "y": 23,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "jiebao",
+   "class": "jiebao",
+   "side": "player",
+   "x": 3,
+   "y": 24,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "tiger",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 20,
+   "y": 1,
+   "level": 30,
+   "levelOffset": 2,
+   "facing": 2,
+   "hidden": true,
+   "name": "大虫",
+   "hpMultiplier": 2.5
+  },
+  {
+   "id": "cub1",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 13,
+   "y": 9,
+   "level": 30,
+   "levelOffset": -2,
+   "facing": 2,
+   "hidden": true
+  },
+  {
+   "id": "cub2",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 13,
+   "y": 11,
+   "level": 30,
+   "levelOffset": -2,
+   "facing": 1,
+   "hidden": true
+  },
+  {
+   "id": "cub3",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 20,
+   "y": 9,
+   "level": 30,
+   "levelOffset": -1,
+   "facing": 1,
+   "hidden": true
+  },
+  {
+   "id": "cub4",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 20,
+   "y": 11,
+   "level": 30,
+   "levelOffset": -1,
+   "facing": 1,
+   "hidden": true
+  }
+ ],
+ "aiPrefer": {
+  "tiger": [
+   "ylt-pu",
+   "ylt-xian",
+   "ylt-jian"
+  ]
+ },
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "登州 · 登州山"
+    ],
+    [
+     "narrate",
+     "且说山东登州城外有一座山，山上多有豺狼虎豹出来伤人。登州知府拘集猎户，当厅委了杖限文书，捉捕登州山上大虫；限期不纳，枷号受责。"
+    ],
+    [
+     "narrate",
+     "登州山下有一家猎户，弟兄两个：哥哥唤做两头蛇解珍，兄弟唤做双尾蝎解宝。两个都使浑铁点钢叉，一身好武艺。"
+    ],
+    [
+     "say",
+     "jiebao",
+     "哥哥，咱两个在山上伏了三日，那窝弓都下了，只不见大虫来。今早却听得窝弓发了一响！"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "必是那大虫踏着了弓弦，中了药箭。趁它药力发作，跟着踪迹去寻。"
+    ],
+    [
+     "focus",
+     6,
+     19
+    ],
+    [
+     "narrate",
+     "两个各拿了钢叉，寻踪觅迹，往山上来。"
+    ],
+    [
+     "objective",
+     "胜利条件：跟着痕迹找到大虫，把它打到三成以下"
+    ],
+    [
+     "objective",
+     "失败条件：解珍或解宝倒下；超过 14 回合"
+    ],
+    [
+     "objective",
+     "提示：解珍的「钢叉叉虎」能叉住大虫一回合，解宝的「乘势刺」打被叉住的大虫伤害加倍。地上的「窝弓」大虫踩着就中箭。"
+    ],
+    [
+     "turnLimit",
+     14
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao"
+    ],
+    "area": [
+     5,
+     18,
+     7,
+     20
+    ],
+    "label": "抓痕",
+    "atTurnEnd": true
+   },
+   "unless": "found",
+   "do": [
+    [
+     "say",
+     "jiebao",
+     "哥哥看，这树皮上好深的抓痕，还是新的！"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "是那大虫磨爪留下的。顺着往东北上去。"
+    ],
+    [
+     "flag",
+     "t1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao"
+    ],
+    "area": [
+     10,
+     13,
+     12,
+     15
+    ],
+    "label": "脚印",
+    "atTurnEnd": true
+   },
+   "unless": "found",
+   "do": [
+    [
+     "say",
+     "jiezhen",
+     "泥地里一串脚印，碗口大小。这畜生往岭上去了。"
+    ],
+    [
+     "narrate",
+     "忽听得草里窸窣乱响，两只半大的小虎窜将出来，龇牙要扑。"
+    ],
+    [
+     "appear",
+     "cub1"
+    ],
+    [
+     "appear",
+     "cub2"
+    ],
+    [
+     "say",
+     "jiebao",
+     "倒先撞着两个小的！哥哥，先料理了它们。"
+    ],
+    [
+     "flag",
+     "t2"
+    ]
+   ],
+   "if": "t1"
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao"
+    ],
+    "area": [
+     15,
+     8,
+     17,
+     10
+    ],
+    "label": "血迹",
+    "atTurnEnd": true
+   },
+   "unless": "found",
+   "do": [
+    [
+     "say",
+     "jiebao",
+     "血！哥哥，这里一路血点子。"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "昨夜那一窝弓的药箭到底着了它。药力发作，它走不远。"
+    ],
+    [
+     "narrate",
+     "血腥气引得岭上又窜出两只小虎来。"
+    ],
+    [
+     "appear",
+     "cub3"
+    ],
+    [
+     "appear",
+     "cub4"
+    ],
+    [
+     "flag",
+     "t3"
+    ]
+   ],
+   "if": "t2"
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao"
+    ],
+    "area": [
+     17,
+     4,
+     19,
+     6
+    ],
+    "label": "压倒的草",
+    "atTurnEnd": true
+   },
+   "unless": "found",
+   "do": [
+    [
+     "say",
+     "jiezhen",
+     "这一片草都压倒了，它就伏在前头那草窠里。兄弟，挺起叉来，慢慢地挨过去。"
+    ],
+    [
+     "flag",
+     "t4"
+    ]
+   ],
+   "if": "t3"
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao"
+    ],
+    "area": [
+     17,
+     0,
+     23,
+     3
+    ],
+    "atTurnEnd": true
+   },
+   "if": "t4",
+   "unless": "found",
+   "do": [
+    [
+     "gust",
+     {
+      "style": "wind",
+      "radius": 2,
+      "x": 20,
+      "y": 1,
+      "focus": true
+     }
+    ],
+    [
+     "appear",
+     "tiger"
+    ],
+    [
+     "narrate",
+     "草窠里卷起一阵腥风，一只吊睛白额大虫跳将出来！那畜生中了药箭，越发凶猛，望着二人便扑。"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "兄弟！我先叉住它，你只顾往它身上搠！"
+    ],
+    [
+     "flag",
+     "found"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "unless": "found",
+   "do": [
+    [
+     "narrate",
+     "日头偏西，那大虫饿得紧了，自家从草窠里钻出来寻食。"
+    ],
+    [
+     "gust",
+     {
+      "style": "wind",
+      "radius": 2,
+      "x": 20,
+      "y": 1,
+      "focus": true
+     }
+    ],
+    [
+     "appear",
+     "tiger"
+    ],
+    [
+     "flag",
+     "found"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "tiger",
+    "area": [
+     14,
+     4,
+     16,
+     5
+    ],
+    "label": "窝弓"
+   },
+   "do": [
+    [
+     "narrate",
+     "那大虫一脚踏着窝弓的弦，「嗖」的一枝药箭正中后胯！"
+    ],
+    [
+     "wound",
+     "tiger",
+     85
+    ],
+    [
+     "buff",
+     "tiger",
+     "move",
+     {
+      "add": -1,
+      "turns": 3
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "tiger",
+    "area": [
+     21,
+     4,
+     23,
+     6
+    ],
+    "label": "窝弓"
+   },
+   "do": [
+    [
+     "narrate",
+     "那大虫一脚踏着窝弓的弦，「嗖」的一枝药箭正中后胯！"
+    ],
+    [
+     "wound",
+     "tiger",
+     75
+    ],
+    [
+     "buff",
+     "tiger",
+     "move",
+     {
+      "add": -1,
+      "turns": 3
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "tiger",
+    "area": [
+     16,
+     1,
+     18,
+     2
+    ],
+    "label": "窝弓"
+   },
+   "do": [
+    [
+     "narrate",
+     "那大虫一脚踏着窝弓的弦，「嗖」的一枝药箭正中后胯！"
+    ],
+    [
+     "wound",
+     "tiger",
+     65
+    ],
+    [
+     "buff",
+     "tiger",
+     "move",
+     {
+      "add": -1,
+      "turns": 3
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "tiger",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "narrate",
+     "那大虫吃了几叉，又中着药箭，负疼不过，大吼一声，翻身往南边山坡下乱滚下去。"
+    ],
+    [
+     "move",
+     "tiger",
+     22,
+     12
+    ],
+    [
+     "leave",
+     "tiger"
+    ],
+    [
+     "say",
+     "jiebao",
+     "滚下去了！那下面是……毛太公的庄后园子！"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "毛太公与我家也是亲眷。天色已明，咱两个下山去他庄上讨大虫便了。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiezhen"
+   },
+   "do": [
+    [
+     "defeat",
+     "解珍伤重，倒在登州山上……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiebao"
+   },
+   "do": [
+    [
+     "defeat",
+     "解宝伤重，倒在登州山上……"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,855 @@
+{
+ "id": "jielao",
+ "title": "劫牢",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 600
+ },
+ "map": {
+  "custom": "laocheng",
+  "seal": [
+   [
+    5,
+    3,
+    579
+   ]
+  ]
+ },
+ "tint": "night",
+ "bgm": [
+  "heist",
+  "battle2"
+ ],
+ "disguise": {
+  "flag": "revealed"
+ },
+ "traps": [
+  {
+   "cells": [
+    [
+     10,
+     23
+    ],
+    [
+     11,
+     23
+    ],
+    [
+     12,
+     23
+    ]
+   ],
+   "tile": 580
+  }
+ ],
+ "units": [
+  {
+   "id": "gudasao",
+   "class": "gudasao",
+   "side": "player",
+   "x": 12,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "disguise": true
+  },
+  {
+   "id": "lehe",
+   "class": "lehe",
+   "side": "player",
+   "x": 11,
+   "y": 12,
+   "level": 30,
+   "facing": 0,
+   "disguise": true
+  },
+  {
+   "id": "jiezhen",
+   "class": "jiezhen",
+   "side": "player",
+   "x": 2,
+   "y": 2,
+   "level": 30,
+   "facing": 3
+  },
+  {
+   "id": "jiebao",
+   "class": "jiebao",
+   "side": "player",
+   "x": 3,
+   "y": 4,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true
+  },
+  {
+   "id": "sunxin",
+   "class": "sunxin",
+   "side": "player",
+   "x": 10,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true
+  },
+  {
+   "id": "zouyuan",
+   "class": "zouyuan",
+   "side": "player",
+   "x": 12,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true
+  },
+  {
+   "id": "zourun",
+   "class": "zourun",
+   "side": "player",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "hidden": true
+  },
+  {
+   "id": "baoji",
+   "class": 38,
+   "side": "enemy",
+   "x": 8,
+   "y": 2,
+   "level": 30,
+   "facing": 2,
+   "name": "包节级",
+   "ai": 13,
+   "seer": 3,
+   "trusts": [
+    "lehe"
+   ],
+   "patrol": [
+    [
+     8,
+     9
+    ],
+    [
+     8,
+     2
+    ]
+   ],
+   "levelOffset": 1,
+   "enemyRank": "leader"
+  },
+  {
+   "id": "ya0",
+   "class": 33,
+   "side": "enemy",
+   "x": 18,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "ya1",
+   "class": 33,
+   "side": "enemy",
+   "x": 18,
+   "y": 3,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "ya2",
+   "class": 33,
+   "side": "enemy",
+   "x": 18,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "ya3",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 2,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "ya4",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 3,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "ya5",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb0",
+   "class": 33,
+   "side": "enemy",
+   "x": 14,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb1",
+   "class": 33,
+   "side": "enemy",
+   "x": 15,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb2",
+   "class": 33,
+   "side": "enemy",
+   "x": 16,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb3",
+   "class": 32,
+   "side": "enemy",
+   "x": 17,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "狱卒",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb4",
+   "class": 34,
+   "side": "enemy",
+   "x": 15,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "弓手",
+   "levelOffset": -3
+  },
+  {
+   "id": "yb5",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "弓手",
+   "levelOffset": -3
+  },
+  {
+   "id": "menguan",
+   "class": 42,
+   "side": "enemy",
+   "x": 11,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵都头",
+   "enemyRank": "leader"
+  },
+  {
+   "id": "mg0",
+   "class": 33,
+   "side": "enemy",
+   "x": 10,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵"
+  },
+  {
+   "id": "mg1",
+   "class": 33,
+   "side": "enemy",
+   "x": 12,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵"
+  },
+  {
+   "id": "mg2",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵"
+  },
+  {
+   "id": "mg3",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵弓手"
+  },
+  {
+   "id": "mg4",
+   "class": 34,
+   "side": "enemy",
+   "x": 12,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "name": "州兵弓手"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "登州 · 牢城营（夜）"
+    ],
+    [
+     "narrate",
+     "次日黄昏，顾大嫂头上插一把梳儿，扮做个送饭的妇人，提着饭罐，到牢城营前叫门。乐和早在门口接着，引了进去。"
+    ],
+    [
+     "narrate",
+     "孙立、孙新、邹渊、邹润，各带了暗器，埋伏在营门外，只等里头发作。"
+    ],
+    [
+     "focus",
+     "baoji"
+    ],
+    [
+     "say",
+     "baoji",
+     "这妇人是什么人？敢进牢里来送饭！"
+    ],
+    [
+     "say",
+     "lehe",
+     "节级，这是解珍、解宝的姐姐，自来送饭。"
+    ],
+    [
+     "say",
+     "baoji",
+     "哼，休教她久留。我自在这里看着。"
+    ],
+    [
+     "focus",
+     5,
+     3
+    ],
+    [
+     "objective",
+     "胜利条件：乐和、顾大嫂一起走到死囚牢门前，开牢门救出解珍、解宝；打倒包节级；解珍、解宝、顾大嫂三人回合结束时都在营门"
+    ],
+    [
+     "objective",
+     "失败条件：顾大嫂、解珍、解宝任一倒下；超过 14 回合"
+    ],
+    [
+     "objective",
+     "提示：顾大嫂、乐和带着「伪装」，狱卒认不出，出手打人就被识破。包节级盯着正前方三格，被他看见也会识破。乐和的「吹铁叫子」能叫身边的人听得入神、一回合不动。"
+    ],
+    [
+     "turnLimit",
+     14
+    ]
+   ]
+  },
+  {
+   "on": "start",
+   "do": [
+    [
+     "bind",
+     "jiezhen"
+    ],
+    [
+     "bind",
+     "jiebao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "lehe",
+     "gudasao"
+    ],
+    "area": [
+     6,
+     2,
+     7,
+     4
+    ],
+    "label": "死囚牢门",
+    "atTurnEnd": true
+   },
+   "do": [
+    [
+     "focus",
+     5,
+     3
+    ],
+    [
+     "narrate",
+     "乐和掏出钥匙，开了死囚牢的门。顾大嫂叫道：「兄弟！」"
+    ],
+    [
+     "unseal",
+     [
+      [
+       5,
+       3
+      ]
+     ]
+    ],
+    [
+     "cleanse",
+     "jiezhen"
+    ],
+    [
+     "cleanse",
+     "jiebao"
+    ],
+    [
+     "transform",
+     "jiezhen",
+     "jiezhen-jia",
+     "解珍"
+    ],
+    [
+     "transform",
+     "jiebao",
+     "jiebao-jia",
+     "解宝"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "姐姐！"
+    ],
+    [
+     "say",
+     "jiebao",
+     "枷还在身上，且就拿这面枷打出去！"
+    ],
+    [
+     "flag",
+     "jia"
+    ],
+    [
+     "flag",
+     "go"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 0
+   },
+   "if": "jia2",
+   "unless": "jiaoff",
+   "do": [
+    [
+     "narrate",
+     "解珍、解宝扭断了木枷，夺了狱卒的刀叉在手。"
+    ],
+    [
+     "transform",
+     "jiezhen",
+     "jiezhen",
+     "解珍"
+    ],
+    [
+     "transform",
+     "jiebao",
+     "jiebao",
+     "解宝"
+    ],
+    [
+     "flag",
+     "jiaoff"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 0
+   },
+   "if": "jia",
+   "unless": "jia2",
+   "do": [
+    [
+     "flag",
+     "jia2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "revealed"
+   },
+   "unless": "go",
+   "do": [
+    [
+     "narrate",
+     "事已泄了！顾大嫂也不再装了，身边掣出两把明晃晃的尖刀。"
+    ],
+    [
+     "flag",
+     "go"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "go"
+   },
+   "do": [
+    [
+     "unmask",
+     "all"
+    ],
+    [
+     "appear",
+     "sunli"
+    ],
+    [
+     "appear",
+     "sunxin"
+    ],
+    [
+     "appear",
+     "zouyuan"
+    ],
+    [
+     "appear",
+     "zourun"
+    ],
+    [
+     "say",
+     "gudasao",
+     "伯伯，动手！"
+    ],
+    [
+     "say",
+     "sunli",
+     "兄弟们，杀进去！"
+    ],
+    [
+     "narrate",
+     "孙立、孙新、邹渊、邹润从营门外一齐杀将入来。满营的狱卒公人都起来了。"
+    ],
+    [
+     "setAi",
+     "baoji",
+     0
+    ],
+    [
+     "setAi",
+     "ya0",
+     0
+    ],
+    [
+     "setAi",
+     "ya1",
+     0
+    ],
+    [
+     "setAi",
+     "ya2",
+     0
+    ],
+    [
+     "setAi",
+     "ya3",
+     0
+    ],
+    [
+     "setAi",
+     "ya4",
+     0
+    ],
+    [
+     "setAi",
+     "ya5",
+     0
+    ],
+    [
+     "setAi",
+     "yb0",
+     0
+    ],
+    [
+     "setAi",
+     "yb1",
+     0
+    ],
+    [
+     "setAi",
+     "yb2",
+     0
+    ],
+    [
+     "setAi",
+     "yb3",
+     0
+    ],
+    [
+     "setAi",
+     "yb4",
+     0
+    ],
+    [
+     "setAi",
+     "yb5",
+     0
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "menguan"
+   },
+   "do": [
+    [
+     "narrate",
+     "州兵都头倒了，众人拽开拒马，营门大开！"
+    ],
+    [
+     "unseal",
+     [
+      [
+       10,
+       23
+      ],
+      [
+       11,
+       23
+      ],
+      [
+       12,
+       23
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "baoji"
+   },
+   "do": [
+    [
+     "say",
+     "jiebao",
+     "你这厮受了王孔目的钱，要在牢里结果我弟兄两个！今日也教你吃我一叉！"
+    ],
+    [
+     "flag",
+     "baodead"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": [
+     "jiezhen",
+     "jiebao",
+     "gudasao"
+    ],
+    "area": [
+     10,
+     23,
+     12,
+     23
+    ],
+    "label": "营门",
+    "atTurnEnd": true
+   },
+   "if": "baodead",
+   "do": [
+    [
+     "narrate",
+     "众人杀出牢城营，孙立弯弓搭箭，护着众人出了登州东门。"
+    ],
+    [
+     "narrate",
+     "一行人连夜奔到毛太公庄上，把毛太公、毛仲义一门老小尽数杀了，取了那只大虫和庄上的财物，放一把火烧了庄院。"
+    ],
+    [
+     "say",
+     "sunli",
+     "如今做下这等事，登州是住不得了。听说梁山泊宋公明招贤纳士，石勇兄弟在山下开着酒店，我们便去投奔他！"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "gudasao"
+   },
+   "do": [
+    [
+     "defeat",
+     "顾大嫂倒在牢城营里……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiezhen"
+   },
+   "do": [
+    [
+     "defeat",
+     "解珍没能逃出死囚牢……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiebao"
+   },
+   "do": [
+    [
+     "defeat",
+     "解宝没能逃出死囚牢……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiezhen-jia"
+   },
+   "do": [
+    [
+     "defeat",
+     "解珍没能逃出死囚牢……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "jiebao-jia"
+   },
+   "do": [
+    [
+     "defeat",
+     "解宝没能逃出死囚牢……"
+    ]
+   ]
+  }
+ ]
+}

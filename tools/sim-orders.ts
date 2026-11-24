@@ -32,7 +32,12 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   'mainline/changjie': [{ char: 133, turns: [1, 8], act: { to: [13, 9] } }],
   // 一丈青：扈三娘专找宋江（72 = 主线包职业 sj-fugitive），宋江别冲到前面
   'mainline/yizhangqing': [{ char: 72, turns: [1, 20], act: 'back' }],
+  // 劫牢：乐和（156）、顾大嫂（134）伪装着先走到死囚牢门前开门，路上别动手
+  'mainline/jielao': [{ char: 156, turns: [1, 4], act: { to: [6, 3] } }, { char: 134, turns: [1, 4], act: { to: [7, 3] } }],
 };
+
+/** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */
+export const FIGHT_FIRST = new Set(['mainline/jielao']);
 
 export const AUTO_TURNS = 2;
 export const AUTO_THREATS = Number(process.env.AUTO_THREATS ?? 5);

@@ -80,6 +80,7 @@ const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
+const DISGUISE_FRAME = 0xc080ff; // 伪装的人（敌人认不出）的紫框
 /** 被树木、屋顶等挡住的人，在遮挡物上面再画一层的不透明度（负责人 2026-11-14 定 50%，2026-11-20 改 60%） */
 const GHOST_ALPHA = 0.6;
 /** 移动 / 攻击 / 技能格被景物挡住时，改画到景物上面，比正常格子再虚这么多（负责人 2026-11-20 先定 80%，同日改为正常 −10 个百分点；没被挡住的格子不变） */
@@ -434,6 +435,8 @@ export class BattleScene extends Phaser.Scene {
     const done = this.actedDone(u);
     // 行动完的我方单位外面再套一圈灰框、三条颜色也调暗（负责人 2026-11-14），下个我方回合开始时消失
     if (done) s.bar.lineStyle(1, ACTED_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
+    // 伪装的人状态条外面套一圈紫框【新】（劫牢、三打）：敌人认不出他
+    else if (u.disguised) s.bar.lineStyle(1, DISGUISE_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
     s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, top, w + 2, rows.length * 3 + 1);
     rows.forEach(([color, r], i) => s.bar.fillStyle(done ? dimColor(color) : color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
   }
@@ -603,7 +606,7 @@ export class BattleScene extends Phaser.Scene {
         const more = hit.length > 1 ? `${name}：范围内 ${hit.length} 人` : name;
         const tip = this.armed && sameCell(this.armed, c) ? `${more}　再点一次施放` : more;
         if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, tip);
-        else if (m.skill.drug) this.ui.showUnit(t, null, `${tip}　喝下就麻翻 ${m.skill.drug} 回合（不伤人）`);
+        else if (m.skill.drug) this.ui.showUnit(t, null, `${tip}　${m.skill.drugText ? `${m.skill.drugText.replace(/！$/, '')} ${m.skill.drug} 回合` : `喝下就麻翻 ${m.skill.drug} 回合`}（不伤人）`);
         else this.ui.showUnit(t, b.preview(u, t, m.skill), tip);
       } else if (c && b.skillCells(u, m.skill).some((t) => sameCell(t, c))) {
         this.ui.showUnit(u, null, `${name}：这里没有可作用的目标`);

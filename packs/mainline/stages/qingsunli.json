@@ -1,0 +1,303 @@
+{
+ "id": "qingsunli",
+ "title": "顾大嫂请孙立",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "jiulou"
+ },
+ "bgm": [
+  "inn",
+  "intrigue"
+ ],
+ "units": [
+  {
+   "id": "gudasao",
+   "class": "gudasao",
+   "side": "player",
+   "x": 9,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "sunxin",
+   "class": "sunxin",
+   "side": "player",
+   "x": 10,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "lehe",
+   "class": "lehe",
+   "side": "player",
+   "x": 6,
+   "y": 15,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "zouyuan",
+   "class": "zouyuan",
+   "side": "player",
+   "x": 6,
+   "y": 16,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "zourun",
+   "class": "zourun",
+   "side": "player",
+   "x": 7,
+   "y": 16,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 6,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "ledasao",
+   "class": 30,
+   "side": "ally",
+   "x": 7,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "name": "乐大娘子",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "登州东门外 · 十里牌酒店"
+    ],
+    [
+     "narrate",
+     "登州东门外十里牌，有一家酒店，是小尉迟孙新和他浑家母大虫顾大嫂开的。店里杀牛开赌，那顾大嫂一身好本事，三二十人近她不得。"
+    ],
+    [
+     "appear",
+     "lehe"
+    ],
+    [
+     "move",
+     "lehe",
+     7,
+     12
+    ],
+    [
+     "face",
+     "lehe",
+     "gudasao"
+    ],
+    [
+     "say",
+     "lehe",
+     "大嫂，小人是牢里的小节级乐和，孙提辖的妻舅。特来报个信：你家姑舅兄弟解珍、解宝，吃毛太公父子赖了大虫，又诬做白昼抢劫，如今监在死囚牢里。"
+    ],
+    [
+     "say",
+     "lehe",
+     "那包节级得了王孔目的钱，早晚便要结果他两个性命。小人一个人救他不得，只得来报知大嫂。"
+    ],
+    [
+     "face",
+     "gudasao",
+     "lehe"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我那两个兄弟着了这等道儿！叔叔，你先回牢里去，照管他两个饭食，不叫他吃亏。我夫妻商量个长便。"
+    ],
+    [
+     "move",
+     "lehe",
+     6,
+     16
+    ],
+    [
+     "leave",
+     "lehe"
+    ],
+    [
+     "face",
+     "gudasao",
+     "sunxin"
+    ],
+    [
+     "face",
+     "sunxin",
+     "gudasao"
+    ],
+    [
+     "say",
+     "gudasao",
+     "这事不是你我两个干得了的，只有劫牢！"
+    ],
+    [
+     "say",
+     "sunxin",
+     "劫牢不难，劫了之后去哪里安身？须得我哥哥孙立做个主，他是本州兵马提辖，登州城里谁不怕他？再叫登云山的邹渊、邹润叔侄两个来帮手。"
+    ],
+    [
+     "narrate",
+     "孙新连夜去登云山，请得邹渊、邹润叔侄两个，带了心腹人来。"
+    ],
+    [
+     "appear",
+     "zouyuan"
+    ],
+    [
+     "move",
+     "zouyuan",
+     5,
+     11
+    ],
+    [
+     "appear",
+     "zourun"
+    ],
+    [
+     "move",
+     "zourun",
+     5,
+     13
+    ],
+    [
+     "say",
+     "zouyuan",
+     "我那里有八九十个小喽啰，只有二十来个心腹的。救得那两个出来，大伙都投梁山泊宋公明去便了。"
+    ],
+    [
+     "say",
+     "gudasao",
+     "好！只是还要请伯伯孙提辖来。叔叔，你只说我病重，请伯伯、姆姆快来看。"
+    ],
+    [
+     "narrate",
+     "孙新便叫火家牵马，去城里请孙提辖。不多时，孙立骑着马，带了乐大娘子来到店里。"
+    ],
+    [
+     "appear",
+     "sunli"
+    ],
+    [
+     "appear",
+     "ledasao"
+    ],
+    [
+     "move",
+     "sunli",
+     8,
+     11
+    ],
+    [
+     "move",
+     "ledasao",
+     7,
+     13
+    ],
+    [
+     "face",
+     "sunli",
+     "gudasao"
+    ],
+    [
+     "say",
+     "sunli",
+     "婶子害什么病？"
+    ],
+    [
+     "say",
+     "gudasao",
+     "伯伯，我害些救兄弟的病！"
+    ],
+    [
+     "face",
+     "gudasao",
+     "sunli"
+    ],
+    [
+     "narrate",
+     "顾大嫂从身边掣出两把明晃晃的尖刀来，邹渊、邹润也拔出刀，一齐围住。"
+    ],
+    [
+     "say",
+     "sunli",
+     "婶子，你做什么？"
+    ],
+    [
+     "say",
+     "gudasao",
+     "伯伯，你不知我两个兄弟吃人陷害，就要死在牢里。我们今日要去劫牢。伯伯你肯去时，一同去梁山泊；若不肯时，我们先砍了伯伯，自去行事！"
+    ],
+    [
+     "say",
+     "sunli",
+     "我是登州的军官，怎地敢做这等事……"
+    ],
+    [
+     "say",
+     "gudasao",
+     "既是伯伯不肯，我今日先和伯伯并个你死我活！"
+    ],
+    [
+     "say",
+     "sunli",
+     "……罢，罢！婶子休要动手。你们既要如此行，我怎地推却？便和你们去。只是要商量个万全之策。"
+    ],
+    [
+     "narrate",
+     "孙立当下回去收拾家私，叫乐大娘子一同收拾细软。众人约定了。"
+    ],
+    [
+     "say",
+     "sunli",
+     "明日分派：婶子扮做送饭的妇人，提了饭罐先进牢去，乐和兄弟在里头接应；我和兄弟、邹家叔侄埋伏在牢门外，听里头发作，便杀进去。"
+    ],
+    [
+     "say",
+     "gudasao",
+     "我进去时，只要我兄弟出得那死囚牢的门。到那时叫一声，伯伯便杀进来！"
+    ],
+    [
+     "say",
+     "sunli",
+     "得手之后，大伙从东门杀出去。迟了，州里兵马把城门关了，便出不去。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

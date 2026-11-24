@@ -1,0 +1,381 @@
+{
+ "id": "laihu",
+ "title": "毛太公赖虎",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "base": "N-add05",
+  "crop": [
+   4,
+   3,
+   28,
+   13
+  ]
+ },
+ "bgm": [
+  "intrigue",
+  "sad"
+ ],
+ "units": [
+  {
+   "id": "jiezhen",
+   "class": "jiezhen",
+   "side": "player",
+   "x": 12,
+   "y": 12,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "jiebao",
+   "class": "jiebao",
+   "side": "player",
+   "x": 14,
+   "y": 12,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "maotaigong",
+   "class": 27,
+   "side": "ally",
+   "x": 13,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "毛太公"
+  },
+  {
+   "id": "zk1",
+   "class": 40,
+   "side": "ally",
+   "x": 11,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "庄客"
+  },
+  {
+   "id": "zk2",
+   "class": 41,
+   "side": "ally",
+   "x": 15,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "庄客"
+  },
+  {
+   "id": "maozhongyi",
+   "class": 37,
+   "side": "ally",
+   "x": 22,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "毛仲义",
+   "hidden": true
+  },
+  {
+   "id": "gr0",
+   "class": 33,
+   "side": "ally",
+   "x": 23,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "gr1",
+   "class": 32,
+   "side": "ally",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "gr2",
+   "class": 33,
+   "side": "ally",
+   "x": 24,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "gr3",
+   "class": 32,
+   "side": "ally",
+   "x": 24,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "gr4",
+   "class": 33,
+   "side": "ally",
+   "x": 25,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "gr5",
+   "class": 32,
+   "side": "ally",
+   "x": 22,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "公人",
+   "hidden": true
+  },
+  {
+   "id": "wangzheng",
+   "class": 36,
+   "side": "ally",
+   "x": 12,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "王孔目",
+   "hidden": true
+  },
+  {
+   "id": "baoji",
+   "class": 38,
+   "side": "ally",
+   "x": 14,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "包节级",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "登州 · 毛太公庄上"
+    ],
+    [
+     "narrate",
+     "解珍、解宝提着钢叉，径奔毛太公庄上来敲门。那毛太公是本乡的上户财主，和解家原是亲眷。"
+    ],
+    [
+     "move",
+     "jiezhen",
+     12,
+     8
+    ],
+    [
+     "move",
+     "jiebao",
+     14,
+     8
+    ],
+    [
+     "say",
+     "jiezhen",
+     "伯伯，多时不见。今夜我弟兄两个射得一个大虫，滚落在伯伯后园里，望借一路，取大虫则个。"
+    ],
+    [
+     "say",
+     "maotaigong",
+     "不妨。你两个连夜辛苦，且吃些早饭，再去取未迟。"
+    ],
+    [
+     "narrate",
+     "毛太公叫庄客安排早饭，劝二人吃了，方才引去后园。开了园门，满园里寻遍，哪里有大虫的影子？"
+    ],
+    [
+     "say",
+     "jiebao",
+     "这里草都滚倒了，又有血迹在上，如何说不在这里？伯伯，必是你家庄客抬过了！"
+    ],
+    [
+     "say",
+     "maotaigong",
+     "你两个怎地这般说！我家庄客又不知道有大虫在园里，便又抬得过？你也须看见我和你方才开锁进园来。"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "你家赖了我大虫，我兄弟两个吃知府杖限，倒要吃棒！你便还我大虫，万事皆休！"
+    ],
+    [
+     "say",
+     "maotaigong",
+     "好没道理！你两个倒来我庄上白赖人家东西！"
+    ],
+    [
+     "narrate",
+     "解珍、解宝大怒，就厅前打将起来，打碎了厅前椅桌。"
+    ],
+    [
+     "act",
+     "jiebao",
+     "attack",
+     "zk1"
+    ],
+    [
+     "act",
+     "zk1",
+     "hurt",
+     "jiebao"
+    ],
+    [
+     "appear",
+     "maozhongyi"
+    ],
+    [
+     "say",
+     "maozhongyi",
+     "有贼！解珍、解宝白昼抢劫我家！"
+    ],
+    [
+     "appear",
+     "gr0"
+    ],
+    [
+     "appear",
+     "gr1"
+    ],
+    [
+     "appear",
+     "gr2"
+    ],
+    [
+     "appear",
+     "gr3"
+    ],
+    [
+     "appear",
+     "gr4"
+    ],
+    [
+     "appear",
+     "gr5"
+    ],
+    [
+     "narrate",
+     "原来毛太公的儿子毛仲义，五更里早把大虫解上州里去请功了，又带了一伙公人，埋伏在庄外，只等二人发作。"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "原来是你父子早定下的圈套！"
+    ],
+    [
+     "approach",
+     "gr0",
+     "jiezhen"
+    ],
+    [
+     "approach",
+     "gr2",
+     "jiebao"
+    ],
+    [
+     "bind",
+     "jiezhen"
+    ],
+    [
+     "bind",
+     "jiebao"
+    ],
+    [
+     "narrate",
+     "众公人一齐上，把解珍、解宝绑了，夺了钢叉，连赃带人，解上州里来。"
+    ],
+    [
+     "tint",
+     "dusk"
+    ],
+    [
+     "leave",
+     "maotaigong"
+    ],
+    [
+     "leave",
+     "zk1"
+    ],
+    [
+     "leave",
+     "zk2"
+    ],
+    [
+     "appear",
+     "wangzheng"
+    ],
+    [
+     "appear",
+     "baoji"
+    ],
+    [
+     "narrate",
+     "那州里管事的六案孔目王正，却是毛太公的女婿。早把话来知府面前说了，将二人一顿拷打，屈打成招，做白昼抢劫论，钉上二十五斤的重枷，发下死囚牢里。"
+    ],
+    [
+     "say",
+     "wangzheng",
+     "包节级，这两个是我丈人的对头。你只在牢里结果了他，日后少不得重谢。"
+    ],
+    [
+     "say",
+     "baoji",
+     "孔目放心。进了我这死囚牢，迟早教他两个吃我一顿好的。"
+    ],
+    [
+     "say",
+     "jiebao",
+     "哥哥……我两个今番死在这里了。"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "兄弟休慌。天可怜见，总有个出头的日子。"
+    ],
+    [
+     "narrate",
+     "却说那牢里有个小节级，姓乐名和，人都唤他铁叫子。他见二人是好汉，私下问起来历，心里便有了计较。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

@@ -78,6 +78,7 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-23：二打祝家庄。大仗一丈青（扈三娘专追宋江，王英、秦明、邓飞被拿都是剧本演出，扈三娘打到三成林冲活捉，宋江撤回营寨）；
   // 过场扈成请和（吴用带吕方、郭盛、三阮到，扈成答应不救祝家）
   { name: '两打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
+  { name: '登州劫牢', stages: ['mainline/shehu', 'mainline/laihu', 'mainline/qingsunli', 'mainline/jielao'] },
 ];
 
 /**

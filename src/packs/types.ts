@@ -125,6 +125,12 @@ export interface PackSkillJson {
   stun?: number;
   /** 蒙汗药酒【新】：不伤人、必定喝下，敌人麻翻这么多回合（已经麻翻的不能再劝）；用在没被麻翻的人身上以外的攻击，见关卡 banquet */
   drug?: number;
+  /** 劝酒类技能命中后飘的字（默认「麻翻了！」）【新】 */
+  drugText?: string;
+  /** 打昏固定几回合【新】（1 = 只误掉对方接下来的一次行动） */
+  stunFor?: number;
+  /** 打昏迷（含被麻翻）的目标伤害倍数【新】 */
+  vsStunned?: number;
   poison?: number;
   hitMod?: number;
   critMod?: number;
@@ -209,6 +215,8 @@ export interface PackStageJson {
    * 只要目标身边 sight 格（默认 2）内有醒着的敌人（目标自己醒着也算），就设上 flag（惊动了押解的人）；打已经麻翻、身边没人醒着的不惊动
    */
   banquet?: { flag: string; sight?: number };
+  /** 伪装【新】：有人被识破时设上这个剧本标志 */
+  disguise?: { flag?: string };
   /** 天色滤镜（§15.15）：夜、雪、黄昏；只改画面，不改规则 */
   tint?: 'night' | 'snow' | 'dusk';
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
@@ -257,6 +265,10 @@ export interface PackUnitJson {
   trusts?: (string | number)[];
   /** 认得的人（trusts）走进警戒范围时拦下盘问：不算被发现，但这回合剩下的行动作废（石秀探庄巡庄庄客）【新】 */
   question?: boolean;
+  /** 伪装【新】（劫牢的顾大嫂、三打的孙立一伙）：敌人认不出、不打他；主动出手打敌人就被识破 */
+  disguise?: boolean;
+  /** 看得穿伪装【新】（劫牢的包节级）：正前方这么多格以内的伪装的人（trusts 里的职业除外）当场识破 */
+  seer?: number;
   /** AI 13 巡逻的路线【新】：依次走过这些格子，走完回到第一个 */
   patrol?: [number, number][];
   /** 劝酒【新】：refuse = 头几次推辞不喝；turns = 麻翻几回合（覆盖技能的 drug）；by = 只肯喝这些职业劝的酒（别人劝一律推辞） */

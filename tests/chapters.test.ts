@@ -90,7 +90,9 @@ describe('章节表', () => {
     expect(chapterOf('mainline/yizhangqing')).toBe(31);
     expect(chapterLabel(31)).toBe('第三十一章 两打祝家庄');
     expect(chapterLabel(27)).toBe('第二十七章 沂岭杀四虎');
-    expect(CHAPTERS).toHaveLength(31);
+    expect(chapterOf('mainline/jielao')).toBe(32);
+    expect(chapterLabel(32)).toBe('第三十二章 登州劫牢');
+    expect(CHAPTERS).toHaveLength(32);
   });
 });
 

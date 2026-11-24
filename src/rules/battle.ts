@@ -243,6 +243,8 @@ export interface StageInput {
   extraSkills?: Record<number, number[]>;
   /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
   cuju?: CujuRules;
+  /** 伪装【新】：开场伪装的人（ACT 索引）；被识破时设上 flag；seers = 看得穿伪装的人（ACT 索引 → 警戒半径，只看正前方，他认得的人 watchTrust 不算） */
+  disguise?: { units: number[]; flag?: number; seers?: Record<number, number> };
   /** 酒席【新】（杯酒救铁牛）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
   banquet?: { flag: number; sight: number };
   /** 劝酒【新】：ACT 索引 → 推辞几次、麻翻几回合、只喝谁劝的（职业号） */
@@ -295,6 +297,9 @@ export class Battle {
   readonly watchers: ReadonlyMap<number, number>;
   private readonly watchTrust: ReadonlyMap<number, number[]>;
   private readonly watchQuestion: ReadonlySet<number>;
+  /** 看得穿伪装的人：uid → 警戒半径【新】 */
+  private readonly seers: ReadonlyMap<number, number>;
+  private readonly disguiseFlag?: number;
   /** 「哨兵:被盘问的人」→ 盘问的回合；盘问过以后两回合内放行 */
   private questioned = new Map<string, number>();
   private readonly patrols: Map<number, { x: number; y: number }[]>;
@@ -411,6 +416,8 @@ export class Battle {
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
     this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
     this.watchQuestion = new Set(input.watchQuestion ?? []);
+    this.seers = new Map(Object.entries(input.disguise?.seers ?? {}).map(([k, v]) => [Number(k), v]));
+    this.disguiseFlag = input.disguise?.flag;
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.banquet = input.banquet;
@@ -507,6 +514,10 @@ export class Battle {
       this.setupRoyale();
     }
     for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
+    for (const uid of input.disguise?.units ?? []) {
+      const u = this.unit(uid);
+      if (u) u.disguised = true;
+    }
   }
 
   // ───────────── 查询 ─────────────
@@ -534,7 +545,7 @@ export class Battle {
     return this.active().find((u) => u.x === x && u.y === y);
   }
   foesOf(u: Unit) {
-    return this.active().filter((t) => !this.spectators.has(t.uid) && hostile(u, t));
+    return this.active().filter((t) => !this.spectators.has(t.uid) && hostile(u, t) && !(t.disguised && u.side === 'enemy'));
   }
   /** 被剧情绑住（bind）的人：AI 默认跳过，不追、不打、技能也不波及（负责人 2026-11-16，青州道劫囚的宋江）【新】 */
   isBound(u: Unit) {
@@ -638,6 +649,7 @@ export class Battle {
       if (this.spectators.has(t.uid)) return false;
       const pos = t === u ? at : t;
       if (skill.drug && t.stunTurns > 0) return false; // 已经麻翻的不用再劝
+      if (!heal && t.disguised && u.side === 'enemy') return false; // 敌人认不出伪装的人，招式也不打他【新】
       return area.has(key(pos.x, pos.y)) && (heal ? !hostile(u, t) : hostile(u, t))
         && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
@@ -1454,6 +1466,8 @@ export class Battle {
     // 教学关的 did 触发：从背后 / 侧面出手（flank）记在 attack / skill 前面，先判「打到背后了」再判「出手了」
     const did = counter ? 'counter' : basic ? 'attack' : 'skill';
     if (skill.drug) return this.serveDrug(u, skill, targets, area, cell);
+    // 伪装的人主动出手打敌人就被识破【新】（反击不算：防御时被打才会反击，敌人本来不打他）
+    if (u.disguised && !counter && !isSupportSkill(skill) && targets.some((t) => t.side === 'enemy')) this.unmask(u, '识破');
     if (this.banquet && u.side === 'player' && !this.flags.has(this.banquet.flag)) this.checkAlarm(targets);
     if (isSupportSkill(skill)) {
       this.noteDid(u, did);
@@ -1524,7 +1538,7 @@ export class Battle {
         this.noteDid(t, 'wake');
       }
       if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun')) {
-        t.stunTurns = this.rng.range(2, 4);
+        t.stunTurns = skill.stunFor ?? this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
       exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
@@ -1563,7 +1577,7 @@ export class Battle {
       t.stunTurns = Math.max(t.stunTurns, d?.turns ?? skill.drug ?? 1);
       t.defending = false;
       this.drugged.add(t.uid);
-      this.emit({ type: 'status', uid: t.uid, text: '麻翻了！' });
+      this.emit({ type: 'status', uid: t.uid, text: skill.drugText ?? '麻翻了！' });
       this.noteDid(t, 'drunk');
       if (u.side === 'player') exp += hitExp(Math.floor(t.stats.maxHp / 4), this.rng);
     }
@@ -1761,6 +1775,8 @@ export class Battle {
       for (const b of this.blocks) if (b.trigger.kind === 'death' && b.trigger.char === 255) this.runBlock(b);
     if (this.status !== 'playing') return;
     this.checkSpotted();
+    if (this.status !== 'playing') return;
+    this.checkSeers();
     if (this.status !== 'playing') return;
     this.checkDid();
     if (this.status !== 'playing') return;
@@ -1974,11 +1990,57 @@ export class Battle {
 
   /** 还在警戒的哨兵（活着、在场、没被发现过的敌人）和他们的警戒半径，画面上画警戒范围用【新】 */
   watchZones(): { uid: number; x: number; y: number; facing: number; r: number; spotted: boolean }[] {
-    if (this.status !== 'playing' || this.stealthOver) return [];
+    if (this.status !== 'playing') return [];
+    // 看得穿伪装的人（劫牢的包节级）：还有人伪装着就画他的视线【新】
+    const seers = this.units.some((t) => t.disguised && t.alive && t.present)
+      ? [...this.seers].flatMap(([uid, r]) => {
+          const w = this.units[uid];
+          return w && w.alive && w.present && w.side === 'enemy' && !(w.stunTurns > 0) ? [{ uid, x: w.x, y: w.y, facing: w.facing, r, spotted: false }] : [];
+        })
+      : [];
+    if (this.stealthOver) return seers;
     return [...this.watchers].flatMap(([uid, r]) => {
       const w = this.units[uid];
       return w && w.alive && w.present && w.side === 'enemy' ? [{ uid, x: w.x, y: w.y, facing: w.facing, r, spotted: uid in this.spotters }] : [];
-    });
+    }).concat(seers);
+  }
+
+  /** 去掉伪装【新】：text = 飘的字（空串不飘）；被识破（不是剧本去掉）时设上关卡的 disguise.flag 并判条件区块 */
+  private unmask(u: Unit, text: string, reveal = true) {
+    if (!u.disguised) return;
+    u.disguised = false;
+    this.lockUndo();
+    if (text) this.emit({ type: 'status', uid: u.uid, text });
+    if (reveal && this.disguiseFlag !== undefined && !this.flags.has(this.disguiseFlag)) {
+      this.flags.add(this.disguiseFlag);
+      this.runCondBlocks();
+    }
+  }
+
+  /** 看得穿伪装的人（劫牢的包节级）正前方警戒半径里有伪装的人（他认得的不算）就识破【新】 */
+  private checkSeers() {
+    for (const [uid, r] of this.seers) {
+      const w = this.unit(uid);
+      if (!w || !w.alive || !w.present || w.side !== 'enemy' || w.stunTurns > 0) continue;
+      for (const t of this.active()) {
+        if (!t.disguised || this.watchTrust.get(uid)?.includes(t.classId) || !watcherSees(w, t, r)) continue;
+        this.emit({ type: 'say', uid, speaker: w.name, text: '且慢！你是什么人？' });
+        this.unmask(t, '识破');
+        if (this.status !== 'playing') return;
+      }
+    }
+  }
+
+  /** 剧本把伪装的人现出原形（op 130）或扮上（op 131）【新】；all = 全部伪装的人 */
+  scriptDisguise(on: boolean, u?: Unit, quiet = false) {
+    if (!on) {
+      for (const t of u ? [u] : this.units.filter((x) => x.disguised)) this.unmask(t, quiet ? '' : '现出原形', false);
+      return;
+    }
+    if (u && !u.disguised) {
+      u.disguised = true;
+      if (!quiet) this.emit({ type: 'status', uid: u.uid, text: '伪装' });
+    }
   }
 
   /**
@@ -2519,6 +2581,13 @@ export class Battle {
           this.emit({ type: 'status', uid: sel.uid, text: '重傷' });
           break;
         }
+        // 130 去掉伪装 / 131 扮上伪装（扩展包【新】，劫牢、三打）：value 1 = 全部伪装的人；args.quiet = 不飘字
+        case 130:
+          this.scriptDisguise(false, op.value ? undefined : sel, !!op.args?.quiet);
+          break;
+        case 131:
+          if (sel) this.scriptDisguise(true, sel, !!op.args?.quiet);
+          break;
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
