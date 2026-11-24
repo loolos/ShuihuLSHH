@@ -281,7 +281,7 @@
    "name": "祝龙",
    "enemyRank": "leader",
    "levelOffset": 1,
-   "hpMultiplier": 1.4
+   "hpMultiplier": 1.0
   },
   {
    "id": "luan",
@@ -294,8 +294,8 @@
    "ai": 11,
    "name": "铁棒栾廷玉",
    "enemyRank": "leader",
-   "levelOffset": 2,
-   "hpMultiplier": 2.5
+   "levelOffset": 1,
+   "hpMultiplier": 1.5
   },
   {
    "id": "a1",
@@ -306,8 +306,8 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "a2",
@@ -318,8 +318,8 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "a3",
@@ -330,8 +330,8 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "a4",
@@ -342,8 +342,8 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "a5",
@@ -354,8 +354,8 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "庄客弓手",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "a6",
@@ -366,8 +366,32 @@
    "level": 30,
    "facing": 3,
    "ai": 11,
-   "name": "庄客弓手",
-   "levelOffset": -1
+   "name": "祝龙护卫",
+   "levelOffset": -2
+  },
+  {
+   "id": "a7",
+   "class": 39,
+   "side": "enemy",
+   "x": 17,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝龙护卫",
+   "levelOffset": -2
+  },
+  {
+   "id": "a8",
+   "class": 39,
+   "side": "enemy",
+   "x": 17,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝龙护卫",
+   "levelOffset": -2
   },
   {
    "id": "e1",
@@ -736,7 +760,7 @@
    "id": "husanniang",
    "class": "husanniang",
    "side": "enemy",
-   "x": 13,
+   "x": 18,
    "y": 44,
    "level": 30,
    "facing": 3,
@@ -745,14 +769,14 @@
    "name": "一丈青扈三娘",
    "enemyRank": "leader",
    "levelOffset": 1,
-   "hpMultiplier": 3.5,
+   "hpMultiplier": 2.0,
    "hidden": true
   },
   {
    "id": "h1",
    "class": 43,
    "side": "enemy",
-   "x": 11,
+   "x": 16,
    "y": 42,
    "level": 30,
    "facing": 3,
@@ -766,7 +790,7 @@
    "id": "h2",
    "class": 43,
    "side": "enemy",
-   "x": 11,
+   "x": 16,
    "y": 46,
    "level": 30,
    "facing": 3,
@@ -780,7 +804,7 @@
    "id": "h3",
    "class": 43,
    "side": "enemy",
-   "x": 9,
+   "x": 14,
    "y": 44,
    "level": 30,
    "facing": 3,
@@ -793,7 +817,7 @@
    "id": "h4",
    "class": 41,
    "side": "enemy",
-   "x": 10,
+   "x": 15,
    "y": 43,
    "level": 30,
    "facing": 3,
@@ -806,7 +830,7 @@
    "id": "h5",
    "class": 41,
    "side": "enemy",
-   "x": 10,
+   "x": 15,
    "y": 45,
    "level": 30,
    "facing": 3,
@@ -819,38 +843,12 @@
    "id": "h6",
    "class": 34,
    "side": "enemy",
-   "x": 8,
+   "x": 13,
    "y": 44,
    "level": 30,
    "facing": 3,
    "ai": 0,
    "name": "扈家庄弓手",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "h7",
-   "class": 19,
-   "side": "enemy",
-   "x": 12,
-   "y": 43,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "h8",
-   "class": 40,
-   "side": "enemy",
-   "x": 12,
-   "y": 45,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
    "levelOffset": -1,
    "hidden": true
   },
@@ -1141,110 +1139,6 @@
    "hidden": true
   },
   {
-   "id": "i1",
-   "class": 43,
-   "side": "enemy",
-   "x": 12,
-   "y": 47,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄马军",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i2",
-   "class": 43,
-   "side": "enemy",
-   "x": 13,
-   "y": 47,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄马军",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i3",
-   "class": 41,
-   "side": "enemy",
-   "x": 13,
-   "y": 45,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i4",
-   "class": 41,
-   "side": "enemy",
-   "x": 15,
-   "y": 46,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i5",
-   "class": 19,
-   "side": "enemy",
-   "x": 14,
-   "y": 44,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i6",
-   "class": 34,
-   "side": "enemy",
-   "x": 11,
-   "y": 46,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄弓手",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i7",
-   "class": 34,
-   "side": "enemy",
-   "x": 12,
-   "y": 48,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄弓手",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "i8",
-   "class": 40,
-   "side": "enemy",
-   "x": 16,
-   "y": 47,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "扈家庄庄客",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
    "id": "j1",
    "class": 19,
    "side": "enemy",
@@ -1319,32 +1213,6 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "j7",
-   "class": 43,
-   "side": "enemy",
-   "x": 28,
-   "y": 18,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "name": "祝家庄马军",
-   "levelOffset": -1,
-   "hidden": true
-  },
-  {
-   "id": "j8",
-   "class": 39,
-   "side": "enemy",
-   "x": 26,
-   "y": 18,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "name": "祝家庄教头",
    "levelOffset": -1,
    "hidden": true
   },
@@ -1482,6 +1350,28 @@
     ],
     [
      "title",
+     "独龙冈 · 盘陀路"
+    ],
+    [
+     "narrate",
+     "次日五更造饭，宋江点起人马，再进独龙冈。这番有了上回的教训，教石秀在前领路。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "众兄弟只看有白杨树的便转弯，不管路阔路狭；没白杨树的都是死路，休要乱走！"
+    ],
+    [
+     "narrate",
+     "宋江暗暗传令，大小军马只顾跟着白杨树转。果然一路转过盘陀路，竹签、铁蒺藜一处也不曾踏着，人马齐齐整整出了林子。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "若不是石秀兄弟，今番又要困在里面了。"
+    ],
+    [
+     "title",
      "独龙冈 · 祝家庄前"
     ],
     [
@@ -1500,7 +1390,7 @@
     ],
     [
      "objective",
-     "攻打祝家庄前门，打退祝龙的人马\n败：宋江或武龙倒下；超过 20 回合"
+     "攻打祝家庄前门：把祝龙打到一半以下，逼他撤兵\n败：宋江或武龙倒下；超过 20 回合"
     ],
     [
      "turnLimit",
@@ -1548,14 +1438,6 @@
     [
      "appear",
      "h6"
-    ],
-    [
-     "appear",
-     "h7"
-    ],
-    [
-     "appear",
-     "h8"
     ],
     [
      "move",
@@ -1668,6 +1550,17 @@
     ],
     [
      "say",
+     "husanniang",
+     "绑了，押回庄去！"
+    ],
+    [
+     "move",
+     "husanniang",
+     18,
+     44
+    ],
+    [
+     "say",
      "songjiang",
      "王英兄弟被拿了！欧鹏、马麟，快去敌住那女将！"
     ],
@@ -1678,7 +1571,7 @@
     ],
     [
      "objective",
-     "一丈青扈三娘带扈家庄马军从西南杀来，专找宋江！护住宋江；把扈三娘打到三成以下，林冲就能活捉她\n败：宋江或武龙倒下；超过 20 回合"
+     "一丈青扈三娘带扈家庄马军从西南杀来，专找宋江！护住宋江。把扈三娘打到三成以下，林冲就能活捉她；把祝龙打到一半以下逼他撤兵。两件都办到以后，宋江撤回南边的「梁山营寨」（回合结束时在里面）就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -1844,17 +1737,66 @@
     [
      "say",
      "dengfei",
-     "秦明哥哥！"
+     "秦明哥哥！休伤我兄弟！"
+    ],
+    [
+     "focus",
+     "dengfei"
+    ],
+    [
+     "approach",
+     "dengfei",
+     "luan"
+    ],
+    [
+     "face",
+     "luan",
+     "dengfei"
+    ],
+    [
+     "say",
+     "luan",
+     "又来一个送死的！"
+    ],
+    [
+     "act",
+     "dengfei",
+     "attack",
+     "luan"
+    ],
+    [
+     "act",
+     "luan",
+     "defend",
+     "dengfei"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "dengfei"
+    ],
+    [
+     "act",
+     "dengfei",
+     "defend",
+     "luan"
+    ],
+    [
+     "act",
+     "dengfei",
+     "attack",
+     "luan"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "dengfei"
     ],
     [
      "narrate",
-     "邓飞见秦明被拿，舞着铁链赶去救时，草里又是一声锣响。"
-    ],
-    [
-     "move",
-     "dengfei",
-     31,
-     23
+     "邓飞舞着铁链来斗栾廷玉，栾廷玉且战且走。斗不到数合，草里又是一声锣响。"
     ],
     [
      "act",
@@ -1874,6 +1816,12 @@
      {
       "near": "dengfei"
      }
+    ],
+    [
+     "act",
+     "ng3",
+     "attack",
+     "dengfei"
     ],
     [
      "bind",
@@ -1911,44 +1859,23 @@
     [
      "say",
      "luan",
-     "这两个且押回庄去！庄客们，一齐杀出去，捉那宋江！"
+     "这两个且押回庄去！"
     ],
     [
-     "standDown",
+     "move",
      "luan",
-     {
-      "leave": true
-     }
+     20,
+     24
     ],
     [
-     "setAi",
-     "a1",
-     0
+     "face",
+     "luan",
+     3
     ],
     [
-     "setAi",
-     "a2",
-     0
-    ],
-    [
-     "setAi",
-     "a3",
-     0
-    ],
-    [
-     "setAi",
-     "a4",
-     0
-    ],
-    [
-     "setAi",
-     "a5",
-     0
-    ],
-    [
-     "setAi",
-     "a6",
-     0
+     "say",
+     "luan",
+     "庄客们，一齐杀出去，捉那宋江！"
     ],
     [
      "setAi",
@@ -2031,11 +1958,6 @@
      0
     ],
     [
-     "setAi",
-     "zhulong",
-     0
-    ],
-    [
      "appear",
      "c1"
     ],
@@ -2084,60 +2006,9 @@
      "j6"
     ],
     [
-     "appear",
-     "j7"
-    ],
-    [
-     "appear",
-     "j8"
-    ],
-    [
      "say",
      "zhulong",
-     "儿郎们，杀！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "do": [
-    [
-     "narrate",
-     "西南上扈家庄又一队人马赶来接应一丈青。"
-    ],
-    [
-     "appear",
-     "i1"
-    ],
-    [
-     "appear",
-     "i2"
-    ],
-    [
-     "appear",
-     "i3"
-    ],
-    [
-     "appear",
-     "i4"
-    ],
-    [
-     "appear",
-     "i5"
-    ],
-    [
-     "appear",
-     "i6"
-    ],
-    [
-     "appear",
-     "i7"
-    ],
-    [
-     "appear",
-     "i8"
+     "两翼儿郎们，杀出去！护卫守住阵脚，休要乱动！"
     ]
    ]
   },
@@ -2398,7 +2269,7 @@
     ],
     [
      "objective",
-     "已捉住扈三娘。护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+     "捉住扈三娘（打到三成以下）、打退祝龙（打到一半以下）以后，护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -2551,7 +2422,7 @@
     ],
     [
      "objective",
-     "已捉住扈三娘。护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+     "捉住扈三娘（打到三成以下）、打退祝龙（打到一半以下）以后，护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -2574,6 +2445,121 @@
       "leave": true,
       "reward": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhulong",
+    "below": 50,
+    "spare": true
+   },
+   "do": [
+    [
+     "flag",
+     "zlBeaten"
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "梁山泊这伙人好生厉害……鸣金，收兵回庄！"
+    ],
+    [
+     "narrate",
+     "祝龙抵敌不住，护卫们簇拥着他退进庄门去了。"
+    ],
+    [
+     "standDown",
+     "zhulong",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ],
+    [
+     "standDown",
+     "a1",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a2",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a3",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a4",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a5",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a6",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a7",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "a8",
+     {
+      "leave": true,
+      "reward": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "songjiang",
+     "祝龙退了！"
+    ],
+    [
+     "objective",
+     "捉住扈三娘（打到三成以下）、打退祝龙（打到一半以下）以后，护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -2611,7 +2597,10 @@
     "label": "梁山营寨",
     "atTurnEnd": true
    },
-   "if": "captured",
+   "if": [
+    "captured",
+    "zlBeaten"
+   ],
    "do": [
     [
      "narrate",
