@@ -61,7 +61,10 @@
    "y": 12,
    "level": 30,
    "facing": 0,
-   "disguise": true
+   "disguise": true,
+   "skills": [
+    "lh-jiaozi-lao"
+   ]
   },
   {
    "id": "jiezhen",
@@ -147,6 +150,84 @@
    ],
    "levelOffset": 1,
    "enemyRank": "leader"
+  },
+  {
+   "id": "xl0",
+   "class": 32,
+   "side": "enemy",
+   "x": 6,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "seer": 2,
+   "trusts": [
+    "lehe"
+   ],
+   "patrol": [
+    [
+     13,
+     10
+    ],
+    [
+     6,
+     10
+    ]
+   ],
+   "name": "巡逻兵丁",
+   "levelOffset": -2
+  },
+  {
+   "id": "xl1",
+   "class": 32,
+   "side": "enemy",
+   "x": 10,
+   "y": 1,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "seer": 2,
+   "trusts": [
+    "lehe"
+   ],
+   "patrol": [
+    [
+     10,
+     8
+    ],
+    [
+     10,
+     1
+    ]
+   ],
+   "name": "巡逻兵丁",
+   "levelOffset": -2
+  },
+  {
+   "id": "xl2",
+   "class": 32,
+   "side": "enemy",
+   "x": 20,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 13,
+   "seer": 2,
+   "trusts": [
+    "lehe"
+   ],
+   "patrol": [
+    [
+     20,
+     14
+    ],
+    [
+     20,
+     6
+    ]
+   ],
+   "name": "巡逻兵丁",
+   "levelOffset": -2
   },
   {
    "id": "ya0",
@@ -410,7 +491,7 @@
     ],
     [
      "objective",
-     "提示：顾大嫂、乐和带着「伪装」，狱卒认不出，出手打人就被识破。包节级盯着正前方三格，被他看见也会识破。乐和的「吹铁叫子」能叫身边的人听得入神、一回合不动。"
+     "提示：顾大嫂、乐和带着「伪装」，狱卒认不出，出手打人就被识破。包节级盯着正前方三格，被他看见也会识破。乐和在牢里能用「长吹铁叫子」，叫三格内的人听得入神、两回合不动。另有三个巡逻的兵丁，正前方两格也看得穿伪装。"
     ],
     [
      "turnLimit",
@@ -665,6 +746,21 @@
     [
      "setAi",
      "yb5",
+     0
+    ],
+    [
+     "setAi",
+     "xl0",
+     0
+    ],
+    [
+     "setAi",
+     "xl1",
+     0
+    ],
+    [
+     "setAi",
+     "xl2",
      0
     ]
    ]

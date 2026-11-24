@@ -77,13 +77,20 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(gu.disguised).toBe(false);
   });
 
-  it('劫牢：吹铁叫子叫人一回合不动，不破伪装', () => {
+  it('劫牢：乐和临时会长吹铁叫子（三格内两回合不动），不破伪装；巡逻兵丁也看得穿伪装', () => {
     const { b, get } = open('jielao');
     const lh = get('lehe'), bj = get('baoji');
-    put(lh, bj.x, bj.y + 2);
-    b.useSkill(lh, skill(b, lh, '吹铁叫子'), { x: bj.x, y: bj.y });
+    expect(learnedSkills(lh, b.data).map((s) => s.name)).toContain('长吹铁叫子');
+    put(lh, bj.x, bj.y + 3);
+    const long = learnedSkills(lh, b.data).find((s) => s.name === '长吹铁叫子')!;
+    b.useSkill(lh, long, b.skillTargets(lh, long)[0]);
     expect(lh.disguised).toBe(true);
-    expect(bj.stunTurns).toBeGreaterThan(0);
+    expect(bj.stunTurns).toBe(2);
+    const gu = get('gudasao'), xl = get('xl0');
+    xl.facing = 3;
+    put(gu, xl.x + 3, xl.y);
+    b.move(gu, xl.x + 2, xl.y);
+    expect(gu.disguised).toBe(false);
   });
 
   it('劫牢：乐和、顾大嫂站到死囚牢门前，回合结束开门；解珍解宝带枷打一回合再扭断枷', () => {
