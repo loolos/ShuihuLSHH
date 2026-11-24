@@ -245,7 +245,7 @@ export interface StageInput {
   /** 蹴鞠外传【新】：有这一项就是蹴鞠关（攻击只能踢球，见 cuju.ts） */
   cuju?: CujuRules;
   /** 伪装【新】：开场伪装的人（ACT 索引）；被识破时设上 flag；seers = 看得穿伪装的人（ACT 索引 → 警戒半径，只看正前方，他认得的人 watchTrust 不算） */
-  disguise?: { units: number[]; flag?: number; seers?: Record<number, number> };
+  disguise?: { units: number[]; flag?: number; seers?: Record<number, number>; moves?: Record<number, number> };
   /** 酒席【新】（杯酒救铁牛）：flag 没设上之前，我方出手时目标身边 sight 格内有醒着的敌人就设上 flag */
   banquet?: { flag: number; sight: number };
   /** 劝酒【新】：ACT 索引 → 推辞几次、麻翻几回合、只喝谁劝的（职业号） */
@@ -523,6 +523,13 @@ export class Battle {
     for (const uid of input.disguise?.units ?? []) {
       const u = this.unit(uid);
       if (u) u.disguised = true;
+    }
+    for (const [uid, d] of Object.entries(input.disguise?.moves ?? {})) {
+      const u = this.unit(Number(uid));
+      if (!u) continue;
+      u.disguiseMove = d;
+      refreshStats(u, this.data);
+      if (u.disguised) u.movementRemaining = Math.min(u.movementRemaining, u.stats.move);
     }
   }
 
@@ -2048,6 +2055,7 @@ export class Battle {
   private unmask(u: Unit, text: string, reveal = true) {
     if (!u.disguised) return;
     u.disguised = false;
+    if (u.disguiseMove) refreshStats(u, this.data);
     this.lockUndo();
     if (text) this.emit({ type: 'status', uid: u.uid, text });
     if (reveal && this.disguiseFlag !== undefined && !this.flags.has(this.disguiseFlag)) {
@@ -2078,6 +2086,7 @@ export class Battle {
     }
     if (u && !u.disguised) {
       u.disguised = true;
+      if (u.disguiseMove) refreshStats(u, this.data);
       if (!quiet) this.emit({ type: 'status', uid: u.uid, text: '伪装' });
     }
   }

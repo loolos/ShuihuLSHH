@@ -50,7 +50,8 @@
    "y": 21,
    "level": 30,
    "facing": 0,
-   "disguise": true
+   "disguise": true,
+   "disguiseMove": -3
   },
   {
    "id": "lehe",

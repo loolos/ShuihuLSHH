@@ -84,6 +84,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(guard.ai.mode).toBe(0);
   });
 
+  it('劫牢：伪装的顾大嫂移动 −3，识破以后恢复；乐和不减', () => {
+    const { b, get } = open('jielao');
+    const gu = get('gudasao'), lh = get('lehe');
+    const disguised = gu.stats.move, lhMove = lh.stats.move;
+    expect(gu.movementRemaining).toBeLessThanOrEqual(disguised);
+    b.scriptDisguise(false);
+    expect(gu.stats.move).toBe(disguised + 3);
+    expect(lh.stats.move).toBe(lhMove);
+  });
+
   it('劫牢：包节级正前方看得穿伪装，乐和他认得', () => {
     const { b, get } = open('jielao');
     const gu = get('gudasao'), lh = get('lehe'), bj = get('baoji');
