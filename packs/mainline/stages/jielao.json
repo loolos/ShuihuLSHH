@@ -414,7 +414,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb1",
@@ -426,7 +426,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb2",
@@ -438,7 +438,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb3",
@@ -450,7 +450,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵骑兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb4",
@@ -462,7 +462,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb5",
@@ -474,7 +474,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zb6",
@@ -486,7 +486,79 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵骑兵",
-   "levelOffset": -3
+   "levelOffset": 1
+  },
+  {
+   "id": "zc0",
+   "class": 33,
+   "side": "enemy",
+   "x": 22,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zc1",
+   "class": 33,
+   "side": "enemy",
+   "x": 22,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zc2",
+   "class": 33,
+   "side": "enemy",
+   "x": 22,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zc3",
+   "class": 33,
+   "side": "enemy",
+   "x": 22,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zc4",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "zc5",
+   "class": 34,
+   "side": "enemy",
+   "x": 22,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
   },
   {
    "id": "zw0",
@@ -498,7 +570,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw1",
@@ -510,7 +582,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw2",
@@ -522,7 +594,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw3",
@@ -534,7 +606,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw4",
@@ -546,7 +618,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw5",
@@ -558,7 +630,7 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵骑兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "zw6",
@@ -570,7 +642,91 @@
    "facing": 1,
    "hidden": true,
    "name": "州兵骑兵",
-   "levelOffset": -3
+   "levelOffset": 1
+  },
+  {
+   "id": "zx0",
+   "class": 33,
+   "side": "enemy",
+   "x": 2,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx1",
+   "class": 33,
+   "side": "enemy",
+   "x": 3,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx2",
+   "class": 33,
+   "side": "enemy",
+   "x": 4,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx3",
+   "class": 43,
+   "side": "enemy",
+   "x": 1,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵骑兵",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx4",
+   "class": 34,
+   "side": "enemy",
+   "x": 2,
+   "y": 16,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx5",
+   "class": 34,
+   "side": "enemy",
+   "x": 3,
+   "y": 16,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵弓手",
+   "levelOffset": 1
+  },
+  {
+   "id": "zx6",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 16,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "name": "州兵骑兵",
+   "levelOffset": 1
   },
   {
    "id": "menguan",
@@ -594,7 +750,7 @@
    "facing": 0,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "mg1",
@@ -606,7 +762,7 @@
    "facing": 0,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "mg2",
@@ -618,7 +774,7 @@
    "facing": 0,
    "hidden": true,
    "name": "州兵",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "mg3",
@@ -630,7 +786,7 @@
    "facing": 0,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   },
   {
    "id": "mg4",
@@ -642,7 +798,7 @@
    "facing": 0,
    "hidden": true,
    "name": "州兵弓手",
-   "levelOffset": -3
+   "levelOffset": 1
   }
  ],
  "script": [
@@ -973,7 +1129,7 @@
    "on": {
     "turn": 0
    },
-   "if": "zb2",
+   "if": "zhoubing",
    "unless": "helpers",
    "do": [
     [
@@ -1025,14 +1181,17 @@
   },
   {
    "on": {
-    "turn": 0
+    "flag": "jia"
    },
-   "if": "zhoubing",
-   "unless": "zb2",
+   "unless": "revealed",
    "do": [
     [
      "flag",
-     "zb2"
+     "quiet"
+    ],
+    [
+     "narrate",
+     "牢里悄没声息，营里的公人一时还没察觉，州衙那边更不知道。"
     ]
    ]
   },
@@ -1041,7 +1200,7 @@
     "turn": 3
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": "rear",
    "do": [
     [
      "focus",
@@ -1081,6 +1240,861 @@
      "zb6"
     ],
     [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "go",
+   "unless": "rear",
+   "do": [
+    [
+     "focus",
+     20,
+     11
+    ],
+    [
+     "narrate",
+     "州衙里得了消息，一队州兵从营后杀到！"
+    ],
+    [
+     "appear",
+     "zb0"
+    ],
+    [
+     "appear",
+     "zb1"
+    ],
+    [
+     "appear",
+     "zb2"
+    ],
+    [
+     "appear",
+     "zb3"
+    ],
+    [
+     "appear",
+     "zb4"
+    ],
+    [
+     "appear",
+     "zb5"
+    ],
+    [
+     "appear",
+     "zb6"
+    ],
+    [
+     "appear",
+     "zc0"
+    ],
+    [
+     "appear",
+     "zc1"
+    ],
+    [
+     "appear",
+     "zc2"
+    ],
+    [
+     "appear",
+     "zc3"
+    ],
+    [
+     "appear",
+     "zc4"
+    ],
+    [
+     "appear",
+     "zc5"
+    ],
+    [
+     "flag",
+     "rear"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
      "focus",
      20,
      15
@@ -1116,6 +2130,1418 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "q2",
+   "unless": "zhoubing",
+   "do": [
+    [
+     "narrate",
+     "州衙这才得了消息，大队州兵赶来了！"
+    ],
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
+    ],
+    [
+     "trap",
+     [],
+     {
+      "min": 0
+     }
+    ],
+    [
+     "focus",
+     11,
+     20
+    ],
+    [
+     "narrate",
+     "又一队州兵赶到牢城营，把营门关了，门口横上拒马，堵住去路！"
+    ],
+    [
+     "appear",
+     "menguan"
+    ],
+    [
+     "appear",
+     "mg0"
+    ],
+    [
+     "appear",
+     "mg1"
+    ],
+    [
+     "appear",
+     "mg2"
+    ],
+    [
+     "appear",
+     "mg3"
+    ],
+    [
+     "appear",
+     "mg4"
+    ],
+    [
+     "objective",
+     "打倒州兵都头，拒马才拽得开"
+    ],
+    [
+     "flag",
+     "zhoubing"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 0
+   },
+   "if": "q1",
+   "unless": "q2",
+   "do": [
+    [
+     "flag",
+     "q2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 0
+   },
+   "if": "quiet",
+   "unless": "q1",
+   "do": [
+    [
+     "flag",
+     "q1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "go",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
+   "do": [
+    [
+     "focus",
+     20,
+     15
+    ],
+    [
+     "narrate",
+     "营东角门也撞进一队州兵来！"
+    ],
+    [
+     "appear",
+     "zw0"
+    ],
+    [
+     "appear",
+     "zw1"
+    ],
+    [
+     "appear",
+     "zw2"
+    ],
+    [
+     "appear",
+     "zw3"
+    ],
+    [
+     "appear",
+     "zw4"
+    ],
+    [
+     "appear",
+     "zw5"
+    ],
+    [
+     "appear",
+     "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1172,45 +3598,11 @@
     "turn": 4
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1247,6 +3639,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1303,45 +3732,11 @@
     "turn": 5
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1378,6 +3773,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1434,45 +3866,11 @@
     "turn": 6
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1509,6 +3907,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1565,45 +4000,11 @@
     "turn": 7
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1640,6 +4041,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1696,45 +4134,11 @@
     "turn": 8
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1771,6 +4175,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1827,45 +4268,11 @@
     "turn": 9
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -1902,6 +4309,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -1958,45 +4402,11 @@
     "turn": 10
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -2033,6 +4443,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -2089,45 +4536,11 @@
     "turn": 11
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -2164,6 +4577,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -2220,45 +4670,11 @@
     "turn": 12
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -2295,6 +4711,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -2351,45 +4804,11 @@
     "turn": 13
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -2426,6 +4845,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
@@ -2482,45 +4938,11 @@
     "turn": 14
    },
    "if": "go",
-   "unless": "zhoubing",
+   "unless": [
+    "zhoubing",
+    "quiet"
+   ],
    "do": [
-    [
-     "focus",
-     20,
-     11
-    ],
-    [
-     "narrate",
-     "州衙里得了消息，一队州兵从营后杀到！"
-    ],
-    [
-     "appear",
-     "zb0"
-    ],
-    [
-     "appear",
-     "zb1"
-    ],
-    [
-     "appear",
-     "zb2"
-    ],
-    [
-     "appear",
-     "zb3"
-    ],
-    [
-     "appear",
-     "zb4"
-    ],
-    [
-     "appear",
-     "zb5"
-    ],
-    [
-     "appear",
-     "zb6"
-    ],
     [
      "focus",
      20,
@@ -2557,6 +4979,43 @@
     [
      "appear",
      "zw6"
+    ],
+    [
+     "focus",
+     3,
+     15
+    ],
+    [
+     "narrate",
+     "营西边也有一队州兵围了上来！"
+    ],
+    [
+     "appear",
+     "zx0"
+    ],
+    [
+     "appear",
+     "zx1"
+    ],
+    [
+     "appear",
+     "zx2"
+    ],
+    [
+     "appear",
+     "zx3"
+    ],
+    [
+     "appear",
+     "zx4"
+    ],
+    [
+     "appear",
+     "zx5"
+    ],
+    [
+     "appear",
+     "zx6"
     ],
     [
      "trap",
