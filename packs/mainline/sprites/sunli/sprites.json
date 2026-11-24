@@ -1,0 +1,130 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50.0,
+ "actions": {
+  "idle": {
+   "source": "AXE_standing_idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 225
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 225
+   }
+  },
+  "walk": {
+   "source": "AXE_standing_walk_forward",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "hit": {
+   "source": "AXE_standing_react_large_gut",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 120
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 120
+   }
+  },
+  "defend": {
+   "source": "AXE_standing_block_idle",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 208
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 208
+   }
+  },
+  "strike": {
+   "source": "AXE_standing_melee_attack_downward",
+   "front": {
+    "file": "strike-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "strike-back.png",
+    "frames": 8,
+    "ms": 110
+   }
+  },
+  "combo": {
+   "source": "AXE_standing_melee_combo_attack_ver_1",
+   "front": {
+    "file": "combo-front.png",
+    "frames": 12,
+    "ms": 110
+   },
+   "back": {
+    "file": "combo-back.png",
+    "frames": 12,
+    "ms": 110
+   }
+  },
+  "battlecry": {
+   "source": "AXE_standing_taunt_battlecry",
+   "front": {
+    "file": "battlecry-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "battlecry-back.png",
+    "frames": 8,
+    "ms": 110
+   }
+  },
+  "leap": {
+   "source": "AXE_standing_melee_run_jump_attack",
+   "front": {
+    "file": "leap-front.png",
+    "frames": 10,
+    "ms": 100
+   },
+   "back": {
+    "file": "leap-back.png",
+    "frames": 10,
+    "ms": 100
+   }
+  },
+  "spin": {
+   "source": "AXE_standing_melee_attack_360_high",
+   "front": {
+    "file": "spin-front.png",
+    "frames": 10,
+    "ms": 100
+   },
+   "back": {
+    "file": "spin-back.png",
+    "frames": 10,
+    "ms": 100
+   }
+  }
+ }
+}

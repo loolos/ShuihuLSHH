@@ -1,0 +1,514 @@
+{
+ "name": "孙立",
+ "_说明": "病尉迟：登州兵马提辖，淡黄面皮、络腮胡，紫抹额，乌铁甲罩紫战袍，右手竹节钢鞭。动作借 Mixamo 单手斧包（AXE_，见 README），待机 AXE_standing_idle 别人没用过",
+ "body": "male",
+ "height": 1.82,
+ "outfit": "outfits/male-base.json",
+ "remove": [
+  "发髻"
+ ],
+ "extraAnims": [
+  "mixamo/mixamo-axe.glb"
+ ],
+ "colors": {
+  "skin": [
+   204,
+   170,
+   112
+  ],
+  "头巾": [
+   124,
+   30,
+   124
+  ],
+  "中衣": [
+   96,
+   90,
+   168
+  ],
+  "短褂": {
+   "color": [
+    96,
+    90,
+    168
+   ],
+   "colors": [
+    [
+     48,
+     44,
+     122
+    ],
+    [
+     48,
+     44,
+     122
+    ],
+    [
+     220,
+     180,
+     80
+    ]
+   ]
+  },
+  "腰带": [
+   220,
+   180,
+   80
+  ],
+  "腰带结": [
+   220,
+   180,
+   80
+  ],
+  "腰带垂": [
+   96,
+   90,
+   168
+  ],
+  "宽裤": [
+   74,
+   56,
+   48
+  ],
+  "裹腿": [
+   44,
+   38,
+   36
+  ],
+  "鞋": [
+   28,
+   26,
+   26
+  ]
+ },
+ "add": {
+  "rules": [
+   {
+    "name": "胡须",
+    "bones": [
+     "Head"
+    ],
+    "when": "y < -0.02 and z < 1.63",
+    "color": [
+     26,
+     20,
+     18
+    ],
+    "inflate": 0.012
+   }
+  ],
+  "props": [
+   {
+    "name": "髯",
+    "bone": "Head",
+    "shape": "sphere",
+    "radius": 0.065,
+    "at": [
+     0,
+     -0.07,
+     1.565
+    ],
+    "scale": [
+     1.15,
+     0.65,
+     1.1
+    ],
+    "color": [
+     26,
+     20,
+     18
+    ]
+   },
+   {
+    "name": "抹额",
+    "bone": "Head",
+    "shape": "sphere",
+    "radius": 0.118,
+    "at": [
+     0,
+     0.01,
+     1.765
+    ],
+    "scale": [
+     1,
+     1.05,
+     0.72
+    ],
+    "color": [
+     124,
+     30,
+     124
+    ]
+   },
+   {
+    "name": "额饰",
+    "bone": "Head",
+    "shape": "box",
+    "at": [
+     0,
+     -0.115,
+     1.745
+    ],
+    "scale": [
+     0.05,
+     0.012,
+     0.04
+    ],
+    "color": [
+     220,
+     180,
+     80
+    ]
+   },
+   {
+    "name": "护心镜",
+    "bone": "spine_03",
+    "shape": "sphere",
+    "radius": 0.07,
+    "at": [
+     0,
+     -0.21,
+     1.27
+    ],
+    "scale": [
+     1,
+     0.25,
+     1
+    ],
+    "color": [
+     220,
+     180,
+     80
+    ]
+   },
+   {
+    "name": "鞭柄",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.017,
+    "depth": 0.16,
+    "at": [
+     -0.8,
+     -0.04,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     70,
+     40,
+     30
+    ]
+   },
+   {
+    "name": "鞭护手",
+    "bone": "hand_r",
+    "shape": "box",
+    "at": [
+     -0.8,
+     -0.13,
+     1.43
+    ],
+    "scale": [
+     0.06,
+     0.02,
+     0.06
+    ],
+    "color": [
+     220,
+     180,
+     80
+    ]
+   },
+   {
+    "name": "鞭身",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.026,
+    "depth": 0.62,
+    "at": [
+     -0.8,
+     -0.45,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     176,
+     180,
+     194
+    ]
+   },
+   {
+    "name": "鞭节1",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.036000000000000004,
+    "depth": 0.03,
+    "at": [
+     -0.8,
+     -0.24,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     110,
+     114,
+     128
+    ]
+   },
+   {
+    "name": "鞭节2",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.035,
+    "depth": 0.03,
+    "at": [
+     -0.8,
+     -0.36,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     110,
+     114,
+     128
+    ]
+   },
+   {
+    "name": "鞭节3",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.034,
+    "depth": 0.03,
+    "at": [
+     -0.8,
+     -0.48,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     110,
+     114,
+     128
+    ]
+   },
+   {
+    "name": "鞭节4",
+    "bone": "hand_r",
+    "shape": "cylinder",
+    "radius": 0.033,
+    "depth": 0.03,
+    "at": [
+     -0.8,
+     -0.6,
+     1.43
+    ],
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "color": [
+     110,
+     114,
+     128
+    ]
+   },
+   {
+    "name": "鞭头",
+    "bone": "hand_r",
+    "shape": "sphere",
+    "radius": 0.032,
+    "at": [
+     -0.8,
+     -0.77,
+     1.43
+    ],
+    "color": [
+     110,
+     114,
+     128
+    ]
+   }
+  ],
+  "layers": [
+   {
+    "name": "铁甲",
+    "bones": [
+     "spine_0[123]",
+     "clavicle_.*",
+     "pelvis"
+    ],
+    "when": "0.96 < z < 1.42 and ax < 0.21",
+    "offset": "0.065",
+    "thickness": 0.014,
+    "color": [
+     112,
+     112,
+     118
+    ],
+    "folds": 0,
+    "colors": [
+     {
+      "when": "int(z * 40) % 2 == 0",
+      "color": [
+       66,
+       66,
+       70
+      ]
+     },
+     {
+      "when": "abs(z - 1.0) < 0.02",
+      "color": [
+       220,
+       180,
+       80
+      ]
+     }
+    ]
+   },
+   {
+    "name": "护肩",
+    "bones": [
+     "clavicle_.*",
+     "upperarm_.*"
+    ],
+    "when": "z > 1.30 and 0.14 < ax < 0.36",
+    "offset": "0.08",
+    "thickness": 0.014,
+    "color": [
+     112,
+     112,
+     118
+    ],
+    "colors": [
+     {
+      "when": "int(ax * 45) % 2 == 0",
+      "color": [
+       66,
+       66,
+       70
+      ]
+     }
+    ]
+   },
+   {
+    "name": "裙甲",
+    "bones": [
+     "pelvis",
+     "thigh_.*",
+     "spine_01"
+    ],
+    "when": "0.70 < z < 0.97 and (y < 0.02 or ax > 0.12)",
+    "offset": "0.08 + (0.10 * (0.95 - z) if z < 0.95 else 0)",
+    "thickness": 0.012,
+    "color": [
+     112,
+     112,
+     118
+    ],
+    "colors": [
+     {
+      "when": "int(z * 30) % 2 == 0",
+      "color": [
+       66,
+       66,
+       70
+      ]
+     },
+     {
+      "when": "z < 0.72",
+      "color": [
+       96,
+       90,
+       168
+      ]
+     }
+    ]
+   },
+   {
+    "name": "护腕",
+    "bones": [
+     "lowerarm_.*"
+    ],
+    "when": "0.60 < ax < 0.75",
+    "offset": 0.025,
+    "thickness": 0.012,
+    "color": [
+     112,
+     112,
+     118
+    ],
+    "colors": [
+     {
+      "when": "abs(ax - 0.61) < 0.012 or abs(ax - 0.74) < 0.012",
+      "color": [
+       220,
+       180,
+       80
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "out": "packs/mainline/sprites/sunli",
+ "frames": 8,
+ "actions": {
+  "idle": "AXE_standing_idle",
+  "walk": "AXE_standing_walk_forward",
+  "hit": {
+   "from": "AXE_standing_react_large_gut",
+   "ms": 120
+  },
+  "defend": "AXE_standing_block_idle",
+  "strike": {
+   "from": "AXE_standing_melee_attack_downward",
+   "ms": 110
+  },
+  "combo": {
+   "from": "AXE_standing_melee_combo_attack_ver_1",
+   "frames": 12,
+   "ms": 110
+  },
+  "battlecry": {
+   "from": "AXE_standing_taunt_battlecry",
+   "ms": 110
+  },
+  "leap": {
+   "from": "AXE_standing_melee_run_jump_attack",
+   "frames": 10,
+   "ms": 100
+  },
+  "spin": {
+   "from": "AXE_standing_melee_attack_360_high",
+   "frames": 10,
+   "ms": 100
+  }
+ },
+ "render": {
+  "toonRange": [
+   0.75,
+   1.15
+  ]
+ }
+}
