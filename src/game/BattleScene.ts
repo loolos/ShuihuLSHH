@@ -1291,9 +1291,24 @@ export class BattleScene extends Phaser.Scene {
     this.ui.playing = true;
     this.ui.setEndTurnEnabled(false);
     this.ui.setRewind(null);
+    // 双击快进中遇到剧本事件（对白、剧情走位、单挑动作、登场……）先恢复正常速度照常播放，播完接着快进【新】
+    //（负责人 2026-11-23：双击跳过不要跳剧情动画，所有关卡都是）；Esc / 跳过按钮仍然整段跳过
+    let resumeFast = false;
     try {
       for (let i = 0; i < events.length; i++) {
         const e = events[i];
+        if (!this.ui.skipping) {
+          const scripted = !!(e as { script?: boolean }).script;
+          if (scripted && this.fast) {
+            this.syncView();
+            this.refreshAll();
+            this.setFast(false);
+            resumeFast = true;
+          } else if (!scripted && resumeFast) {
+            resumeFast = false;
+            this.setFast(true);
+          }
+        }
         // 同伴一起观战/归队：不逐人移动镜头、淡出淡入或串行等待。
         if (!this.fast && !this.ui.skipping && e.type === 'status' && this.battle.spectators.has(e.uid) && (e.text === '观战' || e.text === '归队')) {
           const group = [e];

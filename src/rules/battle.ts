@@ -1051,7 +1051,10 @@ export class Battle {
     this.out = [];
     return o;
   }
+  /** 正在执行剧本区块（>0）：这时发出的事件标上 script，画面双击快进时照常播放（负责人 2026-11-23：快进不跳剧情动画）【新】 */
+  private scriptDepth = 0;
   private emit(e: BattleEvent) {
+    if (this.scriptDepth > 0) Object.defineProperty(e, 'script', { value: true, enumerable: false });
     if (this.teaching && SOFT_EVENTS.has(e.type)) this.soft.add(e);
     this.out.push(e);
   }
@@ -2124,6 +2127,15 @@ export class Battle {
    */
   private runBlock(b: PasBlock) {
     if (this.fired.has(b.index)) return;
+    this.scriptDepth++;
+    try {
+      this.runBlockOps(b);
+    } finally {
+      this.scriptDepth--;
+    }
+  }
+
+  private runBlockOps(b: PasBlock) {
     this.fired.add(b.index);
     if (!this.teaching) this.lockUndo();
     const textOf = (i: number) => {
