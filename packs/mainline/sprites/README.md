@@ -19,7 +19,7 @@
 | `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
 | `daizong/` | 戴宗（褐短褂、幞头、腿绑甲马）：idle、walk、hit-chest、crouch-idle（聚气 / 防御）、death01、roll、punch-jab、punch-two（×2）、punch-cross、kick-r / kick-l / kick-rl（左右踢）、ninja-jump 腾跃、slide 滑铲。配方 `characters/daizong.json` |
 | `husanniang/` | 扈三娘步战造型（配色对齐骑马版：青绿战袍、红围巾、金盔红缨、日月双刀；女假人）：idle（双刀护身）、walk、hit-chest、defend、death01、roll、slash-a/b/c、slash-combo、heavy-combo、dash、crouch-idle。还没有职业用它（战斗里仍是骑兵 43 换色），配方 `characters/husanniang.json` |
-| `sunli/` | 孙立（病尉迟：乌铁甲罩蓝紫战袍、紫抹额、络腮胡，右手竹节钢鞭；动作借 Mixamo 单手斧包 `AXE_`）：idle（持鞭站立）、walk、hit、defend（格挡）、strike（钢鞭下砸）、combo（单鞭连环）、battlecry（聚气）、leap（跃起砸地，病尉迟枪）、spin（旋身两鞭，鞭枪双绝）。配方 `characters/sunli.json` |
+| `sunli/` | 孙立（病尉迟：乌铁甲罩蓝紫战袍、紫抹额、络腮胡，右手竹节钢鞭；动作借 Mixamo 单手斧包 `AXE_`）：idle（持鞭站立）、walk、hit、defend（格挡）、strike（钢鞭下砸）、combo（单鞭连环）、battlecry（聚气）、leap（跃起砸地，病尉迟枪）、spin（旋身两鞭，鞭枪双绝）、shoot（左手持弓放箭，弯弓压阵；这一条另用 `characters/sunli-bow.json` 渲染，把钢鞭换成弓）。配方 `characters/sunli.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 
 ## 来源与授权

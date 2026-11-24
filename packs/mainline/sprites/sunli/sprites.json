@@ -125,6 +125,19 @@
     "frames": 10,
     "ms": 100
    }
+  },
+  "shoot": {
+   "source": "Bow_Shoot",
+   "front": {
+    "file": "shoot-front.png",
+    "frames": 8,
+    "ms": 110
+   },
+   "back": {
+    "file": "shoot-back.png",
+    "frames": 8,
+    "ms": 110
+   }
   }
  }
 }

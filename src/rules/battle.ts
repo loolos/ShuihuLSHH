@@ -301,6 +301,8 @@ export class Battle {
   /** 看得穿伪装的人：uid → 警戒半径【新】 */
   private readonly seers: ReadonlyMap<number, number>;
   private readonly disguiseFlag?: number;
+  /** 这一关有伪装（单位伪装或看得穿的人）【新】 */
+  private readonly hasDisguise: boolean;
   /** 「哨兵:被盘问的人」→ 盘问的回合；盘问过以后两回合内放行 */
   private questioned = new Map<string, number>();
   private readonly patrols: Map<number, { x: number; y: number }[]>;
@@ -421,6 +423,7 @@ export class Battle {
     this.watchQuestion = new Set(input.watchQuestion ?? []);
     this.seers = new Map(Object.entries(input.disguise?.seers ?? {}).map(([k, v]) => [Number(k), v]));
     this.disguiseFlag = input.disguise?.flag;
+    this.hasDisguise = !!input.disguise;
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.banquet = input.banquet;
@@ -624,13 +627,18 @@ export class Battle {
     return previewAttack(u, t, skill);
   }
 
+  /** 暗中才能用的招式（skill.covert）【新】：有伪装的关卡里，自己已经被识破 / 去掉伪装就用不了（乐和的铁叫子：开打以后没人听得入神） */
+  covertLocked(u: Unit, skill: SkillDef) {
+    return !!skill.covert && this.hasDisguise && !u.disguised;
+  }
+
   /**
    * 技能菜单：已习得的技能。usable = 现在能选（能行动、没出过手、气力足够），
    * 范围里没有目标也能选来查看射程和作用范围（lolo 2026-11-13）【新】；hasTarget = 有可施放的位置。
    */
   skillsOf(u: Unit): { skill: SkillDef; usable: boolean; hasTarget: boolean }[] {
     return learnedSkills(u, this.data).map((skill) => {
-      const usable = this.canAct(u) && !u.acted && u.mp >= skill.mpCost;
+      const usable = this.canAct(u) && !u.acted && u.mp >= skill.mpCost && !this.covertLocked(u, skill);
       return { skill, usable, hasTarget: usable && this.skillTargets(u, skill).length > 0 };
     });
   }
@@ -1188,6 +1196,7 @@ export class Battle {
     this.out = [];
     if (!this.canAct(u) || u.acted || u.mp < skill.mpCost) return [];
     if (!learnedSkills(u, this.data).includes(skill)) return [];
+    if (this.covertLocked(u, skill)) return [];
     if (!this.skillTargets(u, skill).some((c) => c.x === cell.x && c.y === cell.y)) return [];
     this.cast(u, skill, cell, false);
     this.endAction(u);

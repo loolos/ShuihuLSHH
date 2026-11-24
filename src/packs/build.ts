@@ -269,6 +269,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     stun: s.stun ?? t.stun,
     ...(s.drug ? { drug: s.drug } : {}),
     ...(s.drugText ? { drugText: s.drugText } : {}),
+    ...(s.covert ? { covert: true } : {}),
     ...(s.stunFor ? { stunFor: s.stunFor } : {}),
     ...(s.vsStunned ? { vsStunned: s.vsStunned } : {}),
     poison: s.poison ?? t.poison,

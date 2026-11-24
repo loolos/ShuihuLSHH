@@ -22,6 +22,8 @@ export interface SkillDef extends ClassSkill {
   drug?: number;
   /** 劝酒类技能命中后飘的字（默认「麻翻了！」）【新】：乐和吹铁叫子 = 「听得入神」 */
   drugText?: string;
+  /** 暗中才能用【新】：有伪装的关卡里，施放者被识破 / 去掉伪装后就不能用（乐和铁叫子） */
+  covert?: boolean;
   /** 打昏（stun）固定几回合【新】：不填按原规则 2–4 回合随机；1 = 只误掉对方接下来的一次行动（解珍 钢叉叉虎） */
   stunFor?: number;
   /** 打昏迷（含被麻翻）的目标伤害倍数【新】（解宝 乘势刺 ×2） */
