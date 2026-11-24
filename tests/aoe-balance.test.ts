@@ -82,6 +82,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('林沖 懷�
       expect(areaCells(board, { x: 20, y: 20 }, s, { x: 20, y: 19 })).toHaveLength(3);
     }
     expect(areaCells(board, { x: 20, y: 20 }, tiers[1], { x: 20, y: 19 })).toHaveLength(1);
+    // LV3、LV4 能斜放（负责人 2026-11-24）：射程 1–2 的四向 + 四斜共 16 格；斜放打施放点和它朝林沖那边的两格
+    for (const s of tiers.slice(2)) {
+      expect(castCells(board, { x: 20, y: 20 }, [s.rangeMin, s.rangeMax], s.targetShape)).toHaveLength(16);
+      expect(areaCells(board, { x: 20, y: 20 }, s, { x: 21, y: 19 })).toEqual([{ x: 21, y: 19 }, { x: 20, y: 19 }, { x: 21, y: 20 }]);
+      expect(areaCells(board, { x: 20, y: 20 }, s, { x: 18, y: 22 })).toEqual([{ x: 18, y: 22 }, { x: 19, y: 22 }, { x: 18, y: 21 }]);
+    }
+    expect(castCells(board, { x: 20, y: 20 }, [tiers[1].rangeMin, tiers[1].rangeMax], tiers[1].targetShape)).toHaveLength(8);
     const at30 = learnedSkills({ classId: 11, level: 30 } as Unit, d).filter((s) => s.name.startsWith('懷璧其罪'));
     expect(at30.map((s) => s.name)).toEqual(['懷璧其罪LV4']);
   });
