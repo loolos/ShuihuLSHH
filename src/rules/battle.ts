@@ -151,10 +151,11 @@ export const TURN_HINT_STAGES = ['N13'] as const;
  * 胜负条件里的区域（格子坐标，含两端）【新：画在小地图和地图上】。
  * goal = 某人进入就过关（指令 29，如 N01 王母、N12 晁蓋、N-add16 主角的撤退出口）；
  * danger = 某人进入就判负（指令 30，如 N13 何濤、N-add03 嘍囉逃走的出口）。
+ * trap = 写了字、要敌人走进去的区域（登州山射虎的窝弓：老虎踩着就中箭）【新】，换一种颜色，免得和要我方走到的格子混在一起。
  * chars 是要进去的角色号（劫法场这类要几个人都到的，列出全部）。
  */
 export interface ObjectiveZone {
-  kind: 'goal' | 'danger';
+  kind: 'goal' | 'danger' | 'trap';
   x1: number;
   y1: number;
   x2: number;
@@ -698,8 +699,15 @@ export class Battle {
       // 敌人走进去就退场（火烧草料场：富安、洪教头从侧门逃走）也标成敌逃【新】
       const flees = (b: (typeof this.blocks)[number]) =>
         b.trigger.kind === 'area' && b.ops.some((o) => o.op === 17 && o.value & 2) && this.units.some((u) => b.trigger.kind === 'area' && u.classId === b.trigger.char && u.side === 'enemy');
+      // 写了字、只有敌人进去才算的区域（射虎的窝弓）【新】
+      const enemyOnly = (b: (typeof this.blocks)[number]) => {
+        const t = b.trigger;
+        if (t.kind !== 'area' || t.side) return false;
+        const cs = t.chars ?? [t.char];
+        return cs.length > 0 && cs.every((c) => this.units.some((u) => u.classId === c && u.side === 'enemy') && !this.units.some((u) => u.classId === c && u.side !== 'enemy'));
+      };
       // 放火点（指令 124，怒破何观察）不是胜利条件，也标出来【新】
-      const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : b.trigger.kind === 'area' && b.trigger.label ? 'goal' /* 写了字的区域（智取无为军的探查点）也标出【新】 */ : null;
+      const kind = wins(b) || b.ops.some((o) => o.op === 124) ? 'goal' : flees(b) ? 'danger' : b.ops.some((o) => o.op === 103 && winFlags.has(o.value)) ? 'goal' : b.ops.some((o) => o.op === 30) ? 'danger' : b.trigger.kind === 'area' && b.trigger.label ? (enemyOnly(b) ? 'trap' : 'goal') /* 写了字的区域（智取无为军的探查点）也标出【新】；要敌人进去的（窝弓）另换颜色 */ : null;
       if (!kind) continue;
       const t = b.trigger;
       // 写了 if / unless 的区域：标志不满足时还没轮到，不标出（教学关的将台，§15.26）

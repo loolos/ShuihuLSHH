@@ -76,7 +76,7 @@ const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as cons
 /** 好汉聚义的毒圈颜色 */
 const POISON_COLOR = 0xa050f0;
 /** 胜负条件区域的颜色【新】：撤退出口青色、敌人逃跑出口品红，和阵营色、宝箱黄都分得开 */
-const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' } } as const;
+const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' }, trap: { color: 0xff9a2e, label: '机关' } } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框

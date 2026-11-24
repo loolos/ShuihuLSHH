@@ -37,6 +37,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     }
   });
 
+  it('射虎：窝弓（要老虎踩的）区域另标一种，不和找踪迹的格子混在一起', () => {
+    const { b } = open('shehu');
+    const zs = b.objectiveZones();
+    expect(zs.filter((z) => z.label === '窝弓').map((z) => z.kind)).toEqual(['trap', 'trap', 'trap']);
+    expect(zs.filter((z) => z.label === '脚印').map((z) => z.kind)).toEqual(['goal']);
+  });
+
   it('射虎：钢叉叉虎叉住一回合，乘势刺打被叉住的伤害加倍', () => {
     const { b, get } = open('shehu');
     const jz = get('jiezhen'), jb = get('jiebao');
