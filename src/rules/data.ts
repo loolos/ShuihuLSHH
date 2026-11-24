@@ -265,8 +265,9 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   11: [
     extraSkill({ name: '懷璧其罪LV2', skillId: 1001, type: 6, group: 1, learnLevel: 18, mpCost: 40, power: 40, rangeMax: 2, hitMod: 5, critMod: 20, soundId: 96, hits: split([11, 11]) }),
     // LV3、LV4（负责人 2026-11-22）：横扫施放点及左右各一格（类型 13）；施放点选身前相邻格就是前方三格（左前、正前、右前），射程仍 1–2。耗气见 HERO_AOE_COSTS
-    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 13, group: 1, learnLevel: 24, mpCost: 60, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
-    extraSkill({ name: '懷璧其罪LV4', skillId: 1009, type: 13, group: 1, learnLevel: 30, mpCost: 75, power: 70, rangeMax: 2, hitMod: 10, critMod: 30, soundId: 96, hits: split([11, 11]) }),
+    // 负责人 2026-11-24：LV3、LV4 也能往四个斜向放（targetShape 'eight'），斜放时打施放点和它两边贴着林沖这一侧的两格（三格弧，见 areaCells 类型 13）
+    extraSkill({ name: '懷璧其罪LV3', skillId: 1002, type: 13, targetShape: 'eight', group: 1, learnLevel: 24, mpCost: 60, power: 55, rangeMax: 2, hitMod: 5, critMod: 25, soundId: 96, hits: split([11, 11]) }),
+    extraSkill({ name: '懷璧其罪LV4', skillId: 1009, type: 13, targetShape: 'eight', group: 1, learnLevel: 30, mpCost: 75, power: 70, rangeMax: 2, hitMod: 10, critMod: 30, soundId: 96, hits: split([11, 11]) }),
     // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
     extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
   ],
