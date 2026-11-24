@@ -154,4 +154,26 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(jz.classId).toBe(cls('jiezhen'));
     expect(jb.classId).toBe(cls('jiebao'));
   });
+
+  it('悄悄开了牢门没被识破：营后州兵照常来，营东州兵和关营门的都头晚两回合', () => {
+    const { b, get } = open('jielao');
+    put(get('lehe'), 6, 3);
+    put(get('gudasao'), 7, 3);
+    get('baoji').hp = 1;
+    for (const id of ['xl0', 'xl1', 'xl2']) get(id).hp = 1;
+    b.endPlayerPhase(); // 第 1 回合结束开牢门
+    expect(b.board.passable(5, 3)).toBe(true);
+    const seen: Record<string, number> = {};
+    for (let t = 2; t <= 8 && b.status === 'playing'; t++) {
+      for (const id of ['zb0', 'zc0', 'zw0', 'zx0', 'menguan', 'luzhishen']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
+      for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8; // 只看增援的时机：敌人原地不动，别把人打倒判负
+      b.endPlayerPhase();
+    }
+    expect(seen.zb0).toBe(3);
+    expect(seen.zc0).toBe(3);
+    expect(seen.zw0).toBe(5);
+    expect(seen.zx0).toBe(5);
+    expect(seen.menguan).toBe(5);
+    expect(seen.luzhishen).toBe(6); // 大队来的下一回合
+  });
 });

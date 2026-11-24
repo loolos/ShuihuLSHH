@@ -33,7 +33,8 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   // 一丈青：扈三娘专找宋江（72 = 主线包职业 sj-fugitive），宋江别冲到前面
   'mainline/yizhangqing': [{ char: 72, turns: [1, 20], act: 'back' }],
   // 劫牢：乐和（156）、顾大嫂（134）伪装着先走到死囚牢门前开门，路上别动手
-  'mainline/jielao': [{ char: 156, turns: [1, 3], act: { to: [6, 3] } }, { char: 134, turns: [1, 3], act: { to: [7, 3] } }],
+  // 包职业号按 pack.json 里的先后排；前面插了职业（扈三娘步战 husanniang-bu）以后乐和从 156 变成 157
+  'mainline/jielao': [{ char: 157, turns: [1, 3], act: { to: [6, 3] } }, { char: 134, turns: [1, 3], act: { to: [7, 3] } }],
 };
 
 /** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */
