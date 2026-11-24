@@ -107,6 +107,19 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(Math.abs(gu.x - bj.x) + Math.abs(gu.y - bj.y)).toBeLessThanOrEqual(3);
   });
 
+  it('劫牢：乐和被识破 / 开打以后吹不了铁叫子；邹渊、邹润是友军', () => {
+    const { b, get } = open('jielao');
+    const lh = get('lehe');
+    const names = (usable: boolean) => b.skillsOf(lh).filter((s) => s.usable === usable).map((s) => s.skill.name);
+    expect(names(true)).toEqual(expect.arrayContaining(['吹铁叫子', '长吹铁叫子']));
+    lh.disguised = false;
+    expect(names(false)).toEqual(expect.arrayContaining(['吹铁叫子', '长吹铁叫子']));
+    const long = learnedSkills(lh, b.data).find((s) => s.name === '长吹铁叫子')!;
+    expect(b.useSkill(lh, long, { x: lh.x, y: lh.y - 1 })).toEqual([]);
+    expect(get('zouyuan').side).toBe('ally');
+    expect(get('zourun').side).toBe('ally');
+  });
+
   it('劫牢：乐和临时会长吹铁叫子（三格内两回合不动），不破伪装；巡逻兵丁也看得穿伪装', () => {
     const { b, get } = open('jielao');
     const lh = get('lehe'), bj = get('baoji');

@@ -127,6 +127,8 @@ export interface PackSkillJson {
   drug?: number;
   /** 劝酒类技能命中后飘的字（默认「麻翻了！」）【新】 */
   drugText?: string;
+  /** 暗中才能用【新】：有伪装的关卡里，施放者被识破 / 去掉伪装后就不能用（乐和铁叫子；没有伪装的关卡照常用） */
+  covert?: boolean;
   /** 打昏固定几回合【新】（1 = 只误掉对方接下来的一次行动） */
   stunFor?: number;
   /** 打昏迷（含被麻翻）的目标伤害倍数【新】 */
