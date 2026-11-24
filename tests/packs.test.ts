@@ -1048,7 +1048,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(face).toBeGreaterThan(ev.findIndex((e) => e.type === 'say' && e.text.includes('出家人模样')));
     // 蜈蚣岭：只有武松、武龙、李逵、花荣四人；第 3 回合一波增援；王道人和全部强人倒下才胜
     const s = stage('wugongling'), b = start('wugongling');
-    expect(s.tint).toBe('night');
+    expect(s.tint).toBeUndefined();
     const heroes = b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.classId);
     expect(heroes.sort()).toEqual([0, cid('wusong'), cid('likui'), cid('huarong')].sort());
     const get = (id: string) => b.unit(s.units.findIndex((u) => u.id === id))!;
@@ -1085,7 +1085,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(said('少戒酒性')).toBeGreaterThan(said('武二郎'));
     // 村店：只有武松一人，开场带三条酒劲；第 3 回合庄客；全灭才胜，战后孔明孔亮出场
     const s = stage('kongliang'), b = start('kongliang');
-    expect(s.tint).toBe('dusk');
+    expect(s.tint).toBeUndefined();
     const heroes = b.units.filter((u) => u.side === 'player' && u.present).map((u) => u.classId);
     expect(heroes).toEqual([cid('wusong')]);
     const get = (id: string) => b.unit(s.units.findIndex((u) => u.id === id))!;

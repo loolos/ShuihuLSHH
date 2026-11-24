@@ -8,7 +8,6 @@
   "map": {
     "base": "N-add02"
   },
-  "tint": "dusk",
   "bgm": ["market", "comic", "battle"],
   "units": [
     {
