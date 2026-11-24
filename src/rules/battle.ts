@@ -340,6 +340,8 @@ export class Battle {
   /** 正在求值的 cond 区块写了 atTurnEnd【新】 */
   private condAtTurnEnd = false;
   /** 回合结束才生效的区域已经提示过的「区块:回合」【新】 */
+  /** 正在结算的这一步移动走过的格子（区域触发 pass 用）【新】 */
+  private passed: { uid: number; path: Cell[] } | null = null;
   private areaHinted = new Set<string>();
   /** 正在执行教学提示（did 区块）【新】 */
   private teaching = false;
@@ -1103,7 +1105,12 @@ export class Battle {
       u.ended = true;
     } else u.movementRemaining -= n.cost;
     if (u.side === 'player') this.noteDid(u, 'move');
-    this.afterAction();
+    this.passed = { uid: u.uid, path };
+    try {
+      this.afterAction();
+    } finally {
+      this.passed = null;
+    }
     // 移动中出了任何事（剧情区块、被哨兵发现、开宝箱、提示以外的消息……），这次移动就定下来，不能撤销【新】（负责人 2026-11-22）
     if (this.out.some((e) => !(e.type === 'move' && e.uid === u.uid) && !(e.type === 'status' && e.text === AREA_HINT) && !this.soft.has(e))) u.turnStart = null;
     return this.flush();
@@ -1843,8 +1850,9 @@ export class Battle {
    * side：这一方任何一个能动的人；chars：这几个人都得进去（返回最后一个）。
    */
   private areaHit(t: Extract<PasTrigger, { kind: 'area' }>): Unit | undefined {
-    const inside = (u: Unit) =>
-      u.x >= Math.min(t.x1, t.x2) && u.x <= Math.max(t.x1, t.x2) && u.y >= Math.min(t.y1, t.y2) && u.y <= Math.max(t.y1, t.y2);
+    const cellIn = (c: Cell) => c.x >= Math.min(t.x1, t.x2) && c.x <= Math.max(t.x1, t.x2) && c.y >= Math.min(t.y1, t.y2) && c.y <= Math.max(t.y1, t.y2);
+    // pass【新】：刚走的这一步路过区域里任何一格也算（射虎：大虫路过窝弓就中箭）
+    const inside = (u: Unit) => cellIn(u) || (!!t.pass && this.passed?.uid === u.uid && this.passed.path.some(cellIn));
     if (t.side) return this.units.find((u) => u.side === t.side && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u));
     if (t.chars) {
       let last: Unit | undefined;

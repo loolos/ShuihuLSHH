@@ -44,6 +44,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(zs.filter((z) => z.label === '脚印').map((z) => z.kind)).toEqual(['goal']);
   });
 
+  it('射虎：大虫路过窝弓就中箭，不必停在里面', () => {
+    const { b, get } = open('shehu');
+    const tiger = get('tiger');
+    tiger.present = true;
+    put(tiger, 12, 5);
+    (b as unknown as { phase: string }).phase = 'enemy';
+    const before = tiger.hp;
+    b.move(tiger, 17, 5); // 一路走过窝弓 [13,5]–[16,5]，停在外面
+    expect(tiger.x).toBe(17);
+    expect(tiger.hp).toBeLessThan(before);
+  });
+
   it('射虎：钢叉叉虎叉住一回合，乘势刺打被叉住的伤害加倍', () => {
     const { b, get } = open('shehu');
     const jz = get('jiezhen'), jb = get('jiebao');
