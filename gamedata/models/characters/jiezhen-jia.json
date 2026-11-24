@@ -1,0 +1,227 @@
+{
+ "name": "解珍（带枷）",
+ "body": "male",
+ "height": 1.82,
+ "outfit": [
+  "outfits/male-base.json"
+ ],
+ "remove": [
+  "中衣",
+  "短褂"
+ ],
+ "colors": {
+  "skin": [
+   192,
+   136,
+   94
+  ],
+  "头巾": [
+   220,
+   100,
+   36
+  ],
+  "宽裤": [
+   120,
+   84,
+   56
+  ],
+  "裹腿": {
+   "color": [
+    196,
+    180,
+    150
+   ],
+   "colors": [
+    [
+     110,
+     64,
+     40
+    ]
+   ]
+  },
+  "腰带": [
+   110,
+   64,
+   40
+  ],
+  "腰带结": [
+   110,
+   64,
+   40
+  ],
+  "腰带垂": [
+   110,
+   64,
+   40
+  ]
+ },
+ "add": {
+  "layers": [
+   {
+    "name": "虎皮坎肩",
+    "bones": [
+     "spine_0[123]",
+     "clavicle_.*",
+     "upperarm_.*",
+     "pelvis"
+    ],
+    "when": "z > 0.86 and z < 1.54 and ax < 0.30 and not (y < -0.03 and ax < 0.11 + (1.50 - z) * 0.25)",
+    "offset": "0.025 + (0.15 * (1.0 - z) if z < 1.0 else 0)",
+    "thickness": 0.012,
+    "color": [
+     240,
+     168,
+     40
+    ],
+    "folds": 0.6,
+    "colors": [
+     {
+      "when": "z < 0.90",
+      "color": [
+       40,
+       26,
+       16
+      ]
+     },
+     {
+      "when": "int((z + 0.35 * abs(x)) * 26) % 3 == 0",
+      "color": [
+       40,
+       26,
+       16
+      ]
+     }
+    ]
+   },
+   {
+    "name": "兽皮裙",
+    "bones": [
+     "pelvis",
+     "thigh_.*",
+     "spine_01"
+    ],
+    "when": "0.70 < z < 0.97 and (y < 0.03 or ax > 0.10)",
+    "offset": "0.06 + (0.10 * (0.95 - z) if z < 0.95 else 0)",
+    "thickness": 0.012,
+    "color": [
+     240,
+     168,
+     40
+    ],
+    "folds": 0.5,
+    "colors": [
+     {
+      "when": "z < 0.73",
+      "color": [
+       40,
+       26,
+       16
+      ]
+     },
+     {
+      "when": "int((z + 0.35 * abs(x)) * 26) % 3 == 0",
+      "color": [
+       40,
+       26,
+       16
+      ]
+     }
+    ]
+   }
+  ],
+  "props": [
+   {
+    "name": "巾尾",
+    "bone": "Head",
+    "shape": "box",
+    "at": [
+     0.03,
+     0.13,
+     1.7
+    ],
+    "scale": [
+     0.05,
+     0.025,
+     0.16
+    ],
+    "rot": [
+     25,
+     0,
+     10
+    ],
+    "color": [
+     220,
+     100,
+     36
+    ]
+   },
+   {
+    "name": "木枷",
+    "bone": "neck_01",
+    "shape": "box",
+    "at": [
+     0,
+     -0.02,
+     1.47
+    ],
+    "scale": [
+     0.62,
+     0.46,
+     0.05
+    ],
+    "color": [
+     92,
+     66,
+     46
+    ]
+   },
+   {
+    "name": "枷封",
+    "bone": "neck_01",
+    "shape": "box",
+    "at": [
+     0,
+     -0.18,
+     1.5
+    ],
+    "scale": [
+     0.14,
+     0.08,
+     0.012
+    ],
+    "color": [
+     226,
+     220,
+     200
+    ]
+   }
+  ]
+ },
+ "out": "packs/mainline/sprites/jiezhen-jia",
+ "frames": 8,
+ "actions": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "hit": "Hit_Chest",
+  "defend": "Crouch_Idle_Loop",
+  "ram": {
+   "from": "Shield_Dash",
+   "ms": 80
+  },
+  "spin": {
+   "from": "AXE_standing_melee_attack_360_low",
+   "frames": 10,
+   "ms": 90
+  }
+ },
+ "render": {
+  "toonRange": [
+   0.75,
+   1.15
+  ]
+ },
+ "extraAnims": [
+  "mixamo/mixamo-axe.glb"
+ ],
+ "_说明": "劫牢时戴着行枷：同一身扮相，没有钢叉，脖子上套一面木枷，两手锁在枷上"
+}

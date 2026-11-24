@@ -177,6 +177,19 @@
     "frames": 8,
     "ms": 110
    }
+  },
+  "spin": {
+   "source": "AXE_standing_melee_attack_360_high",
+   "front": {
+    "file": "spin-front.png",
+    "frames": 10,
+    "ms": 90
+   },
+   "back": {
+    "file": "spin-back.png",
+    "frames": 10,
+    "ms": 90
+   }
   }
  }
 }
