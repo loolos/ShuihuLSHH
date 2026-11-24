@@ -548,10 +548,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(17, 2, (a[1] as { awake?: boolean } | undefined)?.awake ? { args: { awake: true } } : {});
         break;
       case 'move':
+        // ['move', 谁, x, y, {nearest: true}]：那一格被占了或走不到，就走到离它最近的空格（一丈青单挑：开场有人站在空场上）【新】
         select(a[0]);
         op(14, Number(a[1]));
         op(15, Number(a[2]));
-        op(17, 1);
+        op(17, 1, (a[3] as { nearest?: boolean } | undefined)?.nearest ? { args: { nearFree: true } } : {});
         break;
       case 'objective':
         op(31, 0, { text: String(a[0]) });

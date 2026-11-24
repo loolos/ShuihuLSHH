@@ -1575,8 +1575,11 @@
     [
      "move",
      "husanniang",
-     28,
-     30
+     27,
+     38,
+     {
+      "nearest": true
+     }
     ],
     [
      "say",
@@ -1591,6 +1594,15 @@
     [
      "focus",
      "wangying"
+    ],
+    [
+     "move",
+     "wangying",
+     28,
+     38,
+     {
+      "nearest": true
+     }
     ],
     [
      "approach",
@@ -2212,6 +2224,15 @@
      "linchong"
     ],
     [
+     "move",
+     "linchong",
+     42,
+     45,
+     {
+      "nearest": true
+     }
+    ],
+    [
      "say",
      "linchong",
      "哥哥休慌！林冲来也！"
@@ -2279,14 +2300,33 @@
      "captured"
     ],
     [
+     "focus",
+     "linchong"
+    ],
+    [
      "approach",
      "linchong",
      "husanniang"
     ],
     [
+     "face",
+     "husanniang",
+     "linchong"
+    ],
+    [
      "say",
      "linchong",
      "兀那婆娘走哪里去！"
+    ],
+    [
+     "narrate",
+     "一丈青坐下那匹青鬃马早已力乏，她索性跳下马来，提着日月双刀，步战来斗林冲。"
+    ],
+    [
+     "transform",
+     "husanniang",
+     "husanniang-bu",
+     "一丈青扈三娘"
     ],
     [
      "act",
@@ -2297,12 +2337,48 @@
     [
      "act",
      "linchong",
+     "defend",
+     "husanniang"
+    ],
+    [
+     "act",
+     "linchong",
      "attack",
      "husanniang"
     ],
     [
+     "act",
+     "husanniang",
+     "defend",
+     "linchong"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "linchong"
+    ],
+    [
+     "act",
+     "linchong",
+     "defend",
+     "husanniang"
+    ],
+    [
+     "act",
+     "linchong",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "act",
+     "husanniang",
+     "hurt",
+     "linchong"
+    ],
+    [
      "narrate",
-     "一丈青飞刀来斗林冲。林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟过马来。"
+     "斗不到十合，林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟了过来。"
     ],
     [
      "bind",
@@ -2427,19 +2503,54 @@
     ],
     [
      "appear",
-     "linchong",
-     {
-      "near": "husanniang"
-     }
+     "linchong"
     ],
     [
      "focus",
      "linchong"
     ],
     [
+     "move",
+     "linchong",
+     42,
+     45,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "linchong",
+     "哥哥休慌！林冲来也！"
+    ],
+    [
+     "focus",
+     "linchong"
+    ],
+    [
+     "approach",
+     "linchong",
+     "husanniang"
+    ],
+    [
+     "face",
+     "husanniang",
+     "linchong"
+    ],
+    [
      "say",
      "linchong",
      "兀那婆娘走哪里去！"
+    ],
+    [
+     "narrate",
+     "一丈青坐下那匹青鬃马早已力乏，她索性跳下马来，提着日月双刀，步战来斗林冲。"
+    ],
+    [
+     "transform",
+     "husanniang",
+     "husanniang-bu",
+     "一丈青扈三娘"
     ],
     [
      "act",
@@ -2450,12 +2561,48 @@
     [
      "act",
      "linchong",
+     "defend",
+     "husanniang"
+    ],
+    [
+     "act",
+     "linchong",
      "attack",
      "husanniang"
     ],
     [
+     "act",
+     "husanniang",
+     "defend",
+     "linchong"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "linchong"
+    ],
+    [
+     "act",
+     "linchong",
+     "defend",
+     "husanniang"
+    ],
+    [
+     "act",
+     "linchong",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "act",
+     "husanniang",
+     "hurt",
+     "linchong"
+    ],
+    [
      "narrate",
-     "一丈青飞刀来斗林冲。林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟过马来。"
+     "斗不到十合，林冲把蛇矛逼个住，两口刀逼斜了，赶拢去，轻舒猿臂，款扭狼腰，把一丈青只一拽，活挟了过来。"
     ],
     [
      "bind",
