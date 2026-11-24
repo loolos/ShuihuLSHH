@@ -268,6 +268,9 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     area: s.area ?? t.area,
     stun: s.stun ?? t.stun,
     ...(s.drug ? { drug: s.drug } : {}),
+    ...(s.drugText ? { drugText: s.drugText } : {}),
+    ...(s.stunFor ? { stunFor: s.stunFor } : {}),
+    ...(s.vsStunned ? { vsStunned: s.vsStunned } : {}),
     poison: s.poison ?? t.poison,
     hitMod: s.hitMod ?? t.hitMod,
     critMod: s.critMod ?? t.critMod,
@@ -379,13 +382,13 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const classRef = (v: unknown) => (typeof v === 'number' ? v : (rt.classIds.get(String(v)) ?? fail(`${stage.id}: 没有职业 ${String(v)}`)));
   const flagIds = new Map<string, number>();
   const flagRef = (v: unknown) => flagIds.get(String(v)) ?? flagIds.set(String(v), flagIds.size + 1).get(String(v))!;
-  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, traps: stage.traps, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, hasUnit: (id) => byId.has(id), traps: stage.traps, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.units.some((u) => u.disguise || u.seer) ? { disguise: { units: stage.units.flatMap((u, i) => u.disguise ? [i] : []), seers: Object.fromEntries(stage.units.flatMap((u, i) => u.seer ? [[i, u.seer]] : [])), ...(stage.disguise?.flag ? { flag: flagRef(stage.disguise.flag) } : {}) } } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -435,6 +438,8 @@ interface Refs {
   unitRef: (id: unknown) => { json: PackUnitJson; act: ActUnit };
   skillRef: (id: unknown) => number;
   itemRef: (v: unknown) => number;
+  /** 关卡里有没有这个 id 的单位 */
+  hasUnit?: (id: string) => boolean;
   /** 关卡的路障候选路口（stage.traps，指令 129 用） */
   traps?: PackStageJson['traps'];
   /** 多语言编号前缀「包/关卡」（§10.3）：剧本步骤末尾的 "#n" 编成「包/关卡#n」 */
@@ -477,7 +482,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   }
   else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}) };
-  else if ('dead' in on) trigger = { kind: 'death', char: r.charOf(on.dead) };
+  // dead 写单位 id；没有这个单位时当职业名（劫牢带枷的解珍：换了职业也要判负）【新】
+  else if ('dead' in on) trigger = { kind: 'death', char: r.hasUnit?.(on.dead) === false ? r.classRef(on.dead) : r.charOf(on.dead) };
   else if ('enter' in on) {
     const [x1, y1, x2, y2] = on.area;
     // enter: "player"：我方任何一个在场的人走进去都算（智取无为军的探查点、放火点）【新】
@@ -726,6 +732,22 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         if (!(pct > 0 && pct < 100)) fail(`第 ${index} 个区块：wound 的百分比要在 1–99 之间`);
         select(a[0]);
         op(128, pct);
+        break;
+      }
+      case 'unmask': {
+        // ['unmask', 谁 | "all", {quiet}] 现出原形：去掉伪装（指令 130）【新】（劫牢放出解珍解宝、三打发号）
+        const quiet = (a[1] as { quiet?: boolean } | undefined)?.quiet;
+        if (a[0] === 'all') op(130, 1, quiet ? { args: { quiet: true } } : {});
+        else {
+          select(a[0]);
+          op(130, 0, quiet ? { args: { quiet: true } } : {});
+        }
+        break;
+      }
+      case 'disguise': {
+        // ['disguise', 谁, {quiet}] 扮上伪装（指令 131）【新】
+        select(a[0]);
+        op(131, 0, (a[1] as { quiet?: boolean } | undefined)?.quiet ? { args: { quiet: true } } : {});
         break;
       }
       case 'setAi':

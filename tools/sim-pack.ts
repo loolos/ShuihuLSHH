@@ -16,7 +16,7 @@ import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
-import { applyOrders, hasOrder } from './sim-orders.ts';
+import { applyOrders, FIGHT_FIRST, hasOrder } from './sim-orders.ts';
 
 useDiskCustomMaps(); // 自拼地图 packs/maps/*.json（§15.15）
 
@@ -110,6 +110,8 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           const z = b.objectiveZones().find((k) => k.kind === 'goal' && k.chars.includes(u.classId));
           goal = z ? { who: z.chars, x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1, x1: z.x1, x2: z.x2, y1: z.y1, y2: z.y2 } : null;
         }
+        // 关卡给这人这回合下了指令（劫牢：伪装着先去开牢门）就先照指令走
+        if (hasOrder(stageKey, u.classId, b.turn) && applyOrders(b, u, stageKey, ev, (x, y) => walkTo(b, u, x, y, ev))) continue;
         // 潜行关：有人被发现就全力去打倒发现的人；否则要逃的人绕开哨兵现在和下回合看得见的格子往区域走
         if (b.watchZones().length) {
           // 期限最近的发现者先打，用打他最狠的招
@@ -168,7 +170,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         // 像真人一样护送：附近 5 格内有敌人就原地防御，等别人清出路来再走
         // 过关区域还没启用（剧本标志没设）而关卡给这人下了指令（一丈青：扈三娘没捉住前宋江别先跑回营寨）：先照指令走
         const gtIdle = !!gt?.flagged && !(b as unknown as { flagsOk(x: unknown): boolean }).flagsOk(goalBlock);
-        if (goal && goal.who.includes(u.classId) && !(gtIdle && hasOrder(stageKey, u.classId, b.turn))) {
+        if (goal && goal.who.includes(u.classId) && !(gtIdle && (hasOrder(stageKey, u.classId, b.turn) || FIGHT_FIRST.has(stageKey)))) {
           // 这回合走得进区域就直接进去（还道村宋江钻神帐）【新】
           const inReach = b.moveRange(u).green.find((c) => inGoal(c) && !b.active().some((o) => o !== u && o.x === c.x && o.y === c.y));
           if (inReach && !inGoal(u)) { ev.push(...b.move(u, inReach.x, inReach.y)); if (b.canAct(u)) ev.push(...b.defend(u)); }

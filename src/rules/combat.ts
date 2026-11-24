@@ -105,7 +105,8 @@ export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, numb
   const relation = facingRelation(facingTowards(att, def, att.facing), def.facing);
   // 骑兵气功技伤害减半；按施术职业限定，避免影响借用同一原版技能的好汉。
   const cavalryQigong = att.classId === 43 && skill.skillId === 226 && skill.type === 0 ? 0.5 : 1;
-  const f = rangedFactor(att, def, skill) * (def.defending ? 1 : (def.unaware ? SNEAK_DAMAGE_FACTOR : FACING_DAMAGE_FACTOR)[relation]) * cavalryQigong;
+  const f = rangedFactor(att, def, skill) * (def.defending ? 1 : (def.unaware ? SNEAK_DAMAGE_FACTOR : FACING_DAMAGE_FACTOR)[relation]) * cavalryQigong
+    * (skill.vsStunned && def.stunTurns > 0 ? skill.vsStunned : 1);
   const d = Math.max(0, def.stats.defense);
   const normal = ratioDamage(a, d);
   const critical = a > 0 ? normal + (1 + critChance(att, skill) / 100) * a * a / (a + 3 * d) : 0;
