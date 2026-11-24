@@ -21,194 +21,210 @@
  ],
  "units": [
   {
-   "id": "songjiang",
-   "class": "sj-fugitive",
+   "id": "likui",
+   "class": "likui",
    "side": "player",
-   "x": 40,
-   "y": 38,
+   "x": 35,
+   "y": 34,
    "level": 30,
    "facing": 1,
-   "name": "宋江"
+   "hidden": true
   },
   {
    "id": "hero",
    "class": 0,
    "side": "player",
-   "x": 37,
-   "y": 34,
-   "level": 30,
-   "facing": 1
-  },
-  {
-   "id": "likui",
-   "class": "likui",
-   "side": "player",
    "x": 36,
-   "y": 32,
+   "y": 33,
    "level": 30,
-   "facing": 1
+   "facing": 1,
+   "hidden": true
   },
   {
    "id": "yangxiong",
    "class": "yangxiong",
    "side": "player",
-   "x": 38,
-   "y": 33,
+   "x": 37,
+   "y": 32,
    "level": 30,
-   "facing": 1
-  },
-  {
-   "id": "shixiu",
-   "class": "shixiu",
-   "side": "player",
-   "x": 35,
-   "y": 35,
-   "level": 30,
-   "facing": 1
-  },
-  {
-   "id": "daizong",
-   "class": "daizong",
-   "side": "player",
-   "x": 39,
-   "y": 36,
-   "level": 30,
-   "facing": 1
-  },
-  {
-   "id": "lijun",
-   "class": "lijun",
-   "side": "player",
-   "x": 40,
-   "y": 34,
-   "level": 30,
-   "facing": 1
+   "facing": 1,
+   "hidden": true
   },
   {
    "id": "wangying",
    "class": "wangying",
    "side": "player",
    "x": 36,
-   "y": 37,
+   "y": 35,
    "level": 30,
    "facing": 1,
-   "name": "矮脚虎王英"
+   "name": "矮脚虎王英",
+   "hidden": true
   },
   {
-   "id": "oupeng",
-   "class": 65,
-   "side": "ally",
-   "x": 34,
-   "y": 37,
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 37,
+   "y": 34,
    "level": 30,
    "facing": 1,
-   "ai": 0,
-   "name": "摩云金翅欧鹏"
+   "hidden": true
   },
   {
-   "id": "malin",
-   "class": "malin",
-   "side": "ally",
-   "x": 35,
-   "y": 39,
+   "id": "lijun",
+   "class": "lijun",
+   "side": "player",
+   "x": 38,
+   "y": 33,
    "level": 30,
    "facing": 1,
-   "ai": 0,
-   "name": "铁笛仙马麟"
+   "hidden": true
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 38,
+   "y": 36,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 39,
+   "y": 35,
+   "level": 30,
+   "facing": 1,
+   "name": "宋江"
   },
   {
    "id": "qinming",
    "class": "qinming",
    "side": "ally",
-   "x": 36,
-   "y": 30,
+   "x": 38,
+   "y": 29,
    "level": 30,
    "facing": 1,
    "ai": 8,
-   "name": "霹雳火秦明"
+   "name": "霹雳火秦明",
+   "hidden": true
+  },
+  {
+   "id": "oupeng",
+   "class": 65,
+   "side": "ally",
+   "x": 39,
+   "y": 28,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "摩云金翅欧鹏",
+   "hidden": true
   },
   {
    "id": "dengfei",
    "class": 65,
    "side": "ally",
-   "x": 38,
-   "y": 30,
+   "x": 33,
+   "y": 37,
    "level": 30,
    "facing": 1,
    "ai": 8,
-   "name": "火眼狻猊邓飞"
+   "name": "火眼狻猊邓飞",
+   "hidden": true
+  },
+  {
+   "id": "malin",
+   "class": "malin",
+   "side": "ally",
+   "x": 32,
+   "y": 38,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "铁笛仙马麟",
+   "hidden": true
   },
   {
    "id": "ll1",
    "class": 44,
    "side": "ally",
-   "x": 42,
-   "y": 31,
+   "x": 39,
+   "y": 30,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll2",
    "class": 45,
    "side": "ally",
-   "x": 43,
-   "y": 32,
+   "x": 40,
+   "y": 29,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll3",
    "class": 44,
    "side": "ally",
-   "x": 42,
-   "y": 33,
+   "x": 41,
+   "y": 28,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll4",
    "class": 45,
    "side": "ally",
-   "x": 43,
-   "y": 34,
+   "x": 40,
+   "y": 27,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll5",
    "class": 44,
    "side": "ally",
-   "x": 42,
-   "y": 35,
+   "x": 41,
+   "y": 30,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll6",
    "class": 44,
    "side": "ally",
-   "x": 32,
-   "y": 37,
+   "x": 34,
+   "y": 38,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll7",
@@ -220,11 +236,25 @@
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll8",
    "class": 44,
+   "side": "ally",
+   "x": 32,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll9",
+   "class": 45,
    "side": "ally",
    "x": 34,
    "y": 40,
@@ -232,31 +262,21 @@
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
-  },
-  {
-   "id": "ll9",
-   "class": 45,
-   "side": "ally",
-   "x": 36,
-   "y": 40,
-   "level": 30,
-   "facing": 1,
-   "ai": 0,
-   "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "ll10",
    "class": 44,
    "side": "ally",
-   "x": 37,
+   "x": 35,
    "y": 39,
    "level": 30,
    "facing": 1,
    "ai": 0,
    "name": "梁山喽啰",
-   "levelOffset": -2
+   "levelOffset": -2,
+   "hidden": true
   },
   {
    "id": "linchong",
@@ -769,7 +789,7 @@
    "name": "一丈青扈三娘",
    "enemyRank": "leader",
    "levelOffset": 1,
-   "hpMultiplier": 2.0,
+   "hpMultiplier": 1.0,
    "hidden": true
   },
   {
@@ -849,6 +869,32 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h7",
+   "class": 19,
+   "side": "enemy",
+   "x": 17,
+   "y": 43,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h8",
+   "class": 40,
+   "side": "enemy",
+   "x": 17,
+   "y": 45,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
    "levelOffset": -1,
    "hidden": true
   },
@@ -1339,16 +1385,6 @@
      "前番只因路径不熟，误中奸计。今番我亲领大队打他庄前，秦明、邓飞、欧鹏、马麟随我同去。林冲兄弟守住营寨，随时接应。"
     ],
     [
-     "say",
-     "shixiu",
-     "哥哥，庄里路径小弟已记得了，见白杨树便转。"
-    ],
-    [
-     "say",
-     "likui",
-     "这番铁牛要砍翻那鸟庄门！"
-    ],
-    [
      "title",
      "独龙冈 · 盘陀路"
     ],
@@ -1359,16 +1395,105 @@
     [
      "say",
      "shixiu",
-     "众兄弟只看有白杨树的便转弯，不管路阔路狭；没白杨树的都是死路，休要乱走！"
+     "哥哥，众兄弟只看有白杨树的便转弯，不管路阔路狭；没白杨树的都是死路，休要乱走！"
     ],
     [
      "narrate",
-     "宋江暗暗传令，大小军马只顾跟着白杨树转。果然一路转过盘陀路，竹签、铁蒺藜一处也不曾踏着，人马齐齐整整出了林子。"
+     "宋江暗暗传令，大小军马只顾跟着白杨树转。果然一路转过盘陀路，竹签、铁蒺藜一处也不曾踏着。"
     ],
     [
      "say",
      "songjiang",
      "若不是石秀兄弟，今番又要困在里面了。"
+    ],
+    [
+     "narrate",
+     "众好汉和人马随后齐齐整整出了林子。"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "appear",
+     "hero"
+    ],
+    [
+     "appear",
+     "yangxiong"
+    ],
+    [
+     "appear",
+     "wangying"
+    ],
+    [
+     "appear",
+     "daizong"
+    ],
+    [
+     "appear",
+     "lijun"
+    ],
+    [
+     "appear",
+     "qinming"
+    ],
+    [
+     "appear",
+     "oupeng"
+    ],
+    [
+     "appear",
+     "dengfei"
+    ],
+    [
+     "appear",
+     "malin"
+    ],
+    [
+     "appear",
+     "ll1"
+    ],
+    [
+     "appear",
+     "ll2"
+    ],
+    [
+     "appear",
+     "ll3"
+    ],
+    [
+     "appear",
+     "ll4"
+    ],
+    [
+     "appear",
+     "ll5"
+    ],
+    [
+     "appear",
+     "ll6"
+    ],
+    [
+     "appear",
+     "ll7"
+    ],
+    [
+     "appear",
+     "ll8"
+    ],
+    [
+     "appear",
+     "ll9"
+    ],
+    [
+     "appear",
+     "ll10"
+    ],
+    [
+     "say",
+     "likui",
+     "这番铁牛要砍翻那鸟庄门！"
     ],
     [
      "title",
@@ -1438,6 +1563,14 @@
     [
      "appear",
      "h6"
+    ],
+    [
+     "appear",
+     "h7"
+    ],
+    [
+     "appear",
+     "h8"
     ],
     [
      "move",
