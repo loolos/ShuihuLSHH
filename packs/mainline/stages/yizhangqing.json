@@ -1,12 +1,18 @@
 {
  "id": "yizhangqing",
- "title": "一丈青单捉王矮虎",
+ "title": "一丈青",
  "dynamicLevels": true,
  "rewards": {
   "gold": 1000
  },
  "map": {
-  "base": "N-add14"
+  "custom": "dulonggang",
+  "crop": [
+   0,
+   0,
+   50,
+   50
+  ]
  },
  "bgm": [
   "cavalry",
@@ -18,8 +24,8 @@
    "id": "songjiang",
    "class": "sj-fugitive",
    "side": "player",
-   "x": 35,
-   "y": 35,
+   "x": 40,
+   "y": 38,
    "level": 30,
    "facing": 1,
    "name": "宋江"
@@ -28,8 +34,8 @@
    "id": "hero",
    "class": 0,
    "side": "player",
-   "x": 33,
-   "y": 33,
+   "x": 37,
+   "y": 34,
    "level": 30,
    "facing": 1
   },
@@ -37,8 +43,8 @@
    "id": "likui",
    "class": "likui",
    "side": "player",
-   "x": 32,
-   "y": 31,
+   "x": 36,
+   "y": 32,
    "level": 30,
    "facing": 1
   },
@@ -46,8 +52,8 @@
    "id": "yangxiong",
    "class": "yangxiong",
    "side": "player",
-   "x": 34,
-   "y": 32,
+   "x": 38,
+   "y": 33,
    "level": 30,
    "facing": 1
   },
@@ -55,37 +61,17 @@
    "id": "shixiu",
    "class": "shixiu",
    "side": "player",
-   "x": 33,
-   "y": 30,
+   "x": 35,
+   "y": 35,
    "level": 30,
    "facing": 1
-  },
-  {
-   "id": "oupeng",
-   "class": 65,
-   "side": "player",
-   "x": 31,
-   "y": 37,
-   "level": 30,
-   "facing": 1,
-   "name": "摩云金翅欧鹏"
-  },
-  {
-   "id": "malin",
-   "class": "malin",
-   "side": "player",
-   "x": 32,
-   "y": 38,
-   "level": 30,
-   "facing": 1,
-   "name": "铁笛仙马麟"
   },
   {
    "id": "daizong",
    "class": "daizong",
    "side": "player",
-   "x": 36,
-   "y": 37,
+   "x": 39,
+   "y": 36,
    "level": 30,
    "facing": 1
   },
@@ -93,8 +79,8 @@
    "id": "lijun",
    "class": "lijun",
    "side": "player",
-   "x": 37,
-   "y": 36,
+   "x": 40,
+   "y": 34,
    "level": 30,
    "facing": 1
   },
@@ -102,31 +88,42 @@
    "id": "wangying",
    "class": "wangying",
    "side": "player",
-   "x": 26,
-   "y": 40,
+   "x": 36,
+   "y": 37,
    "level": 30,
    "facing": 1,
    "name": "矮脚虎王英"
   },
   {
-   "id": "linchong",
-   "class": 11,
-   "side": "player",
-   "x": 48,
-   "y": 47,
+   "id": "oupeng",
+   "class": 65,
+   "side": "ally",
+   "x": 34,
+   "y": 37,
    "level": 30,
-   "facing": 0,
-   "name": "豹子头林冲",
-   "hidden": true
+   "facing": 1,
+   "ai": 0,
+   "name": "摩云金翅欧鹏"
+  },
+  {
+   "id": "malin",
+   "class": "malin",
+   "side": "ally",
+   "x": 35,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "铁笛仙马麟"
   },
   {
    "id": "qinming",
    "class": "qinming",
    "side": "ally",
-   "x": 48,
-   "y": 13,
+   "x": 36,
+   "y": 30,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 8,
    "name": "霹雳火秦明"
   },
@@ -134,33 +131,442 @@
    "id": "dengfei",
    "class": 65,
    "side": "ally",
-   "x": 50,
-   "y": 14,
+   "x": 38,
+   "y": 30,
    "level": 30,
-   "facing": 0,
+   "facing": 1,
    "ai": 8,
    "name": "火眼狻猊邓飞"
+  },
+  {
+   "id": "ll1",
+   "class": 44,
+   "side": "ally",
+   "x": 42,
+   "y": 31,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll2",
+   "class": 45,
+   "side": "ally",
+   "x": 43,
+   "y": 32,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll3",
+   "class": 44,
+   "side": "ally",
+   "x": 42,
+   "y": 33,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll4",
+   "class": 45,
+   "side": "ally",
+   "x": 43,
+   "y": 34,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll5",
+   "class": 44,
+   "side": "ally",
+   "x": 42,
+   "y": 35,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll6",
+   "class": 44,
+   "side": "ally",
+   "x": 32,
+   "y": 37,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll7",
+   "class": 45,
+   "side": "ally",
+   "x": 33,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll8",
+   "class": 44,
+   "side": "ally",
+   "x": 34,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll9",
+   "class": 45,
+   "side": "ally",
+   "x": 36,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "ll10",
+   "class": 44,
+   "side": "ally",
+   "x": 37,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "梁山喽啰",
+   "levelOffset": -2
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 45,
+   "y": 45,
+   "level": 30,
+   "facing": 0,
+   "name": "豹子头林冲",
+   "hidden": true
+  },
+  {
+   "id": "zhulong",
+   "class": "zhulong",
+   "side": "enemy",
+   "x": 18,
+   "y": 24,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝龙",
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "hpMultiplier": 1.4
   },
   {
    "id": "luan",
    "class": "luantingyu",
    "side": "enemy",
-   "x": 48,
-   "y": 7,
+   "x": 20,
+   "y": 24,
    "level": 30,
-   "facing": 2,
-   "ai": 8,
+   "facing": 3,
+   "ai": 11,
    "name": "铁棒栾廷玉",
    "enemyRank": "leader",
    "levelOffset": 2,
    "hpMultiplier": 2.5
   },
   {
+   "id": "a1",
+   "class": 19,
+   "side": "enemy",
+   "x": 20,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a2",
+   "class": 40,
+   "side": "enemy",
+   "x": 20,
+   "y": 26,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a3",
+   "class": 20,
+   "side": "enemy",
+   "x": 21,
+   "y": 23,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a4",
+   "class": 41,
+   "side": "enemy",
+   "x": 21,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "a5",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 22,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "a6",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 26,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "e1",
+   "class": 19,
+   "side": "enemy",
+   "x": 20,
+   "y": 17,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "e2",
+   "class": 40,
+   "side": "enemy",
+   "x": 20,
+   "y": 19,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "e3",
+   "class": 41,
+   "side": "enemy",
+   "x": 20,
+   "y": 21,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "e4",
+   "class": 20,
+   "side": "enemy",
+   "x": 19,
+   "y": 18,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "e5",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 18,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "e6",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 20,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 21,
+   "y": 18,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "e8",
+   "class": 39,
+   "side": "enemy",
+   "x": 19,
+   "y": 20,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄教头",
+   "levelOffset": -1
+  },
+  {
+   "id": "f1",
+   "class": 19,
+   "side": "enemy",
+   "x": 20,
+   "y": 27,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "f2",
+   "class": 40,
+   "side": "enemy",
+   "x": 20,
+   "y": 29,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "f3",
+   "class": 41,
+   "side": "enemy",
+   "x": 20,
+   "y": 31,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "f4",
+   "class": 20,
+   "side": "enemy",
+   "x": 19,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "f5",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 28,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "f6",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 30,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "庄客弓手",
+   "levelOffset": -1
+  },
+  {
+   "id": "f7",
+   "class": 19,
+   "side": "enemy",
+   "x": 21,
+   "y": 30,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
+   "id": "f8",
+   "class": 40,
+   "side": "enemy",
+   "x": 19,
+   "y": 32,
+   "level": 30,
+   "facing": 3,
+   "ai": 11,
+   "name": "祝家庄庄客",
+   "levelOffset": -1
+  },
+  {
    "id": "ng1",
    "class": "naogou",
    "side": "enemy",
-   "x": 46,
-   "y": 1,
+   "x": 28,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -172,8 +578,8 @@
    "id": "ng2",
    "class": "naogou",
    "side": "enemy",
-   "x": 47,
-   "y": 1,
+   "x": 29,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -185,8 +591,8 @@
    "id": "ng3",
    "class": "naogou",
    "side": "enemy",
-   "x": 48,
-   "y": 1,
+   "x": 30,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -198,99 +604,13 @@
    "id": "ng4",
    "class": "naogou",
    "side": "enemy",
-   "x": 49,
-   "y": 1,
+   "x": 31,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 8,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": -1
-  },
-  {
-   "id": "zhulong",
-   "class": "zhulong",
-   "side": "enemy",
-   "x": 16,
-   "y": 23,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "祝龙",
-   "enemyRank": "leader",
-   "levelOffset": 1,
-   "hpMultiplier": 1.4
-  },
-  {
-   "id": "a1",
-   "class": 19,
-   "side": "enemy",
-   "x": 18,
-   "y": 21,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
-  },
-  {
-   "id": "a2",
-   "class": 40,
-   "side": "enemy",
-   "x": 18,
-   "y": 23,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
-  },
-  {
-   "id": "a3",
-   "class": 19,
-   "side": "enemy",
-   "x": 18,
-   "y": 25,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "祝家庄庄客",
-   "levelOffset": -1
-  },
-  {
-   "id": "a4",
-   "class": 34,
-   "side": "enemy",
-   "x": 16,
-   "y": 21,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "庄客弓手",
-   "levelOffset": -1
-  },
-  {
-   "id": "a5",
-   "class": 34,
-   "side": "enemy",
-   "x": 16,
-   "y": 25,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "庄客弓手",
-   "levelOffset": -1
-  },
-  {
-   "id": "a6",
-   "class": 20,
-   "side": "enemy",
-   "x": 17,
-   "y": 23,
-   "level": 30,
-   "facing": 3,
-   "ai": 0,
-   "name": "祝家庄庄客",
    "levelOffset": -1
   },
   {
@@ -387,6 +707,32 @@
    "hidden": true
   },
   {
+   "id": "b7",
+   "class": 43,
+   "side": "enemy",
+   "x": 16,
+   "y": 29,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "b8",
+   "class": 20,
+   "side": "enemy",
+   "x": 14,
+   "y": 31,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
    "id": "husanniang",
    "class": "husanniang",
    "side": "enemy",
@@ -399,7 +745,7 @@
    "name": "一丈青扈三娘",
    "enemyRank": "leader",
    "levelOffset": 1,
-   "hpMultiplier": 2.0,
+   "hpMultiplier": 3.5,
    "hidden": true
   },
   {
@@ -483,11 +829,37 @@
    "hidden": true
   },
   {
+   "id": "h7",
+   "class": 19,
+   "side": "enemy",
+   "x": 12,
+   "y": 43,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "h8",
+   "class": 40,
+   "side": "enemy",
+   "x": 12,
+   "y": 45,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
    "id": "c1",
    "class": 19,
    "side": "enemy",
-   "x": 42,
-   "y": 6,
+   "x": 35,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -499,8 +871,8 @@
    "id": "c2",
    "class": 40,
    "side": "enemy",
-   "x": 43,
-   "y": 7,
+   "x": 36,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -512,8 +884,8 @@
    "id": "c3",
    "class": 41,
    "side": "enemy",
-   "x": 42,
-   "y": 8,
+   "x": 37,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -525,8 +897,8 @@
    "id": "c4",
    "class": 20,
    "side": "enemy",
-   "x": 44,
-   "y": 6,
+   "x": 38,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -538,8 +910,8 @@
    "id": "c5",
    "class": 34,
    "side": "enemy",
-   "x": 41,
-   "y": 7,
+   "x": 36,
+   "y": 12,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -551,8 +923,424 @@
    "id": "c6",
    "class": 39,
    "side": "enemy",
+   "x": 37,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄教头",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g1",
+   "class": 19,
+   "side": "enemy",
+   "x": 42,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g2",
+   "class": 40,
+   "side": "enemy",
    "x": 43,
-   "y": 5,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g3",
+   "class": 41,
+   "side": "enemy",
+   "x": 44,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g4",
+   "class": 20,
+   "side": "enemy",
+   "x": 45,
+   "y": 39,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g5",
+   "class": 34,
+   "side": "enemy",
+   "x": 43,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g6",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 40,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g7",
+   "class": 43,
+   "side": "enemy",
+   "x": 41,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "g8",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 38,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k1",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 40,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k2",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k3",
+   "class": 41,
+   "side": "enemy",
+   "x": 11,
+   "y": 41,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k4",
+   "class": 41,
+   "side": "enemy",
+   "x": 11,
+   "y": 43,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k5",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 42,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k6",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 41,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k7",
+   "class": 34,
+   "side": "enemy",
+   "x": 9,
+   "y": 43,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "k8",
+   "class": 40,
+   "side": "enemy",
+   "x": 10,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i1",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 47,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i2",
+   "class": 43,
+   "side": "enemy",
+   "x": 13,
+   "y": 47,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i3",
+   "class": 41,
+   "side": "enemy",
+   "x": 13,
+   "y": 45,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i4",
+   "class": 41,
+   "side": "enemy",
+   "x": 15,
+   "y": 46,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i5",
+   "class": 19,
+   "side": "enemy",
+   "x": 14,
+   "y": 44,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i6",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 46,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i7",
+   "class": 34,
+   "side": "enemy",
+   "x": 12,
+   "y": 48,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "i8",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 47,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "扈家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j1",
+   "class": 19,
+   "side": "enemy",
+   "x": 24,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j2",
+   "class": 40,
+   "side": "enemy",
+   "x": 25,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j3",
+   "class": 41,
+   "side": "enemy",
+   "x": 26,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j4",
+   "class": 20,
+   "side": "enemy",
+   "x": 27,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j5",
+   "class": 34,
+   "side": "enemy",
+   "x": 24,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j6",
+   "class": 34,
+   "side": "enemy",
+   "x": 25,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j7",
+   "class": 43,
+   "side": "enemy",
+   "x": 28,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "祝家庄马军",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "j8",
+   "class": 39,
+   "side": "enemy",
+   "x": 26,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -565,7 +1353,7 @@
    "class": 19,
    "side": "enemy",
    "x": 13,
-   "y": 31,
+   "y": 32,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -578,7 +1366,7 @@
    "class": 40,
    "side": "enemy",
    "x": 14,
-   "y": 32,
+   "y": 33,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -591,7 +1379,7 @@
    "class": 41,
    "side": "enemy",
    "x": 13,
-   "y": 33,
+   "y": 34,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -604,7 +1392,7 @@
    "class": 20,
    "side": "enemy",
    "x": 14,
-   "y": 34,
+   "y": 35,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -617,7 +1405,7 @@
    "class": 34,
    "side": "enemy",
    "x": 15,
-   "y": 32,
+   "y": 33,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -630,11 +1418,37 @@
    "class": 34,
    "side": "enemy",
    "x": 15,
-   "y": 34,
+   "y": 35,
    "level": 30,
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d7",
+   "class": 19,
+   "side": "enemy",
+   "x": 16,
+   "y": 34,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄庄客",
+   "levelOffset": -1,
+   "hidden": true
+  },
+  {
+   "id": "d8",
+   "class": 39,
+   "side": "enemy",
+   "x": 16,
+   "y": 33,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "name": "祝家庄教头",
    "levelOffset": -1,
    "hidden": true
   }
@@ -654,7 +1468,7 @@
     [
      "say",
      "songjiang",
-     "前番只因路径不熟，误中奸计。今番我自领一路人马打他庄前，秦明、邓飞领一路打他庄后。林冲兄弟守住营寨，接应两路。"
+     "前番只因路径不熟，误中奸计。今番我亲领大队打他庄前，秦明、邓飞、欧鹏、马麟随我同去。林冲兄弟守住营寨，随时接应。"
     ],
     [
      "say",
@@ -672,7 +1486,7 @@
     ],
     [
      "narrate",
-     "宋江引军直抵冈前，只见庄门开处，祝朝奉的长子祝龙领一队庄客，在庄前一字摆开。庄后喊声起处，秦明、邓飞撞着了祝家庄的教师铁棒栾廷玉。"
+     "宋江引军直抵冈前，只见庄门开处，祝朝奉的长子祝龙和教师铁棒栾廷玉领着庄客，在庄前鹿角后面一字摆开。两军中间空出一块地来。"
     ],
     [
      "say",
@@ -736,18 +1550,75 @@
      "h6"
     ],
     [
+     "appear",
+     "h7"
+    ],
+    [
+     "appear",
+     "h8"
+    ],
+    [
+     "move",
+     "husanniang",
+     28,
+     30
+    ],
+    [
      "say",
      "husanniang",
-     "哪个是宋江？敢来犯我独龙冈！"
+     "哪个是宋江？敢来犯我独龙冈！谁敢出来与我斗三合！"
     ],
     [
      "say",
      "wangying",
-     "好个女将！让小弟去拿她来！"
+     "好个女将！哥哥，让小弟去拿她来！"
+    ],
+    [
+     "focus",
+     "wangying"
     ],
     [
      "approach",
      "wangying",
+     "husanniang"
+    ],
+    [
+     "face",
+     "husanniang",
+     "wangying"
+    ],
+    [
+     "say",
+     "husanniang",
+     "来将通名！"
+    ],
+    [
+     "say",
+     "wangying",
+     "梁山泊矮脚虎王英在此！"
+    ],
+    [
+     "act",
+     "wangying",
+     "attack",
+     "husanniang"
+    ],
+    [
+     "act",
+     "husanniang",
+     "defend",
+     "wangying"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "wangying"
+    ],
+    [
+     "act",
+     "wangying",
+     "defend",
      "husanniang"
     ],
     [
@@ -764,7 +1635,23 @@
     ],
     [
      "narrate",
-     "王英是个好色之徒，听得是个女将，指望一合便拿得来。斗不到十合，手颤脚麻，枪法便乱了。一丈青拍马向前，把王英提离雕鞍，活捉去了。"
+     "王英是个好色之徒，听得是个女将，指望一合便拿得来。斗不到十合，手颤脚麻，枪法便乱了。"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "wangying"
+    ],
+    [
+     "act",
+     "wangying",
+     "hurt",
+     "husanniang"
+    ],
+    [
+     "narrate",
+     "一丈青拍马向前，把王英提离雕鞍，活捉去了。"
     ],
     [
      "bind",
@@ -802,6 +1689,36 @@
    "do": [
     [
      "focus",
+     "luan"
+    ],
+    [
+     "move",
+     "luan",
+     27,
+     28
+    ],
+    [
+     "say",
+     "luan",
+     "梁山泊哪个敢来与我斗？"
+    ],
+    [
+     "say",
+     "qinming",
+     "霹雳火秦明在此！看我拿你！"
+    ],
+    [
+     "focus",
+     "qinming"
+    ],
+    [
+     "approach",
+     "qinming",
+     "luan"
+    ],
+    [
+     "face",
+     "luan",
      "qinming"
     ],
     [
@@ -821,20 +1738,50 @@
      "luan"
     ],
     [
+     "act",
+     "luan",
+     "defend",
+     "qinming"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "qinming"
+    ],
+    [
+     "act",
+     "qinming",
+     "defend",
+     "luan"
+    ],
+    [
+     "act",
+     "qinming",
+     "attack",
+     "luan"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "qinming"
+    ],
+    [
      "narrate",
      "两个斗了二十余合，栾廷玉卖个破绽，拖着铁棒往荒草里便走。秦明性急，纵马赶去。"
     ],
     [
      "move",
      "luan",
-     48,
-     2
+     30,
+     21
     ],
     [
      "move",
      "qinming",
-     48,
-     4
+     30,
+     23
     ],
     [
      "narrate",
@@ -858,6 +1805,12 @@
      {
       "near": "qinming"
      }
+    ],
+    [
+     "act",
+     "ng1",
+     "attack",
+     "qinming"
     ],
     [
      "bind",
@@ -894,30 +1847,14 @@
      "秦明哥哥！"
     ],
     [
-     "say",
-     "songjiang",
-     "庄后也折了秦明！这祝家庄好生厉害……"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "do": [
-    [
-     "focus",
-     "dengfei"
-    ],
-    [
      "narrate",
      "邓飞见秦明被拿，舞着铁链赶去救时，草里又是一声锣响。"
     ],
     [
      "move",
      "dengfei",
-     49,
-     4
+     31,
+     23
     ],
     [
      "act",
@@ -968,8 +1905,135 @@
     ],
     [
      "say",
+     "songjiang",
+     "又折了秦明、邓飞！这祝家庄好生厉害……"
+    ],
+    [
+     "say",
      "luan",
-     "庄客们，随我杀奔庄前，捉那宋江！"
+     "这两个且押回庄去！庄客们，一齐杀出去，捉那宋江！"
+    ],
+    [
+     "standDown",
+     "luan",
+     {
+      "leave": true
+     }
+    ],
+    [
+     "setAi",
+     "a1",
+     0
+    ],
+    [
+     "setAi",
+     "a2",
+     0
+    ],
+    [
+     "setAi",
+     "a3",
+     0
+    ],
+    [
+     "setAi",
+     "a4",
+     0
+    ],
+    [
+     "setAi",
+     "a5",
+     0
+    ],
+    [
+     "setAi",
+     "a6",
+     0
+    ],
+    [
+     "setAi",
+     "e1",
+     0
+    ],
+    [
+     "setAi",
+     "e2",
+     0
+    ],
+    [
+     "setAi",
+     "e3",
+     0
+    ],
+    [
+     "setAi",
+     "e4",
+     0
+    ],
+    [
+     "setAi",
+     "e5",
+     0
+    ],
+    [
+     "setAi",
+     "e6",
+     0
+    ],
+    [
+     "setAi",
+     "e7",
+     0
+    ],
+    [
+     "setAi",
+     "e8",
+     0
+    ],
+    [
+     "setAi",
+     "f1",
+     0
+    ],
+    [
+     "setAi",
+     "f2",
+     0
+    ],
+    [
+     "setAi",
+     "f3",
+     0
+    ],
+    [
+     "setAi",
+     "f4",
+     0
+    ],
+    [
+     "setAi",
+     "f5",
+     0
+    ],
+    [
+     "setAi",
+     "f6",
+     0
+    ],
+    [
+     "setAi",
+     "f7",
+     0
+    ],
+    [
+     "setAi",
+     "f8",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
     ],
     [
      "appear",
@@ -996,16 +2060,84 @@
      "c6"
     ],
     [
-     "say",
-     "luan",
-     "这两个且押回庄去，我自去报与祝朝奉。"
+     "appear",
+     "j1"
     ],
     [
-     "standDown",
-     "luan",
-     {
-      "leave": true
-     }
+     "appear",
+     "j2"
+    ],
+    [
+     "appear",
+     "j3"
+    ],
+    [
+     "appear",
+     "j4"
+    ],
+    [
+     "appear",
+     "j5"
+    ],
+    [
+     "appear",
+     "j6"
+    ],
+    [
+     "appear",
+     "j7"
+    ],
+    [
+     "appear",
+     "j8"
+    ],
+    [
+     "say",
+     "zhulong",
+     "儿郎们，杀！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "西南上扈家庄又一队人马赶来接应一丈青。"
+    ],
+    [
+     "appear",
+     "i1"
+    ],
+    [
+     "appear",
+     "i2"
+    ],
+    [
+     "appear",
+     "i3"
+    ],
+    [
+     "appear",
+     "i4"
+    ],
+    [
+     "appear",
+     "i5"
+    ],
+    [
+     "appear",
+     "i6"
+    ],
+    [
+     "appear",
+     "i7"
+    ],
+    [
+     "appear",
+     "i8"
     ]
    ]
   },
@@ -1041,6 +2173,14 @@
     [
      "appear",
      "b6"
+    ],
+    [
+     "appear",
+     "b7"
+    ],
+    [
+     "appear",
+     "b8"
     ],
     [
      "say",
@@ -1081,7 +2221,7 @@
   },
   {
    "on": {
-    "turn": 8
+    "turn": 7
    },
    "do": [
     [
@@ -1111,6 +2251,14 @@
     [
      "appear",
      "d6"
+    ],
+    [
+     "appear",
+     "d7"
+    ],
+    [
+     "appear",
+     "d8"
     ]
    ]
   },
@@ -1176,8 +2324,81 @@
      "天色已晚，众兄弟随我退回营寨！"
     ],
     [
+     "narrate",
+     "忽听得营寨前一声梆子响，一队庄客从林子里抢出来，截住了归路；西南上扈家庄的人马也赶来抢人。"
+    ],
+    [
+     "appear",
+     "g1"
+    ],
+    [
+     "appear",
+     "g2"
+    ],
+    [
+     "appear",
+     "g3"
+    ],
+    [
+     "appear",
+     "g4"
+    ],
+    [
+     "appear",
+     "g5"
+    ],
+    [
+     "appear",
+     "g6"
+    ],
+    [
+     "appear",
+     "g7"
+    ],
+    [
+     "appear",
+     "g8"
+    ],
+    [
+     "appear",
+     "k1"
+    ],
+    [
+     "appear",
+     "k2"
+    ],
+    [
+     "appear",
+     "k3"
+    ],
+    [
+     "appear",
+     "k4"
+    ],
+    [
+     "appear",
+     "k5"
+    ],
+    [
+     "appear",
+     "k6"
+    ],
+    [
+     "appear",
+     "k7"
+    ],
+    [
+     "appear",
+     "k8"
+    ],
+    [
+     "say",
+     "g1",
+     "休放走了宋江！"
+    ],
+    [
      "objective",
-     "已捉住扈三娘。护着宋江撤回东南的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+     "已捉住扈三娘。护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -1256,8 +2477,81 @@
      "天色已晚，众兄弟随我退回营寨！"
     ],
     [
+     "narrate",
+     "忽听得营寨前一声梆子响，一队庄客从林子里抢出来，截住了归路；西南上扈家庄的人马也赶来抢人。"
+    ],
+    [
+     "appear",
+     "g1"
+    ],
+    [
+     "appear",
+     "g2"
+    ],
+    [
+     "appear",
+     "g3"
+    ],
+    [
+     "appear",
+     "g4"
+    ],
+    [
+     "appear",
+     "g5"
+    ],
+    [
+     "appear",
+     "g6"
+    ],
+    [
+     "appear",
+     "g7"
+    ],
+    [
+     "appear",
+     "g8"
+    ],
+    [
+     "appear",
+     "k1"
+    ],
+    [
+     "appear",
+     "k2"
+    ],
+    [
+     "appear",
+     "k3"
+    ],
+    [
+     "appear",
+     "k4"
+    ],
+    [
+     "appear",
+     "k5"
+    ],
+    [
+     "appear",
+     "k6"
+    ],
+    [
+     "appear",
+     "k7"
+    ],
+    [
+     "appear",
+     "k8"
+    ],
+    [
+     "say",
+     "g1",
+     "休放走了宋江！"
+    ],
+    [
      "objective",
-     "已捉住扈三娘。护着宋江撤回东南的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
+     "已捉住扈三娘。护着宋江撤回南边的「梁山营寨」（地图上标出）：回合结束时宋江在里面就过关\n败：宋江或武龙倒下；超过 20 回合"
     ]
    ]
   },
@@ -1309,10 +2603,10 @@
    "on": {
     "enter": "songjiang",
     "area": [
-     44,
-     44,
-     53,
-     53
+     42,
+     42,
+     47,
+     47
     ],
     "label": "梁山营寨",
     "atTurnEnd": true
