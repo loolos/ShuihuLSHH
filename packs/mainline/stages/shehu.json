@@ -8,10 +8,10 @@
  "map": {
   "base": "N-add06",
   "crop": [
-   8,
+   14,
    4,
-   24,
-   26
+   18,
+   18
   ]
  },
  "bgm": [
@@ -23,8 +23,8 @@
    "id": "jiezhen",
    "class": "jiezhen",
    "side": "player",
-   "x": 2,
-   "y": 23,
+   "x": 1,
+   "y": 16,
    "level": 30,
    "facing": 0
   },
@@ -32,8 +32,8 @@
    "id": "jiebao",
    "class": "jiebao",
    "side": "player",
-   "x": 3,
-   "y": 24,
+   "x": 2,
+   "y": 17,
    "level": 30,
    "facing": 0
   },
@@ -41,23 +41,23 @@
    "id": "tiger",
    "class": "yiling-tiger",
    "side": "enemy",
-   "x": 20,
+   "x": 14,
    "y": 1,
    "level": 30,
    "levelOffset": 2,
    "facing": 2,
    "hidden": true,
    "name": "大虫",
-   "hpMultiplier": 2.5
+   "hpMultiplier": 3
   },
   {
    "id": "cub1",
    "class": "yiling-cub",
    "side": "enemy",
-   "x": 13,
-   "y": 9,
+   "x": 6,
+   "y": 8,
    "level": 30,
-   "levelOffset": -2,
+   "levelOffset": 1,
    "facing": 2,
    "hidden": true
   },
@@ -65,10 +65,10 @@
    "id": "cub2",
    "class": "yiling-cub",
    "side": "enemy",
-   "x": 13,
-   "y": 11,
+   "x": 8,
+   "y": 9,
    "level": 30,
-   "levelOffset": -2,
+   "levelOffset": 1,
    "facing": 1,
    "hidden": true
   },
@@ -76,21 +76,43 @@
    "id": "cub3",
    "class": "yiling-cub",
    "side": "enemy",
-   "x": 20,
+   "x": 13,
    "y": 9,
    "level": 30,
-   "levelOffset": -1,
+   "levelOffset": 1,
    "facing": 1,
+   "hidden": true
+  },
+  {
+   "id": "cub5",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 13,
+   "y": 2,
+   "level": 30,
+   "levelOffset": 1,
+   "facing": 2,
+   "hidden": true
+  },
+  {
+   "id": "cub6",
+   "class": "yiling-cub",
+   "side": "enemy",
+   "x": 16,
+   "y": 2,
+   "level": 30,
+   "levelOffset": 1,
+   "facing": 2,
    "hidden": true
   },
   {
    "id": "cub4",
    "class": "yiling-cub",
    "side": "enemy",
-   "x": 20,
-   "y": 11,
+   "x": 14,
+   "y": 10,
    "level": 30,
-   "levelOffset": -1,
+   "levelOffset": 1,
    "facing": 1,
    "hidden": true
   }
@@ -130,8 +152,8 @@
     ],
     [
      "focus",
-     6,
-     19
+     4,
+     11
     ],
     [
      "narrate",
@@ -143,7 +165,7 @@
     ],
     [
      "objective",
-     "失败条件：解珍或解宝倒下；超过 14 回合"
+     "失败条件：解珍或解宝倒下；超过 12 回合"
     ],
     [
      "objective",
@@ -151,7 +173,7 @@
     ],
     [
      "turnLimit",
-     14
+     12
     ]
    ]
   },
@@ -162,43 +184,10 @@
      "jiebao"
     ],
     "area": [
-     5,
-     18,
-     7,
-     20
-    ],
-    "label": "抓痕",
-    "atTurnEnd": true
-   },
-   "unless": "found",
-   "do": [
-    [
-     "say",
-     "jiebao",
-     "哥哥看，这树皮上好深的抓痕，还是新的！"
-    ],
-    [
-     "say",
-     "jiezhen",
-     "是那大虫磨爪留下的。顺着往东北上去。"
-    ],
-    [
-     "flag",
-     "t1"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "enter": [
-     "jiezhen",
-     "jiebao"
-    ],
-    "area": [
+     3,
      10,
-     13,
-     12,
-     15
+     5,
+     12
     ],
     "label": "脚印",
     "atTurnEnd": true
@@ -229,10 +218,9 @@
     ],
     [
      "flag",
-     "t2"
+     "t1"
     ]
-   ],
-   "if": "t1"
+   ]
   },
   {
    "on": {
@@ -241,10 +229,10 @@
      "jiebao"
     ],
     "area": [
-     15,
      8,
-     17,
-     10
+     5,
+     10,
+     7
     ],
     "label": "血迹",
     "atTurnEnd": true
@@ -254,12 +242,12 @@
     [
      "say",
      "jiebao",
-     "血！哥哥，这里一路血点子。"
+     "血！哥哥，这里一路血点子，草都压倒了。"
     ],
     [
      "say",
      "jiezhen",
-     "昨夜那一窝弓的药箭到底着了它。药力发作，它走不远。"
+     "昨夜那一窝弓的药箭到底着了它。它就伏在前头那草窠里。兄弟，挺起叉来，慢慢地挨过去。"
     ],
     [
      "narrate",
@@ -275,10 +263,10 @@
     ],
     [
      "flag",
-     "t3"
+     "t2"
     ]
    ],
-   "if": "t2"
+   "if": "t1"
   },
   {
    "on": {
@@ -287,43 +275,14 @@
      "jiebao"
     ],
     "area": [
-     17,
-     4,
-     19,
-     6
-    ],
-    "label": "压倒的草",
-    "atTurnEnd": true
-   },
-   "unless": "found",
-   "do": [
-    [
-     "say",
-     "jiezhen",
-     "这一片草都压倒了，它就伏在前头那草窠里。兄弟，挺起叉来，慢慢地挨过去。"
-    ],
-    [
-     "flag",
-     "t4"
-    ]
-   ],
-   "if": "t3"
-  },
-  {
-   "on": {
-    "enter": [
-     "jiezhen",
-     "jiebao"
-    ],
-    "area": [
-     17,
+     11,
      0,
-     23,
+     17,
      3
     ],
     "atTurnEnd": true
    },
-   "if": "t4",
+   "if": "t2",
    "unless": "found",
    "do": [
     [
@@ -331,7 +290,7 @@
      {
       "style": "wind",
       "radius": 2,
-      "x": 20,
+      "x": 14,
       "y": 1,
       "focus": true
      }
@@ -339,6 +298,14 @@
     [
      "appear",
      "tiger"
+    ],
+    [
+     "appear",
+     "cub5"
+    ],
+    [
+     "appear",
+     "cub6"
     ],
     [
      "narrate",
@@ -357,7 +324,7 @@
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7
    },
    "unless": "found",
    "do": [
@@ -370,7 +337,7 @@
      {
       "style": "wind",
       "radius": 2,
-      "x": 20,
+      "x": 14,
       "y": 1,
       "focus": true
      }
@@ -389,10 +356,10 @@
    "on": {
     "enter": "tiger",
     "area": [
-     14,
-     4,
-     16,
-     5
+     10,
+     1,
+     12,
+     2
     ],
     "label": "窝弓"
    },
@@ -421,10 +388,10 @@
    "on": {
     "enter": "tiger",
     "area": [
-     21,
-     4,
-     23,
-     6
+     13,
+     5,
+     16,
+     5
     ],
     "label": "窝弓"
    },
@@ -453,10 +420,10 @@
    "on": {
     "enter": "tiger",
     "area": [
-     16,
-     1,
-     18,
-     2
+     6,
+     3,
+     8,
+     4
     ],
     "label": "窝弓"
    },
@@ -495,7 +462,7 @@
     [
      "move",
      "tiger",
-     22,
+     16,
      12
     ],
     [
