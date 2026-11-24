@@ -8,7 +8,6 @@
   "map": {
     "custom": "wugongling"
   },
-  "tint": "night",
   "bgm": ["night", "eerie", "nightduel"],
   "units": [
     {

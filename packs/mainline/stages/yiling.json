@@ -14,7 +14,6 @@
       30
     ]
   },
-  "tint": "dusk",
   "bgm": ["tiger", "eerie"],
   "units": [
     {
@@ -182,10 +181,6 @@
         [
           "narrate",
           "李逵大怒，一刀杀了李鬼。那妇人却从后门走了。"
-        ],
-        [
-          "tint",
-          "night"
         ],
         [
           "narrate",

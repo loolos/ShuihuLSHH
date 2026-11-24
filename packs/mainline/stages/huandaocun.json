@@ -8,7 +8,6 @@
  "map": {
   "custom": "xuannvmiao"
  },
- "tint": "dusk",
  "bgm": ["sorcery", "eerie", "battle"],
  "units": [
   {
@@ -905,10 +904,6 @@
      }
     ],
     [
-     "tint",
-     "night"
-    ],
-    [
      "say",
      "c1",
      "神圣救命！神圣救命！"
@@ -942,10 +937,6 @@
     [
      "narrate",
      "宋江扑到神座前，只觉一阵困倦，靠着神案昏昏沉沉，忽听得有人轻声唤他。"
-    ],
-    [
-     "tint",
-     ""
     ],
     [
      "appear",
@@ -1032,10 +1023,6 @@
      "xuannv",
      "xuannv-xiang",
      "九天玄女像"
-    ],
-    [
-     "tint",
-     "night"
     ],
     [
      "narrate",
