@@ -141,9 +141,8 @@
     "mainline/jielao": {"14":32,"16":35,"gudasao":43,"lehe":43,"jiezhen":43,"jiebao":43,"sunli":43,"sunxin":43,"wusong":38},
     "mainline/ruzhuang": {"sunli":43,"shixiu":40,"sunxin":43,"gudasao":43,"lehe":43,"jiezhen":44,"jiebao":44},
     "mainline/sanda": {"0":51,"10":29,"11":35,"sunli":43,"sunxin":43,"gudasao":43,"lehe":43,"jiezhen":44,"jiebao":44,"huarong":40,"lijun":46,"likui":43,"yangxiong":40,"sj-fugitive":46,"shixiu":40,"qinming":40,"huangxin":40},
-    "mainline/huzhuang": {"likui":43,"sj-fugitive":46,"shixiu":40},
-    "mainline/zhongli": {"0":51,"sj-fugitive":46,"shixiu":40,"sunli":47,"likui":43},
-    "mainline/liying-shangshan": {"sj-fugitive":46,"sunli":47,"shixiu":40},
+    "mainline/zhongli": {"0":51,"sj-fugitive":46,"shixiu":40,"sunli":49,"likui":43},
+    "mainline/liying-shangshan": {"0":51,"sj-fugitive":46,"sunli":49,"shixiu":40},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":20,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }
