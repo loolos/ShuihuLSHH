@@ -58,6 +58,20 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     // 敌方版武龍不受影响
     for(const c of d.classes.filter(c=>c.id>=18))expect(c.skills.some(s=>s.skillId===1310)).toBe(false);
   });
+  it('铲恶除奸四阶：命中+5/+10/+15/+20、三四阶两段、一线3/4/5/6格、30级换成LV4',()=>{
+    const d=loadPackFromDisk('mainline').data;
+    const tiers=d.classes[11].skills.filter(s=>[101,102,103,1311].includes(s.skillId));expect(tiers).toHaveLength(4);
+    tiers.forEach((s,i)=>{
+      expect(s).toMatchObject({learnLevel:[11,15,25,30][i],mpCost:[55,100,135,175][i],power:[25,35,60,75][i],hitMod:5+5*i,type:0,area:3+i});
+      expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
+      expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20,y:21})).toHaveLength(3+i);
+    });
+    for(let level=1;level<=32;level++){
+      const skills=learnedSkills({classId:11,level}as Unit,d).filter(s=>s.name.startsWith('鏟惡除奸'));
+      const tier=[11,15,25,30].filter(n=>n<=level).length;expect(skills).toHaveLength(tier?1:0);if(tier)expect(skills[0]).toBe(tiers[tier-1]);
+    }
+    for(const c of d.classes.filter(c=>c.id>=18))expect(c.skills.some(s=>s.skillId===1311)).toBe(false);
+  });
   it('主线与江州的对应扩展技能同步，非审定技能保留', () => {
     for (const pack of ['mainline']) {
       const p = loadPackFromDisk(pack);
