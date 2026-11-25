@@ -3,6 +3,7 @@ import { joinLevel, type CampaignState } from '../rules/campaign.ts';
 import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
+import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
 const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨', 'mainline/ruzhuang': '独龙冈营寨' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
@@ -25,11 +26,17 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
   const active = [...new Set(ids)];
   const view = townParty(c, rt);
   const level = joinLevel({ ...view, active }) || 28;
+  // 选关直接进城镇（手上没有人）：每人按下一战的入场等级配（entry-levels.json），不再一律 28 级（负责人 2026-11-25 发现独龙冈营寨全是 28 级）
+  const fresh = !view.members.length;
+  const preset = (entryLevels.levels as Record<string, Record<string, number>>)[ROSTER_FROM[next] ?? next] ?? {};
+  const keyOf = (classId: number) => [...rt.classIds].find(([, v]) => v === classId)?.[0] ?? String(classId);
   for (const classId of active) if (!view.members.some(m => m.classId === classId)) {
     const cls = rt.data.classes[classId];
+    const own = fresh ? preset[String(classId)] ?? preset[keyOf(classId)] : undefined;
+    const lv = own ?? level;
     const slots = [...cls.defaultItems];
-    if (mengzhou || roadside) levelKit(rt.data, cls, level, slots);
-    view.members.push({ classId, level, exp: 0, slots, forge: [] });
+    if (mengzhou || roadside) levelKit(rt.data, cls, lv, slots);
+    view.members.push({ classId, level: lv, exp: 0, slots, forge: [] });
   }
   return { ...view, active };
 }

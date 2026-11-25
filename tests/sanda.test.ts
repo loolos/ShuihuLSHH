@@ -10,7 +10,8 @@ import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
-import { insertTownIntro, insertTownName } from '../src/packs/towns.ts';
+import { insertTownIntro, insertTownName, prepareInsertTown } from '../src/packs/towns.ts';
+import { newCampaign } from '../src/rules/campaign.ts';
 
 describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三章 三打祝家庄', () => {
   useDiskCustomMaps();
@@ -44,6 +45,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     const sanda = rt.stages.find((s) => s.id === 'sanda')!;
     const actors = new Set(sanda.units.filter((u) => u.side === 'player' && !u.hidden && !u.prisonCart).map((u) => u.class));
     for (const l of insertTownIntro('mainline/ruzhuang')) expect(actors.has(l.actor), l.actor).toBe(true);
+  });
+
+  it('选关直接进独龙冈营寨：每人按大仗的入场等级，不是一律 28 级', () => {
+    const c = prepareInsertTown({ ...newCampaign(22), members: [] }, rt, 'mainline/ruzhuang');
+    const lv = (id: string | number) => c.members.find((m) => m.classId === (typeof id === 'number' ? id : rt.classIds.get(id)))!.level;
+    expect(lv('sunli')).toBe(43);
+    expect(lv(0)).toBe(51);
+    expect(Math.min(...c.members.map((m) => m.level))).toBeGreaterThan(28);
   });
 
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
