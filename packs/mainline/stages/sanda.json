@@ -59,9 +59,8 @@
   ]
  },
  "bgm": [
-  "battle2",
-  "manor",
-  "cavalry"
+  "infiltrate",
+  "manor"
  ],
  "disguise": {
   "flag": "revealed"
@@ -3959,6 +3958,13 @@
      "乐和掣出铁叫子，一声长哨，响彻庄院。孙立一伙听得号响，一齐发作！"
     ],
     [
+     "bgm",
+     null,
+     {
+      "sting": "signal"
+     }
+    ],
+    [
      "rout",
      {
       "stun": 30,
@@ -4002,6 +4008,13 @@
     [
      "narrate",
      "乐和听得庄外鼓响，不敢再等，掣出铁叫子吹将起来。孙立一伙一齐发作！"
+    ],
+    [
+     "bgm",
+     null,
+     {
+      "sting": "signal"
+     }
     ],
     [
      "rout",
@@ -4049,6 +4062,14 @@
     [
      "unmask",
      "all"
+    ],
+    [
+     "bgm",
+     [
+      "sanda",
+      "manor",
+      "fire"
+     ]
     ],
     [
      "spectate",
