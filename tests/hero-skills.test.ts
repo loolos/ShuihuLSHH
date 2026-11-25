@@ -20,8 +20,8 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
   const board = new Board(31,31);
   const from = {x:15,y:15};
   const names: Record<string,string[]> = {
-    wusong: ['伏虎拳','横江断浪LV1','擒虎镇岳LV1','擒虎镇岳LV2','擒虎镇岳LV3','抱元归息','横江断浪LV2','玉环鸳鸯脚','横江断浪LV3','横江断浪LV4'],
-    likui: ['双斧开山','狂澜裂岳LV1','裂石连斩','沉息蓄锋','狂澜裂岳LV2','旋风卷岳','狂澜裂岳LV3','狂澜裂岳LV4'],
+    wusong: ['伏虎拳','横江断浪LV1','擒虎镇岳LV1','擒虎镇岳LV2','擒虎镇岳LV3','擒虎镇岳LV4','抱元归息','横江断浪LV2','玉环鸳鸯脚','玉环鸳鸯脚LV2','横江断浪LV3','横江断浪LV4','横江断浪LV5'],
+    likui: ['双斧开山','狂澜裂岳LV1','裂石连斩','裂石连斩LV2','沉息蓄锋','狂澜裂岳LV2','旋风卷岳','旋风卷岳LV2','狂澜裂岳LV3','狂澜裂岳LV4','狂澜裂岳LV5'],
   };
   const battle = (who: string, level=28) => new Battle({
     name:'test', data:main.data, board, seed:11, blocks:[],
@@ -31,7 +31,7 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
   it('两人按1/4/8/12/16/20/24/28学习，最高一级替换旧级，低等级不提前拥有集气',()=> {
     for(const who of ['wusong','likui']) {
       const sk=skills(who);expect(sk.map(s=>s.name)).toEqual(names[who]);
-      expect(sk.map(s=>s.learnLevel)).toEqual(who==='wusong'?[1,4,8,18,28,12,16,20,24,28]:[1,4,8,12,16,20,24,28]);
+      expect(sk.map(s=>s.learnLevel)).toEqual(who==='wusong'?[1,4,8,18,28,36,12,16,20,32,24,28,40]:[1,4,8,32,12,16,20,36,24,28,40]);
       for(let lv=1;lv<=30;lv++) {
         const u={classId:main.classIds.get(who)!,level:lv} as Unit;
         const learned=learnedSkills(u,main.data);

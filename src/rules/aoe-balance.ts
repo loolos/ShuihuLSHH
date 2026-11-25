@@ -7,10 +7,12 @@ export const HERO_AOE_COSTS: Readonly<Record<number, Readonly<Record<number, num
     5: 75, // 千軍萬馬LV2
     6: 110, // 千軍萬馬LV3
     1310: 150, // 千軍萬馬LV4
+    1312: 190, // 千軍萬馬LV5
     10: 75, // 萬夫莫敵LV1
     11: 115, // 萬夫莫敵LV2
     12: 170, // 萬夫莫敵LV3
     1309: 210, // 萬夫莫敵LV4
+    1314: 250, // 萬夫莫敵LV5
   },
   2: {
     21: 75, // 天雷滅敵正法

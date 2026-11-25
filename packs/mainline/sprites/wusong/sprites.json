@@ -215,6 +215,21 @@
     "ms": 50,
     "cycles": 5
    }
+  },
+  "punch-six": {
+   "source": "Punch_Jab × 6",
+   "front": {
+    "file": "punch-jab-front.png",
+    "frames": 8,
+    "ms": 42,
+    "cycles": 6
+   },
+   "back": {
+    "file": "punch-jab-back.png",
+    "frames": 8,
+    "ms": 42,
+    "cycles": 6
+   }
   }
  }
 }
