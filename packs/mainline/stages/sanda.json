@@ -906,8 +906,9 @@
    "y": 53,
    "level": 30,
    "facing": 0,
-   "ai": 2,
-   "levelOffset": -2
+   "ai": 15,
+   "levelOffset": -2,
+   "target": "songjiang"
   },
   {
    "id": "ll20",
@@ -917,8 +918,9 @@
    "y": 53,
    "level": 30,
    "facing": 0,
-   "ai": 2,
-   "levelOffset": -2
+   "ai": 15,
+   "levelOffset": -2,
+   "target": "songjiang"
   },
   {
    "id": "ll21",
@@ -928,8 +930,9 @@
    "y": 58,
    "level": 30,
    "facing": 0,
-   "ai": 2,
-   "levelOffset": -2
+   "ai": 15,
+   "levelOffset": -2,
+   "target": "songjiang"
   },
   {
    "id": "ll22",
@@ -939,8 +942,9 @@
    "y": 58,
    "level": 30,
    "facing": 0,
-   "ai": 2,
-   "levelOffset": -2
+   "ai": 15,
+   "levelOffset": -2,
+   "target": "songjiang"
   },
   {
    "id": "ruanxiaoer",

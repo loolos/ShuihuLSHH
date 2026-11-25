@@ -9,6 +9,7 @@
 //    - back：同自动后撤的走法，但不看条件，只要这一格有敌人够得着就退；
 //    - hold：原地防御；
 //    - to：走向某一格然后防御（如退回庄门）；
+//    - follow：跟着大部队走，站在我方好汉（中位数位置）身后 FOLLOW_BEHIND 格附近、敌人够得着最少的格子，然后防御（三打祝家庄的宋江）；
 //    hpBelow：在 turns 之外，体力低于这个比例时也照这条指令走（如"体力不到六成退回庄门"）。
 import type { Battle } from '../src/rules/battle.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -20,7 +21,7 @@ export interface SimOrder {
   char: number;
   /** 哪几回合照指令走，[起, 止]（含两端） */
   turns: [number, number];
-  act: 'back' | 'hold' | { to: [number, number] };
+  act: 'back' | 'hold' | 'follow' | { to: [number, number] };
   hpBelow?: number;
   /** 另加的条件：为假时这条指令不算（劫牢：牢门开了就照常打） */
   when?: (b: Battle) => boolean;
@@ -48,8 +49,8 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
     { char: SANDA.sunli, turns: [1, 5], act: { to: [31, 21] } }, { char: SANDA.sunxin, turns: [1, 5], act: { to: [48, 21] } },
     { char: SANDA.lehe, turns: [1, 5], act: { to: [14, 21] } }, { char: SANDA.gudasao, turns: [1, 5], act: { to: [7, 9] } },
     { char: SANDA.jiezhen, turns: [1, 7], act: { to: [53, 8] } }, { char: SANDA.jiebao, turns: [1, 5], act: { to: [54, 11] } },
-    // 宋江（72）是失败条件，留在营寨里
-    { char: 72, turns: [1, 50], act: 'back' },
+    // 宋江（72）是失败条件：跟着大部队走，站在众好汉身后（负责人 2026-11-25：back 会被两角伏兵逼到庄门底下，hold 守营寨会被伏兵围死）
+    { char: 72, turns: [1, 50], act: 'follow' },
   ],
 };
 
@@ -114,6 +115,22 @@ function autoBack(b: Battle, u: Unit, ev: unknown[]): boolean {
   return true;
 }
 
+/** follow：站到我方好汉中位数位置身后（+y，离庄墙远的一边）FOLLOW_BEHIND 格附近，先挑敌人够得着最少的格子 */
+const FOLLOW_BEHIND = 4;
+function follow(b: Battle, u: Unit, ev: unknown[]): boolean {
+  const mates = b.active().filter((x) => x.side === 'player' && x !== u && !b.spectators.has(x.uid) && !b.isBound(x));
+  if (!mates.length) return stepBack(b, u, ev);
+  const med = (v: number[]) => v.sort((p, q) => p - q)[v.length >> 1];
+  const gx = med(mates.map((m) => m.x)), gy = med(mates.map((m) => m.y)) + FOLLOW_BEHIND;
+  const cells = [{ x: u.x, y: u.y }, ...b.moveRange(u).green];
+  const score = (c: { x: number; y: number }) => threatsAt(b, u, c) * 100 + Math.abs(c.x - gx) + Math.abs(c.y - gy);
+  const c = cells.reduce((a, g) => (score(g) < score(a) ? g : a));
+  if (c.x !== u.x || c.y !== u.y) ev.push(...b.move(u, c.x, c.y));
+  if (b.canAct(u)) ev.push(...b.defend(u));
+  if (process.env.TRACE_ORDERS) console.log(`  第 ${b.turn} 回合 ${u.name} 跟随：目标 (${gx},${gy}) → (${c.x},${c.y}) 威胁 ${threatsAt(b, u, c)}`);
+  return true;
+}
+
 /**
  * 给这个人套开局指令；走完了（本回合不用再管他）返回 true。
  * walkTo：调用方的"走到某格然后防御"
@@ -133,6 +150,7 @@ export function applyOrders(b: Battle, u: Unit, stageKey: string, ev: unknown[],
       return true;
     }
     if (order.act === 'back') return stepBack(b, u, ev);
+    if (order.act === 'follow') return follow(b, u, ev);
     walkTo(order.act.to[0], order.act.to[1]);
     return true;
   }
