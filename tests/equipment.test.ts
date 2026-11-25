@@ -30,7 +30,9 @@ it('每个档位道具都存在，武器类型正确，攻防不会倒退', () =
   }
   expect(Object.keys(HERO_KITS)).toHaveLength(18);
   for (const row of MEDICINE_TABLE) {
-    expect(row.length).toBeLessThanOrEqual(3);
+    expect(row.length).toBeLessThanOrEqual(7);
+    expect(row.filter((n) => n === '天山雪蓮').length).toBeLessThanOrEqual(1);
+    expect(row.filter((n) => n === '大還金丹').length).toBeLessThanOrEqual(1);
     for (const name of row) expect(data.items.some((it) => it.name === name), name).toBe(true);
   }
 });
@@ -42,14 +44,16 @@ it('档位边界与超过最高等级均可查表', () => {
   });
   expect(kitBand(99)).toBe(6);
 });
-it('低级两颗跌打药，高级最多三个；清理剧本回复药，保留剧情物品', () => {
+it('低级小药，高级天山雪蓮最多一个；清理剧本回复药，保留剧情物品', () => {
   const id = (name: string) => data.items.findIndex((it) => it.name === name) + 1;
   const cls = { id: 0, defaultItems: [], weaponType: 0 } as unknown as ClassDef;
   const slots = [0, 0, 0, id('狗皮膏藥'), id('狗皮膏藥'), id('古武術祕笈')];
   levelKit(data, cls, 1, slots);
-  expect(slots.slice(3).filter((v) => v === id('跌打藥'))).toHaveLength(2);
+  expect(slots.slice(3).filter((v) => v === id('跌打藥'))).toHaveLength(1);
+  expect(slots.slice(3).filter((v) => v === id('狗皮膏藥'))).toHaveLength(2);
   levelKit(data, cls, 30, slots);
-  expect(slots.slice(3).filter((v) => v === id('天山雪蓮'))).toHaveLength(3);
+  expect(slots.slice(3).filter((v) => v === id('天山雪蓮'))).toHaveLength(1);
+  expect(slots.slice(3).filter((v) => v === id('牛肉包子'))).toHaveLength(1);
   expect(slots).toContain(id('古武術祕笈'));
   const special = slots[0];
   levelKit(data, cls, 1, slots, (v) => v === special);

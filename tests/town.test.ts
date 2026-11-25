@@ -200,7 +200,7 @@ describe.skipIf(!has)('测试用跳关', () => {
         tableOrBetter(2, GEAR_TABLE[profile.head][band]);
         const meds = m.slots.slice(3).filter((id) => id && [15, 16, 17].includes(data.items[id - 1].type)).map((id) => data.items[id - 1].name);
         expect(meds).toEqual(MEDICINE_TABLE[band]);
-        expect(meds.length).toBeLessThanOrEqual(3);
+        expect(meds.length).toBeLessThanOrEqual(7);
         expect(m.forge?.every((n) => n === 0)).toBe(true);
       }
     }
