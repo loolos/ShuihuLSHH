@@ -86,6 +86,16 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
    return [updated,{...updated,skillId:1310,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
     learnLevel:22,mpCost:150,power:65,area:9,hitMod:20,hits:two.map(h=>({...h}))}];
   }
+  // 鏟惡除奸（林沖，类型 0 落点往前一线）：负责人 2026-11-25 加 LV4，命中 +5/+10/+15/+20，
+  // LV3、LV4 两段（出手动作 7 第 14 帧气浪、第 18 帧突刺各 50%）；LV4 一线 6 格（3/4/5 → 6），30 级，威力 75，耗气见 HERO_AOE_COSTS
+  if(cls===11&&[101,102,103].includes(s.skillId)){
+   const tier=s.skillId-101;
+   const two=[{frame:14,percent:50,dir:0},{frame:18,percent:50,dir:0}];
+   const updated={...s,hitMod:5*(tier+1),hits:tier===2?two:s.hits};
+   if(tier!==2)return [updated];
+   return [updated,{...updated,skillId:1311,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
+    learnLevel:30,power:75,area:6,hitMod:20,hits:two.map(h=>({...h}))}];
+  }
   if(cls===16&&s.skillId===135){
    const frames=[12,13,15,17],weights=[[100],[50,50],[30,30,40],[25,25,25,25]];
    return [4,14,22,30].map((level,i)=>({...s,skillId:i===0?135:1305+i,soundId:s.soundId??s.skillId,
