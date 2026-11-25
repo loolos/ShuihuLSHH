@@ -30,7 +30,7 @@ it('每个档位道具都存在，武器类型正确，攻防不会倒退', () =
   }
   expect(Object.keys(HERO_KITS)).toHaveLength(18);
   for (const row of MEDICINE_TABLE) {
-    expect(row.length).toBeLessThanOrEqual(7);
+    expect(row.length).toBeLessThanOrEqual(4);
     expect(row.filter((n) => n === '天山雪蓮').length).toBeLessThanOrEqual(1);
     expect(row.filter((n) => n === '大還金丹').length).toBeLessThanOrEqual(1);
     for (const name of row) expect(data.items.some((it) => it.name === name), name).toBe(true);
