@@ -163,14 +163,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(lehe.disguised).toBeFalsy();
   });
 
-  it('祝龙开场在前门外列阵，发号后只下令、留在门外；栾廷玉改追孙新，追上有对白', () => {
+  it('祝龙开场在前门外列阵，发号后只下令、留在门外；栾廷玉改追孙立', () => {
     const { b, get } = open();
-    const zl = get('zhulong'), luan = get('luan'), sx = get('sunxin');
+    const zl = get('zhulong'), luan = get('luan'), sl = get('sunli');
     expect(zl.y).toBeGreaterThan(22);
     const lehe = get('lehe');
     b.useSkill(lehe, learnedSkills(lehe, b.data).find((s) => s.name === '铁叫子发号')!, lehe);
     expect(zl.y).toBeGreaterThan(22);
     expect(luan.ai.mode).toBe(10);
-    expect(b.unitByChar(luan.ai.target)).toBe(sx);
+    expect(b.unitByChar(luan.ai.target)).toBe(sl);
   });
 });

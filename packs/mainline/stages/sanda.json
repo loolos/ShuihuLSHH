@@ -3621,7 +3621,7 @@
    "ai": 2,
    "levelOffset": 1,
    "name": "铁棒栾廷玉",
-   "target": "sunxin"
+   "target": "sunli"
   },
   {
    "id": "luan0",
@@ -6873,49 +6873,6 @@
     [
      "flag",
      "fire"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "near": "luan",
-    "by": "sunxin"
-   },
-   "if": "go",
-   "unless": "luanSunxin",
-   "do": [
-    [
-     "flag",
-     "luanSunxin"
-    ],
-    [
-     "focus",
-     "luan"
-    ],
-    [
-     "face",
-     "luan",
-     "sunxin"
-    ],
-    [
-     "face",
-     "sunxin",
-     "luan"
-    ],
-    [
-     "say",
-     "luan",
-     "孙新！你兄弟两个好大胆，竟敢引梁山贼寇来赚祝家庄！"
-    ],
-    [
-     "say",
-     "sunxin",
-     "栾教师，祝家庄作恶多端，气数已尽，何苦替他们卖命？"
-    ],
-    [
-     "say",
-     "luan",
-     "休得多言！先拿下你，再去寻你哥哥说话！"
     ]
    ]
   },
