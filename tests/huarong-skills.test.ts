@@ -22,11 +22,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('花荣弓术
     {index:0,type:cid,group:1,side:'player',x:15,y:15,facing:0,level:24,flags:0,extra:[0,0,0],items:[],raw:[]},
     ...[[14,14],[15,11],[16,7],[15,6],[17,10],[15,16]].map(([x,y],i)=>({index:i+1,type:32,group:i+2,side:'enemy' as const,x,y,facing:2,level:10,flags:0,extra:[0,0,0] as [number,number,number],items:[],raw:[]})),
   ]});
-  it('按1/4/8/12/16/20/24学习，旧等级自动换成最高级', () => {
-    expect(skills.map(s=>s.learnLevel)).toEqual([1,4,8,12,16,20,24]);
-    for (const level of [1,4,8,12,16,20,24,35]) {
+  it('按1/4/8/12/16/20/24学习（32/36/40 补雁落平沙LV2、连珠飞星LV2、穿云贯日LV4），旧等级自动换成最高级', () => {
+    expect(skills.map(s=>s.learnLevel)).toEqual([1,4,8,32,12,16,36,20,24,40]);
+    for (const level of [1,4,8,12,16,20,24,35,40]) {
       const list=learnedSkills({classId:cid,level} as Unit,main.data);
-      const tier=level>=24?3:level>=20?2:level>=4?1:0;
+      const tier=level>=40?4:level>=24?3:level>=20?2:level>=4?1:0;
       expect(list.filter(s=>s.name.startsWith('穿云贯日')).map(s=>s.name)).toEqual(tier?[`穿云贯日LV${tier}`]:[]);
     }
   });

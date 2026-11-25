@@ -72,8 +72,11 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
    const updated={...s,hitMod:5*(tier+1),critMod:20+5*tier,
     hits:tier===2?[{frame:8,percent:50,dir:0},{frame:12,percent:50,dir:0}]:s.hits};
    if(tier!==2)return [updated];
-   return [updated,{...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
-    learnLevel:28,mpCost:210,power:65,area:8,hitMod:20,critMod:35}];
+   // LV5（负责人 2026-11-25，30–40 级补技能）：40 级，范围 9，威力 75，命中 +25，必杀 +40
+   const lv4={...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
+    learnLevel:28,mpCost:210,power:65,area:8,hitMod:20,critMod:35};
+   return [updated,lv4,{...lv4,skillId:1314,name:s.name.replace(/LV3$/,'LV5'),learnLevel:40,mpCost:250,power:75,area:9,hitMod:25,critMod:40,
+    hits:lv4.hits.map(h=>({...h}))}];
   }
   // 千軍萬馬（武龍，类型 0 落点往前一线）：负责人 2026-11-22 加 LV4，命中 +5/+10/+15/+20，
   // LV3、LV4 两段（与萬夫莫敵同一出手动作第 3 组，第 8、12 帧各 50%）；LV4 一线 9 格（3/5/7 → 9），22 级，威力 65，耗气见 HERO_AOE_COSTS
@@ -83,8 +86,11 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
    // LV3、LV4 可选周围 8 格（含斜向），斜着放时一线也斜着走（负责人 2026-11-22）
    const updated={...s,hitMod:5*(tier+1),hits:tier===2?two:s.hits,targetShape:tier===2?'eight' as const:undefined};
    if(tier!==2)return [updated];
+   // LV5（负责人 2026-11-25，30–40 级补技能）：32 级，一线 11 格，威力 75，命中 +25
    return [updated,{...updated,skillId:1310,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
-    learnLevel:22,mpCost:150,power:65,area:9,hitMod:20,hits:two.map(h=>({...h}))}];
+    learnLevel:22,mpCost:150,power:65,area:9,hitMod:20,hits:two.map(h=>({...h}))},
+    {...updated,skillId:1312,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV5'),
+    learnLevel:32,mpCost:190,power:75,area:11,hitMod:25,hits:two.map(h=>({...h}))}];
   }
   // 鏟惡除奸（林沖，类型 0 落点往前一线）：负责人 2026-11-25 加 LV4，命中 +5/+10/+15/+20，
   // LV3、LV4 两段（出手动作 7 第 14 帧气浪、第 18 帧突刺各 50%）；LV4 一线 6 格（3/4/5 → 6），30 级，威力 75，耗气见 HERO_AOE_COSTS
@@ -104,11 +110,17 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
     power:s.power+i*5,mpCost:s.mpCost+i*10,hitMod:s.hitMod+i*5,critMod:s.critMod+i*5,
     hits:weights[i].map((percent,k)=>({frame:frames[k],percent,dir:0}))}));
   }
+  // 一夫當關（武龍）LV2（负责人 2026-11-25，40 级后也留一招）：44 级，4 段，威力 120，命中 +35
+  if(cls===0&&s.skillId===7)
+   return [s,{...s,skillId:1315,soundId:s.soundId??s.skillId,name:`${s.name}LV2`,learnLevel:44,mpCost:100,power:120,hitMod:s.hitMod+5,
+    hits:[6,11,16,19].map(frame=>({frame,percent:25,dir:0}))}];
   if(cls===0&&s.skillId===3){
    const tiers=[
     {id:3,level:8,power:40,mp:30,hit:20,stun:15,frames:[7,14,20],weights:[30,50,20]},
     {id:1304,level:20,power:60,mp:40,hit:30,stun:20,frames:[5,10,15,20],weights:[25,25,25,25]},
     {id:1305,level:28,power:80,mp:50,hit:40,stun:25,frames:[4,8,12,16,20],weights:[20,20,20,20,20]},
+    // LV4（负责人 2026-11-25，30–40 级补技能）：36 级，6 段
+    {id:1313,level:36,power:100,mp:60,hit:50,stun:30,frames:[3,6,9,12,15,20],weights:[16,16,17,17,17,17]},
    ];
    return tiers.map((t,i)=>({...s,skillId:t.id,soundId:s.soundId??s.skillId,name:`${s.name}LV${i+1}`,learnLevel:t.level,
     power:t.power,mpCost:t.mp,hitMod:t.hit,stun:t.stun,

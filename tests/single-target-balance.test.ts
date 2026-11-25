@@ -31,10 +31,10 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('单体技能数值修
   expect(data.classes[16].skills.find(s=>s.skillId===138)).toMatchObject({stun:40});
   const z=data.classes[rt.classIds.get('zhangshun')!].skills.find(s=>s.name==='浪里钻')!;expect(z.mpCost).toBe(45);
  });
- for(const pack of ['mainline'])it(`${pack}武松三阶8/18/28级，最高阶替换，不改变其他技能`,()=>{
+ for(const pack of ['mainline'])it(`${pack}武松四阶8/18/28/36级，最高阶替换，不改变其他技能`,()=>{
   const r=loadPackFromDisk(pack),id=r.classIds.get('wusong')!,skills=r.data.classes[id].skills.filter(s=>s.name.startsWith('擒虎镇岳'));
-  expect(skills).toHaveLength(3);expect(skills.map(s=>s.learnLevel)).toEqual([8,18,28]);expect(skills.map(s=>s.power)).toEqual([50,60,70]);expect(skills.map(s=>s.hitMod)).toEqual([10,20,30]);expect(skills.map(s=>s.mpCost)).toEqual([40,50,60]);expect(skills.map(s=>attackParts(s).length)).toEqual([3,4,5]);
-  const u={classId:id,level:1}as Unit;for(let level=1;level<=31;level++){u.level=level;const tier=[8,18,28].filter(n=>n<=level).length,available=learnedSkills(u,r.data).filter(s=>s.name.startsWith('擒虎镇岳'));expect(available).toHaveLength(tier?1:0);if(tier)expect(available[0].name).toBe(`擒虎镇岳LV${tier}`);}
+  expect(skills).toHaveLength(4);expect(skills.map(s=>s.learnLevel)).toEqual([8,18,28,36]);expect(skills.map(s=>s.power)).toEqual([50,60,70,80]);expect(skills.map(s=>s.hitMod)).toEqual([10,20,30,40]);expect(skills.map(s=>s.mpCost)).toEqual([40,50,60,70]);expect(skills.map(s=>attackParts(s).length)).toEqual([3,4,5,6]);
+  const u={classId:id,level:1}as Unit;for(let level=1;level<=40;level++){u.level=level;const tier=[8,18,28,36].filter(n=>n<=level).length,available=learnedSkills(u,r.data).filter(s=>s.name.startsWith('擒虎镇岳'));expect(available).toHaveLength(tier?1:0);if(tier)expect(available[0].name).toBe(`擒虎镇岳LV${tier}`);}
   for(const s of skills){expect(s).toMatchObject({rangeMin:1,rangeMax:1,area:1,stun:30,critMod:5,soundId:154});expect(s.hits.reduce((n,h)=>n+h.percent,0)).toBe(100);}
  });
  it('监守自盗1/2/3段、耗气30、命中10/20/30；杜迁四段+40，隔山打虎不分级',()=>{
