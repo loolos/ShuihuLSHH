@@ -223,4 +223,31 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(seen.zw0).toBe(7);
     expect(seen.menguan).toBe(7);
   });
+  it('劫牢：胜负条件只显示当前这一步，开牢门、州兵都头杀到、拽开拒马时换成下一步（负责人 2026-11-25）', () => {
+    const { b, get } = open('jielao');
+    const win = () => b.objectives.filter((l) => l.startsWith('胜利条件'));
+    expect(win()).toHaveLength(1);
+    expect(win()[0]).toContain('死囚牢门');
+    expect(b.objectives.join()).not.toContain('州兵都头');
+    expect(b.objectives.some((l) => l.startsWith('失败条件') && l.includes('18 回合'))).toBe(true);
+    expect(b.objectives.some((l) => l.startsWith('提示') && l.includes('伪装'))).toBe(true);
+    for (const id of ['baoji', 'xl0', 'xl1', 'xl2']) get(id).hp = 1;
+    const shown: string[] = [];
+    for (let t = 1; t <= 9 && b.status === 'playing'; t++) {
+      if (b.turn === 1) { put(get('lehe'), 7, 3); put(get('gudasao'), 6, 4); }
+      for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8;
+      for (const e of b.endPlayerPhase()) if (e.type === 'objective') shown.push(e.lines.find((l) => l.startsWith('胜利条件'))!);
+      const mg = get('menguan');
+      if (mg.present && mg.alive) {
+        expect(win()[0]).toContain('打倒州兵都头');
+        mg.hp = 0; mg.alive = false; mg.present = false;
+        (b as unknown as { pendingDeaths: number[] }).pendingDeaths.push(mg.classId); // 回合结束时判倒下、拽开拒马
+      }
+    }
+    expect(shown[0]).toContain('州兵都头就要带人杀到');
+    expect(shown).toContainEqual(expect.stringContaining('打倒州兵都头'));
+    expect(win()[0]).toContain('逃出牢城营');
+    // 失败条件一直留着，不会被新的胜利条件冲掉
+    expect(b.objectives.some((l) => l.startsWith('失败条件'))).toBe(true);
+  });
 });

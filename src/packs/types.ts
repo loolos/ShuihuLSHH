@@ -223,10 +223,29 @@ export interface PackStageJson {
   tint?: 'night' | 'snow' | 'dusk';
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
+  /**
+   * 分阶段的胜负条件和提示【新】（lolo 2026-11-25：多阶段的关卡只显示当前这一步）。
+   * 按剧本标志随时重算：win / lose 各取最后一个满足 if / unless 且写了这一项的条目（空串 = 这一阶段不显示），
+   * hint 把所有满足条件的条目都列出来（一条条互不相干的提示，各自用 if / unless 管什么时候显示）；
+   * 显示成「胜利条件：」「失败条件：」「提示：」几行，内容一变（剧情演完以后）就弹出新的条件。
+   * 写了 goals 的关卡剧本里不能再用 ["objective", …]。
+   */
+  goals?: PackGoalJson[];
   units: PackUnitJson[];
   script: PackBlockJson[];
   /** AI 优先轮着用的技能：单位 id → 技能 id（老虎的三招） */
   aiPrefer?: Record<string, string[]>;
+}
+
+/** 一个阶段的胜负条件（见 PackStageJson.goals）；数组 = 几行 */
+export interface PackGoalJson {
+  /** 这些剧本标志都已设上（写数组 = 都要） */
+  if?: string | string[];
+  /** 这些剧本标志都还没设上 */
+  unless?: string | string[];
+  win?: string | string[];
+  lose?: string | string[];
+  hint?: string | string[];
 }
 
 export interface PackUnitJson {

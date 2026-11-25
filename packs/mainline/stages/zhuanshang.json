@@ -14,7 +14,29 @@
       24
     ]
   },
-  "bgm": ["heist", "battle", "rock"],
+  "bgm": [
+    "heist",
+    "battle",
+    "rock"
+  ],
+  "goals": [
+    {
+      "lose": "戴宗、萧让或金大坚倒下；超过 22 回合"
+    },
+    {
+      "unless": "reveal",
+      "win": "打退拦路的强人"
+    },
+    {
+      "if": "reveal",
+      "win": "打倒济州巡检和全部官军"
+    },
+    {
+      "if": "reveal",
+      "unless": "r3",
+      "hint": "官军还有援兵分批赶来，都要打倒"
+    }
+  ],
   "units": [
     {
       "id": "daizong",
@@ -676,10 +698,6 @@
           "say",
           "lvfang",
           "几个毛贼，也敢拦路！"
-        ],
-        [
-          "objective",
-          "胜：先打退拦路的强人，再打倒济州巡检和全部官军\n败：戴宗、萧让或金大坚倒下；超过 22 回合"
         ],
         [
           "turnLimit",
