@@ -39,7 +39,7 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   'mainline/yizhangqing': [{ char: 72, turns: [1, 20], act: 'back' }],
   // 劫牢：乐和（156）、顾大嫂（134）伪装着先走到死囚牢门前开门，路上别动手
   // 包职业号按 pack.json 里的先后排；前面插了职业（扈三娘步战 husanniang-bu）以后乐和从 156 变成 157
-  'mainline/jielao': [{ char: 157, turns: [1, 10], act: { to: [7, 3] }, when: jailShut }, { char: 134, turns: [1, 10], act: { to: [6, 4] }, when: jailShut }],
+  'mainline/jielao': [{ char: 157, turns: [1, 10], act: { to: [7, 3] }, when: jailShut }, { char: 134, turns: [1, 10], act: { to: [7, 4] }, when: jailShut }],
 };
 
 /** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */

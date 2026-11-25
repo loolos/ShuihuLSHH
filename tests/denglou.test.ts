@@ -4,7 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
-import { baseDamage } from '../src/rules/combat.ts';
+import { baseDamage, watcherSees } from '../src/rules/combat.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -156,17 +156,36 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(gu.disguised).toBe(false);
   });
 
-  it('劫牢：死囚牢门口站着面朝外的看守，顾大嫂从他正前方过会被识破，从侧面绕进去不会', () => {
+  it('劫牢：死囚牢门口的看守面朝外，正前方三格看住整个「死囚牢门」，得先吹铁叫子；最左边牢门口另有看守', () => {
     const { b, get } = open('jielao');
     const kz = get('xl1'), gu = get('gudasao');
     expect([kz.x, kz.y, kz.facing]).toEqual([6, 3, 3]);
+    const kz2 = get('xl3');
+    expect([kz2.x, kz2.y, kz2.facing, kz2.ai.mode]).toEqual([6, 14, 3, 8]);
     get('baoji').facing = 0; // 只看门口看守
-    put(gu, 6, 5);
-    b.move(gu, 6, 4);
-    expect(gu.disguised).toBe(true);
-    put(gu, 8, 5);
-    b.move(gu, 7, 4);
+    for (const [x, y] of [[7, 2], [7, 3], [7, 4], [8, 2], [8, 3], [8, 4]]) expect(watcherSees(kz, { x, y }, 3), `${x},${y}`).toBe(true);
+    put(gu, 9, 5);
+    b.move(gu, 8, 4);
     expect(gu.disguised).toBe(false);
+    const g2 = open('jielao');
+    g2.get('baoji').facing = 0;
+    g2.get('xl1').stunTurns = 2; // 乐和吹愣了
+    const gu2 = g2.get('gudasao');
+    put(gu2, 9, 5);
+    g2.b.move(gu2, 8, 4);
+    expect(gu2.disguised).toBe(true);
+  });
+
+  it('劫牢：还没到死囚牢门就被识破，营后、营东、营西和都头几队州兵立刻杀到（负责人 2026-11-25）', () => {
+    const { b, get } = open('jielao');
+    const gu = get('gudasao');
+    expect(get('zw0').present).toBe(false);
+    const xl = get('xl0');
+    put(gu, xl.x + 3, xl.y);
+    b.move(gu, xl.x + 2, xl.y);
+    expect(gu.disguised).toBe(false);
+    for (const id of ['zb0', 'zw0', 'zx0', 'menguan']) expect(get(id).present, id).toBe(true);
+    expect(b.turn).toBe(1);
   });
 
   it('劫牢：乐和、顾大嫂站到死囚牢门前，回合结束开门；解珍解宝带枷打一回合再扭断枷', () => {
@@ -175,8 +194,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     const cls = (id: string) => rt.classIds.get(id);
     expect(b.isBound(jz)).toBe(true);
     put(lh, 7, 3);
-    put(gu, 6, 4);
-    get('baoji').hp = 1; // 别在敌方回合捣乱
+    put(gu, 7, 4);
+    get('baoji').hp = 1;
+    get('xl1').stunTurns = 3; // 别在敌方回合捣乱
     b.endPlayerPhase();
     expect(b.board.passable(5, 3)).toBe(true);
     expect(b.isBound(jz)).toBe(false);
@@ -191,9 +211,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
   it('悄悄开了牢门没被识破：营后州兵照常来，营东州兵和关营门的都头晚两回合', () => {
     const { b, get } = open('jielao');
     put(get('lehe'), 7, 3);
-    put(get('gudasao'), 6, 4);
+    put(get('gudasao'), 7, 4);
     get('baoji').hp = 1;
-    for (const id of ['xl0', 'xl1', 'xl2']) get(id).hp = 1;
+    get('xl1').stunTurns = 3;
+    for (const id of ['xl0', 'xl1', 'xl2', 'xl3']) get(id).hp = 1;
     b.endPlayerPhase(); // 第 1 回合结束开牢门
     expect(b.board.passable(5, 3)).toBe(true);
     const seen: Record<string, number> = {};
@@ -214,7 +235,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     for (const id of ['baoji', 'xl0', 'xl1', 'xl2']) get(id).hp = 1;
     const seen: Record<string, number> = {};
     for (let t = 1; t <= 9 && b.status === 'playing'; t++) {
-      if (b.turn === 3) { put(get('lehe'), 7, 3); put(get('gudasao'), 6, 4); }
+      if (b.turn === 3) { put(get('lehe'), 7, 3); put(get('gudasao'), 7, 4); get('xl1').stunTurns = 3; get('baoji').stunTurns = 3; }
       for (const id of ['zb0', 'zw0', 'menguan']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
       for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8;
       b.endPlayerPhase();
@@ -234,7 +255,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     for (const id of ['baoji', 'xl0', 'xl1', 'xl2']) get(id).hp = 1;
     const shown: string[] = [];
     for (let t = 1; t <= 9 && b.status === 'playing'; t++) {
-      if (b.turn === 1) { put(get('lehe'), 7, 3); put(get('gudasao'), 6, 4); }
+      if (b.turn === 1) { put(get('lehe'), 7, 3); put(get('gudasao'), 7, 4); get('xl1').stunTurns = 3; get('baoji').stunTurns = 3; }
       for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8;
       for (const e of b.endPlayerPhase()) if (e.type === 'objective') shown.push(e.lines.find((l) => l.startsWith('胜利条件'))!);
       const mg = get('menguan');
