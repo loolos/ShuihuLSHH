@@ -22,8 +22,48 @@ export const FX_EXPLOSION = 40;
 export const FX_IMPACT = 43;
 /** 石破天惊的目标火焰：王进技能（HUM skillId 16）effect3=17，转为零起始第16组；声音沿用17。 */
 export const FX_FIRE = 16;
-/** hitFx → 命中时在受击者格子上播的特效组 */
-export const HIT_FX_GROUP: Partial<Record<NonNullable<SkillDef['hitFx']>, number>> = { explosion: FX_EXPLOSION, impact: FX_IMPACT, fire: FX_FIRE };
+/**
+ * 命中特效（技能 hitFx）的一层：在受击者格子上播哪一组 Effect.lib，可以染色、缩放、叠加发光、晚几帧再播【新】。
+ * 新特效全是原版特效组的排列组合和换色（负责人 2026-11-25："排列组合、换颜色……但不要太花哨"），不加新图。
+ */
+export interface HitFxLayer {
+  group: number;
+  /** 乘色染色（白色部分变成这个颜色） */
+  tint?: number;
+  scale?: number;
+  alpha?: number;
+  /** 叠加混合（发光，暗边几乎看不见） */
+  add?: boolean;
+  /** 往上挪多少像素（星星绕在头上） */
+  lift?: number;
+  /** 比第一层晚几帧（EFFECT_FRAME_MS）再播 */
+  delay?: number;
+}
+export interface HitFxPreset {
+  layers: HitFxLayer[];
+  /** 多段技只在最后一段命中时播（光柱一类大特效，每段都播会叠成一片） */
+  lastOnly?: boolean;
+  /** 只在这一下真把人打昏时播 */
+  onStun?: boolean;
+}
+/** 蓝色光柱：原版 一刀兩斷 的第 24 组（命中处升起的蓝白光柱），缩到 3/4，柱子起来后迸一小撮冰蓝火花 */
+const ICE = 0xa8dcff;
+/** hitFx → 命中时在受击者格子上播的特效（blood 是程序画的溅血，不在这里） */
+export const HIT_FX: Partial<Record<NonNullable<SkillDef['hitFx']>, HitFxPreset>> = {
+  explosion: { layers: [{ group: FX_EXPLOSION }] },
+  impact: { layers: [{ group: FX_IMPACT }] },
+  fire: { layers: [{ group: FX_FIRE }] },
+  // 蓝色光柱（宋江 四海归心、武龍 一夫當關）：第 24 组 + 晚 4 帧的冰蓝火花（第 42 组白火花染冰蓝、缩小）
+  pillar: { lastOnly: true, layers: [{ group: 24, scale: 0.75 }, { group: 42, tint: ICE, scale: 0.6, delay: 4 }] },
+  // 金色佛光（魯智深 佛光普照）：同一根光柱染金、叠加发光，蓝边隐去只剩金光
+  gold: { lastOnly: true, layers: [{ group: 24, tint: 0xffb838, scale: 0.75, add: true, alpha: 0.9 }, { group: 43, scale: 0.6, delay: 4 }] },
+  // 寒光（黄信 寒锋五叠）：第 42 组白火花染冰蓝，每段都迸
+  frost: { layers: [{ group: 42, tint: ICE, scale: 0.85 }] },
+  // 打昏冒金星（解珍 钢叉叉虎）：原版没用过的第 2 组蓝色星环，缩小挂在头上
+  stars: { lastOnly: true, onStun: true, layers: [{ group: 2, scale: 0.5, lift: 52 }] },
+  // 震劲（石勇 一拳毙命）：反击用的第 37 组聚气爆光，染成淡红、缩小
+  shock: { layers: [{ group: 37, tint: 0xff9a80, scale: 0.6, lift: 24 }] },
+};
 
 export interface SkillFx {
   /** 第一段的组号；directional 时还要加上方向 0–3 */
@@ -142,8 +182,7 @@ export function fxChain(fx: SkillFx, dir: number, hasTarget: boolean, triggers: 
 
 /** 这个技能可能用到的全部组（按需下载用） */
 export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage' | 'hitFx'>): number[] {
-  const g = s.hitFx ? HIT_FX_GROUP[s.hitFx] : undefined;
-  const hit = g === undefined ? [] : [g];
+  const hit = s.hitFx ? [...new Set((HIT_FX[s.hitFx]?.layers ?? []).map((l) => l.group))] : [];
   const fx = skillFx(s);
   if (!fx) return hit;
   const out = fx.directional ? [0, 1, 2, 3].map((d) => fx.first + d) : [fx.first];

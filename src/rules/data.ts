@@ -6,6 +6,9 @@ import type { Item } from '../formats/goo.ts';
 import type { ExePrompt } from '../formats/exe.ts';
 import { GRUNT_CLASSES, OFFICER_CLASSES, statAt, tierGear } from './growth.ts';
 
+/** 技能命中特效名（§6.4.1） */
+export type HitFx = 'blood' | 'explosion' | 'impact' | 'fire' | 'pillar' | 'gold' | 'frost' | 'stars' | 'shock';
+
 export interface SkillDef extends ClassSkill {
   name: string;
   /** 自有后期技能：落点相对坐标 [横向, 前向]，随方向旋转；可含空心范围。 */
@@ -36,8 +39,9 @@ export interface SkillDef extends ClassSkill {
   areaOrigin?: 'target';
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
-  /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；只是画面 */
-  hitFx?: 'blood' | 'explosion' | 'impact' | 'fire';
+  /** 命中时在受击者身上加的简单画面效果【新】：blood = 溅血（玉环鸳鸯脚）、explosion = 爆炸（狂澜裂岳，Effect.lib 第 40 组）；
+   * 其余见 src/game/effects.ts HIT_FX（pillar 蓝色光柱、gold 金色佛光、frost 寒光、stars 打昏冒星、shock 震劲）；只是画面 */
+  hitFx?: HitFx;
   /** 遠程技飞行中的箭加画面效果【新】：fire = 火箭（箭头染成橙红、拖一串火苗，命中处冒一小团火；花荣 穿云贯日，负责人 2026-11-16）；只是画面 */
   arrowFx?: 'fire';
   /** 穿透【新】（遠程技，花荣 穿云贯日，负责人 2026-11-16）：施放点只定方向，从施放者身前一格起整条直线都受击，长 max(area, 到施放点的距离)；箭一路飞到线尾，不停在第一个目标 */
@@ -115,7 +119,7 @@ export const BASIC_ATTACK_HITS: Record<number, SkillHit[]> = {
  * 原版 LV1 威力 10，只比普通攻击 龍虎相搏（威力 5）高 5，比例公式下期望伤害只多约 8%；
  * LV2（60 气）还不如 3 级的 神龍擺尾（30 气）。气力消耗不变。
  */
-type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area' | 'rangedDamage'>>;
+type SkillOverride = Partial<Pick<SkillDef, 'power' | 'mpCost' | 'hitMod' | 'critMod' | 'hits' | 'stun' | 'rangeMax' | 'area' | 'rangedDamage' | 'hitFx'>>;
 export const SKILL_OVERRIDES: Record<number, SkillOverride> = {
   33: { power: 25, critMod: 15 }, // 原版 10 / 10
   34: { power: 45, critMod: 20 }, // 原版 30 / 15
@@ -152,8 +156,10 @@ const hitsAt = (frames: number[], percents: number[]) => frames.map((frame, i) =
 export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   // 单体技能本轮调整：保留原范围与解锁，仅好汉职业生效。
   56: { hitMod: 30, mpCost: 40 }, // 朱武 诡计多端
+  // 命中特效【新】（负责人 2026-11-25：加点蓝色光柱、原版特效换色组合，不要太花哨；src/game/effects.ts HIT_FX）
+  1315: { hitFx: 'pillar' }, // 一夫當關LV2
   106: { power: 60, hits: hitsAt([6, 8, 12, 15, 18], [20, 20, 20, 20, 20]) }, // 晁盖 天王举鼎式：五段
-  7: { power: 100, mpCost: 80 }, // 武龙 一夫当关
+  7: { power: 100, mpCost: 80, hitFx: 'pillar' }, // 武龙 一夫当关；命中特效：最后一段升起蓝色光柱
   20: { mpCost: 40, hits: hitsAt([11, 16, 21], [30, 30, 40]) }, // 公孙胜 神妙御剑心法
   33: { hitMod: 10 },
   65: { hits: hitsAt([12, 23], [40, 60]) }, // 冲太岁LV1，两段
@@ -178,7 +184,7 @@ export const HERO_SKILL_OVERRIDES: Record<number, SkillOverride> = {
   // 史進 龍爭虎鬥LV2 / LV3：耗气 60 → 35、130 → 55；出手动作是翻身飞踢（第 18 帧落地）
   34: { mpCost: 35, hitMod: 20, hits: hitsAt([12, 18], [40, 60]) }, // 两段：空中翻身 + 落地
   35: { mpCost: 55, hitMod: 30, hits: hitsAt([9, 13, 18], [30, 30, 40]) }, // 三段：扑出、空中翻身、落地
-  138: { mpCost: 70, power: 80, hitMod: 30 }, // 鲁智深 佛光普照：威力80、命中+30，耗气70
+  138: { mpCost: 70, power: 80, hitMod: 30, hitFx: 'gold' }, // 鲁智深 佛光普照：威力80、命中+30，耗气70；命中特效金色佛光
   136: { mpCost: 40 }, // 魯智深 殺身成佛 60 → 40
   123: { mpCost: 80, power: 100, hits: hitsAt([6, 12, 20, 27], [25, 25, 25, 25]) }, // 杨志 千刀万剮：威力100，四段，耗气80
   122: { mpCost: 45 }, // 楊志 快刀斬亂麻 100 → 45

@@ -17,7 +17,7 @@ import { cellToWorld, depthOf, HALF_H, HALF_W, worldToCell } from './iso.ts';
 import { Minimap, ringPoints, type MiniMark, type MiniZone, zoneCorners } from './minimap.ts';
 import { multiTouch, releaseStalePointers } from './touch.ts';
 import { coarseMask, OccluderIndex, type CoarseMask } from './occlusion.ts';
-import { dirIndex, FIXED_FX, FX_BLAZE, FX_COUNTER, FX_DEFEND, HIT_FX_GROUP, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
+import { dirIndex, FIXED_FX, FX_BLAZE, FX_COUNTER, FX_DEFEND, HIT_FX, type HitFxPreset, fxChain, fxGroups, fxSpots, skillFx } from './effects.ts';
 import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { batchFamily, batchLength } from './event-batch.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
@@ -1647,22 +1647,32 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
-  /** 命中特效（技能 hitFx）：在受击者格子上放一组特效，压在人物前面；放完自己消失 */
-  private hitEffect(cell: Cell, group: number, audible: boolean): Promise<void> {
-    const anim = effectAnim(this, this.assets, group);
-    if (audible) sound.effect(group);
-    if (!anim) return Promise.resolve();
+  /** 命中特效（技能 hitFx）：在受击者格子上按层放特效（可染色、缩放、叠加发光、晚几帧），压在人物前面；放完自己消失 */
+  private hitEffect(cell: Cell, preset: HitFxPreset, audible: boolean): Promise<void> {
     const p = cellToWorld(cell.x, cell.y);
-    const s = this.add.sprite(p.x, p.y, '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 11));
-    s.play(anim);
-    return new Promise<void>((r) => {
-      const done = () => {
-        if (s.active) s.destroy();
-        r();
-      };
-      s.once('animationcomplete', done);
-      this.time.delayedCall(3000, done);
-    });
+    return Promise.all(
+      preset.layers.map((l, li) => {
+        const anim = effectAnim(this, this.assets, l.group);
+        if (!anim) return Promise.resolve();
+        return new Promise<void>((r) => {
+          this.time.delayedCall((l.delay ?? 0) * EFFECT_FRAME_MS, () => {
+            if (audible && li === 0) sound.effect(l.group);
+            const s = this.add.sprite(p.x, p.y - (l.lift ?? 0), '__DEFAULT').setDepth(depthOf(cell.x, cell.y, 11));
+            if (l.scale !== undefined) s.setScale(l.scale);
+            if (l.alpha !== undefined) s.setAlpha(l.alpha);
+            if (l.tint !== undefined) s.setTint(l.tint);
+            if (l.add) s.setBlendMode(Phaser.BlendModes.ADD);
+            s.play(anim);
+            const done = () => {
+              if (s.active) s.destroy();
+              r();
+            };
+            s.once('animationcomplete', done);
+            this.time.delayedCall(3000, done);
+          });
+        });
+      }),
+    ).then(() => undefined);
   }
 
   /** 在格子上放一组固定特效（EXE 0x403860：直接指定组号），同时播特效音 <组号+1>（0x403880）；放完才返回 */
@@ -1917,8 +1927,10 @@ export class BattleScene extends Phaser.Scene {
                   if (dmg !== null && dmg > 0 && (lead || crit)) sound.hurt(crit);
                   if (dmg !== null && dmg > 0 && skill.hitFx === 'blood') this.bloodSplash(tv.x, tv.y, crit);
                   // 爆炸：每段命中都在受击者身上炸一次，不等它放完（声音只在受击动作那段出）
-                  const hg = skill.hitFx ? HIT_FX_GROUP[skill.hitFx] : undefined;
-                  if (dmg !== null && dmg > 0 && hg !== undefined) void this.hitEffect(tv, hg, lead);
+                  // 光柱一类（lastOnly）只在最后一段打中的那一下播
+                  const hp = skill.hitFx ? HIT_FX[skill.hitFx] : undefined;
+                  const lastLanded = perPart ? res.partHit.lastIndexOf(true) : frames.length - 1;
+                  if (dmg !== null && dmg > 0 && hp && (!hp.lastOnly || i === lastLanded) && (!hp.onStun || res.stunned)) void this.hitEffect(tv, hp, lead || !!hp.lastOnly);
                   if (dmg !== null && dmg > 0 && skill.arrowFx === 'fire') this.flames(cellToWorld(tv.x, tv.y).x, cellToWorld(tv.x, tv.y).y - 34, depthOf(tv.x, tv.y, 11), crit ? 16 : 10, true);
                   if (dmg !== null) {
                     const df = damageFloat(dmg, crit);
