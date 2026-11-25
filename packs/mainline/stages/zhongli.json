@@ -1,0 +1,185 @@
+{
+ "id": "zhongli",
+ "title": "赏粮钟离老人",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "zhujiazhuang"
+ },
+ "bgm": [
+  "manor",
+  "brothers",
+  "story"
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 31,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "宋江"
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "ally",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "吴用"
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "ally",
+   "x": 32,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "林冲"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 30,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 32,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 29,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 33,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "zhongli",
+   "class": "zhongli",
+   "side": "ally",
+   "x": 31,
+   "y": 17,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "name": "钟离老人",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "祝家庄 · 正厅"
+    ],
+    [
+     "narrate",
+     "宋江打破了祝家庄，查点庄上仓廒，得粮米五十万石。众头领都到正厅上来，献功请赏。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "这祝家庄三番两次和我梁山作对，独龙冈上这些村坊，都替他出过人马。依我的意思，不如把这村坊尽数洗荡了，不留一家，以绝后患！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥且慢！前番小弟扮做卖柴的来探路，多亏村里一个钟离老人，指点了白杨树的路径，又留小弟吃饭，小弟才没陷在盘陀路里。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "这村里也有似这等良善的人家，不可一概都杀了。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "原来有这等好人！快去请那位老人家来相见。"
+    ],
+    [
+     "appear",
+     "zhongli"
+    ],
+    [
+     "move",
+     "zhongli",
+     31,
+     12
+    ],
+    [
+     "face",
+     "zhongli",
+     "songjiang"
+    ],
+    [
+     "say",
+     "zhongli",
+     "小老儿钟离，拜见大王。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "老人家休慌。你当日指引石秀兄弟出路，宋江感激不尽。今日看你面上，饶了这一村百姓。"
+    ],
+    [
+     "narrate",
+     "宋江取一包金帛赏了钟离老人，又传令：庄上的粮米，独龙冈村坊每家分一石；余下的装载上车，都搬上梁山泊去。"
+    ],
+    [
+     "say",
+     "zhongli",
+     "大王仁义！小老儿替一村老小拜谢了！"
+    ],
+    [
+     "say",
+     "sunli",
+     "哥哥这一番恩义，强似杀了一千个庄客。"
+    ],
+    [
+     "narrate",
+     "独龙冈的百姓扶老挈幼，香花灯烛，跪在路旁拜谢。宋江收拾人马，一齐回梁山泊来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

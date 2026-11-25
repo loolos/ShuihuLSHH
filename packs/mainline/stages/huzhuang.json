@@ -1,0 +1,456 @@
+{
+ "id": "huzhuang",
+ "title": "黑旋风扈家庄",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "panduolu",
+  "crop": [
+   10,
+   28,
+   30,
+   12
+  ]
+ },
+ "bgm": [
+  "tense",
+  "brothers",
+  "story"
+ ],
+ "tint": "dusk",
+ "units": [
+  {
+   "id": "hucheng",
+   "class": "hucheng",
+   "side": "ally",
+   "x": 24,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "飞天虎扈成"
+  },
+  {
+   "id": "zhubiao",
+   "class": "zhubiao",
+   "side": "enemy",
+   "x": 23,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "祝彪"
+  },
+  {
+   "id": "hk1",
+   "class": 19,
+   "side": "ally",
+   "x": 25,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "扈家庄庄客"
+  },
+  {
+   "id": "hk2",
+   "class": 40,
+   "side": "ally",
+   "x": 25,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "扈家庄庄客"
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 3,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "ll1",
+   "class": 44,
+   "side": "ally",
+   "x": 2,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "ll2",
+   "class": 45,
+   "side": "ally",
+   "x": 2,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "ll3",
+   "class": 44,
+   "side": "ally",
+   "x": 1,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 9,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "宋江"
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "ally",
+   "x": 8,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "吴用"
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "ally",
+   "x": 8,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "林冲"
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 10,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "bind",
+     "zhubiao"
+    ],
+    [
+     "title",
+     "独龙冈东 · 扈家庄路口"
+    ],
+    [
+     "narrate",
+     "却说祝彪见庄子破了，单骑逃往扈家庄。扈成记着宋江营里许下的话，叫庄客把祝彪拿了，绑着解往宋江寨里来献。"
+    ],
+    [
+     "move",
+     "hucheng",
+     18,
+     9
+    ],
+    [
+     "move",
+     "zhubiao",
+     17,
+     9
+    ],
+    [
+     "move",
+     "hk1",
+     19,
+     8
+    ],
+    [
+     "move",
+     "hk2",
+     19,
+     10
+    ],
+    [
+     "narrate",
+     "行不到半路，只见对面一彪人马撞来，当先一个黑大汉，拿着两把板斧，正是黑旋风李逵。"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "appear",
+     "ll1"
+    ],
+    [
+     "appear",
+     "ll2"
+    ],
+    [
+     "appear",
+     "ll3"
+    ],
+    [
+     "move",
+     "likui",
+     13,
+     9
+    ],
+    [
+     "move",
+     "ll1",
+     12,
+     8
+    ],
+    [
+     "move",
+     "ll2",
+     12,
+     10
+    ],
+    [
+     "move",
+     "ll3",
+     11,
+     9
+    ],
+    [
+     "face",
+     "hucheng",
+     "likui"
+    ],
+    [
+     "say",
+     "hucheng",
+     "黑旋风休要动手！小人扈成，依着宋头领的言语，拿了祝彪，正要解去寨里献纳。"
+    ],
+    [
+     "say",
+     "likui",
+     "献甚么献！你那妹子捉了王矮虎，前番又要来拿俺哥哥！你扈家和祝家是一路的！"
+    ],
+    [
+     "approach",
+     "likui",
+     "zhubiao"
+    ],
+    [
+     "face",
+     "likui",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "黑厮！你……"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "zhubiao"
+    ],
+    [
+     "act",
+     "zhubiao",
+     "hurt"
+    ],
+    [
+     "narrate",
+     "李逵也不答话，抡起板斧，一斧砍翻了祝彪。"
+    ],
+    [
+     "leave",
+     "zhubiao"
+    ],
+    [
+     "face",
+     "likui",
+     "hucheng"
+    ],
+    [
+     "say",
+     "likui",
+     "还有你这厮！"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "hucheng"
+    ],
+    [
+     "act",
+     "hucheng",
+     "defend",
+     "likui"
+    ],
+    [
+     "say",
+     "hucheng",
+     "反了！反了！"
+    ],
+    [
+     "move",
+     "hucheng",
+     28,
+     9
+    ],
+    [
+     "leave",
+     "hucheng"
+    ],
+    [
+     "narrate",
+     "扈成见势头不好，撇了庄客，飞马逃走，弃家投延安府去了，后来在军中做了个军官。"
+    ],
+    [
+     "leave",
+     "hk1"
+    ],
+    [
+     "leave",
+     "hk2"
+    ],
+    [
+     "narrate",
+     "李逵只顾杀得手顺，直赶进扈家庄里，把扈太公一门老幼杀得干净，叫喽啰牵了马匹、打掳了财物，一把火烧了庄院。"
+    ],
+    [
+     "leave",
+     "likui"
+    ],
+    [
+     "leave",
+     "ll1"
+    ],
+    [
+     "leave",
+     "ll2"
+    ],
+    [
+     "leave",
+     "ll3"
+    ],
+    [
+     "title",
+     "祝家庄 · 宋江寨前"
+    ],
+    [
+     "appear",
+     "songjiang"
+    ],
+    [
+     "appear",
+     "wuyong"
+    ],
+    [
+     "appear",
+     "linchong"
+    ],
+    [
+     "appear",
+     "shixiu"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "move",
+     "likui",
+     12,
+     9
+    ],
+    [
+     "face",
+     "likui",
+     "songjiang"
+    ],
+    [
+     "face",
+     "songjiang",
+     "likui"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥，铁牛砍了祝彪，又杀了扈家一门，特来请功！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "祝彪是扈成拿了来献的，扈成已经降了我，谁叫你去扈家庄杀人？你违了我的将令，擅自杀他一家！"
+    ],
+    [
+     "say",
+     "likui",
+     "你便忘了，我却不忘！那一丈青捉了王矮虎，又要来拿你。她家和祝家结了亲，便是祝家一伙，留着做甚么！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "你这厮！左右，与我拿下，按军法处置！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥息怒。铁牛虽违了将令，砍了祝彪也是一功。如今用人之际，且饶他这一遭。"
+    ],
+    [
+     "say",
+     "linchong",
+     "哥哥，看众兄弟面上罢。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "罢！将功折罪，功过相抵，不赏也不罚。下次再敢擅自杀人，定斩不饶！"
+    ],
+    [
+     "say",
+     "likui",
+     "虽然没了功劳，也吃我杀得快活！"
+    ],
+    [
+     "narrate",
+     "众人都笑了。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

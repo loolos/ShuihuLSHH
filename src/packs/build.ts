@@ -405,13 +405,21 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
   const flagIds = new Map<string, number>();
   const flagRef = (v: unknown) => flagIds.get(String(v)) ?? flagIds.set(String(v), flagIds.size + 1).get(String(v))!;
   const blocks = stage.script.map((b, i) => compileBlock(b, i, { flagRef, charOf, classRef, unitRef, skillRef, hasUnit: (id) => byId.has(id), traps: stage.traps, tidBase: `${rt.id}/${stage.id}`, itemRef: (v) => (typeof v === 'number' ? v : (rt.itemIds.get(String(v)) ?? fail(`${stage.id}: 没有道具 ${String(v)}`))) }));
+  const idx = (id: unknown) => unitRef(id).act.index;
+  const cell = ([x, y]: [number, number]) => ({ x, y });
+  const sg = stage.siege;
+  const siege: StageInput['siege'] = sg && {
+    gates: sg.gates.map((g) => ({ door: idx(g.door), cells: g.cells.map(cell), guards: g.guards.map(idx), inner: g.inner.map(cell), name: g.name, ...(g.flag ? { flag: flagRef(g.flag) } : {}) })),
+    hp: sg.hp, wallY: sg.wallY, carts: sg.carts.map(cell), cartGuards: sg.cartGuards.map((l) => l.map(idx)),
+    ...(sg.snare ? { snare: { skills: sg.snare.skills.map(skillRef), pct: sg.snare.pct, spare: sg.snare.spare.map(classRef) } } : {}),
+  };
   const goals = compileGoals(stage, flagIds, flagRef);
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.units.some((u) => u.disguise || u.seer) ? { disguise: { units: stage.units.flatMap((u, i) => u.disguise ? [i] : []), seers: Object.fromEntries(stage.units.flatMap((u, i) => u.seer ? [[i, u.seer]] : [])), moves: Object.fromEntries(stage.units.flatMap((u, i) => u.disguiseMove ? [[i, u.disguiseMove]] : [])), ...(stage.disguise?.flag ? { flag: flagRef(stage.disguise.flag) } : {}) } } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])), ...(goals ? { goals } : {}) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.units.some((u) => u.disguise || u.seer) ? { disguise: { units: stage.units.flatMap((u, i) => u.disguise ? [i] : []), seers: Object.fromEntries(stage.units.flatMap((u, i) => u.seer ? [[i, u.seer]] : [])), moves: Object.fromEntries(stage.units.flatMap((u, i) => u.disguiseMove ? [[i, u.disguiseMove]] : [])), ...(stage.disguise?.flag ? { flag: flagRef(stage.disguise.flag) } : {}) } } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])), ...(goals ? { goals } : {}), ...(siege ? { siege } : {}), ...(stage.towers ? { towers: { cells: stage.towers.cells.map(cell), bonus: stage.towers.bonus } } : {}) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -723,6 +731,23 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         ops.push({ op: 126, flag: null, value: 0, args });
         break;
       }
+      case 'rout': {
+        // ['rout', {stun, panic, turns, spare}] 发号乱敌（指令 132）：在场的敌方小兵随机 stun% 昏迷、另外 panic% 逃窜 turns 回合【新】（三打祝家庄）
+        const o = (a[0] ?? {}) as { stun?: number; panic?: number; turns?: number; spare?: unknown[] };
+        if (typeof o !== 'object' || Array.isArray(o)) fail(`第 ${index} 个区块：rout 要写成 ["rout", {stun, panic, turns}]`);
+        const args = Object.fromEntries(Object.entries({ stun: o.stun, panic: o.panic, turns: o.turns, spare: o.spare?.map(r.classRef) }).filter(([, v]) => v !== undefined));
+        ops.push({ op: 132, flag: null, value: 0, args });
+        break;
+      }
+      case 'respawn': {
+        // ['respawn', [[单位…], …], {gates: [门号…], one}] 刷兵 / 补位（指令 133）【新】（三打祝家庄）：默认刷出第一组全都不在场的人；
+        // gates 写每组属于第几座门（门开了不刷，-1 = 不看门）；one = 只刷一个人（从第 回合数 % 组数 组起轮着找空岗）
+        const sets = a[0] as unknown[][];
+        const o = (a[1] ?? {}) as { gates?: number[]; one?: boolean };
+        if (!Array.isArray(sets) || !sets.every(Array.isArray)) fail(`第 ${index} 个区块：respawn 要写成 ["respawn", [[单位, …], …], {gates, one}]`);
+        ops.push({ op: 133, flag: null, value: 0, args: { sets: sets.map((l) => l.map((id) => r.unitRef(id).act.index)), ...(o.gates ? { gates: o.gates } : {}), ...(o.one ? { one: true } : {}) } });
+        break;
+      }
       case 'unseal': {
         // ['unseal', [[x, y], …]] 打开 map.seal 封死的格子（侯健骗开黄文炳家大门）（指令 127）【新】
         // ['unseal', [[x, y], …], {reach: [x, y]}]：另外再拽开几处 trap 设下的路障，直到原来能走的每一格路都通得到 (x, y)（盘陀路石秀带路）
@@ -750,6 +775,11 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // ['stealthEnd'] 潜行结束：哨兵不再警戒，已经发现的也不再判负（智取无为军骗开大门以后）【新】
         op(125);
         break;
+      case 'spectate':
+        // ['spectate', 谁, true | false] 改成观战（不能行动、不能被打）/ 回来参战（指令 123）【新】（三打祝家庄：宋江一队发号前列阵不动）
+        select(a[0]);
+        op(123, a[1] === false ? 0 : 1);
+        break;
       case 'wound': {
         // ['wound', 谁, 百分比] 剧情受伤（指令 128，李应中祝彪的回马箭）：生命降到最大值的这个百分比（已经更低就不动，至少留 1 点），不结算经验【新】
         const pct = Number(a[1]);
@@ -775,12 +805,12 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         break;
       }
       case 'bgm': {
-        // ['bgm', 歌单 | null, {sting}] 换背景曲（指令 132）【新】：歌单是一首或几首曲名（gamedata/bgm/index.json 的 tracks），
+        // ['bgm', 歌单 | null, {sting}] 换背景曲（指令 134）【新】：歌单是一首或几首曲名（gamedata/bgm/index.json 的 tracks），
         // null = 不换只插播；sting = 先插播一段短曲（如三打发号 signal）。负责人 2026-11-25：只在关键剧情用，别多用
         const list = a[0] === null || a[0] === undefined ? [] : Array.isArray(a[0]) ? a[0].map(String) : [String(a[0])];
         const sting = (a[1] as { sting?: string } | undefined)?.sting;
         if (!list.length && !sting) fail(`第 ${index} 个区块：bgm 要写歌单或 {sting}`);
-        op(132, 0, { args: { tracks: list, ...(sting ? { sting: String(sting) } : {}) } });
+        op(134, 0, { args: { tracks: list, ...(sting ? { sting: String(sting) } : {}) } });
         break;
       }
       case 'setAi':

@@ -1,4 +1,4 @@
-// 关卡中途按剧情换背景曲（扩展包指令 ["bgm", 歌单, {sting}]，指令 132；负责人 2026-11-25：只给关键剧情用）
+// 关卡中途按剧情换背景曲（扩展包指令 ["bgm", 歌单, {sting}]，指令 134；负责人 2026-11-25：只给关键剧情用）
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';

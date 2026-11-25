@@ -1,0 +1,287 @@
+{
+ "id": "liying-shangshan",
+ "title": "扑天雕李应上山",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "base": "Act14-2"
+ },
+ "bgm": [
+  "liangshan",
+  "join",
+  "brothers"
+ ],
+ "units": [
+  {
+   "id": "chaogai",
+   "class": 12,
+   "side": "ally",
+   "x": 9,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "晁盖"
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "ally",
+   "x": 8,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "吴用"
+  },
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 10,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "宋江"
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "ally",
+   "x": 11,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "name": "林冲"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "ally",
+   "x": 7,
+   "y": 10,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 11,
+   "y": 10,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 7,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8
+  },
+  {
+   "id": "wangying",
+   "class": "wangying",
+   "side": "ally",
+   "x": 11,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 8
+  },
+  {
+   "id": "xiaorang",
+   "class": "xiaorang",
+   "side": "ally",
+   "x": 9,
+   "y": 15,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true
+  },
+  {
+   "id": "liying",
+   "class": "liying",
+   "side": "ally",
+   "x": 9,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "扑天雕李应"
+  },
+  {
+   "id": "duxing",
+   "class": "duxing",
+   "side": "ally",
+   "x": 10,
+   "y": 14,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "鬼脸儿杜兴"
+  },
+  {
+   "id": "songtaigong",
+   "class": 27,
+   "side": "ally",
+   "x": 8,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "宋太公"
+  },
+  {
+   "id": "husanniang",
+   "class": "husanniang-bu",
+   "side": "ally",
+   "x": 9,
+   "y": 14,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "一丈青扈三娘"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "梁山泊 · 聚义厅"
+    ],
+    [
+     "narrate",
+     "宋江得胜回山，想起李家庄的李应曾助过石秀、杨雄，又被祝彪射了一箭，要请他上山入伙。只是李应推说箭疮未好，不肯相见。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "这个不难。小生自有计较。"
+    ],
+    [
+     "narrate",
+     "过了几日，只见一个知府带着孔目、虞候、节级和三五十个公人，到李家庄上，说李应私通梁山泊，把李应、杜兴锁了便走。"
+    ],
+    [
+     "narrate",
+     "行不到三十里，林子里一声锣响，宋江、林冲、花荣、杨雄、石秀一伙人马拦住去路，赶散了公人，把李应、杜兴「救」了，一径请上山来。"
+    ],
+    [
+     "appear",
+     "liying"
+    ],
+    [
+     "appear",
+     "duxing"
+    ],
+    [
+     "face",
+     "liying",
+     "songjiang"
+    ],
+    [
+     "say",
+     "liying",
+     "李应和梁山泊从不曾有甚么往来。如今被知府拿了，又被众位劫上山来，这私通的罪名，倒坐实了！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "大官人休怪。那知府不是别人——"
+    ],
+    [
+     "appear",
+     "xiaorang"
+    ],
+    [
+     "move",
+     "xiaorang",
+     10,
+     12
+    ],
+    [
+     "face",
+     "xiaorang",
+     "liying"
+    ],
+    [
+     "say",
+     "xiaorang",
+     "小生圣手书生萧让，冒犯大官人了。那孔目、虞候，都是山上的兄弟扮的。"
+    ],
+    [
+     "say",
+     "liying",
+     "你们……原来都是一伙！我的家小却在庄上……"
+    ],
+    [
+     "say",
+     "wuyong",
+     "大官人宽心。宅眷早已一并接上山来，庄院也已放火烧了。大官人便要回去，也没处安身了。"
+    ],
+    [
+     "say",
+     "duxing",
+     "主人，梁山泊众头领义气深重，不如就在此安身罢。"
+    ],
+    [
+     "say",
+     "liying",
+     "（叹）事已至此，李应只得从命了。"
+    ],
+    [
+     "narrate",
+     "晁盖大排筵席，庆贺新到的头领：李应、杜兴；孙立、孙新、顾大嫂、乐和、邹渊、邹润；解珍、解宝；还有从囚车里救出来的石秀、时迁、杨林、黄信、秦明、王英、邓飞。"
+    ],
+    [
+     "appear",
+     "songtaigong"
+    ],
+    [
+     "appear",
+     "husanniang"
+    ],
+    [
+     "say",
+     "songjiang",
+     "一丈青，我父亲宋太公收你做个义女。我王英兄弟一向未曾婚配，今日就许了他，你意下如何？"
+    ],
+    [
+     "say",
+     "husanniang",
+     "家里已没了亲人……小女子全凭宋头领做主。"
+    ],
+    [
+     "say",
+     "wangying",
+     "多谢哥哥！"
+    ],
+    [
+     "narrate",
+     "众人都称赞宋江仁德，说他是个有义气的人。当日筵席尽欢而散。祝家庄得来的粮米，都搬上山来，各寨分派安顿。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

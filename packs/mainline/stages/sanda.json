@@ -1,0 +1,11413 @@
+{
+ "id": "sanda",
+ "title": "宋公明三打祝家庄",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 2000
+ },
+ "map": {
+  "custom": "zhujiazhuang",
+  "seal": [
+   [
+    13,
+    22
+   ],
+   [
+    14,
+    22
+   ],
+   [
+    15,
+    22
+   ],
+   [
+    16,
+    22
+   ],
+   [
+    30,
+    22
+   ],
+   [
+    31,
+    22
+   ],
+   [
+    32,
+    22
+   ],
+   [
+    33,
+    22
+   ],
+   [
+    47,
+    22
+   ],
+   [
+    48,
+    22
+   ],
+   [
+    49,
+    22
+   ],
+   [
+    50,
+    22
+   ]
+  ]
+ },
+ "bgm": [
+  "battle2",
+  "manor",
+  "cavalry"
+ ],
+ "disguise": {
+  "flag": "revealed"
+ },
+ "towers": {
+  "cells": [
+   [
+    10,
+    21
+   ],
+   [
+    11,
+    21
+   ],
+   [
+    18,
+    21
+   ],
+   [
+    19,
+    21
+   ],
+   [
+    27,
+    21
+   ],
+   [
+    28,
+    21
+   ],
+   [
+    35,
+    21
+   ],
+   [
+    36,
+    21
+   ],
+   [
+    44,
+    21
+   ],
+   [
+    45,
+    21
+   ],
+   [
+    52,
+    21
+   ],
+   [
+    53,
+    21
+   ]
+  ],
+  "bonus": 6
+ },
+ "siege": {
+  "gates": [
+   {
+    "door": "door-west",
+    "cells": [
+     [
+      13,
+      22
+     ],
+     [
+      14,
+      22
+     ],
+     [
+      15,
+      22
+     ],
+     [
+      16,
+      22
+     ]
+    ],
+    "guards": [
+     "gd-west0",
+     "gd-west1",
+     "gd-west2",
+     "gd-west3"
+    ],
+    "inner": [
+     [
+      13,
+      21
+     ],
+     [
+      14,
+      21
+     ],
+     [
+      15,
+      21
+     ],
+     [
+      16,
+      21
+     ]
+    ],
+    "flag": "open-west",
+    "name": "西庄门"
+   },
+   {
+    "door": "door-front",
+    "cells": [
+     [
+      30,
+      22
+     ],
+     [
+      31,
+      22
+     ],
+     [
+      32,
+      22
+     ],
+     [
+      33,
+      22
+     ]
+    ],
+    "guards": [
+     "gd-front0",
+     "gd-front1",
+     "gd-front2",
+     "gd-front3"
+    ],
+    "inner": [
+     [
+      30,
+      21
+     ],
+     [
+      31,
+      21
+     ],
+     [
+      32,
+      21
+     ],
+     [
+      33,
+      21
+     ]
+    ],
+    "flag": "open-front",
+    "name": "前庄门"
+   },
+   {
+    "door": "door-east",
+    "cells": [
+     [
+      47,
+      22
+     ],
+     [
+      48,
+      22
+     ],
+     [
+      49,
+      22
+     ],
+     [
+      50,
+      22
+     ]
+    ],
+    "guards": [
+     "gd-east0",
+     "gd-east1",
+     "gd-east2",
+     "gd-east3"
+    ],
+    "inner": [
+     [
+      47,
+      21
+     ],
+     [
+      48,
+      21
+     ],
+     [
+      49,
+      21
+     ],
+     [
+      50,
+      21
+     ]
+    ],
+    "flag": "open-east",
+    "name": "东庄门"
+   }
+  ],
+  "hp": 1000,
+  "wallY": 22,
+  "carts": [
+   [
+    4,
+    5
+   ],
+   [
+    6,
+    5
+   ],
+   [
+    8,
+    5
+   ],
+   [
+    10,
+    5
+   ],
+   [
+    4,
+    8
+   ],
+   [
+    6,
+    8
+   ],
+   [
+    8,
+    8
+   ],
+   [
+    10,
+    8
+   ],
+   [
+    4,
+    11
+   ],
+   [
+    6,
+    11
+   ],
+   [
+    8,
+    11
+   ],
+   [
+    10,
+    11
+   ]
+  ],
+  "cartGuards": [
+   [
+    "cg00",
+    "cg01",
+    "cg02",
+    "cg03"
+   ],
+   [
+    "cg10",
+    "cg11",
+    "cg12",
+    "cg13"
+   ],
+   [
+    "cg20",
+    "cg21",
+    "cg22",
+    "cg23"
+   ]
+  ],
+  "snare": {
+   "skills": [
+    "ng-la",
+    "zt-la"
+   ],
+   "pct": 30,
+   "spare": [
+    "sj-fugitive"
+   ]
+  }
+ },
+ "goals": [
+  {
+   "lose": "宋江倒下；超过 50 回合"
+  },
+  {
+   "unless": "go",
+   "win": "等乐和吹铁叫子发号（最晚第 6 回合），里应外合，打倒祝家庄所有的人"
+  },
+  {
+   "if": "go",
+   "win": "打倒祝家庄里外所有敌人（祝彪逃走、栾廷玉离场都算）"
+  },
+  {
+   "unless": "go",
+   "hint": "孙立一伙带着「伪装」，庄客认不出，先把人摆到要紧处：庄门里侧、后院囚车、东边草料场。乐和用「铁叫子发号」，庄上小兵三成昏迷、三成乱窜两回合；没发号就先动手会被识破，庄上提前戒备，就没这个效果。宋江一队列阵等号，发号后归你指挥。"
+  },
+  {
+   "if": "go",
+   "hint": "庄门各有 1000 体力，可以从外面硬打；先打倒门里的守门庄客，回合结束时有人站在门里侧，就从里面打开（守门庄客隔着墙打不着）。门没开，门里每三回合冲出一队庄客，城楼上缺了弓手也会补上。"
+  },
+  {
+   "if": "go",
+   "unless": "fire",
+   "hint": "解珍或解宝回合结束时站在东边「草料场」里，就放火烧庄。"
+  },
+  {
+   "if": "go",
+   "hint": "挠钩手和庄客头目的「挠钩拖翻」会把体力三成以下的好汉拖进后院囚车（宋江除外）；我方的人走到囚车旁边就放出来。"
+  }
+ ],
+ "units": [
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 24,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "disguise": true
+  },
+  {
+   "id": "sunxin",
+   "class": "sunxin",
+   "side": "player",
+   "x": 25,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "disguise": true
+  },
+  {
+   "id": "gudasao",
+   "class": "gudasao",
+   "side": "player",
+   "x": 19,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "disguise": true
+  },
+  {
+   "id": "lehe",
+   "class": "lehe",
+   "side": "player",
+   "x": 26,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "disguise": true,
+   "skills": [
+    "lh-haoling"
+   ]
+  },
+  {
+   "id": "jiezhen",
+   "class": "jiezhen",
+   "side": "player",
+   "x": 45,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "disguise": true
+  },
+  {
+   "id": "jiebao",
+   "class": "jiebao",
+   "side": "player",
+   "x": 46,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "disguise": true
+  },
+  {
+   "id": "zouyuan",
+   "class": "zouyuan",
+   "side": "ally",
+   "x": 23,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "disguise": true,
+   "ai": 5,
+   "target": "sunli"
+  },
+  {
+   "id": "zourun",
+   "class": "zourun",
+   "side": "ally",
+   "x": 24,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "disguise": true,
+   "ai": 5,
+   "target": "sunli"
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 30,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "huarong",
+   "class": "huarong",
+   "side": "player",
+   "x": 33,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 15,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "lijun",
+   "class": "lijun",
+   "side": "player",
+   "x": 17,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 48,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "player",
+   "x": 46,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 31,
+   "y": 55,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "player",
+   "x": 32,
+   "y": 55,
+   "level": 30,
+   "facing": 0,
+   "spectator": true
+  },
+  {
+   "id": "songqing",
+   "class": "songqing",
+   "side": "ally",
+   "x": 30,
+   "y": 56,
+   "level": 30,
+   "facing": 0,
+   "ai": 15,
+   "target": "songjiang"
+  },
+  {
+   "id": "zhuwu",
+   "class": 5,
+   "side": "ally",
+   "x": 28,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "chenda",
+   "class": 13,
+   "side": "ally",
+   "x": 35,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "yangchun",
+   "class": 15,
+   "side": "ally",
+   "x": 31,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "lvfang",
+   "class": "lvfang",
+   "side": "ally",
+   "x": 12,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "guosheng",
+   "class": "guosheng",
+   "side": "ally",
+   "x": 19,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "ally",
+   "x": 15,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "mengkang",
+   "class": 55,
+   "side": "ally",
+   "x": 11,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "孟康"
+  },
+  {
+   "id": "peixuan",
+   "class": 36,
+   "side": "ally",
+   "x": 20,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "裴宣"
+  },
+  {
+   "id": "oupeng",
+   "class": 65,
+   "side": "ally",
+   "x": 51,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "欧鹏"
+  },
+  {
+   "id": "malin",
+   "class": "malin",
+   "side": "ally",
+   "x": 44,
+   "y": 40,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "lili",
+   "class": "lili",
+   "side": "ally",
+   "x": 48,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "xueyong",
+   "class": "xueyong",
+   "side": "ally",
+   "x": 52,
+   "y": 38,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "houjian",
+   "class": "houjian",
+   "side": "ally",
+   "x": 43,
+   "y": 39,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll1",
+   "class": 44,
+   "side": "ally",
+   "x": 13,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll2",
+   "class": 45,
+   "side": "ally",
+   "x": 15,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll3",
+   "class": 44,
+   "side": "ally",
+   "x": 13,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll4",
+   "class": 45,
+   "side": "ally",
+   "x": 15,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll5",
+   "class": 44,
+   "side": "ally",
+   "x": 14,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll6",
+   "class": 45,
+   "side": "ally",
+   "x": 16,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll7",
+   "class": 44,
+   "side": "ally",
+   "x": 30,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll8",
+   "class": 45,
+   "side": "ally",
+   "x": 32,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll9",
+   "class": 44,
+   "side": "ally",
+   "x": 30,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll10",
+   "class": 45,
+   "side": "ally",
+   "x": 32,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll11",
+   "class": 44,
+   "side": "ally",
+   "x": 31,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll12",
+   "class": 45,
+   "side": "ally",
+   "x": 33,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll13",
+   "class": 44,
+   "side": "ally",
+   "x": 47,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll14",
+   "class": 45,
+   "side": "ally",
+   "x": 49,
+   "y": 34,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll15",
+   "class": 44,
+   "side": "ally",
+   "x": 47,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll16",
+   "class": 45,
+   "side": "ally",
+   "x": 49,
+   "y": 35,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll17",
+   "class": 44,
+   "side": "ally",
+   "x": 48,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll18",
+   "class": 45,
+   "side": "ally",
+   "x": 50,
+   "y": 36,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll19",
+   "class": 44,
+   "side": "ally",
+   "x": 29,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll20",
+   "class": 45,
+   "side": "ally",
+   "x": 34,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll21",
+   "class": 44,
+   "side": "ally",
+   "x": 29,
+   "y": 58,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -2
+  },
+  {
+   "id": "ll22",
+   "class": 45,
+   "side": "ally",
+   "x": 34,
+   "y": 58,
+   "level": 30,
+   "facing": 0,
+   "ai": 2,
+   "levelOffset": -2
+  },
+  {
+   "id": "ruanxiaoer",
+   "class": 7,
+   "side": "ally",
+   "x": 28,
+   "y": 61,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll23",
+   "class": 44,
+   "side": "ally",
+   "x": 29,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll24",
+   "class": 45,
+   "side": "ally",
+   "x": 30,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ruanxiaowu",
+   "class": 8,
+   "side": "ally",
+   "x": 31,
+   "y": 61,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll25",
+   "class": 44,
+   "side": "ally",
+   "x": 32,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll26",
+   "class": 45,
+   "side": "ally",
+   "x": 33,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ruanxiaoqi",
+   "class": 9,
+   "side": "ally",
+   "x": 34,
+   "y": 61,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll27",
+   "class": 44,
+   "side": "ally",
+   "x": 35,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll28",
+   "class": 45,
+   "side": "ally",
+   "x": 36,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "muhong",
+   "class": "muhong",
+   "side": "ally",
+   "x": 1,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll29",
+   "class": 44,
+   "side": "ally",
+   "x": 1,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll30",
+   "class": 45,
+   "side": "ally",
+   "x": 4,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "muchun",
+   "class": "muchun",
+   "side": "ally",
+   "x": 3,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll31",
+   "class": 44,
+   "side": "ally",
+   "x": 6,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll32",
+   "class": 45,
+   "side": "ally",
+   "x": 6,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "yanshun",
+   "class": "yanshun",
+   "side": "ally",
+   "x": 62,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll33",
+   "class": 44,
+   "side": "ally",
+   "x": 61,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll34",
+   "class": 45,
+   "side": "ally",
+   "x": 61,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "shiyong",
+   "class": "shiyong",
+   "side": "ally",
+   "x": 59,
+   "y": 41,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll35",
+   "class": 44,
+   "side": "ally",
+   "x": 58,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll36",
+   "class": 45,
+   "side": "ally",
+   "x": 58,
+   "y": 42,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "zhangheng",
+   "class": "zhangheng",
+   "side": "ally",
+   "x": 27,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll37",
+   "class": 44,
+   "side": "ally",
+   "x": 28,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll38",
+   "class": 45,
+   "side": "ally",
+   "x": 29,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "zhangshun",
+   "class": "zhangshun",
+   "side": "ally",
+   "x": 30,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll39",
+   "class": 44,
+   "side": "ally",
+   "x": 31,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll40",
+   "class": 45,
+   "side": "ally",
+   "x": 32,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "tongwei",
+   "class": "tongwei",
+   "side": "ally",
+   "x": 33,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll41",
+   "class": 44,
+   "side": "ally",
+   "x": 34,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll42",
+   "class": 45,
+   "side": "ally",
+   "x": 35,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "tongmeng",
+   "class": "tongmeng",
+   "side": "ally",
+   "x": 36,
+   "y": 62,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "ai": 0,
+   "levelOffset": -1
+  },
+  {
+   "id": "ll43",
+   "class": 44,
+   "side": "ally",
+   "x": 37,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "ll44",
+   "class": 45,
+   "side": "ally",
+   "x": 38,
+   "y": 63,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -2,
+   "hidden": true
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 4,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "side": "player",
+   "x": 6,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true
+  },
+  {
+   "id": "huangxin",
+   "class": "huangxin",
+   "side": "player",
+   "x": 8,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true
+  },
+  {
+   "id": "shiqian",
+   "class": "shiqian",
+   "side": "ally",
+   "x": 10,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true,
+   "ai": 0
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "side": "ally",
+   "x": 4,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true,
+   "ai": 0,
+   "name": "杨林"
+  },
+  {
+   "id": "wangying",
+   "class": "wangying",
+   "side": "ally",
+   "x": 6,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true,
+   "ai": 0
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "ally",
+   "x": 8,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "prisonCart": true,
+   "spectator": true,
+   "ai": 0,
+   "name": "邓飞"
+  },
+  {
+   "id": "door-west",
+   "class": 19,
+   "side": "enemy",
+   "x": 14,
+   "y": 22,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "levelOffset": 0,
+   "name": "西庄门"
+  },
+  {
+   "id": "gd-west0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "gd-west1",
+   "class": 40,
+   "side": "enemy",
+   "x": 15,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-west2",
+   "class": 41,
+   "side": "enemy",
+   "x": 13,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-west3",
+   "class": 20,
+   "side": "enemy",
+   "x": 16,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "ar-west0",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-west1",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-west2",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-west3",
+   "class": 34,
+   "side": "enemy",
+   "x": 19,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-west4",
+   "class": 34,
+   "side": "enemy",
+   "x": 12,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-west5",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "w-west00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-west01",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west02",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west03",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west04",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-west11",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west12",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west13",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west14",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-west21",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west22",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west23",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west24",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-west31",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west32",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-west33",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-west34",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "door-front",
+   "class": 19,
+   "side": "enemy",
+   "x": 31,
+   "y": 22,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "levelOffset": 0,
+   "name": "前庄门"
+  },
+  {
+   "id": "gd-front0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "gd-front1",
+   "class": 40,
+   "side": "enemy",
+   "x": 32,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-front2",
+   "class": 41,
+   "side": "enemy",
+   "x": 30,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-front3",
+   "class": 20,
+   "side": "enemy",
+   "x": 33,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "ar-front0",
+   "class": 34,
+   "side": "enemy",
+   "x": 27,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-front1",
+   "class": 34,
+   "side": "enemy",
+   "x": 28,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-front2",
+   "class": 34,
+   "side": "enemy",
+   "x": 35,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-front3",
+   "class": 34,
+   "side": "enemy",
+   "x": 36,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-front4",
+   "class": 34,
+   "side": "enemy",
+   "x": 29,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-front5",
+   "class": 34,
+   "side": "enemy",
+   "x": 34,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "w-front00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-front01",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front02",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front03",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front04",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-front11",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front12",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front13",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front14",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-front21",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front22",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front23",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front24",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-front31",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front32",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-front33",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-front34",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "door-east",
+   "class": 19,
+   "side": "enemy",
+   "x": 48,
+   "y": 22,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "levelOffset": 0,
+   "name": "东庄门"
+  },
+  {
+   "id": "gd-east0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "gd-east1",
+   "class": 40,
+   "side": "enemy",
+   "x": 49,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-east2",
+   "class": 41,
+   "side": "enemy",
+   "x": 47,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "gd-east3",
+   "class": 20,
+   "side": "enemy",
+   "x": 50,
+   "y": 19,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "守门庄客"
+  },
+  {
+   "id": "ar-east0",
+   "class": 34,
+   "side": "enemy",
+   "x": 44,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-east1",
+   "class": 34,
+   "side": "enemy",
+   "x": 45,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-east2",
+   "class": 34,
+   "side": "enemy",
+   "x": 52,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-east3",
+   "class": 34,
+   "side": "enemy",
+   "x": 53,
+   "y": 21,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-east4",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "ar-east5",
+   "class": 34,
+   "side": "enemy",
+   "x": 51,
+   "y": 20,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "w-east00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-east01",
+   "class": 19,
+   "side": "enemy",
+   "x": 47,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east02",
+   "class": 40,
+   "side": "enemy",
+   "x": 50,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east03",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east04",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-east11",
+   "class": 19,
+   "side": "enemy",
+   "x": 47,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east12",
+   "class": 40,
+   "side": "enemy",
+   "x": 50,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east13",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east14",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-east21",
+   "class": 19,
+   "side": "enemy",
+   "x": 47,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east22",
+   "class": 40,
+   "side": "enemy",
+   "x": 50,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east23",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east24",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "w-east31",
+   "class": 19,
+   "side": "enemy",
+   "x": 47,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east32",
+   "class": 40,
+   "side": "enemy",
+   "x": 50,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "w-east33",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "w-east34",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "zhuhu",
+   "class": "zhuhu",
+   "side": "enemy",
+   "x": 15,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 1,
+   "name": "祝虎"
+  },
+  {
+   "id": "zhuhu-bg0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zhuhu-bg1",
+   "class": 19,
+   "side": "enemy",
+   "x": 16,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-bg2",
+   "class": 40,
+   "side": "enemy",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s0",
+   "class": 19,
+   "side": "enemy",
+   "x": 13,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s1",
+   "class": 40,
+   "side": "enemy",
+   "x": 14,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s2",
+   "class": 41,
+   "side": "enemy",
+   "x": 15,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s3",
+   "class": 20,
+   "side": "enemy",
+   "x": 16,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s4",
+   "class": 19,
+   "side": "enemy",
+   "x": 17,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "zhuhu-s6",
+   "class": 41,
+   "side": "enemy",
+   "x": 14,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-s7",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhuhu-ar0",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhuhu-ar1",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhuhu-cv0",
+   "class": 43,
+   "side": "enemy",
+   "x": 11,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhuhu-cv1",
+   "class": 43,
+   "side": "enemy",
+   "x": 11,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhuhu-cv2",
+   "class": 43,
+   "side": "enemy",
+   "x": 18,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhuhu-cv3",
+   "class": 43,
+   "side": "enemy",
+   "x": 19,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhubiao",
+   "class": "zhubiao",
+   "side": "enemy",
+   "x": 48,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 1,
+   "name": "祝彪"
+  },
+  {
+   "id": "zhubiao-bg0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 49,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zhubiao-bg1",
+   "class": 19,
+   "side": "enemy",
+   "x": 47,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-bg2",
+   "class": 40,
+   "side": "enemy",
+   "x": 48,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s0",
+   "class": 19,
+   "side": "enemy",
+   "x": 50,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s1",
+   "class": 40,
+   "side": "enemy",
+   "x": 49,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s2",
+   "class": 41,
+   "side": "enemy",
+   "x": 48,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s3",
+   "class": 20,
+   "side": "enemy",
+   "x": 47,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s4",
+   "class": 19,
+   "side": "enemy",
+   "x": 46,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "zhubiao-s6",
+   "class": 41,
+   "side": "enemy",
+   "x": 49,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-s7",
+   "class": 40,
+   "side": "enemy",
+   "x": 47,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhubiao-ar0",
+   "class": 34,
+   "side": "enemy",
+   "x": 50,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhubiao-ar1",
+   "class": 34,
+   "side": "enemy",
+   "x": 46,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhubiao-cv0",
+   "class": 43,
+   "side": "enemy",
+   "x": 52,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhubiao-cv1",
+   "class": 43,
+   "side": "enemy",
+   "x": 52,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhubiao-cv2",
+   "class": 43,
+   "side": "enemy",
+   "x": 44,
+   "y": 28,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhubiao-cv3",
+   "class": 43,
+   "side": "enemy",
+   "x": 45,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhulong",
+   "class": "zhulong",
+   "side": "enemy",
+   "x": 32,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 1,
+   "name": "祝龙"
+  },
+  {
+   "id": "zhulong-bg0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zhulong-bg1",
+   "class": 19,
+   "side": "enemy",
+   "x": 33,
+   "y": 18,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-bg2",
+   "class": 40,
+   "side": "enemy",
+   "x": 32,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zcf",
+   "class": "zhuchaofeng",
+   "side": "enemy",
+   "x": 31,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 1,
+   "name": "祝朝奉",
+   "hpMultiplier": 3
+  },
+  {
+   "id": "hall0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 29,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "hall1",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "hall2",
+   "class": 40,
+   "side": "enemy",
+   "x": 32,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "hall3",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 33,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "hall4",
+   "class": 34,
+   "side": "enemy",
+   "x": 30,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "hall5",
+   "class": 34,
+   "side": "enemy",
+   "x": 32,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "hall6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 28,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "hall7",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 34,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "luan",
+   "class": "luantingyu",
+   "side": "enemy",
+   "x": 40,
+   "y": 16,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 1,
+   "name": "铁棒栾廷玉"
+  },
+  {
+   "id": "luan0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 39,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "luan1",
+   "class": 19,
+   "side": "enemy",
+   "x": 41,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "luan2",
+   "class": 40,
+   "side": "enemy",
+   "x": 39,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "luan3",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 41,
+   "y": 17,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "yard0",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 5,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "庄客头目",
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "yard1",
+   "class": 19,
+   "side": "enemy",
+   "x": 9,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "yard2",
+   "class": 40,
+   "side": "enemy",
+   "x": 7,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "yard3",
+   "class": 41,
+   "side": "enemy",
+   "x": 11,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "yard4",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手"
+  },
+  {
+   "id": "yard5",
+   "class": 20,
+   "side": "enemy",
+   "x": 5,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "cg00",
+   "class": 19,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg01",
+   "class": 40,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg02",
+   "class": 41,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg03",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "cg10",
+   "class": 19,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg11",
+   "class": 40,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg12",
+   "class": 41,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg13",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "cg20",
+   "class": 19,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg21",
+   "class": 40,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg22",
+   "class": 41,
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "cg23",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "cao0",
+   "class": 19,
+   "side": "enemy",
+   "x": 52,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "cao1",
+   "class": 40,
+   "side": "enemy",
+   "x": 56,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "cao2",
+   "class": 41,
+   "side": "enemy",
+   "x": 59,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "cao3",
+   "class": 20,
+   "side": "enemy",
+   "x": 55,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": -1,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "amb5w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb10e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": -1,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "独龙冈 · 祝家庄"
+    ],
+    [
+     "narrate",
+     "第五日，宋江分调人马，四面来打祝家庄：林冲、花荣打前门，武龙、李俊打西门，李逵、杨雄打东门；宋江、吴用押着中军，在南边营寨里接应。"
+    ],
+    [
+     "narrate",
+     "祝家庄上，祝龙守前门，祝虎、祝彪各引一彪人马出了西门、东门，在吊桥外摆开；墙上城楼里排满了弓手。"
+    ],
+    [
+     "focus",
+     "songjiang"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥且按兵不动。孙立一伙已在庄里，只等乐和兄弟吹起铁叫子，里应外合，一鼓可破。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "全仗军师妙计。只教先锋喽啰去门前骂阵，众兄弟列阵不动，看庄里动静。"
+    ],
+    [
+     "focus",
+     "sunli"
+    ],
+    [
+     "say",
+     "sunli",
+     "（低声）众兄弟各去要紧处站定。不到乐和兄弟吹号，休要先动手。"
+    ],
+    [
+     "say",
+     "lehe",
+     "（低声）提辖放心，小弟看准了时候便吹。"
+    ],
+    [
+     "turnLimit",
+     50
+    ]
+   ]
+  },
+  {
+   "on": "start",
+   "do": [
+    [
+     "bind",
+     "shixiu"
+    ],
+    [
+     "bind",
+     "qinming"
+    ],
+    [
+     "bind",
+     "huangxin"
+    ],
+    [
+     "bind",
+     "shiqian"
+    ],
+    [
+     "bind",
+     "yanglin"
+    ],
+    [
+     "bind",
+     "wangying"
+    ],
+    [
+     "bind",
+     "dengfei"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "unless": "go",
+   "do": [
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "梁山泊草寇！前番走了你们，今番又来送死？哪个敢出来与我斗三合！"
+    ],
+    [
+     "say",
+     "likui",
+     "铁牛在此！吃我一斧！"
+    ],
+    [
+     "spectate",
+     "likui",
+     false
+    ],
+    [
+     "approach",
+     "likui",
+     "zhubiao"
+    ],
+    [
+     "face",
+     "zhubiao",
+     "likui"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "zhubiao"
+    ],
+    [
+     "act",
+     "zhubiao",
+     "defend",
+     "likui"
+    ],
+    [
+     "act",
+     "zhubiao",
+     "attack",
+     "likui"
+    ],
+    [
+     "act",
+     "likui",
+     "defend",
+     "zhubiao"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "zhubiao"
+    ],
+    [
+     "act",
+     "zhubiao",
+     "attack",
+     "likui"
+    ],
+    [
+     "narrate",
+     "两个斗了十数合，不分胜败。城楼上一阵乱箭射下来，李逵只得退回本阵。"
+    ],
+    [
+     "move",
+     "likui",
+     48,
+     39,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "likui",
+     0
+    ],
+    [
+     "spectate",
+     "likui",
+     true
+    ],
+    [
+     "say",
+     "zhubiao",
+     "黑厮，且饶你多活几日！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "used": "lehe",
+    "skills": [
+     "lh-haoling"
+    ]
+   },
+   "do": [
+    [
+     "focus",
+     "lehe"
+    ],
+    [
+     "narrate",
+     "乐和掣出铁叫子，一声长哨，响彻庄院。孙立一伙听得号响，一齐发作！"
+    ],
+    [
+     "rout",
+     {
+      "stun": 30,
+      "panic": 30,
+      "turns": 2
+     }
+    ],
+    [
+     "narrate",
+     "庄客们措手不及，一时大乱：有的被打翻在地，有的抱头乱窜。"
+    ],
+    [
+     "flag",
+     "signal"
+    ],
+    [
+     "flag",
+     "go"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "unless": "go",
+   "do": [
+    [
+     "focus",
+     "songjiang"
+    ],
+    [
+     "say",
+     "songjiang",
+     "庄里怎地还没动静？传令擂鼓，打进去！"
+    ],
+    [
+     "focus",
+     "lehe"
+    ],
+    [
+     "narrate",
+     "乐和听得庄外鼓响，不敢再等，掣出铁叫子吹将起来。孙立一伙一齐发作！"
+    ],
+    [
+     "rout",
+     {
+      "stun": 30,
+      "panic": 30,
+      "turns": 2
+     }
+    ],
+    [
+     "narrate",
+     "庄客们措手不及，一时大乱：有的被打翻在地，有的抱头乱窜。"
+    ],
+    [
+     "flag",
+     "signal"
+    ],
+    [
+     "flag",
+     "go"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "revealed"
+   },
+   "unless": "go",
+   "do": [
+    [
+     "narrate",
+     "内应还没等到号令就露了马脚，庄上鸣锣大叫：「有奸细！」孙立一伙只得提前发作。"
+    ],
+    [
+     "flag",
+     "go"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "go"
+   },
+   "do": [
+    [
+     "unmask",
+     "all"
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "lijun",
+     false
+    ],
+    [
+     "spectate",
+     "likui",
+     false
+    ],
+    [
+     "spectate",
+     "yangxiong",
+     false
+    ],
+    [
+     "spectate",
+     "songjiang",
+     false
+    ],
+    [
+     "spectate",
+     "wuyong",
+     false
+    ],
+    [
+     "setAi",
+     "zouyuan",
+     0
+    ],
+    [
+     "setAi",
+     "zourun",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s0",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s1",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s2",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s3",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s4",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s5",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s6",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-s7",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-ar0",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-ar1",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-cv0",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-cv1",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-cv2",
+     0
+    ],
+    [
+     "setAi",
+     "zhuhu-cv3",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s0",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s1",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s2",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s3",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s4",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s5",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s6",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-s7",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-ar0",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-ar1",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-cv0",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-cv1",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-cv2",
+     0
+    ],
+    [
+     "setAi",
+     "zhubiao-cv3",
+     0
+    ],
+    [
+     "setAi",
+     "zhuwu",
+     0
+    ],
+    [
+     "setAi",
+     "chenda",
+     0
+    ],
+    [
+     "setAi",
+     "yangchun",
+     0
+    ],
+    [
+     "setAi",
+     "lvfang",
+     0
+    ],
+    [
+     "setAi",
+     "guosheng",
+     0
+    ],
+    [
+     "setAi",
+     "daizong",
+     0
+    ],
+    [
+     "setAi",
+     "mengkang",
+     0
+    ],
+    [
+     "setAi",
+     "peixuan",
+     0
+    ],
+    [
+     "setAi",
+     "oupeng",
+     0
+    ],
+    [
+     "setAi",
+     "malin",
+     0
+    ],
+    [
+     "setAi",
+     "lili",
+     0
+    ],
+    [
+     "setAi",
+     "xueyong",
+     0
+    ],
+    [
+     "setAi",
+     "houjian",
+     0
+    ],
+    [
+     "say",
+     "songjiang",
+     "庄里火起了！众兄弟，三座庄门一齐打进去！"
+    ],
+    [
+     "setAi",
+     "songqing",
+     15
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "jiezhen",
+    "area": [
+     50,
+     3,
+     60,
+     13
+    ],
+    "label": "草料场",
+    "atTurnEnd": true
+   },
+   "if": "go",
+   "unless": "fire",
+   "do": [
+    [
+     "focus",
+     "jiezhen"
+    ],
+    [
+     "say",
+     "jiezhen",
+     "烧！叫这祝家庄先乱起来！"
+    ],
+    [
+     "fire",
+     [
+      [
+       51,
+       5
+      ],
+      [
+       54,
+       5
+      ],
+      [
+       57,
+       5
+      ],
+      [
+       52,
+       9
+      ],
+      [
+       55,
+       9
+      ],
+      [
+       58,
+       9
+      ]
+     ],
+     {
+      "panic": 8,
+      "turns": 2,
+      "spare": [
+       "zhulong",
+       "zhuhu",
+       "zhubiao",
+       "luantingyu",
+       "zhuchaofeng"
+      ],
+      "focus": true
+     }
+    ],
+    [
+     "narrate",
+     "草料场上烈焰冲天，庄客们见了，都慌了手脚。"
+    ],
+    [
+     "flag",
+     "fire"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "jiebao",
+    "area": [
+     50,
+     3,
+     60,
+     13
+    ],
+    "label": "草料场",
+    "atTurnEnd": true
+   },
+   "if": "go",
+   "unless": "fire",
+   "do": [
+    [
+     "focus",
+     "jiebao"
+    ],
+    [
+     "say",
+     "jiebao",
+     "烧！叫这祝家庄先乱起来！"
+    ],
+    [
+     "fire",
+     [
+      [
+       51,
+       5
+      ],
+      [
+       54,
+       5
+      ],
+      [
+       57,
+       5
+      ],
+      [
+       52,
+       9
+      ],
+      [
+       55,
+       9
+      ],
+      [
+       58,
+       9
+      ]
+     ],
+     {
+      "panic": 8,
+      "turns": 2,
+      "spare": [
+       "zhulong",
+       "zhuhu",
+       "zhubiao",
+       "luantingyu",
+       "zhuchaofeng"
+      ],
+      "focus": true
+     }
+    ],
+    [
+     "narrate",
+     "草料场上烈焰冲天，庄客们见了，都慌了手脚。"
+    ],
+    [
+     "flag",
+     "fire"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "luan",
+    "by": "sunli"
+   },
+   "if": "go",
+   "unless": "luanGone",
+   "do": [
+    [
+     "flag",
+     "luanGone"
+    ],
+    [
+     "focus",
+     "luan"
+    ],
+    [
+     "face",
+     "luan",
+     "sunli"
+    ],
+    [
+     "face",
+     "sunli",
+     "luan"
+    ],
+    [
+     "say",
+     "luan",
+     "孙立！你我同门学艺，你怎地做了梁山的奸细！"
+    ],
+    [
+     "say",
+     "sunli",
+     "师兄，祝家父子倚强凌弱，与梁山结下冤仇。小弟劝师兄一句：早早回头！"
+    ],
+    [
+     "say",
+     "luan",
+     "休得多言！看棒！"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "sunli"
+    ],
+    [
+     "act",
+     "sunli",
+     "defend",
+     "luan"
+    ],
+    [
+     "act",
+     "sunli",
+     "attack",
+     "luan"
+    ],
+    [
+     "act",
+     "luan",
+     "defend",
+     "sunli"
+    ],
+    [
+     "act",
+     "luan",
+     "attack",
+     "sunli"
+    ],
+    [
+     "act",
+     "sunli",
+     "attack",
+     "luan"
+    ],
+    [
+     "narrate",
+     "两个同门师兄弟，一个使铁棒，一个使钢鞭，斗了五十余合，不分胜败。庄里火起，四下喊声震天。"
+    ],
+    [
+     "say",
+     "luan",
+     "罢了！祝家庄气数已尽，我栾廷玉也不做这无义之人！"
+    ],
+    [
+     "narrate",
+     "栾廷玉虚晃一棒，跳出圈子，往庄后去了，从此不知所终。"
+    ],
+    [
+     "standDown",
+     "luan",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "luan",
+    "below": 20,
+    "spare": true
+   },
+   "unless": "luanGone",
+   "do": [
+    [
+     "flag",
+     "luanGone"
+    ],
+    [
+     "focus",
+     "luan"
+    ],
+    [
+     "say",
+     "luan",
+     "好！梁山泊果然人才济济……"
+    ],
+    [
+     "say",
+     "sunli",
+     "师兄！大势已去，休再为祝家卖命了！"
+    ],
+    [
+     "say",
+     "luan",
+     "孙立……你我各为其主，今日一别，后会无期。"
+    ],
+    [
+     "narrate",
+     "栾廷玉拖着铁棒，杀开一条路，往庄后去了，从此不知所终。"
+    ],
+    [
+     "standDown",
+     "luan",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhubiao",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "庄子保不住了……投扈家庄去！"
+    ],
+    [
+     "narrate",
+     "祝彪见势不好，拨转马头，往东边扈家庄去了。"
+    ],
+    [
+     "standDown",
+     "zhubiao",
+     {
+      "leave": true,
+      "reward": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zhulong"
+   },
+   "do": [
+    [
+     "say",
+     "linchong",
+     "祝龙已死！前门的庄客，降者免死！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zhuhu"
+   },
+   "do": [
+    [
+     "say",
+     "lvfang",
+     "祝虎倒了！"
+    ],
+    [
+     "say",
+     "guosheng",
+     "西门的庄客没了主将，杀进去！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "zcf"
+   },
+   "do": [
+    [
+     "say",
+     "shixiu",
+     "老贼！你将我打上囚车之时，可曾想到今日？"
+    ],
+    [
+     "narrate",
+     "祝朝奉死在正厅里，祝家庄群龙无首。"
+    ]
+   ]
+  },
+  {
+   "on": "enemiesDefeated",
+   "do": [
+    [
+     "narrate",
+     "祝家庄里外的庄客杀的杀、降的降，三座庄门都破了。宋江大队人马拥进庄来。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "这一番全仗孙提辖众位兄弟里应外合！石秀兄弟和众位兄弟受苦了。"
+    ],
+    [
+     "say",
+     "shixiu",
+     "哥哥，小弟们在囚车里只盼这一天！"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 1
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-east00",
+       "w-east01",
+       "w-east02",
+       "w-east03",
+       "w-east04"
+      ],
+      [
+       "w-east10",
+       "w-east11",
+       "w-east12",
+       "w-east13",
+       "w-east14"
+      ],
+      [
+       "w-east20",
+       "w-east21",
+       "w-east22",
+       "w-east23",
+       "w-east24"
+      ],
+      [
+       "w-east30",
+       "w-east31",
+       "w-east32",
+       "w-east33",
+       "w-east34"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-front00",
+       "w-front01",
+       "w-front02",
+       "w-front03",
+       "w-front04"
+      ],
+      [
+       "w-front10",
+       "w-front11",
+       "w-front12",
+       "w-front13",
+       "w-front14"
+      ],
+      [
+       "w-front20",
+       "w-front21",
+       "w-front22",
+       "w-front23",
+       "w-front24"
+      ],
+      [
+       "w-front30",
+       "w-front31",
+       "w-front32",
+       "w-front33",
+       "w-front34"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "w-west00",
+       "w-west01",
+       "w-west02",
+       "w-west03",
+       "w-west04"
+      ],
+      [
+       "w-west10",
+       "w-west11",
+       "w-west12",
+       "w-west13",
+       "w-west14"
+      ],
+      [
+       "w-west20",
+       "w-west21",
+       "w-west22",
+       "w-west23",
+       "w-west24"
+      ],
+      [
+       "w-west30",
+       "w-west31",
+       "w-west32",
+       "w-west33",
+       "w-west34"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "ar-west0"
+      ],
+      [
+       "ar-west1"
+      ],
+      [
+       "ar-west2"
+      ],
+      [
+       "ar-west3"
+      ],
+      [
+       "ar-west4"
+      ],
+      [
+       "ar-west5"
+      ],
+      [
+       "ar-front0"
+      ],
+      [
+       "ar-front1"
+      ],
+      [
+       "ar-front2"
+      ],
+      [
+       "ar-front3"
+      ],
+      [
+       "ar-front4"
+      ],
+      [
+       "ar-front5"
+      ],
+      [
+       "ar-east0"
+      ],
+      [
+       "ar-east1"
+      ],
+      [
+       "ar-east2"
+      ],
+      [
+       "ar-east3"
+      ],
+      [
+       "ar-east4"
+      ],
+      [
+       "ar-east5"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       2,
+       2,
+       2,
+       2,
+       2,
+       2
+      ],
+      "one": true
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "do": [
+    [
+     "focus",
+     "amb5w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb5w0"
+    ],
+    [
+     "appear",
+     "amb5w1"
+    ],
+    [
+     "appear",
+     "amb5w2"
+    ],
+    [
+     "appear",
+     "amb5e0"
+    ],
+    [
+     "appear",
+     "amb5e1"
+    ],
+    [
+     "appear",
+     "amb5e2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "do": [
+    [
+     "focus",
+     "amb10w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb10w0"
+    ],
+    [
+     "appear",
+     "amb10w1"
+    ],
+    [
+     "appear",
+     "amb10w2"
+    ],
+    [
+     "appear",
+     "amb10e0"
+    ],
+    [
+     "appear",
+     "amb10e1"
+    ],
+    [
+     "appear",
+     "amb10e2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "focus",
+     "ruanxiaoer"
+    ],
+    [
+     "narrate",
+     "阮氏三雄带着喽啰，从营寨后面赶来助战！"
+    ],
+    [
+     "appear",
+     "ruanxiaoer"
+    ],
+    [
+     "appear",
+     "ll23"
+    ],
+    [
+     "appear",
+     "ll24"
+    ],
+    [
+     "appear",
+     "ruanxiaowu"
+    ],
+    [
+     "appear",
+     "ll25"
+    ],
+    [
+     "appear",
+     "ll26"
+    ],
+    [
+     "appear",
+     "ruanxiaoqi"
+    ],
+    [
+     "appear",
+     "ll27"
+    ],
+    [
+     "appear",
+     "ll28"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "do": [
+    [
+     "focus",
+     "muhong"
+    ],
+    [
+     "narrate",
+     "穆弘、穆春兄弟引一队人马，从西边杀到！"
+    ],
+    [
+     "appear",
+     "muhong"
+    ],
+    [
+     "appear",
+     "ll29"
+    ],
+    [
+     "appear",
+     "ll30"
+    ],
+    [
+     "appear",
+     "muchun"
+    ],
+    [
+     "appear",
+     "ll31"
+    ],
+    [
+     "appear",
+     "ll32"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "do": [
+    [
+     "focus",
+     "yanshun"
+    ],
+    [
+     "narrate",
+     "燕顺、石勇带着喽啰，从东边杀到！"
+    ],
+    [
+     "appear",
+     "yanshun"
+    ],
+    [
+     "appear",
+     "ll33"
+    ],
+    [
+     "appear",
+     "ll34"
+    ],
+    [
+     "appear",
+     "shiyong"
+    ],
+    [
+     "appear",
+     "ll35"
+    ],
+    [
+     "appear",
+     "ll36"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "do": [
+    [
+     "focus",
+     "zhangheng"
+    ],
+    [
+     "narrate",
+     "浔阳江的张横、张顺、童威、童猛，带水军从营寨后面赶来！"
+    ],
+    [
+     "appear",
+     "zhangheng"
+    ],
+    [
+     "appear",
+     "ll37"
+    ],
+    [
+     "appear",
+     "ll38"
+    ],
+    [
+     "appear",
+     "zhangshun"
+    ],
+    [
+     "appear",
+     "ll39"
+    ],
+    [
+     "appear",
+     "ll40"
+    ],
+    [
+     "appear",
+     "tongwei"
+    ],
+    [
+     "appear",
+     "ll41"
+    ],
+    [
+     "appear",
+     "ll42"
+    ],
+    [
+     "appear",
+     "tongmeng"
+    ],
+    [
+     "appear",
+     "ll43"
+    ],
+    [
+     "appear",
+     "ll44"
+    ]
+   ]
+  }
+ ]
+}

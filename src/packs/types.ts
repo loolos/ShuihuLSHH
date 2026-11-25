@@ -197,6 +197,22 @@ export interface PackStageJson {
   /** base：借用的原版地图；custom：自拼地图 packs/maps/<名字>.json（§15.15）；crop：只用其中一块 [x, y, 宽, 高]（格子坐标，单位坐标相对这一块）；
    *  open：改成可通行的格子 [[x, y], …]（坐标同单位，例如让人从原版堵死的大门走出来） */
   map: ({ base: string; custom?: undefined } | { custom: string; base?: undefined }) & { crop?: [number, number, number, number]; open?: [number, number][]; /** 封死的格子（关着的大门），剧本 ["unseal", 格子] 打开【新】（智取无为军）；第三项写地上物图块号时画面上在这格摆它（盘陀路的路障），不写就用地图本来的图块 */ seal?: ([number, number] | [number, number, number])[] };
+  /** 城楼【新】（三打祝家庄，§15.34）：站在这些格子上的敌人，射程 ≥ 2 的攻击和招式再远 bonus 格（远程伤害按加长后的射程递减） */
+  towers?: { cells: [number, number][]; bonus: number };
+  /**
+   * 攻庄【新】（三打祝家庄，§15.34）：gates = 庄门（door 是站在门板格上、AI 8 的敌人，体力固定 hp；cells 是整扇门的格子，要写进 map.seal；
+   * guards 是门卫，不受墙外 y > wallY 的人伤害，都不在场了、回合结束时我方有人站在 inner 格上就从里面开门；开门设上 flag）；
+   * carts = 囚车格，snare.skills 打中体力 pct% 以下的我方好汉（spare 职业除外）拖进空囚车，囚车旁刷出 cartGuards 里还没在场的一组；
+   * 我方或友军走到囚车旁边放人（开场就关在车里的人写 prisonCart + spectator，站在囚车格上）
+   */
+  siege?: {
+    gates: { door: string; cells: [number, number][]; guards: string[]; inner: [number, number][]; flag?: string; name: string }[];
+    hp: number;
+    wallY: number;
+    carts: [number, number][];
+    cartGuards: string[][];
+    snare?: { skills: string[]; pct: number; spare: (string | number)[] };
+  };
   /** 路障候选路口【新】（盘陀路）：剧本 ["trap", …] 从这里挑离我方最近的堵上；tag 给 exclude 用 */
   traps?: { cells: [number, number][]; tag?: string; /** 这处路障的图块（不填用 trap 指令的 tile） */ tile?: number }[];
   /** 蹴鞠关（§15.25）【新】：攻击只能踢球；球场、球门、开球点、几球获胜、回合数 */
@@ -347,7 +363,7 @@ export type PackTrigger =
  * ["bind", 单位] 绑住（不能行动，直到 cleanse）；["cleanse", 单位] 解开绑缚、昏迷、中毒和减益，本回合马上能行动
  * ["choice", 提示, [选项文字, 标志], ...] 剧情选项（必须是区块最后一条）：玩家选一项就设那个标志，接着执行 { flag } 触发的区块；
  * ["setAi", 单位, 模式] 改 AI 模式；
- * ["bgm", 歌单 | null, {sting}] 换背景曲【新】（指令 132）：歌单写一首曲名或几首的数组（gamedata/bgm/index.json 的 tracks），null = 不换；
+ * ["bgm", 歌单 | null, {sting}] 换背景曲【新】（指令 134）：歌单写一首曲名或几首的数组（gamedata/bgm/index.json 的 tracks），null = 不换；
  *   sting = 先插播一段短曲（如三打发号）。时光倒流会跟着换回。只在关键剧情用（负责人 2026-11-25：用多了乱）；
  * ["wound", 单位, 百分比] 剧情受伤：生命降到最大值的这个百分比（已经更低就不动，至少留 1 点），飘「重伤」【新】（李应中箭）；
  * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
