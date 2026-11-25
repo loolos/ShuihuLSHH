@@ -99,7 +99,7 @@ for (const id of fs.readdirSync(path.join(ROOT, 'packs')).filter((d) => fs.exist
       x: b.units[i].x, y: b.units[i].y, side: b.units[i].side, present: b.units[i].present,
       facing: b.units[i].facing,
       label: u.id,
-      prop: !!u.spectator || spect.has(i),
+      prop: !!u.spectator || spect.has(i) || !!u.disguise, // 伪装的人敌人认不出，不算对手（三打祝家庄的内应）
       skip: b.units[i].x !== before[i].x || b.units[i].y !== before[i].y || b.units[i].facing !== before[i].facing || !b.units[i].alive || !!(u.spectator || u.watch || u.patrol || u.offstage || u.ai === 13 || u.ai === 8 && u.side !== 'enemy' || spect.has(i)),
     }));
     const file = path.join(ROOT, 'packs', id, 'stages', `${s.id}.json`);

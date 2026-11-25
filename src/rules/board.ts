@@ -54,8 +54,9 @@ export class Board {
    * 从 start 出发、预算 budget 内能到达的格子（BFS）。blocked 中的格子不能进入也不能穿越；
    * passThrough 中的格子（同阵营的我方/友军）可以穿越但不能停留，所以不出现在结果里，
    * 只记在下一个落脚格的 via 里（pathTo 会把它们放回路径）。返回 key → {cost, prev, via}，含起点。
+   * ghost 中的格子不管地形能不能走，都可以穿越、不能停留（三打祝家庄：敌人从关着的庄门里穿过）【新】。
    */
-  reach(start: Cell, budget: number, blocked: Set<string>, passThrough: Set<string> = new Set()): Map<string, ReachNode> {
+  reach(start: Cell, budget: number, blocked: Set<string>, passThrough: Set<string> = new Set(), ghost?: Set<string>): Map<string, ReachNode> {
     const out = new Map<string, ReachNode>();
     // 所有走到过的格子（含只能穿越的），用来还原路径
     const seen = new Map<string, { x: number; y: number; prev: string | null }>();
@@ -68,10 +69,10 @@ export class Board {
       for (const f of frontier)
         for (const d of DIRS) {
           const x = f.x + d.x, y = f.y + d.y, k = key(x, y);
-          if (seen.has(k) || !this.passable(x, y) || blocked.has(k)) continue;
+          if (seen.has(k) || blocked.has(k) || !(this.passable(x, y) || ghost?.has(k))) continue;
           seen.set(k, { x, y, prev: key(f.x, f.y) });
           next.push({ x, y });
-          if (passThrough.has(k)) continue;
+          if (passThrough.has(k) || ghost?.has(k)) continue;
           // 往回找到最近的落脚格，中间穿过的格子记进 via
           const via: Cell[] = [];
           let pk = key(f.x, f.y);
@@ -87,8 +88,8 @@ export class Board {
     return out;
   }
 
-  /** 到目标的地形距离场（忽略单位）。不可达为 Infinity。 */
-  distanceField(goals: Cell[]): Float32Array {
+  /** 到目标的地形距离场（忽略单位）。不可达为 Infinity。ghost：这些格子号（y * 宽 + x）也当能走【新】 */
+  distanceField(goals: Cell[], ghost?: ReadonlySet<number>): Float32Array {
     const d = new Float32Array(this.width * this.height).fill(Infinity);
     let frontier: Cell[] = [];
     for (const g of goals) if (this.inBounds(g.x, g.y)) {
@@ -100,7 +101,7 @@ export class Board {
       for (const f of frontier)
         for (const dir of DIRS) {
           const x = f.x + dir.x, y = f.y + dir.y;
-          if (!this.passable(x, y) || d[y * this.width + x] <= c) continue;
+          if (!(this.passable(x, y) || ghost?.has(y * this.width + x)) || d[y * this.width + x] <= c) continue;
           d[y * this.width + x] = c;
           next.push({ x, y });
         }

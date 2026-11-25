@@ -212,6 +212,10 @@ export interface StageInput {
   sealed?: { x: number; y: number; /** 画面上摆的地上物（路障），不填就是地图本来的图块（门板） */ tile?: number }[];
   /** 囚车外观的 ACT 序号，只影响表现。 */
   prisonCarts?: number[];
+  /** 城楼【新】（三打祝家庄，负责人 2026-11-25）：站在这些格子上的敌人，射程 ≥ 2 的普通攻击和招式射程再加 bonus 格 */
+  towers?: { cells: { x: number; y: number }[]; bonus: number };
+  /** 攻庄【新】（三打祝家庄，§15.34）：庄门、门卫、囚车、挠钩拖人 */
+  siege?: SiegeInput;
   /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
   fire?: FireInput;
   name: string;
@@ -256,6 +260,22 @@ export interface StageInput {
   royale?: { rules: RoyaleRules; teams: Record<number, number> };
   /** 分阶段的胜负条件【新】（扩展包 goals）：按剧本标志随时重算，见 Battle.syncGoals */
   goals?: BattleGoal[];
+}
+
+/**
+ * 攻庄【新】（三打祝家庄，负责人 2026-11-25，docs/game-design.md §15.34）。
+ * 庄门：门板格子（map.seal 封死）上站一个不会动的敌人「门」（door，体力固定 hp），挡住我方；敌人可以从关着的门里穿过、不能停在门上。
+ * 门被打到 0，或者这座门的门卫（guards）都不在场了、回合结束时我方有人站在门里侧（inner），门就打开（unseal，门板去掉），不再关上；设上 flag。
+ * 门卫不受墙外（y > wallY）的人伤害。挠钩（snare.skills）打中体力 pct% 以下的我方好汉（spare 除外），当场拖进一辆空囚车（carts），
+ * 囚车旁刷出一组看守（cartGuards 里还没在场的一组）；我方或友军走到囚车旁边就放出来。
+ */
+export interface SiegeInput {
+  gates: { door: number; cells: Cell[]; guards: number[]; inner: Cell[]; flag?: number; name: string }[];
+  hp: number;
+  wallY: number;
+  carts: Cell[];
+  cartGuards: number[][];
+  snare?: { skills: number[]; pct: number; spare: number[] };
 }
 
 /** 一个阶段的胜负条件：if 的标志都设上、unless 的都没设上时有效；win / lose 各取最后一个有效且写了这一项的（空数组 = 不显示），hint 列出全部有效的 */
@@ -376,6 +396,19 @@ export class Battle {
   private trapSeals: { x: number; y: number; tile?: number }[] = [];
   /** 已打开的封死格子（y * 宽 + x） */
   private unsealed = new Set<number>();
+  /** 敌人的兵 / 将（enemyRanks）：发号乱敌（指令 132）只挑兵 */
+  private readonly ranks = new Map<number, EnemyRank>();
+  /** 攻庄【新】 */
+  readonly siege?: SiegeInput;
+  /** 门：单位 → 第几座门 */
+  private readonly doors = new Map<number, number>();
+  /** 门卫 */
+  private readonly gateGuards = new Set<number>();
+  /** 开场的站位和 AI（respawn 重新刷出时用） */
+  private readonly homes = new Map<number, { x: number; y: number; ai: Unit['ai'] }>();
+  /** 城楼格子（y * 宽 + x）和射程加成【新】 */
+  readonly towerCells: ReadonlySet<number>;
+  private readonly towerBonus: number;
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
     return this.fired.has(index);
@@ -446,6 +479,13 @@ export class Battle {
     this.toasts = new Map(Object.entries(input.toasts ?? {}).map(([k, v]) => [Number(k), v]));
     this.sealed = input.sealed ?? [];
     this.prisonCarts = new Set(input.prisonCarts ?? []);
+    this.towerCells = new Set((input.towers?.cells ?? []).map((c) => c.y * input.board.width + c.x));
+    this.towerBonus = input.towers?.bonus ?? 0;
+    this.siege = input.siege;
+    input.siege?.gates.forEach((g, i) => {
+      this.doors.set(g.door, i);
+      for (const id of g.guards) this.gateGuards.add(id);
+    });
     if (input.fire) this.fire = new Fire(input.fire, input.board);
     this.name = input.name;
     this.clearGoldOverride = input.clearGold;
@@ -488,6 +528,7 @@ export class Battle {
       const join = a.side === 'player' && !kept ? (input.joinLevel ?? 0) : 0;
       // 正式战斗用兵/将相对区间；无角色策略的旧自定义输入仍保留原有等级保底。
       const rank = input.enemyRanks?.[a.index];
+      if (rank) this.ranks.set(a.index, rank);
       const level = a.side === 'enemy' && rank && heroAverage > 0 && ENEMY_LEVEL.floor
         ? relativeEnemyLevel(a.level, heroAverage, rank)
         : kept?.level ?? (a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1,a.level,join));
@@ -535,6 +576,16 @@ export class Battle {
       this.setupRoyale();
     }
     for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
+    for (const u of this.units) this.homes.set(u.uid, { x: u.x, y: u.y, ai: { ...u.ai, point: { ...u.ai.point } } });
+    // 庄门体力固定（不随等级变）【新】
+    for (const uid of this.doors.keys()) {
+      const u = this.unit(uid);
+      if (!u || !input.siege) continue;
+      u.hpMultiplier = (input.siege.hp * (u.hpMultiplier ?? 1)) / u.stats.maxHp;
+      refreshStats(u, this.data);
+      u.stats.maxHp = input.siege.hp;
+      u.hp = input.siege.hp;
+    }
     for (const uid of input.disguise?.units ?? []) {
       const u = this.unit(uid);
       if (u) u.disguised = true;
@@ -596,9 +647,15 @@ export class Battle {
     const blocked = new Set<string>(), pass = new Set<string>();
     for (const t of this.active()) {
       if (t === u) continue;
+      // 攻庄：门由下面的 ghost 管，敌人能穿过
+      if (u.side === 'enemy' && this.doors.has(t.uid)) continue;
       // 蹴鞠：两队一样，队友互相穿过、对手挡路
       const through = this.cuju ? t.side === u.side : u.side !== 'enemy' && t.side !== 'enemy';
       (through ? pass : blocked).add(key(t.x, t.y));
+    }
+    if (this.siege && u.side === 'enemy') {
+      const ghost = new Set(this.closedGateCells().map((i) => key(i % this.board.width, Math.floor(i / this.board.width))));
+      return this.board.reach(u, budget, blocked, pass, ghost);
     }
     if (this.cuju) {
       // 蹴鞠：球所在的格子能走过、不能停；最多走出球场一格（球门口不能站）
@@ -634,12 +691,12 @@ export class Battle {
   }
   attackTargets(u: Unit): Unit[] {
     if (!this.canAct(u) || u.acted || this.cuju) return [];
-    const r = attackRange(u, this.data);
+    const r = this.onTower(u, attackRange(u, this.data));
     return this.foesOf(u).filter((t) => inAttackRange(u, t, r));
   }
   /** 当前位置的攻击范围格子（显示用） */
   attackCells(u: Unit): Cell[] {
-    const [lo, hi] = attackRange(u, this.data);
+    const [lo, hi] = this.onTower(u, attackRange(u, this.data));
     const out: Cell[] = [];
     for (const d of DIRS)
       for (let k = lo; k <= hi; k++) if (this.board.inBounds(u.x + d.x * k, u.y + d.y * k)) out.push({ x: u.x + d.x * k, y: u.y + d.y * k });
@@ -666,7 +723,151 @@ export class Battle {
   }
   /** 施放距离内的全部格子（显示用）；at 为假设的站位 */
   skillCells(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
-    return castCells(this.board, at, castRange(u, skill, this.data), skill.targetShape);
+    return castCells(this.board, at, this.onTower(u, castRange(u, skill, this.data), at), skill.targetShape);
+  }
+  // ───────────── 攻庄【新】（三打祝家庄，§15.34） ─────────────
+
+  /** 第 i 座门开了没有（门板格子打开了） */
+  gateOpen(i: number): boolean {
+    const c = this.siege?.gates[i]?.cells[0];
+    return !c || this.unsealed.has(c.y * this.board.width + c.x);
+  }
+  /** 关着的门的格子号 */
+  private closedGateCells(): number[] {
+    return (this.siege?.gates ?? []).flatMap((g, i) => (this.gateOpen(i) ? [] : g.cells.map((c) => c.y * this.board.width + c.x)));
+  }
+  /** 这个人是不是门（画面上不画人，只画体力条） */
+  isDoor(uid: number) {
+    return this.doors.has(uid);
+  }
+  /** AI 用的地形距离场：敌人把关着的门当能走 */
+  fieldFor(u: Unit, goals: Cell[]) {
+    return this.board.distanceField(goals, this.siege && u.side === 'enemy' ? new Set(this.closedGateCells()) : undefined);
+  }
+  /** 门卫不受墙外的人伤害：t 是门卫、出手的人站在 at（墙外） */
+  walled(t: Unit, at: Cell): boolean {
+    return !!this.siege && this.gateGuards.has(t.uid) && at.y > this.siege.wallY;
+  }
+  /** 站在城楼上出手：射程加成也算进远程伤害的递减（1 格最高，加长后的最远一格最低）（负责人 2026-11-25 方案 2） */
+  towerSelf<T extends Unit>(u: T): T {
+    if (u.side !== 'enemy' || !this.towerBonus || !this.towerCells.has(u.y * this.board.width + u.x)) return u;
+    return { ...u, stats: { ...u.stats, rangeBonus: u.stats.rangeBonus + this.towerBonus } };
+  }
+  /** 开门：门板去掉、门（还在的话）退场、设上标志 */
+  private openGate(i: number, how: string) {
+    const g = this.siege?.gates[i];
+    if (!g || this.gateOpen(i)) return;
+    for (const c of g.cells) {
+      const k = c.y * this.board.width + c.x;
+      this.board.blocked[k] = 0;
+      this.unsealed.add(k);
+    }
+    const door = this.unit(g.door);
+    if (door?.alive && door.present) {
+      door.alive = false;
+      this.emit({ type: 'leave', uid: door.uid });
+    }
+    this.emit({ type: 'unseal', cells: g.cells.map((c) => ({ x: c.x, y: c.y })) });
+    this.emit({ type: 'message', text: `${g.name}${how}！` });
+    this.emit({ type: 'subtitle', text: `${g.name}${how}` });
+    if (g.flag !== undefined) this.flags.add(g.flag);
+  }
+  /** 回合结束：门卫都不在场、我方有人站在门里侧 → 开门 */
+  private insiderGates() {
+    this.siege?.gates.forEach((g, i) => {
+      if (this.gateOpen(i)) return;
+      if (g.guards.some((id) => { const u = this.unit(id); return u?.alive && u.present; })) return;
+      const hero = this.active().find((u) => u.side === 'player' && !this.spectators.has(u.uid) && !this.isBound(u) && g.inner.some((c) => c.x === u.x && c.y === u.y));
+      if (hero) this.openGate(i, `被${hero.name}从里面打开了`);
+    });
+  }
+  /** 重新刷出（已倒下或还没登场的）一个人：回到开场位置附近，血气回满，AI 照开场 */
+  private respawn(u: Unit) {
+    const home = this.homes.get(u.uid)!;
+    Object.assign(u, { alive: true, defending: false, poisonTurns: 0, stunTurns: 0, panicTurns: 0, buffs: [], x: home.x, y: home.y, ai: { ...home.ai, point: { ...home.ai.point } } });
+    this.ambushers.delete(u.uid);
+    refreshStats(u, this.data);
+    u.hp = u.stats.maxHp;
+    u.mp = u.stats.maxMp;
+    this.appear(u);
+  }
+  private offField(id: number) {
+    const u = this.unit(id);
+    return !!u && (!u.alive || (!u.present && !this.ambushers.has(u.uid)));
+  }
+  /**
+   * 133 刷兵 / 补位【新】：sets = 几组人（ACT 序号），gates = 每组属于第几座门（门开了这组就不刷）。
+   * 默认：挑第一组全都不在场的，整组刷出（每座门的一波出击）。one：只刷一个人，从第 (回合数 % 组数) 组起轮着找、
+   * 不在场且开场位置没人占的那个（弓手补位，每回合最多一个）。
+   */
+  private respawnSets(sets: number[][], gates: number[] = [], one = false) {
+    const ok = (k: number) => gates[k] === undefined || gates[k] < 0 || !this.gateOpen(gates[k]);
+    if (!one) {
+      const k = sets.findIndex((ids, j) => ok(j) && ids.every((id) => this.offField(id)));
+      if (k >= 0) for (const id of sets[k]) this.respawn(this.unit(id)!);
+      return;
+    }
+    const occ = this.occupied();
+    for (let n = 0; n < sets.length; n++) {
+      const k = (this.turn + n) % sets.length;
+      if (!ok(k)) continue;
+      const id = sets[k].find((x) => {
+        const h = this.homes.get(x);
+        return this.offField(x) && h && !occ.has(key(h.x, h.y));
+      });
+      if (id !== undefined) return this.respawn(this.unit(id)!);
+    }
+  }
+  /** 挠钩拖翻：拖进一辆空囚车，囚车旁刷出一组看守 */
+  private snare(t: Unit) {
+    const sg = this.siege!;
+    const occ = this.occupied(t);
+    const cart = sg.carts.find((c) => !occ.has(key(c.x, c.y)));
+    if (!cart) return;
+    this.emit({ type: 'status', uid: t.uid, text: '被挠钩拖翻！' });
+    this.emit({ type: 'message', text: `${t.name}被挠钩拖翻，押进了后院的囚车！` });
+    t.defending = false;
+    t.present = false;
+    this.emit({ type: 'leave', uid: t.uid });
+    t.x = cart.x;
+    t.y = cart.y;
+    t.present = true;
+    t.stunTurns = BOUND_TURNS;
+    t.turnStart = null;
+    (this.spectators as Set<number>).add(t.uid);
+    (this.prisonCarts as Set<number>).add(t.uid);
+    this.emit({ type: 'appear', uid: t.uid, x: t.x, y: t.y, ambush: false });
+    const set = sg.cartGuards.find((ids) => ids.every((id) => this.offField(id)));
+    for (const id of set ?? []) {
+      const g = this.unit(id)!;
+      this.homes.set(g.uid, { ...this.homes.get(g.uid)!, x: cart.x, y: cart.y });
+      this.respawn(g);
+    }
+  }
+  /** 我方或友军站到囚车旁边：放出车里的人 */
+  private freeCaptives() {
+    if (!this.siege) return;
+    for (const c of this.units) {
+      if (!c.alive || !c.present || !this.prisonCarts.has(c.uid) || !this.isBound(c)) continue;
+      const by = this.active().find((u) => (u.side === 'player' || u.side === 'ally') && u !== c && !this.spectators.has(u.uid) && !this.isBound(u) && dist(u, c) === 1);
+      if (!by) continue;
+      by.turnStart = null;
+      c.stunTurns = 0;
+      (this.spectators as Set<number>).delete(c.uid);
+      if (c.side === this.phase) {
+        c.ended = false;
+        c.acted = false;
+        c.movementRemaining = c.stats.move;
+      }
+      this.emit({ type: 'status', uid: c.uid, text: '解開' });
+      this.emit({ type: 'hp', uid: c.uid, hp: c.hp, mp: c.mp, delta: 0 });
+      this.emit({ type: 'message', text: `${by.name}打开囚车，救出了${c.name}！` });
+    }
+  }
+
+  /** 城楼加射程【新】（三打祝家庄）：敌人站在城楼格上，射程上限 ≥ 2 的再远 towerBonus 格（近战不变） */
+  onTower(u: Unit, [lo, hi]: [number, number], at: Cell = u): [number, number] {
+    return u.side === 'enemy' && hi >= 2 && this.towerCells.has(at.y * this.board.width + at.x) ? [lo, hi + this.towerBonus] : [lo, hi];
   }
   /** 施放点 cell 的作用范围 */
   skillArea(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Cell[] {
@@ -943,6 +1144,7 @@ export class Battle {
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
       spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
+      ...(this.siege ? { carts: [...this.prisonCarts], homes: [...this.homes] } : {}),
     });
   }
 
@@ -1016,6 +1218,8 @@ export class Battle {
     }
     if (this.fire || this.blaze.length) this.emit({ type: 'fire', cells: this.fireCells() });
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
+    if (s.carts) { const pc = this.prisonCarts as Set<number>; pc.clear(); for (const id of s.carts) pc.add(id); }
+    if (s.homes) for (const [id, h] of s.homes) this.homes.set(id, h);
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
     const prompt = this.data.prompts?.[0];
@@ -1025,6 +1229,7 @@ export class Battle {
 
   private startTurn(t: number) {
     this.turn = t;
+    if (t > 1) this.insiderGates();
     if (t > 1) this.runTurnTriggers(t - 1);
     if (this.status !== 'playing') return;
     if (this.cuju && this.cujuClock(t)) return;
@@ -1482,6 +1687,7 @@ export class Battle {
     u.y = last.y;
     u.facing = facingTowards(prev, last, u.facing);
     this.emit(script ? { type: 'move', uid: u.uid, path, facing: u.facing, script } : { type: 'move', uid: u.uid, path, facing: u.facing });
+    if (this.siege && u.side !== 'enemy') this.freeCaptives();
     // 原版只有我方在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），踩上宝箱才拾起。
     // 重制版【新：负责人 2026-11-12】：只有我方，走到宝箱上或上下左右相邻的格子（路过也算）就自动打开
     if (u.side !== 'player' && !this.royale) return; // 吃鸡：谁都能开宝箱
@@ -1548,7 +1754,8 @@ export class Battle {
       return;
     }
     const feint = this.tune?.feint;
-    const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : rollAttack(u, t, skill, this.rng, counter) }));
+    const att = this.towerSelf(u);
+    const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : this.walled(t, u) ? wallHit(skill) : rollAttack(att, t, skill, this.rng, counter) }));
     if (feint?.flag !== undefined && hits.some(({ t }) => u.classId === feint.by && t.classId === feint.target)) this.flags.add(feint.flag);
     if (!counter && hits.some(({ r }) => r.backstab !== 'front')) this.noteDid(u, 'flank');
     this.noteDid(u, did);
@@ -1586,7 +1793,7 @@ export class Battle {
         if (counter && u.side === 'player') exp += counterExp(this.rng);
         continue;
       }
-      if (r.poisoned && t.poisonTurns === 0 && !resists(t, 'resistPoison')) {
+      if (r.poisoned && t.poisonTurns === 0 && !resists(t, 'resistPoison') && !this.doors.has(t.uid)) {
         t.poisonTurns = this.rng.range(2, 4);
         refreshStats(t, this.data);
         this.emit({ type: 'status', uid: t.uid, text: '中毒了！' });
@@ -1597,12 +1804,15 @@ export class Battle {
         this.emit({ type: 'status', uid: t.uid, text: '醒過來了' });
         this.noteDid(t, 'wake');
       }
-      if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun')) {
+      if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun') && !this.doors.has(t.uid)) {
         t.stunTurns = skill.stunFor ?? this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
-      exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
+      if (!this.doors.has(t.uid)) exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
       if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng), 'taken');
+      // 挠钩拖翻【新】（三打祝家庄）
+      const sn = this.siege?.snare;
+      if (sn && t.side === 'player' && t.alive && sn.skills.includes(skill.skillId) && !sn.spare.includes(t.classId) && t.hp * 100 <= t.stats.maxHp * sn.pct) this.snare(t);
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
@@ -1659,6 +1869,9 @@ export class Battle {
     this.emit({ type: 'message', text: `${t.name}戰敗了。` });
     this.pendingDeaths.push(t.classId);
     if (this.royale) return this.royaleOut(t, u);
+    // 庄门打破【新】：不给银子、经验
+    const gate = this.doors.get(t.uid);
+    if (gate !== undefined) return this.openGate(gate, '被打破了');
     if (u.side === 'player' && t.side === 'enemy') {
       const gold = killGold(t.classId, this.data, this.rng);
       if (gold) {
@@ -2685,6 +2898,41 @@ export class Battle {
           this.emit({ type: 'status', uid: sel.uid, text: '重傷' });
           break;
         }
+        // 132 发号乱敌【新】（三打祝家庄：乐和按约定吹铁叫子，内应一齐动手，负责人 2026-11-25）：在场的敌方小兵（enemyRanks 为兵）里
+        // 随机 args.stun% 昏迷 args.turns 回合，另外随机 args.panic% 逃窜 args.turns 回合（两拨不重叠）；args.spare 不受影响的职业
+        case 132: {
+          const a = op.args ?? {};
+          const turns = a.turns ?? 2;
+          const pool = this.active().filter((u) => u.side === 'enemy' && !this.spectators.has(u.uid) && !this.isBound(u) && this.ranks.get(u.uid) === 'troop' && !a.spare?.includes(u.classId));
+          for (let i = pool.length - 1; i > 0; i--) {
+            const j = this.rng.int(i + 1);
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+          }
+          const nStun = Math.round((pool.length * (a.stun ?? 0)) / 100), nPanic = Math.round((pool.length * (a.panic ?? 0)) / 100);
+          for (const u of pool.slice(0, nStun)) {
+            u.stunTurns = Math.max(u.stunTurns, turns);
+            if (u.defending) {
+              u.defending = false;
+              this.emit({ type: 'defend', uid: u.uid, on: false });
+            }
+            this.emit({ type: 'status', uid: u.uid, text: '昏迷了！' });
+          }
+          for (const u of pool.slice(nStun, nStun + nPanic)) {
+            u.panicTurns = turns;
+            if (u.defending) {
+              u.defending = false;
+              this.emit({ type: 'defend', uid: u.uid, on: false });
+            }
+            this.emit({ type: 'status', uid: u.uid, text: '逃竄' });
+          }
+          break;
+        }
+        // 133 刷兵 / 补位【新】（三打祝家庄）：见 respawnSets
+        case 133: {
+          const a = op.args ?? {};
+          this.respawnSets(a.sets ?? [], a.gates, !!a.one);
+          break;
+        }
         // 130 去掉伪装 / 131 扮上伪装（扩展包【新】，劫牢、三打）：value 1 = 全部伪装的人；args.quiet = 不飘字
         case 130:
           this.scriptDisguise(false, op.value ? undefined : sel, !!op.args?.quiet);
@@ -3373,4 +3621,10 @@ export class Battle {
 function feintHit(skill: SkillDef): HitResult {
   const n = attackParts(skill).length;
   return { hit: true, crit: false, damage: 0, parts: Array(n).fill(0), partHit: Array(n).fill(true), partCrit: Array(n).fill(false), poisoned: false, stunned: false, backstab: 'front' };
+}
+
+/** 墙外打门卫【新】（三打祝家庄）：隔着庄墙打不着，算落空 */
+function wallHit(skill: SkillDef): HitResult {
+  const n = attackParts(skill).length;
+  return { hit: false, crit: false, damage: 0, parts: Array(n).fill(0), partHit: Array(n).fill(false), partCrit: Array(n).fill(false), poisoned: false, stunned: false, backstab: 'front' };
 }

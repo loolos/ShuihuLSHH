@@ -385,6 +385,8 @@ export class BattleScene extends Phaser.Scene {
       const pc = prisonCartCanvas(this.assets);
       cart = this.add.image(p.x, p.y, textureFor(this, 'prison-cart', () => pc.canvas)).setOrigin(pc.ax / pc.canvas.width, pc.ay / pc.canvas.height).setDepth(depthOf(v.x, v.y, 8) - 0.1);
     }
+    // 庄门【新】（三打祝家庄）：门板就是地图上的门，不画人，只画体力条
+    if (this.battle.isDoor(u.uid)) spr.setVisible(false);
     this.sprites.set(u.uid, { spr, bar, cart, head: classHead(this.assets, v.cls) });
     this.pose(u);
     return spr;

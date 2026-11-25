@@ -71,7 +71,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
   for (const n of reach.values()) {
     if (standOk && !standOk(n)) continue; // 只从这些格子出手（吃鸡：不站到毒圈外）
     const at = { x: n.x, y: n.y };
-    const self = { ...u, x: n.x, y: n.y };
+    const self = b.towerSelf({ ...u, x: n.x, y: n.y });
     for (const skill of skills)
       for (const cell of b.skillCells(u, skill, at)) {
         // 远射技选点多：落点附近（范围大小 + 1 以内）没有敌人就跳过
@@ -79,8 +79,11 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
         const hit = b.affected(u, skill, cell, at);
         // 绑住的人一律不碰：落点会波及被绑的人就不选【新】
         if (!hit.length || (only && !hit.includes(only)) || hit.some((t) => b.isBound(t))) continue;
+        // 门卫不受墙外的人伤害【新】（三打祝家庄）：从墙外打只打得着门卫的落点不选
+        if (hit.every((t) => b.walled(t, at))) continue;
         let expected = 0, kills = 0;
         for (const t of hit) {
+          if (b.walled(t, at)) continue;
           const p = previewAttack(self, t, skill);
           // 含命中、必杀概率，并按剩余体力截断；不预掷命中，不因耗气或少走路压过人数/伤害。
           expected += (p.hit / 100) * ((1 - p.crit / 100) * Math.min(t.hp, p.damage) + (p.crit / 100) * Math.min(t.hp, p.critDamage));
@@ -121,7 +124,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
 /** 朝目标移动：在移动范围内取离目标地形距离最近的格子（stopAt：到这个距离就停，如跟随时停在相邻格） */
 function approach(b: Battle, u: Unit, goals: Cell[], stopAt = 1, budget = u.stats.move): AiPlan {
   if (!goals.length) return {};
-  const field = b.board.distanceField(goals);
+  const field = b.fieldFor(u, goals);
   const reach = b.reachOf(u, budget);
   const w = b.board.width;
   let best: { x: number; y: number; cost: number } | null = null;
@@ -198,7 +201,7 @@ export function alertRadius(b: Battle, u: Unit): number {
   const skills = [attackSkill(u, b.data), ...learnedSkills(u, b.data)].filter(
     (s): s is SkillDef => !!s && !isSupportSkill(s) && !s.volley && !s.drug && s.mpCost <= u.mp,
   );
-  const reach = Math.max(0, ...skills.map((s) => castRange(u, s, b.data)[1] + s.area));
+  const reach = Math.max(0, ...skills.map((s) => b.onTower(u, castRange(u, s, b.data))[1] + s.area));
   return u.stats.move + reach;
 }
 
@@ -210,7 +213,7 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     const cells = [...reach.values()];
     return { path: b.pathOf(reach, cells[b.rng.int(cells.length)]) };
   }
-  const [, hi] = attackRange(u, b.data);
+  const [, hi] = b.onTower(u, attackRange(u, b.data));
   // 模式 5 跟随的 w8 = 0 是主角（角色 0）：N12 晁蓋就是这样跟着主角走的【推测：EXE 0x40c360 按角色号查找，0 也是合法角色号】。
   // 其它模式的 0 仍当"没指定"。
   const target = u.ai.target || u.ai.mode === 5 ? b.unitByChar(u.ai.target) : undefined;
@@ -252,7 +255,7 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       if (!target) return u.hp < u.stats.maxHp ? { rest: true } : {};
       if (u.hp < u.stats.maxHp) return { ...approach(b, u, [target], 1), rest: true };
       const plan = approach(b, u, [target], 1);
-      const field = b.board.distanceField([target]);
+      const field = b.fieldFor(u, [target]);
       const end = plan.path?.at(-1) ?? u;
       if (field[end.y * b.board.width + end.x] <= 1) return plan;
       const forced = approach(b, u, [target], 1, u.stats.move + forcedExtra(u));
@@ -280,7 +283,7 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       // 【新】逃跑（赌坊的赌徒）：不攻击；6 格内有敌对的人就往离所有敌对的人（按走路距离）最远的格子跑
       const foes = b.aiFoesOf(u);
       if (!foes.some((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= 6)) return {};
-      const field = b.board.distanceField(foes);
+      const field = b.fieldFor(u, foes);
       const reach = b.reachOf(u, u.stats.move);
       const w = b.board.width;
       let best: { x: number; y: number; cost: number } | null = null;
@@ -293,6 +296,16 @@ export function planAi(b: Battle, u: Unit): AiPlan {
         }
       }
       return best ? { path: b.pathOf(reach, best) } : {};
+    }
+    case 15: {
+      // 【新】保镖（三打祝家庄的宋清，负责人 2026-11-25）：跟着目标走；目标身边 4 格内有敌人，就站在目标 3 格以内出手
+      if (!target) return defaultPlan(b, u);
+      const near = (c: Cell) => Math.abs(c.x - target.x) + Math.abs(c.y - target.y);
+      if (b.aiFoesOf(u).some((t) => near(t) <= 4)) {
+        const hit = bestAttack(b, u, undefined, u.stats.move, (c) => near(c) <= 3);
+        if (hit) return hit;
+      }
+      return approach(b, u, [target], 1);
     }
     case 8: // 原地不动
       return {};
