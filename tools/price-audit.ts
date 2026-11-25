@@ -1,6 +1,6 @@
 // 物品价格审计（game-design §7.6）：按效果给每件商店货一个指导价，列出买价偏离太多的。
 // 用法：node --experimental-transform-types tools/price-audit.ts [--all]
-//   默认只列偏离超过 ±40% 的；--all 列全部。
+//   默认只列买价不在指导价 0.5–1.5 倍之间的；--all 列全部；--json 输出把它们挪进区间的改价表。
 //
 // 指导价怎么算：
 // - 装备：把各项效果按重制版规则折成「点数」（命中按 1/4 扣法、移动不扣，见 equipHitBonus / equipMoveBonus），
@@ -11,13 +11,20 @@
 // - 限时增益：小加值按 加值 × 回合 × 17 两（原版五种酒的平均）；+255 / 必杀 100% / 加移动这类质变的没法线性比，按同组比较给一个判断价。
 import { loadGameData } from '../src/rules/load.ts';
 import type { Item } from '../src/formats/goo.ts';
-import { equipHitBonus, equipMoveBonus, equipSlotOf, ITEM_OVERRIDES, itemBuffs } from '../src/rules/data.ts';
+import { equipHitBonus, equipMoveBonus, equipSlotOf, itemBuffs } from '../src/rules/data.ts';
 import { nodeGameFiles } from './sim-lib.ts';
 import t2s from '../gamedata/tables/t2s.json' with { type: 'json' };
+import goods from '../gamedata/tables/goods.json' with { type: 'json' };
 
 const conv = (s: string) => [...s].map((c) => (t2s as Record<string, string>)[c] ?? c).join('');
 const data = loadGameData(nodeGameFiles());
 const showAll = process.argv.includes('--all');
+const asJson = process.argv.includes('--json');
+/** 原版的买价（曲线只按原版本来就在商店卖的货拟合，重制版改过的价不影响指导价） */
+const ORIGINAL = new Map((goods as { id: number; category: number; buyPrice: number }[]).map((g) => [g.id, g.category > 0 ? g.buyPrice : 0]));
+/** 合理区间：买价在指导价的 0.5–1.5 倍之间（负责人 2026-11-25） */
+const LOW = 0.5;
+const HIGH = 1.5;
 
 const HP_RATE = 2.5;
 const MP_RATE = 2;
@@ -113,12 +120,12 @@ for (const it of shop) {
 
 interface Row { id: number; name: string; group: string; price: number; guide: number; note: string }
 const rows: Row[] = [];
-const curves = fitCurves(Object.fromEntries(Object.entries(groups).map(([g, l]) => [g, l.filter((it) => !ITEM_OVERRIDES[it.id]).map((it) => ({ x: equipPoints(it), p: it.buyPrice }))])));
+const curves = fitCurves(Object.fromEntries(Object.entries(groups).map(([g, l]) => [g, l.filter((it) => ORIGINAL.get(it.id)).map((it) => ({ x: equipPoints(it), p: ORIGINAL.get(it.id)! }))])));
 console.log(`装备：价 ∝ 点数^${curves.b.toFixed(2)}`);
 for (const [g, list] of Object.entries(groups)) {
   for (const it of list) {
     const x = equipPoints(it);
-    rows.push({ id: it.id, name: it.name, group: g, price: it.buyPrice, guide: Math.round(curves.at(g, x) / 10) * 10, note: `${x.toFixed(1)} 点${ITEM_OVERRIDES[it.id] ? '（重制版上架）' : ''}` });
+    rows.push({ id: it.id, name: it.name, group: g, price: it.buyPrice, guide: Math.round(curves.at(g, x) / 10) * 10, note: `${x.toFixed(1)} 点${ORIGINAL.get(it.id) ? '' : '（重制版上架）'}` });
   }
 }
 for (const it of shop) {
@@ -126,9 +133,20 @@ for (const it of shop) {
   if (c) rows.push({ id: it.id, name: it.name, group: '消耗品', price: it.buyPrice, guide: Math.max(10, Math.round(c[0] / 10) * 10), note: c[1] });
 }
 
-console.log('\n| 道具 | 类 | 买价 | 指导价 | 买价/指导 | 依据 |\n|---|---|---|---|---|---|');
-for (const r of rows) {
-  const ratio = r.price / r.guide;
-  if (!showAll && ratio < 1.4 && ratio > 1 / 1.4) continue;
-  console.log(`| ${r.id} ${conv(r.name)} | ${r.group} | ${r.price} | ${r.guide} | ${ratio.toFixed(2)}${ratio >= 1.4 ? ' 贵' : ratio <= 1 / 1.4 ? ' 便宜' : ''} | ${r.note} |`);
+if (asJson) {
+  // 落在区间外的，挪到最近的边上（取整到 10）
+  const fix = rows.flatMap((r) => {
+    if (r.price > r.guide * HIGH) return [{ id: r.id, name: conv(r.name), from: r.price, to: Math.floor((r.guide * HIGH) / 10) * 10 }];
+    if (r.price < r.guide * LOW) return [{ id: r.id, name: conv(r.name), from: r.price, to: Math.ceil((r.guide * LOW) / 10) * 10 }];
+    return [];
+  });
+  console.log(JSON.stringify(fix));
+} else {
+  console.log('\n| 道具 | 类 | 买价 | 指导价 | 买价/指导 | 依据 |\n|---|---|---|---|---|---|');
+  for (const r of rows) {
+    const ratio = r.price / r.guide;
+    const tag = ratio > HIGH ? ' 贵' : ratio < LOW ? ' 便宜' : '';
+    if (!showAll && !tag) continue;
+    console.log(`| ${r.id} ${conv(r.name)} | ${r.group} | ${r.price} | ${r.guide} | ${ratio.toFixed(2)}${tag} | ${r.note} |`);
+  }
 }
