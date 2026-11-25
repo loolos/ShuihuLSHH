@@ -32,6 +32,8 @@ export { expToNext } from './exp.ts';
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
 export const REST_DIVISOR = 5;
+/** 归队补级：老队员开场不低于本场我方平均等级减这么多（负责人 2026-11-25，吴用在三打祝家庄 29 级 vs 队伍 43） */
+export const CATCH_UP_GAP = 3;
 
 /**
  * 开局多带的道具【新】（负责人 2026-11-12）：第一关 N01 里武龍（0）、王進（1）各带 2 个狗皮膏藥（156），
@@ -514,7 +516,13 @@ export class Battle {
       const kept = input.party?.get(a.type);
       return kept?.level ?? Math.max(1, a.level, input.joinLevel ?? 0);
     };
-    const mine = input.units.filter((a) => a.side === 'player' && !this.spectators.has(a.index) && !this.prisonCarts.has(a.index) && this.board.onGround(a.x,a.y) && this.data.classes[a.type]?.skills.length).map(playerLevel);
+    const fighters = input.units.filter((a) => a.side === 'player' && !this.spectators.has(a.index) && !this.prisonCarts.has(a.index) && this.board.onGround(a.x,a.y) && this.data.classes[a.type]?.skills.length);
+    // 归队补级【新】（负责人 2026-11-25）：好几章没出场的老队员（如三打祝家庄才回来的吴用）还是离队时的等级，
+    // 存档里的等级低于本场我方平均 − CATCH_UP_GAP 的，开场抬到这条线（经验清零）；新入伙的人另按 joinLevel
+    const raw = fighters.map(playerLevel);
+    const catchUp = raw.length ? Math.round(raw.reduce((sum,n)=>sum+n,0)/raw.length) - CATCH_UP_GAP : 0;
+    const keptLevel = (kept: { level: number }) => Math.max(kept.level, catchUp);
+    const mine = fighters.map((a) => { const kept = input.party?.get(a.type); return kept ? keptLevel(kept) : playerLevel(a); });
     const heroAverage = mine.length ? mine.reduce((sum,n)=>sum+n,0)/mine.length : 0;
     const floor = enemyFloor(mine);
     for (const a of input.units) {
@@ -542,8 +550,8 @@ export class Battle {
       if (rank) this.ranks.set(a.index, rank);
       const level = a.side === 'enemy' && rank && heroAverage > 0 && ENEMY_LEVEL.floor
         ? relativeEnemyLevel(a.level, heroAverage, rank)
-        : kept?.level ?? (a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1,a.level,join));
-      const exp = kept?.exp ?? 0;
+        : (kept ? keptLevel(kept) : undefined) ?? (a.side === 'enemy' && a.level > 1 ? Math.max(a.level, floor) : Math.max(1,a.level,join));
+      const exp = kept && keptLevel(kept) > kept.level ? 0 : kept?.exp ?? 0;
       // ACT 读入（EXE 0x4032cc 起）：flags 低字节非 0 → 隐藏（0x20000）；模式 7 → 隐藏并改为 0；模式 6/9 → 埋伏（0x40000）
       let mode = a.flags >> 8;
       let hidden = (a.flags & 0xff) !== 0;
