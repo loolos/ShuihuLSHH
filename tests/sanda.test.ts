@@ -2,7 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { Battle } from '../src/rules/battle.ts';
+import { Battle, CATCH_UP_GAP } from '../src/rules/battle.ts';
+import entryLevels from '../src/data/entry-levels.json' with { type: 'json' };
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import { learnedSkills } from '../src/rules/skills.ts';
@@ -50,9 +51,26 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
   it('选关直接进独龙冈营寨：每人按大仗的入场等级，不是一律 28 级', () => {
     const c = prepareInsertTown({ ...newCampaign(22), members: [] }, rt, 'mainline/ruzhuang');
     const lv = (id: string | number) => c.members.find((m) => m.classId === (typeof id === 'number' ? id : rt.classIds.get(id)))!.level;
-    expect(lv('sunli')).toBe(43);
-    expect(lv(0)).toBe(51);
+    const table = (entryLevels.levels as Record<string, Record<string, number>>)['mainline/sanda'];
+    expect(lv('sunli')).toBe(table.sunli);
+    expect(lv(0)).toBe(table['0']);
     expect(Math.min(...c.members.map((m) => m.level))).toBeGreaterThan(28);
+    // 归队补级：吴用（10）好几章没出场，也不会比大家低一截（负责人 2026-11-25 选关看到 29 级）
+    const avg = c.members.reduce((a, m) => a + m.level, 0) / c.members.length;
+    expect(lv(10)).toBeGreaterThanOrEqual(Math.round(avg) - CATCH_UP_GAP - 1);
+  });
+
+  it('归队补级：存档里落后的老队员开场抬到本场我方平均 − CATCH_UP_GAP，经验清零', () => {
+    const stage = rt.stages.find((s) => s.id === 'sanda')!;
+    const ids = [...new Set(stage.units.filter((u) => u.side === 'player').map((u) => typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!))];
+    const party = new Map(ids.map((classId) => [classId, { classId, level: classId === 10 ? 29 : 43, exp: 50, slots: [...rt.data.classes[classId].defaultItems], forge: [] }]));
+    const b = new Battle(compileStage(rt, stage, files, { seed: 1, party }));
+    const wu = b.units.find((u) => u.side === 'player' && u.classId === 10)!;
+    expect(wu.level).toBeGreaterThanOrEqual(43 - CATCH_UP_GAP - 1);
+    expect(wu.exp).toBe(0);
+    const other = b.units.find((u) => u.side === 'player' && u.classId !== 10 && party.has(u.classId))!;
+    expect(other.level).toBe(43);
+    expect(other.exp).toBe(50);
   });
 
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
