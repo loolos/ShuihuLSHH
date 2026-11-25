@@ -9,13 +9,13 @@
   "custom": "zhujiazhuang",
   "seal": [
    [
-    30,
-    41,
+    31,
+    22,
     580
    ],
    [
-    31,
-    41,
+    32,
+    22,
     580
    ]
   ]
@@ -29,8 +29,8 @@
    "id": "sunli",
    "class": "sunli",
    "side": "player",
-   "x": 30,
-   "y": 51,
+   "x": 31,
+   "y": 34,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -39,8 +39,8 @@
    "id": "shixiu",
    "class": "shixiu",
    "side": "player",
-   "x": 31,
-   "y": 50,
+   "x": 32,
+   "y": 33,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -49,8 +49,8 @@
    "id": "sunxin",
    "class": "sunxin",
    "side": "player",
-   "x": 31,
-   "y": 52,
+   "x": 32,
+   "y": 35,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -59,8 +59,8 @@
    "id": "gudasao",
    "class": "gudasao",
    "side": "player",
-   "x": 32,
-   "y": 52,
+   "x": 33,
+   "y": 35,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -69,8 +69,8 @@
    "id": "lehe",
    "class": "lehe",
    "side": "player",
-   "x": 29,
-   "y": 52,
+   "x": 30,
+   "y": 35,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -79,8 +79,8 @@
    "id": "jiezhen",
    "class": "jiezhen",
    "side": "player",
-   "x": 30,
-   "y": 53,
+   "x": 31,
+   "y": 36,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -89,8 +89,8 @@
    "id": "jiebao",
    "class": "jiebao",
    "side": "player",
-   "x": 31,
-   "y": 53,
+   "x": 32,
+   "y": 36,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -99,8 +99,8 @@
    "id": "zouyuan",
    "class": "zouyuan",
    "side": "ally",
-   "x": 29,
-   "y": 54,
+   "x": 30,
+   "y": 37,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -109,8 +109,8 @@
    "id": "zourun",
    "class": "zourun",
    "side": "ally",
-   "x": 32,
-   "y": 54,
+   "x": 33,
+   "y": 37,
    "level": 30,
    "facing": 0,
    "ai": 8
@@ -119,8 +119,8 @@
    "id": "luan",
    "class": "luantingyu",
    "side": "enemy",
-   "x": 30,
-   "y": 38,
+   "x": 31,
+   "y": 19,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -130,8 +130,8 @@
    "id": "zcf",
    "class": "zhuchaofeng",
    "side": "enemy",
-   "x": 27,
-   "y": 26,
+   "x": 28,
+   "y": 15,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -141,8 +141,8 @@
    "id": "zhulong",
    "class": "zhulong",
    "side": "enemy",
-   "x": 25,
-   "y": 27,
+   "x": 26,
+   "y": 16,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -152,8 +152,8 @@
    "id": "zhuhu",
    "class": "zhuhu",
    "side": "enemy",
-   "x": 29,
-   "y": 26,
+   "x": 30,
+   "y": 15,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -163,8 +163,8 @@
    "id": "zhubiao",
    "class": "zhubiao",
    "side": "enemy",
-   "x": 28,
-   "y": 27,
+   "x": 29,
+   "y": 16,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -174,8 +174,8 @@
    "id": "zk1",
    "class": 19,
    "side": "enemy",
-   "x": 28,
-   "y": 39,
+   "x": 29,
+   "y": 21,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -185,8 +185,8 @@
    "id": "zk2",
    "class": 19,
    "side": "enemy",
-   "x": 33,
-   "y": 39,
+   "x": 34,
+   "y": 21,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -196,8 +196,8 @@
    "id": "zk3",
    "class": 19,
    "side": "enemy",
-   "x": 29,
-   "y": 37,
+   "x": 27,
+   "y": 19,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -207,8 +207,8 @@
    "id": "zk4",
    "class": 19,
    "side": "enemy",
-   "x": 32,
-   "y": 37,
+   "x": 35,
+   "y": 19,
    "level": 30,
    "facing": 2,
    "ai": 8,
@@ -252,56 +252,56 @@
     [
      "move",
      "sunli",
-     30,
-     46
+     31,
+     27
     ],
     [
      "move",
      "shixiu",
-     31,
-     45
+     32,
+     26
     ],
     [
      "move",
      "lehe",
-     29,
-     47
+     30,
+     28
     ],
     [
      "move",
      "sunxin",
-     31,
-     47
+     32,
+     28
     ],
     [
      "move",
      "gudasao",
-     32,
-     47
+     33,
+     28
     ],
     [
      "move",
      "jiezhen",
-     30,
-     48
+     31,
+     29
     ],
     [
      "move",
      "jiebao",
-     31,
-     48
+     32,
+     29
     ],
     [
      "move",
      "zouyuan",
-     29,
-     48
+     30,
+     29
     ],
     [
      "move",
      "zourun",
-     32,
-     48
+     33,
+     29
     ],
     [
      "say",
@@ -316,20 +316,20 @@
      "unseal",
      [
       [
-       30,
-       41
+       31,
+       22
       ],
       [
-       31,
-       41
+       32,
+       22
       ]
      ]
     ],
     [
      "move",
      "luan",
-     30,
-     44
+     31,
+     24
     ],
     [
      "face",
@@ -364,62 +364,62 @@
     [
      "move",
      "luan",
-     29,
-     29
+     30,
+     18
     ],
     [
      "move",
      "sunli",
-     28,
-     29
+     29,
+     18
     ],
     [
      "move",
      "shixiu",
-     30,
-     31
+     31,
+     19
     ],
     [
      "move",
      "lehe",
-     27,
-     31
+     28,
+     19
     ],
     [
      "move",
      "sunxin",
-     28,
-     31
+     29,
+     19
     ],
     [
      "move",
      "gudasao",
-     29,
-     31
+     30,
+     19
     ],
     [
      "move",
      "jiezhen",
-     27,
-     32
+     28,
+     20
     ],
     [
      "move",
      "jiebao",
-     28,
-     32
+     29,
+     20
     ],
     [
      "move",
      "zouyuan",
-     29,
-     32
+     30,
+     20
     ],
     [
      "move",
      "zourun",
-     30,
-     32
+     31,
+     20
     ],
     [
      "focus",
@@ -462,20 +462,20 @@
     [
      "move",
      "zk3",
-     22,
-     23
+     9,
+     14
     ],
     [
      "move",
      "zk4",
-     21,
-     24
+     8,
+     15
     ],
     [
      "move",
      "shixiu",
-     21,
-     22
+     8,
+     14
     ],
     [
      "leave",
@@ -484,14 +484,14 @@
     [
      "move",
      "zk3",
-     29,
-     37
+     27,
+     19
     ],
     [
      "move",
      "zk4",
-     32,
-     37
+     35,
+     19
     ],
     [
      "say",
