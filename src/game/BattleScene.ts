@@ -22,7 +22,7 @@ import { MISS_FLOAT, damageFloat, recoveryFloats } from './float-text.ts';
 import { batchFamily, batchLength } from './event-batch.ts';
 import { applyTint, isStageTint, type StageTint } from './tint.ts';
 import { actionMs, castPlayMs, castPlaybackRate, castSegmentMs } from './cast-timing.ts';
-import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, blazeAnim, classHead, idleAction, textureFor } from './sprites.ts';
+import { ACTION, HEAD_STD, ACTION_FRAME_MS, animFor, EFFECT_FRAME_MS, effectAnim, blazeAnim, classHead, idleAction, PACK_IDLE, textureFor } from './sprites.ts';
 import type { BattleUI, Command } from './ui.ts';
 import { prisonCartCanvas } from './prison-cart.ts';
 import { packFaceUrl } from './packs.ts';
@@ -2094,7 +2094,10 @@ export class BattleScene extends Phaser.Scene {
         v.facing = e.facing;
         await this.focusOn(u, 300);
         if (e.action === 'hurt') sound.hurt(false);
-        const action = e.action === 'hurt' ? ACTION.hurt : e.action === 'defend' ? ACTION.defend : idleAction(this.assets, v.cls);
+        // attack：原版职业的待机就是普通攻击动作的第 1 帧，播一遍即出手；扩展包图条职业的待机是单独的站姿，改播普通攻击的出手动作（祝彪斗李逵时李逵不动）
+        const idle = idleAction(this.assets, v.cls);
+        const action = e.action === 'hurt' ? ACTION.hurt : e.action === 'defend' ? ACTION.defend
+          : idle === PACK_IDLE ? ACTION.firstSkill + attackSkill(u, this.assets.data).group : idle;
         await this.playOnce(u, action, e.facing, 1200);
         if (e.action !== 'defend') this.pose(u);
         break;
