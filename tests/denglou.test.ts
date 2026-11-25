@@ -156,13 +156,26 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(gu.disguised).toBe(false);
   });
 
+  it('劫牢：死囚牢门口站着面朝外的看守，顾大嫂从他正前方过会被识破，从侧面绕进去不会', () => {
+    const { b, get } = open('jielao');
+    const kz = get('xl1'), gu = get('gudasao');
+    expect([kz.x, kz.y, kz.facing]).toEqual([6, 3, 3]);
+    get('baoji').facing = 0; // 只看门口看守
+    put(gu, 6, 5);
+    b.move(gu, 6, 4);
+    expect(gu.disguised).toBe(true);
+    put(gu, 8, 5);
+    b.move(gu, 7, 4);
+    expect(gu.disguised).toBe(false);
+  });
+
   it('劫牢：乐和、顾大嫂站到死囚牢门前，回合结束开门；解珍解宝带枷打一回合再扭断枷', () => {
     const { b, get } = open('jielao');
     const gu = get('gudasao'), lh = get('lehe'), jz = get('jiezhen'), jb = get('jiebao');
     const cls = (id: string) => rt.classIds.get(id);
     expect(b.isBound(jz)).toBe(true);
-    put(lh, 6, 3);
-    put(gu, 7, 3);
+    put(lh, 7, 3);
+    put(gu, 6, 4);
     get('baoji').hp = 1; // 别在敌方回合捣乱
     b.endPlayerPhase();
     expect(b.board.passable(5, 3)).toBe(true);
@@ -177,8 +190,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
 
   it('悄悄开了牢门没被识破：营后州兵照常来，营东州兵和关营门的都头晚两回合', () => {
     const { b, get } = open('jielao');
-    put(get('lehe'), 6, 3);
-    put(get('gudasao'), 7, 3);
+    put(get('lehe'), 7, 3);
+    put(get('gudasao'), 6, 4);
     get('baoji').hp = 1;
     for (const id of ['xl0', 'xl1', 'xl2']) get(id).hp = 1;
     b.endPlayerPhase(); // 第 1 回合结束开牢门
@@ -201,7 +214,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     for (const id of ['baoji', 'xl0', 'xl1', 'xl2']) get(id).hp = 1;
     const seen: Record<string, number> = {};
     for (let t = 1; t <= 9 && b.status === 'playing'; t++) {
-      if (b.turn === 3) { put(get('lehe'), 6, 3); put(get('gudasao'), 7, 3); }
+      if (b.turn === 3) { put(get('lehe'), 7, 3); put(get('gudasao'), 6, 4); }
       for (const id of ['zb0', 'zw0', 'menguan']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
       for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8;
       b.endPlayerPhase();
