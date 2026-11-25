@@ -7,7 +7,7 @@
   "N-add13#6": {"zh":"兄弟们都在庄门外看着，谁也别插手，免得落人口实。","t":"Brothers, watch from outside the gate. Nobody interfere, so they've nothing to hold against us."},
   "N-add13#7": {"zh":"庄客、家人在院子两边围看，众好汉在庄门外观战。三阵各派一位好汉上场，教头一阵比一阵多；谁体力先剩不到三成谁认输，点到为止；杨志是叫阵的人，三阵里要出战一阵。","t":"Farmhands and household watch from both sides of the yard; the heroes watch from outside the manor gate. Send one hero into each of the three bouts, with one more instructor each time. Whoever first drops below 30% HP gives up; it stops at first blood. Yang Zhi issued the challenge, so he must fight one of the three bouts."},
   "N-add13#8": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
-  "N-add13#9": {"zh":"胜利条件   --- 三阵全胜（每阵一位好汉，对一、二、三个教头；把教头打到体力不到三成他就认输，这一阵的教头都认输就赢；第三阵赢了晁盖出庄）","t":"Victory --- Win all three bouts (one hero per bout, against one, two, then three instructors; an instructor below 30% HP gives up, and the bout is won once all its instructors give up; win the third and Chao Gai comes out)"},
+  "N-add13#9": {"zh":"胜利条件   --- 第一阵：出战的好汉单挑一个教头，把他打到体力不到三成他就认输（三阵全胜，晁盖才出庄）","t":"Victory --- Bout 1: your hero faces one instructor alone; bring him below 30% HP and he gives up (win all three bouts and Chao Gai comes out)"},
   "N-add13#10": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
   "N-add13#11": {"zh":"失败条件二 --- 杨志死亡","t":"Defeat 2 --- Yang Zhi dies"},
   "N-add13#12": {"zh":"注意       --- 好汉体力不到三成就输了这一阵；输掉一阵、对庄客家人或还没上场的教头出手、拖过第 20 回合，都会翻脸混战，那时要打败所有敌人","t":"Note       --- A hero below 30% HP loses the bout. Losing a bout, attacking farmhands, household or instructors not yet in the bout, or going past turn 20 turns it into a brawl, and then you must defeat all enemies"},
@@ -63,5 +63,15 @@
   "N-add13#62": {"zh":"第一阵算你们侥幸。第二阵，我们师兄弟两个一起来！","t":"The first bout was luck. In the second, two of us brothers will face you together!"},
   "N-add13#63": {"zh":"请选择出战第二阵的好汉（对两个教头）","t":"Choose the hero for the second bout (against two instructors)"},
   "N-add13#64": {"zh":"让开！第三阵，我们三个一起会会你！","t":"Out of the way! In the third bout, all three of us will take you on!"},
-  "N-add13#65": {"zh":"请选择出战第三阵的好汉（对三个教头）","t":"Choose the hero for the third bout (against three instructors)"}
+  "N-add13#65": {"zh":"请选择出战第三阵的好汉（对三个教头）","t":"Choose the hero for the third bout (against three instructors)"},
+  "N-add13#66": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N-add13#67": {"zh":"胜利条件   --- 第二阵：另派一位好汉，以一敌二，把两个教头都打到体力不到三成","t":"Victory --- Bout 2: send another hero, one against two; bring both instructors below 30% HP"},
+  "N-add13#68": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
+  "N-add13#69": {"zh":"失败条件二 --- 杨志死亡","t":"Defeat 2 --- Yang Zhi dies"},
+  "N-add13#70": {"zh":"注意       --- 好汉体力不到三成就输了这一阵；输掉一阵、对庄客家人或还没上场的教头出手、拖过第 20 回合，都会翻脸混战，那时要打败所有敌人","t":"Note       --- A hero below 30% HP loses the bout. Losing a bout, attacking farmhands, household or instructors not yet in the bout, or going past turn 20 turns it into a brawl, and then you must defeat all enemies"},
+  "N-add13#71": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N-add13#72": {"zh":"胜利条件   --- 第三阵：再派一位好汉，以一敌三，把三个教头都打到体力不到三成","t":"Victory --- Bout 3: send another hero, one against three; bring all three instructors below 30% HP"},
+  "N-add13#73": {"zh":"失败条件一 --- %N死亡","t":"Defeat 1 --- %N dies"},
+  "N-add13#74": {"zh":"失败条件二 --- 杨志死亡","t":"Defeat 2 --- Yang Zhi dies"},
+  "N-add13#75": {"zh":"注意       --- 好汉体力不到三成就输了这一阵；输掉一阵、对庄客家人或还没上场的教头出手、拖过第 20 回合，都会翻脸混战，那时要打败所有敌人","t":"Note       --- A hero below 30% HP loses the bout. Losing a bout, attacking farmhands, household or instructors not yet in the bout, or going past turn 20 turns it into a brawl, and then you must defeat all enemies"}
 }

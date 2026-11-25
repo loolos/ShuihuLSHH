@@ -254,7 +254,20 @@ export interface StageInput {
   toasts?: Record<number, string[]>;
   /** 好汉聚义（吃鸡，§15.31）【新】：规则，和各单位的阵营号（ACT 序号 → 阵营；参赛好汉各自一号，小头目共用 NPC_TEAM） */
   royale?: { rules: RoyaleRules; teams: Record<number, number> };
+  /** 分阶段的胜负条件【新】（扩展包 goals）：按剧本标志随时重算，见 Battle.syncGoals */
+  goals?: BattleGoal[];
 }
+
+/** 一个阶段的胜负条件：if 的标志都设上、unless 的都没设上时有效；win / lose 各取最后一个有效且写了这一项的（空数组 = 不显示），hint 列出全部有效的 */
+export interface BattleGoal {
+  if: number[];
+  unless: number[];
+  win?: string[];
+  lose?: string[];
+  hint?: string[];
+}
+
+const GOAL_LABEL = { win: '胜利条件：', lose: '失败条件：', hint: '提示：' } as const;
 
 /**
  * 选人（剧本指令 27，EXE 0x411d38 置标志 0x100 → 玩家在地图上点一个我方人物 0x405d10 → 0x40de90 让其余我方、友军全部退场）。
@@ -351,6 +364,7 @@ export class Battle {
   private soft = new WeakSet<BattleEvent>();
   status: 'playing' | 'won' | 'lost' = 'playing';
   objectives: string[] = [];
+  private readonly goals?: BattleGoal[];
   private blocks: PasBlock[];
   private fired = new Set<number>();
   /** 剧本放的火（指令 124，只是画面，不挡路、不烧人）【新】 */
@@ -427,6 +441,7 @@ export class Battle {
     this.patrols = new Map(Object.entries(input.patrols ?? {}).map(([k, v]) => [Number(k), v]));
     this.stealth = input.stealth;
     this.banquet = input.banquet;
+    this.goals = input.goals?.length ? input.goals : undefined;
     this.drinks = new Map(Object.entries(input.drinks ?? {}).map(([k, v]) => [Number(k), v]));
     this.toasts = new Map(Object.entries(input.toasts ?? {}).map(([k, v]) => [Number(k), v]));
     this.sealed = input.sealed ?? [];
@@ -2147,6 +2162,34 @@ export class Battle {
       this.condAtTurnEnd = false;
       if (ok) this.runBlock(b);
     }
+    this.syncGoals();
+  }
+
+  /** 分阶段胜负条件（goals）按当前剧本标志算出要显示的几行 */
+  private goalLines(): string[] {
+    const g = this.goals!;
+    const on = (x: BattleGoal) => x.if.every((f) => this.flags.has(f)) && x.unless.every((f) => !this.flags.has(f));
+    const lines: string[] = [];
+    for (const k of ['win', 'lose', 'hint'] as const) {
+      // 胜负条件取最后一个有效的；提示是几条互不相干的，有效的全列出来
+      const hits = k === 'hint' ? g.filter((x) => x[k] && on(x)) : [...g].reverse().filter((x) => x[k] && on(x)).slice(0, 1);
+      for (const t of hits.flatMap((x) => x[k]!)) lines.push(GOAL_LABEL[k] + t.replace(/%[NX]/g, this.data.heroName).replace(/%M/g, this.data.heroNickname ?? ''));
+    }
+    return lines;
+  }
+
+  /**
+   * 分阶段胜负条件【新】（lolo 2026-11-25）：剧本跑完一段、标志变了以后重算，和正在显示的不一样就换上并弹出来。
+   * 剧本还在跑（嵌套的区块）时先不算，等这一段剧情演完再弹，免得插在对白中间。
+   */
+  private syncGoals() {
+    if (!this.goals || this.scriptDepth > 0 || this.status !== 'playing') return;
+    const lines = this.goalLines();
+    if (lines.join('\n') === this.objectives.join('\n')) return;
+    // 只是收起了用不着的提示（已经惊动、绳索已割断）就悄悄换掉，不弹窗
+    const quiet = lines.every((l) => this.objectives.includes(l));
+    this.objectives = lines;
+    if (!quiet) this.emit({ type: 'objective', lines });
   }
 
   /**
@@ -2243,6 +2286,7 @@ export class Battle {
     } finally {
       this.scriptDepth--;
     }
+    this.syncGoals();
   }
 
   private runBlockOps(b: PasBlock) {
