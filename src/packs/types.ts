@@ -2,6 +2,7 @@
 // 载入时（src/packs/build.ts）接到原版编号后面。原版素材一律按编号引用，不复制。
 
 import type { RecolorGroup } from './recolor.ts';
+import type { HitFx } from '../rules/data.ts';
 
 export type StatBlock = { hp: number; mp: number; attack: number; defense: number; hit: number; agility: number; crit: number };
 
@@ -114,7 +115,7 @@ export interface PackSkillJson {
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */
-  hitFx?: 'blood' | 'explosion' | 'impact' | 'fire';
+  hitFx?: HitFx;
   /** 遠程技飞行中的箭的画面效果：fire = 火箭（只是画面） */
   arrowFx?: 'fire';
   /** 穿透：从施放者身前一格起整条直线都受击（长 max(area, 到施放点的距离)） */
