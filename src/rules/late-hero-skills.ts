@@ -64,8 +64,45 @@ export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
  return out;
 }
 
+type Hit = { frame: number; percent: number; dir: number };
+const hitList = (frames: number[], weights: number[]): Hit[] => frames.map((frame, i) => ({ frame, percent: weights[i], dir: 0 }));
+/**
+ * 30–40 级补技能（负责人 2026-11-25，game-design §6.5.2 第三优先）：原版好汉在已有技能后面接一档新的。
+ * from = 原技能号（新档沿用它的出手动作、特效、音效），名字 LV3 → LV4，没有 LV 的加 LV2。
+ * 威力、命中是好汉负命中折算后的最终值。
+ */
+const NEXT_TIERS: { cls: number; from: number; id: number; level: number; set: Partial<SkillDef> }[] = [
+ { cls: 16, from: 142, id: 1316, level: 34, set: { power: 85, area: 9, hitMod: 40, mpCost: 200 } }, // 萬佛朝宗LV4
+ { cls: 3, from: 39, id: 1317, level: 32, set: { power: 50, area: 6, hitMod: 5, mpCost: 115 } }, // 天龍出雲LV4
+ { cls: 3, from: 44, id: 1318, level: 36, set: { power: 85, area: 5, rangeMax: 6, hitMod: 5, mpCost: 165 } }, // 狂龍出海LV4
+ { cls: 14, from: 122, id: 1319, level: 32, set: { power: 60, hitMod: 35, mpCost: 55, hits: hitList([6, 10, 13, 16], [25, 25, 25, 25]) } }, // 快刀斬亂麻LV2
+ { cls: 14, from: 127, id: 1320, level: 36, set: { power: 70, area: 6, hitMod: 5, mpCost: 165 } }, // 一刀兩斷LV4
+ { cls: 2, from: 30, id: 1321, level: 32, set: { power: 85, area: 5, rangeMax: 8, hitMod: 25, mpCost: 220 } }, // 五雷咒LV4
+ { cls: 2, from: 20, id: 1322, level: 36, set: { power: 45, hitMod: 15, mpCost: 55, hits: hitList([11, 14, 17, 21], [25, 25, 25, 25]) } }, // 神妙御劍心法LV2
+ { cls: 4, from: 47, id: 1323, level: 34, set: { power: 45, hitMod: 25, mpCost: 25, hits: hitList([4, 15, 22, 29], [20, 20, 20, 40]) } }, // 窮鼠噬貓LV2
+ { cls: 5, from: 56, id: 1324, level: 36, set: { power: 75, hitMod: 35, mpCost: 55 } }, // 詭計多端LV2
+ { cls: 7, from: 67, id: 1325, level: 34, set: { power: 60, hitMod: 15, mpCost: 50, hits: hitList([6, 10, 14, 18, 23], [20, 20, 20, 20, 20]) } }, // 沖太歲LV4
+ { cls: 8, from: 74, id: 1326, level: 32, set: { power: 55, hitMod: 15, mpCost: 50 } }, // 絕地逢生LV2
+ { cls: 8, from: 78, id: 1327, level: 36, set: { power: 75, area: 7, hitMod: 5, mpCost: 130 } }, // 翻江倒海LV4
+ { cls: 9, from: 85, id: 1328, level: 36, set: { power: 80, area: 9, hitMod: 5, mpCost: 135 } }, // 怒海狂濤LV4
+ { cls: 10, from: 93, id: 1329, level: 36, set: { power: 75, area: 4, rangeMax: 7, hitMod: 5, critMod: 20, mpCost: 100 } }, // 星羅棋布LV4
+ { cls: 15, from: 132, id: 1331, level: 36, set: { power: 90, area: 9, hitMod: 5, mpCost: 100 } }, // 靈蛇出洞LV4
+ { cls: 17, from: 146, id: 1332, level: 34, set: { power: 70, hitMod: 35, mpCost: 50, hits: hitList([9, 14, 18], [30, 30, 40]) } }, // 百鬼夜行LV2
+ { cls: 17, from: 150, id: 1333, level: 36, set: { power: 70, area: 7, hitMod: 15, critMod: 25, mpCost: 130 } }, // 鬼哭神號LV4
+];
+
 /** 好汉技能分阶；按职业与原技能号限定，NPC保留自己的原技能。 */
 export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
+ return heroSkillTiersBase(cls, own).flatMap(s => {
+  const next = NEXT_TIERS.find(t => t.cls === cls && t.from === s.skillId);
+  if (!next) return [s];
+  const m = /LV(\d+)$/.exec(s.name);
+  const name = m ? s.name.replace(/LV\d+$/, `LV${+m[1] + 1}`) : `${s.name}LV2`;
+  return [s, { ...s, hits: s.hits.map(h => ({ ...h })), ...next.set, skillId: next.id, soundId: s.soundId ?? s.skillId, name, learnLevel: next.level }];
+ });
+}
+
+function heroSkillTiersBase(cls: number, own: SkillDef[]): SkillDef[] {
  return own.flatMap(s => {
   if(cls===0&&[10,11,12].includes(s.skillId)){
    const tier=s.skillId-10;
@@ -132,7 +169,9 @@ export function heroSkillTiers(cls: number, own: SkillDef[]): SkillDef[] {
   const tiers=chenda
    ? [{id:115,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[12,23],weights:[40,60]},
       {id:1300,level:20,power:55,mp:30,frames:[12,18,23],weights:[30,30,40]},
-      {id:1301,level:28,power:75,mp:40,frames:[8,12,18,23],weights:[25,25,25,25]}]
+      {id:1301,level:28,power:75,mp:40,frames:[8,12,18,23],weights:[25,25,25,25]},
+      // LV4（负责人 2026-11-25，30–40 级补技能）
+      {id:1330,level:36,power:90,mp:50,frames:[8,12,15,18,23],weights:[20,20,20,20,20]}]
    : [{id:81,level:s.learnLevel,power:s.power,mp:s.mpCost,frames:[18,25,28],weights:[30,30,40]},
       {id:1302,level:27,power:60,mp:30,frames:[18,22,25,28],weights:[25,25,25,25]},
       {id:1303,level:30,power:80,mp:40,frames:[15,18,22,25,28],weights:[20,20,20,20,20]}];

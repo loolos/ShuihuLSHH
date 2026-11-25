@@ -26,7 +26,7 @@ const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 describe.skipIf(!has)('黄信镇三山与寒锋五叠',()=>{
   it.each(['mainline'])('%s三级范围按选点起算，射程与落剑特效正确',pack=>{
     const rt=loadPackFromDisk(pack),cls=rt.data.classes[rt.classIds.get('huangxin')!],board=new Board(30,30),from={x:15,y:15};
-    const aoe=cls.skills.filter(s=>s.name.startsWith('镇三山'));
+    const aoe=cls.skills.filter(s=>s.name.startsWith('镇三山')&&s.learnLevel<30); // LV4（38 级）见 skills-30-40.test.ts
     expect(aoe).toHaveLength(3);
     for(const [i,s]of aoe.entries()){
       expect([s.rangeMin,s.rangeMax,s.area,s.mpCost,s.learnLevel]).toEqual([1,i+3,i+1,[35,50,65][i],[4,16,20][i]]);
