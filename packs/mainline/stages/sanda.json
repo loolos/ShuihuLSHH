@@ -3959,7 +3959,11 @@
     ],
     [
      "bgm",
-     null,
+     [
+      "sanda",
+      "manor",
+      "fire"
+     ],
      {
       "sting": "signal"
      }
@@ -4011,7 +4015,11 @@
     ],
     [
      "bgm",
-     null,
+     [
+      "sanda",
+      "manor",
+      "fire"
+     ],
      {
       "sting": "signal"
      }
@@ -4049,6 +4057,14 @@
      "内应还没等到号令就露了马脚，庄上鸣锣大叫：「有奸细！」孙立一伙只得提前发作。"
     ],
     [
+     "bgm",
+     [
+      "sanda",
+      "manor",
+      "fire"
+     ]
+    ],
+    [
      "flag",
      "go"
     ]
@@ -4062,14 +4078,6 @@
     [
      "unmask",
      "all"
-    ],
-    [
-     "bgm",
-     [
-      "sanda",
-      "manor",
-      "fire"
-     ]
     ],
     [
      "spectate",
