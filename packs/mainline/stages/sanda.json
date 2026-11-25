@@ -1833,6 +1833,330 @@
    "hidden": true
   },
   {
+   "id": "wo-west00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-west01",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west02",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west03",
+   "class": 19,
+   "side": "enemy",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-west04",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west05",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-west11",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west12",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west13",
+   "class": 19,
+   "side": "enemy",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-west14",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west15",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-west21",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west22",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west23",
+   "class": 19,
+   "side": "enemy",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-west24",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west25",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 14,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-west31",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 15,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west32",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 14,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-west33",
+   "class": 19,
+   "side": "enemy",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-west34",
+   "class": 43,
+   "side": "enemy",
+   "x": 12,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-west35",
+   "class": 43,
+   "side": "enemy",
+   "x": 17,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
    "id": "door-front",
    "class": 19,
    "side": "enemy",
@@ -2240,6 +2564,330 @@
    "hidden": true
   },
   {
+   "id": "wo-front00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-front01",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front02",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front03",
+   "class": 19,
+   "side": "enemy",
+   "x": 32,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-front04",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front05",
+   "class": 43,
+   "side": "enemy",
+   "x": 34,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-front11",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front12",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front13",
+   "class": 19,
+   "side": "enemy",
+   "x": 32,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-front14",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front15",
+   "class": 43,
+   "side": "enemy",
+   "x": 34,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-front21",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front22",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front23",
+   "class": 19,
+   "side": "enemy",
+   "x": 32,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-front24",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front25",
+   "class": 43,
+   "side": "enemy",
+   "x": 34,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 31,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-front31",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front32",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 31,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-front33",
+   "class": 19,
+   "side": "enemy",
+   "x": 32,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-front34",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-front35",
+   "class": 43,
+   "side": "enemy",
+   "x": 34,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
    "id": "door-east",
    "class": 19,
    "side": "enemy",
@@ -2644,6 +3292,330 @@
    "ai": 0,
    "levelOffset": 0,
    "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-east01",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east02",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east03",
+   "class": 19,
+   "side": "enemy",
+   "x": 49,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-east04",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east05",
+   "class": 43,
+   "side": "enemy",
+   "x": 51,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-east11",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east12",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east13",
+   "class": 19,
+   "side": "enemy",
+   "x": 49,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-east14",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east15",
+   "class": 43,
+   "side": "enemy",
+   "x": 51,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-east21",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east22",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east23",
+   "class": 19,
+   "side": "enemy",
+   "x": 49,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-east24",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east25",
+   "class": 43,
+   "side": "enemy",
+   "x": 51,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 48,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "wo-east31",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 49,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east32",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 48,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "hidden": true
+  },
+  {
+   "id": "wo-east33",
+   "class": 19,
+   "side": "enemy",
+   "x": 49,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "hidden": true
+  },
+  {
+   "id": "wo-east34",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "wo-east35",
+   "class": 43,
+   "side": "enemy",
+   "x": 51,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "hidden": true
   },
   {
@@ -7027,6 +7999,7 @@
     "below": 30,
     "spare": true
    },
+   "if": "zbR",
    "do": [
     [
      "focus",
@@ -7048,6 +8021,7596 @@
       "leave": true,
       "reward": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhulong",
+    "below": 1,
+    "spare": true
+   },
+   "unless": "zlD",
+   "do": [
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "罢了……先退回庄里裹伤！"
+    ],
+    [
+     "narrate",
+     "祝龙身负重伤，被庄客抢回庄里去了。"
+    ],
+    [
+     "leave",
+     "zhulong"
+    ],
+    [
+     "flag",
+     "zlD"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zlW",
+   "unless": "zlR",
+   "do": [
+    [
+     "flag",
+     "zlR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhulong"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "爹爹放心！孩儿裹了伤，再去杀那伙草寇！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zlD",
+   "unless": "zlW",
+   "do": [
+    [
+     "flag",
+     "zlW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhuhu",
+    "below": 1,
+    "spare": true
+   },
+   "unless": "zhD",
+   "do": [
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "好厉害……且退回庄里！"
+    ],
+    [
+     "narrate",
+     "祝虎身负重伤，被庄客抢回庄里去了。"
+    ],
+    [
+     "leave",
+     "zhuhu"
+    ],
+    [
+     "flag",
+     "zhD"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zhW",
+   "unless": "zhR",
+   "do": [
+    [
+     "flag",
+     "zhR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhuhu"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhuhu",
+     0
+    ],
+    [
+     "focus",
+     "zhuhu"
+    ],
+    [
+     "say",
+     "zhuhu",
+     "梁山泊的贼，这一回定不饶你！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zhD",
+   "unless": "zhW",
+   "do": [
+    [
+     "flag",
+     "zhW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "zhubiao",
+    "below": 30,
+    "spare": true
+   },
+   "unless": "zbD",
+   "do": [
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "这伙草寇好狠！且回庄里换口气！"
+    ],
+    [
+     "narrate",
+     "祝彪拨马退回庄里去了。"
+    ],
+    [
+     "leave",
+     "zhubiao"
+    ],
+    [
+     "flag",
+     "zbD"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zbW",
+   "unless": "zbR",
+   "do": [
+    [
+     "flag",
+     "zbR"
+    ],
+    [
+     "respawn",
+     [
+      [
+       "zhubiao"
+      ]
+     ],
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "setAi",
+     "zhubiao",
+     0
+    ],
+    [
+     "focus",
+     "zhubiao"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，孩儿又来了！今日不杀尽这伙贼，誓不回庄！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": "zbD",
+   "unless": "zbW",
+   "do": [
+    [
+     "flag",
+     "zbW"
     ]
    ]
   },
@@ -7184,6 +15747,51 @@
        "开前门！把挠钩带上，拖几个活的回来！"
       ]
      }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
     ]
    ]
   },
@@ -7279,6 +15887,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -7470,6 +16123,51 @@
      "respawn",
      [
       [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
        "ar-west0"
       ],
       [
@@ -7654,6 +16352,51 @@
      "respawn",
      [
       [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
        "ar-west0"
       ],
       [
@@ -7831,6 +16574,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -8015,6 +16803,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -8199,6 +17032,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -8383,6 +17261,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -8567,6 +17490,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -8751,6 +17719,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -8935,6 +17948,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -9119,6 +18177,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -9303,6 +18406,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -9487,6 +18635,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -9671,6 +18864,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -9855,6 +19093,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -10039,6 +19322,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -10223,6 +19551,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -10407,6 +19780,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -10591,6 +20009,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -10775,6 +20238,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -10959,6 +20467,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -11143,6 +20696,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -11327,6 +20925,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -11511,6 +21154,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -11695,6 +21383,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -11879,6 +21612,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -12063,6 +21841,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -12247,6 +22070,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -12431,6 +22299,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -12615,6 +22528,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -12799,6 +22757,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -12983,6 +22986,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -13167,6 +23215,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -13351,6 +23444,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -13535,6 +23673,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -13719,6 +23902,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -13903,6 +24131,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -14087,6 +24360,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -14271,6 +24589,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -14455,6 +24818,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -14639,6 +25047,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -14823,6 +25276,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -15007,6 +25505,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -15191,6 +25734,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -15375,6 +25963,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -15559,6 +26192,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
@@ -15743,6 +26421,51 @@
        "东庄门的弟兄，杀出去接应三官人！",
        "开东门！那黑大汉就在外面，挠钩伺候！",
        "东门再出一队，休放贼人过桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-east00",
+       "wo-east01",
+       "wo-east02",
+       "wo-east03",
+       "wo-east04",
+       "wo-east05"
+      ],
+      [
+       "wo-east10",
+       "wo-east11",
+       "wo-east12",
+       "wo-east13",
+       "wo-east14",
+       "wo-east15"
+      ],
+      [
+       "wo-east20",
+       "wo-east21",
+       "wo-east22",
+       "wo-east23",
+       "wo-east24",
+       "wo-east25"
+      ],
+      [
+       "wo-east30",
+       "wo-east31",
+       "wo-east32",
+       "wo-east33",
+       "wo-east34",
+       "wo-east35"
+      ]
+     ],
+     {
+      "gates": [
+       2,
+       2,
+       2,
+       2
       ]
      }
     ],
@@ -15927,6 +26650,51 @@
        "前庄门的，随我杀出去！",
        "大官人有令：前门再出一队！",
        "开前门！把挠钩带上，拖几个活的回来！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-front00",
+       "wo-front01",
+       "wo-front02",
+       "wo-front03",
+       "wo-front04",
+       "wo-front05"
+      ],
+      [
+       "wo-front10",
+       "wo-front11",
+       "wo-front12",
+       "wo-front13",
+       "wo-front14",
+       "wo-front15"
+      ],
+      [
+       "wo-front20",
+       "wo-front21",
+       "wo-front22",
+       "wo-front23",
+       "wo-front24",
+       "wo-front25"
+      ],
+      [
+       "wo-front30",
+       "wo-front31",
+       "wo-front32",
+       "wo-front33",
+       "wo-front34",
+       "wo-front35"
+      ]
+     ],
+     {
+      "gates": [
+       1,
+       1,
+       1,
+       1
       ]
      }
     ],
@@ -16111,6 +26879,51 @@
        "西庄门的弟兄，随二官人杀出去！",
        "开西门！砍翻那伙梁山草寇！",
        "西门再出一队，莫叫贼人近了吊桥！"
+      ]
+     }
+    ],
+    [
+     "respawn",
+     [
+      [
+       "wo-west00",
+       "wo-west01",
+       "wo-west02",
+       "wo-west03",
+       "wo-west04",
+       "wo-west05"
+      ],
+      [
+       "wo-west10",
+       "wo-west11",
+       "wo-west12",
+       "wo-west13",
+       "wo-west14",
+       "wo-west15"
+      ],
+      [
+       "wo-west20",
+       "wo-west21",
+       "wo-west22",
+       "wo-west23",
+       "wo-west24",
+       "wo-west25"
+      ],
+      [
+       "wo-west30",
+       "wo-west31",
+       "wo-west32",
+       "wo-west33",
+       "wo-west34",
+       "wo-west35"
+      ]
+     ],
+     {
+      "gates": [
+       0,
+       0,
+       0,
+       0
       ]
      }
     ],
