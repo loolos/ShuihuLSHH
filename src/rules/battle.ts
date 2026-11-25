@@ -102,6 +102,8 @@ export type BattleEvent =
   | { type: 'portrait'; classId: number; file: string }
   /** 原版音效（Sound/ 里的名字，不含扩展名） */
   | { type: 'sound'; name: string }
+  /** 剧情换背景曲（扩展包指令 134【新】，负责人 2026-11-25：只在关键剧情用）：tracks 新歌单（空 = 不换），sting 先插播的短曲 */
+  | { type: 'bgm'; tracks: string[]; sting?: string }
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
   /** 地上新冒出一个宝箱【新】（好汉聚义刷宝箱、小头目掉药） */
   | { type: 'chest'; x: number; y: number; item: number }
@@ -391,6 +393,8 @@ export class Battle {
   private blaze: Cell[] = [];
   /** 潜行结束【新】（智取无为军：骗开大门以后，指令 125）：哨兵不再警戒、发现也不再判负 */
   private stealthOver = false;
+  /** 剧本换过的背景曲歌单（指令 134）；null = 用关卡本来的 */
+  bgm: string[] | null = null;
   private sealed: { x: number; y: number; tile?: number }[] = [];
   /** 剧本临时摆的路障（指令 129，盘陀路）：跟着倒流、读档保存【新】 */
   private trapSeals: { x: number; y: number; tile?: number }[] = [];
@@ -1142,7 +1146,7 @@ export class Battle {
       objectives: this.objectives, fired: [...this.fired], scriptFlag: this.scriptFlag, turnParam: this.turnParam, flags: [...this.flags],
       pendingDeaths: this.pendingDeaths, teamExp: this.teamExp, clearGold: this.clearGold, ambushers: [...this.ambushers],
       expBySource: this.expBySource, benched: [...this.benched], used: this.used, turnAt: this.turnAt, spectators: [...this.spectators],
-      spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
+      spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, bgm: this.bgm, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
       ...(this.siege ? { carts: [...this.prisonCarts], homes: [...this.homes] } : {}),
     });
@@ -1209,6 +1213,7 @@ export class Battle {
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
     this.stealthOver = s.stealthOver ?? false;
+    this.bgm = s.bgm ?? null;
     this.unsealed = new Set(s.unsealed ?? []);
     for (const c of this.trapSeals) this.board.blocked[c.y * this.board.width + c.x] = 0;
     this.trapSeals = (s.trapSeals ?? []).map((c: { x: number; y: number; tile?: number }) => ({ ...c }));
@@ -2940,6 +2945,13 @@ export class Battle {
         case 131:
           if (sel) this.scriptDisguise(true, sel, !!op.args?.quiet);
           break;
+        // 134 换背景曲【新】（负责人 2026-11-25：关卡打到一半按剧情换曲，只给关键剧情用）：args.tracks 新歌单（空 = 不换），args.sting 先插播短曲
+        case 134: {
+          const tracks: string[] = op.args?.tracks ?? [];
+          if (tracks.length) this.bgm = [...tracks];
+          this.emit({ type: 'bgm', tracks, ...(op.args?.sting ? { sting: op.args.sting } : {}) });
+          break;
+        }
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
