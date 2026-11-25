@@ -71,7 +71,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   },
   "3": {
     "weapon": 0,
-    "armor": "轻甲",
+    "armor": "常服",
     "head": "头巾"
   },
   "4": {
@@ -87,7 +87,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "6": {
     "weapon": 0,
     "armor": "常服",
-    "head": "头巾"
+    "head": "官帽"
   },
   "7": {
     "weapon": 9,
@@ -126,7 +126,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   },
   "14": {
     "weapon": 6,
-    "armor": "战袍",
+    "armor": "常服",
     "head": "斗笠"
   },
   "15": {
@@ -163,7 +163,7 @@ export function kitBand(level: number): number {
   return Math.max(0, LEVEL_BANDS.filter((min) => level >= min).length - 1);
 }
 /**
- * 扩展包好汉按原著改的类别（负责人 2026-11-25，对照原著出场描写）：按职业名查，没列的按初始衣服 / 头饰推断。
+ * 扩展包好汉按原著改的类别（负责人 2026-11-25，对照原著出场描写；原版 18 人照原版不改）：按职业名查，没列的按初始衣服 / 头饰推断。
  * 武将披挂出阵 → 重甲 / 战盔；花荣「战袍金翠绣」→ 战袍；卖药的薛永、裁缝侯健、开酒店的朱贵 → 常服。
  */
 export const PACK_KITS: Record<string, { armor?: string; head?: string }> = {
