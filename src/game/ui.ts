@@ -58,8 +58,14 @@ export class BattleUI {
     // 手机上 Phaser 会对触摸调用 preventDefault，浏览器就不再补发 click，所以用 pointerup 推进；
     // 推进后短时间内的鼠标/触摸/click 事件一并拦下，免得同一下点击又落到地图上。
     let swallowUntil = 0;
-    // 检查更新的按钮、提示条、选关按钮和它打开的选关页不受对白影响
-    const exempt = (e: Event) => !!(e.target as Element | null)?.closest?.('#update, #toast, #sound, #music, #minimap, #stage, #title, #lang, #lang-menu');
+    // 顶栏（主菜单、检查更新、音量、选关……）、提示条、小地图和选关页不受对白影响：点它们不推进剧情。
+    // 只有「回合终了」「时光倒流」在剧情中不能用，点它们仍按推进剧情处理。
+    const exempt = (e: Event) => {
+      const t = e.target as Element | null;
+      if (!t?.closest) return false;
+      if (t.closest('#end-turn, #rewind')) return false;
+      return !!t.closest('#hud, #toast, #minimap, #title, #lang-menu');
+    };
     const guard = (e: Event) => {
       if ((this.dialog.hidden && performance.now() > swallowUntil) || exempt(e)) return;
       e.stopPropagation();
