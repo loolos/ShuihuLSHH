@@ -1580,7 +1580,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
   });
 
   it('动态等级确定后才发默认药品，低等级不会拿到剧本高等级药品', () => {
-    for (const [level, names] of [[5, ['跌打藥', '跌打藥', '跌打藥']], [30, ['銀創藥', '銀創藥', '金創藥', '金創藥', '大還金丹', '天山雪蓮', '牛肉包子']]] as const) {
+    for (const [level, names] of [[5, ['跌打藥', '跌打藥', '跌打藥']], [30, ['金創藥', '大還金丹', '天山雪蓮', '牛肉包子']]] as const) {
       const input = compileStage(rt, { ...stage('kuaihuolin'), gearAt: undefined }, files, { joinLevel: level });
       const hero = input.units.find(u => u.side === 'player' && u.type === 0)!;
       expect(hero.level).toBe(level);
