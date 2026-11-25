@@ -1,0 +1,600 @@
+{
+ "id": "ruzhuang",
+ "title": "孙立假投祝家庄",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "zhujiazhuang",
+  "seal": [
+   [
+    30,
+    41,
+    580
+   ],
+   [
+    31,
+    41,
+    580
+   ]
+  ]
+ },
+ "bgm": [
+  "intrigue",
+  "manor"
+ ],
+ "units": [
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 30,
+   "y": 51,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "player",
+   "x": 31,
+   "y": 50,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "sunxin",
+   "class": "sunxin",
+   "side": "player",
+   "x": 31,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "gudasao",
+   "class": "gudasao",
+   "side": "player",
+   "x": 32,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "lehe",
+   "class": "lehe",
+   "side": "player",
+   "x": 29,
+   "y": 52,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "jiezhen",
+   "class": "jiezhen",
+   "side": "player",
+   "x": 30,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "jiebao",
+   "class": "jiebao",
+   "side": "player",
+   "x": 31,
+   "y": 53,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "zouyuan",
+   "class": "zouyuan",
+   "side": "ally",
+   "x": 29,
+   "y": 54,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "zourun",
+   "class": "zourun",
+   "side": "ally",
+   "x": 32,
+   "y": 54,
+   "level": 30,
+   "facing": 0,
+   "ai": 8
+  },
+  {
+   "id": "luan",
+   "class": "luantingyu",
+   "side": "enemy",
+   "x": 30,
+   "y": 38,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "铁棒栾廷玉"
+  },
+  {
+   "id": "zcf",
+   "class": "zhuchaofeng",
+   "side": "enemy",
+   "x": 27,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝朝奉"
+  },
+  {
+   "id": "zhulong",
+   "class": "zhulong",
+   "side": "enemy",
+   "x": 25,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝龙"
+  },
+  {
+   "id": "zhuhu",
+   "class": "zhuhu",
+   "side": "enemy",
+   "x": 29,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝虎"
+  },
+  {
+   "id": "zhubiao",
+   "class": "zhubiao",
+   "side": "enemy",
+   "x": 28,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝彪"
+  },
+  {
+   "id": "zk1",
+   "class": 19,
+   "side": "enemy",
+   "x": 28,
+   "y": 39,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zk2",
+   "class": 19,
+   "side": "enemy",
+   "x": 33,
+   "y": 39,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zk3",
+   "class": 19,
+   "side": "enemy",
+   "x": 29,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zk4",
+   "class": 19,
+   "side": "enemy",
+   "x": 32,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "name": "祝家庄庄客"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "bind",
+     "shixiu"
+    ],
+    [
+     "title",
+     "独龙冈 · 祝家庄前"
+    ],
+    [
+     "narrate",
+     "却说孙立一行到了石勇酒店里，和吴学究见了，商量定一条计策：孙立和栾廷玉是一个师父教的武艺，便扮做登州对调来郓州守把的兵马提辖，投祝家庄来做个内应。"
+    ],
+    [
+     "narrate",
+     "要祝家庄信得过，须得一件表忠心的见面礼。众人议定：教石秀在路上「撞」着孙立，被孙立活捉了，押来献与祝家庄。"
+    ],
+    [
+     "focus",
+     "sunli"
+    ],
+    [
+     "say",
+     "shixiu",
+     "（低声）提辖，绳子缚得紧些，休教庄上看出破绽。"
+    ],
+    [
+     "say",
+     "sunli",
+     "（低声）兄弟委屈几日。待里应外合那天，我亲自来开你的囚车。"
+    ],
+    [
+     "move",
+     "sunli",
+     30,
+     46
+    ],
+    [
+     "move",
+     "shixiu",
+     31,
+     45
+    ],
+    [
+     "move",
+     "lehe",
+     29,
+     47
+    ],
+    [
+     "move",
+     "sunxin",
+     31,
+     47
+    ],
+    [
+     "move",
+     "gudasao",
+     32,
+     47
+    ],
+    [
+     "move",
+     "jiezhen",
+     30,
+     48
+    ],
+    [
+     "move",
+     "jiebao",
+     31,
+     48
+    ],
+    [
+     "move",
+     "zouyuan",
+     29,
+     48
+    ],
+    [
+     "move",
+     "zourun",
+     32,
+     48
+    ],
+    [
+     "say",
+     "sunli",
+     "庄上听着！登州兵马提辖孙立，特来拜望师兄栾廷玉！"
+    ],
+    [
+     "focus",
+     "luan"
+    ],
+    [
+     "unseal",
+     [
+      [
+       30,
+       41
+      ],
+      [
+       31,
+       41
+      ]
+     ]
+    ],
+    [
+     "move",
+     "luan",
+     30,
+     44
+    ],
+    [
+     "face",
+     "luan",
+     "sunli"
+    ],
+    [
+     "face",
+     "sunli",
+     "luan"
+    ],
+    [
+     "say",
+     "luan",
+     "原来是孙提辖贤弟！多年不见，如何到这里来？"
+    ],
+    [
+     "say",
+     "sunli",
+     "小弟奉总兵府文书，对调来郓州守把，路经此间，闻知师兄在祝家庄，特来相探。"
+    ],
+    [
+     "say",
+     "sunli",
+     "来时路上，撞见一个梁山泊的贼，鬼鬼祟祟窥探庄上路径，被小弟顺手拿了，权当见面之礼。"
+    ],
+    [
+     "say",
+     "luan",
+     "这厮莫不是前番扮做柴夫、来庄上探路的那个石秀？贤弟一到便立了大功。快请进庄！"
+    ],
+    [
+     "move",
+     "luan",
+     29,
+     29
+    ],
+    [
+     "move",
+     "sunli",
+     28,
+     29
+    ],
+    [
+     "move",
+     "shixiu",
+     30,
+     31
+    ],
+    [
+     "move",
+     "lehe",
+     27,
+     31
+    ],
+    [
+     "move",
+     "sunxin",
+     28,
+     31
+    ],
+    [
+     "move",
+     "gudasao",
+     29,
+     31
+    ],
+    [
+     "move",
+     "jiezhen",
+     27,
+     32
+    ],
+    [
+     "move",
+     "jiebao",
+     28,
+     32
+    ],
+    [
+     "move",
+     "zouyuan",
+     29,
+     32
+    ],
+    [
+     "move",
+     "zourun",
+     30,
+     32
+    ],
+    [
+     "focus",
+     "zcf"
+    ],
+    [
+     "face",
+     "sunli",
+     "zcf"
+    ],
+    [
+     "say",
+     "luan",
+     "太公，这位是小弟同门的师兄弟，登州孙提辖，武艺胜我十倍。"
+    ],
+    [
+     "say",
+     "sunli",
+     "孙立拜见祝太公。"
+    ],
+    [
+     "say",
+     "zcf",
+     "提辖远来辛苦！梁山泊宋江屡次来犯，正要好汉相助。提辖一来便拿了石秀，老汉一家感激不尽。"
+    ],
+    [
+     "say",
+     "zhubiao",
+     "爹爹，这石秀奸猾得紧，先打上囚车，待拿了宋江，一并解上东京请功！"
+    ],
+    [
+     "say",
+     "shixiu",
+     "呸！今日落在你们手里，要杀便杀，休想从我口里问出半句！"
+    ],
+    [
+     "narrate",
+     "庄客把石秀推进后院，打上囚车，和前番拿住的时迁、杨林、黄信、秦明、王英、邓飞关在一处。"
+    ],
+    [
+     "move",
+     "zk3",
+     22,
+     23
+    ],
+    [
+     "move",
+     "zk4",
+     21,
+     24
+    ],
+    [
+     "move",
+     "shixiu",
+     21,
+     22
+    ],
+    [
+     "leave",
+     "shixiu"
+    ],
+    [
+     "move",
+     "zk3",
+     29,
+     37
+    ],
+    [
+     "move",
+     "zk4",
+     32,
+     37
+    ],
+    [
+     "say",
+     "zcf",
+     "提辖一家老小便在庄上安歇，一同杀退了梁山贼寇，老汉自有重谢。"
+    ],
+    [
+     "say",
+     "sunli",
+     "孙立敢不尽力！"
+    ],
+    [
+     "tint",
+     "night"
+    ],
+    [
+     "narrate",
+     "当夜，祝家庄上置酒相待。散席之后，孙立一伙回到客房，关上门来。"
+    ],
+    [
+     "leave",
+     "luan"
+    ],
+    [
+     "leave",
+     "zcf"
+    ],
+    [
+     "leave",
+     "zhulong"
+    ],
+    [
+     "leave",
+     "zhuhu"
+    ],
+    [
+     "leave",
+     "zhubiao"
+    ],
+    [
+     "leave",
+     "zk1"
+    ],
+    [
+     "leave",
+     "zk2"
+    ],
+    [
+     "leave",
+     "zk3"
+    ],
+    [
+     "leave",
+     "zk4"
+    ],
+    [
+     "focus",
+     "sunli"
+    ],
+    [
+     "say",
+     "gudasao",
+     "（低声）伯伯好手段，那老儿一句也没疑心。"
+    ],
+    [
+     "say",
+     "sunli",
+     "（低声）休要大意。栾廷玉是我同门，最知我底细，说话须要小心。"
+    ],
+    [
+     "say",
+     "sunli",
+     "（低声）吴学究约定：宋公明分兵打他三座庄门，祝龙、祝虎、祝彪三个必然各守一门。我等里面只看乐和兄弟的号。"
+    ],
+    [
+     "say",
+     "lehe",
+     "（低声）小弟吹起铁叫子为号，众兄弟一齐发作。"
+    ],
+    [
+     "say",
+     "sunli",
+     "（低声）到时我去夺庄门、放吊桥，接应外面兄弟进来；解珍、解宝去草料场放火，叫他庄里先乱；大嫂去后院开囚车，救出石秀他们七个。邹渊、邹润两位兄弟只跟着我。"
+    ],
+    [
+     "say",
+     "jiebao",
+     "（低声）哥哥放心，一把火保管烧得他满庄乱窜。"
+    ],
+    [
+     "say",
+     "gudasao",
+     "（低声）囚车只交给老娘便是。"
+    ],
+    [
+     "narrate",
+     "众人计议已定，各自歇了，只等宋江兵到。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

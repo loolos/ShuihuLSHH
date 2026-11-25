@@ -79,6 +79,8 @@ export const CHAPTERS: ChapterDef[] = [
   // 过场扈成请和（吴用带吕方、郭盛、三阮到，扈成答应不救祝家）
   { name: '两打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
   { name: '登州劫牢', stages: ['mainline/shehu', 'mainline/laihu', 'mainline/qingsunli', 'mainline/jielao'] },
+  // 负责人 2026-11-25：三打祝家庄。过场孙立假投祝家庄（献石秀表忠心、夜里密议内应）；大仗待做
+  { name: '三打祝家庄', stages: ['mainline/ruzhuang'] },
 ];
 
 /**

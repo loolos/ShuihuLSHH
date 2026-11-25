@@ -92,7 +92,9 @@ describe('章节表', () => {
     expect(chapterLabel(27)).toBe('第二十七章 沂岭杀四虎');
     expect(chapterOf('mainline/jielao')).toBe(32);
     expect(chapterLabel(32)).toBe('第三十二章 登州劫牢');
-    expect(CHAPTERS).toHaveLength(32);
+    expect(chapterOf('mainline/ruzhuang')).toBe(33);
+    expect(chapterLabel(33)).toBe('第三十三章 三打祝家庄');
+    expect(CHAPTERS).toHaveLength(33);
   });
 });
 
