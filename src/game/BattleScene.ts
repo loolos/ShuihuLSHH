@@ -808,7 +808,13 @@ export class BattleScene extends Phaser.Scene {
     for (const u of units) {
       const v = this.vs(u);
       // 好汉聚义的小头目画成橙色，和对手好汉分开
-      marks.push({ x: v.x, y: v.y, color: u.team === NPC_TEAM ? '#f0a030' : `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}` });
+      // 我方：本回合已行动完的红框，没行动的黑框（lolo 2026-11-25）
+      marks.push({
+        x: v.x,
+        y: v.y,
+        color: u.team === NPC_TEAM ? '#f0a030' : `#${SIDE_COLOR[u.side].toString(16).padStart(6, '0')}`,
+        border: this.actedDone(u) ? '#ff2020' : undefined,
+      });
     }
     // 蹴鞠：球画成白点
     if (this.cujuView) marks.push({ x: this.cujuView.cell.x, y: this.cujuView.cell.y, color: '#ffffff' });

@@ -17,6 +17,8 @@ export interface MiniMark {
   x: number;
   y: number;
   color: string;
+  /** 边框色，缺省黑色（我方已行动完的画红框，lolo 2026-11-25）【新】 */
+  border?: string;
 }
 
 /** 小地图上的区域（格子坐标矩形，含两端）：撤退出口等【新】 */
@@ -305,7 +307,7 @@ export class Minimap {
     const s = Math.max(3, Math.min(7, Math.round(HALF_W * 2 * l.scale)));
     for (const m of marks) {
       const p = worldToMini(l, (m.x - m.y) * HALF_W, (m.x + m.y) * HALF_H);
-      g.fillStyle = '#000';
+      g.fillStyle = m.border ?? '#000';
       g.fillRect(Math.round(p.x - s / 2) - 1, Math.round(p.y - s / 2) - 1, s + 2, s + 2);
       g.fillStyle = m.color;
       g.fillRect(Math.round(p.x - s / 2), Math.round(p.y - s / 2), s, s);
