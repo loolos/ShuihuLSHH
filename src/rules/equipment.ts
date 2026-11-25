@@ -162,13 +162,28 @@ export const MEDICINE_TABLE = [
 export function kitBand(level: number): number {
   return Math.max(0, LEVEL_BANDS.filter((min) => level >= min).length - 1);
 }
-/** 原版人物有显式标定；扩展人物按初始衣服/头饰归类，缺省常服/头巾。 */
+/**
+ * 扩展包好汉按原著改的类别（负责人 2026-11-25，对照原著出场描写；原版 18 人照原版不改）：按职业名查，没列的按初始衣服 / 头饰推断。
+ * 武将披挂出阵 → 重甲 / 战盔；花荣「战袍金翠绣」→ 战袍；卖药的薛永、裁缝侯健、开酒店的朱贵 → 常服。
+ */
+export const PACK_KITS: Record<string, { armor?: string; head?: string }> = {
+  秦明: { armor: '重甲', head: '战盔' },
+  黄信: { armor: '重甲', head: '战盔' },
+  李应: { armor: '重甲', head: '战盔' },
+  孙立: { armor: '重甲', head: '战盔' },
+  花荣: { armor: '战袍' },
+  薛永: { armor: '常服' },
+  侯健: { armor: '常服' },
+  朱贵: { armor: '常服' },
+};
+/** 原版人物有显式标定；扩展人物按 PACK_KITS 或初始衣服/头饰归类，缺省常服/头巾。 */
 export function kitProfile(data: GameData, cls: ClassDef) {
   const category = (slot: number, fallback: string) => {
     const name = itemOf(data, cls.defaultItems[slot])?.name;
     return Object.keys(EQUIPMENT_CATEGORIES).find((key) => name && EQUIPMENT_CATEGORIES[key].includes(name)) ?? fallback;
   };
-  return HERO_KITS[cls.id] ?? { armor: category(1, '常服'), head: category(2, '头巾') };
+  const pack = PACK_KITS[cls.name];
+  return HERO_KITS[cls.id] ?? { armor: pack?.armor ?? category(1, '常服'), head: pack?.head ?? category(2, '头巾') };
 }
 export function levelKit(data: GameData, cls: ClassDef, level: number, slots: number[], keep: (id: number) => boolean = () => false): void {
   while (slots.length < SLOT_COUNT) slots.push(0);
