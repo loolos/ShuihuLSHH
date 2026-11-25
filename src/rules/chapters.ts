@@ -80,7 +80,7 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '两打祝家庄', stages: ['mainline/yizhangqing', 'mainline/hucheng'] },
   { name: '登州劫牢', stages: ['mainline/shehu', 'mainline/laihu', 'mainline/qingsunli', 'mainline/jielao'] },
   // 负责人 2026-11-25：三打祝家庄。过场孙立假投祝家庄（献石秀表忠心、夜里密议内应）；大仗宋公明三打祝家庄（里应外合、三座庄门）；战后过场黑旋风扈家庄、赏粮钟离老人、扑天雕李应上山
-  { name: '三打祝家庄', stages: ['mainline/ruzhuang', 'mainline/sanda', 'mainline/huzhuang', 'mainline/zhongli', 'mainline/liying-shangshan'] },
+  { name: '三打祝家庄', stages: ['mainline/ruzhuang', 'mainline/sanda', 'mainline/zhongli', 'mainline/liying-shangshan'] },
 ];
 
 /**

@@ -24,7 +24,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
   const put = (u: Unit, x: number, y: number) => { u.x = x; u.y = y; };
 
   it('大仗和三段战后过场排在第三十三章，开场单位不重叠、都走得到', () => {
-    for (const id of ['sanda', 'huzhuang', 'zhongli', 'liying-shangshan']) expect(chapterOf(`mainline/${id}`)).toBe(33);
+    for (const id of ['sanda', 'zhongli', 'liying-shangshan']) expect(chapterOf(`mainline/${id}`)).toBe(33);
     const { b, stage } = open();
     const seen = new Set<string>();
     for (const u of stage.units.filter((x) => !x.hidden)) {
