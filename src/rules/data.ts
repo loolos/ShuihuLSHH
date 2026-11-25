@@ -485,6 +485,8 @@ const soldFrom = (town: number) => {
 };
 /** 上架：武器店（大类 2）或当铺（大类 5），从城镇 town 起有卖，卖价 = 买价 / 2 */
 const shopItem = (price: number, town: number, category = 2): Partial<Item> => ({ category, buyPrice: price, sellPrice: price / 2, seqA: soldFrom(town) });
+/** 只改价钱：卖价 = 买价 / 2 */
+const price = (p: number): Partial<Item> => ({ buyPrice: p, sellPrice: p / 2 });
 export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   127: { name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 4500, sellPrice: 2250, seqA: [7, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0] },
   /*
@@ -509,6 +511,18 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   138: shopItem(5000, 9), // 麒麟護符：防 20、命 10、敏 10
   143: shopItem(5000, 9, 5), // 菊花金飾：体气 +50（水蓮鐵飾 +20 / 2000），当铺
   154: shopItem(8000, 10, 5), // 孔明兵法：攻防命敏 +5，当铺
+  /*
+   * 药价按效果重定【新：负责人 2026-11-25】：原版小還銀丹 / 小還金丹回得比大還少却贵 2–5 倍，大還、萬靈藥又比同等回量的創藥便宜一半，
+   * 抗毒 / 抗昏 3 回合卖解毒草藥的 60 倍。现按指导价（tools/price-audit.ts：体力 2.5 两/点、气力 2 两/点，回满按体 300 气 200 算）。
+   */
+  157: price(750), // 萬靈藥：回体 510（≈回满），原 300
+  158: price(950), // 大還銀丹：体 300 气 100，原 500
+  159: price(1150), // 大還金丹：体 400 气 200，原 700
+  161: price(1300), // 天山雪蓮：体气回满 + 解毒解昏，原 1000（要比大還金丹贵）
+  183: price(500), // 小還銀丹：体 170 气 30，原 1500
+  184: price(900), // 小還金丹：体 350 气 75，原 2500
+  185: price(300), // 清涼丸：3 回合抗毒，原 3000
+  187: price(300), // 提神丸：3 回合抗昏，原 3000
 };
 export const withItemOverrides = (items: Item[]): Item[] => items.map((it) => (ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it));
 /** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */

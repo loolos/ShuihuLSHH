@@ -43,6 +43,7 @@
 | `node --experimental-transform-types tools/charge-anim.ts [--all]` | 列出所有职业（原版 + 扩展包）集气技的施放时长（默认只列被加快的） |
 | `npm run i18n -- ids\|sync\|check …` | 多语言（`docs/game-design.md` §10.3）：给关卡剧本文字分配固定编号、同步 `gamedata/lang/<语言>/` 的译文文件、列出未翻 / 过期句数 |
 | `python tools/render-character.py gamedata/models/characters/<人物>.json [--only 动作 --frames 3 --samples 8 --out 目录]` | 按人物配方用 3D 假人渲染整套精灵图条（需要 `bpy`；配方和换色写法见 `gamedata/models/README.md`） |
+| `node --experimental-transform-types tools/price-audit.ts [--all]` | 物品价格审计：按效果算每件商店货的指导价，列出买价偏离 ±40% 以上的（`--all` 列全部；§7.4） |
 | `npm run render:maps` | 把地图渲染成 PNG 预览，写到 `extracted/maps/` |
 | `node --experimental-transform-types tools/compose-map.ts [名字]` | 按 `tools/map-recipes/` 的配方拼新地图，写 `packs/maps/*.json`（§15.15，见配方目录的 README） |
 
