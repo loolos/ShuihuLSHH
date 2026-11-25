@@ -108,7 +108,7 @@ export function pierceLength(from: Cell, s: Pick<SkillDef, 'area'>, at: Cell): n
  * 技能的作用范围（原版 0x408b10 按类型分派，跳转表 0x408b94）：
  * - 0、5、6、10：从施放点沿施放方向的一条线，长 size 格（0x40cf90）
  * - 1：从施放点沿施放方向展开的扇形，第 i 行（从 0 数）向两侧各 floor(i/2) 格，共 size 行（0x40d330）
- * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）
+ * - 2 迴旋技：施放者四周 4 格（原版的命中段带 0–3 四个方向；推测）；选在第 k 格（射程大于 1 时）就打四个方向的第 k 格【新】
  * - 12 周身技：周围 8 格；13 横扫：面前三格（八向选点斜放时为施放点及其朝施放者的横、竖两格）；14 前方长方形：宽 3、长 size；15 前冲：正前、前两格及左右前方四格；16 三岔：身前一格为柄，再向前展开三条各 size 格的射线；17 倒锥：近宽远窄，size 行【新】
  * - 其余（3、4、7、8、9、11）：以施放点为中心的菱形，曼哈顿距离 < size；size 0 只含施放点（0x40cde0）
  */
@@ -143,9 +143,12 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
         for (let j = -Math.floor(i / 2); j <= Math.floor(i / 2); j++) add(cx + dir.y * j, cy + dir.x * j);
       }
       break;
-    case 2:
-      for (const d of DIRS) add(from.x + d.x, from.y + d.y);
+    case 2: {
+      // 射程 1–2 的迴旋技（顾大嫂 母大虫扑食）：选第几格就打四个方向的第几格，不连带近的那圈（负责人 2026-11-24）；射程 1 的照旧打身边四格
+      const k = Math.max(1, Math.abs(at.x - from.x) + Math.abs(at.y - from.y));
+      for (const d of DIRS) add(from.x + d.x * k, from.y + d.y * k);
       break;
+    }
     case 12:
       for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) if (dx || dy) add(at.x + dx, at.y + dy);
       break;
