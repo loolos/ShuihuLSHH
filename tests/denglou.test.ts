@@ -149,6 +149,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     b.useSkill(lh, long, b.skillTargets(lh, long)[0]);
     expect(lh.disguised).toBe(true);
     expect(bj.stunTurns).toBe(2);
+    expect(skill(b, lh, '吹铁叫子').drug).toBe(2); // 普通吹铁叫子也愣两回合（负责人 2026-11-25）
     const gu = get('gudasao'), xl = get('xl0');
     xl.facing = 3;
     put(gu, xl.x + 3, xl.y);
