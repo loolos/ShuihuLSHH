@@ -1,0 +1,13 @@
+{
+  "N-add15#1": {"zh":"不要跑！统统给我站住！","t":"Don't run! Stop right there, all of you!"},
+  "N-add15#2": {"zh":"可恶！真是穷追不舍...我看这样吧，留下一个人与我阻挡追兵，其余的人先走...","t":"Damn! They just won't let up... Here's what we'll do: one of you stays with me to hold off the pursuers, and the rest go on ahead..."},
+  "N-add15#3": {"zh":"请选择留下的人","t":"Choose who stays behind"},
+  "N-add15#4": {"zh":"那么，三个时辰后大家在石碣村前面碰头。","t":"Then we'll meet in front of Stone Tablet Village in three hours."},
+  "N-add15#5": {"zh":"限制回合数 --- 50","t":"Turn limit --- 50"},
+  "N-add15#6": {"zh":"胜利条件   --- 打败所有敌人","t":"Victory --- Defeat all enemies"},
+  "N-add15#7": {"zh":"失败条件   --- %N死亡","t":"Defeat --- %N dies"},
+  "N-add15#8": {"zh":"敌军增援了！","t":"Enemy reinforcements!"},
+  "N-add15#9": {"zh":"限制回合数已到，未完成任务，游戏失败！","t":"Turn limit reached. Mission failed!"},
+  "N-add15#10": {"zh":"断后失败，众好汉被官兵追上，一一死于刀下........","t":"The rearguard failed. The soldiers caught up with the heroes and cut them down one by one........"},
+  "N-add15#11": {"zh":"经过一场恶战，终于逃脱了官兵的追捕。","t":"After a fierce battle, they finally escaped the soldiers' pursuit."}
+}
