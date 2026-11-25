@@ -58,6 +58,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
   const basic = attackSkill(u, b.data);
   const skills = [basic, ...learnedSkills(u, b.data).filter(s => !isSupportSkill(s) && !s.drug && s.mpCost <= u.mp)];
   const foes = b.aiFoesOf(u);
+  const occ = b.occupancy(u);
   const loneVolley: Choice = { best: null, ties: 0 };
   let bestLegacy: Option | null = null;
   const bestArea: Choice = { best: null, ties: 0 };
@@ -76,7 +77,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
       for (const cell of b.skillCells(u, skill, at)) {
         // 远射技选点多：落点附近（范围大小 + 1 以内）没有敌人就跳过
         if (skill.volley && !foes.some((t) => dist(t, cell) <= Math.max(1, skill.area) + 1)) continue;
-        const hit = b.affected(u, skill, cell, at);
+        const hit = b.affected(u, skill, cell, at, occ);
         // 绑住的人一律不碰：落点会波及被绑的人就不选【新】
         if (!hit.length || (only && !hit.includes(only)) || hit.some((t) => b.isBound(t))) continue;
         // 门卫不受墙外的人伤害【新】（三打祝家庄）：从墙外打只打得着门卫的落点不选

@@ -331,6 +331,9 @@ const BOUND_TURNS = 9999;
 /** 哨兵盘问时说的话（石秀探庄） */
 const QUESTIONS = ['站住！卖柴的，你往哪里去？', '兀那汉子，哪里来的？把担子放下看看！', '卖柴的，这条路不许乱走！', '你是哪个村的？怎地面生？']
 
+/** Battle.occupancy 建的表：格子编号 → 站在那里的人（和他在 units 里的次序） */
+export type Occupancy = Map<number, { t: Unit; i: number }[]> & { self?: { t: Unit; i: number } };
+
 export class Battle {
   readonly spectators: ReadonlySet<number>;
   /** 潜行关的哨兵：uid → 警戒半径【新】 */
@@ -892,19 +895,45 @@ export class Battle {
     return areaCells(this.board, at, skill, cell);
   }
   /** 攻击技只影响敌人；回复与援气只影响同阵营，援气不含自身或满气目标。 */
-  affected(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u): Unit[] {
+  affected(u: Unit, skill: SkillDef, cell: Cell, at: Cell = u, occ?: Occupancy): Unit[] {
     if (isSelfChargeSkill(skill)) return [u];
-    const area = new Set(this.skillArea(u, skill, cell, at).map((c) => key(c.x, c.y)));
+    const w = this.board.width;
+    const cells = this.skillArea(u, skill, cell, at);
     const allyCharge = isAllyChargeSkill(skill);
     const heal = isHealSkill(skill) || allyCharge;
-    return this.active().filter((t) => {
+    // occ（AI 一次决策里先建好的「格子 → 人」表）：只看作用范围里的格子，不必每个落点把全场几百人过一遍【新】（三打祝家庄手机上卡）
+    let pool: Unit[];
+    if (occ) {
+      const found: { t: Unit; i: number }[] = [];
+      for (const c of cells) {
+        const k = c.y * w + c.x;
+        for (const e of occ.get(k) ?? []) if (e.t !== u) found.push(e);
+        if (c.x === at.x && c.y === at.y && occ.self) found.push(occ.self);
+      }
+      found.sort((p, q) => p.i - q.i);
+      pool = found.filter((e, n) => n === 0 || found[n - 1].i !== e.i).map((e) => e.t); // 范围格子有重复时同一个人只算一次
+    } else pool = this.active();
+    const area = new Set(cells.map((c) => c.y * w + c.x));
+    return pool.filter((t) => {
       if (this.spectators.has(t.uid)) return false;
       const pos = t === u ? at : t;
       if (skill.drug && t.stunTurns > 0) return false; // 已经麻翻的不用再劝
       if (!heal && t.disguised && u.side === 'enemy') return false; // 敌人认不出伪装的人，招式也不打他【新】
-      return area.has(key(pos.x, pos.y)) && (heal ? !hostile(u, t) : hostile(u, t))
+      return area.has(pos.y * w + pos.x) && (heal ? !hostile(u, t) : hostile(u, t))
         && (!allyCharge || (t !== u && t.mp < t.stats.maxMp));
     });
+  }
+  /** 在场、没观战的人按格子编号（y × 宽 + x）分好，带上在 units 里的次序；self = 出手的人自己（他会挪到施放点，另算） */
+  occupancy(u: Unit): Occupancy {
+    const m: Occupancy = new Map();
+    this.units.forEach((t, i) => {
+      if (!t.alive || !t.present || this.spectators.has(t.uid)) return;
+      if (t === u) { m.self = { t, i }; return; }
+      const k = t.y * this.board.width + t.x;
+      const list = m.get(k);
+      if (list) list.push({ t, i }); else m.set(k, [{ t, i }]);
+    });
+    return m;
   }
   /** 能施放的格子（范围内至少有一个可作用的单位） */
   skillTargets(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
