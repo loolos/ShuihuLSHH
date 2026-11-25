@@ -57,12 +57,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('吕方、郭
     }
   });
   it('燕顺、石勇（负责人 2026-11-20）：燕顺换虎系技能；石勇有自己的身体（庄客拳师改深灰），不再借童威的', () => {
-    expect(cls('yanshun').skills.map((s) => s.name)).toEqual(['锦毛朴刀', '饿虎扑食', '猛虎下山', '虎踞', '虎跃断魂']);
+    expect(cls('yanshun').skills.map((s) => s.name)).toEqual(['锦毛朴刀', '饿虎扑食', '猛虎下山', '虎踞', '虎跃断魂', '猛虎下山LV2', '虎跃断魂LV2']);
     expect(cls('yanshun').skills[1].hits).toHaveLength(4);
     expect(cls('yanshun').skills[3].type).toBe(8);
     const defs = JSON.parse(fs.readFileSync('packs/mainline/pack.json', 'utf8')).classes as { id: string; sprite: { fromClass: number } }[];
     expect(defs.find((c) => c.id === 'shiyong')!.sprite.fromClass).toBe(19);
-    expect(cls('shiyong').skills.map((s) => s.name)).toEqual(['石将军拳', '一拳毙命', '聚气', '孤注一掷', '石破天惊']);
+    expect(cls('shiyong').skills.map((s) => s.name)).toEqual(['石将军拳', '一拳毙命', '聚气', '孤注一掷', '石破天惊', '石破天惊LV2', '一拳毙命LV2']);
     expect(cls('shiyong').skills[1].critMod).toBeGreaterThan(cls('yanshun').skills[1].critMod);
     for (const st of ['shiyong', 'fachang', 'bailongmiao']) {
       const u = JSON.parse(fs.readFileSync(`packs/mainline/stages/${st}.json`, 'utf8')).units.find((x: { id: string }) => x.id === 'shiyong');
@@ -74,7 +74,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('吕方、郭
     expect(defs.find((c) => c.id === 'yanshun')!.sprite.fromClass).toBe(14);
     const ys = cls('yanshun').skills;
     // 五招各用杨志自己的一套动作（第 0–4 组），不重复
-    expect(ys.map((s) => s.group)).toEqual([0, 2, 1, 4, 3]);
+    expect(ys.map((s) => s.group)).toEqual([0, 2, 1, 4, 3, 1, 3]); // 末尾两招是 40 级后的 LV2，沿用同一出手动作（§6.5.2）
     expect(ys[4].type).toBe(7);
     expect(learnedSkills(unit('yanshun', 26), rt.data).map((s) => s.name)).toContain('虎跃断魂');
     const sy = cls('shiyong').skills;
