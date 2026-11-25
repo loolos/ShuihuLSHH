@@ -743,9 +743,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // ['respawn', [[单位…], …], {gates: [门号…], one}] 刷兵 / 补位（指令 133）【新】（三打祝家庄）：默认刷出第一组全都不在场的人；
         // gates 写每组属于第几座门（门开了不刷，-1 = 不看门）；one = 只刷一个人（从第 回合数 % 组数 组起轮着找空岗）
         const sets = a[0] as unknown[][];
-        const o = (a[1] ?? {}) as { gates?: number[]; one?: boolean };
+        // say：刷出人来时，刷出的第一个人喊一句（按回合数轮着挑）
+        const o = (a[1] ?? {}) as { gates?: number[]; one?: boolean; say?: string[] };
         if (!Array.isArray(sets) || !sets.every(Array.isArray)) fail(`第 ${index} 个区块：respawn 要写成 ["respawn", [[单位, …], …], {gates, one}]`);
-        ops.push({ op: 133, flag: null, value: 0, args: { sets: sets.map((l) => l.map((id) => r.unitRef(id).act.index)), ...(o.gates ? { gates: o.gates } : {}), ...(o.one ? { one: true } : {}) } });
+        ops.push({ op: 133, flag: null, value: 0, args: { sets: sets.map((l) => l.map((id) => r.unitRef(id).act.index)), ...(o.gates ? { gates: o.gates } : {}), ...(o.one ? { one: true } : {}), ...(o.say?.length ? { say: o.say } : {}) } });
         break;
       }
       case 'unseal': {

@@ -811,12 +811,13 @@ export class Battle {
    * 默认：挑第一组全都不在场的，整组刷出（每座门的一波出击）。one：只刷一个人，从第 (回合数 % 组数) 组起轮着找、
    * 不在场且开场位置没人占的那个（弓手补位，每回合最多一个）。
    */
-  private respawnSets(sets: number[][], gates: number[] = [], one = false) {
+  /** 返回刷出来的第一个人（没刷出来是 undefined），喊话用 */
+  private respawnSets(sets: number[][], gates: number[] = [], one = false): Unit | undefined {
     const ok = (k: number) => gates[k] === undefined || gates[k] < 0 || !this.gateOpen(gates[k]);
     if (!one) {
       const k = sets.findIndex((ids, j) => ok(j) && ids.every((id) => this.offField(id)));
       if (k >= 0) for (const id of sets[k]) this.respawn(this.unit(id)!);
-      return;
+      return k >= 0 ? this.unit(sets[k][0]) : undefined;
     }
     const occ = this.occupied();
     for (let n = 0; n < sets.length; n++) {
@@ -826,8 +827,9 @@ export class Battle {
         const h = this.homes.get(x);
         return this.offField(x) && h && !occ.has(key(h.x, h.y));
       });
-      if (id !== undefined) return this.respawn(this.unit(id)!);
+      if (id !== undefined) { const u = this.unit(id)!; this.respawn(u); return u; }
     }
+    return undefined;
   }
   /** 挠钩拖翻：拖进一辆空囚车，囚车旁刷出一组看守 */
   private snare(t: Unit) {
@@ -2979,7 +2981,10 @@ export class Battle {
         // 133 刷兵 / 补位【新】（三打祝家庄）：见 respawnSets
         case 133: {
           const a = op.args ?? {};
-          this.respawnSets(a.sets ?? [], a.gates, !!a.one);
+          const who = this.respawnSets(a.sets ?? [], a.gates, !!a.one);
+          // args.say【新】（负责人 2026-11-25：刷兵、补位要有一句喊话）：刷出来的第一个人按回合轮着喊一句
+          const lines: string[] = a.say ?? [];
+          if (who && lines.length) this.emit({ type: 'say', uid: who.uid, speaker: who.name, text: lines[this.turn % lines.length] });
           break;
         }
         // 130 去掉伪装 / 131 扮上伪装（扩展包【新】，劫牢、三打）：value 1 = 全部伪装的人；args.quiet = 不飘字
