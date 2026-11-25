@@ -3247,6 +3247,198 @@
    "name": "挠钩手"
   },
   {
+   "id": "zcf-cg00",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg01",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg10",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg11",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg20",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg21",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg30",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg31",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg40",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg41",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg50",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-cg51",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
    "id": "luan",
    "class": "luantingyu",
    "side": "enemy",
@@ -3590,1563 +3782,1871 @@
   },
   {
    "id": "amb5w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb5w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 3,
-   "y": 33,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 7,
-   "y": 30,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb5w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 33,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 34,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 54,
-   "y": 31,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb5e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 54,
-   "y": 31,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb5e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 54,
-   "y": 32,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb5e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb8w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 10,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb8w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 9,
-   "y": 35,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb8e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 35,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 37,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb8e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 35,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb8e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 37,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb11w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 3,
-   "y": 33,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 7,
-   "y": 30,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb11w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 33,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 34,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 54,
-   "y": 31,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb11e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 54,
-   "y": 31,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb11e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 54,
-   "y": 32,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb11e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb14w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 10,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb14w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 9,
-   "y": 35,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb14e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 35,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 37,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb14e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 35,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb14e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 37,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb17w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 3,
-   "y": 33,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 7,
-   "y": 30,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb17w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 33,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 34,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 54,
-   "y": 31,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb17e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 54,
-   "y": 31,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb17e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 54,
-   "y": 32,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb17e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb20w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 10,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb20w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 9,
-   "y": 35,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb20e1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 35,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 61,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 57,
-   "y": 37,
+   "x": 60,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb20e5",
    "class": "naogou",
    "side": "enemy",
-   "x": 56,
-   "y": 35,
+   "x": 61,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 36,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb20e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 56,
-   "y": 37,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w0",
-   "class": 43,
+   "class": "zhuangtou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 4,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "庄客头目",
    "target": "songjiang",
-   "hidden": true
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
   },
   {
    "id": "amb23w1",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 3,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w2",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 3,
-   "y": 33,
+   "x": 2,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w3",
-   "class": 43,
+   "class": "naogou",
    "side": "enemy",
-   "x": 6,
-   "y": 37,
+   "x": 2,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄马军",
+   "name": "挠钩手",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w4",
-   "class": "zhuangtou",
-   "side": "enemy",
-   "x": 7,
-   "y": 30,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "庄客头目",
-   "target": "songjiang",
-   "hidden": true,
-   "skills": [
-    "zt-la"
-   ]
-  },
-  {
-   "id": "amb23w5",
    "class": "naogou",
    "side": "enemy",
-   "x": 7,
-   "y": 30,
+   "x": 0,
+   "y": 60,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w5",
+   "class": 19,
+   "side": "enemy",
+   "x": 1,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 33,
+   "x": 0,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23w7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 10,
-   "y": 34,
+   "x": 1,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 3,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w8",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 62,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w9",
+   "class": 43,
+   "side": "enemy",
+   "x": 0,
+   "y": 63,
+   "level": 30,
+   "facing": 3,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23e0",
-   "class": 43,
-   "side": "enemy",
-   "x": 54,
-   "y": 31,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb23e1",
-   "class": 43,
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb23e2",
-   "class": 43,
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb23e3",
-   "class": 43,
-   "side": "enemy",
-   "x": 57,
-   "y": 34,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": 0,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb23e4",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 54,
-   "y": 31,
+   "x": 59,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "庄客头目",
@@ -5157,44 +5657,128 @@
    ]
   },
   {
-   "id": "amb23e5",
+   "id": "amb23e1",
    "class": "naogou",
    "side": "enemy",
-   "x": 54,
-   "y": 32,
+   "x": 60,
+   "y": 62,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
    "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e2",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 61,
+   "y": 61,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e3",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 60,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e4",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 61,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e5",
+   "class": 19,
+   "side": "enemy",
+   "x": 63,
+   "y": 60,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23e6",
-   "class": "naogou",
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 63,
+   "y": 61,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "挠钩手",
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
    "id": "amb23e7",
-   "class": 19,
+   "class": 43,
    "side": "enemy",
-   "x": 57,
-   "y": 34,
+   "x": 62,
+   "y": 63,
    "level": 30,
-   "facing": 2,
+   "facing": 1,
    "ai": 10,
    "levelOffset": 0,
-   "name": "祝家庄庄客",
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e8",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 62,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e9",
+   "class": 43,
+   "side": "enemy",
+   "x": 63,
+   "y": 63,
+   "level": 30,
+   "facing": 1,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   }
@@ -6216,6 +6800,10 @@
    },
    "do": [
     [
+     "flag",
+     "zcfDead"
+    ],
+    [
      "say",
      "shixiu",
      "老贼！你将我打上囚车之时，可曾想到今日？"
@@ -6305,6 +6893,43 @@
        1
       ]
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 1
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -6440,6 +7065,43 @@
   },
   {
    "on": {
+    "turn": 2
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 3
    },
    "do": [
@@ -6565,6 +7227,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -6700,6 +7399,43 @@
   },
   {
    "on": {
+    "turn": 4
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 5
    },
    "do": [
@@ -6825,6 +7561,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -6960,6 +7733,43 @@
   },
   {
    "on": {
+    "turn": 6
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 7
    },
    "do": [
@@ -7090,6 +7900,43 @@
   },
   {
    "on": {
+    "turn": 7
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 8
    },
    "do": [
@@ -7215,6 +8062,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -7350,6 +8234,43 @@
   },
   {
    "on": {
+    "turn": 9
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 10
    },
    "do": [
@@ -7480,6 +8401,43 @@
   },
   {
    "on": {
+    "turn": 10
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 11
    },
    "do": [
@@ -7605,6 +8563,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -7740,6 +8735,43 @@
   },
   {
    "on": {
+    "turn": 12
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 13
    },
    "do": [
@@ -7870,6 +8902,43 @@
   },
   {
    "on": {
+    "turn": 13
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 14
    },
    "do": [
@@ -7995,6 +9064,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -8130,6 +9236,43 @@
   },
   {
    "on": {
+    "turn": 15
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 16
    },
    "do": [
@@ -8260,6 +9403,43 @@
   },
   {
    "on": {
+    "turn": 16
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 17
    },
    "do": [
@@ -8385,6 +9565,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -8520,6 +9737,43 @@
   },
   {
    "on": {
+    "turn": 18
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 19
    },
    "do": [
@@ -8650,6 +9904,43 @@
   },
   {
    "on": {
+    "turn": 19
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 20
    },
    "do": [
@@ -8775,6 +10066,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -8910,6 +10238,43 @@
   },
   {
    "on": {
+    "turn": 21
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 22
    },
    "do": [
@@ -9040,6 +10405,43 @@
   },
   {
    "on": {
+    "turn": 22
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 23
    },
    "do": [
@@ -9165,6 +10567,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -9300,6 +10739,43 @@
   },
   {
    "on": {
+    "turn": 24
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 25
    },
    "do": [
@@ -9425,6 +10901,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -9560,6 +11073,43 @@
   },
   {
    "on": {
+    "turn": 26
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 27
    },
    "do": [
@@ -9685,6 +11235,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -9820,6 +11407,43 @@
   },
   {
    "on": {
+    "turn": 28
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 29
    },
    "do": [
@@ -9945,6 +11569,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -10080,6 +11741,43 @@
   },
   {
    "on": {
+    "turn": 30
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 31
    },
    "do": [
@@ -10205,6 +11903,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -10340,6 +12075,43 @@
   },
   {
    "on": {
+    "turn": 32
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 33
    },
    "do": [
@@ -10465,6 +12237,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -10600,6 +12409,43 @@
   },
   {
    "on": {
+    "turn": 34
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 35
    },
    "do": [
@@ -10725,6 +12571,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -10860,6 +12743,43 @@
   },
   {
    "on": {
+    "turn": 36
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 37
    },
    "do": [
@@ -10985,6 +12905,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -11120,6 +13077,43 @@
   },
   {
    "on": {
+    "turn": 38
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 39
    },
    "do": [
@@ -11245,6 +13239,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -11380,6 +13411,43 @@
   },
   {
    "on": {
+    "turn": 40
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 41
    },
    "do": [
@@ -11505,6 +13573,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -11640,6 +13745,43 @@
   },
   {
    "on": {
+    "turn": 42
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 43
    },
    "do": [
@@ -11765,6 +13907,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -11900,6 +14079,43 @@
   },
   {
    "on": {
+    "turn": 44
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 45
    },
    "do": [
@@ -12025,6 +14241,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -12160,6 +14413,43 @@
   },
   {
    "on": {
+    "turn": 46
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 47
    },
    "do": [
@@ -12285,6 +14575,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -12420,6 +14747,43 @@
   },
   {
    "on": {
+    "turn": 48
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 49
    },
    "do": [
@@ -12545,6 +14909,43 @@
       ],
       "one": true
      }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
     ]
    ]
   },
@@ -12680,6 +15081,43 @@
   },
   {
    "on": {
+    "turn": 50
+   },
+   "unless": "zcfDead",
+   "do": [
+    [
+     "respawn",
+     [
+      [
+       "zcf-cg00",
+       "zcf-cg01"
+      ],
+      [
+       "zcf-cg10",
+       "zcf-cg11"
+      ],
+      [
+       "zcf-cg20",
+       "zcf-cg21"
+      ],
+      [
+       "zcf-cg30",
+       "zcf-cg31"
+      ],
+      [
+       "zcf-cg40",
+       "zcf-cg41"
+      ],
+      [
+       "zcf-cg50",
+       "zcf-cg51"
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 5
    },
    "do": [
@@ -12689,7 +15127,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -12725,6 +15163,14 @@
     ],
     [
      "appear",
+     "amb5w8"
+    ],
+    [
+     "appear",
+     "amb5w9"
+    ],
+    [
+     "appear",
      "amb5e0"
     ],
     [
@@ -12754,6 +15200,14 @@
     [
      "appear",
      "amb5e7"
+    ],
+    [
+     "appear",
+     "amb5e8"
+    ],
+    [
+     "appear",
+     "amb5e9"
     ]
    ]
   },
@@ -12768,7 +15222,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -12804,6 +15258,14 @@
     ],
     [
      "appear",
+     "amb8w8"
+    ],
+    [
+     "appear",
+     "amb8w9"
+    ],
+    [
+     "appear",
      "amb8e0"
     ],
     [
@@ -12833,6 +15295,14 @@
     [
      "appear",
      "amb8e7"
+    ],
+    [
+     "appear",
+     "amb8e8"
+    ],
+    [
+     "appear",
+     "amb8e9"
     ]
    ]
   },
@@ -12847,7 +15317,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -12883,6 +15353,14 @@
     ],
     [
      "appear",
+     "amb11w8"
+    ],
+    [
+     "appear",
+     "amb11w9"
+    ],
+    [
+     "appear",
      "amb11e0"
     ],
     [
@@ -12912,6 +15390,14 @@
     [
      "appear",
      "amb11e7"
+    ],
+    [
+     "appear",
+     "amb11e8"
+    ],
+    [
+     "appear",
+     "amb11e9"
     ]
    ]
   },
@@ -12926,7 +15412,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -12962,6 +15448,14 @@
     ],
     [
      "appear",
+     "amb14w8"
+    ],
+    [
+     "appear",
+     "amb14w9"
+    ],
+    [
+     "appear",
      "amb14e0"
     ],
     [
@@ -12991,6 +15485,14 @@
     [
      "appear",
      "amb14e7"
+    ],
+    [
+     "appear",
+     "amb14e8"
+    ],
+    [
+     "appear",
+     "amb14e9"
     ]
    ]
   },
@@ -13005,7 +15507,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -13041,6 +15543,14 @@
     ],
     [
      "appear",
+     "amb17w8"
+    ],
+    [
+     "appear",
+     "amb17w9"
+    ],
+    [
+     "appear",
      "amb17e0"
     ],
     [
@@ -13070,6 +15580,14 @@
     [
      "appear",
      "amb17e7"
+    ],
+    [
+     "appear",
+     "amb17e8"
+    ],
+    [
+     "appear",
+     "amb17e9"
     ]
    ]
   },
@@ -13084,7 +15602,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -13120,6 +15638,14 @@
     ],
     [
      "appear",
+     "amb20w8"
+    ],
+    [
+     "appear",
+     "amb20w9"
+    ],
+    [
+     "appear",
      "amb20e0"
     ],
     [
@@ -13149,6 +15675,14 @@
     [
      "appear",
      "amb20e7"
+    ],
+    [
+     "appear",
+     "amb20e8"
+    ],
+    [
+     "appear",
+     "amb20e9"
     ]
    ]
   },
@@ -13163,7 +15697,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+     "左右两角一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -13199,6 +15733,14 @@
     ],
     [
      "appear",
+     "amb23w8"
+    ],
+    [
+     "appear",
+     "amb23w9"
+    ],
+    [
+     "appear",
      "amb23e0"
     ],
     [
@@ -13228,6 +15770,14 @@
     [
      "appear",
      "amb23e7"
+    ],
+    [
+     "appear",
+     "amb23e8"
+    ],
+    [
+     "appear",
+     "amb23e9"
     ]
    ]
   },
