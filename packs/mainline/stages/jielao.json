@@ -2,6 +2,7 @@
  "id": "jielao",
  "title": "解珍解宝双越狱",
  "dynamicLevels": true,
+ "townAfter": 11,
  "rewards": {
   "gold": 600
  },

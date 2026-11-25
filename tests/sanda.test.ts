@@ -10,6 +10,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
+import { insertTownIntro, insertTownName } from '../src/packs/towns.ts';
 
 describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三章 三打祝家庄', () => {
   useDiskCustomMaps();
@@ -35,6 +36,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     const gates = new Set(b.siege!.gates.flatMap((g) => g.cells.map((c) => c.y * 64 + c.x)));
     const f = b.board.distanceField([{ x: 31, y: 55 }], gates);
     for (const u of b.units.filter((x) => x.side === 'enemy' && !b.isDoor(x.uid))) expect(Number.isFinite(f[u.y * 64 + u.x]), `${u.name} (${u.x},${u.y})`).toBe(true);
+  });
+
+  it('第三十三章开头有营寨整备：解珍解宝双越狱之后进城镇，入城对白的人都在大仗开场的我方里', () => {
+    expect(rt.stages.find((s) => s.id === 'jielao')!.townAfter).toBe(11);
+    expect(insertTownName('mainline/ruzhuang')).toBe('独龙冈营寨');
+    const sanda = rt.stages.find((s) => s.id === 'sanda')!;
+    const actors = new Set(sanda.units.filter((u) => u.side === 'player' && !u.hidden && !u.prisonCart).map((u) => u.class));
+    for (const l of insertTownIntro('mainline/ruzhuang')) expect(actors.has(l.actor), l.actor).toBe(true);
   });
 
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {

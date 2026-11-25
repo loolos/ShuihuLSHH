@@ -51,7 +51,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
   it('有专名的插关城镇都有自己的入城对白，不落到阳谷的宋江、武松对白（负责人 2026-11-23：独龙冈下寨照抄了阳谷）', () => {
     const yanggu = JSON.stringify(insertTownIntro('mainline/shizipo'));
     expect(insertTownIntro('mainline/none')).toEqual([]);
-    for (const next of ['mainline/shiyong', 'mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu']) {
+    for (const next of ['mainline/shiyong', 'mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang']) {
       expect(insertTownName(next), next).not.toBe('阳谷整备');
       expect(JSON.stringify(insertTownIntro(next)), next).not.toBe(yanggu);
     }

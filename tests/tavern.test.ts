@@ -13,7 +13,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('续篇城镇
   const rt = loadPackFromDisk('mainline');
 
   it('六个续篇城镇都有传闻和说书，挂在「下一关」上', () => {
-    expect(Object.keys(TAVERNS).sort()).toEqual(['mainline/fachang', 'mainline/jieyangzhen', 'mainline/panduolu', 'mainline/shiyong', 'mainline/shizipo', 'mainline/yekun', 'mainline/yuanyanglou', 'mainline/zhujiadian']);
+    expect(Object.keys(TAVERNS).sort()).toEqual(['mainline/fachang', 'mainline/jieyangzhen', 'mainline/panduolu', 'mainline/ruzhuang', 'mainline/shiyong', 'mainline/shizipo', 'mainline/yekun', 'mainline/yuanyanglou', 'mainline/zhujiadian']);
     // 每个下一关前面那一关都写了 townAfter
     const towns = rt.stages.filter((s) => s.townAfter).length;
     expect(towns).toBe(Object.keys(TAVERNS).length);
