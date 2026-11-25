@@ -3620,7 +3620,8 @@
    "facing": 2,
    "ai": 2,
    "levelOffset": 1,
-   "name": "铁棒栾廷玉"
+   "name": "铁棒栾廷玉",
+   "target": "sunxin"
   },
   {
    "id": "luan0",
@@ -6687,66 +6688,40 @@
     [
      "say",
      "zhulong",
-     "庄里有奸细！亲随跟我回庄去拿人，其余的守住吊桥！"
+     "栾教师！孙提辖一伙原来是梁山的奸细，庄里就烦你去拿人！"
     ],
     [
-     "move",
-     "zhulong-bg2",
-     32,
-     18,
-     {
-      "nearest": true
-     }
+     "focus",
+     "luan"
     ],
     [
-     "move",
-     "zhulong",
-     32,
-     19,
-     {
-      "nearest": true
-     }
-    ],
-    [
-     "move",
-     "zhulong-bg0",
-     31,
-     19,
-     {
-      "nearest": true
-     }
-    ],
-    [
-     "move",
-     "zhulong-bg1",
-     33,
-     19,
-     {
-      "nearest": true
-     }
-    ],
-    [
-     "narrate",
-     "祝龙引着几个亲随，从前门退回庄里，去拿孙立一伙。"
+     "say",
+     "luan",
+     "公子守住前门，庄里的事交给栾某！"
     ],
     [
      "setAi",
-     "zhulong",
+     "luan",
+     10
+    ],
+    [
+     "setAi",
+     "luan0",
      0
     ],
     [
      "setAi",
-     "zhulong-bg0",
+     "luan1",
      0
     ],
     [
      "setAi",
-     "zhulong-bg1",
+     "luan2",
      0
     ],
     [
      "setAi",
-     "zhulong-bg2",
+     "luan3",
      0
     ]
    ]
@@ -6898,6 +6873,49 @@
     [
      "flag",
      "fire"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "luan",
+    "by": "sunxin"
+   },
+   "if": "go",
+   "unless": "luanSunxin",
+   "do": [
+    [
+     "flag",
+     "luanSunxin"
+    ],
+    [
+     "focus",
+     "luan"
+    ],
+    [
+     "face",
+     "luan",
+     "sunxin"
+    ],
+    [
+     "face",
+     "sunxin",
+     "luan"
+    ],
+    [
+     "say",
+     "luan",
+     "孙新！你兄弟两个好大胆，竟敢引梁山贼寇来赚祝家庄！"
+    ],
+    [
+     "say",
+     "sunxin",
+     "栾教师，祝家庄作恶多端，气数已尽，何苦替他们卖命？"
+    ],
+    [
+     "say",
+     "luan",
+     "休得多言！先拿下你，再去寻你哥哥说话！"
     ]
    ]
   },
