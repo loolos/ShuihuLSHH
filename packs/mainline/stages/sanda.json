@@ -6779,7 +6779,7 @@
       ]
      ],
      {
-      "panic": 8,
+      "panic": 16,
       "turns": 2,
       "spare": [
        "zhulong",
@@ -6854,7 +6854,7 @@
       ]
      ],
      {
-      "panic": 8,
+      "panic": 16,
       "turns": 2,
       "spare": [
        "zhulong",

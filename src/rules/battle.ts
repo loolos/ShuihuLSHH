@@ -2876,7 +2876,8 @@ export class Battle {
           const foes = this.active()
             .filter((u) => u.side === 'enemy' && !this.spectators.has(u.uid) && !this.isBound(u))
             .sort((p, q) => d(p) - d(q) || p.uid - q.uid);
-          const fled = foes.filter((u) => !a.spare?.includes(u.classId) && !u.panicTurns).slice(0, a.panic ?? 0);
+          // 攻庄的门（看不见的敌人）不会被吓跑
+          const fled = foes.filter((u) => !a.spare?.includes(u.classId) && !u.panicTurns && !this.isDoor(u.uid)).slice(0, a.panic ?? 0);
           for (const u of fled) {
             u.panicTurns = a.turns ?? 3;
             if (u.defending) {
