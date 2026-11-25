@@ -23,6 +23,10 @@ import {
   attackRange, attackSkill, computeStats, DIRS, dist, facingTowards, hostile, inAttackRange, refreshStats, resists, type Side, type Unit,
 } from './unit.ts';
 
+/** 三打祝家庄放囚车的对白【新】（负责人 2026-11-25） */
+const RESCUE_LINES = ['{who}兄弟，我来救你了！', '{who}兄弟莫慌，我这就砸开囚车！', '{who}兄弟，受苦了！快出来！'];
+const FREED_LINES = ['多谢相救！这口鸟气，正要去找祝家庄讨回来！', '好兄弟！且拿件兵器来，与他们厮杀一场！', '憋死我了！祝家庄的鸟人，吃我一顿好打！'];
+
 export { expToNext } from './exp.ts';
 /** 强行军：黄色范围 = 剩余移动力 + 移动力的一半（向上取整）。原版固定 +1，负责人决定用这个【新】 */
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
@@ -865,7 +869,17 @@ export class Battle {
       }
       this.emit({ type: 'status', uid: c.uid, text: '解開' });
       this.emit({ type: 'hp', uid: c.uid, hp: c.hp, mp: c.mp, delta: 0 });
+      // 放人有对白（负责人 2026-11-25）：救人的、被救的各一句；伪装的内应动手放人，旁边的庄客当场喊破
+      const k = this.turn + c.uid;
+      this.emit({ type: 'say', uid: by.uid, speaker: by.name, text: RESCUE_LINES[k % RESCUE_LINES.length].replace('{who}', c.name) });
       this.emit({ type: 'message', text: `${by.name}打开囚车，救出了${c.name}！` });
+      this.emit({ type: 'say', uid: c.uid, speaker: c.name, text: FREED_LINES[k % FREED_LINES.length] });
+      if (by.disguised) {
+        const foes = this.active().filter((u) => u.side === 'enemy' && !this.isDoor(u.uid) && !this.spectators.has(u.uid) && u.stunTurns === 0);
+        const w = foes.sort((p, q) => dist(p, by) - dist(q, by))[0];
+        if (w) this.emit({ type: 'say', uid: w.uid, speaker: w.name, text: '有人劫囚车！那厮不是自家人，是梁山泊的奸细！' });
+        this.unmask(by, '识破');
+      }
     }
   }
 

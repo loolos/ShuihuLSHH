@@ -411,9 +411,11 @@ export class BattleScene extends Phaser.Scene {
     this.drawBar(u);
   }
 
-  /** 我方本回合已经行动完（待机的不算：待机不结束行动，见 §2.5）；剧情关不算，过场里人物不变灰 */
+  /** 我方本回合已经行动完（待机的不算：待机不结束行动，见 §2.5）；剧情关不算，过场里人物不变灰。
+   *  观战 / 押在囚车里这类不能动的好汉一直算行动完毕（负责人 2026-11-25） */
   private actedDone(u: Unit) {
-    return !this.story && u.side === 'player' && u.ended && this.battle.phase === 'player';
+    if (this.story || u.side !== 'player') return false;
+    return this.battle.spectators.has(u.uid) || (u.ended && this.battle.phase === 'player');
   }
 
   /**
@@ -421,8 +423,10 @@ export class BattleScene extends Phaser.Scene {
    * 我方好汉再加一条经验（蓝，满了就升级）。
    */
   private drawBar(u: Unit) {
-    if (this.battle.spectators.has(u.uid)) { this.sprites.get(u.uid)?.bar.clear(); return; }
     const s = this.sprites.get(u.uid);
+    // 灰色跟着观战 / 行动完的状态走（观战改回出战时只发一条 hp 事件，这里顺手刷新）
+    if (s) { if (this.actedDone(u)) s.spr.setTint(0x808080); else s.spr.clearTint(); }
+    if (this.battle.spectators.has(u.uid)) { s?.bar.clear(); return; }
     if (!s) return;
     const v = this.vs(u);
     const p = cellToWorld(v.x, v.y);

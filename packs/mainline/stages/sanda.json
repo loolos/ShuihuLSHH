@@ -468,7 +468,7 @@
    "class": 11,
    "side": "player",
    "x": 30,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -478,7 +478,7 @@
    "class": "huarong",
    "side": "player",
    "x": 33,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -488,7 +488,7 @@
    "class": 0,
    "side": "player",
    "x": 15,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -498,7 +498,7 @@
    "class": "lijun",
    "side": "player",
    "x": 17,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -508,7 +508,7 @@
    "class": "likui",
    "side": "player",
    "x": 48,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -518,7 +518,7 @@
    "class": "yangxiong",
    "side": "player",
    "x": 46,
-   "y": 39,
+   "y": 43,
    "level": 30,
    "facing": 0,
    "spectator": true
@@ -559,10 +559,10 @@
    "class": 5,
    "side": "ally",
    "x": 28,
-   "y": 40,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -570,10 +570,10 @@
    "class": 13,
    "side": "ally",
    "x": 35,
-   "y": 40,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -581,32 +581,32 @@
    "class": 15,
    "side": "ally",
    "x": 31,
-   "y": 41,
+   "y": 45,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
    "id": "lvfang",
    "class": "lvfang",
    "side": "ally",
-   "x": 12,
-   "y": 40,
+   "x": 13,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
    "id": "guosheng",
    "class": "guosheng",
    "side": "ally",
-   "x": 19,
-   "y": 40,
+   "x": 18,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -614,10 +614,10 @@
    "class": "daizong",
    "side": "ally",
    "x": 15,
-   "y": 41,
+   "y": 45,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -625,10 +625,10 @@
    "class": 55,
    "side": "ally",
    "x": 11,
-   "y": 38,
+   "y": 42,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1,
    "name": "孟康"
   },
@@ -637,10 +637,10 @@
    "class": 36,
    "side": "ally",
    "x": 20,
-   "y": 38,
+   "y": 42,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1,
    "name": "裴宣"
   },
@@ -649,10 +649,10 @@
    "class": 65,
    "side": "ally",
    "x": 51,
-   "y": 40,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1,
    "name": "欧鹏"
   },
@@ -661,10 +661,10 @@
    "class": "malin",
    "side": "ally",
    "x": 44,
-   "y": 40,
+   "y": 44,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -672,21 +672,21 @@
    "class": "lili",
    "side": "ally",
    "x": 48,
-   "y": 41,
+   "y": 45,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
    "id": "xueyong",
    "class": "xueyong",
    "side": "ally",
-   "x": 52,
-   "y": 38,
+   "x": 51,
+   "y": 42,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -694,10 +694,10 @@
    "class": "houjian",
    "side": "ally",
    "x": 43,
-   "y": 39,
+   "y": 42,
    "level": 30,
    "facing": 0,
-   "ai": 2,
+   "ai": 8,
    "levelOffset": -1
   },
   {
@@ -1437,12 +1437,12 @@
    "id": "gd-west0",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 14,
+   "x": 13,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客",
    "skills": [
     "zt-la"
@@ -1452,36 +1452,36 @@
    "id": "gd-west1",
    "class": 40,
    "side": "enemy",
-   "x": 15,
+   "x": 16,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-west2",
    "class": 41,
    "side": "enemy",
-   "x": 13,
-   "y": 19,
+   "x": 12,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-west3",
    "class": 20,
    "side": "enemy",
-   "x": 16,
-   "y": 19,
+   "x": 17,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
@@ -1493,7 +1493,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1505,7 +1505,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1517,7 +1517,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1529,7 +1529,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1541,7 +1541,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1553,7 +1553,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1565,7 +1565,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -1581,7 +1581,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1594,7 +1594,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1607,7 +1607,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1620,7 +1620,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1633,7 +1633,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -1649,7 +1649,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1662,7 +1662,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1675,7 +1675,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1688,7 +1688,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1701,7 +1701,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -1717,7 +1717,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1730,7 +1730,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1743,7 +1743,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1756,7 +1756,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1769,7 +1769,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -1785,7 +1785,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1798,7 +1798,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -1811,7 +1811,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1824,7 +1824,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -1844,12 +1844,12 @@
    "id": "gd-front0",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 31,
+   "x": 30,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客",
    "skills": [
     "zt-la"
@@ -1859,36 +1859,36 @@
    "id": "gd-front1",
    "class": 40,
    "side": "enemy",
-   "x": 32,
+   "x": 33,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-front2",
    "class": 41,
    "side": "enemy",
-   "x": 30,
-   "y": 19,
+   "x": 29,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-front3",
    "class": 20,
    "side": "enemy",
-   "x": 33,
-   "y": 19,
+   "x": 34,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
@@ -1900,7 +1900,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1912,7 +1912,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1924,7 +1924,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1936,7 +1936,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1948,7 +1948,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1960,7 +1960,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -1972,7 +1972,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -1988,7 +1988,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2001,7 +2001,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2014,7 +2014,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2027,7 +2027,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2040,7 +2040,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2056,7 +2056,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2069,7 +2069,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2082,7 +2082,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2095,7 +2095,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2108,7 +2108,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2124,7 +2124,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2137,7 +2137,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2150,7 +2150,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2163,7 +2163,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2176,7 +2176,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2192,7 +2192,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2205,7 +2205,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2218,7 +2218,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2231,7 +2231,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2251,12 +2251,12 @@
    "id": "gd-east0",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 48,
+   "x": 47,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客",
    "skills": [
     "zt-la"
@@ -2266,36 +2266,36 @@
    "id": "gd-east1",
    "class": 40,
    "side": "enemy",
-   "x": 49,
+   "x": 50,
    "y": 20,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-east2",
    "class": 41,
    "side": "enemy",
-   "x": 47,
-   "y": 19,
+   "x": 46,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
    "id": "gd-east3",
    "class": 20,
    "side": "enemy",
-   "x": 50,
-   "y": 19,
+   "x": 51,
+   "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "守门庄客"
   },
   {
@@ -2307,7 +2307,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2319,7 +2319,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2331,7 +2331,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2343,7 +2343,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2355,7 +2355,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2367,7 +2367,7 @@
    "level": 30,
    "facing": 2,
    "ai": 11,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2379,7 +2379,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2395,7 +2395,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2408,7 +2408,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2421,7 +2421,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2434,7 +2434,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2447,7 +2447,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2463,7 +2463,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2476,7 +2476,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2489,7 +2489,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2502,7 +2502,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2515,7 +2515,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2531,7 +2531,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2544,7 +2544,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2557,7 +2557,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2570,7 +2570,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2583,7 +2583,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "hidden": true,
    "skills": [
@@ -2599,7 +2599,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2612,7 +2612,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -2625,7 +2625,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2638,7 +2638,7 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -2647,7 +2647,7 @@
    "class": "zhuhu",
    "side": "enemy",
    "x": 15,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
@@ -2659,11 +2659,11 @@
    "class": "zhuangtou",
    "side": "enemy",
    "x": 14,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -2674,11 +2674,11 @@
    "class": 19,
    "side": "enemy",
    "x": 16,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2686,11 +2686,11 @@
    "class": 40,
    "side": "enemy",
    "x": 15,
-   "y": 27,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2698,11 +2698,11 @@
    "class": 19,
    "side": "enemy",
    "x": 13,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2710,11 +2710,11 @@
    "class": 40,
    "side": "enemy",
    "x": 14,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2722,11 +2722,11 @@
    "class": 41,
    "side": "enemy",
    "x": 15,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2734,11 +2734,11 @@
    "class": 20,
    "side": "enemy",
    "x": 16,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2746,11 +2746,11 @@
    "class": 19,
    "side": "enemy",
    "x": 17,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2758,11 +2758,11 @@
    "class": "naogou",
    "side": "enemy",
    "x": 15,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -2770,11 +2770,11 @@
    "class": 41,
    "side": "enemy",
    "x": 14,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2782,11 +2782,11 @@
    "class": 40,
    "side": "enemy",
    "x": 16,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2794,23 +2794,23 @@
    "class": 34,
    "side": "enemy",
    "x": 13,
-   "y": 27,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
    "id": "zhuhu-ar1",
    "class": 34,
    "side": "enemy",
-   "x": 17,
-   "y": 27,
+   "x": 16,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -2818,11 +2818,11 @@
    "class": 43,
    "side": "enemy",
    "x": 11,
-   "y": 29,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
@@ -2830,23 +2830,23 @@
    "class": 43,
    "side": "enemy",
    "x": 11,
-   "y": 30,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
    "id": "zhuhu-cv2",
    "class": 43,
    "side": "enemy",
-   "x": 18,
-   "y": 29,
+   "x": 19,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
@@ -2854,11 +2854,11 @@
    "class": 43,
    "side": "enemy",
    "x": 19,
-   "y": 30,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
@@ -2866,7 +2866,7 @@
    "class": "zhubiao",
    "side": "enemy",
    "x": 48,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
@@ -2878,11 +2878,11 @@
    "class": "zhuangtou",
    "side": "enemy",
    "x": 49,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -2893,11 +2893,11 @@
    "class": 19,
    "side": "enemy",
    "x": 47,
-   "y": 28,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2905,11 +2905,11 @@
    "class": 40,
    "side": "enemy",
    "x": 48,
-   "y": 27,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2917,11 +2917,11 @@
    "class": 19,
    "side": "enemy",
    "x": 50,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2929,11 +2929,11 @@
    "class": 40,
    "side": "enemy",
    "x": 49,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2941,11 +2941,11 @@
    "class": 41,
    "side": "enemy",
    "x": 48,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2953,11 +2953,11 @@
    "class": 20,
    "side": "enemy",
    "x": 47,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2965,11 +2965,11 @@
    "class": 19,
    "side": "enemy",
    "x": 46,
-   "y": 30,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -2977,11 +2977,11 @@
    "class": "naogou",
    "side": "enemy",
    "x": 48,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -2989,11 +2989,11 @@
    "class": 41,
    "side": "enemy",
    "x": 49,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3001,11 +3001,11 @@
    "class": 40,
    "side": "enemy",
    "x": 47,
-   "y": 31,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3013,23 +3013,23 @@
    "class": 34,
    "side": "enemy",
    "x": 50,
-   "y": 27,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
    "id": "zhubiao-ar1",
    "class": 34,
    "side": "enemy",
-   "x": 46,
-   "y": 27,
+   "x": 47,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -3037,11 +3037,11 @@
    "class": 43,
    "side": "enemy",
    "x": 52,
-   "y": 29,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
@@ -3049,11 +3049,11 @@
    "class": 43,
    "side": "enemy",
    "x": 52,
-   "y": 30,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
@@ -3061,30 +3061,30 @@
    "class": 43,
    "side": "enemy",
    "x": 44,
-   "y": 28,
+   "y": 26,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
    "id": "zhubiao-cv3",
    "class": 43,
    "side": "enemy",
-   "x": 45,
-   "y": 30,
+   "x": 44,
+   "y": 27,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军"
   },
   {
    "id": "zhulong",
    "class": "zhulong",
    "side": "enemy",
-   "x": 32,
+   "x": 37,
    "y": 18,
    "level": 30,
    "facing": 2,
@@ -3096,12 +3096,12 @@
    "id": "zhulong-bg0",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 31,
+   "x": 36,
    "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -3111,24 +3111,24 @@
    "id": "zhulong-bg1",
    "class": 19,
    "side": "enemy",
-   "x": 33,
+   "x": 38,
    "y": 18,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
    "id": "zhulong-bg2",
    "class": 40,
    "side": "enemy",
-   "x": 32,
+   "x": 37,
    "y": 17,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3153,7 +3153,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -3168,7 +3168,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3180,7 +3180,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3192,7 +3192,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -3207,7 +3207,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -3219,7 +3219,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄弓手"
   },
   {
@@ -3231,7 +3231,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -3243,7 +3243,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -3267,7 +3267,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -3282,7 +3282,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3294,7 +3294,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3306,7 +3306,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -3318,7 +3318,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "庄客头目",
    "skills": [
     "zt-la"
@@ -3333,7 +3333,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3345,7 +3345,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3357,7 +3357,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3369,7 +3369,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手"
   },
   {
@@ -3381,7 +3381,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3393,7 +3393,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3406,7 +3406,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3419,7 +3419,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3432,7 +3432,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -3445,7 +3445,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3458,7 +3458,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3471,7 +3471,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3484,7 +3484,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -3497,7 +3497,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3510,7 +3510,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3523,7 +3523,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客",
    "hidden": true
   },
@@ -3536,7 +3536,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "挠钩手",
    "hidden": true
   },
@@ -3549,7 +3549,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3561,7 +3561,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3573,7 +3573,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3585,7 +3585,7 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄庄客"
   },
   {
@@ -3597,7 +3597,7 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
@@ -3611,7 +3611,7 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
@@ -3625,8 +3625,81 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb5w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 10,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   },
@@ -3639,7 +3712,7 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
@@ -3653,7 +3726,7 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
@@ -3667,55 +3740,13 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
-   "id": "amb10w0",
-   "class": 43,
-   "side": "enemy",
-   "x": 6,
-   "y": 37,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": -1,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb10w1",
-   "class": 43,
-   "side": "enemy",
-   "x": 6,
-   "y": 37,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": -1,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb10w2",
-   "class": 43,
-   "side": "enemy",
-   "x": 6,
-   "y": 37,
-   "level": 30,
-   "facing": 2,
-   "ai": 10,
-   "levelOffset": -1,
-   "name": "祝家庄马军",
-   "target": "songjiang",
-   "hidden": true
-  },
-  {
-   "id": "amb10e0",
+   "id": "amb5e3",
    "class": 43,
    "side": "enemy",
    "x": 57,
@@ -3723,13 +3754,201 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
-   "id": "amb10e1",
+   "id": "amb5e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb5e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 54,
+   "y": 32,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb5e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb8w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 9,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e1",
    "class": 43,
    "side": "enemy",
    "x": 57,
@@ -3737,13 +3956,13 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
    "target": "songjiang",
    "hidden": true
   },
   {
-   "id": "amb10e2",
+   "id": "amb8e2",
    "class": 43,
    "side": "enemy",
    "x": 56,
@@ -3751,8 +3970,1231 @@
    "level": 30,
    "facing": 2,
    "ai": 10,
-   "levelOffset": -1,
+   "levelOffset": 0,
    "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb8e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb8e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 56,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb11w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 10,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb11e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 54,
+   "y": 32,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb11e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb14w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 9,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb14e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb14e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 56,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb17w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 10,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb17e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 54,
+   "y": 32,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb17e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb20w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 9,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb20e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 56,
+   "y": 36,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb20e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 56,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w0",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w1",
+   "class": 43,
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w2",
+   "class": 43,
+   "side": "enemy",
+   "x": 3,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w3",
+   "class": 43,
+   "side": "enemy",
+   "x": 6,
+   "y": 37,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb23w5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 10,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23w7",
+   "class": 19,
+   "side": "enemy",
+   "x": 10,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e0",
+   "class": 43,
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e1",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e2",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e3",
+   "class": 43,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e4",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 54,
+   "y": 31,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "target": "songjiang",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "amb23e5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 54,
+   "y": 32,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e6",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "挠钩手",
+   "target": "songjiang",
+   "hidden": true
+  },
+  {
+   "id": "amb23e7",
+   "class": 19,
+   "side": "enemy",
+   "x": 57,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 10,
+   "levelOffset": 0,
+   "name": "祝家庄庄客",
    "target": "songjiang",
    "hidden": true
   }
@@ -3866,6 +5308,15 @@
      false
     ],
     [
+     "move",
+     "zhubiao",
+     48,
+     31,
+     {
+      "nearest": true
+     }
+    ],
+    [
      "approach",
      "likui",
      "zhubiao"
@@ -3919,7 +5370,7 @@
      "move",
      "likui",
      48,
-     39,
+     43,
      {
       "nearest": true
      }
@@ -3938,6 +5389,20 @@
      "say",
      "zhubiao",
      "黑厮，且饶你多活几日！"
+    ],
+    [
+     "move",
+     "zhubiao",
+     48,
+     25,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "zhubiao",
+     2
     ]
    ]
   },
@@ -3969,6 +5434,16 @@
      }
     ],
     [
+     "say",
+     "sunli",
+     "号令到了！众兄弟，并力杀将出去！"
+    ],
+    [
+     "say",
+     "zhulong",
+     "孙提辖，你……你们原来是梁山泊的奸细！"
+    ],
+    [
      "rout",
      {
       "stun": 30,
@@ -3979,6 +5454,11 @@
     [
      "narrate",
      "庄客们措手不及，一时大乱：有的被打翻在地，有的抱头乱窜。"
+    ],
+    [
+     "say",
+     "zcf",
+     "快关庄门！快去请栾教师来！"
     ],
     [
      "flag",
@@ -4025,6 +5505,16 @@
      }
     ],
     [
+     "say",
+     "sunli",
+     "号令到了！众兄弟，并力杀将出去！"
+    ],
+    [
+     "say",
+     "zhulong",
+     "孙提辖，你……你们原来是梁山泊的奸细！"
+    ],
+    [
      "rout",
      {
       "stun": 30,
@@ -4035,6 +5525,11 @@
     [
      "narrate",
      "庄客们措手不及，一时大乱：有的被打翻在地，有的抱头乱窜。"
+    ],
+    [
+     "say",
+     "zcf",
+     "快关庄门！快去请栾教师来！"
     ],
     [
      "flag",
@@ -4053,8 +5548,13 @@
    "unless": "go",
    "do": [
     [
+     "say",
+     "zhulong",
+     "孙提辖带来的人里有奸细！鸣锣，拿下！"
+    ],
+    [
      "narrate",
-     "内应还没等到号令就露了马脚，庄上鸣锣大叫：「有奸细！」孙立一伙只得提前发作。"
+     "内应还没等到号令就露了马脚，庄上鸣锣大叫：「有奸细！」"
     ],
     [
      "bgm",
@@ -4063,6 +5563,16 @@
       "manor",
       "fire"
      ]
+    ],
+    [
+     "say",
+     "sunli",
+     "事已败露，不必再藏！众兄弟，就此动手！"
+    ],
+    [
+     "say",
+     "lehe",
+     "外面的哥哥们，快打进来！"
     ],
     [
      "flag",
@@ -11179,7 +12689,7 @@
     ],
     [
      "narrate",
-     "两边树林里一声锣响，祝家庄的马军冲将出来，直扑宋江中军！"
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
@@ -11195,6 +12705,26 @@
     ],
     [
      "appear",
+     "amb5w3"
+    ],
+    [
+     "appear",
+     "amb5w4"
+    ],
+    [
+     "appear",
+     "amb5w5"
+    ],
+    [
+     "appear",
+     "amb5w6"
+    ],
+    [
+     "appear",
+     "amb5w7"
+    ],
+    [
+     "appear",
      "amb5e0"
     ],
     [
@@ -11204,51 +12734,506 @@
     [
      "appear",
      "amb5e2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 10
-   },
-   "do": [
-    [
-     "focus",
-     "amb10w0"
-    ],
-    [
-     "narrate",
-     "两边树林里一声锣响，祝家庄的马军冲将出来，直扑宋江中军！"
     ],
     [
      "appear",
-     "amb10w0"
+     "amb5e3"
     ],
     [
      "appear",
-     "amb10w1"
+     "amb5e4"
     ],
     [
      "appear",
-     "amb10w2"
+     "amb5e5"
     ],
     [
      "appear",
-     "amb10e0"
+     "amb5e6"
     ],
     [
      "appear",
-     "amb10e1"
-    ],
-    [
-     "appear",
-     "amb10e2"
+     "amb5e7"
     ]
    ]
   },
   {
    "on": {
     "turn": 8
+   },
+   "do": [
+    [
+     "focus",
+     "amb8w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb8w0"
+    ],
+    [
+     "appear",
+     "amb8w1"
+    ],
+    [
+     "appear",
+     "amb8w2"
+    ],
+    [
+     "appear",
+     "amb8w3"
+    ],
+    [
+     "appear",
+     "amb8w4"
+    ],
+    [
+     "appear",
+     "amb8w5"
+    ],
+    [
+     "appear",
+     "amb8w6"
+    ],
+    [
+     "appear",
+     "amb8w7"
+    ],
+    [
+     "appear",
+     "amb8e0"
+    ],
+    [
+     "appear",
+     "amb8e1"
+    ],
+    [
+     "appear",
+     "amb8e2"
+    ],
+    [
+     "appear",
+     "amb8e3"
+    ],
+    [
+     "appear",
+     "amb8e4"
+    ],
+    [
+     "appear",
+     "amb8e5"
+    ],
+    [
+     "appear",
+     "amb8e6"
+    ],
+    [
+     "appear",
+     "amb8e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "do": [
+    [
+     "focus",
+     "amb11w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb11w0"
+    ],
+    [
+     "appear",
+     "amb11w1"
+    ],
+    [
+     "appear",
+     "amb11w2"
+    ],
+    [
+     "appear",
+     "amb11w3"
+    ],
+    [
+     "appear",
+     "amb11w4"
+    ],
+    [
+     "appear",
+     "amb11w5"
+    ],
+    [
+     "appear",
+     "amb11w6"
+    ],
+    [
+     "appear",
+     "amb11w7"
+    ],
+    [
+     "appear",
+     "amb11e0"
+    ],
+    [
+     "appear",
+     "amb11e1"
+    ],
+    [
+     "appear",
+     "amb11e2"
+    ],
+    [
+     "appear",
+     "amb11e3"
+    ],
+    [
+     "appear",
+     "amb11e4"
+    ],
+    [
+     "appear",
+     "amb11e5"
+    ],
+    [
+     "appear",
+     "amb11e6"
+    ],
+    [
+     "appear",
+     "amb11e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "do": [
+    [
+     "focus",
+     "amb14w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb14w0"
+    ],
+    [
+     "appear",
+     "amb14w1"
+    ],
+    [
+     "appear",
+     "amb14w2"
+    ],
+    [
+     "appear",
+     "amb14w3"
+    ],
+    [
+     "appear",
+     "amb14w4"
+    ],
+    [
+     "appear",
+     "amb14w5"
+    ],
+    [
+     "appear",
+     "amb14w6"
+    ],
+    [
+     "appear",
+     "amb14w7"
+    ],
+    [
+     "appear",
+     "amb14e0"
+    ],
+    [
+     "appear",
+     "amb14e1"
+    ],
+    [
+     "appear",
+     "amb14e2"
+    ],
+    [
+     "appear",
+     "amb14e3"
+    ],
+    [
+     "appear",
+     "amb14e4"
+    ],
+    [
+     "appear",
+     "amb14e5"
+    ],
+    [
+     "appear",
+     "amb14e6"
+    ],
+    [
+     "appear",
+     "amb14e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "do": [
+    [
+     "focus",
+     "amb17w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb17w0"
+    ],
+    [
+     "appear",
+     "amb17w1"
+    ],
+    [
+     "appear",
+     "amb17w2"
+    ],
+    [
+     "appear",
+     "amb17w3"
+    ],
+    [
+     "appear",
+     "amb17w4"
+    ],
+    [
+     "appear",
+     "amb17w5"
+    ],
+    [
+     "appear",
+     "amb17w6"
+    ],
+    [
+     "appear",
+     "amb17w7"
+    ],
+    [
+     "appear",
+     "amb17e0"
+    ],
+    [
+     "appear",
+     "amb17e1"
+    ],
+    [
+     "appear",
+     "amb17e2"
+    ],
+    [
+     "appear",
+     "amb17e3"
+    ],
+    [
+     "appear",
+     "amb17e4"
+    ],
+    [
+     "appear",
+     "amb17e5"
+    ],
+    [
+     "appear",
+     "amb17e6"
+    ],
+    [
+     "appear",
+     "amb17e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "do": [
+    [
+     "focus",
+     "amb20w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb20w0"
+    ],
+    [
+     "appear",
+     "amb20w1"
+    ],
+    [
+     "appear",
+     "amb20w2"
+    ],
+    [
+     "appear",
+     "amb20w3"
+    ],
+    [
+     "appear",
+     "amb20w4"
+    ],
+    [
+     "appear",
+     "amb20w5"
+    ],
+    [
+     "appear",
+     "amb20w6"
+    ],
+    [
+     "appear",
+     "amb20w7"
+    ],
+    [
+     "appear",
+     "amb20e0"
+    ],
+    [
+     "appear",
+     "amb20e1"
+    ],
+    [
+     "appear",
+     "amb20e2"
+    ],
+    [
+     "appear",
+     "amb20e3"
+    ],
+    [
+     "appear",
+     "amb20e4"
+    ],
+    [
+     "appear",
+     "amb20e5"
+    ],
+    [
+     "appear",
+     "amb20e6"
+    ],
+    [
+     "appear",
+     "amb20e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "do": [
+    [
+     "focus",
+     "amb23w0"
+    ],
+    [
+     "narrate",
+     "两边树林里一声锣响，祝家庄的马军、步卒冲将出来，直扑宋江中军！"
+    ],
+    [
+     "appear",
+     "amb23w0"
+    ],
+    [
+     "appear",
+     "amb23w1"
+    ],
+    [
+     "appear",
+     "amb23w2"
+    ],
+    [
+     "appear",
+     "amb23w3"
+    ],
+    [
+     "appear",
+     "amb23w4"
+    ],
+    [
+     "appear",
+     "amb23w5"
+    ],
+    [
+     "appear",
+     "amb23w6"
+    ],
+    [
+     "appear",
+     "amb23w7"
+    ],
+    [
+     "appear",
+     "amb23e0"
+    ],
+    [
+     "appear",
+     "amb23e1"
+    ],
+    [
+     "appear",
+     "amb23e2"
+    ],
+    [
+     "appear",
+     "amb23e3"
+    ],
+    [
+     "appear",
+     "amb23e4"
+    ],
+    [
+     "appear",
+     "amb23e5"
+    ],
+    [
+     "appear",
+     "amb23e6"
+    ],
+    [
+     "appear",
+     "amb23e7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
    },
    "do": [
     [
@@ -11299,7 +13284,7 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 6
    },
    "do": [
     [
@@ -11338,7 +13323,7 @@
   },
   {
    "on": {
-    "turn": 12
+    "turn": 8
    },
    "do": [
     [
@@ -11377,7 +13362,7 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 10
    },
    "do": [
     [
