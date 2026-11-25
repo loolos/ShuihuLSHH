@@ -29,6 +29,9 @@ export interface SimOrder {
 /** 劫牢：死囚牢还没开（解珍还绑着） */
 const jailShut = (b: Battle) => b.units.some((u) => u.name === '解珍' && b.isBound(u));
 
+/** 三打祝家庄的内应（主线包职业号 = 72 + pack.json 里的先后） */
+const SANDA = { sunli: 158, sunxin: 159, lehe: 157, gudasao: 134, jiezhen: 153, jiebao: 154 };
+
 /** 键：原版关卡用地图名（如 N10），扩展包用「包名/关卡」（如 mainline/jingyanggang） */
 export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   // 双夺宝珠寺：七个喽啰头目一开场就专追杨志，他别冲在前面
@@ -40,6 +43,14 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   // 劫牢：乐和（156）、顾大嫂（134）伪装着先走到死囚牢门前开门，路上别动手
   // 包职业号按 pack.json 里的先后排；前面插了职业（扈三娘步战 husanniang-bu）以后乐和从 156 变成 157
   'mainline/jielao': [{ char: 157, turns: [1, 10], act: { to: [7, 3] }, when: jailShut }, { char: 134, turns: [1, 10], act: { to: [7, 4] }, when: jailShut }],
+  // 三打祝家庄：内应伪装着先摆到要紧处，等第 6 回合发号（试打 AI 不会用发号的招）
+  'mainline/sanda': [
+    { char: SANDA.sunli, turns: [1, 5], act: { to: [31, 21] } }, { char: SANDA.sunxin, turns: [1, 5], act: { to: [48, 21] } },
+    { char: SANDA.lehe, turns: [1, 5], act: { to: [14, 21] } }, { char: SANDA.gudasao, turns: [1, 5], act: { to: [7, 9] } },
+    { char: SANDA.jiezhen, turns: [1, 7], act: { to: [53, 8] } }, { char: SANDA.jiebao, turns: [1, 5], act: { to: [54, 11] } },
+    // 宋江（72）是失败条件，留在营寨里
+    { char: 72, turns: [1, 50], act: 'back' },
+  ],
 };
 
 /** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */

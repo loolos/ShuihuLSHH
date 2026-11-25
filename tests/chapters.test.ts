@@ -93,6 +93,8 @@ describe('章节表', () => {
     expect(chapterOf('mainline/jielao')).toBe(32);
     expect(chapterLabel(32)).toBe('第三十二章 登州劫牢');
     expect(chapterOf('mainline/ruzhuang')).toBe(33);
+    expect(chapterOf('mainline/sanda')).toBe(33);
+    expect(chapterOf('mainline/liying-shangshan')).toBe(33);
     expect(chapterLabel(33)).toBe('第三十三章 三打祝家庄');
     expect(CHAPTERS).toHaveLength(33);
   });

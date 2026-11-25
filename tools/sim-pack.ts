@@ -83,7 +83,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const ev = [...b.begin()];
     while (b.pendingChoice) ev.push(...b.answer(0));
     let guard = 0;
-    while (b.status === 'playing' && guard++ < 40) {
+    while (b.status === 'playing' && guard++ < 60) {
       // 没有直接过关的区域时，用画面上标出的目标区域（区域只设标志、另有区块再过关，如旱地忽律放号箭）
       if (!gt) {
         const z = b.objectiveZones().find((k) => k.kind === 'goal');
@@ -238,8 +238,11 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         else if (b.canAct(u)) ev.push(...b.defend(u));
       }
       if (process.env.TRACE_POS) console.log(`  回合 ${b.turn}:`, b.units.filter((u) => u.side === 'player' && u.present).map((u) => `${u.name}(${u.x},${u.y})`).join(' '), '发现', JSON.stringify(b.spotters));
+      if (process.env.TRACE_TURN) { const n = (side: string) => b.active().filter((u) => u.side === side && !b.spectators.has(u.uid)).length; console.log(`  回合 ${b.turn}: 我方 ${n('player')} 友军 ${n('ally')} 敌 ${n('enemy')}`); }
       if (b.status === 'playing') ev.push(...b.endPlayerPhase());
     }
+    // TRACE_MSG=正则：打印匹配的战报（三打祝家庄看开门、救人、拖人）
+    if (process.env.TRACE_MSG) { const re = new RegExp(process.env.TRACE_MSG); let t = 0; for (const e of ev) { if (e.type === 'phase') t = e.turn; if ((e.type === 'message' || e.type === 'narrate') && re.test(e.text)) console.log('  ', t, e.text); } }
     if (process.env.TRACE_STATUS) for (const e of ev) if ((e as { type: string }).type === 'status') console.log('  ', b.turn, JSON.stringify(e));
     if (process.env.TRACE) for (const e of ev) if (e.type === 'attack') console.log('  ', b.units.find((u) => u.uid === e.uid)!.classId, e.skill.name, e.hits.map((h) => `${h.uid}:${JSON.stringify(h.result)}`).join(' '));
     const said = ev.filter((e) => e.type === 'narrate' || e.type === 'say').map((e) => ('text' in e ? e.text : '').slice(0, 8));
@@ -251,6 +254,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     const left = b.units.filter((u) => u.side === 'enemy' && u.present && u.hp > 0).length;
     const flags =
       stage.id === 'jingyanggang' ? `  折棒 ${said.some((s) => s.startsWith('武松双手')) ? '是' : '否'}  泄气 ${said.some((s) => s.startsWith('原来那大虫')) ? '是' : '否'}` : '';
+    if (process.env.TRACE_TURN) console.log('  剩下的敌人：', b.active().filter((u) => u.side === 'enemy').map((u) => `${u.name}(${u.x},${u.y}) ai${u.ai.mode} ${u.hp}/${u.stats.maxHp}${b.spectators.has(u.uid) ? ' 观战' : ''}`).join(' '));
     console.log(`种子 ${seed}: ${b.status} 第 ${b.turn} 回合  ${me}  ${boss ? hp(boss) : ''}  敌人剩 ${left}${flags}`);
   }
   console.log(`胜 ${wins}/${n}`);
