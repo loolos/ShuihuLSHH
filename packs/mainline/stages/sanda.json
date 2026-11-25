@@ -59,9 +59,8 @@
   ]
  },
  "bgm": [
-  "battle2",
-  "manor",
-  "cavalry"
+  "infiltrate",
+  "manor"
  ],
  "disguise": {
   "flag": "revealed"

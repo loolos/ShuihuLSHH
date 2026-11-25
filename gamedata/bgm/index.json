@@ -40,7 +40,13 @@
   "market": "market.mp3",
   "cavalry": "cavalry.mp3",
   "lament": "lament.mp3",
-  "intrigue": "intrigue.mp3"
+  "intrigue": "intrigue.mp3",
+  "infiltrate": "infiltrate.mp3",
+  "sanda": "sanda.mp3",
+  "likui": "likui.mp3",
+  "feast": "feast.mp3",
+  "camp": "camp.mp3",
+  "signal": "signal.mp3"
  },
  "stages": {
   "n01": [
