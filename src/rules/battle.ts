@@ -864,6 +864,7 @@ export class Battle {
       if (!by) continue;
       by.turnStart = null;
       c.stunTurns = 0;
+      c.hp = Math.ceil(c.stats.maxHp / 2); // 放出来是半血【新】（负责人 2026-11-25）：开场关着的、后来被拖进去的都一样
       (this.spectators as Set<number>).delete(c.uid);
       if (c.side === this.phase) {
         c.ended = false;

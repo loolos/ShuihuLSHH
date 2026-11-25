@@ -122,7 +122,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(c.alive).toBe(false);
   });
 
-  it('挠钩拖翻：好汉拖进空囚车、囚车旁刷出 4 个看守；我方走到车旁放出来', () => {
+  it('挠钩拖翻：好汉拖进空囚车、囚车旁刷出 4 个看守；我方走到车旁放出来，半血', () => {
     const { b, get } = open();
     const lin = get('linchong');
     priv(b).spectators.delete(lin.uid);
@@ -142,6 +142,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     b.move(gu, next.x, next.y);
     expect(b.isBound(lin)).toBe(false);
     expect(b.spectators.has(lin.uid)).toBe(false);
+    expect(lin.hp).toBe(Math.ceil(lin.stats.maxHp / 2)); // 放出来是半血
   });
 
   it('挠钩技能打中三成体力以下的好汉才拖，宋江不拖', () => {
