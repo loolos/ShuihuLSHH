@@ -774,6 +774,15 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(131, 0, (a[1] as { quiet?: boolean } | undefined)?.quiet ? { args: { quiet: true } } : {});
         break;
       }
+      case 'bgm': {
+        // ['bgm', 歌单 | null, {sting}] 换背景曲（指令 132）【新】：歌单是一首或几首曲名（gamedata/bgm/index.json 的 tracks），
+        // null = 不换只插播；sting = 先插播一段短曲（如三打发号 signal）。负责人 2026-11-25：只在关键剧情用，别多用
+        const list = a[0] === null || a[0] === undefined ? [] : Array.isArray(a[0]) ? a[0].map(String) : [String(a[0])];
+        const sting = (a[1] as { sting?: string } | undefined)?.sting;
+        if (!list.length && !sting) fail(`第 ${index} 个区块：bgm 要写歌单或 {sting}`);
+        op(132, 0, { args: { tracks: list, ...(sting ? { sting: String(sting) } : {}) } });
+        break;
+      }
       case 'setAi':
         // ['setAi', 谁, 模式] 改 AI 模式（揭阳岭放哨的火家看见人才跑回店里）【新】
         select(a[0]);

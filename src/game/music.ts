@@ -7,7 +7,8 @@
 //   之后又加 inn 酒店、rock 民乐摇滚（普通战斗轮放）、boss 首领战第二首、comic 诙谐剧情。
 //   2026-11-14 第三批：title 标题画面，ending 片尾（通关先放一遍再接 liangshan），naval 水战，march 行军（普通战斗轮放），
 //   escape 突围 / 断后，fire 火攻，rescue 救人，reeds 水乡剧情，brothers 结义剧情；外传专用 tiger / nightduel / jiangzhou；
-//   插播短曲 ambush 伏兵登场、join 新人入伙、chapter 新一章 / 外传开场（sting()，不循环）。
+//   插播短曲 ambush 伏兵登场、join 新人入伙、chapter 新一章 / 外传开场（sting()，不循环）；signal 发号（三打乐和吹铁叫子，剧本 bgm 指令插播）。
+//   关卡中途换曲：剧本指令 ["bgm", 歌单, {sting}]（指令 132，负责人 2026-11-25：只给关键剧情用）。
 // 关卡没在 stages 里指定时：Act 剧情关 → story，其余 → battle、battle2 轮放。战斗关的 stages 值多是 2–3 首的歌单，
 // 一首放完交叉淡化接下一首（负责人 2026-11-12 要求）。缺哪首就用 FALLBACK 里的替身。
 // 播放（负责人 2026-11-12 要求）：
@@ -58,7 +59,7 @@ const FALLBACK: Record<string, string> = {
   escape: 'army',
 };
 /** 插播短曲：放一遍不循环，期间把背景音乐压低；没有这首就不放（负责人 2026-11-14 提供） */
-const STINGS = new Set(['ambush', 'join', 'chapter']);
+const STINGS = new Set(['ambush', 'join', 'chapter', 'signal']);
 /** 两次插播至少隔多少毫秒（一回合里一次冒出好几个伏兵时只放一次） */
 const STING_GAP = 4000;
 const KEEP = new Set(['victory', 'defeat']);

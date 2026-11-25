@@ -2095,6 +2095,11 @@ export class BattleScene extends Phaser.Scene {
         this.ring = { zone: e.zone, next: e.next };
         if (!this.fast) this.cameras.main.flash(250, 120, 40, 160);
         break;
+      case 'bgm':
+        // 剧情换背景曲（指令 132【新】）：先插播短曲，再淡入新歌单
+        if (e.sting) void music.sting(e.sting);
+        if (e.tracks.length) void music.play(e.tracks);
+        break;
       case 'gust':
         if (!this.fast) await this.gust(e.x, e.y, e.radius, e.style);
         break;

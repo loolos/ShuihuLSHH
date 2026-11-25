@@ -405,11 +405,16 @@ function startGame(assets: Assets) {
   const rewind = async () => {
     const sc = scene();
     if (!sc || sc.battle.rewindTarget() === null) return;
-    if (sc.battle.status === 'lost') {
-      if (packBgm) void music.play(packBgm);
+    const before = sc.battle.bgm;
+    const lost = sc.battle.status === 'lost';
+    if (!(await sc.rewind())) return;
+    // 从失败画面倒流、或倒回剧本换曲（指令 132）之前：放回那时的曲子
+    const now = sc.battle.bgm;
+    if (lost || JSON.stringify(before) !== JSON.stringify(now)) {
+      if (now) void music.play(now);
+      else if (packBgm) void music.play(packBgm);
       else void music.stageTrack(stageOf(campaign.stage).mapName).then((t) => music.play(t));
     }
-    await sc.rewind();
   };
   let loading = 0;
   /** 外传关卡的背景音乐（倒流回来时换回）；玩主线时为 null */
