@@ -6,7 +6,7 @@ import { Battle } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { baseDamage } from '../src/rules/combat.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
-import { learnedSkills } from '../src/rules/skills.ts';
+import { areaCells, learnedSkills } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
@@ -94,6 +94,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(lh.stats.move).toBe(lhMove);
   });
 
+  it('母大虫扑食：选第一格打四个方向的第一格，选第二格只打四个方向的第二格', () => {
+    const { b, get } = open('jielao');
+    const gu = get('gudasao');
+    put(gu, 12, 12);
+    const s = skill(b, gu, '母大虫扑食');
+    const key = (cs: { x: number; y: number }[]) => cs.map((c) => `${c.x - 12},${c.y - 12}`).sort();
+    expect(key(areaCells(b.board, gu, s, { x: 12, y: 11 }))).toEqual(['-1,0', '0,-1', '0,1', '1,0']);
+    expect(key(areaCells(b.board, gu, s, { x: 12, y: 10 }))).toEqual(['-2,0', '0,-2', '0,2', '2,0']);
+  });
+
   it('劫牢：包节级正前方看得穿伪装，乐和他认得', () => {
     const { b, get } = open('jielao');
     const gu = get('gudasao'), lh = get('lehe'), bj = get('baoji');
@@ -175,15 +185,29 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(b.board.passable(5, 3)).toBe(true);
     const seen: Record<string, number> = {};
     for (let t = 2; t <= 8 && b.status === 'playing'; t++) {
-      for (const id of ['zb0', 'zc0', 'zw0', 'zx0', 'menguan', 'luzhishen']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
+      for (const id of ['zb0', 'zw0', 'zx0', 'menguan', 'luzhishen']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
       for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8; // 只看增援的时机：敌人原地不动，别把人打倒判负
       b.endPlayerPhase();
     }
     expect(seen.zb0).toBe(3);
-    expect(seen.zc0).toBe(3);
     expect(seen.zw0).toBe(5);
     expect(seen.zx0).toBe(5);
     expect(seen.menguan).toBe(5);
     expect(seen.luzhishen).toBe(6); // 大队来的下一回合
+  });
+
+  it('第 3 回合以后才悄悄开牢门，大队也照样晚两回合（负责人 2026-11-24 试玩发现一起出来了）', () => {
+    const { b, get } = open('jielao');
+    for (const id of ['baoji', 'xl0', 'xl1', 'xl2']) get(id).hp = 1;
+    const seen: Record<string, number> = {};
+    for (let t = 1; t <= 9 && b.status === 'playing'; t++) {
+      if (b.turn === 3) { put(get('lehe'), 6, 3); put(get('gudasao'), 7, 3); }
+      for (const id of ['zb0', 'zw0', 'menguan']) if (seen[id] === undefined && get(id).present) seen[id] = b.turn;
+      for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8;
+      b.endPlayerPhase();
+    }
+    expect(seen.zb0).toBe(4);
+    expect(seen.zw0).toBe(7);
+    expect(seen.menguan).toBe(7);
   });
 });

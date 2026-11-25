@@ -22,7 +22,12 @@ export interface SimOrder {
   turns: [number, number];
   act: 'back' | 'hold' | { to: [number, number] };
   hpBelow?: number;
+  /** 另加的条件：为假时这条指令不算（劫牢：牢门开了就照常打） */
+  when?: (b: Battle) => boolean;
 }
+
+/** 劫牢：死囚牢还没开（解珍还绑着） */
+const jailShut = (b: Battle) => b.units.some((u) => u.name === '解珍' && b.isBound(u));
 
 /** 键：原版关卡用地图名（如 N10），扩展包用「包名/关卡」（如 mainline/jingyanggang） */
 export const STAGE_ORDERS: Record<string, SimOrder[]> = {
@@ -34,7 +39,7 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
   'mainline/yizhangqing': [{ char: 72, turns: [1, 20], act: 'back' }],
   // 劫牢：乐和（156）、顾大嫂（134）伪装着先走到死囚牢门前开门，路上别动手
   // 包职业号按 pack.json 里的先后排；前面插了职业（扈三娘步战 husanniang-bu）以后乐和从 156 变成 157
-  'mainline/jielao': [{ char: 157, turns: [1, 7], act: { to: [6, 3] } }, { char: 134, turns: [1, 7], act: { to: [7, 3] } }],
+  'mainline/jielao': [{ char: 157, turns: [1, 10], act: { to: [6, 3] }, when: jailShut }, { char: 134, turns: [1, 10], act: { to: [7, 3] }, when: jailShut }],
 };
 
 /** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */
@@ -103,13 +108,13 @@ function autoBack(b: Battle, u: Unit, ev: unknown[]): boolean {
  * walkTo：调用方的"走到某格然后防御"
  */
 /** 这一回合关卡有没有给这个角色下指令 */
-export function hasOrder(stageKey: string, char: number, turn: number): boolean {
-  return !!STAGE_ORDERS[stageKey]?.some((o) => o.char === char && turn >= o.turns[0] && turn <= o.turns[1]);
+export function hasOrder(b: Battle, stageKey: string, char: number, turn: number): boolean {
+  return !!STAGE_ORDERS[stageKey]?.some((o) => o.char === char && (!o.when || o.when(b)) && turn >= o.turns[0] && turn <= o.turns[1]);
 }
 
 export function applyOrders(b: Battle, u: Unit, stageKey: string, ev: unknown[], walkTo: (x: number, y: number) => void): boolean {
   const order = STAGE_ORDERS[stageKey]?.find(
-    (o) => o.char === u.classId && ((b.turn >= o.turns[0] && b.turn <= o.turns[1]) || (o.hpBelow !== undefined && u.hp < u.stats.maxHp * o.hpBelow)),
+    (o) => o.char === u.classId && (!o.when || o.when(b)) && ((b.turn >= o.turns[0] && b.turn <= o.turns[1]) || (o.hpBelow !== undefined && u.hp < u.stats.maxHp * o.hpBelow)),
   );
   if (order) {
     if (order.act === 'hold') {
