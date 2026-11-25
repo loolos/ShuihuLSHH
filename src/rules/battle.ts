@@ -32,8 +32,8 @@ export { expToNext } from './exp.ts';
 export const forcedExtra = (u: Unit) => Math.ceil(u.stats.move / 2);
 /** 休息：体力、气力各恢复上限的 1/5（负责人 2026-11-12 决定；原版恢复得更少）【新】 */
 export const REST_DIVISOR = 5;
-/** 归队补级：老队员开场不低于本场我方平均等级减这么多（负责人 2026-11-25，吴用在三打祝家庄 29 级 vs 队伍 43） */
-export const CATCH_UP_GAP = 3;
+/** 归队补级：老队员开场不低于本场我方平均等级减这么多（负责人 2026-11-25 定 5；吴用在三打祝家庄 29 级 vs 队伍 43） */
+export const CATCH_UP_GAP = 5;
 
 /**
  * 开局多带的道具【新】（负责人 2026-11-12）：第一关 N01 里武龍（0）、王進（1）各带 2 个狗皮膏藥（156），
