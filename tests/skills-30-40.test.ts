@@ -110,3 +110,16 @@ describe.skipIf(!available)('30–40 级补技能', () => {
     }
   });
 });
+
+describe.skipIf(!available)('六人技能补命中特效（负责人 2026-11-25）', () => {
+  const main = loadPackFromDisk('mainline');
+  it('石秀（三个形象）、杨雄、乐和、孙新、顾大嫂、武松的攻击技能都有特效：刀类溅血、拳脚鞭尺打击火花', () => {
+    for (const k of ['shixiu', 'shixiu-tuo', 'shixiu-chai', 'yangxiong', 'lehe', 'sunxin', 'gudasao', 'wusong']) {
+      const c = main.data.classes[main.classIds.get(k)!];
+      for (const s of c.skills.slice(1)) {
+        if (s.type === 8 || s.type === 9 || s.learnLevel >= 99 || (s as { drug?: number }).drug) continue;
+        expect(!!s.hitFx || (s.effect > 0 && s.type !== 2), `${k} ${s.name}`).toBe(true);
+      }
+    }
+  });
+});
