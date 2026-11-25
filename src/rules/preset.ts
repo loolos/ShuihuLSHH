@@ -8,6 +8,8 @@ import { ROUTES, startingParty, type CampaignState, type Member } from './campai
 import { SLOT_COUNT, type GameData } from './data.ts';
 import { stageJson, type FileSource } from './load.ts';
 import { goldBase, stageClearGold } from './gold.ts';
+import { chapterSequence, isInsertKey } from './chapters.ts';
+import type { PackStageJson } from '../packs/types.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
 /** 主线估算得出的每关入场等级：关卡名（小写）→ 角色号 → 等级（tools/gen-entry-levels.ts 生成） */
@@ -36,7 +38,7 @@ function readStage(files: FileSource, s: Stage): { units: ActUnit[]; town: numbe
  * - 技能随等级自动领悟；
  * - 银子 = 打到上一关为止的期望收入 expectedGold（掉钱基数 + 过关奖励，不扣沿途花销），不沿用手上的钱。
  */
-export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number; partyFrom?: number } = {}): CampaignState {
+export function jumpTo(files: FileSource, data: GameData, stages: Stage[], target: number, c: CampaignState, opts: { levelFrom?: number; partyFrom?: number; /** 主线插关的期望收入（mainlineGold） */ insertGold?: (ref: string) => number } = {}): CampaignState {
   const pos = stages.findIndex((s) => s.index === target);
   if (pos < 0) return c;
   const info = new Map<number, ReturnType<typeof readStage>>();
@@ -69,8 +71,8 @@ export function jumpTo(files: FileSource, data: GameData, stages: Stage[], targe
   // 已有整条主线的经验估算预设时不再被旧敌人绝对等级反向压低。
   if (!Object.keys(table).length) balanceLevels([...members.values()], script, foeAverage(stages.length, lpos < 0 ? pos : lpos, (i) => at(i).units));
   for (const m of members.values()) levelKit(data, data.classes[m.classId], m.level, m.slots);
-  // 银子固定为打到上一关为止的期望收入（负责人 2026-11-14），不沿用手上的钱
-  return { version: 1, stage: target, gold: pos > 0 ? expectedGold(files, data, stages, pos - 1) : 0, members: [...members.values()] };
+  // 银子固定为打到上一关为止的期望收入（负责人 2026-11-14），不沿用手上的钱；章节表里排在前面的主线插关也算上
+  return { version: 1, stage: target, gold: mainlineGold(files, data, stages, stages[pos].mapName, false, opts.insertGold), members: [...members.values()] };
 }
 
 /**
@@ -128,23 +130,22 @@ export const stageUnits = (files: FileSource, s: Stage) => readStage(files, s).u
  * - 人物 = 城镇整备名单（城镇之后那一关开局在场的人，townRoster），active 也设成它；
  * - 装备和药品也按下一关的人物等级配，不再依赖城镇商店；
  * - 等级按城镇之后的下一关 next 配（和直接跳到 next 一样）；
- * - 银子 = 从第一关打到第 stage 关、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
+ * - 银子 = 从第一关打到第 stage 关（含章节表里排在前面的主线插关）、每个敌人掉钱的基数（上限的一半）与过关奖励之和，
  *   固定这个数，不沿用手上的钱（负责人 2026-11-14）。
  */
-export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState): CampaignState {
+export function jumpToTown(files: FileSource, data: GameData, stages: Stage[], stage: number, town: number, next: number, c: CampaignState, insertGold?: (ref: string) => number): CampaignState {
   const pos = stages.findIndex((s) => s.index === stage);
   if (pos < 0) return c;
-  const base = jumpTo(files, data, stages, stage, c, { levelFrom: next, partyFrom: next });
+  const base = jumpTo(files, data, stages, stage, c, { levelFrom: next, partyFrom: next, insertGold });
   const n = stages.find((s) => s.index === next);
-  return { ...base, town, gold: expectedGold(files, data, stages, pos), active: n ? townRoster(files, n.mapName) : undefined };
+  return { ...base, town, gold: mainlineGold(files, data, stages, stages[pos].mapName, true, insertGold), active: n ? townRoster(files, n.mapName) : undefined };
 }
 
 /** 城镇整备名单：城镇之后那一关（mapName）开局在场的我方角色号（startingParty） */
 export const townRoster = (files: FileSource, mapName: string): number[] => startingParty(readStage(files, { index: -1, mapName }).units);
 
 /** 打到第 pos 关（含）为止，敌人掉钱的期望加过关奖励的总和；分路的两关只算一条（目标在小径上就算小径，否则算大道） */
-export function expectedGold(files: FileSource, data: GameData, stages: Stage[], pos: number): number {
-  const target = stages[pos].index;
+export function expectedGold(files: FileSource, data: GameData, stages: Stage[], pos: number, target = stages[pos].index): number {
   const skip = new Set(Object.values(ROUTES).map((r) => (target === r.alt ? r.alt - 1 : r.alt)));
   let sum = 0;
   for (let i = 0; i <= pos; i++) {
@@ -153,5 +154,35 @@ export function expectedGold(files: FileSource, data: GameData, stages: Stage[],
     for (const u of units) if (u.side === 'enemy') sum += goldBase(data, u.type);
     if (units.some((u) => u.side === 'player')) sum += stageClearGold(stages[i].mapName);
   }
+  return Math.round(sum);
+}
+
+/**
+ * 一段主线插关（扩展包关卡）的期望收入：自有掉钱的敌人（原版职业号；包职业不掉钱）的掉钱基数 + 过关奖励（视角关不给）。
+ * 教学关不写回银子，算 0；演员（ai 8）和观战的人打不到，不算。
+ */
+export function packStageGold(data: GameData, s: PackStageJson): number {
+  if (s.tutorial) return 0;
+  let sum = s.pov ? 0 : (s.rewards?.gold ?? 0);
+  for (const u of s.units) if (u.side === 'enemy' && typeof u.class === 'number' && u.ai !== 8 && !u.spectator) sum += goldBase(data, u.class);
+  return sum;
+}
+
+/**
+ * 按章节表（含序章与主线插关）的顺序，打到 key（原版地图名或插关 ref，不分大小写）之前为止的期望收入；inclusive 时含 key 本身。
+ * 原版关按 expectedGold（分路的两关只算一条：跳到哪一条就算哪一条），插关按 insertGold(ref)（packStageGold）。
+ * 选关进入、手上没有存档时用它定银子；key 不在章节表里时只算原版关（同 expectedGold）。
+ */
+export function mainlineGold(files: FileSource, data: GameData, stages: Stage[], key: string, inclusive: boolean, insertGold: (ref: string) => number = () => 0, seq = chapterSequence().map((x) => x.key)): number {
+  const k = key.toLowerCase();
+  const at = seq.findIndex((x) => x.toLowerCase() === k);
+  const before = at < 0 ? [] : seq.slice(0, at + (inclusive ? 1 : 0));
+  // 分路：目标本身是原版关就按它选路，否则按前面最后一个原版关
+  const self = stages.findIndex((s) => s.mapName.toLowerCase() === k);
+  const lastOrig = [...before].reverse().find((x) => !isInsertKey(x))?.toLowerCase();
+  const pos = at < 0 ? self - (inclusive ? 0 : 1) : lastOrig ? stages.findIndex((s) => s.mapName.toLowerCase() === lastOrig) : -1;
+  let sum = 0;
+  if (pos >= 0) sum += expectedGold(files, data, stages, pos, self >= 0 ? stages[self].index : stages[pos].index);
+  for (const x of before) if (isInsertKey(x)) sum += insertGold(x);
   return Math.round(sum);
 }

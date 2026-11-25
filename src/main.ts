@@ -18,7 +18,7 @@ import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/titl
 import { stageLabel, townName } from './game/stage-names.ts';
 import { CHAPTERS, PROLOGUE, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
 import { stageJson, stageMapName } from './rules/load.ts';
-import { jumpTo, jumpToTown, townRoster } from './rules/preset.ts';
+import { jumpTo, jumpToTown, mainlineGold, packStageGold, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
@@ -199,12 +199,17 @@ function startGame(assets: Assets) {
     return { ...c, insert: pendingInsert(c, inserts, stages[0].mapName) };
   };
   let campaign = loadSave() ?? newCampaign(stages[0].index);
+  /** 主线插关的期望收入（选关定银子用，§7.6） */
+  const insertGold = (ref: string) => { const s = packStages.get(ref.toLowerCase()); return s ? packStageGold(assets.data, s) : 0; };
+  /** 手上没有存档资产（选关从头试玩）时，银子按章节表打到 key 为止的期望收入 */
+  const fresh = (c: CampaignState) => !c.members.length && !Object.keys(c.companions ?? {}).length;
+  const presetGold = (key: string, inclusive: boolean) => mainlineGold(assets.files, assets.data, stages, key, inclusive, insertGold);
   /** 测试用跳关：人物按那一关的难度补上等级和装备（原版没有）；town:<关卡> 表示那一关之后的城镇 */
   const jump = (value: string, c: CampaignState): CampaignState => {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('itown:')) {
       const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
-      if (e?.townAfter) return { ...c, inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
+      if (e?.townAfter) return { ...c, ...(fresh(c) ? { gold: presetGold(ref, true) } : {}), inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
     }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
@@ -212,12 +217,12 @@ function startGame(assets: Assets) {
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
         const done = replayInsertProgress(c, inserts, e.ref);
-        return { ...(c.members.length || Object.keys(c.companions ?? {}).length ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : jumpTo(assets.files, assets.data, stages, s.index, c)), insert: e.ref, insertPreset: c.members.length || Object.keys(c.companions ?? {}).length ? undefined : e.ref, inserts: done, finished: undefined };
+        return { ...(!fresh(c) ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : { ...jumpTo(assets.files, assets.data, stages, s.index, c, { insertGold }), gold: presetGold(e.ref, false) }), insert: e.ref, insertPreset: fresh(c) ? e.ref : undefined, inserts: done, finished: undefined };
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
-    if (t) return { ...inheritAssets(c, jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c)), insert: undefined, finished: undefined };
-    return { ...inheritAssets(c, jumpTo(assets.files, assets.data, stages, Number(value), c)), insert: undefined, town: undefined, finished: undefined };
+    if (t) return { ...inheritAssets(c, jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c, insertGold)), insert: undefined, finished: undefined };
+    return { ...inheritAssets(c, jumpTo(assets.files, assets.data, stages, Number(value), c, { insertGold })), insert: undefined, town: undefined, finished: undefined };
   };
   const asked = params.get('stage')?.toLowerCase();
   if (asked?.startsWith('itown:')) {
