@@ -162,4 +162,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(troops.length).toBeGreaterThan(10);
     expect(lehe.disguised).toBeFalsy();
   });
+
+  it('祝龙开场在前门外列阵，发号后带亲随退回庄里', () => {
+    const { b, get } = open();
+    const zl = get('zhulong');
+    expect(zl.y).toBeGreaterThan(22);
+    const lehe = get('lehe');
+    b.useSkill(lehe, learnedSkills(lehe, b.data).find((s) => s.name === '铁叫子发号')!, lehe);
+    expect(zl.y).toBeLessThan(22);
+    expect(['zhulong-bg0', 'zhulong-bg1', 'zhulong-bg2'].every((id) => get(id).y < 22)).toBe(true);
+  });
 });

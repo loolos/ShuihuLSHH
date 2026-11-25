@@ -3084,8 +3084,8 @@
    "id": "zhulong",
    "class": "zhulong",
    "side": "enemy",
-   "x": 37,
-   "y": 18,
+   "x": 32,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
@@ -3096,8 +3096,8 @@
    "id": "zhulong-bg0",
    "class": "zhuangtou",
    "side": "enemy",
-   "x": 36,
-   "y": 18,
+   "x": 31,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
@@ -3111,8 +3111,8 @@
    "id": "zhulong-bg1",
    "class": 19,
    "side": "enemy",
-   "x": 38,
-   "y": 18,
+   "x": 33,
+   "y": 25,
    "level": 30,
    "facing": 2,
    "ai": 2,
@@ -3123,13 +3123,181 @@
    "id": "zhulong-bg2",
    "class": 40,
    "side": "enemy",
-   "x": 37,
-   "y": 17,
+   "x": 32,
+   "y": 24,
    "level": 30,
    "facing": 2,
    "ai": 2,
    "levelOffset": 0,
    "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s0",
+   "class": 19,
+   "side": "enemy",
+   "x": 30,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s1",
+   "class": 40,
+   "side": "enemy",
+   "x": 31,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s2",
+   "class": 41,
+   "side": "enemy",
+   "x": 32,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s3",
+   "class": 20,
+   "side": "enemy",
+   "x": 33,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s4",
+   "class": 19,
+   "side": "enemy",
+   "x": 34,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s5",
+   "class": "naogou",
+   "side": "enemy",
+   "x": 32,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "挠钩手"
+  },
+  {
+   "id": "zhulong-s6",
+   "class": 41,
+   "side": "enemy",
+   "x": 31,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-s7",
+   "class": 40,
+   "side": "enemy",
+   "x": 33,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄庄客"
+  },
+  {
+   "id": "zhulong-ar0",
+   "class": 34,
+   "side": "enemy",
+   "x": 30,
+   "y": 24,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhulong-ar1",
+   "class": 34,
+   "side": "enemy",
+   "x": 33,
+   "y": 24,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄弓手"
+  },
+  {
+   "id": "zhulong-cv0",
+   "class": 43,
+   "side": "enemy",
+   "x": 28,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhulong-cv1",
+   "class": 43,
+   "side": "enemy",
+   "x": 28,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhulong-cv2",
+   "class": 43,
+   "side": "enemy",
+   "x": 36,
+   "y": 26,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄马军"
+  },
+  {
+   "id": "zhulong-cv3",
+   "class": 43,
+   "side": "enemy",
+   "x": 36,
+   "y": 27,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "levelOffset": 0,
+   "name": "祝家庄马军"
   },
   {
    "id": "zcf",
@@ -5797,7 +5965,7 @@
     ],
     [
      "narrate",
-     "祝家庄上，祝龙守前门，祝虎、祝彪各引一彪人马出了西门、东门，在吊桥外摆开；墙上城楼里排满了弓手。"
+     "祝家庄上，祝龙、祝虎、祝彪各引一彪人马出了前门、西门、东门，在吊桥外摆开；墙上城楼里排满了弓手。"
     ],
     [
      "focus",
@@ -6365,6 +6533,76 @@
     ],
     [
      "setAi",
+     "zhulong-s0",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s1",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s2",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s3",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s4",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s5",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s6",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-s7",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-ar0",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-ar1",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-cv0",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-cv1",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-cv2",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-cv3",
+     0
+    ],
+    [
+     "setAi",
      "lvfang",
      0
     ],
@@ -6437,6 +6675,75 @@
      "setAi",
      "songqing",
      15
+    ],
+    [
+     "focus",
+     "zhulong"
+    ],
+    [
+     "say",
+     "zhulong",
+     "庄里有奸细！亲随跟我回庄去拿人，其余的守住吊桥！"
+    ],
+    [
+     "move",
+     "zhulong-bg2",
+     32,
+     18,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "zhulong",
+     32,
+     19,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "zhulong-bg0",
+     31,
+     19,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "zhulong-bg1",
+     33,
+     19,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "narrate",
+     "祝龙引着几个亲随，从前门退回庄里，去拿孙立一伙。"
+    ],
+    [
+     "setAi",
+     "zhulong",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-bg0",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-bg1",
+     0
+    ],
+    [
+     "setAi",
+     "zhulong-bg2",
+     0
     ]
    ]
   },
