@@ -3892,7 +3892,7 @@ npm test
 
 ### 15.34 主线续篇第二十段：三打祝家庄（第三十三章）【新：负责人 2026-11-25 要求；已做】
 
-演原著第 50 回「吴学究双掌连环计 宋公明三打祝家庄」。方案和负责人逐条定下的内容见项目文件 `shuihu-design/sanda-zhujiazhuang-plan.md`「补充定稿（lolo 2026-11-25）」；生成脚本 `shuihu-design/sanda-gen/`（`ruzhuang.py`、`map_recipe.py`、`sanda.py`、`aftermath.py`）。章节表：第三十三章「三打祝家庄」= `ruzhuang` → `sanda` → `zhongli` → `liying-shangshan`，接在解珍解宝双越狱后面。原著对白按记忆改写，逐字【待核】。
+演原著第 50 回「吴学究双掌连环计 宋公明三打祝家庄」。方案和负责人逐条定下的内容见项目文件 `shuihu-design/sanda-zhujiazhuang-plan.md`「补充定稿（lolo 2026-11-25）」；生成脚本 `shuihu-design/sanda-gen/`（`ruzhuang.py`、`map_recipe.py`、`sanda.py`、`aftermath.py`）。章节表：第三十三章「三打祝家庄」=（城镇「独龙冈营寨」）→ `ruzhuang` → `sanda` → `zhongli` → `liying-shangshan`，接在解珍解宝双越狱后面。城镇（负责人 2026-11-25 加在本章开头做准备）：`jielao` 写 `townAfter` 11；下一关是过场 `ruzhuang`，名单按大仗 `sanda` 开场的我方配（内应 6 人 + 宋江一队 8 人，押在囚车里的不算；`towns.ts` 的 `ROSTER_FROM`）；入城对白孙立来投、说出与栾廷玉同门、宋江定内应之计；酒馆传闻讲囚车、登州来人、吊桥城楼，说书「病尉迟孙立」。原著对白按记忆改写，逐字【待核】。
 
 #### 15.34.1 过场「孙立假投祝家庄」`ruzhuang`（自拼地图 `zhujiazhuang`）
 

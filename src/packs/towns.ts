@@ -4,11 +4,13 @@ import { levelKit } from '../rules/equipment.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 
-const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨' };
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨', 'mainline/ruzhuang': '独龙冈营寨' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
-const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu']);
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang']);
 /** 下一战里中途才来的我方（隐藏开场）不进城镇名单：独龙冈整备只有杨雄、石秀、时迁、武龙，鲁智深、武松半路赶到 */
-const OPENING_ONLY = new Set(['mainline/zhujiadian', 'mainline/panduolu']);
+const OPENING_ONLY = new Set(['mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang']);
+/** 名单照哪一关的开场我方配：三打祝家庄前的营寨（负责人 2026-11-25）下一关是孙立入庄的过场，名单按大仗 sanda 开场（内应 + 宋江一队，押在囚车里的不算） */
+const ROSTER_FROM: Record<string, string> = { 'mainline/ruzhuang': 'mainline/sanda' };
 export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
@@ -18,7 +20,7 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
   const ids = roadside
     ? [0, ...['sj-fugitive','huarong','huangxin','qinming','likui','wangying'].map(id => rt.classIds.get(id)!)]
     : mengzhou
-    ? rt.stages.find(s => `${rt.id}/${s.id}` === next)!.units.filter(u => u.side === 'player' && !(OPENING_ONLY.has(next) && u.hidden)).map(u => typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!)
+    ? rt.stages.find(s => `${rt.id}/${s.id}` === (ROSTER_FROM[next] ?? next))!.units.filter(u => u.side === 'player' && !u.prisonCart && !(OPENING_ONLY.has(next) && u.hidden)).map(u => typeof u.class === 'number' ? u.class : rt.classIds.get(u.class)!)
     : [rt.classIds.get('sj-fugitive')!, rt.classIds.get('wusong')!, 0];
   const active = [...new Set(ids)];
   const view = townParty(c, rt);
@@ -37,6 +39,12 @@ export function insertTownIntro(next: string): { actor: string; text: string }[]
     { actor: 'huarong', text: '多亏二龙山三位兄弟援手，救得哥哥出来。只是黄信那厮逃了回去，青州必然发兵来打清风山。' },
     { actor: 'sj-fugitive', text: '鲁大师、武二郎、杨制使已自回山。我等且在山下村坊补些药品，整顿兵器，提防官军。' },
     { actor: 'wangying', text: '山寨里有的是金银，兄弟们只管去置办！' },
+  ];
+  if (next === 'mainline/ruzhuang') return [
+    { actor: 'sunli', text: '小弟孙立，带着登州一伙兄弟，特来投奔宋头领。祝家庄的教师栾廷玉，和小弟是一个师父教的。' },
+    { actor: 'sj-fugitive', text: '原来如此！两番打那祝家庄，折了好几个兄弟，正愁没个门路进去。' },
+    { actor: 'sunli', text: '小弟只说是登州调来郓州守把，路过拜望师兄。他不疑我，便好在庄里做个内应。' },
+    { actor: 'sj-fugitive', text: '好计！诸位且在营里补齐药品，整顿兵器。这一回里应外合，定要打破祝家庄，救出众兄弟。' },
   ];
   if (next === 'mainline/panduolu') return [
     { actor: 'sj-fugitive', text: '石秀、杨林两个兄弟去探路，到这早晚还不见回来。庄上又点起灯来，只怕凶多吉少。' },
