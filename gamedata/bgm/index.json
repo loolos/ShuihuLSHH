@@ -46,7 +46,15 @@
   "likui": "likui.mp3",
   "feast": "feast.mp3",
   "camp": "camp.mp3",
-  "signal": "signal.mp3"
+  "signal": "signal.mp3",
+  "clear": "clear.mp3",
+  "fallen": "fallen.mp3",
+  "treasure": "treasure.mp3",
+  "reunion": "reunion.mp3",
+  "grief": "grief.mp3",
+  "twist": "twist.mp3",
+  "scheme": "scheme.mp3",
+  "warlord": "warlord.mp3"
  },
  "stages": {
   "n01": [
