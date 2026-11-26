@@ -105,7 +105,7 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
     const id = items.length + 1;
     const sale = it.shop ? { category: it.category ?? 2, seqA: [...it.shop, ...Array(13).fill(0)].slice(0, 13) } : {};
     const price = it.buyPrice !== undefined ? { buyPrice: it.buyPrice, sellPrice: Math.floor(it.buyPrice / 2) } : {};
-    const extra = Object.fromEntries((['crit', 'maxHp', 'maxMp', 'regenHp', 'regenMp', 'healHp', 'healMp', 'moveBonus', 'area', 'shopTier'] as const).filter((k) => it[k] !== undefined).map((k) => [k, it[k]]));
+    const extra = Object.fromEntries((['crit', 'maxHp', 'maxMp', 'regenHp', 'regenMp', 'healHp', 'healMp', 'moveBonus', 'range', 'area', 'shopTier'] as const).filter((k) => it[k] !== undefined).map((k) => [k, it[k]]));
     items.push({
       ...from, ...sale, ...price, ...extra, id, name: it.name, type: it.type ?? from.type, description: it.description ?? from.description,
       attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility, hit: it.hit ?? from.hit,

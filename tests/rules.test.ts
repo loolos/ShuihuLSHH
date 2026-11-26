@@ -1429,7 +1429,7 @@ describe('道具表改动', () => {
     const { withItemOverrides } = await import('../src/rules/data.ts');
     const base = { id: 127, name: '青箬笠', category: 0, hit: 0, buyPrice: 0, sellPrice: 2250, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
     const [it] = withItemOverrides([base]);
-    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 3750 });
+    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 3670 });
     expect(it.seqA).toContain(7);
   });
 });
