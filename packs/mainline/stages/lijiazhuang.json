@@ -154,7 +154,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -167,7 +167,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -180,7 +180,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -193,7 +193,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -206,7 +206,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -219,7 +219,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -232,7 +232,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -245,7 +245,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -258,7 +258,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -271,7 +271,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -284,7 +284,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -297,7 +297,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -310,7 +310,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -323,7 +323,7 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -338,7 +338,8 @@
    "hidden": true,
    "name": "祝家庄教头",
    "enemyRank": "leader",
-   "hpMultiplier": 1.4
+   "hpMultiplier": 1.4,
+   "levelOffset": 1
   },
   {
    "id": "c1",
@@ -350,7 +351,7 @@
    "facing": 3,
    "ai": 0,
    "name": "挠钩手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -363,7 +364,7 @@
    "facing": 3,
    "ai": 0,
    "name": "挠钩手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -376,7 +377,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -389,7 +390,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -402,7 +403,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -415,7 +416,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -428,7 +429,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -441,7 +442,7 @@
    "facing": 1,
    "ai": 10,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -455,7 +456,7 @@
    "facing": 1,
    "ai": 10,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -469,7 +470,7 @@
    "facing": 1,
    "ai": 10,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -483,7 +484,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -496,7 +497,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -509,7 +510,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -522,7 +523,7 @@
    "facing": 1,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -535,7 +536,7 @@
    "facing": 1,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -548,7 +549,7 @@
    "facing": 0,
    "ai": 10,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -562,7 +563,7 @@
    "facing": 0,
    "ai": 10,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -576,7 +577,7 @@
    "facing": 0,
    "ai": 10,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -590,7 +591,7 @@
    "facing": 0,
    "ai": 10,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -604,7 +605,7 @@
    "facing": 0,
    "ai": 10,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   },
@@ -618,7 +619,7 @@
    "facing": 0,
    "ai": 10,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "liying"
   }

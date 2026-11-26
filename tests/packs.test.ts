@@ -1758,15 +1758,15 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     while(y.turn<6){for(const u of foes)if(u.present)kill(u);y.endPlayerPhase();expect(y.status).toBe('playing');}
     for(const u of foes)if(u.present)kill(u);y.endPlayerPhase();expect(y.status).toBe('won');
   });
-  it('飞云浦使用默认模板，第2回合东桥头6人加另外四处各3人，之后每回合6人，最后一波全灭才获胜', () => {
+  it('飞云浦使用默认模板，第2回合东桥头6人加另外四处各3人，之后每回合8人、第6回合两队16人，最后一波全灭才获胜', () => {
     const b = start('feiyunpu');
     const foes = b.units.filter(u => u.side === 'enemy');
     expect(stage('feiyunpu').map).toEqual({ custom: 'dukou' });
     expect([b.board.width, b.board.height]).toEqual([30, 24]);
     const bridgeReach = b.board.reach({ x: 21, y: 10 }, 1000, new Set());
     for (const u of b.units) expect([...bridgeReach.values()].some(c => c.x === u.x && c.y === u.y), `桥面可达 ${u.name}`).toBe(true);
-    expect(foes).toHaveLength(48);
-    expect(new Set(foes.map(u => u.classId))).toEqual(new Set([32, 36, 67, 65, 38]));
+    expect(foes).toHaveLength(64);
+    expect(new Set(foes.map(u => u.classId))).toEqual(new Set([32, 34, 36, 67, 65, 38]));
     // 默认 28 级模板，移除原先 566 血的自定义精英职业。
     for (const u of foes) {
       expect(u.stats.maxHp).toBeLessThan(300);
@@ -1780,7 +1780,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
       b.endPlayerPhase();
       expect(b.status, `第${turn}回合前不能提前通关`).toBe('playing');
       expect(b.turn).toBe(turn);
-      expect(foes.filter(u => u.present)).toHaveLength(turn === 2 ? 18 : 6);
+      expect(foes.filter(u => u.present)).toHaveLength(turn === 2 ? 18 : turn === 6 ? 16 : 8);
     }
     // 最后一批还活着一个时也不胜利。
     const survivor = foes.find(u => u.present)!;
