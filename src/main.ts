@@ -23,6 +23,7 @@ import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro, shopTierOf } from './packs/towns.ts';
 import { insertTavern } from './packs/tavern.ts';
+import { FEAST_PLACES, feastFor } from './rules/feast.ts';
 import { compileStage, stageClasses, stageKind, stageSealTiles, type PackRuntime } from './packs/build.ts';
 import { royalePool, royaleStage } from './packs/royale.ts';
 import { levelKit } from './rules/equipment.ts';
@@ -330,6 +331,13 @@ function startGame(assets: Assets) {
       ui.endSkip();
     },
   });
+  /** 酒店请客（src/rules/feast.ts）：这一城能不能请、请了管哪几关（分路的两关都算） */
+  const feastOption = (key: string, n: ReturnType<typeof nextOf>, resolve: (k: string) => number | undefined) => {
+    const place = FEAST_PLACES[key];
+    if (!place) return undefined;
+    const alt = n.route ? stages.find((s) => s.index === n.route!.alt)?.mapName : undefined;
+    return { place, stages: [...n.next.map((s) => s.mapName), ...(alt ? [alt] : [])], resolve };
+  };
   const openTown = (c: CampaignState, t: number, leave: (c: CampaignState) => void) => {
     town.setAssets(assets);
     town.show(c, {
@@ -340,6 +348,7 @@ function startGame(assets: Assets) {
         if (t) writeSave(x); // 城镇里随时存档（读档回到城镇）；单独整备等进了下一关再存
       },
       onLeave: leave,
+      feast: t ? feastOption(String(t), nextOf(stageOf(c.stage)), () => undefined) : undefined,
     });
   };
   /** 进城镇：整备名单换成城镇之后那一关开局在场的人（docs/game-design.md §7.5.1；旧存档读进城镇时也改过来） */
@@ -525,6 +534,7 @@ function startGame(assets: Assets) {
       const data = {
         assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed, story: stageKind(stage) === '剧情',
         makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr, party, joinLevel: join, preset: campaign.insertPreset === ref }) }),
+        feast: feastFor(campaign, ref),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),
       };
       if (scene()) scene()!.scene.restart(data);
@@ -618,6 +628,7 @@ function startGame(assets: Assets) {
     town.show({ ...townParty(campaign,rt), active: ids }, {
       town: stop.town, shopTier: shopTierOf(stop.next), title: `城镇 · ${insertTownName(stop.next)}`, ...insertTavern(rt, stop.next),
       leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
+      feast: FEAST_PLACES[stop.next] ? { place: FEAST_PLACES[stop.next], stages: [stop.next], resolve: (k) => rt.classIds.get(k) } : undefined,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
       onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
     });
@@ -659,7 +670,7 @@ function startGame(assets: Assets) {
     setupEl.hidden = true;
     void music.playStage(stage);
     chapterSting(stageLabel(stageOf(campaign.stage).title, stage).chapterLabel);
-    const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), onEnd, story: stageLabel(stageOf(campaign.stage).title, stage).kind === '剧情' };
+    const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), feast: feastFor(campaign, stage), onEnd, story: stageLabel(stageOf(campaign.stage).title, stage).kind === '剧情' };
     if (scene()) scene()!.scene.restart(data);
     else game.scene.add('battle', BattleScene, true, data);
     const u = new URL(location.href);
