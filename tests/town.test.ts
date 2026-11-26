@@ -191,11 +191,14 @@ describe.skipIf(!has)('测试用跳关', () => {
       for (const m of state.members) {
         const cls = data.classes[m.classId], profile = kitProfile(data, cls), band = kitBand(m.level);
         const type = data.items[cls.defaultItems[0] - 1]?.type ?? cls.weaponType;
-        // 剧本装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比防御
+        // 剧本装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比买价
         const tableOrBetter = (k: number, want: string) => {
           const got = data.items[m.slots[k] - 1], ref = data.items.find((it) => it.name === want)!;
           if (got?.name === want) return;
-          expect(k === 0 ? got.attack : got.defense, `${stage.mapName} ${cls.name} ${got?.name} / ${want}`).toBeGreaterThan(k === 0 ? ref.attack : ref.defense);
+          // 衣服、头饰比买价（两件都有买价时；负责人 2026-11-26），否则比防御
+          const byPrice = k > 0 && got.buyPrice > 0 && ref.buyPrice > 0;
+          const v = (it: typeof got) => (k === 0 ? it.attack : byPrice ? it.buyPrice : it.defense);
+          expect(v(got), `${stage.mapName} ${cls.name} ${got?.name} / ${want}`).toBeGreaterThan(v(ref));
         };
         tableOrBetter(0, WEAPON_TABLE[type][band]);
         tableOrBetter(1, GEAR_TABLE[profile.armor][band]);
