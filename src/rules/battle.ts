@@ -10,7 +10,7 @@ import { Board, key, pathTo, type Cell } from './board.ts';
 import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { applyBuffs, BAG_SLOTS, buffName, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { applyBuffs, BAG_SLOTS, buffName, buffShort, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
@@ -1946,14 +1946,14 @@ export class Battle {
   }
 
   /**
-   * 技能附带的增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者（buffAlly 架势技给所选的人、回复技的持续回体给每个受回复的人）加上；同一技能再放只刷新回合（applyBuffs），不同来源同一属性只取最高，都不叠加。
+   * 技能附带的增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者（buffAlly 架势技给所选的人、回复技的持续回体给每个受回复的人）加上；同一技能再放只刷新回合、不叠加（applyBuffs），不同增益效果相加。
    * 回合数按回合开始倒数（同道具增益），本回合放的 3 回合增益护住接下来 3 个敌方阶段。
    */
   private addBuffs(u: Unit, list: Buff[] | undefined, source: string) {
     if (!list?.length || !u.alive) return;
     u.buffs = applyBuffs(u.buffs, list, source);
     refreshStats(u, this.data);
-    this.emit({ type: 'status', uid: u.uid, text: list.map((b) => `${buffName(b.stat)}+${b.value}`).join(' ') });
+    this.emit({ type: 'status', uid: u.uid, text: buffShort(list) });
     this.emit({ type: 'message', text: `${u.name}${list.map((b) => `${buffName(b.stat)}+${b.value}`).join('、')}，持續 ${Math.max(...list.map((b) => b.turns))} 回合。` });
   }
 
@@ -3188,7 +3188,7 @@ export class Battle {
           const value = op.args.pct ? Math.round((cur * op.args.pct) / 100) : (op.args.add ?? 0);
           sel.buffs.push({ stat, value, turns: op.args.turns ?? 0 });
           refreshStats(sel, this.data);
-          this.emit({ type: 'status', uid: sel.uid, text: `${buffName(stat)}${value > 0 ? '+' : ''}${value}` });
+          this.emit({ type: 'status', uid: sel.uid, text: buffShort([{ stat, value, turns: 0 }]) });
           break;
         }
       }

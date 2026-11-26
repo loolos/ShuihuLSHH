@@ -767,7 +767,7 @@ export interface Buff {
 
 /**
  * 加一组增益【新】（负责人 2026-11-26）：同一来源（同名技能 / 道具 / 请客）已有的整组换成新的，只是刷新回合，效果不叠加；
- * 不同来源可以同时挂着，但同一属性的正加值只取最高的一个（computeStats），也不叠加。没写来源的（剧本 op 101）照旧直接加上。
+ * 不同来源的增益同时挂着、效果相加（负责人 2026-11-26）。没写来源的（剧本 op 101）照旧直接加上。
  */
 export function applyBuffs(cur: Buff[], list: readonly Buff[], source?: string): Buff[] {
   if (!source) return [...cur, ...list.map((b) => ({ ...b }))];
@@ -809,6 +809,9 @@ const STAT_SHORT: Record<BuffStat, string> = {
   attack: '攻', defense: '防', hit: '命', agility: '敏', crit: '必', move: '移', poison: '带毒', stun: '致昏', resistPoison: '抗毒', resistStun: '抗昏', regenHp: '回体', regenMp: '回气',
 };
 
+/** 头上弹字用的简短效果，如「防+30 敏+20」 */
+export const buffShort = (list: readonly Buff[]) => list.map((b) => `${STAT_SHORT[b.stat]}${b.value ? `${b.value > 0 ? '+' : ''}${b.value}` : ''}`).join(' ');
+
 /** 单位面板的状态说明【新】：按来源一组一条，写简要的效果和剩余回合，如「呼保义 防+30 敏+20 3回合」；没有来源的每项一条。 */
 export function buffLabels(buffs: readonly Buff[]): string[] {
   const groups = new Map<string, Buff[]>();
@@ -817,7 +820,7 @@ export function buffLabels(buffs: readonly Buff[]): string[] {
     groups.set(key, [...(groups.get(key) ?? []), b]);
   });
   return [...groups.values()].map((g) => {
-    const fx = g.map((b) => `${STAT_SHORT[b.stat]}${b.value ? `${b.value > 0 ? '+' : ''}${b.value}` : ''}`).join(' ');
+    const fx = buffShort(g);
     const turns = g[0].turns === 0 ? '本关' : `${g[0].turns}回合`;
     return [g[0].source, fx, turns].filter(Boolean).join(' ');
   });
