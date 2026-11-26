@@ -65,6 +65,7 @@ export const WEAPON_TABLE: Record<number, string[]> = {
   "11": ["獵弓", "獵弓", "鵲畫弓", "鵲畫弓", "鵲畫弓", "寶雕弓", "寶雕弓", "鐵胎弓", "鐵胎弓", "鐵胎弓"],
   "12": ["", "", "", "", "", "", "", "", "", ""]
 };
+// 负责人 2026-11-26：原版人物也按原著打扮适当调整——朱武 重甲→战袍（军师）；林沖、白勝、阮小二 头巾→斗笠；陳達 头巾→战盔；公孫勝 头巾→帽子（道冠）
 export const HERO_KITS: Record<number, { weapon: number; armor: string; head: string }> = {
   "0": {
     "weapon": 0,
@@ -79,7 +80,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "2": {
     "weapon": 8,
     "armor": "道袍",
-    "head": "头巾"
+    "head": "帽子"
   },
   "3": {
     "weapon": 0,
@@ -89,11 +90,11 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "4": {
     "weapon": 6,
     "armor": "常服",
-    "head": "头巾"
+    "head": "斗笠"
   },
   "5": {
     "weapon": 2,
-    "armor": "重甲",
+    "armor": "战袍",
     "head": "头巾"
   },
   "6": {
@@ -104,7 +105,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "7": {
     "weapon": 9,
     "armor": "常服",
-    "head": "头巾"
+    "head": "斗笠"
   },
   "8": {
     "weapon": 3,
@@ -124,7 +125,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "11": {
     "weapon": 1,
     "armor": "战袍",
-    "head": "头巾"
+    "head": "斗笠"
   },
   "12": {
     "weapon": 0,
@@ -134,7 +135,7 @@ export const HERO_KITS: Record<number, { weapon: number; armor: string; head: st
   "13": {
     "weapon": 4,
     "armor": "重甲",
-    "head": "头巾"
+    "head": "战盔"
   },
   "14": {
     "weapon": 6,
