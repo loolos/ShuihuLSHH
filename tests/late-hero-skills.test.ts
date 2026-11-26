@@ -6,7 +6,7 @@ import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import { attackParts, baseDamage, rangedFactor, rollAttack } from '../src/rules/combat.ts';
 import { Rng } from '../src/rules/rng.ts';
-import { areaCells, castRange, learnedSkills } from '../src/rules/skills.ts';
+import { areaCells, castRange, isStanceSkill, learnedSkills } from '../src/rules/skills.ts';
 import { LATE_HERO_SKILLS } from '../src/rules/late-hero-skills.ts';
 import type { ActUnit } from '../src/formats/act.ts';
 import { DATA } from '../tools/sim-lib.ts';
@@ -78,7 +78,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
  });
  it('陈达杨春8级、白胜26级新增半条气回复，其余已有回气者不重复添加，NPC不增加技能',()=>{
   for(const id of [4,5,7,9,11,13,14,15,16,17]){
-   const charges=data.classes[id].skills.filter(s=>s.type===8&&!s.chargeTarget);expect(charges).toHaveLength(1);
+   const charges=data.classes[id].skills.filter(s=>s.type===8&&!s.chargeTarget&&!isStanceSkill(s));expect(charges).toHaveLength(1);
    if([4,13,15].includes(id)){const s=charges[0];for(const level of [s.learnLevel-1,s.learnLevel])expect(learnedSkills({classId:id,level} as Unit,data).includes(s)).toBe(level>=s.learnLevel);expect(s).toMatchObject({learnLevel:id===4?26:8,mpCost:0,power:2,rangeMin:0,rangeMax:0});
     const b=new Battle({name:'charge',board,units:[act(0,id,'player',10,10),act(1,32,'enemy',20,20)],blocks:[],data,seed:2});b.begin();const u=b.units[0];u.mp=0;b.useSkill(u,s,u);expect(u.mp).toBe(Math.floor(u.stats.maxMp/2));
    }

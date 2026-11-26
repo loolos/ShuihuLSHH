@@ -21,7 +21,7 @@ export interface Command {
 }
 
 /** 标签颜色（style.css 的 .tag-*） */
-const TAG_CLASS: Record<string, string> = { 回旋: 'spin', 单体: 'single', 远程: 'ranged', 范围: 'area', 回气: 'charge', 回复: 'heal', 增益: 'buff', 无目标: 'none' };
+const TAG_CLASS: Record<string, string> = { 回旋: 'spin', 单体: 'single', 远程: 'ranged', 范围: 'area', 回气: 'charge', 回复: 'heal', 增益: 'buff', 友方: 'ally', 无目标: 'none' };
 
 const SIDE_NAME = { player: '我方', ally: '友军', enemy: '敌方' } as const;
 

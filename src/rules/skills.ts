@@ -7,11 +7,11 @@ import { attackRange, attackSkill, DIRS, facingTowards, type Unit } from './unit
 export const isChargeSkill = (s: SkillDef) => s.type === 8;
 /** 援助回气与自身集气分开，避免回合终了或 AI 把援助当成给自己回气。 */
 export const isAllyChargeSkill = (s: SkillDef) => isChargeSkill(s) && s.chargeTarget === 'ally';
-export const isSelfChargeSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s);
-/** 架势技【新】（§6.5.3）：集气类、不回气（power 0），只给自己加增益；回合终了的自动回气和 AI 回气都不选它 */
-export const isStanceSkill = (s: SkillDef) => isSelfChargeSkill(s) && s.power <= 0 && !!s.selfBuffs?.length;
+export const isSelfChargeSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s) && !s.buffAlly;
+/** 架势技【新】（§6.5.3）：集气类、不回气（power 0），只加增益（buffAlly 的可以给相邻队友）；回合终了的自动回气和 AI 回气都不选它 */
+export const isStanceSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s) && s.power <= 0 && !!s.selfBuffs?.length;
 /** 能当回气用的自身集气技（不含架势技） */
-export const isRechargeSkill = (s: SkillDef) => isSelfChargeSkill(s) && !isStanceSkill(s);
+export const isRechargeSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s) && !isStanceSkill(s);
 /** 回复技：回复范围内我方的体力（类型 9 与 11 的区别还没解开，都按回复体力处理【待核】） */
 export const isHealSkill = (s: SkillDef) => s.type === 9 || s.type === 11;
 /** 不造成伤害的技能 */
@@ -70,7 +70,7 @@ export function skillsLearnedAt(u: Unit, data: GameData, level: number): SkillDe
 export function castRange(u: Unit, s: SkillDef, data: GameData): [number, number] {
   if (s === attackSkill(u, data)) return attackRange(u, data);
   // 援气固定相邻一格；四格前冲技只选相邻方向，不由武器射程扩大施放点。
-  if (s.areaPattern || isAllyChargeSkill(s) || s.type === 15 || s.type === 16 || s.type === 17) return [s.rangeMin, s.rangeMax];
+  if (s.areaPattern || isAllyChargeSkill(s) || s.buffAlly || s.type === 15 || s.type === 16 || s.type === 17) return [s.rangeMin, s.rangeMax];
   const lo = s.rangeMin;
   let hi = s.rangeMax > 0 ? Math.max(lo, s.rangeMax + u.stats.rangeBonus) : s.rangeMax;
   // 上限按「施放点 + 线形范围延伸」算：一线 2 格的技能施放点最远到第 reachCap − 1 格
@@ -220,11 +220,12 @@ export function skillBonusText(s: SkillDef): string {
   if (s.poison) parts.push(`毒${s.poison}%`);
   if (s.stun) parts.push(`昏${s.stun}%`);
   for (const b of s.selfBuffs ?? []) parts.push(`${buffName(b.stat).replace('每回合', '')}+${b.value}·${b.turns}回合`);
+  if (s.healRegen) parts.push(`持续回体1/${s.healRegen.divisor}·${s.healRegen.turns}回合`);
   return parts.join(' ');
 }
 
 /** 技能类型标签【新】（负责人 2026-11-22）：技能菜单里加成那一行下面的彩色小标签 */
-export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '增益' | '无目标';
+export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '增益' | '友方' | '无目标';
 
 const openBoard = { inBounds: () => true } as unknown as Board;
 
@@ -242,7 +243,8 @@ export function skillTags(s: SkillDef): SkillTag[] {
   const self = s.type === 2 || s.rangeMax <= 0;
   const at = self ? from : { x: 0, y: -Math.max(1, s.rangeMin) };
   const cells = areaCells(openBoard, from, s, at).length;
-  const buffTag: SkillTag[] = s.selfBuffs?.length ? ['增益'] : [];
+  // 增益：带限时增益（含持续回体）；友方：能对相邻队友用（给队友加增益 / 援气）【新】（负责人 2026-11-26）
+  const buffTag: SkillTag[] = [...(s.selfBuffs?.length || s.healRegen ? ['增益' as const] : []), ...(s.buffAlly || isAllyChargeSkill(s) ? ['友方' as const] : [])];
   if (isStanceSkill(s)) return buffTag;
   if (isChargeSkill(s)) return ['回气', ...buffTag];
   if (isHealSkill(s)) tags.push('回复');

@@ -10,7 +10,7 @@ import { Board, key, pathTo, type Cell } from './board.ts';
 import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { BAG_SLOTS, buffName, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
@@ -914,7 +914,7 @@ export class Battle {
     const w = this.board.width;
     const cells = this.skillArea(u, skill, cell, at);
     const allyCharge = isAllyChargeSkill(skill);
-    const heal = isHealSkill(skill) || allyCharge;
+    const heal = isHealSkill(skill) || allyCharge || !!skill.buffAlly;
     // occ（AI 一次决策里先建好的「格子 → 人」表）：只看作用范围里的格子，不必每个落点把全场几百人过一遍【新】（三打祝家庄手机上卡）
     let pool: Unit[];
     if (occ) {
@@ -1818,7 +1818,18 @@ export class Battle {
       if (isStanceSkill(skill)) {
         if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
         this.emit({ type: 'message', text: `${u.name}使出${name}！` });
-        return this.applySelfBuffs(u, skill);
+        const t = targets[0] ?? u; // buffAlly：自己或相邻队友
+        if (t !== u) t.turnStart = null;
+        return this.addBuffs(t, skill.selfBuffs);
+      }
+      if (skill.buffAlly && isChargeSkill(skill)) {
+        // 可给队友的集气技（晁盖 天王聚义式、吴用 运筹帷幄）：气回给施放者自己，增益加在所选的人（自己或相邻队友）身上
+        const t = targets[0] ?? u;
+        if (t !== u) t.turnStart = null;
+        const mp0 = u.mp;
+        u.mp = Math.min(u.stats.maxMp, u.mp + Math.floor(u.stats.maxMp / Math.max(1, skill.power)));
+        this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, mpDelta: u.mp - mp0, text: name });
+        return this.addBuffs(t, skill.selfBuffs);
       }
       for (const t of targets) {
         if (t !== u) t.turnStart = null; // 被队友的回复 / 集气技照顾到，就不能再撤销移动（同给别人用道具）【新】（负责人 2026-11-22）
@@ -1828,9 +1839,11 @@ export class Battle {
         else t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / div));
         healed += t.hp - hp0;
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
+        const r = skill.healRegen;
+        if (r) this.addBuffs(t, [{ stat: 'regenHp', value: Math.max(1, Math.floor(t.stats.maxHp / r.divisor)), turns: r.turns }]);
       }
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
-      return this.applySelfBuffs(u, skill);
+      return this.addBuffs(u, skill.selfBuffs);
     }
     const feint = this.tune?.feint;
     const att = this.towerSelf(u);
@@ -1895,16 +1908,15 @@ export class Battle {
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
-    if (!counter) this.applySelfBuffs(u, skill);
+    if (!counter) this.addBuffs(u, skill.selfBuffs);
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
   /**
-   * 技能附带的自身增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者加上；同一项已有限时增益就取大值、刷新回合，不叠加。
+   * 技能附带的增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者（buffAlly 架势技给所选的人、回复技的持续回体给每个受回复的人）加上；同一项已有限时增益就取大值、刷新回合，不叠加。
    * 回合数按回合开始倒数（同道具增益），本回合放的 3 回合增益护住接下来 3 个敌方阶段。
    */
-  private applySelfBuffs(u: Unit, skill: SkillDef) {
-    const list = skill.selfBuffs;
+  private addBuffs(u: Unit, list: Buff[] | undefined) {
     if (!list?.length || !u.alive) return;
     for (const b of list) {
       const old = u.buffs.find((x) => x.stat === b.stat && x.turns > 0);
