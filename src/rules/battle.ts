@@ -11,7 +11,7 @@ import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type A
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { BAG_SLOTS, buffName, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
-import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
+import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
@@ -1561,7 +1561,7 @@ export class Battle {
     if (!this.canAct(u) || u.acted) return undefined;
     const after = (s: SkillDef) => Math.min(u.stats.maxMp, u.mp - s.mpCost + Math.floor(u.stats.maxMp / Math.max(1, s.power)));
     return learnedSkills(u, this.data)
-      .filter((s) => isSelfChargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
+      .filter((s) => isRechargeSkill(s) && u.mp >= s.mpCost && after(s) > u.mp)
       .filter((s) => this.skillTargets(u, s).some((c) => c.x === u.x && c.y === u.y))
       .sort((a, b) => after(b) - after(a) || a.mpCost - b.mpCost)[0];
   }
@@ -1815,6 +1815,11 @@ export class Battle {
       if (skill.mpCost && !targets.includes(u)) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
       const name = this.tr(skill.name);
       let healed = 0;
+      if (isStanceSkill(skill)) {
+        if (skill.mpCost) this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0 });
+        this.emit({ type: 'message', text: `${u.name}使出${name}！` });
+        return this.applySelfBuffs(u, skill);
+      }
       for (const t of targets) {
         if (t !== u) t.turnStart = null; // 被队友的回复 / 集气技照顾到，就不能再撤销移动（同给别人用道具）【新】（负责人 2026-11-22）
         const hp0 = t.hp, mp0 = t.mp;
@@ -1825,7 +1830,7 @@ export class Battle {
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
       }
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
-      return;
+      return this.applySelfBuffs(u, skill);
     }
     const feint = this.tune?.feint;
     const att = this.towerSelf(u);
@@ -1890,7 +1895,27 @@ export class Battle {
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
+    if (!counter) this.applySelfBuffs(u, skill);
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
+  }
+
+  /**
+   * 技能附带的自身增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者加上；同一项已有限时增益就取大值、刷新回合，不叠加。
+   * 回合数按回合开始倒数（同道具增益），本回合放的 3 回合增益护住接下来 3 个敌方阶段。
+   */
+  private applySelfBuffs(u: Unit, skill: SkillDef) {
+    const list = skill.selfBuffs;
+    if (!list?.length || !u.alive) return;
+    for (const b of list) {
+      const old = u.buffs.find((x) => x.stat === b.stat && x.turns > 0);
+      if (old) {
+        old.value = Math.max(old.value, b.value);
+        old.turns = Math.max(old.turns, b.turns);
+      } else u.buffs.push({ ...b });
+    }
+    refreshStats(u, this.data);
+    this.emit({ type: 'status', uid: u.uid, text: list.map((b) => `${buffName(b.stat)}+${b.value}`).join(' ') });
+    this.emit({ type: 'message', text: `${u.name}${list.map((b) => `${buffName(b.stat)}+${b.value}`).join('、')}，持續 ${Math.max(...list.map((b) => b.turns))} 回合。` });
   }
 
   /**

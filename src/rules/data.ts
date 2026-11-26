@@ -52,6 +52,9 @@ export interface SkillDef extends ClassSkill {
   reachCap?: number;
   /** 敌兵远射技（§6.6）：AI 只在能打到 2 人以上、或没有别的攻击可用时才放；不计入迎击警戒半径 */
   volley?: boolean;
+  /** 施放后给施放者自己加的限时增益【新】（负责人 2026-11-26，§6.5.3）：固定点数、只加不减；同一项再放只刷新回合、取大值。
+   * 集气技（类型 8）把 power 设为 0 就成了「架势技」：花气、不回气、只加增益 */
+  selfBuffs?: Buff[];
 }
 
 export interface ClassDef {
@@ -214,6 +217,27 @@ const withChargeDivisor = <T extends Pick<SkillDef, 'type' | 'power'>>(s: T): T 
  * 白勝 監守自盜LV3（威 15、命 −15）、通殺LV1–3（威 10、命 −15/−15/−10）减完不足 1，按 1 算。
  */
 export const HERO_CLASS_COUNT = 18;
+
+const buff = (stat: BuffStat, value: number, turns: number): Buff => ({ stat, value, turns });
+/**
+ * 原版好汉技能的自身增益【新】（负责人 2026-11-26，§6.5.3）：职业号 → 技能名 → 增益。只加防御、敏捷、回体（保命用），固定点数。
+ * 按名字挂，分级技能各级分开写；敌方版好汉（职业号 46 起）不受影响。
+ */
+export const HERO_SELF_BUFFS: Record<number, Record<string, Buff[]>> = {
+  0: { 一夫當關: [buff('defense', 30, 3)], 一夫當關LV2: [buff('defense', 45, 3)], 百尺竿頭: [buff('agility', 20, 2)] }, // 武龍
+  3: { 龍蟠虎踞: [buff('defense', 20, 2)], 龍騰九天: [buff('agility', 35, 2)] }, // 史進
+  5: { 奇門遁甲LV1: [buff('agility', 20, 2)], 奇門遁甲LV2: [buff('agility', 25, 2)], 奇門遁甲LV3: [buff('agility', 35, 2)] }, // 朱武
+  11: { 棄暗投明: [buff('regenHp', 12, 3)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
+  13: { 伏虎调息: [buff('defense', 20, 2)] }, // 陳達
+  14: { 游刃有餘: [buff('agility', 35, 3)], 快刀斬亂麻: [buff('agility', 25, 2)], 快刀斬亂麻LV2: [buff('agility', 45, 2)] }, // 楊志
+  15: { 盘蛇吐纳: [buff('regenHp', 12, 3)] }, // 楊春
+  16: { 我佛慈悲: [buff('regenHp', 15, 3)], 佛法無邊: [buff('defense', 30, 3)] }, // 魯智深
+};
+
+function withHeroSelfBuffs(cls: number, s: SkillDef): SkillDef {
+  const b = HERO_SELF_BUFFS[cls]?.[s.name];
+  return b ? { ...s, selfBuffs: b.map((x) => ({ ...x })) } : s;
+}
 export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(classId: number, s: T): T {
   if (classId >= HERO_CLASS_COUNT || s.hitMod >= 0) return s;
   return { ...s, power: Math.max(1, s.power + s.hitMod), hitMod: 0 };
@@ -416,7 +440,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...lateHeroSkills(r.id, all),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
-      ]).map(s => balanceHeroAoe(r.id, s)).map((s) => (r.id < HERO_CLASS_COUNT ? heroSkillNoHitMod(s) : s)),
+      ]).map(s => balanceHeroAoe(r.id, s)).map((s) => (r.id < HERO_CLASS_COUNT ? withHeroSelfBuffs(r.id, heroSkillNoHitMod(s)) : s)),
     };
   });
 }

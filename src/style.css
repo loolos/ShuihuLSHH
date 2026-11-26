@@ -150,7 +150,7 @@ code { color: var(--ink); }
 #cmd button:disabled { opacity: 0.4; cursor: default; }
 #cmd button small { display: block; font-size: 12px; color: var(--muted); line-height: 1.3; }
 #cmd button.on small { color: #3a2c1c; }
-/* 技能类型标签（回旋 / 单体 / 远程 / 范围 / 回气 / 回复 / 无目标） */
+/* 技能类型标签（回旋 / 单体 / 远程 / 范围 / 回气 / 回复 / 增益 / 无目标） */
 #cmd button .skill-tags, #cmd-float button .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 3px; }
 .skill-tag { display: inline-block; padding: 0 4px; border-radius: 3px; font-size: 10px; line-height: 14px; color: #fff; white-space: nowrap; }
 .skill-tag-spin { background: #8a4fc0; }
@@ -159,6 +159,7 @@ code { color: var(--ink); }
 .skill-tag-area { background: #c07a1a; }
 .skill-tag-charge { background: #b89a1a; }
 .skill-tag-heal { background: #3a9a4a; }
+.skill-tag-buff { background: #2f9a96; }
 .skill-tag-none { background: #6a6a6a; }
 #cmd { max-height: calc(100vh - 70px); overflow-y: auto; }
 #unit-panel .item-detail { margin-top: 6px; padding-top: 6px; border-top: 1px solid #4a3b29; max-width: 300px; }

@@ -1,6 +1,6 @@
 // 技能：习得、施放距离、范围形状（docs/game-design.md §6；原版 EXE 0x408a80、0x408ae0、0x408b10）。
 import type { Board, Cell } from './board.ts';
-import type { GameData, SkillDef } from './data.ts';
+import { buffName, type GameData, type SkillDef } from './data.ts';
 import { attackRange, attackSkill, DIRS, facingTowards, type Unit } from './unit.ts';
 
 /** 集气 / 援气：回复自身或指定队友的气力。 */
@@ -8,6 +8,10 @@ export const isChargeSkill = (s: SkillDef) => s.type === 8;
 /** 援助回气与自身集气分开，避免回合终了或 AI 把援助当成给自己回气。 */
 export const isAllyChargeSkill = (s: SkillDef) => isChargeSkill(s) && s.chargeTarget === 'ally';
 export const isSelfChargeSkill = (s: SkillDef) => isChargeSkill(s) && !isAllyChargeSkill(s);
+/** 架势技【新】（§6.5.3）：集气类、不回气（power 0），只给自己加增益；回合终了的自动回气和 AI 回气都不选它 */
+export const isStanceSkill = (s: SkillDef) => isSelfChargeSkill(s) && s.power <= 0 && !!s.selfBuffs?.length;
+/** 能当回气用的自身集气技（不含架势技） */
+export const isRechargeSkill = (s: SkillDef) => isSelfChargeSkill(s) && !isStanceSkill(s);
 /** 回复技：回复范围内我方的体力（类型 9 与 11 的区别还没解开，都按回复体力处理【待核】） */
 export const isHealSkill = (s: SkillDef) => s.type === 9 || s.type === 11;
 /** 不造成伤害的技能 */
@@ -215,11 +219,12 @@ export function skillBonusText(s: SkillDef): string {
   if (s.critMod) parts.push(`必${sign(s.critMod)}`);
   if (s.poison) parts.push(`毒${s.poison}%`);
   if (s.stun) parts.push(`昏${s.stun}%`);
+  for (const b of s.selfBuffs ?? []) parts.push(`${buffName(b.stat).replace('每回合', '')}+${b.value}·${b.turns}回合`);
   return parts.join(' ');
 }
 
 /** 技能类型标签【新】（负责人 2026-11-22）：技能菜单里加成那一行下面的彩色小标签 */
-export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '无目标';
+export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '增益' | '无目标';
 
 const openBoard = { inBounds: () => true } as unknown as Board;
 
@@ -237,10 +242,12 @@ export function skillTags(s: SkillDef): SkillTag[] {
   const self = s.type === 2 || s.rangeMax <= 0;
   const at = self ? from : { x: 0, y: -Math.max(1, s.rangeMin) };
   const cells = areaCells(openBoard, from, s, at).length;
-  if (isChargeSkill(s)) return ['回气'];
+  const buffTag: SkillTag[] = s.selfBuffs?.length ? ['增益'] : [];
+  if (isStanceSkill(s)) return buffTag;
+  if (isChargeSkill(s)) return ['回气', ...buffTag];
   if (isHealSkill(s)) tags.push('回复');
   else if (self) tags.push('回旋');
   if (!isSupportSkill(s) && (s.type === 10 || s.pierce || s.rangeMax >= 2)) tags.push('远程');
   if (!tags.includes('回旋')) tags.push(cells > 1 ? '范围' : '单体');
-  return tags;
+  return [...tags, ...buffTag];
 }

@@ -2,7 +2,7 @@
 // 载入时（src/packs/build.ts）接到原版编号后面。原版素材一律按编号引用，不复制。
 
 import type { RecolorGroup } from './recolor.ts';
-import type { HitFx } from '../rules/data.ts';
+import type { BuffStat, HitFx } from '../rules/data.ts';
 
 export type StatBlock = { hp: number; mp: number; attack: number; defense: number; hit: number; agility: number; crit: number };
 
@@ -123,6 +123,8 @@ export interface PackSkillJson {
   rangeMin?: number;
   rangeMax?: number;
   area?: number;
+  /** 施放后给自己加的限时增益【新】（§6.5.3）：固定点数；集气技（from 借集气技）写 power 0 就是只加增益的架势技 */
+  selfBuffs?: { stat: BuffStat; value: number; turns: number }[];
   stun?: number;
   /** 蒙汗药酒【新】：不伤人、必定喝下，敌人麻翻这么多回合（已经麻翻的不能再劝）；用在没被麻翻的人身上以外的攻击，见关卡 banquet */
   drug?: number;
