@@ -5,7 +5,7 @@ import type { Unit } from '../src/rules/unit.ts';
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { balanceHeroAoe, HERO_AOE_COSTS } from '../src/rules/aoe-balance.ts';
+import { AOE_CAP, aoeCellCount, balanceHeroAoe, HERO_AOE_COSTS } from '../src/rules/aoe-balance.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA } from '../tools/sim-lib.ts';
 
@@ -105,5 +105,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('林沖 懷�
     expect(castCells(board, { x: 20, y: 20 }, [tiers[1].rangeMin, tiers[1].rangeMax], tiers[1].targetShape)).toHaveLength(8);
     const at30 = learnedSkills({ classId: 11, level: 30 } as Unit, d).filter((s) => s.name.startsWith('懷璧其罪'));
     expect(at30.map((s) => s.name)).toEqual(['懷璧其罪LV4']);
+  });
+  it('大范围技能上限：好汉 25 格以上威力 ≤60、命中必杀 ≤+10、≤2 段，40 格以上威力 ≤50（萬夫莫敵除外）', () => {
+    const rt = loadPackFromDisk('mainline');
+    const pj = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname, '../packs/mainline/pack.json'), 'utf8')) as { classes: { id: string; hero?: boolean }[] };
+    const heroes = [...Array(18).keys(), ...pj.classes.filter((c) => c.hero).map((c) => rt.classIds.get(c.id)!)];
+    let checked = 0;
+    for (const cls of heroes) for (const s of rt.data.classes[cls].skills) {
+      if ([8, 9, 11].includes(s.type) || s.power <= 0 || s.healRegen || (cls === 0 && s.name.startsWith('萬夫莫敵'))) continue;
+      const n = aoeCellCount(s);
+      if (n < AOE_CAP.cells) continue;
+      checked++;
+      expect(s.power, s.name).toBeLessThanOrEqual(n >= AOE_CAP.wideCells ? AOE_CAP.widePower : AOE_CAP.power);
+      expect(s.hitMod, s.name).toBeLessThanOrEqual(AOE_CAP.hitMod);
+      expect(s.critMod, s.name).toBeLessThanOrEqual(AOE_CAP.critMod);
+      if (s.hits.every((h) => h.dir === s.hits[0].dir)) expect(attackParts(s).length, s.name).toBeLessThanOrEqual(AOE_CAP.hits);
+    }
+    expect(checked).toBeGreaterThan(8);
+    expect(rt.data.classes[3].skills.find((s) => s.name === '狂龍出海LV4')).toMatchObject({ power: 50 });
   });
 });

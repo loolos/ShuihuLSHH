@@ -1,5 +1,7 @@
 // 群伤技能审查定值：仅原版好汉职业生效，不改敌方同模型与原始 HUM。
 import type { SkillDef } from './data.ts';
+import { Board } from './board.ts';
+import { areaCells, castCells } from './skills.ts';
 
 export const HERO_AOE_COSTS: Readonly<Record<number, Readonly<Record<number, number>>>> = {
   0: {
@@ -108,4 +110,32 @@ export function balanceHeroAoe(classId: number, skill: SkillDef): SkillDef {
   const mpCost = HERO_AOE_COSTS[classId]?.[skill.skillId];
   const hit = classId === 9 && skill.skillId === 84 ? { hitMod: 15 } : {};
   return mpCost === undefined ? skill : { ...skill, mpCost, ...hit };
+}
+
+/** 一招最多能罩住几格（在空地上试遍所有施放点，不算装备射程） */
+export function aoeCellCount(s: SkillDef): number {
+  const b = new Board(41, 41), at = { x: 20, y: 20 };
+  let best = 0;
+  for (const c of castCells(b, at, [s.rangeMin, Math.max(s.rangeMin, s.rangeMax)], s.targetShape)) best = Math.max(best, areaCells(b, at, s, c).length);
+  return best;
+}
+
+/** 大范围技能上限（负责人 2026-11-26：范围太大、加成又多的技能清兵太猛）：25 格以上威力 ≤ 60、命中 / 必杀加成各 ≤ +10、最多 2 段；40 格以上威力 ≤ 50 */
+export const AOE_CAP = { cells: 25, power: 60, hitMod: 10, critMod: 10, hits: 2, wideCells: 40, widePower: 50 };
+/** 不受上限的：武龍 萬夫莫敵（负责人 2026-11-26 单独定了威力 55、必杀 +20、LV5 三段） */
+const AOE_CAP_EXEMPT = new Set(['0:10', '0:11', '0:12', '0:1309', '0:1314']);
+
+/** 好汉的大范围攻击技按 AOE_CAP 封顶；集气、回复、增益技不管 */
+export function capHeroAoe(classId: number, s: SkillDef): SkillDef {
+  if (s.type === 8 || s.type === 9 || s.type === 11 || s.power <= 0 || s.healRegen || AOE_CAP_EXEMPT.has(`${classId}:${s.skillId}`)) return s;
+  const cells = aoeCellCount(s);
+  if (cells < AOE_CAP.cells) return s;
+  const power = Math.min(s.power, cells >= AOE_CAP.wideCells ? AOE_CAP.widePower : AOE_CAP.power);
+  const hitMod = Math.min(s.hitMod, AOE_CAP.hitMod), critMod = Math.min(s.critMod, AOE_CAP.critMod);
+  let hits = s.hits;
+  // 只有一个方向的多段才合并（迴旋技各方向的分段另算）；留第一段和最后一段的帧，各 50%
+  if (hits.length > AOE_CAP.hits && hits.every((h) => h.dir === hits[0].dir))
+    hits = [{ ...hits[0], percent: 50 }, { ...hits[hits.length - 1], percent: 50 }];
+  if (power === s.power && hitMod === s.hitMod && critMod === s.critMod && hits === s.hits) return s;
+  return { ...s, power, hitMod, critMod, hits };
 }
