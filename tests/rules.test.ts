@@ -698,6 +698,26 @@ describe('战斗流程', () => {
     expect(p.ended).toBe(true);
   });
 
+  it('高级药：立即回复之外，之后 3 回合每回合开始再回复', () => {
+    const potion = { ...glove, type: 15, name: '丹', attack: 0, healHp: 10, healMp: 0, regenHp: 7, regenMp: 0, params: [] } as unknown as Item;
+    const d2: GameData = { ...data, items: [glove, potion] };
+    const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0), act(1, 1, 'enemy', 9, 9, 0x800)], blocks: [], data: d2, seed: 1 });
+    b.begin();
+    const p = b.unit(0)!;
+    p.slots = [2];
+    p.hp = 1;
+    b.useItem(p, 0);
+    expect(p.hp).toBe(11);
+    expect(p.buffs).toEqual([{ stat: 'regenHp', value: 7, turns: 3 }]);
+    const hps: number[] = [];
+    for (let t = 0; t < 4; t++) {
+      b.endPlayerPhase();
+      hps.push(p.hp);
+    }
+    expect(hps).toEqual([18, 25, 32, 32]);
+    expect(p.buffs).toEqual([]);
+  });
+
   it('回复事件带上气的变化，用来弹黄字（扣气不弹）', () => {
     const b = new Battle({ name: 't', board: new Board(10, 10), units: [act(0, 0, 'player', 0, 0)], blocks: [], data, seed: 1 });
     b.begin();
