@@ -2419,6 +2419,7 @@
         "hitMod": 0,
         "critMod": 0,
         "castCycles": 4,
+        "castSpeed": 2,
         "hits": [
           {
             "frame": 11,
@@ -2442,7 +2443,7 @@
           }
         ]
       },
-      {"id": "qm-dangtou-2", "name": "当头一棒LV2", "from": 123, "anim": 0, "learnLevel": 38, "power": 65, "mpCost": 50, "stun": 30, "hitMod": 0, "critMod": 0, "castCycles": 5, "hits": [{"frame": 11, "percent": 20, "dir": 0}, {"frame": 33, "percent": 20, "dir": 0}, {"frame": 55, "percent": 20, "dir": 0}, {"frame": 77, "percent": 20, "dir": 0}, {"frame": 99, "percent": 20, "dir": 0}]},
+      {"id": "qm-dangtou-2", "name": "当头一棒LV2", "from": 123, "anim": 0, "learnLevel": 38, "power": 65, "mpCost": 50, "stun": 30, "hitMod": 0, "critMod": 0, "castCycles": 5, "castSpeed": 2, "hits": [{"frame": 11, "percent": 20, "dir": 0}, {"frame": 33, "percent": 20, "dir": 0}, {"frame": 55, "percent": 20, "dir": 0}, {"frame": 77, "percent": 20, "dir": 0}, {"frame": 99, "percent": 20, "dir": 0}]},
       {
         "id": "qm-pili-1",
         "name": "霹雳火LV1",
