@@ -529,11 +529,12 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
    */
   // 萬靈藥：原数据回体 510 ≈ 回满（说明写 200），2026-11-25 改 200；2026-11-26 负责人定改成群体药：自己和相邻友方各回体 150（area），原价 300，群体后按指导价 750
   157: { healHp: 150, area: true, description: '自己與相鄰的同伴各回復體力150點', ...price(750) },
-  158: price(950), // 大還銀丹：体 300 气 100，原 500
-  159: price(1150), // 大還金丹：体 400 气 200，原 700
+  158: { healHp: 90, healMp: 40, regenHp: 55, regenMp: 20, description: '回復體力90點與氣力40點，之後3回合每回合回復體力55點、氣力20點', ...price(840) }, // 大還銀丹：原 500；2026-11-26 体 300 气 100 → 立即 90/40 + 3 回合每回合 55/20（体力回复总量不超过约 300，主要靠持续回复）
+  159: { healHp: 120, healMp: 60, regenHp: 60, regenMp: 40, description: '回復體力120點與氣力60點，之後3回合每回合回復體力60點、氣力40點', ...price(1110) }, // 大還金丹：原 700；2026-11-26 体 400 气 200 → 立即 120/60 + 3 回合每回合 60/40
   161: price(1300), // 天山雪蓮：体气回满 + 解毒解昏，原 1000（要比大還金丹贵）
   183: price(500), // 小還銀丹：体 170 气 30，原 1500
-  184: price(900), // 小還金丹：体 350 气 75，原 2500
+  182: { healHp: 100, regenHp: 60, description: '回復體力100點，之後3回合每回合回復體力60點', ...price(700) }, // 金創藥：2026-11-26 体 350 → 立即 100 + 3 回合每回合 60
+  184: { healHp: 100, healMp: 30, regenHp: 60, regenMp: 15, description: '回復體力100點與氣力30點，之後3回合每回合回復體力60點、氣力15點', ...price(850) }, // 小還金丹：原 2500；2026-11-26 体 350 气 75 → 立即 100/30 + 3 回合每回合 60/15
   185: price(300), // 清涼丸：3 回合抗毒，原 3000
   187: price(300), // 提神丸：3 回合抗昏，原 3000
   /*
@@ -669,7 +670,9 @@ export function basicAttack(c: ClassDef): SkillDef | undefined {
 /** 战斗中能"使用"的道具：类型 15–22（回复、解毒解昏、抗毒抗昏、增益）。原版 0x408dc0 收 15–24，23 财宝用了没有效果、24 祕笈暂未实现 */
 export const isUsable = (it: Item | undefined) => !!it && it.type >= 15 && it.type <= 22;
 
-export type BuffStat = 'attack' | 'defense' | 'hit' | 'agility' | 'crit' | 'move' | 'poison' | 'stun' | 'resistPoison' | 'resistStun';
+export type BuffStat = 'attack' | 'defense' | 'hit' | 'agility' | 'crit' | 'move' | 'poison' | 'stun' | 'resistPoison' | 'resistStun' | 'regenHp' | 'regenMp';
+/** 高级药的持续回复（负责人 2026-11-26）：药上的 regenHp / regenMp 是之后每回合回复多少，持续这么多回合 */
+export const ITEM_REGEN_TURNS = 3;
 /** 属性效果：value 加到对应属性；turns > 0 按回合倒计时，turns = 0 表示持续到本关结束。 */
 export interface Buff {
   stat: BuffStat;
@@ -697,12 +700,14 @@ export function itemBuffs(it: Item): Buff[] {
     { stat: 'resistStun', value: 0, turns: p[19] },
     { stat: 'poison', value: p[23], turns: p[22] },
     { stat: 'stun', value: p[25], turns: p[24] },
+    { stat: 'regenHp', value: it.regenHp, turns: ITEM_REGEN_TURNS },
+    { stat: 'regenMp', value: it.regenMp, turns: ITEM_REGEN_TURNS },
   ];
   return list.filter((b) => (b.turns ?? 0) > 0 && (b.value !== 0 || b.stat.startsWith('resist')));
 }
 
 const STAT_NAME: Record<BuffStat, string> = {
-  attack: '攻击', defense: '防御', hit: '命中', agility: '敏捷', crit: '必杀', move: '移动', poison: '攻击带毒', stun: '攻击致昏', resistPoison: '抗毒', resistStun: '抗昏',
+  attack: '攻击', defense: '防御', hit: '命中', agility: '敏捷', crit: '必杀', move: '移动', poison: '攻击带毒', stun: '攻击致昏', resistPoison: '抗毒', resistStun: '抗昏', regenHp: '每回合回体', regenMp: '每回合回气',
 };
 export const buffName = (s: BuffStat) => STAT_NAME[s];
 

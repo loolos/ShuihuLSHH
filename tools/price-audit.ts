@@ -10,7 +10,7 @@
 //   解毒、解昏各 50 两。
 // - 限时增益：小加值按 加值 × 回合 × 17 两（原版五种酒的平均）；+255 / 必杀 100% / 加移动这类质变的没法线性比，按同组比较给一个判断价。
 import type { Item } from '../src/formats/goo.ts';
-import { equipHitBonus, equipMoveBonus, equipSlotOf, itemBuffs } from '../src/rules/data.ts';
+import { equipHitBonus, equipMoveBonus, equipSlotOf, itemBuffs, ITEM_REGEN_TURNS } from '../src/rules/data.ts';
 import { loadPackFromDisk } from './sim-pack.ts';
 import t2s from '../gamedata/tables/t2s.json' with { type: 'json' };
 import goods from '../gamedata/tables/goods.json' with { type: 'json' };
@@ -67,10 +67,12 @@ const JUDGED: Record<number, [number, string]> = {
 function consumableGuide(it: Item): [number, string] | null {
   if (JUDGED[it.id]) return JUDGED[it.id];
   if (it.type < 15 || it.type > 22) return null;
-  const hp = it.healHp < 0 ? HP_CAP : Math.min(HP_CAP, it.healHp);
-  const mp = it.healMp < 0 ? MP_CAP : Math.min(MP_CAP, it.healMp);
+  // 持续回复（高级药，负责人 2026-11-26）按总量算进回复，和立即回复一起封顶
+  const regen = (v: number) => (it.type >= 15 ? v * ITEM_REGEN_TURNS : 0);
+  const hp = it.healHp < 0 ? HP_CAP : Math.min(HP_CAP, it.healHp + regen(it.regenHp));
+  const mp = it.healMp < 0 ? MP_CAP : Math.min(MP_CAP, it.healMp + regen(it.regenMp));
   const cure = (it.curePoison || it.type === 18 ? CURE : 0) + (it.cureStun || it.type === 19 ? CURE : 0);
-  const buff = itemBuffs(it).reduce((s, b) => s + Math.abs(b.value) * b.turns * BUFF_RATE, 0);
+  const buff = itemBuffs(it).filter((b) => !b.stat.startsWith('regen')).reduce((s, b) => s + Math.abs(b.value) * b.turns * BUFF_RATE, 0);
   const parts = [hp && `体${hp}`, mp && `气${mp}`, cure && '解状态', buff && '增益'].filter(Boolean).join(' ');
   // 群体药按平均 2 人计（自己 + 约 1 个相邻同伴）
   const n = it.area ? 2 : 1;
