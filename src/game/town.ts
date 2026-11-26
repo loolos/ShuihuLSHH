@@ -348,8 +348,11 @@ export class TownUI {
       const groups = new Map<string, { type: number; name: string; ids: number[] }>();
       for (const id of list) {
         const it = itemOf(d, id)!;
-        const type = it.type;
-        const name = type === 13 || type === 14
+        // 解毒、解昏迷、抗毒、抗昏四类小药并成一组「其他」（负责人 2026-11-26）
+        const cureOrResist = it.type >= 18 && it.type <= 21;
+        const type = cureOrResist ? 18 : it.type;
+        const name = cureOrResist ? '其他'
+          : type === 13 || type === 14
           ? shopGroup(it.name)
           : type === 11 ? '武器·弓' : itemTypeName(type);
         const key = `${type}:${name}`;
