@@ -162,6 +162,19 @@ describe('技能自身增益', () => {
     expect(withCharge(b, dai, {}).skill).toBeUndefined();
   });
 
+  it('扩展包好汉伤害招附带 2 回合增益，乐和 吹铁叫子持续回体', () => {
+    const want: Record<string, [string, number]> = {
+      横扫千军: ['defense', 25], 弯弓压阵: ['agility', 25], 猛虎翻叉: ['agility', 25], 横叉扫LV1: ['defense', 25],
+      母大虫扑食: ['agility', 25], 双鞭齐下: ['defense', 25], 偷鸡摸狗: ['agility', 30], 旱地翻身: ['agility', 25], 猛虎下山: ['agility', 25],
+    };
+    const skills = pack.classes.flatMap((c) => c.skills ?? []);
+    for (const [name, [stat, value]] of Object.entries(want)) {
+      const s = skills.find((x) => x.name === name)!;
+      expect(s.selfBuffs, name).toEqual([{ stat, value, turns: 2 }]);
+    }
+    expect(skills.find((x) => x.name === '吹铁叫子')!.healRegen).toEqual({ divisor: 10, turns: 3 });
+  });
+
   it('原版好汉增益表只写防御、敏捷、回体，数值为正', () => {
     for (const per of Object.values(HERO_SELF_BUFFS))
       for (const list of Object.values(per)) for (const x of list) {
