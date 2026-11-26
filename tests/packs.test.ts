@@ -854,7 +854,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     const startingDefense = wu.stats.defense;
     expect(wu.buffs.find(buff => buff.stat === 'defense')?.turns).toBe(2); // 开局已过一次回合开始结算。
     expect(wu.stats.attack).toBe(189);
-    const attacks = [208, 229, 252], hits = [244, 232, 220]; // 武松戴斗笠（2026-11-26 配装改类别）命中 +15
+    const attacks = [208, 229, 252], hits = [242, 230, 219]; // 武松戴斗笠（2026-11-26 配装改类别；斗笠补档后这一档是白范陽氈笠 命中 +14）
     for (let i = 0; i < 3; i++) {
       const npc = s.units.find(u => u.id === `wine-${i + 1}`)!;
       wu.x = npc.x + 1; wu.y = npc.y;
@@ -871,7 +871,7 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(wu.stats.defense).toBe(startingDefense - 7);
     expect(wu.buffs).toHaveLength(6);
     expect(wu.stats.attack).toBe(252);
-    expect(wu.stats.hit).toBe(220);
+    expect(wu.stats.hit).toBe(219);
   });
 
   it('快活林第4回合只有戴宗、花荣、李逵来援，史进不在本关出场', () => {

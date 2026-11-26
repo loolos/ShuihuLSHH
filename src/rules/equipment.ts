@@ -18,7 +18,7 @@ export const EQUIPMENT_CATEGORIES: Record<string, string[]> = {
   "重甲": ["裹金生鐵甲", "鑲銀生鐵甲", "魚鱗鐵甲", "狻猊甲", "鐵葉攢鎧", "烏油對嵌鎧"],
   "头巾": ["一字巾", "破頭巾", "絳紅巾", "乾紅凹面巾", "青紗頭巾", "萬字巾", "軟紗唐巾", "黑頭巾", "皂紗唐巾", "金線抹額"],
   "帽子": ["虎皮帽", "僧帽", "官帽", "貂鼠皮帽", "烏紗帽", "束髮紫金冠"],
-  "斗笠": ["遮日黑箬笠", "紅纓氈笠", "碧雲箬笠"],
+  "斗笠": ["遮日黑箬笠", "青竹斗笠", "紅纓氈笠", "白范陽氈笠", "碧雲箬笠"],
   "战盔": ["熟鐵盔", "朱纓盔", "獅子盔", "熟鋼獅子盔", "耀日鑌鐵盔", "鳳翅金盔", "爛銀盔", "紫金盔"],
   "护符": ["玄武護符", "白虎護符", "青龍護符", "朱雀護符", "麒麟護符"],
   "花饰": ["青花錫飾", "水蓮鐵飾", "芙蓉銅飾", "牡丹銀飾", "菊花金飾"],
@@ -46,7 +46,7 @@ export const GEAR_TABLE: Record<string, string[]> = {
   "帽子": ["虎皮帽", "虎皮帽", "官帽", "官帽", "官帽", "貂鼠皮帽", "烏紗帽", "束髮紫金冠", "束髮紫金冠", "束髮紫金冠"],
   // 只给鲁智深的配装行（商店里归帽子）：出家人一直戴僧帽
   "僧帽": ["僧帽", "僧帽", "僧帽", "僧帽", "僧帽", "僧帽", "僧帽", "僧帽", "僧帽", "僧帽"],
-  "斗笠": ["遮日黑箬笠", "遮日黑箬笠", "紅纓氈笠", "紅纓氈笠", "紅纓氈笠", "碧雲箬笠", "碧雲箬笠", "碧雲箬笠", "碧雲箬笠", "碧雲箬笠"],
+  "斗笠": ["遮日黑箬笠", "遮日黑箬笠", "遮日黑箬笠", "青竹斗笠", "紅纓氈笠", "白范陽氈笠", "白范陽氈笠", "碧雲箬笠", "碧雲箬笠", "碧雲箬笠"],
   "战盔": ["熟鐵盔", "朱纓盔", "獅子盔", "獅子盔", "熟鋼獅子盔", "耀日鑌鐵盔", "爛銀盔", "爛銀盔", "紫金盔", "紫金盔"],
 };
 export const WEAPON_TABLE: Record<number, string[]> = {
@@ -242,13 +242,19 @@ export function levelKit(data: GameData, cls: ClassDef, level: number, slots: nu
   // 默认武器优先遵照出场武器的类型（阮小五等职业表和初始武器不一致）。
   const weaponType = HERO_KITS[cls.id]?.weapon ?? itemOf(data, cls.defaultItems[0])?.type ?? cls.weaponType;
   const names = [WEAPON_TABLE[weaponType]?.[band], GEAR_TABLE[profile.armor]?.[band], GEAR_TABLE[profile.head]?.[band]];
-  // 剧本（或职业默认）给的装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击，衣服、头饰比防御
-  const score = (id: number, k: number) => { const it = itemOf(data, id); return it ? (k === 0 ? it.attack : it.defense) : -1; };
+  // 剧本（或职业默认）给的装备比表里这一档好就留着（负责人 2026-11-15）：武器比攻击；
+  // 衣服、头饰比买价（买价按全部效果定，斗笠、帽子不会因为防御低被跳过；负责人 2026-11-26），商店不卖的特殊装备（买价 0）仍比防御
+  const score = (id: number, k: number, other: number) => {
+    const it = itemOf(data, id), o = itemOf(data, other);
+    if (!it) return -1;
+    if (k === 0) return it.attack;
+    return it.buyPrice > 0 && (o?.buyPrice ?? 0) > 0 ? it.buyPrice : it.defense;
+  };
   const rows = [WEAPON_TABLE[weaponType], GEAR_TABLE[profile.armor], GEAR_TABLE[profile.head]];
   names.forEach((name, k) => {
     if (!name || keep(slots[k])) return; // 弓手类（11、12）表里没有武器，别误配到无名的空道具
     const id = findBack(data, rows[k] ?? [], band);
-    if (id && score(slots[k], k) <= score(id, k)) slots[k] = id;
+    if (id && score(slots[k], k, id) <= score(id, k, slots[k])) slots[k] = id;
   });
   // 清掉旧药品（含解毒、抗性、增益药），重新发本档药；非药品剧情物品保留。
   for (let k = 3; k < slots.length; k++) {

@@ -499,7 +499,8 @@ const shopItem = (price: number, town: number, category = 2): Partial<Item> => (
 /** 只改价钱：卖价 = 买价 / 2 */
 const price = (p: number): Partial<Item> => ({ buyPrice: p, sellPrice: p / 2 });
 export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
-  127: { name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 3600, sellPrice: 1800, seqA: [7, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0, 0, 0] }, // 3600 两（2026-11-26 重审）
+  127: { name: '碧雲箬笠', category: 2, hit: 16, defense: 12, description: '防御力加12，可提升', buyPrice: 2580, sellPrice: 1290, seqA: [10, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }, // 斗笠到顶（移动 +3）；2026-11-26 斗笠补档后从城镇 7 挪到 10、防 10 → 12
+  126: { ...shopItem(1550, 5), defense: 8, description: '防御力加8，可提升' }, // 紅纓氈笠：移动 +2 原版城镇 2 就有，太早；2026-11-26 挪到城镇 5、防 6 → 8
   /*
    * 原版库里有、但没有任何关卡、宝箱、我方配装或商店给的装备（敌人身上的打倒后不掉），一律放进后期商店【新：负责人 2026-11-14】。
    * 价格按同类商店货的属性比较定；城镇 7（N09 之后）→ 8 → 9 → 10（N-add16 前）越往后越好。属性照原版不改。108魔星草人没有属性，不放。
@@ -639,6 +640,9 @@ const NEW_ITEMS: Record<number, { from: number } & Partial<Item>> = {
   81: { from: 103, name: '鎖子甲', icon: 200, defense: 28, hit: 6, agility: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(2200, 7) }, // 轻甲：原到顶朱紅甲 防 22（城镇 5）
   82: { from: 102, name: '柳葉軟甲', icon: 201, defense: 34, hit: 8, agility: 0, maxHp: 15, description: '防御力加34，可提升', ...shopItem(3200, 9) },
   170: { from: 121, name: '貂鼠皮帽', icon: 205, defense: 9, regenHp: 15, regenMp: 15, description: '防御力加9，每回合回復體力氣力15點', ...shopItem(2600, 6) }, // 帽子：官帽（城镇 3）到烏紗帽（城镇 9）之间
+  // 斗笠补两档（负责人 2026-11-26：只有最高档碧雲箬笠移动 +3）：遮日黑箬笠 1 → 青竹斗笠 1 → 紅纓氈笠 2 → 白范陽氈笠 2 → 碧雲箬笠 3
+  186: { from: 125, name: '青竹斗笠', type: 14, icon: 206, defense: 6, hit: 10, moveBonus: 1, description: '防御力加6，可提升', ...shopItem(740, 3) },
+  193: { from: 126, name: '白范陽氈笠', type: 14, icon: 207, defense: 10, hit: 14, moveBonus: 2, description: '防御力加10，可提升', ...shopItem(1790, 7) },
   160: { from: 132, name: '爛銀盔', icon: 202, defense: 28, hit: 0, agility: -6, crit: 13, maxHp: 10, description: '防御力加28，可提升', ...shopItem(1600, 10) }, // 战盔：原到顶耀日鑌鐵盔 防 20
 };
 export const withItemOverrides = (items: Item[]): Item[] =>
