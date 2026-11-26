@@ -294,6 +294,8 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     ...(s.covert ? { covert: true } : {}),
     ...(s.stunFor ? { stunFor: s.stunFor } : {}),
     ...(s.vsStunned ? { vsStunned: s.vsStunned } : {}),
+    // 借来的原版技能如果挂了好汉自身增益（HERO_SELF_BUFFS），包里的技能不跟着继承，只认自己写的
+    selfBuffs: s.selfBuffs?.length ? s.selfBuffs.map((b) => ({ ...b })) : undefined,
     poison: s.poison ?? t.poison,
     hitMod: s.hitMod ?? t.hitMod,
     critMod: s.critMod ?? t.critMod,

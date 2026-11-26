@@ -3,7 +3,7 @@ import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
-import { castRange, isAllyChargeSkill, isSelfChargeSkill, isHealSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { castRange, isAllyChargeSkill, isRechargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
 
 export interface AiPlan {
@@ -155,10 +155,25 @@ export function healSkill(b: Battle, u: Unit): AiPlan | null {
   return s && cell ? { skill: s, cell } : null;
 }
 
+/**
+ * 打不到人、又有敌人在下回合可能打到自己的距离内（敌人移动力 + 3 格）时，在走到的位置摆架势技【新】（§6.5.3）；
+ * 身上已有这招的全部增益就不重复摆。
+ */
+export function withStance(b: Battle, u: Unit, plan: AiPlan): AiPlan | null {
+  if (plan.skill) return null;
+  const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
+  const s = learnedSkills(u, b.data).find((k) => isStanceSkill(k) && k.mpCost <= u.mp && !k.selfBuffs!.every((x) => u.buffs.some((y) => y.stat === x.stat && y.turns > 0)));
+  if (!s || !b.aiFoesOf(u).some((t) => dist(end, t) <= t.stats.move + 3)) return null;
+  return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
+}
+
 /** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
 export function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
-  if (plan.skill || u.mp >= u.stats.maxMp / 2) return plan;
-  const s = learnedSkills(u, b.data).find(isSelfChargeSkill);
+  if (plan.skill) return plan;
+  const stance = withStance(b, u, plan);
+  if (stance) return stance;
+  if (u.mp >= u.stats.maxMp / 2) return plan;
+  const s = learnedSkills(u, b.data).find(isRechargeSkill);
   if (!s) return plan;
   const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
   return { ...plan, skill: s, cell: { x: end.x, y: end.y } };

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
 import { Board } from '../src/rules/board.ts';
-import { areaCells, castCells, learnedSkills, skillBaseName, skillsLearnedAt } from '../src/rules/skills.ts';
+import { areaCells, castCells, isStanceSkill, learnedSkills, skillBaseName, skillsLearnedAt } from '../src/rules/skills.ts';
 import { attackParts, baseDamage, rollAttack } from '../src/rules/combat.ts';
 import { Rng } from '../src/rules/rng.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -30,11 +30,11 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
   });
   it('两人按1/4/8/12/16/20/24/28学习，最高一级替换旧级，低等级不提前拥有集气',()=> {
     for(const who of ['wusong','likui']) {
-      const sk=skills(who);expect(sk.map(s=>s.name)).toEqual(names[who]);
+      const sk=skills(who).filter(s=>!isStanceSkill(s));expect(sk.map(s=>s.name)).toEqual(names[who]);
       expect(sk.map(s=>s.learnLevel)).toEqual(who==='wusong'?[1,4,8,18,28,36,12,16,20,32,24,28,40]:[1,4,8,32,12,16,20,36,24,28,40]);
       for(let lv=1;lv<=30;lv++) {
         const u={classId:main.classIds.get(who)!,level:lv} as Unit;
-        const learned=learnedSkills(u,main.data);
+        const learned=learnedSkills(u,main.data).filter(s=>!isStanceSkill(s));
         expect(learned.every(s=>s.learnLevel<=lv)).toBe(true);
         expect(new Set(learned.map(s=>skillBaseName(s.name))).size).toBe(learned.length);
         expect(learned.filter(s=>s.type===8).length).toBe(lv>=12?1:0);
@@ -42,9 +42,9 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
         const expected=tier?[`${who==='wusong'?'横江断浪':'狂澜裂岳'}LV${tier}`]:[];
         if(who==='wusong'&&lv>=8)expected.push(`擒虎镇岳LV${lv>=28?3:lv>=18?2:1}`);
         expect(learned.filter(s=>s.name.includes('LV')).map(s=>s.name)).toEqual(expected);
-        expect(skillsLearnedAt(u,main.data,lv).length).toBe(who==='wusong'&&lv===28?2:([4,8,12,16,20,24,28].includes(lv)||(who==='wusong'&&lv===18))?1:0);
+        expect(skillsLearnedAt(u,main.data,lv).filter(s=>!isStanceSkill(s)).length).toBe(who==='wusong'&&lv===28?2:([4,8,12,16,20,24,28].includes(lv)||(who==='wusong'&&lv===18))?1:0);
       }
-      expect(learnedSkills({classId:main.classIds.get(who)!,level:28} as Unit,main.data)).toHaveLength(4);
+      expect(learnedSkills({classId:main.classIds.get(who)!,level:28} as Unit,main.data).filter(s=>!isStanceSkill(s))).toHaveLength(4);
     }
   });
   it('武松普攻2段、重拳3段、鸳鸯4段：动画真正循环相应次数，命中各落在一次出拳内',()=> {
