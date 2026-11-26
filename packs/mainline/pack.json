@@ -35,7 +35,7 @@
       "type": 11,
       "attack": 25,
       "hit": 5,
-      "buyPrice": 1750,
+      "buyPrice": 1680,
       "shop": [11],
       "icon": "icons/quehuagong.png",
       "description": "弓背描著喜鵲的好弓，花榮慣用。"
@@ -47,7 +47,7 @@
       "type": 11,
       "attack": 38,
       "hit": 10,
-      "buyPrice": 3720,
+      "buyPrice": 3510,
       "shop": [11],
       "icon": "icons/baodiaogong.png",
       "description": "雕翎寶弓，百步穿楊。"
@@ -207,7 +207,7 @@
       "attack": 46,
       "hit": 10,
       "crit": 0,
-      "buyPrice": 4960,
+      "buyPrice": 4660,
       "shop": [11],
       "shopTier": 1,
       "icon": "icons/tietaigong.png",

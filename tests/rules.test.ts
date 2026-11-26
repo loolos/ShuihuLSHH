@@ -1429,7 +1429,7 @@ describe('道具表改动', () => {
     const { withItemOverrides } = await import('../src/rules/data.ts');
     const base = { id: 127, name: '青箬笠', category: 0, hit: 0, buyPrice: 0, sellPrice: 2250, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
     const [it] = withItemOverrides([base]);
-    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 3850 });
+    expect(it).toMatchObject({ name: '碧雲箬笠', category: 2, hit: 16, buyPrice: 3750 });
     expect(it.seqA).toContain(7);
   });
 });
@@ -1439,7 +1439,7 @@ describe('拿不到的装备上架', () => {
     const { withItemOverrides } = await import('../src/rules/data.ts');
     const base = { id: 21, name: '打狗棒', category: 0, buyPrice: 0, sellPrice: 3000, seqA: [] } as unknown as Parameters<typeof withItemOverrides>[0][number];
     const [it] = withItemOverrides([base]);
-    expect(it).toMatchObject({ category: 2, buyPrice: 6960, sellPrice: 3480 });
+    expect(it).toMatchObject({ category: 2, buyPrice: 7430, sellPrice: 3715 });
     expect(it.seqA.slice(0, 2)).toEqual([10, 11]);
   });
 });
