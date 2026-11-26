@@ -3,8 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
-import { areaCells, castCells, learnedSkills, skillTags } from '../src/rules/skills.ts';
+import { areaCells, castCells, castRange, learnedSkills, skillTags } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
+import { GRUNT_CLASSES } from '../src/rules/growth.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA } from '../tools/sim-lib.ts';
 
@@ -111,10 +112,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('孙立 弯�
   it('射程 2–6（负责人 2026-11-26，原先 2–4）', () => {
     const d = loadPackFromDisk('mainline').data;
     const s = d.classes.flatMap((c) => c?.skills ?? []).find((s) => s.name === '弯弓压阵')!;
-    const cells = castCells(new Board(40, 40), { x: 20, y: 20 }, [s.rangeMin, s.rangeMax], s.targetShape);
-    expect(cells).toContainEqual({ x: 20, y: 14 });
+    // 走游戏实际用的 castRange：借来的原版 222 曾把杂兵射程封顶 3 带进来，画面上只剩 2–3 格
+    const u = { classId: d.classes.findIndex((c) => c?.name === '孙立'), stats: { rangeBonus: 0 } } as unknown as Unit;
+    expect(castRange(u, s, d)).toEqual([2, 6]);
+    const cells = castCells(new Board(40, 40), { x: 20, y: 20 }, castRange(u, s, d), s.targetShape);
+    for (const [dx, dy] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) for (let k = 2; k <= 6; k++) expect(cells).toContainEqual({ x: 20 + dx * k, y: 20 + dy * k });
     expect(cells).not.toContainEqual({ x: 20, y: 19 });
     expect(cells).not.toContainEqual({ x: 20, y: 13 });
+  });
+
+  it('包里借原版 222 的技能不继承杂兵射程封顶', () => {
+    const d = loadPackFromDisk('mainline').data;
+    expect(d.classes.flatMap((c, id) => (GRUNT_CLASSES.has(id) ? [] : c?.skills ?? [])).filter((s) => s.reachCap).map((s) => s.name)).toEqual([]);
   });
 });
 
