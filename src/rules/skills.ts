@@ -221,6 +221,7 @@ export function skillBonusText(s: SkillDef): string {
   if (s.stun) parts.push(`昏${s.stun}%`);
   for (const b of s.selfBuffs ?? []) parts.push(`${buffName(b.stat).replace('每回合', '')}+${b.value}·${b.turns}回合`);
   if (s.healRegen) parts.push(`持续回体1/${s.healRegen.divisor}·${s.healRegen.turns}回合`);
+  if (s.cure) parts.push('解毒·解昏迷');
   return parts.join(' ');
 }
 

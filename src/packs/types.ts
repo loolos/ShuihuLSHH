@@ -129,6 +129,8 @@ export interface PackSkillJson {
   buffAlly?: boolean;
   /** 回复技附加持续回体：之后 turns 回合每回合回最大体力的 1/divisor【新】 */
   healRegen?: { divisor: number; turns: number };
+  /** 回复技顺带解毒、解昏迷 */
+  cure?: boolean;
   stun?: number;
   /** 蒙汗药酒【新】：不伤人、必定喝下，敌人麻翻这么多回合（已经麻翻的不能再劝）；用在没被麻翻的人身上以外的攻击，见关卡 banquet */
   drug?: number;

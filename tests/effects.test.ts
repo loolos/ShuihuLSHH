@@ -4,7 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parseHuman } from '../src/formats/hum.ts';
 import { readExeTables } from '../src/formats/exe.ts';
-import { FX_CHARGE, FX_HEAL, fxChain, fxSpots, skillFx } from '../src/game/effects.ts';
+import { FX_BUFF, FX_CHARGE, FX_HEAL, fxChain, fxSpots, skillFx } from '../src/game/effects.ts';
 
 const sk = (type: number, effect: number, effect2 = 0, effect3 = 0) => ({ type, effect, effect2, effect3 });
 
@@ -14,6 +14,9 @@ describe('技能特效选组', () => {
     expect(skillFx(sk(11, 0))).toBeNull();
     expect(skillFx(sk(9, 0))).toMatchObject({ first: FX_HEAL, atEnd: true });
     expect(skillFx(sk(8, 0))).toMatchObject({ first: FX_CHARGE, atEnd: true });
+    // 架势技（威力 0、只加增益）不用回气特效，播光柱（负责人 2026-11-26）；带增益的集气技仍是回气特效
+    expect(skillFx({ ...sk(8, 0), power: 0, selfBuffs: [{ stat: 'defense', value: 30, turns: 5 }] })).toMatchObject({ first: FX_BUFF, atEnd: true });
+    expect(skillFx({ ...sk(8, 0), power: 2, selfBuffs: [{ stat: 'defense', value: 30, turns: 5 }] })?.first).toBe(FX_CHARGE);
     expect(skillFx(sk(2, 5))).toBeNull();
     expect(skillFx(sk(0, 0))).toBeNull();
   });
