@@ -106,3 +106,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('解珍钢叉
     }
   });
 });
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('孙立 弯弓压阵', () => {
+  it('射程 2–6（负责人 2026-11-26，原先 2–4）', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const s = d.classes.flatMap((c) => c?.skills ?? []).find((s) => s.name === '弯弓压阵')!;
+    const cells = castCells(new Board(40, 40), { x: 20, y: 20 }, [s.rangeMin, s.rangeMax], s.targetShape);
+    expect(cells).toContainEqual({ x: 20, y: 14 });
+    expect(cells).not.toContainEqual({ x: 20, y: 19 });
+    expect(cells).not.toContainEqual({ x: 20, y: 13 });
+  });
+});
