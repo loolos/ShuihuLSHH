@@ -163,6 +163,8 @@ export interface PackItemJson {
   maxMp?: number;
   regenHp?: number;
   regenMp?: number;
+  /** 装备移动加成 */
+  moveBonus?: number;
   /** 消耗品：回体 / 回气（−1 = 回满） */
   healHp?: number;
   healMp?: number;
