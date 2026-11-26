@@ -149,7 +149,9 @@ describe.skipIf(!has)('城镇（原版数据）', () => {
     expect(names(1)).not.toContain('白銀手套');
     expect(names(0)).toContain('女兒紅');
     expect(names(3)).toContain('狗皮膏藥');
-    expect(names(4)).toEqual(['青花錫飾']);
+    // 当铺只典当不卖（负责人 2026-11-26），原来的当铺货在武器店
+    expect(names(4)).toEqual([]);
+    expect(names(1)).toContain('青花錫飾');
     expect(names(2)).toEqual([]);
   });
 });

@@ -1,6 +1,7 @@
 // 主线续篇城镇的名称、阵容与入城对白。商品仍使用 townAfter 指定的现有城镇表。
 import { joinLevel, type CampaignState } from '../rules/campaign.ts';
 import { levelKit } from '../rules/equipment.ts';
+import { chapterOf } from '../rules/chapters.ts';
 import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
@@ -13,6 +14,13 @@ const OPENING_ONLY = new Set(['mainline/zhujiadian', 'mainline/panduolu', 'mainl
 /** 名单照哪一关的开场我方配：三打祝家庄前的营寨（负责人 2026-11-25）下一关是孙立入庄的过场，名单按大仗 sanda 开场（内应 + 宋江一队，押在囚车里的不算） */
 const ROSTER_FROM: Record<string, string> = { 'mainline/ruzhuang': 'mainline/sanda' };
 export const insertTownName = (next: string): string => NAMES[next] ?? '阳谷整备';
+/**
+ * 续篇商店分档（负责人 2026-11-26，§7.5）：续篇城镇都借原版城镇 11 的店，按下一关所在的章再加货。
+ * 第二十章起（清风山整备、村镇整备、揭阳岭整备，下一关约 35–40 级）= 续篇二档；第二十四章起（梁山泊整备、独龙冈三城，约 40–50 级）= 续篇三档。
+ * 后一档包含前一档的货（Item.shopTier ≤ 档）。
+ */
+export const SHOP_TIER_CHAPTERS = [20, 24] as const;
+export const shopTierOf = (next: string): number => SHOP_TIER_CHAPTERS.filter((ch) => chapterOf(next) >= ch).length;
 
 /** 鸳鸯楼前开放下一战全部我方；阳谷保留宋江、武松、武龙三人。解甲留锋后三将与同行的宋江、武龙、李逵、王英整备。只初始化缺失人物，不覆盖已有资产。 */
 export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: string): CampaignState {

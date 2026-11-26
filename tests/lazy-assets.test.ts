@@ -73,7 +73,9 @@ describe.skipIf(!has)('拆出来的图像', () => {
       [assets.objects, openPic(fs.readFileSync(path.join(DATA, 'Object.lib')))],
     ] as const;
     for (const [mine, ref] of pairs) {
-      expect(mine.count).toBe(ref.count);
+      // 道具图标在原版 200 帧后面接了换色的新图标（gamedata/icons 200 起）
+      if (mine === assets.objects) expect(mine.count).toBeGreaterThanOrEqual(ref.count);
+      else expect(mine.count).toBe(ref.count);
       for (let i = 0; i < ref.count; i++) {
         const a = mine.frame(i), b = ref.frame(i);
         expect([a.width, a.height, a.anchorX, a.anchorY]).toEqual([b.width, b.height, b.anchorX, b.anchorY]);
