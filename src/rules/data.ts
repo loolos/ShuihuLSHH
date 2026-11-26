@@ -311,7 +311,12 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     learnLevel: 6, mpCost: 0, power: CHARGE_DIVISOR, rangeMin: 0, rangeMax: 0, area: 0,
     effect: 0, effect2: 0, effect3: 0, poison: 0, stun: 0, hitMod: 0, critMod: 0,
     hits: [], raw: '',
-  }],
+  },
+  // 神机助气【新】（负责人 2026-11-26）：架势技，自己或相邻一格的队友之后 5 回合每回合回气 20；group 0 同气定神闲
+  extraSkill({
+    name: '神机助气', skillId: 1014, type: 8, group: 0, learnLevel: 16, mpCost: 40, power: 0, rangeMin: 0, rangeMax: 1, area: 0, hits: [],
+    buffAlly: true, selfBuffs: [{ stat: 'regenMp', value: 20, turns: 5 }],
+  })],
   11: [
     extraSkill({ name: '懷璧其罪LV2', skillId: 1001, type: 6, group: 1, learnLevel: 18, mpCost: 40, power: 40, rangeMax: 2, hitMod: 5, critMod: 20, soundId: 96, hits: split([11, 11]) }),
     // LV3、LV4（负责人 2026-11-22）：横扫施放点及左右各一格（类型 13）；施放点选身前相邻格就是前方三格（左前、正前、右前），射程仍 1–2。耗气见 HERO_AOE_COSTS
