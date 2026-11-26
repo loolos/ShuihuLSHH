@@ -20,9 +20,14 @@ export type ShopAction = (typeof SHOPS)[number]['actions'][number];
 
 /** 道具的大类（店序号 + 1）；原版当铺货（大类 5）改在武器店卖（负责人 2026-11-26） */
 const shopCategory = (category: number) => (category === 5 ? 2 : category);
-/** 本店的货：大类对上、有买价、城镇号表含本城；续篇城镇按 tier 分档（Item.shopTier，§7.5） */
+/**
+ * 本店的货：大类对上、有买价、城镇号表含本城；续篇城镇按 tier 分档（Item.shopTier，§7.5）。
+ * 按买价从低到高排（同价按道具号）：道具号顺序因补空格、扩展包追加、改类别和重定价已不再是价格顺序。
+ */
 export const stock = (data: GameData, shop: number, town: number, tier = 0): number[] =>
-  data.items.flatMap((it, i) => (shopCategory(it.category) === shop + 1 && it.buyPrice > 0 && it.seqA.includes(town) && (it.shopTier ?? 0) <= tier ? [i + 1] : []));
+  data.items
+    .flatMap((it, i) => (shopCategory(it.category) === shop + 1 && it.buyPrice > 0 && it.seqA.includes(town) && (it.shopTier ?? 0) <= tier ? [i + 1] : []))
+    .sort((a, b) => data.items[a - 1].buyPrice - data.items[b - 1].buyPrice || a - b);
 
 export interface Outcome {
   c: CampaignState;

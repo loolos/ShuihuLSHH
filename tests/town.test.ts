@@ -42,7 +42,7 @@ const camp = (gold = 1000): CampaignState => ({
 
 describe('城镇', () => {
   it('货品：大类 = 店序号 + 1，且城镇号表含本城', () => {
-    expect(stock(data, 1, 1)).toEqual([1, 2, 3]);
+    expect(stock(data, 1, 1)).toEqual([2, 3, 1]); // 按买价从低到高（100、100、200），同价按道具号
     expect(stock(data, 3, 1)).toEqual([4]);
     expect(stock(data, 1, 5)).toEqual([]);
   });
