@@ -10,7 +10,7 @@ import { Board, key, pathTo, type Cell } from './board.ts';
 import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type AttackPreview, type HitResult } from './combat.ts';
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
-import { BAG_SLOTS, buffName, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
+import { applyBuffs, BAG_SLOTS, buffName, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
 import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
@@ -1305,8 +1305,7 @@ export class Battle {
     const who = this.units.filter((u) => u.side === 'player' && u.present && u.alive && !this.spectators.has(u.uid));
     if (!who.length) return;
     for (const u of who) {
-      u.buffs = u.buffs.filter((x) => !list.some((b) => b.stat === x.stat));
-      for (const b of list) u.buffs.push({ ...b, turns: b.turns + 1 });
+      u.buffs = applyBuffs(u.buffs, list.map((b) => ({ ...b, turns: b.turns + 1 })), list[0].source ?? '请客');
       refreshStats(u, this.data);
     }
     const text = list.map((b) => `${buffName(b.stat)}+${b.value}`).join('、');
@@ -1764,11 +1763,8 @@ export class Battle {
     if (cured) this.emit({ type: 'message', text: `${who}狀態恢復正常了！` });
     const buffs = itemBuffs(it);
     const move0 = t.stats.move;
-    for (const b of buffs) {
-      // 同一项效果再用一次：以新的为准（不叠加）【新】
-      t.buffs = t.buffs.filter((x) => x.stat !== b.stat);
-      t.buffs.push({ ...b });
-    }
+    // 同一道具再用一次：只刷新回合，不叠加【新】
+    if (buffs.length) t.buffs = applyBuffs(t.buffs, buffs, name);
     refreshStats(t, this.data);
     this.adjustMovement(t, t.stats.move - move0);
     if (buffs.length) this.emit({ type: 'message', text: `${who}${buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''}`).join('、')}，持續 ${Math.max(...buffs.map((b) => b.turns))} 回合。` });
@@ -1844,7 +1840,7 @@ export class Battle {
         this.emit({ type: 'message', text: `${u.name}使出${name}！` });
         const t = targets[0] ?? u; // buffAlly：自己或相邻队友
         if (t !== u) t.turnStart = null;
-        return this.addBuffs(t, skill.selfBuffs);
+        return this.addBuffs(t, skill.selfBuffs, name);
       }
       if (skill.buffAlly && isChargeSkill(skill)) {
         // 可给队友的集气技（晁盖 天王聚义式、吴用 运筹帷幄）：气回给施放者自己，增益加在所选的人（自己或相邻队友）身上
@@ -1853,7 +1849,7 @@ export class Battle {
         const mp0 = u.mp;
         u.mp = Math.min(u.stats.maxMp, u.mp + Math.floor(u.stats.maxMp / Math.max(1, skill.power)));
         this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: 0, mpDelta: u.mp - mp0, text: name });
-        return this.addBuffs(t, skill.selfBuffs);
+        return this.addBuffs(t, skill.selfBuffs, name);
       }
       for (const t of targets) {
         if (t !== u) t.turnStart = null; // 被队友的回复 / 集气技照顾到，就不能再撤销移动（同给别人用道具）【新】（负责人 2026-11-22）
@@ -1864,7 +1860,7 @@ export class Battle {
         healed += t.hp - hp0;
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
         const r = skill.healRegen;
-        if (r) this.addBuffs(t, [{ stat: 'regenHp', value: Math.max(1, Math.floor(t.stats.maxHp / r.divisor)), turns: r.turns }]);
+        if (r) this.addBuffs(t, [{ stat: 'regenHp', value: Math.max(1, Math.floor(t.stats.maxHp / r.divisor)), turns: r.turns }], name);
         if (skill.cure && (t.poisonTurns > 0 || t.stunTurns > 0)) {
           t.poisonTurns = 0;
           if (t.stunTurns > 0) {
@@ -1876,7 +1872,7 @@ export class Battle {
         }
       }
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
-      return this.addBuffs(u, skill.selfBuffs);
+      return this.addBuffs(u, skill.selfBuffs, name);
     }
     const feint = this.tune?.feint;
     const att = this.towerSelf(u);
@@ -1941,23 +1937,17 @@ export class Battle {
     }
     if (hits.length > 1) this.emit({ type: 'message', text: total > 0 ? `造成敵方總共 ${total} 點傷害。` : `${u.name}的攻擊落空了。` });
     if (u.side === 'player' && exp && u.alive) this.gainExp(u, exp, counter ? 'counter' : 'hit');
-    if (!counter) this.addBuffs(u, skill.selfBuffs);
+    if (!counter) this.addBuffs(u, skill.selfBuffs, this.tr(skill.name));
     if (counterBy && counterBy.alive && u.alive) this.cast(counterBy, attackSkill(counterBy, this.data), u, true);
   }
 
   /**
-   * 技能附带的增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者（buffAlly 架势技给所选的人、回复技的持续回体给每个受回复的人）加上；同一项已有限时增益就取大值、刷新回合，不叠加。
+   * 技能附带的增益【新】（负责人 2026-11-26，§6.5.3）：出手结算完给施放者（buffAlly 架势技给所选的人、回复技的持续回体给每个受回复的人）加上；同一技能再放只刷新回合（applyBuffs），不同来源同一属性只取最高，都不叠加。
    * 回合数按回合开始倒数（同道具增益），本回合放的 3 回合增益护住接下来 3 个敌方阶段。
    */
-  private addBuffs(u: Unit, list: Buff[] | undefined) {
+  private addBuffs(u: Unit, list: Buff[] | undefined, source: string) {
     if (!list?.length || !u.alive) return;
-    for (const b of list) {
-      const old = u.buffs.find((x) => x.stat === b.stat && x.turns > 0);
-      if (old) {
-        old.value = Math.max(old.value, b.value);
-        old.turns = Math.max(old.turns, b.turns);
-      } else u.buffs.push({ ...b });
-    }
+    u.buffs = applyBuffs(u.buffs, list, source);
     refreshStats(u, this.data);
     this.emit({ type: 'status', uid: u.uid, text: list.map((b) => `${buffName(b.stat)}+${b.value}`).join(' ') });
     this.emit({ type: 'message', text: `${u.name}${list.map((b) => `${buffName(b.stat)}+${b.value}`).join('、')}，持續 ${Math.max(...list.map((b) => b.turns))} 回合。` });

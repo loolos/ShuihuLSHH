@@ -2,7 +2,7 @@
 import { expToNext } from '../rules/exp.ts';
 import type { AttackPreview } from '../rules/combat.ts';
 import type { Unit } from '../rules/unit.ts';
-import { buffLabel } from '../rules/data.ts';
+import { buffLabels } from '../rules/data.ts';
 import { splitNickname } from '../rules/nicknames.ts';
 import { sound } from './sound.ts';
 
@@ -157,7 +157,7 @@ export class BattleUI {
     }
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
-    const buffs = u.buffs.map(buffLabel);
+    const buffs = buffLabels(u.buffs);
     const states = [this.spectators.has(u.uid) && u.side !== 'enemy' && '观战', !!u.disguised && '伪装（敌人认不出，出手就被识破）', u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), !!u.panicTurns && `逃窜 ${u.panicTurns}`, u.ended && u.side === 'player' && '已行动']
       .filter((state): state is string => typeof state === 'string');
     const face = this.portrait(u.classId);

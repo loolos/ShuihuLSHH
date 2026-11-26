@@ -4,7 +4,7 @@ import { Board } from '../src/rules/board.ts';
 import { cellPassable } from '../src/rules/passability.ts';
 import { attackParts, baseDamage, critChance, rangedFactor, facingRelation, hitChance, previewAttack, rollAttack } from '../src/rules/combat.ts';
 import { DEFEND_BONUS, dodgeExp, expAtLevel, expToNext, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from '../src/rules/exp.ts';
-import { buffLabel, buildClasses, EQUIP_SLOTS, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
+import { applyBuffs, buffLabels, buildClasses, EQUIP_SLOTS, equipHitBonus, unlockHiddenSkills, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import type { ClassRecord } from '../src/formats/hum.ts';
 import { Rng } from '../src/rules/rng.ts';
 import { attackSkill, computeStats, facingTowards, refreshStats, type Unit } from '../src/rules/unit.ts';
@@ -44,10 +44,24 @@ function unit(o: Partial<Unit>): Unit {
 }
 
 describe('属性', () => {
-  it('状态面板区分加值和持续时间，减益不显示多余加号', () => {
-    expect(buffLabel({ stat: 'attack', value: 19, turns: 0 })).toBe('攻击 +19（本关有效）');
-    expect(buffLabel({ stat: 'hit', value: -12, turns: 0 })).toBe('命中 -12（本关有效）');
-    expect(buffLabel({ stat: 'defense', value: 7, turns: 2 })).toBe('防御 +7（剩余2回合）');
+  it('状态面板按来源显示增益名、简要效果和剩余回合', () => {
+    expect(buffLabels([{ stat: 'defense', value: 30, turns: 3, source: '呼保义' }, { stat: 'agility', value: 20, turns: 3, source: '呼保义' }])).toEqual(['呼保义 防+30 敏+20 3回合']);
+    expect(buffLabels([{ stat: 'resistPoison', value: 0, turns: 2, source: '解毒丸' }])).toEqual(['解毒丸 抗毒 2回合']);
+    expect(buffLabels([{ stat: 'move', value: -2, turns: 0 }, { stat: 'hit', value: 5, turns: 0 }])).toEqual(['移-2 本关', '命+5 本关']);
+  });
+
+  it('同一来源再加只刷新回合，不同来源同一属性只取最高，都不叠加', () => {
+    let buffs = applyBuffs([], [{ stat: 'defense', value: 30, turns: 3 }], '呼保义');
+    buffs[0].turns = 1;
+    buffs = applyBuffs(buffs, [{ stat: 'defense', value: 30, turns: 3 }], '呼保义');
+    expect(buffs).toEqual([{ stat: 'defense', value: 30, turns: 3, source: '呼保义' }]);
+    buffs = applyBuffs(buffs, [{ stat: 'defense', value: 15, turns: 5 }], '清茶');
+    expect(buffs).toHaveLength(2);
+    const cls = data.classes[0];
+    const base = computeStats(cls, 1, [], data).defense;
+    expect(computeStats(cls, 1, [], data, false, [], buffs).defense).toBe(base + 30);
+    // 剧本加减（没有来源）照旧相加
+    expect(computeStats(cls, 1, [], data, false, [], [...buffs, { stat: 'defense', value: -5, turns: 0 }]).defense).toBe(base + 25);
   });
 
   it('己方等级移动力：5 级 +1，20 级累计 +2；同职业敌方、友军均不增加', () => {
@@ -708,7 +722,7 @@ describe('战斗流程', () => {
     p.hp = 1;
     b.useItem(p, 0);
     expect(p.hp).toBe(11);
-    expect(p.buffs).toEqual([{ stat: 'regenHp', value: 7, turns: 3 }]);
+    expect(p.buffs).toEqual([{ stat: 'regenHp', value: 7, turns: 3, source: '丹' }]);
     const hps: number[] = [];
     for (let t = 0; t < 4; t++) {
       b.endPlayerPhase();

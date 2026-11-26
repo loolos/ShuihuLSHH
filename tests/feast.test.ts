@@ -25,7 +25,7 @@ describe('请客', () => {
     expect(r.c.feast!.buffs).toEqual([{ stat: 'attack', value: 17, turns: FEAST_TURNS }, { stat: 'crit', value: 5, turns: FEAST_TURNS }]);
     expect(feasted(r.c, ['N-add04a', 'N-add04b'])).toBe(true);
     expect(orderFeast(r.c, 1, ['N-add04a']).ok).toBe(false); // 一城只请一次
-    expect(feastFor(r.c, 'n-add04b')).toEqual(r.c.feast!.buffs);
+    expect(feastFor(r.c, 'n-add04b')).toEqual(r.c.feast!.buffs.map((b) => ({ ...b, source: '透瓶香' })));
     expect(feastFor(r.c, 'N-add05')).toBeUndefined(); // 别的关不算
   });
 

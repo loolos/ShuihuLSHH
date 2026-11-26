@@ -121,7 +121,10 @@ export function feastText(buffs: Buff[]): string {
 
 /** 这一关开场要加的请客增益（存档里记的关要对得上） */
 export function feastFor(c: CampaignState, stage: string): Buff[] | undefined {
-  return c.feast?.stages.some((s) => s.toLowerCase() === stage.toLowerCase()) ? c.feast.buffs : undefined;
+  if (!c.feast?.stages.some((s) => s.toLowerCase() === stage.toLowerCase())) return undefined;
+  // 状态栏显示的来源名：酒菜名的头一样（透瓶香 / 药酒 / 清茶）
+  const source = FEAST_DRINKS[c.feast.drink]?.label.split('·')[0] ?? '请客';
+  return c.feast.buffs.map((b) => ({ ...b, source }));
 }
 
 /** 入席后的对白，只留名单里在的人 */

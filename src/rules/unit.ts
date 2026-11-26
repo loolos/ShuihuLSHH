@@ -148,7 +148,15 @@ export function computeStats(cls: ClassDef, level: number, slots: number[], data
     st.poison += it!.poison;
     st.stun += it!.stun;
   }
-  for (const b of buffs) if (b.stat in st) st[b.stat as keyof Stats] += b.value;
+  // 有来源的正加值同一属性只取最高（不同技能 / 道具 / 请客不叠加）；减益和剧本加的照旧相加
+  const best: Partial<Record<keyof Stats, number>> = {};
+  for (const b of buffs) {
+    if (!(b.stat in st)) continue;
+    const k = b.stat as keyof Stats;
+    if (b.source && b.value > 0) best[k] = Math.max(best[k] ?? 0, b.value);
+    else st[k] += b.value;
+  }
+  for (const [k, v] of Object.entries(best)) st[k as keyof Stats] += v;
   for (const k of ['attack', 'defense', 'hit', 'agility', 'crit'] as const) st[k] = Math.max(0, st[k]);
   if (poisoned) {
     st.attack = Math.floor(st.attack / 2);
