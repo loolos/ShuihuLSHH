@@ -4,7 +4,7 @@ import type { ActUnit } from '../src/formats/act.ts';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
-import { healPlan, planAi, withCharge } from '../src/rules/ai.ts';
+import { enemyAdvance, healPlan, planAi, withCharge } from '../src/rules/ai.ts';
 
 const basic: SkillDef = {
   name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false,
@@ -24,7 +24,8 @@ const act = (index: number, type: number, side: ActUnit['side'], x: number, y: n
   index, type, side, x, y, level: 30, facing: 0, group: index, flags: 0,
   items: [0, 0, 0, 0, 0, 0, 0], extra: [0, 0, 0], raw: [],
 });
-const data: GameData = { classes: [cls(0, [basic, heal, stance]), cls(1)], items: [], charNames: ['甲', '乙'], heroName: '甲' };
+const recharge: SkillDef = { ...basic, skillId: 303, name: '集氣技', type: 8, power: 2, rangeMin: 0, rangeMax: 0, area: 0, hits: [] };
+const data: GameData = { classes: [cls(0, [basic, heal, stance]), cls(1), cls(2, [basic, recharge])], items: [], charNames: ['甲', '乙', '丙'], heroName: '甲' };
 const battle = (units: ActUnit[]) => {
   const b = new Battle({ name: 'test-support', board: new Board(30, 30), data, units, blocks: [], seed: 5 });
   b.begin();
@@ -68,5 +69,27 @@ describe('AI 回复与增益', () => {
     expect(plan.cell).toEqual({ x: 5, y: 5 });
     b.useSkill(me, stance, plan.cell!);
     expect(withCharge(b, me, {}).skill).toBeUndefined();
+  });
+
+  it('敌人打不到人：满血强行军，不满血走完按缺得多的休息或回气；打得到照样先打', () => {
+    const b = battle([act(0, 2, 'enemy', 5, 5), act(1, 1, 'player', 5, 25)]);
+    const foe = b.unit(0)!, hero = b.unit(1)!;
+    let plan = planAi(b, foe);
+    expect(plan.path!.length - 1).toBe(foe.stats.move + Math.ceil(foe.stats.move / 2));
+    expect(plan.skill).toBeUndefined();
+    foe.hp = foe.stats.maxHp - 50;
+    plan = planAi(b, foe);
+    expect(plan.path!.length - 1).toBe(foe.stats.move);
+    expect(plan.rest).toBe(true);
+    foe.mp = 0;
+    plan = planAi(b, foe);
+    expect(plan.skill?.name).toBe('集氣技');
+    expect(plan.rest).toBeUndefined();
+    // 我方不受影响
+    expect(enemyAdvance(b, hero, [foe])).toBeNull();
+    // 走绿格打得到人：先打
+    foe.hp = foe.stats.maxHp;
+    hero.y = 8;
+    expect(planAi(b, foe).target).toBe(hero);
   });
 });

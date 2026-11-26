@@ -141,7 +141,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     b.endPlayerPhase();
     expect(last.every((u) => u.present && u.alive)).toBe(true);
     expect(last.filter((u) => u.name === '祝家庄马军').length).toBe(6);
-    for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(8);
+    // 刷出后当回合就往前赶，满血的强行军多走「移动力 ÷ 2」格
+    for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(8 + Math.ceil(u.stats.move / 2));
   });
 
   it('祝朝奉身边刷的兵三种轮换：2 庄客 + 2 挠钩手、庄客头目 + 教头、2 骑兵（负责人 2026-11-26）', () => {
