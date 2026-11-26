@@ -95,3 +95,12 @@ export async function idbPrune(prefix: string): Promise<void> {
   await done(tx);
   db.close();
 }
+
+/** 删一项 */
+export async function idbDelete(k: string): Promise<void> {
+  const db = await open();
+  const tx = db.transaction(STORE, 'readwrite');
+  tx.objectStore(STORE).delete(k);
+  await done(tx);
+  db.close();
+}
