@@ -125,6 +125,10 @@ export interface PackSkillJson {
   area?: number;
   /** 施放后给自己加的限时增益【新】（§6.5.3）：固定点数；集气技（from 借集气技）写 power 0 就是只加增益的架势技 */
   selfBuffs?: { stat: BuffStat; value: number; turns: number }[];
+  /** 架势技可给自己或相邻一格的队友用（另写 rangeMin 0、rangeMax 1）【新】 */
+  buffAlly?: boolean;
+  /** 回复技附加持续回体：之后 turns 回合每回合回最大体力的 1/divisor【新】 */
+  healRegen?: { divisor: number; turns: number };
   stun?: number;
   /** 蒙汗药酒【新】：不伤人、必定喝下，敌人麻翻这么多回合（已经麻翻的不能再劝）；用在没被麻翻的人身上以外的攻击，见关卡 banquet */
   drug?: number;

@@ -55,6 +55,10 @@ export interface SkillDef extends ClassSkill {
   /** 施放后给施放者自己加的限时增益【新】（负责人 2026-11-26，§6.5.3）：固定点数、只加不减；同一项再放只刷新回合、取大值。
    * 集气技（类型 8）把 power 设为 0 就成了「架势技」：花气、不回气、只加增益 */
   selfBuffs?: Buff[];
+  /** 架势技可以给自己或相邻一格的队友用（增益加在目标身上）【新】（负责人 2026-11-26：宋江 呼保义、戴宗 神行法） */
+  buffAlly?: boolean;
+  /** 回复技附加持续回体【新】（负责人 2026-11-26：吴用 如鱼得水）：每个受回复的人之后 turns 回合每回合回最大体力的 1/divisor */
+  healRegen?: { divisor: number; turns: number };
 }
 
 export interface ClassDef {
@@ -228,15 +232,30 @@ export const HERO_SELF_BUFFS: Record<number, Record<string, Buff[]>> = {
   3: { 龍蟠虎踞: [buff('defense', 20, 2)], 龍騰九天: [buff('agility', 35, 2)] }, // 史進
   5: { 奇門遁甲LV1: [buff('agility', 20, 2)], 奇門遁甲LV2: [buff('agility', 25, 2)], 奇門遁甲LV3: [buff('agility', 35, 2)] }, // 朱武
   11: { 棄暗投明: [buff('regenHp', 12, 3)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
+  10: { 運籌帷幄: [buff('agility', 35, 5)] }, // 吳用
+  12: { 天王聚義式: [buff('defense', 30, 5)] }, // 晁蓋
   13: { 伏虎调息: [buff('defense', 20, 2)] }, // 陳達
   14: { 游刃有餘: [buff('agility', 35, 3)], 快刀斬亂麻: [buff('agility', 25, 2)], 快刀斬亂麻LV2: [buff('agility', 45, 2)] }, // 楊志
   15: { 盘蛇吐纳: [buff('regenHp', 12, 3)] }, // 楊春
   16: { 我佛慈悲: [buff('regenHp', 15, 3)], 佛法無邊: [buff('defense', 30, 3)] }, // 魯智深
 };
 
+/** 原版好汉回复技附加的持续回体（职业号 → 技能名）【新】（负责人 2026-11-26） */
+export const HERO_HEAL_REGEN: Record<number, Record<string, { divisor: number; turns: number }>> = {
+  5: { 回復計LV1: { divisor: 10, turns: 3 }, 回復計LV2: { divisor: 10, turns: 3 }, 回復計LV3: { divisor: 10, turns: 3 } }, // 朱武
+  10: { 如魚得水LV1: { divisor: 10, turns: 3 }, 如魚得水LV2: { divisor: 10, turns: 3 }, 如魚得水LV3: { divisor: 10, turns: 3 } }, // 吳用
+};
+/** 可以给相邻一格队友用的集气技（气仍回给自己，增益给所选的人）【新】（负责人 2026-11-26） */
+export const HERO_BUFF_ALLY: Record<number, string[]> = {
+  10: ['運籌帷幄'], // 吳用
+  12: ['天王聚義式'], // 晁蓋
+};
+
 function withHeroSelfBuffs(cls: number, s: SkillDef): SkillDef {
   const b = HERO_SELF_BUFFS[cls]?.[s.name];
-  return b ? { ...s, selfBuffs: b.map((x) => ({ ...x })) } : s;
+  const r = HERO_HEAL_REGEN[cls]?.[s.name];
+  const ally = HERO_BUFF_ALLY[cls]?.includes(s.name);
+  return { ...s, ...(b ? { selfBuffs: b.map((x) => ({ ...x })) } : {}), ...(r ? { healRegen: { ...r } } : {}), ...(ally ? { buffAlly: true, rangeMin: 0, rangeMax: 1 } : {}) };
 }
 export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(classId: number, s: T): T {
   if (classId >= HERO_CLASS_COUNT || s.hitMod >= 0) return s;
