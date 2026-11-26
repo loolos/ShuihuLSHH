@@ -527,7 +527,7 @@ AI 模式（EXE 0x407930 的跳转表；行为命名为中）：
 | `human.json` | `Human.hum`（§10） | `parseHuman` 的结果，72 个职业，含未解字段的十六进制原样 `raw` |
 | `goods.json` | `Goods.dab`（§9） | `parseGoods` 的结果，200 件道具（未加重制版改动） |
 | `terrain.json` | `Ground.att`、`Upper.att`（§6） | `{ground, upper}`，各 2040 个字节（去掉 8 B 头） |
-| `t2s.json` | 63 对 `.pab`/`.pas` 逐字对齐 | 繁→简单字对照，按出现次数投票（`.pas` 偶有错字） |
+| `t2s.json` | 63 对 `.pab`/`.pas` 逐字对齐；2026-11-26 补 84 个字 | 繁→简单字对照，按出现次数投票（`.pas` 偶有错字）。对齐只覆盖剧本里出现过的字，职业、技能、道具名里另有 84 个繁体字（鑌、鎖、葉、靈……）没收，简体下会显示成繁体；这些按 OpenCC 繁→简逐字补上 |
 | `palette.json` | `Default.pal` | 256 个 `[r, g, b]` |
 
 **图像**：全部是 8 位索引色 PNG（色彩类型 3、不隔行），PLTE = `Default.pal`，tRNS 把 0 号设成透明；解码只取索引（`src/formats/png-indexed.ts`），编辑后仍须是这种格式。
