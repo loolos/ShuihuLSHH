@@ -308,6 +308,12 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       }
       return approach(b, u, [target], 1);
     }
+    case 16: {
+      // 【新】直扑目标、顺路就打（三打祝家庄的伏兵，负责人 2026-11-26）：打得到目标先打目标；
+      // 打不到目标时，移动范围里打得到谁就打谁；都打不到才往目标那边走（模式 10 只认目标，路上的人不理）
+      if (!target) return defaultPlan(b, u);
+      return bestAttack(b, u, target) ?? bestAttack(b, u) ?? approach(b, u, [target]);
+    }
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为

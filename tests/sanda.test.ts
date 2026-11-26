@@ -7,6 +7,7 @@ import entryLevels from '../src/data/entry-levels.json' with { type: 'json' };
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import { learnedSkills } from '../src/rules/skills.ts';
+import { planAi } from '../src/rules/ai.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
@@ -93,6 +94,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
       return;
     }
     throw new Error('40 个种子都没打中');
+  });
+
+  it('伏兵直扑宋江、顺路就打：打不到宋江时打身边的人（AI 16）', () => {
+    const { b, get } = open();
+    const amb = get('amb5w0'), sj = get('songjiang'), lin = get('linchong');
+    expect(amb.ai.mode).toBe(16);
+    priv(b).spectators.delete(lin.uid);
+    amb.present = true;
+    put(amb, 5, 60); put(lin, 5, 59);
+    const plan = planAi(b, amb);
+    expect(plan.target?.uid).toBe(lin.uid);
+    expect(Math.abs(sj.x - amb.x) + Math.abs(sj.y - amb.y)).toBeGreaterThan(10);
   });
 
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
