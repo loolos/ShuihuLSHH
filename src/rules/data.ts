@@ -742,11 +742,24 @@ export const isUsable = (it: Item | undefined) => !!it && it.type >= 15 && it.ty
 export type BuffStat = 'attack' | 'defense' | 'hit' | 'agility' | 'crit' | 'move' | 'poison' | 'stun' | 'resistPoison' | 'resistStun' | 'regenHp' | 'regenMp';
 /** 高级药的持续回复（负责人 2026-11-26）：药上的 regenHp / regenMp 是之后每回合回复多少，持续这么多回合 */
 export const ITEM_REGEN_TURNS = 3;
-/** 属性效果：value 加到对应属性；turns > 0 按回合倒计时，turns = 0 表示持续到本关结束。 */
+/**
+ * 属性效果：value 加到对应属性；turns > 0 按回合倒计时，turns = 0 表示持续到本关结束。
+ * source 是增益的来源名（技能、道具、请客的酒菜），状态栏按它显示；同一来源再加只刷新回合、不叠加（applyBuffs）。
+ */
 export interface Buff {
   stat: BuffStat;
   value: number;
   turns: number;
+  source?: string;
+}
+
+/**
+ * 加一组增益【新】（负责人 2026-11-26）：同一来源（同名技能 / 道具 / 请客）已有的整组换成新的，只是刷新回合，效果不叠加；
+ * 不同来源可以同时挂着，但同一属性的正加值只取最高的一个（computeStats），也不叠加。没写来源的（剧本 op 101）照旧直接加上。
+ */
+export function applyBuffs(cur: Buff[], list: readonly Buff[], source?: string): Buff[] {
+  if (!source) return [...cur, ...list.map((b) => ({ ...b }))];
+  return [...cur.filter((b) => b.source !== source), ...list.map((b) => ({ ...b, source }))];
 }
 
 /**
@@ -780,11 +793,22 @@ const STAT_NAME: Record<BuffStat, string> = {
 };
 export const buffName = (s: BuffStat) => STAT_NAME[s];
 
-/** 单位面板的状态说明，区分属性加值与持续时间。 */
-export function buffLabel(b: Buff): string {
-  const value = b.value ? ` ${b.value > 0 ? '+' : ''}${b.value}` : '';
-  const duration = b.turns === 0 ? '本关有效' : `剩余${b.turns}回合`;
-  return `${buffName(b.stat)}${value}（${duration}）`;
+const STAT_SHORT: Record<BuffStat, string> = {
+  attack: '攻', defense: '防', hit: '命', agility: '敏', crit: '必', move: '移', poison: '带毒', stun: '致昏', resistPoison: '抗毒', resistStun: '抗昏', regenHp: '回体', regenMp: '回气',
+};
+
+/** 单位面板的状态说明【新】：按来源一组一条，写简要的效果和剩余回合，如「呼保义 防+30 敏+20 3回合」；没有来源的每项一条。 */
+export function buffLabels(buffs: readonly Buff[]): string[] {
+  const groups = new Map<string, Buff[]>();
+  buffs.forEach((b, i) => {
+    const key = b.source ? `${b.source}|${b.turns}` : `#${i}`;
+    groups.set(key, [...(groups.get(key) ?? []), b]);
+  });
+  return [...groups.values()].map((g) => {
+    const fx = g.map((b) => `${STAT_SHORT[b.stat]}${b.value ? `${b.value > 0 ? '+' : ''}${b.value}` : ''}`).join(' ');
+    const turns = g[0].turns === 0 ? '本关' : `${g[0].turns}回合`;
+    return [g[0].source, fx, turns].filter(Boolean).join(' ');
+  });
 }
 
 
