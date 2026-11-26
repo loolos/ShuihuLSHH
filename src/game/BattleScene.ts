@@ -641,7 +641,7 @@ export class BattleScene extends Phaser.Scene {
       const n = u.forge[m.slot] ?? 0;
       return this.ui.showUnit(u, null, '', {
         title: `${slotLabel(m.slot)} · ${name}${n ? ` +${n}` : ''}`,
-        lines: [itemSummary(it, n), this.assets.tr(it.description)],
+        lines: equipSlotOf(it) >= 0 ? [itemSummary(it, n), this.assets.tr(it.description)] : [itemSummary(it, n)], // 消耗品的说明就是效果，不再重复一行（负责人 2026-11-26）
         warn: m.op === 'discard' ? `确定丢弃${name}？丢掉就找不回来了。` : m.slot >= EQUIP_SLOTS && equipSlotOf(it) >= 0 ? (canEquip(this.assets.data.classes[u.classId], it, this.assets.data) ? '放在物品栏里不算加成，装备后才生效' : `${u.name}不能装备这件`) : '',
       });
     }

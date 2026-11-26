@@ -265,7 +265,7 @@
       "shop": [11],
       "shopTier": 1,
       "icon": "icons/huichundan.png",
-      "description": "自己與相鄰的同伴各回復體力150點與氣力80點，之後3回合每回合回復體力50點、氣力30點"
+      "description": "自己與相鄰同伴各回體150、氣80，之後3回合每回合體50、氣30"
     },
     {
       "id": "zijinguan",
