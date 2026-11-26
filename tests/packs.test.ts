@@ -1818,6 +1818,8 @@ describe.skipIf(!has)('三打祝家庄：扑天雕李应', () => {
     b.begin();
     // 测试不操作我方：其他好汉加厚血，免得武龙等先倒下判负
     for (const u of b.units) if (u.side === 'player' && u.classId !== rt.classIds.get('liying')) u.stats.maxHp = u.hp = 99999;
+    // 李应也不操作：友军满血强行军冲到前面后，祝彪会先找上原地不动的李应；敌人攻击力清零，只看剧情受伤
+    for (const u of b.units) if (u.side === 'enemy') u.stats.attack = 0;
     return { b, ly: b.units.find((u) => u.classId === rt.classIds.get('liying'))!, zb: b.units.find((u) => u.classId === rt.classIds.get('zhubiao'))! };
   };
   it('开场李应归玩家操作；第 3 回合中回马箭：生命降到四成半、落马移动 −1、转友军，冈下杀出援兵', () => {

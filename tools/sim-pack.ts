@@ -235,6 +235,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         if (last && plan.path!.length > 1) ev.push(...b.move(u, last.x, last.y));
         if (plan.skill && plan.cell && plan.skill !== attackSkill(u, b.data)) ev.push(...b.useSkill(u, plan.skill, plan.cell));
         else if (plan.target && b.attackTargets(u).includes(plan.target)) ev.push(...b.attack(u, plan.target));
+        else if (plan.rest && b.canAct(u)) ev.push(...b.rest(u)); // 赶路后休息（强行军走完本回合就结束了）
         else if (b.canAct(u)) ev.push(...b.defend(u));
       }
       if (process.env.TRACE_POS) console.log(`  回合 ${b.turn}:`, b.units.filter((u) => u.side === 'player' && u.present).map((u) => `${u.name}(${u.x},${u.y})`).join(' '), '发现', JSON.stringify(b.spotters));
