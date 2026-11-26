@@ -35,6 +35,8 @@ export const FEAST_DRINKS: FeastDrink[] = [
 
 /** 一个城镇的请客：入席后谁说什么（只说给名单里在的人；who 是职业号，续篇城镇的包人物写 '@包职业名'，由界面换成职业号） */
 export interface FeastPlace {
+  /** 增益管的那一场仗（续篇城镇之后先演一段过场时写；不写就是城镇之后那一关） */
+  battle?: string;
   lines: { who: number | string; text: string }[];
 }
 
@@ -83,6 +85,26 @@ export const FEAST_PLACES: Record<string, FeastPlace> = {
       { who: '@likui', text: '好酒好肉！铁牛吃饱了，明日砍那姓秦的兵，一斧一个！' },
       { who: '@huarong', text: '秦明性如烈火，明日须用计困他。兄弟们吃饱便好，莫要贪杯。' },
       { who: '@sj-fugitive', text: '众兄弟且吃几碗，养足了精神，明日一同迎敌。' },
+    ],
+  },
+  // 独龙冈下寨 → 盘陀路：石秀探庄未回、杨林被拿，宋江要硬闯祝家庄（负责人 2026-11-26 加）
+  'mainline/panduolu': {
+    lines: [
+      { who: '@sj-fugitive', text: '石秀兄弟探庄未回，杨林又被拿了去。众兄弟今夜吃饱，明日只好打进庄去。' },
+      { who: '@likui', text: '怕他甚么！铁牛打头阵，见一个砍一个！' },
+      { who: '@huarong', text: '听说庄里的路七弯八绕，明日进去，大伙紧跟着走，莫要走散。' },
+      { who: '@yangxiong', text: '只盼石秀兄弟平安回来。' },
+    ],
+  },
+  // 独龙冈营寨 → 孙立入庄（过场）→ 宋公明三打祝家庄：孙立一伙来投、愿做内应（负责人 2026-11-26 加）
+  'mainline/ruzhuang': {
+    battle: 'mainline/sanda',
+    lines: [
+      { who: '@sj-fugitive', text: '两番打祝家庄都折了兄弟。这回有孙提辖做内应，众兄弟满饮此碗！' },
+      { who: '@sunli', text: '小弟明日便领一伙人入庄，到时里应外合，叫他首尾不能相顾。' },
+      { who: '@gudasao', text: '老娘先干了这碗！到时候里头外头一齐杀。' },
+      { who: '@likui', text: '这回总该让铁牛杀个痛快了吧？' },
+      { who: 10, text: '众位依计而行，切莫走漏了风声。' },
     ],
   },
   // 独龙冈整备 → 火烧祝家店：杨雄、石秀、时迁投梁山，路过独龙冈

@@ -39,7 +39,7 @@ export interface CampaignState {
   inserts?: string[];
   /** 主线已经通关；重载时显示通关画面而不是重打最后一关 */
   finished?: boolean;
-  /** 酒店请客【新】（src/rules/feast.ts）：下一关（stages 里任一关）开场全员加的增益；打赢一关后清掉 */
+  /** 酒店请客【新】（src/rules/feast.ts）：下一场仗（stages 里任一关）开场全员加的增益；用上增益的那一关打赢后清掉（中间的过场不清） */
   feast?: { stages: string[]; drink: number; buffs: Buff[] };
 }
 
@@ -139,7 +139,7 @@ export function recordResult(c: CampaignState, battle: Battle, opts: { keepActiv
   }
   // 没有我方出场的过场（如 Act13-1 只有官军）沿用上一关的出场名单，免得城镇里一个人都不列
   if (opts.keepActive && c.active) for (const id of c.active) if (!active.includes(id)) active.push(id);
-  return { ...c, members: [...members.values()], gold, active: active.length ? active : c.active, feast: undefined };
+  return { ...c, members: [...members.values()], gold, active: active.length ? active : c.active, feast: battle.feastUsed ? undefined : c.feast };
 }
 
 /** 主线插关的登记：ref = <包>/<关卡>，before = 插在哪一关（原版地图名）前面 */

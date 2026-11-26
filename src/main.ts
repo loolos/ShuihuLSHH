@@ -629,7 +629,7 @@ function startGame(assets: Assets) {
     town.show({ ...townParty(campaign,rt), active: ids }, {
       town: stop.town, shopTier: shopTierOf(stop.next), title: `城镇 · ${insertTownName(stop.next)}`, ...insertTavern(rt, stop.next),
       leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
-      feast: FEAST_PLACES[stop.next] ? { place: FEAST_PLACES[stop.next], stages: [stop.next], resolve: (k) => rt.classIds.get(k) } : undefined,
+      feast: FEAST_PLACES[stop.next] ? { place: FEAST_PLACES[stop.next], stages: [FEAST_PLACES[stop.next].battle ?? stop.next], resolve: (k) => rt.classIds.get(k) } : undefined,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
       onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
     });
