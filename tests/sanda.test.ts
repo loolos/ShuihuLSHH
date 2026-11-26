@@ -108,6 +108,20 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(Math.abs(sj.x - amb.x) + Math.abs(sj.y - amb.y)).toBeGreaterThan(10);
   });
 
+  it('三座庄门都破了：祝朝奉身边刷出 6 骑 + 4 个庄客头目，主动进攻，只刷一次', () => {
+    const { b, get } = open();
+    const lin = get('linchong'), zcf = get('zcf');
+    const last = Array.from({ length: 10 }, (_, k) => get(`zcf-last${k}`));
+    priv(b).kill(lin, get('door-west'));
+    priv(b).kill(lin, get('door-front'));
+    expect(last.some((u) => u.present)).toBe(false);
+    priv(b).kill(lin, get('door-east'));
+    b.endPlayerPhase();
+    expect(last.every((u) => u.present && u.alive)).toBe(true);
+    expect(last.filter((u) => u.name === '祝家庄马军').length).toBe(6);
+    for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(6);
+  });
+
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
     const { b, get } = open();
     const door = get('door-front');

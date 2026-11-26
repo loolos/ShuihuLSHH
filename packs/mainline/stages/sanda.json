@@ -4583,6 +4583,148 @@
    ]
   },
   {
+   "id": "zcf-last0",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last1",
+   "class": 43,
+   "side": "enemy",
+   "x": 33,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last2",
+   "class": 43,
+   "side": "enemy",
+   "x": 28,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last3",
+   "class": 43,
+   "side": "enemy",
+   "x": 34,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last4",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last5",
+   "class": 43,
+   "side": "enemy",
+   "x": 33,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "祝家庄马军",
+   "hidden": true
+  },
+  {
+   "id": "zcf-last6",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-last7",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-last8",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 30,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
+   "id": "zcf-last9",
+   "class": "zhuangtou",
+   "side": "enemy",
+   "x": 32,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "levelOffset": 0,
+   "name": "庄客头目",
+   "hidden": true,
+   "skills": [
+    "zt-la"
+   ]
+  },
+  {
    "id": "luan",
    "class": "luantingyu",
    "side": "enemy",
@@ -15611,6 +15753,291 @@
     [
      "flag",
      "zbW"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "open-west"
+   },
+   "if": [
+    "open-front",
+    "open-east"
+   ],
+   "unless": "lastGuard",
+   "do": [
+    [
+     "flag",
+     "lastGuard"
+    ],
+    [
+     "focus",
+     "zcf"
+    ],
+    [
+     "say",
+     "zcf",
+     "三座庄门都破了！庄里的马军、头目，都随我杀出去！"
+    ],
+    [
+     "appear",
+     "zcf-last0",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last1",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last2",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last3",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last4",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last5",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last6",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last7",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last8",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last9",
+     {
+      "near": "zcf"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "open-front"
+   },
+   "if": [
+    "open-west",
+    "open-east"
+   ],
+   "unless": "lastGuard",
+   "do": [
+    [
+     "flag",
+     "lastGuard"
+    ],
+    [
+     "focus",
+     "zcf"
+    ],
+    [
+     "say",
+     "zcf",
+     "三座庄门都破了！庄里的马军、头目，都随我杀出去！"
+    ],
+    [
+     "appear",
+     "zcf-last0",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last1",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last2",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last3",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last4",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last5",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last6",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last7",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last8",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last9",
+     {
+      "near": "zcf"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "open-east"
+   },
+   "if": [
+    "open-west",
+    "open-front"
+   ],
+   "unless": "lastGuard",
+   "do": [
+    [
+     "flag",
+     "lastGuard"
+    ],
+    [
+     "focus",
+     "zcf"
+    ],
+    [
+     "say",
+     "zcf",
+     "三座庄门都破了！庄里的马军、头目，都随我杀出去！"
+    ],
+    [
+     "appear",
+     "zcf-last0",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last1",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last2",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last3",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last4",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last5",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last6",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last7",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last8",
+     {
+      "near": "zcf"
+     }
+    ],
+    [
+     "appear",
+     "zcf-last9",
+     {
+      "near": "zcf"
+     }
     ]
    ]
   },
