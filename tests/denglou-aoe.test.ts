@@ -65,3 +65,44 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('杨雄 鬼�
     expect(skillTags(s)).toContain('回旋');
   });
 });
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('解珍 钢叉穿心', () => {
+  it('打前方十字五格（负责人 2026-11-26，原先一线三格）', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const s = d.classes.flatMap((c) => c?.skills ?? []).find((s) => s.name === '钢叉穿心')!;
+    const board = new Board(40, 40), me = { x: 20, y: 20 };
+    const cells = areaCells(board, me, s, { x: 20, y: 19 });
+    expect(cells).toHaveLength(5);
+    for (const c of [{ x: 20, y: 19 }, { x: 20, y: 18 }, { x: 20, y: 17 }, { x: 19, y: 18 }, { x: 21, y: 18 }]) expect(cells).toContainEqual(c);
+  });
+});
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('解珍两头蛇、解宝双尾蝎', () => {
+  it('各级都能打周围两格菱形内的一个人（12 格，含斜角），仍是单体（负责人 2026-11-26）', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const all = d.classes.flatMap((c) => c?.skills ?? []).filter((s) => /^(两头蛇|双尾蝎)LV\d$/.test(s.name));
+    expect(all).toHaveLength(6);
+    const board = new Board(40, 40), me = { x: 20, y: 20 };
+    for (const s of all) {
+      const cells = castCells(board, me, [s.rangeMin, s.rangeMax], s.targetShape);
+      expect(cells, s.name).toHaveLength(12);
+      expect(cells).toContainEqual({ x: 21, y: 21 });
+      expect(areaCells(board, me, s, { x: 21, y: 21 })).toHaveLength(1);
+    }
+  });
+});
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('解珍钢叉叉虎、解宝乘势刺', () => {
+  it('前后左右直线 3 格内选一人（12 格，没有斜角），仍是单体（负责人 2026-11-26）', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const board = new Board(40, 40), me = { x: 20, y: 20 };
+    for (const name of ['钢叉叉虎', '乘势刺']) {
+      const s = d.classes.flatMap((c) => c?.skills ?? []).find((s) => s.name === name)!;
+      const cells = castCells(board, me, [s.rangeMin, s.rangeMax], s.targetShape);
+      expect(cells, name).toHaveLength(12);
+      expect(cells).toContainEqual({ x: 20, y: 17 });
+      expect(cells).not.toContainEqual({ x: 21, y: 21 });
+      expect(areaCells(board, me, s, { x: 20, y: 17 })).toHaveLength(1);
+    }
+  });
+});
