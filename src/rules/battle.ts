@@ -201,6 +201,8 @@ function flagLeaves(c: PasCond): number[] {
 }
 
 export interface StageInput {
+  /** 酒店请客【新】（src/rules/feast.ts）：开场时在场的我方全员加这些增益 */
+  feast?: Buff[];
   /** 仅战斗敌人：最终等级按实际参战好汉均级限制到兵种区间。 */
   enemyRanks?: Record<number, EnemyRank>;
   /** 本关单位体力倍率：ACT索引→倍率。 */
@@ -477,7 +479,9 @@ export class Battle {
   /** 扩展包：AI 优先用的技能（StageInput.aiPrefer） */
   private readonly aiPrefer: Record<number, number[]>;
 
+  private feast?: Buff[];
   constructor(input: StageInput) {
+    this.feast = input.feast;
     this.spectators = new Set(input.spectators ?? []);
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
     this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
@@ -962,6 +966,7 @@ export class Battle {
     this.out = [];
     if (this.fire) this.emit({ type: 'fire', cells: this.fireCells() });
     this.runTurnTriggers(0);
+    this.applyFeast();
     // 开场剧本要求选人：等 choose() 选完再进第 1 回合（这样时光倒流不会回到选人之前）
     if (this.pendingPick || this.pendingChoice) return this.flush();
     this.startTurn(1);
@@ -1287,6 +1292,25 @@ export class Battle {
     const prompt = this.data.prompts?.[0];
     if (this.awaitingSignal && prompt) this.emit({ type: 'ask', prompt });
     return this.flush();
+  }
+
+  /**
+   * 酒店请客的增益【新】（src/rules/feast.ts）：开场剧本演完后在场的我方全员都加上（半路登场的不算）。
+   * 第 1 回合开始时增益也会扣一回合，所以多记一回合，正好管满 FEAST_TURNS 个我方回合。
+   */
+  private applyFeast() {
+    const list = this.feast;
+    this.feast = undefined;
+    if (!list?.length) return;
+    const who = this.units.filter((u) => u.side === 'player' && u.present && u.alive && !this.spectators.has(u.uid));
+    if (!who.length) return;
+    for (const u of who) {
+      u.buffs = u.buffs.filter((x) => !list.some((b) => b.stat === x.stat));
+      for (const b of list) u.buffs.push({ ...b, turns: b.turns + 1 });
+      refreshStats(u, this.data);
+    }
+    const text = list.map((b) => `${buffName(b.stat)}+${b.value}`).join('、');
+    this.emit({ type: 'message', text: `酒足飯飽，眾人${text}，持續 ${Math.max(...list.map((b) => b.turns))} 回合。` });
   }
 
   private startTurn(t: number) {
