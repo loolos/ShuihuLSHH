@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
-import { newCampaign, type CampaignState } from '../src/rules/campaign.ts';
+import { newCampaign, recordResult, type CampaignState } from '../src/rules/campaign.ts';
+import type { Battle as BattleT } from '../src/rules/battle.ts';
 import { FEAST_DRINKS, FEAST_PLACES, FEAST_PRICE, FEAST_TURNS, feasted, feastFor, feastLevel, feastLines, orderFeast } from '../src/rules/feast.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
@@ -35,6 +36,18 @@ describe('请客', () => {
 
   it('银子不够不能请', () => {
     expect(orderFeast(party([5], FEAST_PRICE - 1), 0, ['N-add02']).ok).toBe(false);
+  });
+
+  it('中间的过场不清掉请客，用上增益的那一仗打赢才清', () => {
+    const c = orderFeast(party([30]), 0, ['mainline/sanda']).c;
+    const fake = (feastUsed: boolean) => ({ units: [], benchedUids: [], clearGold: 0, status: 'won', feastUsed }) as unknown as BattleT;
+    expect(recordResult(c, fake(false)).feast).toEqual(c.feast); // 孙立入庄过场
+    expect(recordResult(c, fake(true)).feast).toBeUndefined();
+  });
+
+  it('续篇城镇：营寨的请客管三打祝家庄，下寨管盘陀路', () => {
+    expect(FEAST_PLACES['mainline/ruzhuang'].battle).toBe('mainline/sanda');
+    expect(FEAST_PLACES['mainline/panduolu'].battle).toBeUndefined();
   });
 
   it('对白只给名单里的人', () => {

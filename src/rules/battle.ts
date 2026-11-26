@@ -480,8 +480,11 @@ export class Battle {
   private readonly aiPrefer: Record<number, number[]>;
 
   private feast?: Buff[];
+  /** 这一关开场加了请客的增益（打赢后存档里的请客才清掉） */
+  readonly feastUsed: boolean;
   constructor(input: StageInput) {
     this.feast = input.feast;
+    this.feastUsed = !!input.feast?.length;
     this.spectators = new Set(input.spectators ?? []);
     this.watchers = new Map(Object.entries(input.watchers ?? {}).map(([k, v]) => [Number(k), v]));
     this.watchTrust = new Map(Object.entries(input.watchTrust ?? {}).map(([k, v]) => [Number(k), v]));
