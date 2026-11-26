@@ -338,7 +338,7 @@
    "ai": 11,
    "name": "祝龙",
    "enemyRank": "leader",
-   "levelOffset": 1,
+   "levelOffset": 2,
    "hpMultiplier": 1.0
   },
   {
@@ -352,7 +352,7 @@
    "ai": 11,
    "name": "铁棒栾廷玉",
    "enemyRank": "leader",
-   "levelOffset": 1,
+   "levelOffset": 2,
    "hpMultiplier": 1.5
   },
   {
@@ -365,7 +365,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a2",
@@ -377,7 +377,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a3",
@@ -389,7 +389,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a4",
@@ -401,7 +401,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a5",
@@ -413,7 +413,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a6",
@@ -425,7 +425,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a7",
@@ -437,7 +437,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "a8",
@@ -449,7 +449,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝龙护卫",
-   "levelOffset": -2
+   "levelOffset": 0
   },
   {
    "id": "e1",
@@ -461,7 +461,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e2",
@@ -473,7 +473,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e3",
@@ -485,7 +485,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e4",
@@ -497,7 +497,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e5",
@@ -509,7 +509,7 @@
    "facing": 3,
    "ai": 11,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e6",
@@ -521,7 +521,7 @@
    "facing": 3,
    "ai": 11,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e7",
@@ -533,7 +533,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "e8",
@@ -545,7 +545,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄教头",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f1",
@@ -557,7 +557,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f2",
@@ -569,7 +569,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f3",
@@ -581,7 +581,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f4",
@@ -593,7 +593,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f5",
@@ -605,7 +605,7 @@
    "facing": 3,
    "ai": 11,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f6",
@@ -617,7 +617,7 @@
    "facing": 3,
    "ai": 11,
    "name": "庄客弓手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f7",
@@ -629,7 +629,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "f8",
@@ -641,7 +641,7 @@
    "facing": 3,
    "ai": 11,
    "name": "祝家庄庄客",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "ng1",
@@ -654,7 +654,7 @@
    "ai": 8,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "ng2",
@@ -667,7 +667,7 @@
    "ai": 8,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "ng3",
@@ -680,7 +680,7 @@
    "ai": 8,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "ng4",
@@ -693,7 +693,7 @@
    "ai": 8,
    "hidden": true,
    "name": "挠钩手",
-   "levelOffset": -1
+   "levelOffset": 1
   },
   {
    "id": "zhubiao",
@@ -706,7 +706,7 @@
    "ai": 0,
    "name": "祝彪",
    "enemyRank": "leader",
-   "levelOffset": 1,
+   "levelOffset": 2,
    "hpMultiplier": 2.0,
    "hidden": true
   },
@@ -720,7 +720,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -733,7 +733,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -746,7 +746,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -759,7 +759,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -772,7 +772,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -785,7 +785,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -798,7 +798,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -811,7 +811,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -826,7 +826,7 @@
    "target": "songjiang",
    "name": "一丈青扈三娘",
    "enemyRank": "leader",
-   "levelOffset": 1,
+   "levelOffset": 2,
    "hpMultiplier": 1.0,
    "hidden": true
   },
@@ -840,7 +840,7 @@
    "facing": 3,
    "ai": 16,
    "name": "扈家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "songjiang"
   },
@@ -854,7 +854,7 @@
    "facing": 3,
    "ai": 16,
    "name": "扈家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true,
    "target": "songjiang"
   },
@@ -868,7 +868,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -881,7 +881,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -894,7 +894,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -907,7 +907,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -920,7 +920,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -933,7 +933,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -946,7 +946,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -959,7 +959,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -972,7 +972,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -985,7 +985,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -998,7 +998,7 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1011,7 +1011,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄教头",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1024,7 +1024,7 @@
    "facing": 0,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1037,7 +1037,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1050,7 +1050,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1063,7 +1063,7 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1076,7 +1076,7 @@
    "facing": 0,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1089,7 +1089,7 @@
    "facing": 1,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1102,7 +1102,7 @@
    "facing": 0,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1115,7 +1115,119 @@
    "facing": 1,
    "ai": 0,
    "name": "祝家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
+   "hidden": true
+  },
+  {
+   "id": "k1",
+   "class": 41,
+   "side": "enemy",
+   "x": 45,
+   "y": 30,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄庄客",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k2",
+   "class": 41,
+   "side": "enemy",
+   "x": 45,
+   "y": 31,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄庄客",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k3",
+   "class": 41,
+   "side": "enemy",
+   "x": 45,
+   "y": 32,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄庄客",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k4",
+   "class": 39,
+   "side": "enemy",
+   "x": 46,
+   "y": 31,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "祝家庄教头",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k5",
+   "class": 34,
+   "side": "enemy",
+   "x": 47,
+   "y": 30,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄弓手",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k6",
+   "class": 34,
+   "side": "enemy",
+   "x": 47,
+   "y": 32,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄弓手",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k7",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 29,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄马军",
+   "levelOffset": 2,
+   "hidden": true
+  },
+  {
+   "id": "k8",
+   "class": 43,
+   "side": "enemy",
+   "x": 46,
+   "y": 33,
+   "level": 30,
+   "facing": 1,
+   "ai": 16,
+   "target": "songjiang",
+   "name": "扈家庄马军",
+   "levelOffset": 2,
    "hidden": true
   },
   {
@@ -1128,7 +1240,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1141,7 +1253,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄马军",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1154,7 +1266,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1167,7 +1279,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1180,7 +1292,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1193,7 +1305,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1206,7 +1318,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1219,7 +1331,7 @@
    "facing": 3,
    "ai": 0,
    "name": "扈家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1232,7 +1344,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1245,7 +1357,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1258,7 +1370,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1271,7 +1383,7 @@
    "facing": 2,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1284,7 +1396,7 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1297,7 +1409,7 @@
    "facing": 2,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1310,7 +1422,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1323,7 +1435,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1336,7 +1448,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1349,7 +1461,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1362,7 +1474,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1375,7 +1487,7 @@
    "facing": 3,
    "ai": 0,
    "name": "庄客弓手",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1388,7 +1500,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄庄客",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   },
   {
@@ -1401,7 +1513,7 @@
    "facing": 3,
    "ai": 0,
    "name": "祝家庄教头",
-   "levelOffset": -1,
+   "levelOffset": 1,
    "hidden": true
   }
  ],
@@ -2188,6 +2300,53 @@
      "say",
      "zhulong",
      "两翼儿郎们，杀出去！护卫守住阵脚，休要乱动！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "东边林子里又闪出一队扈家庄人马，直奔宋江而来！"
+    ],
+    [
+     "focus",
+     "k4"
+    ],
+    [
+     "appear",
+     "k1"
+    ],
+    [
+     "appear",
+     "k2"
+    ],
+    [
+     "appear",
+     "k3"
+    ],
+    [
+     "appear",
+     "k4"
+    ],
+    [
+     "appear",
+     "k5"
+    ],
+    [
+     "appear",
+     "k6"
+    ],
+    [
+     "appear",
+     "k7"
+    ],
+    [
+     "appear",
+     "k8"
     ]
    ]
   },

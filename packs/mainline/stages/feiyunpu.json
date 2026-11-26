@@ -26,6 +26,7 @@
       "x": 22,
       "y": 10,
       "level": 28,
+      "levelOffset": 1,
       "name": "押送公人"
     },
     {
@@ -35,6 +36,7 @@
       "x": 20,
       "y": 10,
       "level": 28,
+      "levelOffset": 1,
       "name": "押送公人"
     },
     {
@@ -44,6 +46,7 @@
       "x": 26,
       "y": 10,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true,
       "name": "蒋门神徒弟"
     },
@@ -54,6 +57,7 @@
       "x": 26,
       "y": 11,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true,
       "name": "蒋门神徒弟"
     },
@@ -144,7 +148,8 @@
       "side": "enemy",
       "x": 17,
       "y": 10,
-      "level": 28
+      "level": 28,
+      "levelOffset": 1
     },
     {
       "id": "guard-2",
@@ -152,7 +157,8 @@
       "side": "enemy",
       "x": 17,
       "y": 11,
-      "level": 28
+      "level": 28,
+      "levelOffset": 1
     },
     {
       "id": "guard-3",
@@ -160,7 +166,8 @@
       "side": "enemy",
       "x": 16,
       "y": 9,
-      "level": 28
+      "level": 28,
+      "levelOffset": 1
     },
     {
       "id": "guard-4",
@@ -168,7 +175,8 @@
       "side": "enemy",
       "x": 16,
       "y": 12,
-      "level": 28
+      "level": 28,
+      "levelOffset": 1
     },
     {
       "id": "wave2-1",
@@ -177,6 +185,7 @@
       "x": 27,
       "y": 10,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -186,6 +195,7 @@
       "x": 27,
       "y": 11,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -195,6 +205,7 @@
       "x": 28,
       "y": 9,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -204,6 +215,7 @@
       "x": 28,
       "y": 12,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -213,6 +225,7 @@
       "x": 26,
       "y": 20,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -222,6 +235,7 @@
       "x": 29,
       "y": 21,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -231,6 +245,7 @@
       "x": 29,
       "y": 19,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -240,6 +255,7 @@
       "x": 12,
       "y": 1,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -249,6 +265,7 @@
       "x": 15,
       "y": 0,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -258,6 +275,7 @@
       "x": 16,
       "y": 1,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -267,6 +285,7 @@
       "x": 12,
       "y": 22,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -276,6 +295,7 @@
       "x": 16,
       "y": 22,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -285,6 +305,7 @@
       "x": 13,
       "y": 21,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -294,6 +315,7 @@
       "x": 26,
       "y": 4,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -303,6 +325,7 @@
       "x": 29,
       "y": 2,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -312,6 +335,7 @@
       "x": 27,
       "y": 2,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -321,6 +345,7 @@
       "x": 28,
       "y": 20,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -330,6 +355,7 @@
       "x": 27,
       "y": 20,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -339,6 +365,7 @@
       "x": 29,
       "y": 20,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -348,6 +375,7 @@
       "x": 28,
       "y": 21,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -357,6 +385,7 @@
       "x": 28,
       "y": 18,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -366,6 +395,27 @@
       "x": 27,
       "y": 19,
       "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave3-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 27,
+      "y": 21,
+      "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave3-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 28,
+      "y": 22,
+      "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -375,6 +425,7 @@
       "x": 14,
       "y": 1,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -384,6 +435,7 @@
       "x": 14,
       "y": 0,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -393,6 +445,7 @@
       "x": 13,
       "y": 1,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -402,6 +455,7 @@
       "x": 15,
       "y": 1,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -411,6 +465,7 @@
       "x": 14,
       "y": 2,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -420,6 +475,27 @@
       "x": 13,
       "y": 0,
       "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave4-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 12,
+      "y": 0,
+      "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave4-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 16,
+      "y": 0,
+      "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -429,6 +505,7 @@
       "x": 15,
       "y": 21,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -438,6 +515,7 @@
       "x": 14,
       "y": 22,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -447,6 +525,7 @@
       "x": 16,
       "y": 21,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -456,6 +535,7 @@
       "x": 13,
       "y": 22,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -465,6 +545,7 @@
       "x": 15,
       "y": 22,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -474,6 +555,27 @@
       "x": 14,
       "y": 23,
       "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave5-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 21,
+      "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave5-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 15,
+      "y": 23,
+      "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -483,6 +585,7 @@
       "x": 27,
       "y": 4,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -492,6 +595,7 @@
       "x": 29,
       "y": 4,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -501,6 +605,7 @@
       "x": 28,
       "y": 5,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -510,6 +615,7 @@
       "x": 28,
       "y": 2,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -519,6 +625,7 @@
       "x": 28,
       "y": 3,
       "level": 28,
+      "levelOffset": 1,
       "hidden": true
     },
     {
@@ -528,6 +635,115 @@
       "x": 28,
       "y": 4,
       "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave6-7",
+      "class": 32,
+      "side": "enemy",
+      "x": 29,
+      "y": 3,
+      "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave6-8",
+      "class": 34,
+      "side": "enemy",
+      "x": 29,
+      "y": 5,
+      "level": 28,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 10,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-2",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 11,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-3",
+      "class": 65,
+      "side": "enemy",
+      "x": 4,
+      "y": 10,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-4",
+      "class": 38,
+      "side": "enemy",
+      "x": 4,
+      "y": 11,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-5",
+      "class": 34,
+      "side": "enemy",
+      "x": 3,
+      "y": 10,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 3,
+      "y": 11,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-7",
+      "class": 67,
+      "side": "enemy",
+      "x": 2,
+      "y": 10,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
+      "hidden": true
+    },
+    {
+      "id": "wave7-8",
+      "class": 67,
+      "side": "enemy",
+      "x": 2,
+      "y": 11,
+      "level": 28,
+      "facing": 3,
+      "levelOffset": 1,
       "hidden": true
     }
   ],
@@ -922,6 +1138,14 @@
         [
           "appear",
           "wave3-6"
+        ],
+        [
+          "appear",
+          "wave3-7"
+        ],
+        [
+          "appear",
+          "wave3-8"
         ]
       ]
     },
@@ -961,6 +1185,14 @@
         [
           "appear",
           "wave4-6"
+        ],
+        [
+          "appear",
+          "wave4-7"
+        ],
+        [
+          "appear",
+          "wave4-8"
         ]
       ]
     },
@@ -1000,6 +1232,14 @@
         [
           "appear",
           "wave5-6"
+        ],
+        [
+          "appear",
+          "wave5-7"
+        ],
+        [
+          "appear",
+          "wave5-8"
         ]
       ]
     },
@@ -1014,7 +1254,7 @@
         ],
         [
           "narrate",
-          "东北岸上又来一伙，看来是张团练手里最后一批人手。"
+          "东北岸上又来一伙，西边来路上也杀出一队，看来是张团练手里最后的人手。"
         ],
         [
           "appear",
@@ -1039,6 +1279,46 @@
         [
           "appear",
           "wave6-6"
+        ],
+        [
+          "appear",
+          "wave6-7"
+        ],
+        [
+          "appear",
+          "wave6-8"
+        ],
+        [
+          "appear",
+          "wave7-1"
+        ],
+        [
+          "appear",
+          "wave7-2"
+        ],
+        [
+          "appear",
+          "wave7-3"
+        ],
+        [
+          "appear",
+          "wave7-4"
+        ],
+        [
+          "appear",
+          "wave7-5"
+        ],
+        [
+          "appear",
+          "wave7-6"
+        ],
+        [
+          "appear",
+          "wave7-7"
+        ],
+        [
+          "appear",
+          "wave7-8"
         ],
         [
           "flag",
