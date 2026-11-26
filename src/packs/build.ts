@@ -298,6 +298,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     selfBuffs: s.selfBuffs?.length ? s.selfBuffs.map((b) => ({ ...b })) : undefined,
     buffAlly: s.buffAlly || undefined,
     healRegen: s.healRegen ? { ...s.healRegen } : undefined,
+    cure: s.cure || undefined,
     poison: s.poison ?? t.poison,
     hitMod: s.hitMod ?? t.hitMod,
     critMod: s.critMod ?? t.critMod,

@@ -9,6 +9,7 @@ import { Battle } from '../src/rules/battle.ts';
 import { HERO_SELF_BUFFS, type ClassDef, type GameData, type SkillDef } from '../src/rules/data.ts';
 import { isRechargeSkill, isStanceSkill, learnedSkills, skillBonusText, skillTags } from '../src/rules/skills.ts';
 import { withCharge } from '../src/rules/ai.ts';
+import { loadPackFromDisk } from '../tools/sim-pack.ts';
 
 const basic: SkillDef = {
   name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false,
@@ -127,6 +128,29 @@ describe('技能自身增益', () => {
     expect(ally.hp).toBe(hp + tick);
     b.endPlayerPhase(); b.endPlayerPhase(); b.endPlayerPhase();
     expect(ally.hp).toBe(hp + 3 * tick);
+  });
+
+  it('如魚得水 / 回復計：解掉受回复者的中毒和昏迷，昏迷的队友解了还能行动', () => {
+    const cure: SkillDef = { ...basic, skillId: 301, name: '如魚得水LV1', type: 11, power: 3, mpCost: 10, rangeMin: 0, rangeMax: 0, area: 2, hits: [], cure: true };
+    const classes = [cls(0, [basic, cure]), cls(1)];
+    const data: GameData = { classes, items: [], charNames: ['甲', '乙'], heroName: '甲' };
+    const b = new Battle({ name: 'test-cure', board: new Board(10, 10), data, units: [act(0, 0, 'player', 5, 5), act(1, 0, 'player', 5, 6), act(2, 1, 'enemy', 0, 0)], blocks: [], seed: 3 });
+    b.begin();
+    const me = b.unit(0)!, ally = b.unit(1)!;
+    expect(skillBonusText(cure)).toContain('解毒·解昏迷');
+    ally.poisonTurns = 3; ally.stunTurns = 2; ally.ended = true;
+    b.useSkill(me, cure, { x: 5, y: 5 });
+    expect(ally.poisonTurns).toBe(0);
+    expect(ally.stunTurns).toBe(0);
+    expect(ally.ended).toBe(false);
+  });
+
+  it('原版吳用 如魚得水、朱武 回復計带解毒解昏迷', () => {
+    const main = loadPackFromDisk('mainline');
+    for (const [cls, name] of [[10, '如魚得水LV1'], [10, '如魚得水LV3'], [5, '回復計LV2']] as const) {
+      const s = main.data.classes[cls].skills.find((x) => x.name === name)!;
+      expect(s.cure, name).toBe(true);
+    }
   });
 
   it('攻击技附带增益：出手后加防御；每回合回体按回合开始回复', () => {

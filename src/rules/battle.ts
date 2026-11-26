@@ -1865,6 +1865,15 @@ export class Battle {
         this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
         const r = skill.healRegen;
         if (r) this.addBuffs(t, [{ stat: 'regenHp', value: Math.max(1, Math.floor(t.stats.maxHp / r.divisor)), turns: r.turns }]);
+        if (skill.cure && (t.poisonTurns > 0 || t.stunTurns > 0)) {
+          t.poisonTurns = 0;
+          if (t.stunTurns > 0) {
+            t.stunTurns = 0;
+            if (t.side === this.phase && !t.acted) t.ended = false; // 同解昏迷的道具：解了就能照常行动
+          }
+          this.emit({ type: 'status', uid: t.uid, text: '狀態恢復' });
+          this.emit({ type: 'message', text: `${t.name}狀態恢復正常了！` });
+        }
       }
       if (isHealSkill(skill) && u.side === 'player') this.gainExp(u, healExp(healed, this.rng), 'heal');
       return this.addBuffs(u, skill.selfBuffs);

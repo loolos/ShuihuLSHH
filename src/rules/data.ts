@@ -59,6 +59,8 @@ export interface SkillDef extends ClassSkill {
   buffAlly?: boolean;
   /** 回复技附加持续回体【新】（负责人 2026-11-26：吴用 如鱼得水）：每个受回复的人之后 turns 回合每回合回最大体力的 1/divisor */
   healRegen?: { divisor: number; turns: number };
+  /** 回复技顺带解掉受回复者的中毒和昏迷【新】（负责人 2026-11-26：如魚得水、回復計） */
+  cure?: boolean;
 }
 
 export interface ClassDef {
@@ -260,7 +262,8 @@ function withHeroSelfBuffs(cls: number, s: SkillDef): SkillDef {
   const b = HERO_SELF_BUFFS[cls]?.[s.name];
   const r = HERO_HEAL_REGEN[cls]?.[s.name];
   const ally = HERO_BUFF_ALLY[cls]?.includes(s.name);
-  return { ...s, ...(b ? { selfBuffs: b.map((x) => ({ ...x })) } : {}), ...(r ? { healRegen: { ...r } } : {}), ...(ally ? { buffAlly: true, rangeMin: 0, rangeMax: 1 } : {}) };
+  // 如魚得水、回復計：持续回体 + 解毒解昏迷（负责人 2026-11-26）
+  return { ...s, ...(b ? { selfBuffs: b.map((x) => ({ ...x })) } : {}), ...(r ? { healRegen: { ...r }, cure: true } : {}), ...(ally ? { buffAlly: true, rangeMin: 0, rangeMax: 1 } : {}) };
 }
 export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(classId: number, s: T): T {
   if (classId >= HERO_CLASS_COUNT || s.hitMod >= 0) return s;
