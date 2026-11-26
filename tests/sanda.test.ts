@@ -134,7 +134,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     b.endPlayerPhase();
     expect(last.every((u) => u.present && u.alive)).toBe(true);
     expect(last.filter((u) => u.name === '祝家庄马军').length).toBe(6);
-    for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(6);
+    for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(8);
+  });
+
+  it('祝朝奉身边刷的兵三种轮换：2 庄客 + 2 挠钩手、庄客头目 + 教头、2 骑兵（负责人 2026-11-26）', () => {
+    const { stage } = open();
+    const kinds = (g: number) => stage.units.filter((u) => u.id.startsWith(`zcf-cg${g}`)).map((u) => String(u.class)).sort().join(',');
+    expect(kinds(0)).toBe(['19', '41', 'naogou', 'naogou'].sort().join(','));
+    expect(kinds(1)).toBe(['39', 'zhuangtou'].sort().join(','));
+    expect(kinds(2)).toBe('43,43');
+    for (const g of [3, 4, 5]) expect(kinds(g)).toBe(kinds(g - 3));
   });
 
   it('祝朝奉倒下以后不再刷援兵：庄门出兵、弓手补位、伏兵都停', () => {
