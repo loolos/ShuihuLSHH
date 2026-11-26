@@ -74,6 +74,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(other.exp).toBe(50);
   });
 
+  it('解珍解宝烧草料场：附近 16 个敌人乱窜五回合（负责人 2026-11-26）', () => {
+    const { stage } = open();
+    const ops = (stage.script as { do?: unknown[][] }[]).flatMap((b) => b.do ?? []);
+    const fire = ops.find((o) => o[0] === 'fire');
+    expect(fire?.[2]).toMatchObject({ panic: 16, turns: 5 });
+  });
+
   it('好汉援军左右两路轮流出：三阮、燕顺石勇在左路（武龙开场处），穆家兄弟、浔阳江四人在右路（李逵开场处），不走中路', () => {
     const { stage } = open();
     const at = (id: string) => stage.units.find((u) => u.id === id)!;
