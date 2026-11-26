@@ -1581,7 +1581,17 @@ export class BattleScene extends Phaser.Scene {
     }
   }
 
+  /** 每格正在飘的居中弹字占了哪几行（到期时间），新的弹字往上找空行，不和技能名、回复数字、增益叠在一起【新】 */
+  private floatRows = new Map<string, number[]>();
+
   private float(x: number, y: number, text: string, color = '#ffffff', side = 0, lift = 0, lifetime = 1200) {
+    if (side === 0) {
+      const key = `${x},${y}`, now = this.time.now;
+      const rows = (this.floatRows.get(key) ?? []).map((t) => (t > now ? t : 0));
+      while (rows[lift]) lift++;
+      rows[lift] = now + Math.min(lifetime, 700);
+      this.floatRows.set(key, rows);
+    }
     const p = cellToWorld(x, y);
     p.y -= lift * 26 + barTop(this.headAt(x, y)) + 13; // 第一行字的中线在状态条上方
     const t = this.add
