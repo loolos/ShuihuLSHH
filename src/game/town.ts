@@ -7,6 +7,7 @@ import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimi
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
 import { afterTale, chooseTale, taleOf, TELLER, type Tale, type TaleLine } from '../rules/storyteller.ts';
 import { computeStats } from '../rules/unit.ts';
+import { FEAST_DRINKS, FEAST_PRICE, feasted, feastLevel, feastLines, feastText, orderFeast, type FeastPlace } from '../rules/feast.ts';
 import { frameToCanvas, ICON_KEY, type Assets } from './assets.ts';
 import { music } from './music.ts';
 
@@ -32,6 +33,8 @@ export interface TownOptions {
   tale?: Tale;
   /** 续篇城镇的商店分档（0–2，src/packs/towns.ts shopTierOf）；原版城镇不写 */
   shopTier?: number;
+  /** 酒店请客【新】（src/rules/feast.ts）：只有几个城镇有；stages = 请客管的下一关，resolve 把包职业名换成职业号 */
+  feast?: { place: FeastPlace; stages: string[]; resolve: (k: string) => number | undefined };
 }
 
 /** 说书用的对白框和二选一面板（和战斗共用 #dialog、#result） */
@@ -175,6 +178,42 @@ export class TownUI {
     this.render();
   }
 
+  /** 请客【新】：花一笔固定的银子请众人吃一顿，三种酒菜三种开场增益（src/rules/feast.ts） */
+  private async feast() {
+    const f = this.o.feast, st = this.stage;
+    if (!f || !st || this.telling || feasted(this.c, f.stages)) return;
+    if (this.c.gold < FEAST_PRICE) {
+      this.line = `店小二：一桌酒菜 ${FEAST_PRICE} 两，客官的银子怕是不够。`;
+      return this.render();
+    }
+    this.telling = true;
+    st.done();
+    const d = this.data;
+    const say = (l: TaleLine) => {
+      if (typeof l.who === 'string') return st.say(l.who, l.text, null);
+      return st.say(l.who === 0 ? d.heroName : this.tr(d.charNames[l.who] ?? ''), l.text, l.who);
+    };
+    try {
+      const level = feastLevel(this.c);
+      const options = [...FEAST_DRINKS.map((x) => ({ label: x.label, note: feastText(x.buffs(level)) })), { label: '改日再说', note: '' }];
+      const k = await st.choose('请众人吃酒', `店小二：客官要请众位好汉？一桌 ${FEAST_PRICE} 两，管够！\n下一场战斗开场时在场的人都有增益（按众人平均 ${level} 级算）。`, options);
+      if (k >= FEAST_DRINKS.length) return;
+      st.done();
+      const r = orderFeast(this.c, k, f.stages);
+      this.line = r.text;
+      if (!r.ok) return;
+      this.c = r.c;
+      this.o.onChange(this.c);
+      this.render();
+      await st.say('店小二', FEAST_DRINKS[k].serve, null);
+      for (const l of feastLines(f.place, this.c, f.resolve)) await say(l);
+    } finally {
+      st.done();
+      this.telling = false;
+      this.render();
+    }
+  }
+
   /** 本城的说书：续篇城镇用传进来的，原版城镇按城镇号 */
   private taleHere(): Tale | undefined {
     return this.o.tale ?? (this.c.insertTown ? undefined : taleOf(this.o.town));
@@ -234,6 +273,9 @@ export class TownUI {
       case 'story':
         void this.tell();
         return;
+      case 'feast':
+        void this.feast();
+        return;
       case 'leave':
         this.hide();
         return this.o.onLeave(this.c);
@@ -276,7 +318,8 @@ export class TownUI {
         ? ''
         : SHOPS[this.shop].actions
             .map((a) => `<button data-do="action" data-v="${['talk', 'buy', 'items', 'forge', 'pawn'].indexOf(a)}" class="${this.action === a ? 'on' : ''}">${this.tr(ACTION_LABEL[a])}</button>`)
-            .join('') + (this.shop === 0 && this.taleHere() && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '');
+            .join('') + (this.shop === 0 && this.taleHere() && this.stage ? `<button data-do="story" class="story">${this.tr('說書')}</button>` : '') +
+          (this.shop === 0 && this.o.feast && this.stage ? `<button data-do="feast" class="story" ${feasted(this.c, this.o.feast.stages) ? 'disabled' : ''}>${feasted(this.c, this.o.feast.stages) ? '已请客' : '请客'}</button>` : '');
     this.root.innerHTML = `
       <div class="town-head">
         <h2>${esc(this.tr(this.o.title))}</h2>

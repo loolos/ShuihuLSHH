@@ -7,7 +7,7 @@ import { expToNext } from '../rules/exp.ts';
 import type { Cell } from '../rules/board.ts';
 import type { Member } from '../rules/campaign.ts';
 import { loadStage, loadStageMap, stageMap } from '../rules/load.ts';
-import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type SkillDef } from '../rules/data.ts';
+import { canEquip, EQUIP_SLOTS, equipSlotOf, isUsable, itemOf, itemSummary, type Buff, type SkillDef } from '../rules/data.ts';
 import { announcesSkill, isHealSkill, isSupportSkill, learnedSkills, skillBonusText, skillTags } from '../rules/skills.ts';
 import { sound } from './sound.ts';
 import { music } from './music.ts';
@@ -39,6 +39,8 @@ export interface BattleSceneData {
   party?: Map<number, Member>;
   /** 新入伙的人的入队等级（campaign.ts joinLevel） */
   joinLevel?: number;
+  /** 酒店请客的开场增益（src/rules/feast.ts） */
+  feast?: Buff[];
   /** 关卡结束（胜负面板由调用方决定） */
   onEnd?: (battle: Battle, won: boolean, text: string) => void;
   /** 扩展包关卡：画哪张原版地图，以及每次开打（含重新开始）时生成关卡数据 */
@@ -112,6 +114,7 @@ export class BattleScene extends Phaser.Scene {
   private seed?: number;
   private party?: Map<number, Member>;
   private joinLevel?: number;
+  private feast?: Buff[];
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   /** head：头顶高度（世界像素，见 classHead），状态条和飘字放在它上面 */
@@ -178,6 +181,7 @@ export class BattleScene extends Phaser.Scene {
     this.seed = data.seed;
     this.party = data.party;
     this.joinLevel = data.joinLevel;
+    this.feast = data.feast;
     this.onEnd = data.onEnd;
     // 原版关卡的地图写在关卡 JSON 里（柳树下用狮子楼裁图）
     this.mapName = data.map ?? (data.assets.files ? stageMap(data.assets.files, data.stage) : data.stage);
@@ -212,7 +216,8 @@ export class BattleScene extends Phaser.Scene {
     const loaded = loadStageMap(files, this.mapName);
     if (!loaded) throw new Error(`找不到地图 ${this.mapName}`);
     const { map } = loaded;
-    this.battle = new Battle(this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel }));
+    const input = this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel });
+    this.battle = new Battle(this.feast ? { ...input, feast: this.feast } : input);
     this.ui.spectators = this.battle.spectators;
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
