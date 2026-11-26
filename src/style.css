@@ -399,3 +399,8 @@ body.storytelling #dialog, body.storytelling #result { z-index: 7; }
 /* 英文界面（docs/game-design.md §10.3）：中文用的大字距在英文里太散 */
 html[lang="en"] :is(.title-logo, .title-sub, .title-nav button, #result h2, #unit-pick h2, .town-head h2) { letter-spacing: 0.02em; text-indent: 0; }
 html[lang="en"] .title-logo { font-size: clamp(40px, 10vw, 84px); }
+
+/* 离线包按钮只在标题画面（主菜单）显示，游戏顶栏里不放（负责人 2026-11-26） */
+#hud #offline {
+  display: none;
+}
