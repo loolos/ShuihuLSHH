@@ -767,7 +767,7 @@ export interface Buff {
 
 /**
  * 加一组增益【新】（负责人 2026-11-26）：同一来源（同名技能 / 道具 / 请客）已有的整组换成新的，只是刷新回合，效果不叠加；
- * 不同来源可以同时挂着，但同一属性的正加值只取最高的一个（computeStats），也不叠加。没写来源的（剧本 op 101）照旧直接加上。
+ * 不同来源的增益同时挂着、效果相加（负责人 2026-11-26）。没写来源的（剧本 op 101）照旧直接加上。
  */
 export function applyBuffs(cur: Buff[], list: readonly Buff[], source?: string): Buff[] {
   if (!source) return [...cur, ...list.map((b) => ({ ...b }))];

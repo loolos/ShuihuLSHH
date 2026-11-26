@@ -50,7 +50,7 @@ describe('属性', () => {
     expect(buffLabels([{ stat: 'move', value: -2, turns: 0 }, { stat: 'hit', value: 5, turns: 0 }])).toEqual(['移-2 本关', '命+5 本关']);
   });
 
-  it('同一来源再加只刷新回合，不同来源同一属性只取最高，都不叠加', () => {
+  it('同一来源再加只刷新回合不叠加，不同增益相加', () => {
     let buffs = applyBuffs([], [{ stat: 'defense', value: 30, turns: 3 }], '呼保义');
     buffs[0].turns = 1;
     buffs = applyBuffs(buffs, [{ stat: 'defense', value: 30, turns: 3 }], '呼保义');
@@ -59,9 +59,9 @@ describe('属性', () => {
     expect(buffs).toHaveLength(2);
     const cls = data.classes[0];
     const base = computeStats(cls, 1, [], data).defense;
-    expect(computeStats(cls, 1, [], data, false, [], buffs).defense).toBe(base + 30);
+    expect(computeStats(cls, 1, [], data, false, [], buffs).defense).toBe(base + 45);
     // 剧本加减（没有来源）照旧相加
-    expect(computeStats(cls, 1, [], data, false, [], [...buffs, { stat: 'defense', value: -5, turns: 0 }]).defense).toBe(base + 25);
+    expect(computeStats(cls, 1, [], data, false, [], [...buffs, { stat: 'defense', value: -5, turns: 0 }]).defense).toBe(base + 40);
   });
 
   it('己方等级移动力：5 级 +1，20 级累计 +2；同职业敌方、友军均不增加', () => {
