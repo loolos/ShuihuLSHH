@@ -122,6 +122,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     for (const u of last) expect(Math.abs(u.x - zcf.x) + Math.abs(u.y - zcf.y)).toBeLessThanOrEqual(6);
   });
 
+  it('祝朝奉倒下以后不再刷援兵：庄门出兵、弓手补位、伏兵都停', () => {
+    const { b, get } = open();
+    priv(b).kill(get('linchong'), get('zcf'));
+    while (b.turn < 6) b.endPlayerPhase();
+    for (const id of ['w-west00', 'wo-west00', 'w-east00', 'wo-east00', 'amb5w0', 'amb5e4']) expect(get(id).present, id).toBe(false);
+  });
+
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
     const { b, get } = open();
     const door = get('door-front');

@@ -8202,7 +8202,10 @@
     "turn": 2
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8253,7 +8256,10 @@
     "turn": 3
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8304,7 +8310,10 @@
     "turn": 4
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8355,7 +8364,10 @@
     "turn": 5
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8406,7 +8418,10 @@
     "turn": 6
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8457,7 +8472,10 @@
     "turn": 7
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8508,7 +8526,10 @@
     "turn": 8
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8559,7 +8580,10 @@
     "turn": 9
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8610,7 +8634,10 @@
     "turn": 10
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8661,7 +8688,10 @@
     "turn": 11
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8712,7 +8742,10 @@
     "turn": 12
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8763,7 +8796,10 @@
     "turn": 13
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8814,7 +8850,10 @@
     "turn": 14
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8865,7 +8904,10 @@
     "turn": 15
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8916,7 +8958,10 @@
     "turn": 16
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -8967,7 +9012,10 @@
     "turn": 17
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9018,7 +9066,10 @@
     "turn": 18
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9069,7 +9120,10 @@
     "turn": 19
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9120,7 +9174,10 @@
     "turn": 20
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9171,7 +9228,10 @@
     "turn": 21
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9222,7 +9282,10 @@
     "turn": 22
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9273,7 +9336,10 @@
     "turn": 23
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9324,7 +9390,10 @@
     "turn": 24
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9375,7 +9444,10 @@
     "turn": 25
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9426,7 +9498,10 @@
     "turn": 26
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9477,7 +9552,10 @@
     "turn": 27
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9528,7 +9606,10 @@
     "turn": 28
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9579,7 +9660,10 @@
     "turn": 29
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9630,7 +9714,10 @@
     "turn": 30
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9681,7 +9768,10 @@
     "turn": 31
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9732,7 +9822,10 @@
     "turn": 32
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9783,7 +9876,10 @@
     "turn": 33
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9834,7 +9930,10 @@
     "turn": 34
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9885,7 +9984,10 @@
     "turn": 35
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9936,7 +10038,10 @@
     "turn": 36
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -9987,7 +10092,10 @@
     "turn": 37
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10038,7 +10146,10 @@
     "turn": 38
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10089,7 +10200,10 @@
     "turn": 39
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10140,7 +10254,10 @@
     "turn": 40
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10191,7 +10308,10 @@
     "turn": 41
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10242,7 +10362,10 @@
     "turn": 42
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10293,7 +10416,10 @@
     "turn": 43
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10344,7 +10470,10 @@
     "turn": 44
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10395,7 +10524,10 @@
     "turn": 45
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10446,7 +10578,10 @@
     "turn": 46
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10497,7 +10632,10 @@
     "turn": 47
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10548,7 +10686,10 @@
     "turn": 48
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10599,7 +10740,10 @@
     "turn": 49
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10650,7 +10794,10 @@
     "turn": 50
    },
    "if": "zlW",
-   "unless": "zlR",
+   "unless": [
+    "zlR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10732,7 +10879,10 @@
     "turn": 2
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10783,7 +10933,10 @@
     "turn": 3
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10834,7 +10987,10 @@
     "turn": 4
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10885,7 +11041,10 @@
     "turn": 5
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10936,7 +11095,10 @@
     "turn": 6
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -10987,7 +11149,10 @@
     "turn": 7
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11038,7 +11203,10 @@
     "turn": 8
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11089,7 +11257,10 @@
     "turn": 9
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11140,7 +11311,10 @@
     "turn": 10
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11191,7 +11365,10 @@
     "turn": 11
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11242,7 +11419,10 @@
     "turn": 12
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11293,7 +11473,10 @@
     "turn": 13
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11344,7 +11527,10 @@
     "turn": 14
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11395,7 +11581,10 @@
     "turn": 15
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11446,7 +11635,10 @@
     "turn": 16
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11497,7 +11689,10 @@
     "turn": 17
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11548,7 +11743,10 @@
     "turn": 18
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11599,7 +11797,10 @@
     "turn": 19
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11650,7 +11851,10 @@
     "turn": 20
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11701,7 +11905,10 @@
     "turn": 21
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11752,7 +11959,10 @@
     "turn": 22
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11803,7 +12013,10 @@
     "turn": 23
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11854,7 +12067,10 @@
     "turn": 24
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11905,7 +12121,10 @@
     "turn": 25
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -11956,7 +12175,10 @@
     "turn": 26
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12007,7 +12229,10 @@
     "turn": 27
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12058,7 +12283,10 @@
     "turn": 28
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12109,7 +12337,10 @@
     "turn": 29
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12160,7 +12391,10 @@
     "turn": 30
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12211,7 +12445,10 @@
     "turn": 31
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12262,7 +12499,10 @@
     "turn": 32
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12313,7 +12553,10 @@
     "turn": 33
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12364,7 +12607,10 @@
     "turn": 34
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12415,7 +12661,10 @@
     "turn": 35
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12466,7 +12715,10 @@
     "turn": 36
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12517,7 +12769,10 @@
     "turn": 37
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12568,7 +12823,10 @@
     "turn": 38
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12619,7 +12877,10 @@
     "turn": 39
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12670,7 +12931,10 @@
     "turn": 40
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12721,7 +12985,10 @@
     "turn": 41
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12772,7 +13039,10 @@
     "turn": 42
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12823,7 +13093,10 @@
     "turn": 43
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12874,7 +13147,10 @@
     "turn": 44
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12925,7 +13201,10 @@
     "turn": 45
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -12976,7 +13255,10 @@
     "turn": 46
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13027,7 +13309,10 @@
     "turn": 47
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13078,7 +13363,10 @@
     "turn": 48
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13129,7 +13417,10 @@
     "turn": 49
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13180,7 +13471,10 @@
     "turn": 50
    },
    "if": "zhW",
-   "unless": "zhR",
+   "unless": [
+    "zhR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13262,7 +13556,10 @@
     "turn": 2
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13313,7 +13610,10 @@
     "turn": 3
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13364,7 +13664,10 @@
     "turn": 4
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13415,7 +13718,10 @@
     "turn": 5
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13466,7 +13772,10 @@
     "turn": 6
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13517,7 +13826,10 @@
     "turn": 7
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13568,7 +13880,10 @@
     "turn": 8
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13619,7 +13934,10 @@
     "turn": 9
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13670,7 +13988,10 @@
     "turn": 10
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13721,7 +14042,10 @@
     "turn": 11
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13772,7 +14096,10 @@
     "turn": 12
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13823,7 +14150,10 @@
     "turn": 13
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13874,7 +14204,10 @@
     "turn": 14
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13925,7 +14258,10 @@
     "turn": 15
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -13976,7 +14312,10 @@
     "turn": 16
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14027,7 +14366,10 @@
     "turn": 17
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14078,7 +14420,10 @@
     "turn": 18
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14129,7 +14474,10 @@
     "turn": 19
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14180,7 +14528,10 @@
     "turn": 20
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14231,7 +14582,10 @@
     "turn": 21
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14282,7 +14636,10 @@
     "turn": 22
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14333,7 +14690,10 @@
     "turn": 23
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14384,7 +14744,10 @@
     "turn": 24
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14435,7 +14798,10 @@
     "turn": 25
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14486,7 +14852,10 @@
     "turn": 26
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14537,7 +14906,10 @@
     "turn": 27
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14588,7 +14960,10 @@
     "turn": 28
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14639,7 +15014,10 @@
     "turn": 29
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14690,7 +15068,10 @@
     "turn": 30
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14741,7 +15122,10 @@
     "turn": 31
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14792,7 +15176,10 @@
     "turn": 32
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14843,7 +15230,10 @@
     "turn": 33
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14894,7 +15284,10 @@
     "turn": 34
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14945,7 +15338,10 @@
     "turn": 35
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -14996,7 +15392,10 @@
     "turn": 36
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15047,7 +15446,10 @@
     "turn": 37
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15098,7 +15500,10 @@
     "turn": 38
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15149,7 +15554,10 @@
     "turn": 39
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15200,7 +15608,10 @@
     "turn": 40
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15251,7 +15662,10 @@
     "turn": 41
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15302,7 +15716,10 @@
     "turn": 42
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15353,7 +15770,10 @@
     "turn": 43
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15404,7 +15824,10 @@
     "turn": 44
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15455,7 +15878,10 @@
     "turn": 45
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15506,7 +15932,10 @@
     "turn": 46
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15557,7 +15986,10 @@
     "turn": 47
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15608,7 +16040,10 @@
     "turn": 48
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15659,7 +16094,10 @@
     "turn": 49
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15710,7 +16148,10 @@
     "turn": 50
    },
    "if": "zbW",
-   "unless": "zbR",
+   "unless": [
+    "zbR",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15764,7 +16205,10 @@
     "open-front",
     "open-east"
    ],
-   "unless": "lastGuard",
+   "unless": [
+    "lastGuard",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15859,7 +16303,10 @@
     "open-west",
     "open-east"
    ],
-   "unless": "lastGuard",
+   "unless": [
+    "lastGuard",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -15954,7 +16401,10 @@
     "open-west",
     "open-front"
    ],
-   "unless": "lastGuard",
+   "unless": [
+    "lastGuard",
+    "zcfDead"
+   ],
    "do": [
     [
      "flag",
@@ -16086,7 +16536,7 @@
     ],
     [
      "narrate",
-     "祝朝奉死在正厅里，祝家庄群龙无首。"
+     "祝朝奉死在正厅里，祝家庄群龙无首，再没有援兵出来了。"
     ]
    ]
   },
@@ -16128,6 +16578,7 @@
    "on": {
     "turn": 1
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -16270,6 +16721,7 @@
    "on": {
     "turn": 2
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -16499,6 +16951,7 @@
    "on": {
     "turn": 3
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -16728,6 +17181,7 @@
    "on": {
     "turn": 4
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -16957,6 +17411,7 @@
    "on": {
     "turn": 5
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -17186,6 +17641,7 @@
    "on": {
     "turn": 6
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -17415,6 +17871,7 @@
    "on": {
     "turn": 7
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -17644,6 +18101,7 @@
    "on": {
     "turn": 8
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -17873,6 +18331,7 @@
    "on": {
     "turn": 9
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -18102,6 +18561,7 @@
    "on": {
     "turn": 10
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -18331,6 +18791,7 @@
    "on": {
     "turn": 11
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -18560,6 +19021,7 @@
    "on": {
     "turn": 12
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -18789,6 +19251,7 @@
    "on": {
     "turn": 13
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -19018,6 +19481,7 @@
    "on": {
     "turn": 14
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -19247,6 +19711,7 @@
    "on": {
     "turn": 15
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -19476,6 +19941,7 @@
    "on": {
     "turn": 16
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -19705,6 +20171,7 @@
    "on": {
     "turn": 17
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -19934,6 +20401,7 @@
    "on": {
     "turn": 18
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -20163,6 +20631,7 @@
    "on": {
     "turn": 19
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -20392,6 +20861,7 @@
    "on": {
     "turn": 20
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -20621,6 +21091,7 @@
    "on": {
     "turn": 21
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -20850,6 +21321,7 @@
    "on": {
     "turn": 22
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -21079,6 +21551,7 @@
    "on": {
     "turn": 23
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -21308,6 +21781,7 @@
    "on": {
     "turn": 24
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -21537,6 +22011,7 @@
    "on": {
     "turn": 25
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -21766,6 +22241,7 @@
    "on": {
     "turn": 26
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -21995,6 +22471,7 @@
    "on": {
     "turn": 27
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -22224,6 +22701,7 @@
    "on": {
     "turn": 28
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -22453,6 +22931,7 @@
    "on": {
     "turn": 29
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -22682,6 +23161,7 @@
    "on": {
     "turn": 30
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -22911,6 +23391,7 @@
    "on": {
     "turn": 31
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -23140,6 +23621,7 @@
    "on": {
     "turn": 32
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -23369,6 +23851,7 @@
    "on": {
     "turn": 33
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -23598,6 +24081,7 @@
    "on": {
     "turn": 34
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -23827,6 +24311,7 @@
    "on": {
     "turn": 35
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -24056,6 +24541,7 @@
    "on": {
     "turn": 36
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -24285,6 +24771,7 @@
    "on": {
     "turn": 37
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -24514,6 +25001,7 @@
    "on": {
     "turn": 38
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -24743,6 +25231,7 @@
    "on": {
     "turn": 39
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -24972,6 +25461,7 @@
    "on": {
     "turn": 40
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -25201,6 +25691,7 @@
    "on": {
     "turn": 41
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -25430,6 +25921,7 @@
    "on": {
     "turn": 42
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -25659,6 +26151,7 @@
    "on": {
     "turn": 43
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -25888,6 +26381,7 @@
    "on": {
     "turn": 44
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -26117,6 +26611,7 @@
    "on": {
     "turn": 45
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -26346,6 +26841,7 @@
    "on": {
     "turn": 46
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -26575,6 +27071,7 @@
    "on": {
     "turn": 47
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -26804,6 +27301,7 @@
    "on": {
     "turn": 48
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -27033,6 +27531,7 @@
    "on": {
     "turn": 49
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -27262,6 +27761,7 @@
    "on": {
     "turn": 50
    },
+   "unless": "zcfDead",
    "do": [
     [
      "respawn",
@@ -27491,6 +27991,7 @@
    "on": {
     "turn": 5
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -27600,6 +28101,7 @@
    "on": {
     "turn": 8
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -27709,6 +28211,7 @@
    "on": {
     "turn": 11
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -27818,6 +28321,7 @@
    "on": {
     "turn": 14
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -27927,6 +28431,7 @@
    "on": {
     "turn": 17
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -28036,6 +28541,7 @@
    "on": {
     "turn": 20
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
@@ -28145,6 +28651,7 @@
    "on": {
     "turn": 23
    },
+   "unless": "zcfDead",
    "do": [
     [
      "focus",
