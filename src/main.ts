@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { GameFiles, REPO_GAMEDATA, pruneOldCache, webLoader, type Progress } from './platform/gamefiles.ts';
 import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
+import { deleteOffline, downloadOffline, initOffline, mb, offlineStatus } from './platform/offline.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
 import { frameToCanvas, loadAssets, preloadStage, startupImages, type Assets } from './game/assets.ts';
 import { PRISON_CART_TILES } from './game/prison-cart.ts';
@@ -698,6 +699,7 @@ function startGame(assets: Assets) {
       { label: '取消', run: hideToast },
     ]);
   setupUpdateButton();
+  setupOfflineButton();
   // 顶栏在窄屏上会折行，小地图跟着顶栏的实际高度往下放
   const hudH = () => document.documentElement.style.setProperty('--hud-h', `${$('hud').getBoundingClientRect().height}px`);
   new ResizeObserver(hudH).observe($('hud'));
@@ -742,7 +744,7 @@ function startGame(assets: Assets) {
       current: current ?? (ok ? placeOf(ok) : undefined),
       portraits: TITLE_FACES.map((cls) => ui.portrait(cls)).filter((x): x is string => !!x),
       version: versionLabel(BUILD),
-      buttons: [$('lang'), $('sound'), $('music'), $('update')],
+      buttons: [$('lang'), $('sound'), $('music'), $('update'), $('offline')],
       onNew: () => begin(freshCampaign()),
       onLoad: () => begin(ok!),
       onClear: () => {
@@ -837,6 +839,81 @@ function setupUpdateButton() {
   };
 }
 
+/** 离线包按钮（顶栏与标题画面共用）：下载全部图像、音效、配乐，断网也能玩（§12.3） */
+let offlineAbort: AbortController | null = null;
+/** 启动时注册服务工作线程，并把换了版本的离线文件删掉（要在载入图像之前，免得用旧图） */
+const offlineInit = initOffline().catch((e) => console.error('离线包初始化失败', e));
+function setupOfflineButton() {
+  const btn = $<HTMLButtonElement>('offline');
+  const label = async () => {
+    if (offlineAbort) return;
+    const s = await offlineStatus();
+    btn.hidden = !s.supported;
+    btn.textContent = s.total && s.have === s.total ? '离线包✓' : s.have || s.stale ? '离线包…' : '离线包';
+  };
+  void offlineInit.then(label);
+  btn.onclick = async () => {
+    if (offlineAbort) {
+      return toast(btn.dataset.progress ?? '正在下载离线包…', [
+        { label: '暂停下载', primary: true, run: () => offlineAbort?.abort() },
+        { label: '后台继续', run: hideToast },
+      ]);
+    }
+    const s = await offlineStatus();
+    if (!s.supported) return toast('这个浏览器不支持离线游玩');
+    const online = navigator.onLine;
+    const room = s.quota ? `浏览器给本站的空间 ${mb(s.quota)}，已用 ${mb(s.usage ?? 0)}。` : '';
+    const left = s.total - s.have;
+    const leftBytes = s.totalBytes - s.haveBytes;
+    const close = { label: '关闭', run: hideToast };
+    const del = { label: '删除离线包', run: () => void deleteOffline().then(() => (toast('离线包已删除（存档不受影响）'), label())) };
+    if (s.total && !left) {
+      return toast(
+        `离线包已下载完（${s.total} 个文件，${mb(s.totalBytes)}）${s.shellReady ? '，断网也能打开本页游玩' : '；刷新一次页面后断网也能打开'}。新版本发布后联网打开一次，按这里补下改过的文件。存档在浏览器里，不受影响。${room}`,
+        [close, del],
+      );
+    }
+    if (!online) return toast(`现在没有网络。离线包已下载 ${s.have} / ${s.total} 个文件，联网后再继续。`);
+    const what = s.have
+      ? `离线包还差 ${left} 个文件（${mb(leftBytes)}）${s.stale ? '，其中有新版本改过的' : ''}。`
+      : `把全部图像、音效、配乐（${s.total} 个文件，共 ${mb(s.totalBytes)}）下载到浏览器里，之后断网（比如在飞机上）也能打开本页游玩。`;
+    toast(`${what}${room}建议连着 Wi-Fi 下载。`, [
+      { label: s.have ? '继续下载' : '下载全部', primary: true, run: () => void startOfflineDownload(btn, label) },
+      close,
+      ...(s.have ? [del] : []),
+    ]);
+  };
+}
+
+async function startOfflineDownload(btn: HTMLButtonElement, label: () => Promise<void>) {
+  const ctl = (offlineAbort = new AbortController());
+  const show = (text: string) => {
+    btn.dataset.progress = text;
+    // 提示条开着时跟着刷新进度
+    if (!$('toast').hidden && $('toast-text').textContent?.startsWith('正在下载')) $('toast-text').textContent = text;
+  };
+  toast('正在下载离线包…', [
+    { label: '暂停下载', primary: true, run: () => ctl.abort() },
+    { label: '后台继续', run: hideToast },
+  ]);
+  try {
+    const failed = await downloadOffline((done, total, bytes, totalBytes) => {
+      const pct = totalBytes ? Math.floor((bytes / totalBytes) * 100) : 100;
+      btn.textContent = `离线包 ${pct}%`;
+      show(`正在下载离线包 ${done} / ${total}（${mb(bytes)} / ${mb(totalBytes)}）`);
+    }, ctl.signal);
+    offlineAbort = null;
+    if (ctl.signal.aborted) toast('已暂停。已下载的部分保留，再按「离线包」接着下。');
+    else if (failed) toast(`有 ${failed} 个文件没下载成功，再按「离线包」重试。`);
+    else toast(navigator.serviceWorker.controller ? '离线包下载完成，断网也能打开本页游玩。' : '离线包下载完成。刷新一次页面后，断网也能打开本页游玩。');
+  } catch (e) {
+    offlineAbort = null;
+    toast(`下载离线包失败：${e instanceof Error ? e.message : e}`);
+  }
+  delete btn.dataset.progress;
+  await label();
+}
+
 installTouchGuards();
 installSound($<HTMLButtonElement>('sound'));
 installMusic($<HTMLButtonElement>('music'));
@@ -844,6 +921,7 @@ installMusic($<HTMLButtonElement>('music'));
 async function boot() {
   try {
     pruneOldCache();
+    await Promise.race([offlineInit, new Promise((r) => setTimeout(r, 5000))]);
     await initI18n().catch((e) => console.error('多语言载入失败', e));
     const assets = loadAssets(gameFiles());
     setHero(assets.data.heroName, assets.data.heroNickname ?? '');
