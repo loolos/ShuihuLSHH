@@ -157,6 +157,15 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(gu.disguised).toBe(false);
   });
 
+  it('乐和裂石穿云带伤害（威力 20），打中的必定发愣一回合（负责人 2026-11-26，原先不伤人）', () => {
+    const { b, get } = open('jielao');
+    const s = skill(b, get('lehe'), '裂石穿云');
+    expect(s.power).toBeGreaterThan(0); // 写的威力 20，出自 222 的命中修正按好汉规则折进威力
+    expect(s.drug).toBeUndefined();
+    expect(s.stun).toBe(100);
+    expect(s.stunFor).toBe(1);
+  });
+
   it('劫牢：死囚牢门口的看守面朝外，正前方三格看住整个「死囚牢门」，得先吹铁叫子；最左边牢门口另有看守', () => {
     const { b, get } = open('jielao');
     const kz = get('xl1'), gu = get('gudasao');
