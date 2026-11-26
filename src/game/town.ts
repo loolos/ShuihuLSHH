@@ -188,6 +188,8 @@ export class TownUI {
     }
     this.telling = true;
     st.done();
+    // 对白框和选项面板要盖在城镇界面上面（和说书一样，style.css body.storytelling）
+    document.body.classList.add('storytelling');
     const d = this.data;
     const say = (l: TaleLine) => {
       if (typeof l.who === 'string') return st.say(l.who, l.text, null);
@@ -209,6 +211,7 @@ export class TownUI {
       for (const l of feastLines(f.place, this.c, f.resolve)) await say(l);
     } finally {
       st.done();
+      document.body.classList.remove('storytelling');
       this.telling = false;
       this.render();
     }
