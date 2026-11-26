@@ -74,6 +74,14 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(other.exp).toBe(50);
   });
 
+  it('好汉援军左右两路轮流出：三阮、燕顺石勇在左路（武龙开场处），穆家兄弟、浔阳江四人在右路（李逵开场处），不走中路', () => {
+    const { stage } = open();
+    const at = (id: string) => stage.units.find((u) => u.id === id)!;
+    const left = at('hero').x, right = at('likui').x;
+    for (const id of ['ruanxiaoer', 'ruanxiaowu', 'ruanxiaoqi', 'yanshun', 'shiyong']) expect(Math.abs(at(id).x - left), id).toBeLessThanOrEqual(6);
+    for (const id of ['muhong', 'muchun', 'zhangheng', 'zhangshun', 'tongwei', 'tongmeng']) expect(Math.abs(at(id).x - right), id).toBeLessThanOrEqual(7);
+  });
+
   it('祝氏三杰各复活一次：第一次打倒先退回庄里，2 回合后在祝朝奉身边出来、主动进攻；第二次照常倒下', () => {
     for (let seed = 1; seed < 40; seed++) {
       const { b, get } = open('sanda', seed);
