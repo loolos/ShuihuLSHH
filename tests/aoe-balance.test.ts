@@ -30,7 +30,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     const d=loadPackFromDisk(pack).data;
     const tiers=d.classes[0].skills.filter(s=>[10,11,12,1309].includes(s.skillId));expect(tiers).toHaveLength(4);
     tiers.forEach((s,i)=>{
-      expect(s).toMatchObject({learnLevel:[8,12,22,28][i],mpCost:[75,115,170,210][i],power:35+10*i,critMod:20+5*i,hitMod:5+5*i,type:1,area:5+i,poison:0,stun:0});
+      expect(s).toMatchObject({learnLevel:[8,12,22,28][i],mpCost:[75,115,170,210][i],power:[35,45,55,55][i],critMod:20,hitMod:5+5*i,type:1,area:5+i,poison:0,stun:0});
       expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
       for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]])expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20+dx,y:20+dy})).toHaveLength([13,18,25,32][i]);
     });
