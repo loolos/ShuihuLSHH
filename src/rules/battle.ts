@@ -801,9 +801,11 @@ export class Battle {
     });
   }
   /** 重新刷出（已倒下或还没登场的）一个人：回到开场位置附近，血气回满，AI 照开场 */
-  private respawn(u: Unit) {
+  private respawn(u: Unit, near?: Unit) {
     const home = this.homes.get(u.uid)!;
-    Object.assign(u, { alive: true, defending: false, poisonTurns: 0, stunTurns: 0, panicTurns: 0, buffs: [], x: home.x, y: home.y, ai: { ...home.ai, point: { ...home.ai.point } } });
+    // near【新】（三打祝家庄祝氏三杰复活）：在这个人身边出来，不回开场位置
+    const at = near && near.alive && near.present ? near : home;
+    Object.assign(u, { alive: true, defending: false, poisonTurns: 0, stunTurns: 0, panicTurns: 0, buffs: [], x: at.x, y: at.y, ai: { ...home.ai, point: { ...home.ai.point } } });
     this.ambushers.delete(u.uid);
     refreshStats(u, this.data);
     u.hp = u.stats.maxHp;
@@ -820,11 +822,11 @@ export class Battle {
    * 不在场且开场位置没人占的那个（弓手补位，每回合最多一个）。
    */
   /** 返回刷出来的第一个人（没刷出来是 undefined），喊话用 */
-  private respawnSets(sets: number[][], gates: number[] = [], one = false): Unit | undefined {
+  private respawnSets(sets: number[][], gates: number[] = [], one = false, near?: Unit): Unit | undefined {
     const ok = (k: number) => gates[k] === undefined || gates[k] < 0 || !this.gateOpen(gates[k]);
     if (!one) {
       const k = sets.findIndex((ids, j) => ok(j) && ids.every((id) => this.offField(id)));
-      if (k >= 0) for (const id of sets[k]) this.respawn(this.unit(id)!);
+      if (k >= 0) for (const id of sets[k]) this.respawn(this.unit(id)!, near);
       return k >= 0 ? this.unit(sets[k][0]) : undefined;
     }
     const occ = this.occupied();
@@ -2990,7 +2992,7 @@ export class Battle {
         // 133 刷兵 / 补位【新】（三打祝家庄）：见 respawnSets
         case 133: {
           const a = op.args ?? {};
-          const who = this.respawnSets(a.sets ?? [], a.gates, !!a.one);
+          const who = this.respawnSets(a.sets ?? [], a.gates, !!a.one, a.near !== undefined ? this.unit(a.near) : undefined);
           // args.say【新】（负责人 2026-11-25：刷兵、补位要有一句喊话）：刷出来的第一个人按回合轮着喊一句
           const lines: string[] = a.say ?? [];
           if (who && lines.length) this.emit({ type: 'say', uid: who.uid, speaker: who.name, text: lines[this.turn % lines.length] });

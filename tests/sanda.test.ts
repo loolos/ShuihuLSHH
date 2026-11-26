@@ -73,6 +73,28 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     expect(other.exp).toBe(50);
   });
 
+  it('祝氏三杰各复活一次：第一次打倒先退回庄里，2 回合后在祝朝奉身边出来、主动进攻；第二次照常倒下', () => {
+    for (let seed = 1; seed < 40; seed++) {
+      const { b, get } = open('sanda', seed);
+      const zl = get('zhulong'), lin = get('linchong'), zcf = get('zcf');
+      priv(b).spectators.delete(lin.uid);
+      put(lin, zl.x, zl.y + 1);
+      zl.hp = 1;
+      b.attack(lin, zl);
+      if (zl.hp === 1 && zl.present) continue; // 没打中，换个种子
+      expect(zl.alive).toBe(true);
+      expect(zl.present).toBe(false);
+      const t0 = b.turn;
+      while (b.turn < t0 + 2) b.endPlayerPhase();
+      expect(zl.present && zl.alive).toBe(true);
+      expect(zl.hp).toBe(zl.stats.maxHp);
+      expect(zl.ai.mode).toBe(0);
+      expect(Math.abs(zl.x - zcf.x) + Math.abs(zl.y - zcf.y)).toBeLessThanOrEqual(4);
+      return;
+    }
+    throw new Error('40 个种子都没打中');
+  });
+
   it('庄门：体力 1000，挡住我方；敌人能从关着的门里穿过，但不能停在门上', () => {
     const { b, get } = open();
     const door = get('door-front');
