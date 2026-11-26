@@ -558,9 +558,9 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   73: price(2350), // 钢叉：原 2900
   74: price(3190), // 飞鱼叉：原 4200
   85: price(230), // 棋子布背心：原 200
-  104: { ...price(1390), agility: 0 }, // 朱红甲：原 2300；轻甲不扣敏捷（原 −9，负责人 2026-11-26）
-  108: price(3160), // 狻猊甲：原 3810
-  109: price(4960), // 铁葉攢鎧：原 5200
+  104: { ...price(1390), agility: 0, hit: 4 }, // 朱红甲：原 2300；轻甲不扣敏捷（原 −9，负责人 2026-11-26）
+  108: { ...price(3160), crit: 6 }, // 狻猊甲：原 3810；必杀 +6
+  109: { ...price(4960), crit: 10 }, // 铁葉攢鎧：原 5200；必杀 +10
   112: price(60), // 一字巾：原 50
   115: price(460), // 干红凹面巾：原 400
   118: { ...price(720), hit: 4 }, // 軟紗唐巾：原 1500；命中 +4（高档头巾加命中，负责人 2026-11-26）
@@ -580,7 +580,15 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
    * 衣帽调整【新：负责人 2026-11-26】：轻甲不扣敏捷（连环甲原 −6、朱红甲见上）；战盔扣的敏捷减半（熟铁盔…耀日镔铁盔见上，宝箱货凤翅金盔 −12 → −6）；
    * 最早两件重甲防御太低（比城镇 5 的朱红甲还低），裹金生铁甲 16 → 24、镶银生铁甲 17 → 26。
    */
-  103: { agility: 0 }, // 連環甲
+  103: { agility: 0, hit: 2 }, // 連環甲
+  /* 衣服特点拉开（负责人 2026-11-26）：高档轻甲加命中、高档重甲加必杀、战袍都带每回合回气（低档少） */
+  91: { moveBonus: 1 }, // 皂色繡襖：移动 +1
+  90: { moveBonus: 1 }, // 青紗衫子：高档常服移动 +1（负责人 2026-11-26）
+  95: { regenMp: 2 }, // 戰袍
+  96: { regenMp: 4 }, // 虎皮戰袍
+  97: { regenMp: 6 }, // 金繡綠羅袍
+  98: { regenMp: 8 }, // 綠羅花戰袍
+  107: { crit: 3, ...price(2460) }, // 魚鱗鐵甲
   116: { hit: 2 }, // 青紗頭巾：命中 +2（头巾到这档起加命中）
   117: { hit: 5 }, // 萬字巾（宝箱货）：命中 +5
   133: { agility: -6 }, // 鳳翅金盔
@@ -595,8 +603,8 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
 const NEW_ITEMS: Record<number, { from: number } & Partial<Item>> = {
   71: { from: 69, name: '雌雄寶劍', type: 8, icon: 204, attack: 37, hit: 5, crit: 12, description: '攻擊力加37，可提升', ...shopItem(2900, 10) }, // 双剑：原到顶鴛鴦劍 攻 33
   80: { from: 9, name: '金剛拳套', icon: 203, attack: 36, hit: 10, crit: 10, description: '攻擊力加36，可提升', ...shopItem(3300, 10) }, // 拳套：原到顶鐵甲拳 攻 30
-  81: { from: 103, name: '鎖子甲', icon: 200, defense: 28, agility: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(2200, 7) }, // 轻甲：原到顶朱紅甲 防 22（城镇 5）
-  82: { from: 102, name: '柳葉軟甲', icon: 201, defense: 34, agility: 0, maxHp: 15, description: '防御力加34，可提升', ...shopItem(3200, 9) },
+  81: { from: 103, name: '鎖子甲', icon: 200, defense: 28, hit: 6, agility: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(2200, 7) }, // 轻甲：原到顶朱紅甲 防 22（城镇 5）
+  82: { from: 102, name: '柳葉軟甲', icon: 201, defense: 34, hit: 8, agility: 0, maxHp: 15, description: '防御力加34，可提升', ...shopItem(3200, 9) },
   170: { from: 121, name: '貂鼠皮帽', icon: 205, defense: 9, regenHp: 15, regenMp: 15, description: '防御力加9，每回合回復體力氣力15點', ...shopItem(2600, 6) }, // 帽子：官帽（城镇 3）到烏紗帽（城镇 9）之间
   160: { from: 132, name: '爛銀盔', icon: 202, defense: 28, hit: 0, agility: -6, crit: 13, maxHp: 10, description: '防御力加28，可提升', ...shopItem(1600, 10) }, // 战盔：原到顶耀日鑌鐵盔 防 20
 };
