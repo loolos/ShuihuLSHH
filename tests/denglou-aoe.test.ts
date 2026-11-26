@@ -43,10 +43,15 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('登州诸人
     });
   });
 
-  it('孙新双鞭齐下打 T 字四格', () => {
-    const s = d.classes[cls('双鞭齐下')].skills.find((s) => s.name === '双鞭齐下')!;
-    expect(areaCells(board, me, s, { x: 20, y: 19 })).toHaveLength(4);
-    expect(skillTags(s)).toContain('范围');
+  it('孙新双鞭齐下：LV1 打 4 格三角、LV2 打 9 格三角，尖朝自己、往外展开（负责人 2026-11-26）', () => {
+    const sk = (n: string) => d.classes[cls('双鞭齐下')].skills.find((s) => s.name === n)!;
+    const tgt = { x: 20, y: 19 };
+    const c1 = areaCells(board, me, sk('双鞭齐下'), tgt), c2 = areaCells(board, me, sk('双鞭齐下LV2'), tgt);
+    expect(c1).toHaveLength(4);
+    expect(c2).toHaveLength(9);
+    expect(c2).toContainEqual(tgt);
+    expect(c2.filter((c) => c.y === 17)).toHaveLength(5); // 最远一排 5 格
+    expect(skillTags(sk('双鞭齐下'))).toContain('范围');
   });
 });
 
