@@ -4,7 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { Board } from '../src/rules/board.ts';
-import { isChargeSkill, learnedSkills, skillsLearnedAt } from '../src/rules/skills.ts';
+import { isChargeSkill, isStanceSkill, learnedSkills, skillsLearnedAt } from '../src/rules/skills.ts';
 import { skillFx, FX_CHARGE } from '../src/game/effects.ts';
 import { planAi } from '../src/rules/ai.ts';
 import { buildT2S, exeTables, loadGameData, loadStage, stageJson, type FileSource } from '../src/rules/load.ts';
@@ -61,7 +61,7 @@ describe.skipIf(!has)('N01', () => {
   });
 
   it('所有集气技（含敌方职业）都回复最大气力的一半', () => {
-    const charges = data.classes.flatMap((c) => c.skills.filter(isChargeSkill));
+    const charges = data.classes.flatMap((c) => c.skills.filter((s) => isChargeSkill(s) && !isStanceSkill(s))); // 架势技（威力 0）不回气，见 skill-self-buffs.test.ts
     expect(charges.length).toBeGreaterThan(20);
     for (const s of charges) expect(s.power).toBe(2);
   });
