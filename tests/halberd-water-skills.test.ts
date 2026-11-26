@@ -44,10 +44,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('吕方、郭
     expect(cls('zhangshun').skills.map((s) => s.name)).toEqual(['分水刀', '浪里钻', '换气', '白条翻浪']);
     expect(areaCells(board, me, cls('zhangshun').skills[3], me)).toHaveLength(8);
   });
-  it('童威、童猛（负责人 2026-11-20 重做）：不再借阮小五、阮小七的身体；各有普攻、单体、远程、回气四招', () => {
+  it('童威、童猛（负责人 2026-11-20 重做）：2026-11-26 改为童威借刘唐、童猛借阮小七（换色）；各有普攻、单体、远程、回气四招', () => {
     const defs = JSON.parse(fs.readFileSync('packs/mainline/pack.json', 'utf8')).classes as { id: string; sprite: { fromClass: number } }[];
-    expect(defs.find((c) => c.id === 'tongwei')!.sprite.fromClass).toBe(66);
-    expect(defs.find((c) => c.id === 'tongmeng')!.sprite.fromClass).toBe(20);
+    expect(defs.find((c) => c.id === 'tongwei')!.sprite.fromClass).toBe(61);
+    expect(defs.find((c) => c.id === 'tongmeng')!.sprite.fromClass).toBe(52);
     for (const id of ['tongwei', 'tongmeng']) {
       const sk = cls(id).skills;
       expect(sk).toHaveLength(4);
