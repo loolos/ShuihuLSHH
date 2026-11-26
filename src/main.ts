@@ -418,7 +418,7 @@ function startGame(assets: Assets) {
     if (lost || JSON.stringify(before) !== JSON.stringify(now)) {
       if (now) void music.play(now);
       else if (packBgm) void music.play(packBgm);
-      else void music.stageTrack(stageOf(campaign.stage).mapName).then((t) => music.play(t));
+      else void music.playStage(stageOf(campaign.stage).mapName);
     }
   };
   let loading = 0;
@@ -657,7 +657,7 @@ function startGame(assets: Assets) {
     }
     if (ticket !== loading) return; // 下载期间又换了关
     setupEl.hidden = true;
-    void music.stageTrack(stage).then((t) => music.play(t));
+    void music.playStage(stage);
     chapterSting(stageLabel(stageOf(campaign.stage).title, stage).chapterLabel);
     const data = { assets, stage, ui, seed, party: partyOf(campaign), joinLevel: joinLevel(campaign), onEnd, story: stageLabel(stageOf(campaign.stage).title, stage).kind === '剧情' };
     if (scene()) scene()!.scene.restart(data);
