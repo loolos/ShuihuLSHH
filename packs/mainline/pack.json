@@ -1582,7 +1582,7 @@
         "area": 1,
         "effect": 0
     },
-    {"id": "lk-xuanfeng-2", "name": "旋风卷岳LV2", "from": 225, "anim": "axe-sweep", "poison": 0, "stun": 0, "hitAt": [0.45], "power": 45, "mpCost": 55, "learnLevel": 36, "type": 2, "rangeMin": 1, "rangeMax": 1, "area": 1, "effect": 0},
+    {"id": "lk-xuanfeng-2", "name": "旋风卷岳LV2", "from": 225, "anim": "axe-sweep", "poison": 0, "stun": 0, "hitAt": [0.45], "power": 45, "mpCost": 55, "learnLevel": 36, "type": 12, "rangeMin": 0, "rangeMax": 0, "area": 2, "effect": 0},
     {
         "id": "lk-kuanglan-lv3",
         "name": "狂澜裂岳LV3",

@@ -95,6 +95,8 @@ describe.skipIf(!available)('武松、李逵技能重做', () => {
     expect(b.skillTargets(u,s)).toContainEqual({x:12,y:10});expect(b.affected(u,s,{x:12,y:10})).toHaveLength(1);
     expect(s).toMatchObject({rangeMax:2,power:25,mpCost:30,stun:30});expect(attackParts(s)).toHaveLength(2);
     expect(areaCells(board,from,skill('likui','旋风卷岳'),{x:16,y:15})).toHaveLength(4);
+    expect(areaCells(board,from,skill('likui','旋风卷岳LV2'),from)).toHaveLength(8); // LV2 周身一圈 8 格（负责人 2026-11-26）
+    b.units[2].x=u.x+1;b.units[2].y=u.y+1;expect(b.affected(u,skill('likui','旋风卷岳LV2'),{x:u.x,y:u.y}).map((t)=>t.uid)).toContain(b.units[2].uid); // 斜角也砍得到
     u.mp=0;const charge=skill('likui','沉息蓄锋');b.useSkill(u,charge,u);expect(u.mp).toBe(Math.floor(u.stats.maxMp/2));
   });
   it('狂澜四级固定5格、3/4/5/6段、威力0/20/40/60；昏迷每目标只掷一次',()=> {
