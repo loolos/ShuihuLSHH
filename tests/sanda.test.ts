@@ -93,7 +93,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十三
     const { stage } = open();
     const at = (id: string) => stage.units.find((u) => u.id === id)!;
     expect(Math.abs(at('lehe').x - at('gudasao').x)).toBeLessThanOrEqual(6);
-    for (const id of ['sunli', 'sunxin']) expect(Math.abs(at(id).x - at('jiezhen').x), id).toBeLessThanOrEqual(3);
+    for (const id of ['sunli', 'sunxin', 'zouyuan', 'zourun']) expect(Math.abs(at(id).x - at('jiezhen').x), id).toBeLessThanOrEqual(3);
   });
 
   it('祝氏三杰各复活一次：第一次打倒先退回庄里，2 回合后在祝朝奉身边出来、主动进攻；第二次照常倒下', () => {
