@@ -117,3 +117,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('孙立 弯�
     expect(cells).not.toContainEqual({ x: 20, y: 13 });
   });
 });
+
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('乐和 铁尺挑', () => {
+  it('三段伤害、昏迷 30%（负责人 2026-11-26）', () => {
+    const d = loadPackFromDisk('mainline').data;
+    const s = d.classes.flatMap((c) => c?.skills ?? []).find((s) => s.name === '铁尺挑')!;
+    expect(s.hits.map((h) => h.percent)).toEqual([30, 30, 40]);
+    expect(s.stun).toBe(30);
+  });
+});
