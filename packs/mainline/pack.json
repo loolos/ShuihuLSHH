@@ -255,17 +255,17 @@
       "id": "huichundan",
       "name": "回春丹",
       "from": 159,
-      "healHp": 80,
-      "healMp": 50,
+      "healHp": 150,
+      "healMp": 80,
       "regenHp": 50,
-      "regenMp": 25,
+      "regenMp": 30,
       "area": true,
       "category": 4,
-      "buyPrice": 1650,
+      "buyPrice": 2180,
       "shop": [11],
       "shopTier": 1,
       "icon": "icons/huichundan.png",
-      "description": "自己與相鄰的同伴各回復體力80點與氣力50點，之後3回合每回合回復體力50點、氣力25點"
+      "description": "自己與相鄰的同伴各回復體力150點與氣力80點，之後3回合每回合回復體力50點、氣力30點"
     },
     {
       "id": "zijinguan",
