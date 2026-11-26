@@ -1,7 +1,7 @@
 // 城镇与整备界面（HTML）：顶部是店铺分页，左边是本店的货或传闻，右边是队员和他们的 7 格道具。
 // 规则在 src/rules/town.ts；这里只负责显示和把点击交给规则函数。
 import { itemTypeName, type Item } from '../formats/goo.ts';
-import { EQUIPMENT_CATEGORIES } from '../rules/equipment.ts';
+import { shopGroup } from '../rules/equipment.ts';
 import type { CampaignState, Member } from '../rules/campaign.ts';
 import { canEquip, equipSlotOf, EQUIP_SLOTS, forgeGain, forgeGainText, forgeLimit, itemOf, itemSummary, SLOT_COUNT } from '../rules/data.ts';
 import { buy, canForge, discard, equip, forge, forgeCost, give, partyMembers, pawn, SHOPS, stock, type Outcome, type ShopAction } from '../rules/town.ts';
@@ -30,6 +30,8 @@ export interface TownOptions {
   /** 续篇城镇的酒馆传闻和说书（src/packs/tavern.ts）；不给就按城镇号查原版的 */
   rumors?: string[];
   tale?: Tale;
+  /** 续篇城镇的商店分档（0–2，src/packs/towns.ts shopTierOf）；原版城镇不写 */
+  shopTier?: number;
 }
 
 /** 说书用的对白框和二选一面板（和战斗共用 #dialog、#result） */
@@ -295,7 +297,7 @@ export class TownUI {
   private shopPane(): string {
     const d = this.data;
     if (this.action === 'buy') {
-      const list = stock(d, this.shop, this.o.town);
+      const list = stock(d, this.shop, this.o.town, this.o.shopTier ?? 0);
       if (!list.length) return '<p class="hint">这里没有东西卖。</p>';
       const who = partyMembers(this.c)
         .map((m) => `<button data-do="member" data-v="${m.classId}" class="${m.classId === this.member ? 'on' : ''}">${esc(this.tr(d.charNames[m.classId] ?? ''))}</button>`)
@@ -305,7 +307,7 @@ export class TownUI {
         const it = itemOf(d, id)!;
         const type = it.type;
         const name = type === 13 || type === 14
-          ? Object.keys(EQUIPMENT_CATEGORIES).find((key) => EQUIPMENT_CATEGORIES[key].includes(it.name)) ?? '其他'
+          ? shopGroup(it.name)
           : type === 11 ? '武器·弓' : itemTypeName(type);
         const key = `${type}:${name}`;
         if (!groups.has(key)) groups.set(key, { type, name, ids: [] });

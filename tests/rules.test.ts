@@ -753,6 +753,24 @@ describe('战斗流程', () => {
     expect(ally.stats.attack).toBe(atk);
   });
 
+  it('群体药：自己和上下左右相邻的友方各回复，斜角、敌人不算', () => {
+    const group = { ...glove, type: 15, name: '萬靈藥', attack: 0, healHp: 150, healMp: 0, area: true, params: [] } as unknown as Item;
+    const d2: GameData = { ...data, items: [glove, group] };
+    const b = new Battle({
+      name: 't', board: new Board(10, 10), blocks: [], data: d2, seed: 1,
+      units: [act(0, 0, 'player', 2, 2), act(1, 1, 'player', 3, 2), act(2, 1, 'ally', 2, 3), act(3, 1, 'player', 3, 3), act(4, 1, 'enemy', 1, 2, 0x800)],
+    });
+    b.begin();
+    const [p, q, ally, diag, foe] = [b.unit(0)!, b.unit(1)!, b.unit(2)!, b.unit(3)!, b.unit(4)!];
+    p.slots = [0, 0, 0, 2, 0, 0, 0];
+    for (const u of [p, q, ally, diag, foe]) u.hp = 1;
+    b.useItem(p, 3, q);
+    expect([p, q, ally].map((u) => u.hp)).toEqual([p, q, ally].map((u) => Math.min(u.stats.maxHp, 151)));
+    expect(diag.hp).toBe(1);
+    expect(foe.hp).toBe(1);
+    expect(p.slots[3]).toBe(0);
+  });
+
   it('跟随型 AI（模式 5）体力不满时移动后休息', () => {
     const b = new Battle({
       name: 't', board: new Board(10, 10), blocks: [], data, seed: 1,

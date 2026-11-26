@@ -3,6 +3,7 @@ import { markLine } from '../i18n/index.ts';
 import type { ActUnit } from '../formats/act.ts';
 import type { DidAction, PasBlock, PasCond, PasHeader, PasOp, PasTrigger } from '../formats/pas.ts';
 import type { ExePrompt } from '../formats/exe.ts';
+import type { Item } from '../formats/goo.ts';
 import { alertRadius, planAi } from './ai.ts';
 import type { Member } from './campaign.ts';
 import { Board, key, pathTo, type Cell } from './board.ts';
@@ -1591,10 +1592,12 @@ export class Battle {
   useItem(u: Unit, slot: number, target: Unit = u): BattleEvent[] {
     this.out = [];
     if (!this.itemTargets(u, slot).includes(target)) return [];
+    const area = itemOf(this.data, u.slots[slot])?.area ? this.areaTargets(u) : [];
     this.applyItem(u, slot, target);
     this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
     target.turnStart = null; // 用在别人身上：对方也不能再撤销移动
+    for (const x of area) x.turnStart = null;
     this.noteDid(u, 'item');
     this.checkDid();
     return this.flush();
@@ -1707,9 +1710,19 @@ export class Battle {
   /** 道具效果（EXE 0x408dc0）：回复、解毒解昏、限时效果；战报按原版"甲使用了某某，乙生命力恢復了 N 點。" */
   private applyItem(u: Unit, slot: number, t: Unit = u) {
     const it = itemOf(this.data, u.slots[slot])!;
-    const name = this.tr(it.name);
     this.clearSlot(u, slot);
     this.emit({ type: 'sound', name: 'm10' }); // 使用道具音（EXE 0x408dc0）
+    // 群体药（萬靈藥、回春丹，负责人 2026-11-26）：自己和上下左右相邻的友方各按本药回复，选谁都一样
+    for (const x of it.area ? this.areaTargets(u) : [t]) this.itemEffect(u, it, x);
+  }
+
+  /** 群体药的对象：使用者和相邻的非敌对单位 */
+  areaTargets(u: Unit): Unit[] {
+    return [u, ...this.active().filter((x) => x !== u && dist(u, x) === 1 && !hostile(u, x))];
+  }
+
+  private itemEffect(u: Unit, it: Item, t: Unit) {
+    const name = this.tr(it.name);
     const hp0 = t.hp, mp0 = t.mp;
     if (it.healHp) t.hp = it.healHp < 0 ? t.stats.maxHp : Math.min(t.stats.maxHp, t.hp + it.healHp);
     if (it.healMp) t.mp = it.healMp < 0 ? t.stats.maxMp : Math.min(t.stats.maxMp, t.mp + it.healMp);

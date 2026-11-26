@@ -518,7 +518,7 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   110: shopItem(7810, 9), // 梅花榆葉甲：防 45（鐵葉攢鎧 防 40 / 5200）
   111: shopItem(13530, 10), // 雁翎圈金甲：防 50
   124: shopItem(6000, 9), // 烏紗帽：防 10、每回合回体回气 20（猛虎紋玉 回 15 / 6000）
-  132: shopItem(1080, 7), // 耀日鑌鐵盔：防 20、必 10（熟鋼獅子盔 防 18 / 2400）
+  132: { ...shopItem(1080, 7), agility: -5 }, // 耀日鑌鐵盔：防 20、必 10（熟鋼獅子盔 防 18 / 2400）；敏捷 −10 → −5
   138: shopItem(2890, 9), // 麒麟護符：防 20、命 10、敏 10
   143: shopItem(5000, 9, 5), // 菊花金飾：体气 +50（水蓮鐵飾 +20 / 2000），当铺
   154: shopItem(600, 10, 5), // 孔明兵法：攻防命敏 +5，当铺
@@ -526,7 +526,8 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
    * 药价按效果重定【新：负责人 2026-11-25】：原版小還銀丹 / 小還金丹回得比大還少却贵 2–5 倍，大還又比同等回量的創藥便宜一半，
    * 抗毒 / 抗昏 3 回合卖解毒草藥的 60 倍。现按指导价（tools/price-audit.ts：体力 2.5 两/点、气力 2 两/点，回满按体 300 气 200 算）。
    */
-  157: { healHp: 200, ...price(500) }, // 萬靈藥：回体改成说明写的 200（原数据 510 ≈ 回满，负责人 2026-11-25 嫌回太多），价 500，原 300
+  // 萬靈藥：原数据回体 510 ≈ 回满（说明写 200），2026-11-25 改 200；2026-11-26 负责人定改成群体药：自己和相邻友方各回体 150（area），原价 300，群体后按指导价 750
+  157: { healHp: 150, area: true, description: '自己與相鄰的同伴各回復體力150點', ...price(750) },
   158: price(950), // 大還銀丹：体 300 气 100，原 500
   159: price(1150), // 大還金丹：体 400 气 200，原 700
   161: price(1300), // 天山雪蓮：体气回满 + 解毒解昏，原 1000（要比大還金丹贵）
@@ -557,7 +558,7 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   73: price(2350), // 钢叉：原 2900
   74: price(3190), // 飞鱼叉：原 4200
   85: price(230), // 棋子布背心：原 200
-  104: price(1390), // 朱红甲：原 2300
+  104: { ...price(1390), agility: 0 }, // 朱红甲：原 2300；轻甲不扣敏捷（原 −9，负责人 2026-11-26）
   108: price(3160), // 狻猊甲：原 3810
   109: price(4960), // 铁葉攢鎧：原 5200
   112: price(60), // 一字巾：原 50
@@ -568,15 +569,45 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   121: price(590), // 虎皮帽：原 300
   122: price(630), // 僧帽：原 400
   123: price(1100), // 官帽：原 800
-  128: price(150), // 熟铁盔：原 300
-  129: price(130), // 朱纓盔：原 1200
-  130: price(210), // 獅子盔：原 1800
-  131: price(550), // 熟钢獅子盔：原 2400
+  128: { ...price(150), agility: -1 }, // 熟铁盔：原 300；敏捷 −2 → −1
+  129: { ...price(130), agility: -2 }, // 朱纓盔：原 1200；敏捷 −4 → −2
+  130: { ...price(210), agility: -3 }, // 獅子盔：原 1800；敏捷 −6 → −3
+  131: { ...price(550), agility: -4 }, // 熟钢獅子盔：原 2400；敏捷 −8 → −4
   139: price(840), // 青花錫飾：原 1000
   155: price(70), // 狗皮膏药：原 50
   169: price(390), // 青花壇酒：原 400
+  /*
+   * 衣帽调整【新：负责人 2026-11-26】：轻甲不扣敏捷（连环甲原 −6、朱红甲见上）；战盔扣的敏捷减半（熟铁盔…耀日镔铁盔见上，宝箱货凤翅金盔 −12 → −6）；
+   * 最早两件重甲防御太低（比城镇 5 的朱红甲还低），裹金生铁甲 16 → 24、镶银生铁甲 17 → 26。
+   */
+  103: { agility: 0 }, // 連環甲
+  133: { agility: -6 }, // 鳳翅金盔
+  105: { defense: 24, description: '防御力加24，可提升', ...price(700) }, // 裹金生鐵甲：原 500
+  106: { defense: 26, description: '防御力加26，可提升' }, // 鑲銀生鐵甲
 };
-export const withItemOverrides = (items: Item[]): Item[] => items.map((it) => (ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it));
+/**
+ * 新增装备【新：负责人 2026-11-26，补商店断档】：放在原版道具表的空位上（原版这几格没有名字、不在任何地方出现），
+ * 其余字段照 from 那件同类货（打铁、图标框等），图标是换色的新图（gamedata/icons 200 起，tools/recolor-icon.py）。
+ * 续篇商店的新货在 mainline 包（packs/mainline/pack.json，按 shopTier 分档）。
+ */
+const NEW_ITEMS: Record<number, { from: number } & Partial<Item>> = {
+  71: { from: 69, name: '雌雄寶劍', type: 8, icon: 204, attack: 37, hit: 5, crit: 12, description: '攻擊力加37，可提升', ...shopItem(2900, 10) }, // 双剑：原到顶鴛鴦劍 攻 33
+  80: { from: 9, name: '金剛拳套', icon: 203, attack: 36, hit: 10, crit: 10, description: '攻擊力加36，可提升', ...shopItem(3300, 10) }, // 拳套：原到顶鐵甲拳 攻 30
+  81: { from: 103, name: '鎖子甲', icon: 200, defense: 28, agility: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(2200, 7) }, // 轻甲：原到顶朱紅甲 防 22（城镇 5）
+  82: { from: 102, name: '柳葉軟甲', icon: 201, defense: 34, agility: 0, maxHp: 15, description: '防御力加34，可提升', ...shopItem(3200, 9) },
+  170: { from: 121, name: '貂鼠皮帽', icon: 205, defense: 9, regenHp: 15, regenMp: 15, description: '防御力加9，每回合回復體力氣力15點', ...shopItem(2600, 6) }, // 帽子：官帽（城镇 3）到烏紗帽（城镇 9）之间
+  160: { from: 132, name: '爛銀盔', icon: 202, defense: 28, hit: 0, agility: -6, crit: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(1600, 10) }, // 战盔：原到顶耀日鑌鐵盔 防 20
+};
+export const withItemOverrides = (items: Item[]): Item[] =>
+  items.map((it) => {
+    const add = NEW_ITEMS[it.id];
+    if (add && items[add.from]) {
+      const { from, ...patch } = add;
+      const base = items[from];
+      return { ...base, seqB: patch.seqA ?? base.seqB, ...patch, params: [...base.params], id: it.id };
+    }
+    return ITEM_OVERRIDES[it.id] ? { ...it, ...ITEM_OVERRIDES[it.id] } : it;
+  });
 /** 个别装备的命中改值（道具号 → 命中）：遮日黑箬笠 +8、紅纓氈笠 +12（原版都是 0）【新：负责人 2026-11-14】 */
 export const EQUIP_HIT_OVERRIDES: Record<number, number> = { 125: 8, 126: 12 };
 
@@ -654,6 +685,7 @@ export function itemSummary(it: Item, n = 0): string {
     if (it.stun) p.push(`攻击致昏${it.stun}%`);
     return p.join(' ');
   }
+  if (it.area) p.push('自己和相邻同伴都');
   if (it.healHp) p.push(it.healHp < 0 ? '体力全满' : `回体${it.healHp}`);
   if (it.healMp) p.push(it.healMp < 0 ? '气力全满' : `回气${it.healMp}`);
   if (it.curePoison || it.type === 18) p.push('解毒');

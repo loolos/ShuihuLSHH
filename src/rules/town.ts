@@ -13,12 +13,16 @@ export const SHOPS = [
   { key: 'weapon', actions: ['buy', 'items'] },
   { key: 'smith', actions: ['forge', 'items'] },
   { key: 'drug', actions: ['buy', 'items'] },
-  { key: 'pawn', actions: ['pawn', 'buy', 'items'] },
+  // 当铺只典当，不卖东西（负责人 2026-11-26）：原来当铺卖的饰品、玉、兵书挪到武器店
+  { key: 'pawn', actions: ['pawn', 'items'] },
 ] as const;
 export type ShopAction = (typeof SHOPS)[number]['actions'][number];
 
-export const stock = (data: GameData, shop: number, town: number): number[] =>
-  data.items.flatMap((it, i) => (it.category === shop + 1 && it.buyPrice > 0 && it.seqA.includes(town) ? [i + 1] : []));
+/** 道具的大类（店序号 + 1）；原版当铺货（大类 5）改在武器店卖（负责人 2026-11-26） */
+const shopCategory = (category: number) => (category === 5 ? 2 : category);
+/** 本店的货：大类对上、有买价、城镇号表含本城；续篇城镇按 tier 分档（Item.shopTier，§7.5） */
+export const stock = (data: GameData, shop: number, town: number, tier = 0): number[] =>
+  data.items.flatMap((it, i) => (shopCategory(it.category) === shop + 1 && it.buyPrice > 0 && it.seqA.includes(town) && (it.shopTier ?? 0) <= tier ? [i + 1] : []));
 
 export interface Outcome {
   c: CampaignState;

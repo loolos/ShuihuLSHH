@@ -10,6 +10,10 @@ export interface Item {
   icon: number; // +2 图标编号（Object.lib 帧号）
   /** 扩展包道具自带的图标（图片地址），有就代替 icon */
   iconUrl?: string;
+  /** 续篇商店分档【新：负责人 2026-11-26】：1 = 续篇二档（清风山整备起）、2 = 续篇三档（梁山泊整备起）才上架；不写 = 照城镇号表 */
+  shopTier?: number;
+  /** 群体药【新】：用了以后自己和上下左右相邻的友方都按本药回复（只看回体、回气） */
+  area?: boolean;
   name: string; // +6
   description: string; // +26
   moveBonus: number; // +104 移动力加成

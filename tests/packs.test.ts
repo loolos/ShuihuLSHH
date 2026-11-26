@@ -14,7 +14,7 @@ import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { DIRS, attackSkill, type Unit } from '../src/rules/unit.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
 import { buy, pawn, stock } from '../src/rules/town.ts';
-import { insertTownName, prepareInsertTown, insertTownIntro } from '../src/packs/towns.ts';
+import { insertTownName, prepareInsertTown, insertTownIntro, shopTierOf } from '../src/packs/towns.ts';
 import { inheritAssets, pendingInsert, recordResult, type CampaignState } from '../src/rules/campaign.ts';
 import { insertPlaces } from '../src/rules/chapters.ts';
 /** 章节表算出的插关位置：关卡 id → before / after */
@@ -1556,6 +1556,18 @@ describe.skipIf(!has)('孟州续篇：存档、援军与结算', () => {
     expect(bows.map((it) => it.name)).toEqual(['獵弓', '鵲畫弓', '寶雕弓']);
     for (const it of bows) expect(canEquip(rt.data.classes[cid('huarong')], it, rt.data)).toBe(true);
     expect(canEquip(rt.data.classes[cid('wusong')], bows[0], rt.data)).toBe(false);
+  });
+  it('续篇商店分三档：清风山整备起二档、梁山泊整备起三档，后一档含前一档', async () => {
+    const { stock } = await import('../src/rules/town.ts');
+    expect(['mainline/yuanyanglou', 'mainline/yekun', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/ruzhuang'].map(shopTierOf)).toEqual([0, 1, 1, 2, 2]);
+    const names = (shop: number, tier: number) => stock(rt.data, shop, 11, tier).map((id) => rt.data.items[id - 1].name);
+    expect(names(1, 0)).not.toContain('蟠龍棍');
+    expect(names(1, 1)).toEqual(expect.arrayContaining(['蟠龍棍', '錦繡衫', '金線抹額', '鐵胎弓']));
+    expect(names(1, 1)).not.toContain('烏油對嵌鎧');
+    expect(names(1, 2)).toEqual(expect.arrayContaining(['蟠龍棍', '烏犀軟甲', '烏油對嵌鎧', '紫金盔']));
+    expect(names(3, 0)).not.toContain('回春丹');
+    expect(names(3, 1)).toContain('回春丹');
+    expect(names(4, 2)).toEqual([]); // 当铺只典当
   });
 
   it('第一次出场的人自带武器；武松用手套，哨棒、解腕刀只是本场临时拿着（负责人 2026-11-15）', () => {

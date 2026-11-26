@@ -21,7 +21,7 @@ import { stageJson, stageMapName } from './rules/load.ts';
 import { jumpTo, jumpToTown, mainlineGold, packStageGold, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
-import { insertTownName, prepareInsertTown, insertTownIntro } from './packs/towns.ts';
+import { insertTownName, prepareInsertTown, insertTownIntro, shopTierOf } from './packs/towns.ts';
 import { insertTavern } from './packs/tavern.ts';
 import { compileStage, stageClasses, stageKind, stageSealTiles, type PackRuntime } from './packs/build.ts';
 import { royalePool, royaleStage } from './packs/royale.ts';
@@ -616,7 +616,7 @@ function startGame(assets: Assets) {
     }
     town.setAssets(pa);
     town.show({ ...townParty(campaign,rt), active: ids }, {
-      town: stop.town, title: `城镇 · ${insertTownName(stop.next)}`, ...insertTavern(rt, stop.next),
+      town: stop.town, shopTier: shopTierOf(stop.next), title: `城镇 · ${insertTownName(stop.next)}`, ...insertTavern(rt, stop.next),
       leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
       onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },

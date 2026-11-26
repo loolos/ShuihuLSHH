@@ -9,15 +9,15 @@
 // - 回复药：按实际能回的量计价，体力 2.5 两/点、气力 2 两/点；回满和超过上限的都按好汉 45 级的上限算（体力 300、气力 200），
 //   解毒、解昏各 50 两。
 // - 限时增益：小加值按 加值 × 回合 × 17 两（原版五种酒的平均）；+255 / 必杀 100% / 加移动这类质变的没法线性比，按同组比较给一个判断价。
-import { loadGameData } from '../src/rules/load.ts';
 import type { Item } from '../src/formats/goo.ts';
 import { equipHitBonus, equipMoveBonus, equipSlotOf, itemBuffs } from '../src/rules/data.ts';
-import { nodeGameFiles } from './sim-lib.ts';
+import { loadPackFromDisk } from './sim-pack.ts';
 import t2s from '../gamedata/tables/t2s.json' with { type: 'json' };
 import goods from '../gamedata/tables/goods.json' with { type: 'json' };
 
 const conv = (s: string) => [...s].map((c) => (t2s as Record<string, string>)[c] ?? c).join('');
-const data = loadGameData(nodeGameFiles());
+// 连 mainline 包的商店货（弓、续篇分档新货）一起审
+const data = loadPackFromDisk('mainline').data;
 const showAll = process.argv.includes('--all');
 const asJson = process.argv.includes('--json');
 /** 原版的买价（曲线只按原版本来就在商店卖的货拟合，重制版改过的价不影响指导价） */
@@ -72,7 +72,9 @@ function consumableGuide(it: Item): [number, string] | null {
   const cure = (it.curePoison || it.type === 18 ? CURE : 0) + (it.cureStun || it.type === 19 ? CURE : 0);
   const buff = itemBuffs(it).reduce((s, b) => s + Math.abs(b.value) * b.turns * BUFF_RATE, 0);
   const parts = [hp && `体${hp}`, mp && `气${mp}`, cure && '解状态', buff && '增益'].filter(Boolean).join(' ');
-  return [Math.round(hp * HP_RATE + mp * MP_RATE + cure + buff), parts];
+  // 群体药按平均 2 人计（自己 + 约 1 个相邻同伴）
+  const n = it.area ? 2 : 1;
+  return [Math.round((hp * HP_RATE + mp * MP_RATE) * n + cure + buff), (it.area ? '群体×2 ' : '') + parts];
 }
 
 const median = (a: number[]) => {
@@ -107,7 +109,7 @@ function fitCurves(groups: Record<string, { x: number; p: number }[]>) {
   return { b, at: (g: string, x: number) => Math.exp(a[g] + b * Math.log(Math.max(1, x))) };
 }
 
-const shop = data.items.filter((it) => it && it.buyPrice > 0 && it.category > 0);
+const shop = data.items.filter((it) => it && it.buyPrice > 0 && it.category > 0 && it.seqA.some((t) => t > 0));
 /** 饰品、玉、兵法：头饰栏里不加防御的那些 */
 const isTrinket = (it: Item) => equipSlotOf(it) === 2 && it.defense === 0;
 const groups: Record<string, Item[]> = { 武器: [], 衣服: [], 头饰: [], 饰品: [] };

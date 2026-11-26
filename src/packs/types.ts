@@ -158,6 +158,20 @@ export interface PackItemJson {
   defense?: number;
   agility?: number;
   hit?: number;
+  crit?: number;
+  maxHp?: number;
+  maxMp?: number;
+  regenHp?: number;
+  regenMp?: number;
+  /** 消耗品：回体 / 回气（−1 = 回满） */
+  healHp?: number;
+  healMp?: number;
+  /** 群体药：自己和相邻友方都回复（Item.area） */
+  area?: boolean;
+  /** 卖在哪家店（原版大类：1 酒店、2 武器店、4 药铺）；不写 = 武器店 */
+  category?: number;
+  /** 续篇商店分档（Item.shopTier）：1 = 续篇二档、2 = 续篇三档 */
+  shopTier?: number;
   /** 道具类型码（0–12 武器类，如 11 = 弓）；不写沿用 from */
   type?: number;
   /** 买价；卖价取一半 */
