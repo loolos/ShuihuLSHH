@@ -26,8 +26,8 @@ export const EQUIPMENT_CATEGORIES: Record<string, string[]> = {
   "兵书": ["鬼谷子兵法", "孫臏兵法", "孫子兵法", "黃石公兵法", "孔明兵法"],
   "特殊": ["108魔星草人"]
 };
-/** 商店里并成「其他」的小类（负责人 2026-11-26）：只有一两件、以后不扩展；配装表仍按原类别给人物。便帽、僧帽、官帽合成「帽子」（防低、每回合回体回气） */
-export const SHOP_OTHER = new Set(['夜行衣', '僧衣', '蓑衣', '道袍', '特殊']);
+/** 商店里并成「其他」的小类（负责人 2026-11-26）：只有一两件、以后不扩展；配装表仍按原类别给人物。便帽、僧帽、官帽合成「帽子」（防低、每回合回体回气）；头饰的护符、花饰、纹玉、兵书也并进「其他」，不再扩充 */
+export const SHOP_OTHER = new Set(['夜行衣', '僧衣', '蓑衣', '道袍', '护符', '花饰', '纹玉', '兵书', '特殊']);
 /** 商店折叠列表里衣帽的二级分类名 */
 export function shopGroup(name: string): string {
   const key = Object.keys(EQUIPMENT_CATEGORIES).find((k) => EQUIPMENT_CATEGORIES[k].includes(name));
@@ -193,6 +193,21 @@ export const PACK_KITS: Record<string, { armor?: string; head?: string }> = {
   薛永: { armor: '常服' },
   侯健: { armor: '常服' },
   朱贵: { armor: '常服' },
+  // 负责人 2026-11-26：常服 + 头巾的人太多，按原著身份分散开（原版 18 人不动）
+  杨雄: { armor: '轻甲', head: '帽子' }, // 两院押狱兼刽子手
+  孙新: { armor: '轻甲' }, // 军官孙立之弟，学得哥哥枪法
+  解珍: { armor: '轻甲', head: '帽子' }, // 登州猎户，虎皮帽
+  解宝: { armor: '轻甲', head: '帽子' },
+  杜兴: { armor: '轻甲' }, // 李家庄主管，随李应厮杀
+  王英: { armor: '战袍', head: '战盔' }, // 清风山头领
+  马麟: { armor: '战袍' }, // 黄门山头领
+  邹渊: { armor: '战袍' }, // 登云山头领
+  武松: { head: '斗笠' }, // 原著行路「头戴毡笠儿」
+  李俊: { head: '斗笠' }, // 揭阳岭、浔阳江上的水上好汉
+  张横: { head: '斗笠' },
+  童威: { head: '斗笠' },
+  戴宗: { head: '帽子' }, // 江州两院院长
+  乐和: { head: '帽子' }, // 登州牢子
 };
 /** 原版人物有显式标定；扩展人物按 PACK_KITS 或初始衣服/头饰归类，缺省常服/头巾。 */
 export function kitProfile(data: GameData, cls: ClassDef) {

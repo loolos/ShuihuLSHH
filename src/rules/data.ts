@@ -563,16 +563,16 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
   109: price(4960), // 铁葉攢鎧：原 5200
   112: price(60), // 一字巾：原 50
   115: price(460), // 干红凹面巾：原 400
-  118: price(720), // 軟紗唐巾：原 1500
-  119: price(1740), // 黑头巾：原 2090
-  120: price(1840), // 皂紗唐巾：原 2800
+  118: { ...price(720), hit: 4 }, // 軟紗唐巾：原 1500；命中 +4（高档头巾加命中，负责人 2026-11-26）
+  119: { ...price(1740), hit: 6 }, // 黑头巾：原 2090；命中 +6
+  120: { ...price(1840), hit: 8 }, // 皂紗唐巾：原 2800；命中 +8
   121: price(590), // 虎皮帽：原 300
   122: price(630), // 僧帽：原 400
   123: price(1100), // 官帽：原 800
   128: { ...price(150), agility: -1 }, // 熟铁盔：原 300；敏捷 −2 → −1
   129: { ...price(130), agility: -2 }, // 朱纓盔：原 1200；敏捷 −4 → −2
-  130: { ...price(210), agility: -3 }, // 獅子盔：原 1800；敏捷 −6 → −3
-  131: { ...price(550), agility: -4 }, // 熟钢獅子盔：原 2400；敏捷 −8 → −4
+  130: { ...price(210), agility: -3, crit: 3 }, // 獅子盔：原 1800；敏捷 −6 → −3；必杀 +3（战盔必杀按档拉开，负责人 2026-11-26）
+  131: { ...price(550), agility: -4, crit: 6 }, // 熟钢獅子盔：原 2400；敏捷 −8 → −4；必杀 +6
   139: price(840), // 青花錫飾：原 1000
   155: price(70), // 狗皮膏药：原 50
   169: price(390), // 青花壇酒：原 400
@@ -581,6 +581,8 @@ export const ITEM_OVERRIDES: Record<number, Partial<Item>> = {
    * 最早两件重甲防御太低（比城镇 5 的朱红甲还低），裹金生铁甲 16 → 24、镶银生铁甲 17 → 26。
    */
   103: { agility: 0 }, // 連環甲
+  116: { hit: 2 }, // 青紗頭巾：命中 +2（头巾到这档起加命中）
+  117: { hit: 5 }, // 萬字巾（宝箱货）：命中 +5
   133: { agility: -6 }, // 鳳翅金盔
   105: { defense: 24, description: '防御力加24，可提升', ...price(700) }, // 裹金生鐵甲：原 500
   106: { defense: 26, description: '防御力加26，可提升' }, // 鑲銀生鐵甲
@@ -596,7 +598,7 @@ const NEW_ITEMS: Record<number, { from: number } & Partial<Item>> = {
   81: { from: 103, name: '鎖子甲', icon: 200, defense: 28, agility: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(2200, 7) }, // 轻甲：原到顶朱紅甲 防 22（城镇 5）
   82: { from: 102, name: '柳葉軟甲', icon: 201, defense: 34, agility: 0, maxHp: 15, description: '防御力加34，可提升', ...shopItem(3200, 9) },
   170: { from: 121, name: '貂鼠皮帽', icon: 205, defense: 9, regenHp: 15, regenMp: 15, description: '防御力加9，每回合回復體力氣力15點', ...shopItem(2600, 6) }, // 帽子：官帽（城镇 3）到烏紗帽（城镇 9）之间
-  160: { from: 132, name: '爛銀盔', icon: 202, defense: 28, hit: 0, agility: -6, crit: 0, maxHp: 10, description: '防御力加28，可提升', ...shopItem(1600, 10) }, // 战盔：原到顶耀日鑌鐵盔 防 20
+  160: { from: 132, name: '爛銀盔', icon: 202, defense: 28, hit: 0, agility: -6, crit: 13, maxHp: 10, description: '防御力加28，可提升', ...shopItem(1600, 10) }, // 战盔：原到顶耀日鑌鐵盔 防 20
 };
 export const withItemOverrides = (items: Item[]): Item[] =>
   items.map((it) => {
