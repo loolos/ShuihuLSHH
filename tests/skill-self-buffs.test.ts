@@ -172,7 +172,11 @@ describe('技能自身增益', () => {
       const s = skills.find((x) => x.name === name)!;
       expect(s.selfBuffs, name).toEqual([{ stat, value, turns: 2 }]);
     }
-    expect(skills.find((x) => x.name === '吹铁叫子')!.healRegen).toEqual({ divisor: 10, turns: 3 });
+    const whistle = skills.find((x) => x.name === '吹铁叫子')!;
+    expect(whistle.healRegen).toEqual({ divisor: 10, turns: 3 });
+    // 施放点：自己和四个方向各 2 格（共 9 格）；起效：落点的 5 格小十字
+    expect([whistle.rangeMin, whistle.rangeMax]).toEqual([0, 2]);
+    expect(whistle.areaPattern).toHaveLength(5);
   });
 
   it('原版好汉增益表只写防御、敏捷、回体，数值为正', () => {
