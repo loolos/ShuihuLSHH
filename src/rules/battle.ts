@@ -953,6 +953,10 @@ export class Battle {
     });
     return m;
   }
+  /** 技能显示名（增益的来源名就是它，见 addBuffs） */
+  skillLabel(skill: SkillDef): string {
+    return this.tr(skill.name);
+  }
   /** 能施放的格子（范围内至少有一个可作用的单位） */
   skillTargets(u: Unit, skill: SkillDef, at: Cell = u): Cell[] {
     if (this.cuju && !isSupportSkill(skill)) return this.kickCells(u, skill, at);

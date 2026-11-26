@@ -4,7 +4,7 @@ import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
 import { castRange, isAllyChargeSkill, isRechargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills } from './skills.ts';
-import { attackRange, attackSkill, dist, type Unit } from './unit.ts';
+import { attackRange, attackSkill, dist, hostile, type Unit } from './unit.ts';
 
 export interface AiPlan {
   path?: Cell[]; // 含起点
@@ -155,16 +155,86 @@ export function healSkill(b: Battle, u: Unit): AiPlan | null {
   return s && cell ? { skill: s, cell } : null;
 }
 
+/** 需要照顾的自己人：体力不到一半，或（能解的技能）中毒、昏迷（剧情绑住的不算） */
+const needsHeal = (b: Battle, t: Unit, cure?: boolean) =>
+  t.hp < t.stats.maxHp / 2 || (!!cure && !b.isBound(t) && (t.poisonTurns > 0 || t.stunTurns > 0));
+
 /**
- * 打不到人、又有敌人在下回合可能打到自己的距离内（敌人移动力 + 3 格）时，在走到的位置摆架势技【新】（§6.5.3）；
- * 身上已有这招的全部增益就不重复摆。
+ * 回复技给自己人回血【新】（负责人 2026-11-26，§8）：移动范围内（budget）每个出手位置、每个施放点都试一遍，
+ * 范围里至少有一个体力不到一半（或能解的中毒 / 昏迷）的自己人才放；按实际回得上的体力打分，体力不到 1/3 的人加倍算，
+ * 能解状态的再加一点；同分少走路。波及剧情绑住的人的落点不选（解昏迷会把人放了）。
+ */
+export function healPlan(b: Battle, u: Unit, budget = u.stats.move): AiPlan | null {
+  const skills = learnedSkills(u, b.data).filter((k) => isHealSkill(k) && k.mpCost <= u.mp);
+  if (!skills.length) return null;
+  // 范围里没人需要照顾就不必一格格试：自己人里没有需要照顾的直接跳过
+  if (!b.active().some((t) => !hostile(u, t) && !b.spectators.has(t.uid) && skills.some((k) => needsHeal(b, t, k.cure)))) return null;
+  const reach = b.reachOf(u, budget);
+  const occ = b.occupancy(u);
+  let best: { at: { x: number; y: number; cost: number }; skill: SkillDef; cell: Cell; score: number } | null = null;
+  for (const n of reach.values()) {
+    const at = { x: n.x, y: n.y };
+    for (const skill of skills)
+      for (const cell of b.skillCells(u, skill, at)) {
+        const hit = b.affected(u, skill, cell, at, occ);
+        if (!hit.some((t) => needsHeal(b, t, skill.cure)) || (skill.cure && hit.some((t) => b.isBound(t)))) continue;
+        let score = 0;
+        for (const t of hit) {
+          const gain = Math.min(t.stats.maxHp - t.hp, Math.floor(t.stats.maxHp / Math.max(1, skill.power)));
+          score += t.hp < t.stats.maxHp / 3 ? gain * 2 : gain;
+          if (skill.cure && (t.poisonTurns > 0 || t.stunTurns > 0)) score += Math.floor(t.stats.maxHp / 10);
+        }
+        if (!best || score > best.score || (score === best.score && n.cost < best.at.cost)) best = { at: n, skill, cell, score };
+      }
+  }
+  return best ? { path: b.pathOf(reach, best.at), skill: best.skill, cell: best.cell } : null;
+}
+
+/** 这个人身上已经有这招的增益（同一招还剩 2 回合以上，或别的来源同属性不低于它）：再放是白费一回合 */
+export function hasSkillBuffs(b: Battle, t: Unit, skill: SkillDef): boolean {
+  const list = skill.selfBuffs ?? [];
+  if (!list.length) return true;
+  if (t.buffs.some((y) => y.source === b.skillLabel(skill) && y.turns > 1)) return true;
+  return list.every((x) => t.buffs.some((y) => y.stat === x.stat && y.value >= x.value && y.turns > 1));
+}
+
+/** 下回合可能挨打：有敌人在「它的移动力 + 3」格以内 */
+const inDanger = (b: Battle, u: Unit, at: Cell) => b.aiFoesOf(u).some((t) => dist(at, t) <= t.stats.move + 3);
+
+/**
+ * 增益给谁【新】（负责人 2026-11-26）：自己（站在 end）或 buffAlly 技能可选的相邻队友里，还没有这招增益、下回合可能挨打的人；
+ * 挨得着的敌人多的优先，再看体力比例低的，再看离敌人近的。返回施放点；没人值得加就返回 undefined。
+ */
+function buffCell(b: Battle, u: Unit, skill: SkillDef, end: Cell): Cell | undefined {
+  const cands: { t: Unit; at: Cell }[] = [{ t: u, at: end }];
+  if (skill.buffAlly)
+    for (const t of b.active())
+      if (t !== u && !hostile(u, t) && !b.spectators.has(t.uid) && !b.isBound(t) && dist(end, t) === 1) cands.push({ t, at: t });
+  let best: { at: Cell; foes: number; ratio: number; near: number } | null = null;
+  for (const { t, at } of cands) {
+    if (hasSkillBuffs(b, t, skill) || !inDanger(b, u, at)) continue;
+    const close = b.aiFoesOf(u).filter((f) => dist(at, f) <= f.stats.move + 3);
+    const foes = close.length;
+    const ratio = t.hp / t.stats.maxHp;
+    const near = Math.min(...close.map((f) => dist(at, f)));
+    if (!best || foes > best.foes || (foes === best.foes && (ratio < best.ratio || (ratio === best.ratio && near < best.near)))) best = { at, foes, ratio, near };
+  }
+  return best ? { x: best.at.x, y: best.at.y } : undefined;
+}
+
+/**
+ * 打不到人、又有敌人在下回合可能打到自己（或可加增益的相邻队友）的距离内（敌人移动力 + 3 格）时，在走到的位置摆架势技【新】（§6.5.3）；
+ * 身上已有这招的增益就不重复摆，能给队友的（呼保义、神行法、神机助气）挑最需要的人。
  */
 export function withStance(b: Battle, u: Unit, plan: AiPlan): AiPlan | null {
   if (plan.skill) return null;
   const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
-  const s = learnedSkills(u, b.data).find((k) => isStanceSkill(k) && k.mpCost <= u.mp && !k.selfBuffs!.every((x) => u.buffs.some((y) => y.stat === x.stat && y.turns > 0)));
-  if (!s || !b.aiFoesOf(u).some((t) => dist(end, t) <= t.stats.move + 3)) return null;
-  return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
+  for (const s of learnedSkills(u, b.data)) {
+    if (!isStanceSkill(s) || s.mpCost > u.mp) continue;
+    const cell = buffCell(b, u, s, end);
+    if (cell) return { ...plan, skill: s, cell };
+  }
+  return null;
 }
 
 /** 打不到人时：气力不到一半就在走到的位置用集气技【新】 */
@@ -176,11 +246,13 @@ export function withCharge(b: Battle, u: Unit, plan: AiPlan): AiPlan {
   const s = learnedSkills(u, b.data).find(isRechargeSkill);
   if (!s) return plan;
   const end = plan.path?.at(-1) ?? { x: u.x, y: u.y };
-  return { ...plan, skill: s, cell: { x: end.x, y: end.y } };
+  // 回气顺带给人加增益的（天王聚義式、運籌帷幄）：增益给最需要的相邻队友，没人需要就给自己
+  const cell = (s.buffAlly && buffCell(b, u, s, end)) || { x: end.x, y: end.y };
+  return { ...plan, skill: s, cell };
 }
 
 function defaultPlan(b: Battle, u: Unit): AiPlan {
-  const heal = healIfLow(b, u) ?? healSkill(b, u);
+  const heal = healIfLow(b, u) ?? healPlan(b, u);
   if (heal) return heal;
   // 相邻队友严重缺气时先援气；自身回气仍只选择自身集气技能。
   const aid = allyChargePlan(b, u);
@@ -248,9 +320,10 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     case 2:
     case 6: {
       // 迎击：警戒半径内有敌人才行动，否则原地待命（半径见 alertRadius）
+      // 没敌人靠近时原地不动，只在原地给够得着的自己人回血
       const near = foesWithin(b, u, alertRadius(b, u));
-      if (!near.length) return withCharge(b, u, {});
-      return healSkill(b, u) ?? bestAttack(b, u) ?? withCharge(b, u, approach(b, u, near));
+      if (!near.length) return healPlan(b, u, 0) ?? withCharge(b, u, {});
+      return healPlan(b, u) ?? bestAttack(b, u) ?? withCharge(b, u, approach(b, u, near));
     }
     case 3: {
       // 固守：只攻击"移动 + 射程"内的敌人，打不到就不动
