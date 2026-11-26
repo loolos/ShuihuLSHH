@@ -3628,7 +3628,8 @@
    "facing": 2,
    "ai": 2,
    "levelOffset": 1,
-   "name": "祝虎"
+   "name": "祝虎",
+   "hpMultiplier": 1.5
   },
   {
    "id": "zhuhu-bg0",
@@ -3847,7 +3848,8 @@
    "facing": 2,
    "ai": 2,
    "levelOffset": 1,
-   "name": "祝彪"
+   "name": "祝彪",
+   "hpMultiplier": 1.5
   },
   {
    "id": "zhubiao-bg0",
@@ -4066,7 +4068,8 @@
    "facing": 2,
    "ai": 2,
    "levelOffset": 1,
-   "name": "祝龙"
+   "name": "祝龙",
+   "hpMultiplier": 1.5
   },
   {
    "id": "zhulong-bg0",
