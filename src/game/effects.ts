@@ -8,6 +8,8 @@ import { DIRS } from '../rules/unit.ts';
 export const FX_CHARGE = 7;
 /** 回复技一律播第 17 组（EXE 0x4037db：类型 9、11 → push 0x11），不看技能子项 +6 */
 export const FX_HEAL = 17;
+/** 架势技（加增益、不回气，如呼保义、神行法）【新】（负责人 2026-11-26：别用回气的特效）：施放点（自己或所选队友）身上升起第 24 组蓝色光柱 */
+export const FX_BUFF = 24;
 /** 防御：我方单位进入防御状态时在脚下播第 48 组（蓝色护盾圈，EXE 0x4075c0 → 0x40765f；只限阵营 0 且已登场），声音 49.wav */
 export const FX_DEFEND = 48;
 /** 反击：防御中闪开相邻攻击、触发反击时，在反击者脚下先播第 37 组（聚气爆光，EXE 0x4077a0 → 0x40782b），声音 38.wav，再出手 */
@@ -87,8 +89,9 @@ export interface SkillFx {
  * - 类型 11 的回复技 +6 不为 0 才播，播的也是第 17 组（不是 +6 那组）；
  * - 其它技能 +6 为 0 时不播，否则 +6 → +24 → +26 三段接力。
  */
-export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage'>): SkillFx | null {
+export function skillFx(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage'> & Partial<Pick<SkillDef, 'power' | 'selfBuffs'>>): SkillFx | null {
   const base = { then: null, onTarget: null, directional: false, projectile: false };
+  if (s.type === 8 && (s.power ?? 0) <= 0 && s.selfBuffs?.length) return { ...base, first: FX_BUFF, atEnd: true };
   if (s.type === 8) return { ...base, first: FX_CHARGE, atEnd: true };
   if (s.type === 9) return { ...base, first: FX_HEAL, atEnd: true };
   if (s.type === 2 || s.effect <= 0) return null;
@@ -181,7 +184,7 @@ export function fxChain(fx: SkillFx, dir: number, hasTarget: boolean, triggers: 
 }
 
 /** 这个技能可能用到的全部组（按需下载用） */
-export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage' | 'hitFx'>): number[] {
+export function fxGroups(s: Pick<SkillDef, 'type' | 'effect' | 'effect2' | 'effect3' | 'rangedDamage' | 'hitFx'> & Partial<Pick<SkillDef, 'power' | 'selfBuffs'>>): number[] {
   const hit = s.hitFx ? [...new Set((HIT_FX[s.hitFx]?.layers ?? []).map((l) => l.group))] : [];
   const fx = skillFx(s);
   if (!fx) return hit;
