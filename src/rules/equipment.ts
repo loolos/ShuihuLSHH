@@ -159,6 +159,9 @@ export const MEDICINE_TABLE = [
   ['銀創藥', '金創藥', '天山雪蓮', '豬肉包子'],
   ['金創藥', '大還金丹', '天山雪蓮', '牛肉包子'],
 ];
+/** 高于这个等级的默认药品另加 1 个 STUN_CURE（负责人 2026-11-26） */
+export const STUN_CURE_LEVEL = 20;
+export const STUN_CURE = '解昏迷草藥';
 export function kitBand(level: number): number {
   return Math.max(0, LEVEL_BANDS.filter((min) => level >= min).length - 1);
 }
@@ -203,7 +206,8 @@ export function levelKit(data: GameData, cls: ClassDef, level: number, slots: nu
     const it = itemOf(data, slots[k]);
     if (it && it.type >= 15 && it.type <= 22) slots[k] = 0;
   }
-  for (const name of MEDICINE_TABLE[band]) {
+  // 高于 20 级每人另带 1 个解昏迷草藥（负责人 2026-11-26），不算在每档 4 件里。
+  for (const name of [...MEDICINE_TABLE[band], ...(level > STUN_CURE_LEVEL ? [STUN_CURE] : [])]) {
     const id = data.items.findIndex((it) => it.name === name) + 1;
     const empty = slots.findIndex((v, k) => k >= 3 && !v);
     if (id && empty >= 0) slots[empty] = id;

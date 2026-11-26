@@ -51,7 +51,12 @@ it('低级小药，高级天山雪蓮最多一个；清理剧本回复药，保�
   levelKit(data, cls, 1, slots);
   expect(slots.slice(3).filter((v) => v === id('跌打藥'))).toHaveLength(1);
   expect(slots.slice(3).filter((v) => v === id('狗皮膏藥'))).toHaveLength(2);
+  levelKit(data, cls, 20, slots);
+  expect(slots).not.toContain(id('解昏迷草藥'));
+  levelKit(data, cls, 21, slots);
+  expect(slots.slice(3).filter((v) => v === id('解昏迷草藥'))).toHaveLength(1);
   levelKit(data, cls, 30, slots);
+  expect(slots.slice(3).filter((v) => v === id('解昏迷草藥'))).toHaveLength(1);
   expect(slots.slice(3).filter((v) => v === id('天山雪蓮'))).toHaveLength(1);
   expect(slots.slice(3).filter((v) => v === id('牛肉包子'))).toHaveLength(1);
   expect(slots).toContain(id('古武術祕笈'));
