@@ -447,6 +447,102 @@
       "hidden": true
     },
     {
+      "id": "ge-1",
+      "class": 32,
+      "side": "enemy",
+      "x": 7,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "ge-2",
+      "class": 33,
+      "side": "enemy",
+      "x": 8,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "ge-3",
+      "class": 32,
+      "side": "enemy",
+      "x": 9,
+      "y": 20,
+      "level": 30,
+      "facing": 0,
+      "name": "土兵",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "ge-4",
+      "class": 36,
+      "side": "enemy",
+      "x": 8,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "做公的",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "ge-5",
+      "class": 34,
+      "side": "enemy",
+      "x": 7,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "ge-6",
+      "class": 34,
+      "side": "enemy",
+      "x": 9,
+      "y": 22,
+      "level": 30,
+      "facing": 0,
+      "name": "弓手",
+      "levelOffset": -2,
+      "hidden": true
+    },
+    {
+      "id": "ge-7",
+      "class": 43,
+      "side": "enemy",
+      "x": 5,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
+      "id": "ge-8",
+      "class": 43,
+      "side": "enemy",
+      "x": 11,
+      "y": 21,
+      "level": 30,
+      "facing": 0,
+      "name": "马军",
+      "levelOffset": -1,
+      "hidden": true
+    },
+    {
       "id": "gd-1",
       "class": 34,
       "side": "enemy",
@@ -1844,6 +1940,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -1893,6 +2021,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -1942,6 +2102,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -1991,6 +2183,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2040,6 +2264,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2089,6 +2345,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2138,6 +2426,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2187,6 +2507,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2236,6 +2588,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2285,6 +2669,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2334,6 +2750,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2383,6 +2831,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2432,6 +2912,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2481,6 +2993,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2530,6 +3074,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2579,6 +3155,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2628,6 +3236,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2677,6 +3317,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2726,6 +3398,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2775,6 +3479,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
@@ -2824,6 +3560,38 @@
         [
           "appear",
           "gc-8"
+        ],
+        [
+          "appear",
+          "ge-1"
+        ],
+        [
+          "appear",
+          "ge-2"
+        ],
+        [
+          "appear",
+          "ge-3"
+        ],
+        [
+          "appear",
+          "ge-4"
+        ],
+        [
+          "appear",
+          "ge-5"
+        ],
+        [
+          "appear",
+          "ge-6"
+        ],
+        [
+          "appear",
+          "ge-7"
+        ],
+        [
+          "appear",
+          "ge-8"
         ]
       ]
     },
