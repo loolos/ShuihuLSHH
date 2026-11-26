@@ -133,7 +133,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     const names = (usable: boolean) => b.skillsOf(lh).filter((s) => s.usable === usable).map((s) => s.skill.name);
     expect(names(true)).toEqual(expect.arrayContaining(['吹铁叫子', '长吹铁叫子']));
     lh.disguised = false;
-    expect(names(false)).toEqual(expect.arrayContaining(['吹铁叫子', '长吹铁叫子']));
+    expect(names(false)).toContain('长吹铁叫子');
+    expect(names(true)).toContain('吹铁叫子'); // 吹铁叫子平时是回复技，明着也能用（负责人 2026-11-26）
     const long = learnedSkills(lh, b.data).find((s) => s.name === '长吹铁叫子')!;
     expect(b.useSkill(lh, long, { x: lh.x, y: lh.y - 1 })).toEqual([]);
     expect(get('zouyuan').side).toBe('ally');
@@ -149,7 +150,6 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     b.useSkill(lh, long, b.skillTargets(lh, long)[0]);
     expect(lh.disguised).toBe(true);
     expect(bj.stunTurns).toBe(2);
-    expect(skill(b, lh, '吹铁叫子').drug).toBe(2); // 普通吹铁叫子也愣两回合（负责人 2026-11-25）
     const gu = get('gudasao'), xl = get('xl0');
     xl.facing = 3;
     put(gu, xl.x + 3, xl.y);
@@ -164,6 +164,21 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第三十二
     expect(s.drug).toBeUndefined();
     expect(s.stun).toBe(100);
     expect(s.stunFor).toBe(1);
+  });
+
+  it('吹铁叫子是回复技：自己和前后左右的我方每人回 1/3 体力，不破伪装（负责人 2026-11-26）', () => {
+    const { b, get } = open('jielao');
+    const lh = get('lehe'), gu = get('gudasao');
+    const s = skill(b, lh, '吹铁叫子');
+    expect(s.drug).toBeUndefined();
+    put(gu, lh.x + 1, lh.y);
+    gu.hp = 10; lh.hp = 10;
+    const cell = b.skillTargets(lh, s)[0];
+    expect(b.affected(lh, s, cell)).toHaveLength(2);
+    b.useSkill(lh, s, cell);
+    expect(gu.hp).toBe(10 + Math.floor(gu.stats.maxHp / 3));
+    expect(lh.hp).toBe(10 + Math.floor(lh.stats.maxHp / 3));
+    expect(lh.disguised).toBe(true);
   });
 
   it('劫牢：死囚牢门口的看守面朝外，正前方三格看住整个「死囚牢门」，得先吹铁叫子；最左边牢门口另有看守', () => {
