@@ -228,8 +228,13 @@ const buff = (stat: BuffStat, value: number, turns: number): Buff => ({ stat, va
  * 按名字挂，分级技能各级分开写；敌方版好汉（职业号 46 起）不受影响。
  */
 export const HERO_SELF_BUFFS: Record<number, Record<string, Buff[]>> = {
-  0: { 百尺竿頭: [buff('agility', 20, 5)] }, // 武龍（一夫當關本身已很强，不加）
-  3: { 龍蟠虎踞: [buff('defense', 20, 5)] }, // 史進（龍騰九天本身已很强，不加）
+  0: { 一夫當關: [buff('defense', 30, 3)], 一夫當關LV2: [buff('defense', 45, 3)], 百尺竿頭: [buff('agility', 20, 5)] }, // 武龍
+  3: { 龍蟠虎踞: [buff('defense', 20, 5)], 龍騰九天: [buff('agility', 35, 2)] }, // 史進
+  4: { 窮鼠噬貓: [buff('agility', 25, 2)], 窮鼠噬貓LV2: [buff('agility', 35, 2)] }, // 白勝
+  7: { 分水穿浪: [buff('agility', 25, 2)] }, // 阮小二
+  8: { 絕地逢生: [buff('defense', 25, 2)], 絕地逢生LV2: [buff('defense', 35, 2)] }, // 阮小五
+  9: { 横江拍浪: [buff('agility', 25, 2)] }, // 阮小七
+  17: { 魑魅魍魎: [buff('agility', 25, 2)] }, // 劉唐
   5: { 奇門遁甲LV1: [buff('agility', 20, 2)], 奇門遁甲LV2: [buff('agility', 25, 2)], 奇門遁甲LV3: [buff('agility', 35, 2)] }, // 朱武
   11: { 棄暗投明: [buff('regenHp', 12, 5)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
   10: { 運籌帷幄: [buff('agility', 35, 5)] }, // 吳用
