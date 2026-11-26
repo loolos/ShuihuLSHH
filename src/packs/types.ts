@@ -167,6 +167,9 @@ export interface PackItemJson {
   moveBonus?: number;
   /** 装备射程加成（普攻和射程大于 0 的技能） */
   range?: number;
+  /** 装备攻击带毒 / 昏迷几率（%） */
+  poison?: number;
+  stun?: number;
   /** 消耗品：回体 / 回气（−1 = 回满） */
   healHp?: number;
   healMp?: number;
