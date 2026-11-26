@@ -190,12 +190,10 @@ export function healPlan(b: Battle, u: Unit, budget = u.stats.move): AiPlan | nu
   return best ? { path: b.pathOf(reach, best.at), skill: best.skill, cell: best.cell } : null;
 }
 
-/** 这个人身上已经有这招的增益（同一招还剩 2 回合以上，或别的来源同属性不低于它）：再放是白费一回合 */
+/** 这个人身上已经有这招的增益（同一招还剩 2 回合以上）：同一招再放只刷新回合，白费一回合；别的来源的增益照样叠加，不算 */
 export function hasSkillBuffs(b: Battle, t: Unit, skill: SkillDef): boolean {
-  const list = skill.selfBuffs ?? [];
-  if (!list.length) return true;
-  if (t.buffs.some((y) => y.source === b.skillLabel(skill) && y.turns > 1)) return true;
-  return list.every((x) => t.buffs.some((y) => y.stat === x.stat && y.value >= x.value && y.turns > 1));
+  if (!skill.selfBuffs?.length) return true;
+  return t.buffs.some((y) => y.source === b.skillLabel(skill) && y.turns > 1);
 }
 
 /** 下回合可能挨打：有敌人在「它的移动力 + 3」格以内 */
