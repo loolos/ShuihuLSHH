@@ -17,6 +17,9 @@
 // - 循环接缝：Suno 的曲子最后约 5 秒是渐弱，不能直接 loop。两个播放器轮流放：快到结尾时另一个从头淡入，前一个淡出。
 // - 换曲时旧曲 1 秒淡出、新曲淡入，不硬切。
 // - 过关 / 失败音效播放期间把音乐压低（duck），播完再恢复。
+// - 同一时间只响一首音乐（负责人 2026-11-26 反映有时两首一起放）：插播短曲期间背景音乐完全静音（以前只压到 20%，
+//   而且按预估时长恢复，短曲还在缓冲时背景曲就回到原音量了），等短曲真的放完 / 出错再淡回来；
+//   不在主放的播放器每一拍都强制淡出；关卡开场的曲子是异步查出来的，查到之前剧本已经换了曲就不再覆盖。
 // - 音量跟顶栏「♪」档位（关 / 小 / 中 / 大）走，切档立即生效；「关」档同时静音音乐（负责人 2026-11-13 要求）。
 //   「音乐开 / 关」按钮仍然单独控制要不要放音乐。
 // - iPhone / iPad 的 Safari 不许网页改 <audio> 的 volume（写了也还是 1），所以那里把两个播放器接进 Web Audio，
@@ -68,6 +71,8 @@ const STINGS = new Set([
 ]);
 /** 两次插播至少隔多少毫秒（一回合里一次冒出好几个伏兵时只放一次） */
 const STING_GAP = 4000;
+/** 短曲最长按多少秒算（ended 事件丢了也不会让背景音乐一直静音） */
+const STING_MAX = 40;
 const KEEP = new Set(['victory', 'defeat']);
 
 interface BgmIndex {
@@ -129,6 +134,10 @@ class MusicPlayer {
   private stingEl = new Audio();
   private stingGain: GainNode | null = null;
   private stingAt = -1e9;
+  /** 正在插播短曲（背景音乐静音）；到这个时间还没收到结束事件也当作放完 */
+  private stingUntil = 0;
+  /** play() 调用次数：异步查曲目的调用据此判断期间有没有别处换过曲 */
+  private seq = 0;
   /** 当前（或即将）主放的播放器 */
   private active = 0;
   private index: Promise<BgmIndex | null> | null = null;
@@ -219,8 +228,10 @@ class MusicPlayer {
           this.onChange();
         }
       },
-      () => {
-        // 还没有用户操作，浏览器不让播：等第一次点击时再试
+      (e: unknown) => {
+        // 还没有用户操作，浏览器不让播：等第一次点击时再试。
+        // 换曲 / 淡出时 pause() 或换 src 打断的播放会以 AbortError 失败，那不是被拦
+        if ((e as { name?: string } | null)?.name === 'AbortError') return;
         this.blocked = true;
         this.onChange();
       },
@@ -236,18 +247,22 @@ class MusicPlayer {
     const now = performance.now();
     const dt = Math.min(1, (now - this.last) / 1000);
     this.last = now;
-    // 压低：到时间后 0.6 秒回到原音量
-    const want = now < this.duckUntil ? DUCK_LEVEL : 1;
+    // 压低：到时间后 0.6 秒回到原音量；插播短曲期间完全静音
+    if (this.stingUntil && (now >= this.stingUntil || this.stingEl.paused || this.stingEl.ended)) this.stingUntil = 0;
+    const want = this.stingUntil ? 0 : now < this.duckUntil ? DUCK_LEVEL : 1;
     if (this.duck > want) this.duck = Math.max(want, this.duck - dt / 0.25);
     else if (this.duck < want) this.duck = Math.min(want, this.duck + dt / 0.6);
     const a = this.decks[this.active];
+    // 只有主放的播放器可以有声：另一个不论因为什么还开着，都淡出
+    const other = this.decks[1 - this.active];
+    if (other.target > 0) other.fadeTo(0, SWITCH_FADE);
     // 循环接缝：快到结尾时另一个播放器从头接上
     if (a.target > 0 && !a.el.paused && a.el.duration > LOOP_TAIL * 3 && a.el.currentTime >= a.el.duration - LOOP_TAIL) this.loopNow(LOOP_XFADE);
     for (const d of this.decks) {
       d.step(dt);
       d.setVolume(musicVolume(this.level, this.duck, d.level));
     }
-    if (this.decks.every((d) => d.el.paused) && this.duck === 1) {
+    if (this.decks.every((d) => d.el.paused) && this.duck === 1 && !this.stingUntil) {
       clearInterval(this.timer!);
       this.timer = null;
     }
@@ -270,6 +285,7 @@ class MusicPlayer {
 
   /** 循环播放某首或轮放一个歌单（同一个正在放就不重来）；null = 停 */
   async play(want: Playlist): Promise<void> {
+    this.seq++;
     const list = want == null ? null : Array.isArray(want) ? want : [want];
     const key = list?.join(',') ?? null;
     this.current = want;
@@ -304,6 +320,12 @@ class MusicPlayer {
     d.level = 0;
     d.fadeTo(1, a.level > 0 ? SWITCH_FADE : 0.5);
     this.start(d);
+  }
+  /** 放某一关的默认曲子（要先异步查 index.json）：查到之前别处已经换过曲（比如剧本开场就换），就不再覆盖 */
+  async playStage(mapName: string): Promise<void> {
+    const seq = this.seq;
+    const t = await this.stageTrack(mapName);
+    if (this.seq === seq) await this.play(t);
   }
   /** 开着且不在「关」档 */
   get audible() {
@@ -367,11 +389,14 @@ class MusicPlayer {
       this.stingGain.gain.value = v;
       el.volume = 1;
     } else el.volume = v;
+    // 背景音乐先静音，短曲真的放完（paused / ended，出错也会停）才淡回来，见 tick()
+    const until = now + STING_MAX * 1000;
+    this.stingUntil = until;
+    this.ensureTimer();
     el.src = this.url(file);
-    el.addEventListener('loadedmetadata', () => this.duckFor((el.duration || 2) + 0.3), { once: true });
-    this.duckFor(2); // 先压低，读到时长后延长到放完
     el.play().catch(() => {
-      /* 自动播放被拦：不补放 */
+      // 放不出来：别让背景音乐一直静音（被下一首短曲顶掉的不算）
+      if (this.stingUntil === until) this.stingUntil = 0;
     });
   }
   /** 第一次用户操作时补放（浏览器的自动播放限制） */
