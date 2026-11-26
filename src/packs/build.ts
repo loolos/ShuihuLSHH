@@ -267,6 +267,8 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
   } else group = typeof s.anim === 'number' ? s.anim : t.group; // 借原版动画：原版第几个出手动作
   return {
     ...t,
+    // 杂兵「遠程攻擊」的射程封顶（TROOP_REACH_CAP）只给原版杂兵；包里借 222 的技能按自己写的射程（孙立 弯弓压阵 2–6 曾被压成 2–3）
+    reachCap: undefined,
     skillId,
     soundId: t.soundId ?? t.skillId,
     name: s.name,
