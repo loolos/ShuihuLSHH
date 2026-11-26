@@ -54,7 +54,6 @@ describe('技能自身增益', () => {
     const stance = learnedSkills(dai, rt.data).find((s) => s.name === '神行法')!;
     expect(isStanceSkill(stance)).toBe(true);
     expect(isRechargeSkill(stance)).toBe(false);
-    expect(skillTags(stance)).toEqual(['增益']);
     expect(skillBonusText(stance)).toBe('移动+2·5回合 敏捷+40·5回合');
     const move0 = dai.stats.move, agi0 = dai.stats.agility;
     dai.mp = 50;
@@ -84,6 +83,7 @@ describe('技能自身增益', () => {
     const dai = b.unit(0)!, near = b.unit(1)!;
     const stance = learnedSkills(dai, rt.data).find((s) => s.name === '神行法')!;
     expect(stance.buffAlly).toBe(true);
+    expect(skillTags(stance)).toEqual(['增益', '友方']);
     const cells = b.skillTargets(dai, stance).map((c) => `${c.x},${c.y}`).sort();
     expect(cells).toEqual(['5,5', '6,5']); // 自己和相邻的队友；隔一格的不行
     const agi0 = near.stats.agility, mine = dai.stats.agility;

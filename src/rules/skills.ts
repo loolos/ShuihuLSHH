@@ -225,7 +225,7 @@ export function skillBonusText(s: SkillDef): string {
 }
 
 /** 技能类型标签【新】（负责人 2026-11-22）：技能菜单里加成那一行下面的彩色小标签 */
-export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '增益' | '无目标';
+export type SkillTag = '回旋' | '单体' | '远程' | '范围' | '回气' | '回复' | '增益' | '友方' | '无目标';
 
 const openBoard = { inBounds: () => true } as unknown as Board;
 
@@ -243,7 +243,8 @@ export function skillTags(s: SkillDef): SkillTag[] {
   const self = s.type === 2 || s.rangeMax <= 0;
   const at = self ? from : { x: 0, y: -Math.max(1, s.rangeMin) };
   const cells = areaCells(openBoard, from, s, at).length;
-  const buffTag: SkillTag[] = s.selfBuffs?.length || s.healRegen ? ['增益'] : [];
+  // 增益：带限时增益（含持续回体）；友方：能对相邻队友用（给队友加增益 / 援气）【新】（负责人 2026-11-26）
+  const buffTag: SkillTag[] = [...(s.selfBuffs?.length || s.healRegen ? ['增益' as const] : []), ...(s.buffAlly || isAllyChargeSkill(s) ? ['友方' as const] : [])];
   if (isStanceSkill(s)) return buffTag;
   if (isChargeSkill(s)) return ['回气', ...buffTag];
   if (isHealSkill(s)) tags.push('回复');

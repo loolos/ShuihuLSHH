@@ -228,16 +228,16 @@ const buff = (stat: BuffStat, value: number, turns: number): Buff => ({ stat, va
  * 按名字挂，分级技能各级分开写；敌方版好汉（职业号 46 起）不受影响。
  */
 export const HERO_SELF_BUFFS: Record<number, Record<string, Buff[]>> = {
-  0: { 一夫當關: [buff('defense', 30, 3)], 一夫當關LV2: [buff('defense', 45, 3)], 百尺竿頭: [buff('agility', 20, 2)] }, // 武龍
-  3: { 龍蟠虎踞: [buff('defense', 20, 2)], 龍騰九天: [buff('agility', 35, 2)] }, // 史進
+  0: { 百尺竿頭: [buff('agility', 20, 5)] }, // 武龍（一夫當關本身已很强，不加）
+  3: { 龍蟠虎踞: [buff('defense', 20, 5)] }, // 史進（龍騰九天本身已很强，不加）
   5: { 奇門遁甲LV1: [buff('agility', 20, 2)], 奇門遁甲LV2: [buff('agility', 25, 2)], 奇門遁甲LV3: [buff('agility', 35, 2)] }, // 朱武
-  11: { 棄暗投明: [buff('regenHp', 12, 3)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
+  11: { 棄暗投明: [buff('regenHp', 12, 5)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
   10: { 運籌帷幄: [buff('agility', 35, 5)] }, // 吳用
   12: { 天王聚義式: [buff('defense', 30, 5)] }, // 晁蓋
-  13: { 伏虎调息: [buff('defense', 20, 2)] }, // 陳達
-  14: { 游刃有餘: [buff('agility', 35, 3)], 快刀斬亂麻: [buff('agility', 25, 2)], 快刀斬亂麻LV2: [buff('agility', 45, 2)] }, // 楊志
-  15: { 盘蛇吐纳: [buff('regenHp', 12, 3)] }, // 楊春
-  16: { 我佛慈悲: [buff('regenHp', 15, 3)], 佛法無邊: [buff('defense', 30, 3)] }, // 魯智深
+  13: { 伏虎调息: [buff('defense', 20, 5)] }, // 陳達
+  14: { 游刃有餘: [buff('agility', 35, 5)], 快刀斬亂麻: [buff('agility', 25, 2)], 快刀斬亂麻LV2: [buff('agility', 45, 2)] }, // 楊志
+  15: { 盘蛇吐纳: [buff('regenHp', 12, 5)] }, // 楊春
+  16: { 我佛慈悲: [buff('regenHp', 15, 5)], 佛法無邊: [buff('defense', 30, 3)] }, // 魯智深
 };
 
 /** 原版好汉回复技附加的持续回体（职业号 → 技能名）【新】（负责人 2026-11-26） */
