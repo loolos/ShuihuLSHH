@@ -142,13 +142,13 @@ function approach(b: Battle, u: Unit, goals: Cell[], stopAt = 1, budget = u.stat
 }
 
 /**
- * 敌人赶路【新】（负责人 2026-11-26）：这回合打不到人、要往目标走时——
+ * 赶路【新】（负责人 2026-11-26，先敌人、后来我方和友军也一样）：这回合打不到人、要往目标走时——
  * 体力满：强行军（多走「移动力 ÷ 2，向上取整」格，走完本回合结束），比普通移动走得更近才用；
  * 体力不满：普通移动，走完按缺得多的那样补：缺气的比例比缺体力大、又有回气技就回气，否则休息。
- * 只管敌方；其余情况返回 null，照旧走（withCharge）。
+ * 敌方、友军、试打的我方都一样；强行军走不近时返回 null，照旧走（withCharge）。
  */
-export function enemyAdvance(b: Battle, u: Unit, goals: Cell[]): AiPlan | null {
-  if (u.side !== 'enemy' || !goals.length) return null;
+export function marchPlan(b: Battle, u: Unit, goals: Cell[]): AiPlan | null {
+  if (!goals.length) return null;
   const plan = approach(b, u, goals);
   if (u.hp >= u.stats.maxHp) {
     const field = b.fieldFor(u, goals);
@@ -284,7 +284,7 @@ function defaultPlan(b: Battle, u: Unit): AiPlan {
   if (atk) return atk;
   const main = primaryFoe(b, u);
   const goals = main ? [main] : [];
-  return enemyAdvance(b, u, goals) ?? withCharge(b, u, approach(b, u, goals));
+  return marchPlan(b, u, goals) ?? withCharge(b, u, approach(b, u, goals));
 }
 
 function allyChargePlan(b: Battle, u: Unit): AiPlan | null {
@@ -340,14 +340,14 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     case 1:
     case 10: // 追击指定单位
       if (!target) return defaultPlan(b, u);
-      return bestAttack(b, u, target) ?? enemyAdvance(b, u, [target]) ?? approach(b, u, [target]);
+      return bestAttack(b, u, target) ?? marchPlan(b, u, [target]) ?? approach(b, u, [target]);
     case 2:
     case 6: {
       // 迎击：警戒半径内有敌人才行动，否则原地待命（半径见 alertRadius）
       // 没敌人靠近时原地不动，只在原地给够得着的自己人回血
       const near = foesWithin(b, u, alertRadius(b, u));
       if (!near.length) return healPlan(b, u, 0) ?? withCharge(b, u, {});
-      return healPlan(b, u) ?? bestAttack(b, u) ?? enemyAdvance(b, u, near) ?? withCharge(b, u, approach(b, u, near));
+      return healPlan(b, u) ?? bestAttack(b, u) ?? marchPlan(b, u, near) ?? withCharge(b, u, approach(b, u, near));
     }
     case 3: {
       // 固守：只攻击"移动 + 射程"内的敌人，打不到就不动
@@ -424,7 +424,7 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       // 【新】直扑目标、顺路就打（三打祝家庄的伏兵，负责人 2026-11-26）：打得到目标先打目标；
       // 打不到目标时，移动范围里打得到谁就打谁；都打不到才往目标那边走（模式 10 只认目标，路上的人不理）
       if (!target) return defaultPlan(b, u);
-      return bestAttack(b, u, target) ?? bestAttack(b, u) ?? enemyAdvance(b, u, [target]) ?? approach(b, u, [target]);
+      return bestAttack(b, u, target) ?? bestAttack(b, u) ?? marchPlan(b, u, [target]) ?? approach(b, u, [target]);
     }
     case 8: // 原地不动
       return {};

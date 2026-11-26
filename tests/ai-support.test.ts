@@ -4,7 +4,7 @@ import type { ActUnit } from '../src/formats/act.ts';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
-import { enemyAdvance, healPlan, planAi, withCharge } from '../src/rules/ai.ts';
+import { marchPlan, healPlan, planAi, withCharge } from '../src/rules/ai.ts';
 
 const basic: SkillDef = {
   name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false,
@@ -71,7 +71,7 @@ describe('AI 回复与增益', () => {
     expect(withCharge(b, me, {}).skill).toBeUndefined();
   });
 
-  it('敌人打不到人：满血强行军，不满血走完按缺得多的休息或回气；打得到照样先打', () => {
+  it('打不到人（敌我一样）：满血强行军，不满血走完按缺得多的休息或回气；打得到照样先打', () => {
     const b = battle([act(0, 2, 'enemy', 5, 5), act(1, 1, 'player', 5, 25)]);
     const foe = b.unit(0)!, hero = b.unit(1)!;
     let plan = planAi(b, foe);
@@ -85,8 +85,8 @@ describe('AI 回复与增益', () => {
     plan = planAi(b, foe);
     expect(plan.skill?.name).toBe('集氣技');
     expect(plan.rest).toBeUndefined();
-    // 我方不受影响
-    expect(enemyAdvance(b, hero, [foe])).toBeNull();
+    // 我方也一样：满血强行军
+    expect(marchPlan(b, hero, [foe])!.path!.length - 1).toBe(hero.stats.move + Math.ceil(hero.stats.move / 2));
     // 走绿格打得到人：先打
     foe.hp = foe.stats.maxHp;
     hero.y = 8;
