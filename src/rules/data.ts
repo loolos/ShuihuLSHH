@@ -238,7 +238,9 @@ export const HERO_SELF_BUFFS: Record<number, Record<string, Buff[]>> = {
   9: { 横江拍浪: [buff('agility', 25, 2)] }, // 阮小七
   17: { 魑魅魍魎: [buff('agility', 25, 2)] }, // 劉唐
   5: { 奇門遁甲LV1: [buff('agility', 20, 2)], 奇門遁甲LV2: [buff('agility', 25, 2)], 奇門遁甲LV3: [buff('agility', 35, 2)] }, // 朱武
-  11: { 棄暗投明: [buff('regenHp', 12, 5)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)] }, // 林沖
+  11: { 棄暗投明: [buff('regenHp', 12, 5)], 風雪交加: [buff('defense', 20, 2)], 風雪交加LV2: [buff('defense', 40, 2)],
+    // 家破人亡 LV1 / LV2 附带小幅回体 + 防御（负责人 2026-11-27）
+    家破人亡: [buff('regenHp', 8, 3), buff('defense', 10, 3)], 家破人亡LV2: [buff('regenHp', 12, 3), buff('defense', 20, 3)] }, // 林沖
   10: { 運籌帷幄: [buff('agility', 35, 5)] }, // 吳用
   12: { 天王聚義式: [buff('defense', 30, 5)] }, // 晁蓋
   13: { 伏虎调息: [buff('defense', 20, 5)] }, // 陳達
@@ -310,7 +312,7 @@ const split = (frames: number[]) => frames.map((frame) => ({ frame, percent: 100
  * 新增技能（职业号 → 技能），不改原版 HUM；1000 起为重制版技能号（负责人 2026-11-14 起的好汉技能扩充，见 game-design §6.5）。
  * 1001–1002 林沖 懷璧其罪 LV2 / LV3（LV1 是原版 96；LV4 是 1009）；1003 林沖 風雪交加（类型 12：以自身为中心的周围 8 格）；
  * 1004 楊春 靈蛇吐信（暗器，类型 10，射程 8）；1005 陳達 虎尾橫掃（类型 13：面前相邻一排横向三格）；1006–1007 吳用 運籌帷幄（回气）/ 調虎離山（单体昏迷）；1008 晁蓋 天王八荒式（周身技，三段）；1009 林沖 懷璧其罪 LV4；
- * 1010–1013 30–40 级补的 LV2（负责人 2026-11-25，§6.5.2）：林沖 風雪交加、晁蓋 天王八荒式、吳用 調虎離山、楊春 靈蛇吐信。
+ * 1010–1013 30–40 级补的 LV2（负责人 2026-11-25，§6.5.2）：林沖 風雪交加、晁蓋 天王八荒式、吳用 調虎離山、楊春 靈蛇吐信；1015 林沖 家破人亡LV2（十字 8 格）。
  */
 export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
   // 朱武：沿用集气技的零耗气、自身回复 1/2 气力（CHARGE_DIVISOR）；group 0 复用本人的回复计出手动作。
@@ -333,6 +335,10 @@ export const CLASS_EXTRA_SKILLS: Record<number, SkillDef[]> = {
     extraSkill({ name: '懷璧其罪LV4', skillId: 1009, type: 13, targetShape: 'eight', group: 1, learnLevel: 30, mpCost: 75, power: 70, rangeMax: 2, hitMod: 10, critMod: 30, soundId: 96, hits: split([11, 11]) }),
     // 借家破人亡的旋身动作（第 2 组，四个击打帧）、第 31 组雪花星光特效（原版没有技能用）
     extraSkill({ name: '風雪交加', skillId: 1003, type: 12, group: 2, learnLevel: 13, mpCost: 50, power: 30, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 10, critMod: 10, stun: 20, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
+    // 家破人亡LV2（负责人 2026-11-27）：原版 97（类型 2，周身四向各一格）的二级，四个方向各打两格（十字 8 格）；同一出手动作和音效
+    extraSkill({ name: '家破人亡LV2', skillId: 1015, type: 2, group: 2, learnLevel: 32, mpCost: 80, power: 40, rangeMin: 0, rangeMax: 0, area: 2,
+      areaPattern: [[1, 0], [2, 0], [-1, 0], [-2, 0], [0, 1], [0, 2], [0, -1], [0, -2]], hitMod: 20, critMod: 10, soundId: 97,
+      hits: [{ frame: 9, percent: 100, dir: 3 }, { frame: 11, percent: 30, dir: 0 }, { frame: 12, percent: 100, dir: 1 }, { frame: 13, percent: 100, dir: 2 }] }),
     extraSkill({ name: '風雪交加LV2', skillId: 1010, type: 12, group: 2, learnLevel: 36, mpCost: 85, power: 45, rangeMin: 0, rangeMax: 0, area: 2, hitMod: 15, critMod: 10, stun: 30, effect: 32, soundId: 97, hits: split([9, 11, 12, 13]) }),
   ],
   // 吳用（24 级入队）：回气借本人那组一帧的姿势（第 1 组，其它好汉的集气技也是一帧）；单体昏迷借普攻动作（第 0 组），第 28 组蓝色光环特效（原版没有技能用）
