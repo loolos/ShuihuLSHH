@@ -77,24 +77,28 @@
   {
    "id": "huarong",
    "class": "huarong",
-   "side": "player",
+   "side": "ally",
    "x": 20,
    "y": 27,
    "level": 30,
-   "facing": 0
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
   },
   {
    "id": "qinming",
    "class": "qinming",
-   "side": "player",
+   "side": "ally",
    "x": 21,
    "y": 25,
    "level": 30,
-   "facing": 0
+   "facing": 0,
+   "ai": 0,
+   "levelOffset": -3
   },
   {
-   "id": "likui",
-   "class": "likui",
+   "id": "zhutong",
+   "class": "zhutong",
    "side": "player",
    "x": 16,
    "y": 25,
@@ -111,6 +115,86 @@
    "facing": 0
   },
   {
+   "id": "malin",
+   "class": "malin",
+   "side": "ally",
+   "x": 18,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "dengfei",
+   "class": 65,
+   "side": "ally",
+   "x": 23,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "name": "邓飞",
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "yanglin",
+   "class": 39,
+   "side": "ally",
+   "x": 21,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "name": "杨林",
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "oupeng",
+   "class": 65,
+   "side": "ally",
+   "x": 22,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "name": "欧鹏",
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "guosheng",
+   "class": "guosheng",
+   "side": "ally",
+   "x": 17,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "lvfang",
+   "class": "lvfang",
+   "side": "ally",
+   "x": 16,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "ally",
+   "x": 23,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
    "id": "gaolian",
    "class": "gaolian",
    "side": "enemy",
@@ -121,7 +205,7 @@
    "ai": 11,
    "enemyRank": "leader",
    "levelOffset": 2,
-   "hpMultiplier": 4,
+   "hpMultiplier": 5.0,
    "name": "高唐州知府高廉"
   },
   {
@@ -889,7 +973,7 @@
     ],
     [
      "narrate",
-     "李逵奔回梁山泊，说了柴进陷在高唐州死囚牢里。宋江亲自点起人马，吴用同行，林冲、花荣、秦明、李逵、雷横和武龙跟随，杀奔高唐州来。朱仝不愿与李逵同路，留守山寨。"
+     "李逵奔回梁山泊，说了柴进陷在高唐州死囚牢里。宋江、吴用亲自点起人马：前军林冲、花荣、秦明、孙立、吕方、郭盛、欧鹏、杨林、邓飞、马麟，中军朱仝、雷横和武龙跟随，杀奔高唐州来。李逵闯下这场大祸，又与朱仝誓不相见，宋江教他留守山寨。"
     ],
     [
      "narrate",
@@ -918,12 +1002,12 @@
     [
      "say",
      "hero",
-     "铁牛，殷天锡是自己找死；可柴大官人替你吃了官司，这一仗你可得把力气使在正处。"
+     "朱都头、雷都头，当年柴大官人也是江湖上人人敬重的好汉，今日咱们替他把这口气出了。"
     ],
     [
      "say",
-     "likui",
-     "那还用说！先砍了那鸟知府，再去牢里背大官人出来！"
+     "zhutong",
+     "柴大官人仗义疏财，天下闻名。朱仝这一条命，今日便替他拼了。"
     ]
    ]
   },
