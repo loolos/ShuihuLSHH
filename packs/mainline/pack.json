@@ -1046,7 +1046,7 @@
           "power": 35,
           "mpCost": 50,
           "stun": 0,
-          "effect": 0,
+          "effect": 39,
           "hitFx": "impact",
           "hits": [
             {
@@ -1107,7 +1107,7 @@
           "mpCost": 80,
           "stun": 0,
           "hitMod": 5,
-          "effect": 0,
+          "effect": 39,
           "hitFx": "impact",
           "hits": [
             {
@@ -1184,7 +1184,7 @@
           "mpCost": 115,
           "stun": 20,
           "hitMod": 10,
-          "effect": 0,
+          "effect": 39,
           "hitFx": "impact",
           "hits": [
             {
