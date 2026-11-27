@@ -2254,7 +2254,7 @@ export class Battle {
     const cellIn = (c: Cell) => c.x >= Math.min(t.x1, t.x2) && c.x <= Math.max(t.x1, t.x2) && c.y >= Math.min(t.y1, t.y2) && c.y <= Math.max(t.y1, t.y2);
     // pass【新】：刚走的这一步路过区域里任何一格也算（射虎：大虫路过窝弓就中箭）
     const inside = (u: Unit) => cellIn(u) || (!!t.pass && this.passed?.uid === u.uid && this.passed.path.some(cellIn));
-    if (t.side) return this.units.find((u) => u.side === t.side && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u));
+    if (t.side) return this.units.find((u) => (t.side === 'ours' ? u.side !== 'enemy' : u.side === t.side) && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u));
     if (t.chars) {
       let last: Unit | undefined;
       for (const c of t.chars) {
@@ -3045,6 +3045,30 @@ export class Battle {
                 u.defending = false;
                 this.emit({ type: 'status', uid: u.uid, text: '飛沙迷眼' });
               }
+            }
+            // 吹开【新】（负责人 2026-11-27：飞沙走石把离高廉最近的 5 个好汉往外吹，越近吹得越远）：
+            // 最近的吹 push+1 格、依次少一格；每一步沿离施法者更远的方向挑空格，走不动就停；几个人一起移动
+            if (a.push) {
+              const dc = (u: Cell) => Math.abs(u.x - c.x) + Math.abs(u.y - c.y);
+              const near = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid)).sort((p, q) => dc(p) - dc(q) || p.uid - q.uid).slice(0, a.push);
+              near.forEach((u, i) => {
+                const path: Cell[] = [{ x: u.x, y: u.y }];
+                let at = { x: u.x, y: u.y };
+                for (let s = a.push! + 1 - i; s > 0; s--) {
+                  const dx = Math.sign(at.x - c.x), dy = Math.sign(at.y - c.y);
+                  const pref = (p: Cell) => ((p.y === at.y) === (Math.abs(at.x - c.x) >= Math.abs(at.y - c.y)) ? 0 : 1);
+                  const steps: Cell[] = [dx ? { x: at.x + dx, y: at.y } : null, dy ? { x: at.x, y: at.y + dy } : null]
+                    .filter((n): n is Cell => !!n && this.board.inBounds(n.x, n.y) && this.board.passable(n.x, n.y) && !this.unitAt(n.x, n.y))
+                    // 先沿离得远的那根轴吹（大致是直线往外）
+                    .sort((p, q) => pref(p) - pref(q));
+                  if (!steps.length) break;
+                  at = steps[0];
+                  path.push(at);
+                  u.x = at.x;
+                  u.y = at.y;
+                }
+                if (path.length > 1) this.emit({ type: 'move', uid: u.uid, path, facing: u.facing, script: true });
+              });
             }
             sel = hit[0];
             selName = sel.name;

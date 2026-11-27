@@ -33,7 +33,7 @@
     "dueled",
     "tianshu"
    ],
-   "hint": "高廉每回合轮着作一种妖法：黑气（随机三分之一的人中毒两回合）、飞沙走石（随机三分之一的人昏迷一回合）、召飞天神兵、召猛虎"
+   "hint": "高廉每回合轮着作一种妖法：召飞天神兵、黑气（随机三分之一的人中毒两回合）、飞沙走石（随机三分之一的人昏迷一回合）、召猛虎"
   },
   {
    "if": [
@@ -267,7 +267,7 @@
    "ai": 11,
    "enemyRank": "leader",
    "levelOffset": 2,
-   "hpMultiplier": 15.0,
+   "hpMultiplier": 6,
    "name": "高唐州知府高廉"
   },
   {
@@ -719,6 +719,270 @@
    "levelOffset": 2
   },
   {
+   "id": "sb06",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb07",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 2,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb08",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 4,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb09",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 1,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb16",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 2,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb17",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 5,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb18",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb19",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 5,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb26",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb27",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 1,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb28",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 2,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "sb29",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 0,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 1,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 2,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw4",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw5",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 8,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw6",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 9,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw7",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 10,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw8",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "hw9",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
    "id": "mb0",
    "class": "yiling-tiger",
    "side": "enemy",
@@ -795,402 +1059,6 @@
    "hidden": true,
    "name": "猛兽",
    "levelOffset": -1
-  },
-  {
-   "id": "r00",
-   "class": 32,
-   "side": "enemy",
-   "x": 13,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r01",
-   "class": 32,
-   "side": "enemy",
-   "x": 15,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r02",
-   "class": 32,
-   "side": "enemy",
-   "x": 17,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r03",
-   "class": 32,
-   "side": "enemy",
-   "x": 19,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r04",
-   "class": 32,
-   "side": "enemy",
-   "x": 13,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r05",
-   "class": 32,
-   "side": "enemy",
-   "x": 15,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r06",
-   "class": 34,
-   "side": "enemy",
-   "x": 17,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "r07",
-   "class": 34,
-   "side": "enemy",
-   "x": 19,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "r20",
-   "class": 32,
-   "side": "enemy",
-   "x": 13,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r21",
-   "class": 32,
-   "side": "enemy",
-   "x": 15,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r22",
-   "class": 32,
-   "side": "enemy",
-   "x": 17,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r23",
-   "class": 32,
-   "side": "enemy",
-   "x": 19,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r24",
-   "class": 32,
-   "side": "enemy",
-   "x": 13,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r25",
-   "class": 32,
-   "side": "enemy",
-   "x": 15,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r26",
-   "class": 34,
-   "side": "enemy",
-   "x": 17,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "r27",
-   "class": 34,
-   "side": "enemy",
-   "x": 19,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "r10",
-   "class": 32,
-   "side": "enemy",
-   "x": 21,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r11",
-   "class": 32,
-   "side": "enemy",
-   "x": 23,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r12",
-   "class": 32,
-   "side": "enemy",
-   "x": 25,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r13",
-   "class": 32,
-   "side": "enemy",
-   "x": 27,
-   "y": 8,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r14",
-   "class": 32,
-   "side": "enemy",
-   "x": 21,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r15",
-   "class": 32,
-   "side": "enemy",
-   "x": 23,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "r16",
-   "class": 34,
-   "side": "enemy",
-   "x": 25,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "r17",
-   "class": 34,
-   "side": "enemy",
-   "x": 27,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "弓手"
-  },
-  {
-   "id": "fl0",
-   "class": 43,
-   "side": "enemy",
-   "x": 30,
-   "y": 14,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
-  },
-  {
-   "id": "fl1",
-   "class": 43,
-   "side": "enemy",
-   "x": 31,
-   "y": 15,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
-  },
-  {
-   "id": "fl2",
-   "class": 43,
-   "side": "enemy",
-   "x": 30,
-   "y": 16,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
-  },
-  {
-   "id": "fl3",
-   "class": 43,
-   "side": "enemy",
-   "x": 30,
-   "y": 18,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
-  },
-  {
-   "id": "fl4",
-   "class": 43,
-   "side": "enemy",
-   "x": 29,
-   "y": 15,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
-  },
-  {
-   "id": "fl5",
-   "class": 43,
-   "side": "enemy",
-   "x": 29,
-   "y": 17,
-   "level": 30,
-   "facing": 1,
-   "ai": 1,
-   "target": "songjiang",
-   "hidden": true,
-   "name": "马军",
-   "levelOffset": 2
   }
  ],
  "script": [
@@ -1703,9 +1571,196 @@
      false
     ],
     [
+     "setAi",
+     "huarong",
+     0
+    ],
+    [
+     "setAi",
+     "malin",
+     0
+    ],
+    [
+     "setAi",
+     "dengfei",
+     0
+    ],
+    [
+     "setAi",
+     "yanglin",
+     0
+    ],
+    [
+     "setAi",
+     "oupeng",
+     0
+    ],
+    [
+     "setAi",
+     "guosheng",
+     0
+    ],
+    [
+     "setAi",
+     "lvfang",
+     0
+    ],
+    [
+     "setAi",
+     "sunli",
+     0
+    ],
+    [
+     "setAi",
+     "daizong",
+     0
+    ],
+    [
+     "setAi",
+     "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "zhangshun",
+     0
+    ],
+    [
+     "setAi",
+     "baisheng",
+     0
+    ],
+    [
      "say",
      "wuyong",
      "哥哥，两员统制已除，趁势杀过去，拿了高廉，救出柴大官人！"
+    ],
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb00",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb01",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb02",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb03",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb04",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb05",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb06",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb07",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb08",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb09",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k1"
+    ],
+    [
+     "say",
+     "songjiang",
+     "这……这是什么妖法！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "军师说得是！待我取出天书，依法施行。"
+    ],
+    [
+     "flag",
+     "tianshu"
     ]
    ],
    "if": "wen",
@@ -1907,464 +1962,70 @@
      false
     ],
     [
+     "setAi",
+     "huarong",
+     0
+    ],
+    [
+     "setAi",
+     "malin",
+     0
+    ],
+    [
+     "setAi",
+     "dengfei",
+     0
+    ],
+    [
+     "setAi",
+     "yanglin",
+     0
+    ],
+    [
+     "setAi",
+     "oupeng",
+     0
+    ],
+    [
+     "setAi",
+     "guosheng",
+     0
+    ],
+    [
+     "setAi",
+     "lvfang",
+     0
+    ],
+    [
+     "setAi",
+     "sunli",
+     0
+    ],
+    [
+     "setAi",
+     "daizong",
+     0
+    ],
+    [
+     "setAi",
+     "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "zhangshun",
+     0
+    ],
+    [
+     "setAi",
+     "baisheng",
+     0
+    ],
+    [
      "say",
      "wuyong",
      "哥哥，两员统制已除，趁势杀过去，拿了高廉，救出柴大官人！"
-    ]
-   ],
-   "if": "yu",
-   "unless": "dueled"
-  },
-  {
-   "on": {
-    "dead": "linchong"
-   },
-   "do": [
-    [
-     "flag",
-     "lcdown"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "dead": "qinming"
-   },
-   "do": [
-    [
-     "flag",
-     "qmdown"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "flag": "lcdown"
-   },
-   "do": [
-    [
-     "defeat",
-     "林冲单挑落败。"
-    ]
-   ],
-   "unless": "dueled"
-  },
-  {
-   "on": {
-    "flag": "qmdown"
-   },
-   "do": [
-    [
-     "defeat",
-     "秦明单挑落败。"
-    ]
-   ],
-   "unless": "dueled"
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "if": "dueled",
-   "unless": [
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
     ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 2,
-      "style": "dust"
-     }
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "if": "dueled",
-   "unless": [
-    "tianshu",
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "if": [
-    "dueled",
-    "huifeng"
-   ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
-      "style": "wind",
-      "spare": [
-       "gaolian"
-      ]
-     }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": "dueled",
-   "unless": [
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind"
-     }
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": "dueled",
-   "unless": [
-    "tianshu",
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": [
-    "dueled",
-    "huifeng"
-   ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
-      "style": "wind",
-      "spare": [
-       "gaolian"
-      ]
-     }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 5
-   },
-   "if": "dueled",
-   "unless": [
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
     [
      "narrate",
      "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
@@ -2428,20 +2089,51 @@
        7
       ]
      }
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 5
-   },
-   "if": "dueled",
-   "unless": [
-    "tianshu",
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
+    ],
+    [
+     "appear",
+     "sb06",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb07",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb08",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb09",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k1"
+    ],
     [
      "say",
      "songjiang",
@@ -2461,11 +2153,92 @@
      "flag",
      "tianshu"
     ]
+   ],
+   "if": "yu",
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "dead": "linchong"
+   },
+   "do": [
+    [
+     "flag",
+     "lcdown"
+    ]
    ]
   },
   {
    "on": {
-    "turn": 5
+    "dead": "qinming"
+   },
+   "do": [
+    [
+     "flag",
+     "qmdown"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "lcdown"
+   },
+   "do": [
+    [
+     "defeat",
+     "林冲单挑落败。"
+    ]
+   ],
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "flag": "qmdown"
+   },
+   "do": [
+    [
+     "defeat",
+     "秦明单挑落败。"
+    ]
+   ],
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
    },
    "if": [
     "dueled",
@@ -2597,6 +2370,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -2605,10 +2466,309 @@
   },
   {
    "on": {
-    "turn": 6
+    "turn": 3
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k2"
+   ],
    "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
     "huifeng",
     "retreat"
    ],
@@ -2630,187 +2790,57 @@
      {
       "near": "gaolian"
      }
+    ],
+    [
+     "flag",
+     "k4"
     ]
    ]
   },
   {
    "on": {
-    "turn": 6
+    "turn": 4
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k2"
+   ],
    "unless": [
-    "tianshu",
+    "k3",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 6
-   },
-   "if": [
-    "dueled",
-    "huifeng"
-   ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
     ],
     [
      "gust",
      {
       "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
+      "pick": 33,
+      "stun": 2,
       "style": "wind",
-      "spare": [
-       "gaolian"
-      ]
+      "push": 5
      }
     ],
     [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
+     "flag",
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 7
+    "turn": 4
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k1"
+   ],
    "unless": [
+    "k2",
     "huifeng",
     "retreat"
    ],
@@ -2827,44 +2857,16 @@
       "poison": 2,
       "style": "dust"
      }
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 7
-   },
-   "if": "dueled",
-   "unless": [
-    "tianshu",
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
     ],
     [
      "flag",
-     "tianshu"
+     "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 7
+    "turn": 4
    },
    "if": [
     "dueled",
@@ -2996,6 +2998,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -3004,207 +3094,14 @@
   },
   {
    "on": {
-    "turn": 8
-   },
-   "if": "dueled",
-   "unless": [
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind"
-     }
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": "dueled",
-   "unless": [
-    "tianshu",
-    "huifeng",
-    "retreat"
-   ],
-   "do": [
-    [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
+    "turn": 5
    },
    "if": [
     "dueled",
-    "huifeng"
+    "k4"
    ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
-      "style": "wind",
-      "spare": [
-       "gaolian"
-      ]
-     }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "if": "dueled",
    "unless": [
+    "k5",
     "huifeng",
     "retreat"
    ],
@@ -3272,44 +3169,161 @@
        7
       ]
      }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 5
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k3"
+   ],
    "unless": [
-    "tianshu",
+    "k4",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
     ],
     [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
     ],
     [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "flag",
-     "tianshu"
+     "k4"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 5
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
    },
    "if": [
     "dueled",
@@ -3441,6 +3455,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -3449,10 +3551,1028 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 6
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k5"
+   ],
    "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
     "huifeng",
     "retreat"
    ],
@@ -3474,187 +4594,57 @@
      {
       "near": "gaolian"
      }
+    ],
+    [
+     "flag",
+     "k8"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10
+    "turn": 8
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k6"
+   ],
    "unless": [
-    "tianshu",
+    "k7",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 10
-   },
-   "if": [
-    "dueled",
-    "huifeng"
-   ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
     ],
     [
      "gust",
      {
       "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
+      "pick": 33,
+      "stun": 2,
       "style": "wind",
-      "spare": [
-       "gaolian"
-      ]
+      "push": 5
      }
     ],
     [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
+     "flag",
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 8
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k5"
+   ],
    "unless": [
+    "k6",
     "huifeng",
     "retreat"
    ],
@@ -3671,187 +4661,185 @@
       "poison": 2,
       "style": "dust"
      }
+    ],
+    [
+     "flag",
+     "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 8
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k4"
+   ],
    "unless": [
-    "tianshu",
+    "k5",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
-    ],
-    [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
-    ],
-    [
-     "flag",
-     "tianshu"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 11
-   },
-   "if": [
-    "dueled",
-    "huifeng"
-   ],
-   "unless": "retreat",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
     ],
     [
-     "gust",
+     "appear",
+     "sb10",
      {
-      "caster": "gaolian",
-      "back": true,
-      "radius": 4,
-      "panic": 8,
-      "turns": 2,
-      "style": "wind",
-      "spare": [
-       "gaolian"
+      "ring": [
+       4,
+       7
       ]
      }
     ],
     [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb00"
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb01"
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb02"
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb03"
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb04"
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb05"
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb10"
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb11"
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
     ],
     [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "say",
-     "gaolian",
-     "好个宋江，也会些法术！"
+     "flag",
+     "k5"
     ]
    ]
   },
   {
    "on": {
-    "turn": 12
+    "turn": 8
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k3"
+   ],
    "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
     "huifeng",
     "retreat"
    ],
@@ -3866,46 +4854,52 @@
       "caster": "gaolian",
       "pick": 33,
       "stun": 2,
-      "style": "wind"
+      "style": "wind",
+      "push": 5
      }
+    ],
+    [
+     "flag",
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 12
+    "turn": 8
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k1"
+   ],
    "unless": [
-    "tianshu",
+    "k2",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
     ],
     [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
-    ],
-    [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
     ],
     [
      "flag",
-     "tianshu"
+     "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 12
+    "turn": 8
    },
    "if": [
     "dueled",
@@ -4037,6 +5031,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -4045,10 +5127,14 @@
   },
   {
    "on": {
-    "turn": 13
+    "turn": 9
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k8"
+   ],
    "unless": [
+    "k9",
     "huifeng",
     "retreat"
    ],
@@ -4116,44 +5202,390 @@
        7
       ]
      }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 9
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k7"
+   ],
    "unless": [
-    "tianshu",
+    "k8",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
     ],
     [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
     ],
     [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "flag",
-     "tianshu"
+     "k8"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
    },
    "if": [
     "dueled",
@@ -4285,6 +5717,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -4293,10 +5813,1486 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 10
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k9"
+   ],
    "unless": [
+    "k10",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k9"
+   ],
+   "unless": [
+    "k10",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k11"
+   ],
+   "unless": [
+    "k12",
     "huifeng",
     "retreat"
    ],
@@ -4318,6 +7314,1554 @@
      {
       "near": "gaolian"
      }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k9"
+   ],
+   "unless": [
+    "k10",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k11"
+   ],
+   "unless": [
+    "k12",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb4",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb5",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k9"
+   ],
+   "unless": [
+    "k10",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "dueled",
+    "huifeng"
+   ],
+   "unless": "retreat",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "leave",
+     "mb0"
+    ],
+    [
+     "leave",
+     "mb1"
+    ],
+    [
+     "leave",
+     "mb2"
+    ],
+    [
+     "leave",
+     "mb3"
+    ],
+    [
+     "leave",
+     "mb4"
+    ],
+    [
+     "leave",
+     "mb5"
+    ],
+    [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！"
     ]
    ]
   },
@@ -4325,31 +8869,562 @@
    "on": {
     "turn": 14
    },
-   "if": "dueled",
+   "if": [
+    "dueled",
+    "k11"
+   ],
    "unless": [
-    "tianshu",
+    "k12",
     "huifeng",
     "retreat"
    ],
    "do": [
     [
-     "say",
-     "songjiang",
-     "这……这是什么妖法！"
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
     ],
     [
-     "say",
-     "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+     "appear",
+     "mb4",
+     {
+      "near": "gaolian"
+     }
     ],
     [
-     "say",
-     "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "appear",
+     "mb5",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "flag",
-     "tianshu"
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k9"
+   ],
+   "unless": [
+    "k10",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb28",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb29",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，口衔芦哨，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb18",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb19",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "dueled",
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 2,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k2"
     ]
    ]
   },
@@ -4487,6 +9562,94 @@
      "mb5"
     ],
     [
+     "leave",
+     "hw0"
+    ],
+    [
+     "leave",
+     "hw1"
+    ],
+    [
+     "leave",
+     "hw2"
+    ],
+    [
+     "leave",
+     "hw3"
+    ],
+    [
+     "leave",
+     "hw4"
+    ],
+    [
+     "leave",
+     "hw5"
+    ],
+    [
+     "leave",
+     "hw6"
+    ],
+    [
+     "leave",
+     "hw7"
+    ],
+    [
+     "leave",
+     "hw8"
+    ],
+    [
+     "leave",
+     "hw9"
+    ],
+    [
+     "leave",
+     "sb06"
+    ],
+    [
+     "leave",
+     "sb07"
+    ],
+    [
+     "leave",
+     "sb08"
+    ],
+    [
+     "leave",
+     "sb09"
+    ],
+    [
+     "leave",
+     "sb16"
+    ],
+    [
+     "leave",
+     "sb17"
+    ],
+    [
+     "leave",
+     "sb18"
+    ],
+    [
+     "leave",
+     "sb19"
+    ],
+    [
+     "leave",
+     "sb26"
+    ],
+    [
+     "leave",
+     "sb27"
+    ],
+    [
+     "leave",
+     "sb28"
+    ],
+    [
+     "leave",
+     "sb29"
+    ],
+    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -4495,85 +9658,98 @@
   },
   {
    "on": {
-    "turn": 6
+    "enter": "ours",
+    "area": [
+     14,
+     4,
+     24,
+     9
+    ],
+    "label": "高廉身边"
    },
+   "if": "dueled",
    "unless": "retreat",
    "do": [
     [
      "narrate",
-     "城门开处，又一彪官兵杀出城来！"
+     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，身边黄砂卷起，十个飞天神兵护住了他！"
     ],
     [
      "appear",
-     "r00"
+     "hw0",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r01"
+     "hw1",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r02"
+     "hw2",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r03"
+     "hw3",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r04"
+     "hw4",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r05"
+     "hw5",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r06"
+     "hw6",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "appear",
-     "r07"
+     "hw7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "hw8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "hw9",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "say",
+     "gaolian",
+     "哪个敢近我身！"
     ]
-   ],
-   "if": "dueled"
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "unless": "retreat",
-   "do": [
-    [
-     "narrate",
-     "东边尘头起处，一队马军抄到宋江背后来了！"
-    ],
-    [
-     "appear",
-     "fl0"
-    ],
-    [
-     "appear",
-     "fl1"
-    ],
-    [
-     "appear",
-     "fl2"
-    ],
-    [
-     "appear",
-     "fl3"
-    ],
-    [
-     "appear",
-     "fl4"
-    ],
-    [
-     "appear",
-     "fl5"
-    ]
-   ],
-   "if": "dueled"
+   ]
   },
   {
    "on": {

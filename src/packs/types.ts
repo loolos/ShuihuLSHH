@@ -372,7 +372,7 @@ export type PackTrigger =
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */
-  /** enter: "player" = 我方任何一个在场的人进去都算【新】 */
+  /** enter: "player" = 我方任何一个在场的人进去都算【新】；"ours" = 我方或友军【新】 */
   | { enter: string | string[]; area: [number, number, number, number]; label?: string; /** 回合结束（敌方行动完、下回合开始前）人还在里面才触发【新】 */ atTurnEnd?: boolean; /** 走路时路过区域里任何一格就触发，不必停在里面（射虎的窝弓）【新】 */ pass?: boolean } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
   | { near: string; by?: string; playerPhase?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
