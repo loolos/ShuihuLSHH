@@ -2720,6 +2720,24 @@ export class Battle {
             // args.toward【新】（火烧祝家店：挠钩手钩走时迁）：登场在这个人身边，不在自己的开场格
             const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
             if (t?.present) (sel.x = t.x), (sel.y = t.y);
+            // args.ring【新】（妖法困宋江，负责人 2026-11-27）：在离我方 / 友军最近的人 [min, max] 步的空格里随机挑一格冒出来（飞天神兵突然杀出）
+            const ring = op.args?.ring;
+            if (ring) {
+              const mine = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid));
+              const f = this.board.distanceField(mine.map((u) => ({ x: u.x, y: u.y })));
+              const occ = this.occupied(sel);
+              const W = this.board.width;
+              const cand: Cell[] = [];
+              for (let y = 0; y < this.board.height; y++)
+                for (let x = 0; x < W; x++) {
+                  const dd = f[y * W + x];
+                  if (dd >= ring[0] && dd <= ring[1] && this.board.passable(x, y) && !occ.has(key(x, y))) cand.push({ x, y });
+                }
+              if (cand.length) {
+                const c = cand[this.rng.int(cand.length)];
+                (sel.x = c.x), (sel.y = c.y);
+              }
+            }
             this.appear(sel);
           }
           break;
@@ -2996,7 +3014,39 @@ export class Battle {
           if (a.caster !== undefined && (!c?.present || !c.alive)) break;
           // back：风被吹回施法的人那边（宋江回风返火），照旧吹散他身边的敌人
           if (c && a.back) at = { x: c.x, y: c.y };
-          else if (c) {
+          else if (c && a.pick) {
+            // 妖法点人【新】（妖法困宋江，负责人 2026-11-27）：随机挑场上我方 / 友军的 pick%（至少 1 人），
+            // 黑气 = 中毒 poison 回合，飞沙走石 = 昏迷 stun 回合；不看远近
+            const pool = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid));
+            const n = Math.min(pool.length, Math.max(1, Math.round((pool.length * a.pick) / 100)));
+            const hit: Unit[] = [];
+            while (hit.length < n) hit.push(pool.splice(this.rng.int(pool.length), 1)[0]);
+            if (!hit.length) break;
+            this.emit({ type: 'focus', x: hit[0].x, y: hit[0].y });
+            for (const u of hit) {
+              this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'wind' ? 'wind' : 'dust' });
+              if (a.hurt) {
+                const loss = Math.min(u.hp - 1, Math.floor((u.stats.maxHp * a.hurt) / 100));
+                if (loss > 0) {
+                  u.hp -= loss;
+                  this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: -loss });
+                }
+              }
+              if (a.poison && !resists(u, 'resistPoison')) {
+                u.poisonTurns = Math.max(u.poisonTurns, a.poison);
+                refreshStats(u, this.data);
+                this.emit({ type: 'status', uid: u.uid, text: '黑氣入體' });
+              }
+              if (a.stun) {
+                u.stunTurns = Math.max(u.stunTurns, a.stun);
+                u.defending = false;
+                this.emit({ type: 'status', uid: u.uid, text: '飛沙迷眼' });
+              }
+            }
+            sel = hit[0];
+            selName = sel.name;
+            break;
+          } else if (c) {
             const dc = (u: Cell) => Math.abs(u.x - c.x) + Math.abs(u.y - c.y);
             const near = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid)).sort((p, q) => dc(p) - dc(q) || p.uid - q.uid)[0];
             if (!near) break;
