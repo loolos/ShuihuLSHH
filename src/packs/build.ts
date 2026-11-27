@@ -105,7 +105,7 @@ export function buildPack(base: GameData, pack: PackJson, stages: PackStageJson[
     const id = items.length + 1;
     const sale = it.shop ? { category: it.category ?? 2, seqA: [...it.shop, ...Array(13).fill(0)].slice(0, 13) } : {};
     const price = it.buyPrice !== undefined ? { buyPrice: it.buyPrice, sellPrice: Math.floor(it.buyPrice / 2) } : {};
-    const extra = Object.fromEntries((['crit', 'maxHp', 'maxMp', 'regenHp', 'regenMp', 'healHp', 'healMp', 'moveBonus', 'range', 'poison', 'stun', 'area', 'shopTier'] as const).filter((k) => it[k] !== undefined).map((k) => [k, it[k]]));
+    const extra = Object.fromEntries((['crit', 'maxHp', 'maxMp', 'regenHp', 'regenMp', 'healHp', 'healMp', 'moveBonus', 'range', 'poison', 'stun', 'area', 'shopTier', 'story'] as const).filter((k) => it[k] !== undefined).map((k) => [k, it[k]]));
     items.push({
       ...from, ...sale, ...price, ...extra, id, name: it.name, type: it.type ?? from.type, description: it.description ?? from.description,
       attack: it.attack ?? from.attack, defense: it.defense ?? from.defense, agility: it.agility ?? from.agility, hit: it.hit ?? from.hit,
@@ -532,14 +532,14 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: on.enter === 'ours' ? 'ours' as const : 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.pass ? { pass: true } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
-    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}) };
+    trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.range ? { range: on.range } : {}), ...(on.ours ? { ours: true } : {}) };
   } else if ('hp' in on) {
     const target = r.unitRef(on.hp).act;
     trigger = { kind: 'hp', char: target.type, uid: target.index, below: on.below, ...(on.spare ? { spare: true } : {}) };
   } else if ('did' in on) {
     if (!DID_ACTIONS.includes(on.action)) fail(`第 ${index} 个区块：did 的操作只能是 ${DID_ACTIONS.join(' / ')}`);
     const who = r.unitRef(on.did).act;
-    trigger = { kind: 'did', char: who.type, uid: who.index, action: on.action };
+    trigger = { kind: 'did', char: who.type, uid: who.index, action: on.action, ...(on.item !== undefined ? { item: r.itemRef(on.item) } : {}) };
   }
   else trigger = { kind: 'used', char: r.charOf(on.used), skills: on.skills?.map(r.skillRef), count: on.count };
   if (trigger.kind === 'near' || trigger.kind === 'hp' || trigger.kind === 'did' || (trigger.kind === 'area' && trigger.flagged) || (trigger.kind === 'turn' && trigger.flagged)) {
@@ -623,7 +623,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'borrowEquip':
       case 'setEquip':
         select(a[0]);
-        ops.push({ op: name === 'borrowEquip' ? 107 : 100, flag: Number(a[1]), value: a[2] === 0 ? 0 : r.itemRef(a[2]) });
+        // borrowEquip 的格号写 "bag"：放进随身物品栏第一个空格（满了就借用最后一格），战后照样还原【新】（神兵困公明的天书）
+        ops.push({ op: name === 'borrowEquip' ? 107 : 100, flag: a[1] === 'bag' && name === 'borrowEquip' ? -1 : Number(a[1]), value: a[2] === 0 ? 0 : r.itemRef(a[2]) });
         break;
       case 'bind':
         select(a[0]);
@@ -739,10 +740,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         // radius 格内的敌人逃窜 turns 回合（同放火），画面冒黑尘或卷起怪风【新】（还道村受天书）
         // 妖风【新】（飞天神兵，高廉作法）：caster = 施法的人，风落在离他最近的我方 / 友军身上，radius 格内的我方、友军昏迷 stun 回合、
         // 体力减最大值的 hurt%（至少留 1 点）；写 pick（百分比）就不看远近，随机挑场上我方 / 友军这么多人，poison = 中毒回合（妖法困宋江的黑气）；再写 back 就是风吹回施法的人那边、吹散他身边的敌人（回风返火）；不写 caster 就是原来的吹散敌人
-        const o = (a[0] ?? {}) as { style?: string; radius?: number; turns?: number; panic?: number; spare?: unknown[]; x?: number; y?: number; focus?: boolean; caster?: string; stun?: number; hurt?: number; back?: boolean; pick?: number; poison?: number; push?: number };
+        const o = (a[0] ?? {}) as { style?: string; radius?: number; turns?: number; panic?: number; spare?: unknown[]; x?: number; y?: number; focus?: boolean; caster?: string; stun?: number; hurt?: number; back?: boolean; pick?: number; poison?: number; push?: number; banish?: number; of?: unknown[] };
         if (typeof o !== 'object' || Array.isArray(o)) fail(`第 ${index} 个区块：gust 要写成 ["gust", {style, radius, turns}]`);
         if (o.style && o.style !== 'dust' && o.style !== 'wind' && o.style !== 'none') fail(`第 ${index} 个区块：gust 的 style 只能是 dust / wind / none（none = 不画风尘，只让人乱逃）`);
-        const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined, caster: o.caster !== undefined ? r.unitRef(o.caster).act.group : undefined, stun: o.stun, hurt: o.hurt, back: o.back || undefined, pick: o.pick, poison: o.poison, push: o.push }).filter(([, v]) => v !== undefined));
+        const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined, caster: o.caster !== undefined ? r.unitRef(o.caster).act.group : undefined, stun: o.stun, hurt: o.hurt, back: o.back || undefined, pick: o.pick, poison: o.poison, push: o.push, banish: o.banish, classes: o.of?.map(r.classRef) }).filter(([, v]) => v !== undefined));
         ops.push({ op: 126, flag: null, value: 0, args });
         break;
       }

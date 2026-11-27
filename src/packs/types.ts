@@ -181,6 +181,8 @@ export interface PackItemJson {
   /** 消耗品：回体 / 回气（−1 = 回满） */
   healHp?: number;
   healMp?: number;
+  /** 剧情道具【新】：用了没有回复效果、不报「沒有效果」，由剧本 {did, action: "item", item} 触发处理（神兵困公明的天书） */
+  story?: boolean;
   /** 群体药：自己和相邻友方都回复（Item.area） */
   area?: boolean;
   /** 卖在哪家店（原版大类：1 酒店、2 武器店、4 药铺）；不写 = 武器店 */
@@ -375,7 +377,7 @@ export type PackTrigger =
   /** enter: "player" = 我方任何一个在场的人进去都算【新】；"ours" = 我方或友军【新】 */
   | { enter: string | string[]; area: [number, number, number, number]; label?: string; /** 回合结束（敌方行动完、下回合开始前）人还在里面才触发【新】 */ atTurnEnd?: boolean; /** 走路时路过区域里任何一格就触发，不必停在里面（射虎的窝弓）【新】 */ pass?: boolean } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
-  | { near: string; by?: string; playerPhase?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
+  | { near: string; by?: string; playerPhase?: boolean; /** 几格以内算走近（默认 1）【新】 */ range?: number; /** 友军走近也算【新】 */ ours?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
   | { flag: string }
   /** 目标生命低于最大值的 below%（可配 if / unless）；spare = 区块没执行时这人挨打至少留 1 点体力，不会在触发前被一下打死 */
@@ -383,7 +385,7 @@ export type PackTrigger =
   /** 出手之后：用过全部 skills，或累计出手 count 次 */
   | { used: string; skills?: string[]; count?: number }
   /** 这个人刚做了某个操作（教学关，§15.26）：只看操作发生那一刻，可配 if / unless */
-  | { did: string; action: import('../formats/pas.ts').DidAction };
+  | { did: string; action: import('../formats/pas.ts').DidAction; /** action 为 item 时只认用了这件道具（包里道具 id）【新】 */ item?: string };
 
 /**
  * 指令（数组，第一项是名字）：

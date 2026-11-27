@@ -24,7 +24,7 @@
   },
   {
    "if": "dueled",
-   "win": "把高廉打到三成半体力以下，或撑过第 14 回合",
+   "win": "把高廉打到三成半体力以下，或撑过第 12 回合",
    "lose": "宋江倒下",
    "hint": "全军压上，直取高廉"
   },
@@ -40,8 +40,11 @@
     "dueled",
     "tianshu"
    ],
-   "unless": "huifeng",
-   "hint": "宋江念天书上的「回风返火」，高廉下一次作法就会被吹回去，场上的神兵、猛虎一并吹散"
+   "unless": [
+    "huifeng",
+    "shuused"
+   ],
+   "hint": "宋江随身带着「天书」（道具，只能用一次）：用了立刻吹散场上一半的飞天神兵、猛虎，高廉下一次作法也会被吹回去"
   },
   {
    "if": [
@@ -49,6 +52,11 @@
     "huifeng"
    ],
    "hint": "天书已经念过，高廉下一次作法会被吹回去"
+  },
+  {
+   "if": "shuused",
+   "unless": "huifeng",
+   "hint": "天书已经用过了，只能硬拼"
   }
  ],
  "units": [
@@ -59,10 +67,7 @@
    "x": 19,
    "y": 26,
    "level": 30,
-   "facing": 0,
-   "skills": [
-    "sj-huifeng"
-   ]
+   "facing": 0
   },
   {
    "id": "wuyong",
@@ -284,14 +289,14 @@
   },
   {
    "id": "gw1",
-   "class": 34,
+   "class": 36,
    "side": "enemy",
    "x": 18,
    "y": 7,
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "name": "弓手",
+   "name": "官吏",
    "levelOffset": 2
   },
   {
@@ -358,14 +363,14 @@
   },
   {
    "id": "ya2",
-   "class": 32,
+   "class": 38,
    "side": "enemy",
    "x": 14,
    "y": 11,
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵",
+   "name": "都头",
    "levelOffset": 2
   },
   {
@@ -444,14 +449,14 @@
   },
   {
    "id": "wa1",
-   "class": 32,
+   "class": 38,
    "side": "enemy",
    "x": 22,
    "y": 11,
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵",
+   "name": "都头",
    "levelOffset": 2
   },
   {
@@ -500,6 +505,198 @@
    "facing": 2,
    "ai": 0,
    "name": "马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "la0",
+   "class": 32,
+   "side": "enemy",
+   "x": 5,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵",
+   "levelOffset": 2
+  },
+  {
+   "id": "la1",
+   "class": 38,
+   "side": "enemy",
+   "x": 6,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "都头",
+   "levelOffset": 2
+  },
+  {
+   "id": "la2",
+   "class": 32,
+   "side": "enemy",
+   "x": 7,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵",
+   "levelOffset": 2
+  },
+  {
+   "id": "la3",
+   "class": 43,
+   "side": "enemy",
+   "x": 4,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "la4",
+   "class": 43,
+   "side": "enemy",
+   "x": 8,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "la5",
+   "class": 36,
+   "side": "enemy",
+   "x": 6,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官吏",
+   "levelOffset": 2
+  },
+  {
+   "id": "la6",
+   "class": 34,
+   "side": "enemy",
+   "x": 5,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手",
+   "levelOffset": 2
+  },
+  {
+   "id": "la7",
+   "class": 34,
+   "side": "enemy",
+   "x": 7,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra0",
+   "class": 43,
+   "side": "enemy",
+   "x": 27,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra1",
+   "class": 32,
+   "side": "enemy",
+   "x": 28,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra2",
+   "class": 38,
+   "side": "enemy",
+   "x": 29,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "都头",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra3",
+   "class": 32,
+   "side": "enemy",
+   "x": 30,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra4",
+   "class": 43,
+   "side": "enemy",
+   "x": 31,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra5",
+   "class": 36,
+   "side": "enemy",
+   "x": 29,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官吏",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra6",
+   "class": 34,
+   "side": "enemy",
+   "x": 28,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手",
+   "levelOffset": 2
+  },
+  {
+   "id": "ra7",
+   "class": 34,
+   "side": "enemy",
+   "x": 30,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手",
    "levelOffset": 2
   },
   {
@@ -983,6 +1180,102 @@
    "levelOffset": 2
   },
   {
+   "id": "bk0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 13,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 14,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 15,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 16,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk4",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 17,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk5",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 18,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk6",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 19,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk7",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 20,
+   "y": 31,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
    "id": "mb0",
    "class": "yiling-tiger",
    "side": "enemy",
@@ -1068,6 +1361,12 @@
     [
      "title",
      "高唐州 · 城外"
+    ],
+    [
+     "borrowEquip",
+     "songjiang",
+     "bag",
+     "tianshu"
     ],
     [
      "narrate",
@@ -1241,6 +1540,70 @@
     [
      "spectate",
      "baisheng"
+    ],
+    [
+     "spectate",
+     "la0"
+    ],
+    [
+     "spectate",
+     "la1"
+    ],
+    [
+     "spectate",
+     "la2"
+    ],
+    [
+     "spectate",
+     "la3"
+    ],
+    [
+     "spectate",
+     "la4"
+    ],
+    [
+     "spectate",
+     "la5"
+    ],
+    [
+     "spectate",
+     "la6"
+    ],
+    [
+     "spectate",
+     "la7"
+    ],
+    [
+     "spectate",
+     "ra0"
+    ],
+    [
+     "spectate",
+     "ra1"
+    ],
+    [
+     "spectate",
+     "ra2"
+    ],
+    [
+     "spectate",
+     "ra3"
+    ],
+    [
+     "spectate",
+     "ra4"
+    ],
+    [
+     "spectate",
+     "ra5"
+    ],
+    [
+     "spectate",
+     "ra6"
+    ],
+    [
+     "spectate",
+     "ra7"
     ],
     [
      "narrate",
@@ -1571,6 +1934,86 @@
      false
     ],
     [
+     "spectate",
+     "la0",
+     false
+    ],
+    [
+     "spectate",
+     "la1",
+     false
+    ],
+    [
+     "spectate",
+     "la2",
+     false
+    ],
+    [
+     "spectate",
+     "la3",
+     false
+    ],
+    [
+     "spectate",
+     "la4",
+     false
+    ],
+    [
+     "spectate",
+     "la5",
+     false
+    ],
+    [
+     "spectate",
+     "la6",
+     false
+    ],
+    [
+     "spectate",
+     "la7",
+     false
+    ],
+    [
+     "spectate",
+     "ra0",
+     false
+    ],
+    [
+     "spectate",
+     "ra1",
+     false
+    ],
+    [
+     "spectate",
+     "ra2",
+     false
+    ],
+    [
+     "spectate",
+     "ra3",
+     false
+    ],
+    [
+     "spectate",
+     "ra4",
+     false
+    ],
+    [
+     "spectate",
+     "ra5",
+     false
+    ],
+    [
+     "spectate",
+     "ra6",
+     false
+    ],
+    [
+     "spectate",
+     "ra7",
+     false
+    ],
+    [
      "setAi",
      "huarong",
      0
@@ -1740,6 +2183,42 @@
      }
     ],
     [
+     "narrate",
+     "梁山阵后也卷起一阵黄砂，又一彪飞天神兵从背后杀来，直扑后队的众头领！"
+    ],
+    [
+     "appear",
+     "bk0"
+    ],
+    [
+     "appear",
+     "bk1"
+    ],
+    [
+     "appear",
+     "bk2"
+    ],
+    [
+     "appear",
+     "bk3"
+    ],
+    [
+     "appear",
+     "bk4"
+    ],
+    [
+     "appear",
+     "bk5"
+    ],
+    [
+     "appear",
+     "bk6"
+    ],
+    [
+     "appear",
+     "bk7"
+    ],
+    [
      "flag",
      "k1"
     ],
@@ -1751,12 +2230,12 @@
     [
      "say",
      "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+     "哥哥休慌！还道村九天玄女娘娘传的三卷天书，哥哥随身带着，里面有一道回风返火破阵之法。只是这法力只够使一回，须看准了时候再念！"
     ],
     [
      "say",
      "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "军师说得是！待他妖兵多时，我便取出天书来破他。"
     ],
     [
      "flag",
@@ -1962,6 +2441,86 @@
      false
     ],
     [
+     "spectate",
+     "la0",
+     false
+    ],
+    [
+     "spectate",
+     "la1",
+     false
+    ],
+    [
+     "spectate",
+     "la2",
+     false
+    ],
+    [
+     "spectate",
+     "la3",
+     false
+    ],
+    [
+     "spectate",
+     "la4",
+     false
+    ],
+    [
+     "spectate",
+     "la5",
+     false
+    ],
+    [
+     "spectate",
+     "la6",
+     false
+    ],
+    [
+     "spectate",
+     "la7",
+     false
+    ],
+    [
+     "spectate",
+     "ra0",
+     false
+    ],
+    [
+     "spectate",
+     "ra1",
+     false
+    ],
+    [
+     "spectate",
+     "ra2",
+     false
+    ],
+    [
+     "spectate",
+     "ra3",
+     false
+    ],
+    [
+     "spectate",
+     "ra4",
+     false
+    ],
+    [
+     "spectate",
+     "ra5",
+     false
+    ],
+    [
+     "spectate",
+     "ra6",
+     false
+    ],
+    [
+     "spectate",
+     "ra7",
+     false
+    ],
+    [
      "setAi",
      "huarong",
      0
@@ -2131,6 +2690,42 @@
      }
     ],
     [
+     "narrate",
+     "梁山阵后也卷起一阵黄砂，又一彪飞天神兵从背后杀来，直扑后队的众头领！"
+    ],
+    [
+     "appear",
+     "bk0"
+    ],
+    [
+     "appear",
+     "bk1"
+    ],
+    [
+     "appear",
+     "bk2"
+    ],
+    [
+     "appear",
+     "bk3"
+    ],
+    [
+     "appear",
+     "bk4"
+    ],
+    [
+     "appear",
+     "bk5"
+    ],
+    [
+     "appear",
+     "bk6"
+    ],
+    [
+     "appear",
+     "bk7"
+    ],
+    [
      "flag",
      "k1"
     ],
@@ -2142,12 +2737,12 @@
     [
      "say",
      "wuyong",
-     "哥哥休慌！还道村九天玄女娘娘传的三卷天书里，有一道回风返火破阵之法。哥哥照着念动，定能破他的妖术！"
+     "哥哥休慌！还道村九天玄女娘娘传的三卷天书，哥哥随身带着，里面有一道回风返火破阵之法。只是这法力只够使一回，须看准了时候再念！"
     ],
     [
      "say",
      "songjiang",
-     "军师说得是！待我取出天书，依法施行。"
+     "军师说得是！待他妖兵多时，我便取出天书来破他。"
     ],
     [
      "flag",
@@ -2253,7 +2848,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -2268,194 +2863,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -2548,7 +2955,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -2563,194 +2970,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -2881,7 +3100,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -2896,194 +3115,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -3338,7 +3369,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -3353,194 +3384,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -3828,7 +3671,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -3843,194 +3686,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -4352,7 +4007,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -4367,194 +4022,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -4914,7 +4381,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -4929,194 +4396,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -5600,7 +4879,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -5615,194 +4894,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -6319,7 +5410,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -6334,194 +5425,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -7072,7 +5975,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -7087,194 +5990,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -7863,7 +6578,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -7878,194 +6593,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -8654,7 +7181,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -8669,194 +7196,6 @@
        "gaolian"
       ]
      }
-    ],
-    [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
     ],
     [
      "say",
@@ -9445,7 +7784,7 @@
     ],
     [
      "narrate",
-     "高廉又要作法，却被宋江的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+     "高廉又要作法，却被天书上的回风返火之法一逼，那风倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
     ],
     [
      "gust",
@@ -9462,194 +7801,6 @@
      }
     ],
     [
-     "narrate",
-     "场上的飞天神兵、猛虎被风一卷，一个个跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
-    ],
-    [
-     "leave",
-     "sb00"
-    ],
-    [
-     "leave",
-     "sb01"
-    ],
-    [
-     "leave",
-     "sb02"
-    ],
-    [
-     "leave",
-     "sb03"
-    ],
-    [
-     "leave",
-     "sb04"
-    ],
-    [
-     "leave",
-     "sb05"
-    ],
-    [
-     "leave",
-     "sb10"
-    ],
-    [
-     "leave",
-     "sb11"
-    ],
-    [
-     "leave",
-     "sb12"
-    ],
-    [
-     "leave",
-     "sb13"
-    ],
-    [
-     "leave",
-     "sb14"
-    ],
-    [
-     "leave",
-     "sb15"
-    ],
-    [
-     "leave",
-     "sb20"
-    ],
-    [
-     "leave",
-     "sb21"
-    ],
-    [
-     "leave",
-     "sb22"
-    ],
-    [
-     "leave",
-     "sb23"
-    ],
-    [
-     "leave",
-     "sb24"
-    ],
-    [
-     "leave",
-     "sb25"
-    ],
-    [
-     "leave",
-     "mb0"
-    ],
-    [
-     "leave",
-     "mb1"
-    ],
-    [
-     "leave",
-     "mb2"
-    ],
-    [
-     "leave",
-     "mb3"
-    ],
-    [
-     "leave",
-     "mb4"
-    ],
-    [
-     "leave",
-     "mb5"
-    ],
-    [
-     "leave",
-     "hw0"
-    ],
-    [
-     "leave",
-     "hw1"
-    ],
-    [
-     "leave",
-     "hw2"
-    ],
-    [
-     "leave",
-     "hw3"
-    ],
-    [
-     "leave",
-     "hw4"
-    ],
-    [
-     "leave",
-     "hw5"
-    ],
-    [
-     "leave",
-     "hw6"
-    ],
-    [
-     "leave",
-     "hw7"
-    ],
-    [
-     "leave",
-     "hw8"
-    ],
-    [
-     "leave",
-     "hw9"
-    ],
-    [
-     "leave",
-     "sb06"
-    ],
-    [
-     "leave",
-     "sb07"
-    ],
-    [
-     "leave",
-     "sb08"
-    ],
-    [
-     "leave",
-     "sb09"
-    ],
-    [
-     "leave",
-     "sb16"
-    ],
-    [
-     "leave",
-     "sb17"
-    ],
-    [
-     "leave",
-     "sb18"
-    ],
-    [
-     "leave",
-     "sb19"
-    ],
-    [
-     "leave",
-     "sb26"
-    ],
-    [
-     "leave",
-     "sb27"
-    ],
-    [
-     "leave",
-     "sb28"
-    ],
-    [
-     "leave",
-     "sb29"
-    ],
-    [
      "say",
      "gaolian",
      "好个宋江，也会些法术！"
@@ -9658,14 +7809,9 @@
   },
   {
    "on": {
-    "enter": "ours",
-    "area": [
-     14,
-     4,
-     24,
-     9
-    ],
-    "label": "高廉身边"
+    "near": "gaolian",
+    "range": 3,
+    "ours": true
    },
    "if": "dueled",
    "unless": "retreat",
@@ -9753,10 +7899,9 @@
   },
   {
    "on": {
-    "used": "songjiang",
-    "skills": [
-     "sj-huifeng"
-    ]
+    "did": "songjiang",
+    "action": "item",
+    "item": "tianshu"
    },
    "do": [
     [
@@ -9764,13 +7909,32 @@
      "huifeng"
     ],
     [
+     "flag",
+     "shuused"
+    ],
+    [
      "narrate",
-     "宋江取出天书，按上面的法，左手捏诀，右手仗剑，念动回风返火的咒语。"
+     "宋江取出天书，按上面的法，左手捏诀，右手仗剑，念动回风返火的咒语。只见平地里卷起一阵狂风，望高廉阵中刮去！"
+    ],
+    [
+     "gust",
+     {
+      "banish": 50,
+      "of": [
+       "shenbing",
+       "yiling-tiger",
+       "yiling-tigress"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "场上的飞天神兵、猛虎被风一卷，倒有一半跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
     ],
     [
      "say",
      "songjiang",
-     "且看那厮的风，往哪里刮！"
+     "且看那厮下回的风，往哪里刮！"
     ]
    ]
   },
@@ -9789,7 +7953,7 @@
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13
    },
    "do": [
     [

@@ -14,6 +14,8 @@ export interface Item {
   shopTier?: number;
   /** 群体药【新】：用了以后自己和上下左右相邻的友方都按本药回复（只看回体、回气） */
   area?: boolean;
+  /** 扩展包剧情道具【新】：用了没有回复效果，也不报「沒有效果」，由剧本的 did item 触发处理（神兵困公明的天书） */
+  story?: boolean;
   name: string; // +6
   description: string; // +26
   moveBonus: number; // +104 移动力加成
