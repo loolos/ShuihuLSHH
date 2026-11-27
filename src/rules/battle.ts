@@ -2725,7 +2725,8 @@ export class Battle {
             // args.ring【新】（妖法困宋江，负责人 2026-11-27）：在离我方 / 友军最近的人 [min, max] 步的空格里随机挑一格冒出来（飞天神兵突然杀出）
             const ring = op.args?.ring;
             if (ring) {
-              const mine = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid));
+              // 同时给了 toward：按离那个人的步数算（护法神兵在高廉身边散开）
+              const mine = t?.present ? [t] : this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid));
               const f = this.board.distanceField(mine.map((u) => ({ x: u.x, y: u.y })));
               const occ = this.occupied(sel);
               const W = this.board.width;
@@ -3030,15 +3031,16 @@ export class Battle {
           if (a.caster !== undefined && (!c?.present || !c.alive)) break;
           // back：风被吹回施法的人那边（宋江回风返火），照旧吹散他身边的敌人
           if (c && a.back) at = { x: c.x, y: c.y };
-          else if (c && a.pick) {
+          else if (c && (a.pick || a.push)) {
             // 妖法点人【新】（妖法困宋江，负责人 2026-11-27）：随机挑场上我方 / 友军的 pick%（至少 1 人），
             // 黑气 = 中毒 poison 回合，飞沙走石 = 昏迷 stun 回合；不看远近
             const pool = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid));
-            const n = Math.min(pool.length, Math.max(1, Math.round((pool.length * a.pick) / 100)));
+            // 只有 push 没有 pick（近身护法：神兵冒出来的同时把最近的几人吹开）：不点人，只吹
+            const n = a.pick ? Math.min(pool.length, Math.max(1, Math.round((pool.length * a.pick) / 100))) : 0;
             const hit: Unit[] = [];
             while (hit.length < n) hit.push(pool.splice(this.rng.int(pool.length), 1)[0]);
-            if (!hit.length) break;
-            this.emit({ type: 'focus', x: hit[0].x, y: hit[0].y });
+            if (!hit.length && !a.push) break;
+            if (hit.length) this.emit({ type: 'focus', x: hit[0].x, y: hit[0].y });
             // 先一起刮风，再一起掉血、上状态：同类事件挨着，画面上所有人同时生效（负责人 2026-11-27）
             for (const u of hit) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'wind' ? 'wind' : 'dust' });
             for (const u of hit) {
@@ -3067,6 +3069,7 @@ export class Battle {
             if (a.push) {
               const dc = (u: Cell) => Math.abs(u.x - c.x) + Math.abs(u.y - c.y);
               const near = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid)).sort((p, q) => dc(p) - dc(q) || p.uid - q.uid).slice(0, a.push);
+              if (!a.pick) for (const u of near) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'dust' ? 'dust' : 'wind' });
               near.forEach((u, i) => {
                 const path: Cell[] = [{ x: u.x, y: u.y }];
                 let at = { x: u.x, y: u.y };
@@ -3086,7 +3089,7 @@ export class Battle {
                 if (path.length > 1) this.emit({ type: 'move', uid: u.uid, path, facing: u.facing, script: true });
               });
             }
-            sel = hit[0];
+            sel = hit[0] ?? c;
             selName = sel.name;
             break;
           } else if (c) {

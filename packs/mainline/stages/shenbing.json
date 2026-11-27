@@ -33,7 +33,7 @@
     "dueled",
     "tianshu"
    ],
-   "hint": "高廉每回合轮着作一种妖法：召飞天神兵、黑气（随机三分之一的人中毒两回合）、飞沙走石（随机三分之一的人昏迷一回合）、召猛虎"
+   "hint": "高廉每回合轮着作一种妖法：召飞天神兵、黑气（随机三分之一的人中毒两回合）、飞沙走石（随机三分之一的人昏迷一回合）、召猛兽（狮、虎、狼、熊、野猪）"
   },
   {
    "if": [
@@ -44,7 +44,7 @@
     "huifeng",
     "shuused"
    ],
-   "hint": "宋江随身带着「天书」（道具，只能用一次）：用了立刻吹散场上一半的飞天神兵、猛虎，高廉下一次作法也会被吹回去"
+   "hint": "宋江随身带着「天书」（道具，只能用一次）：用了立刻吹散场上一半的飞天神兵、猛兽，高廉下一次作法也会被吹回去"
   },
   {
    "if": [
@@ -258,6 +258,28 @@
    "level": 30,
    "facing": 0,
    "name": "白胜",
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "ally",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "ally",
+   "x": 23,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
    "ai": 11,
    "levelOffset": -3
   },
@@ -1183,7 +1205,7 @@
    "id": "bk0",
    "class": "shenbing",
    "side": "enemy",
-   "x": 13,
+   "x": 12,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1195,7 +1217,7 @@
    "id": "bk1",
    "class": "shenbing",
    "side": "enemy",
-   "x": 14,
+   "x": 13,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1207,7 +1229,7 @@
    "id": "bk2",
    "class": "shenbing",
    "side": "enemy",
-   "x": 15,
+   "x": 14,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1219,7 +1241,7 @@
    "id": "bk3",
    "class": "shenbing",
    "side": "enemy",
-   "x": 16,
+   "x": 17,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1231,7 +1253,7 @@
    "id": "bk4",
    "class": "shenbing",
    "side": "enemy",
-   "x": 17,
+   "x": 18,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1243,7 +1265,7 @@
    "id": "bk5",
    "class": "shenbing",
    "side": "enemy",
-   "x": 18,
+   "x": 19,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1255,8 +1277,8 @@
    "id": "bk6",
    "class": "shenbing",
    "side": "enemy",
-   "x": 19,
-   "y": 31,
+   "x": 18,
+   "y": 32,
    "level": 30,
    "facing": 0,
    "ai": 0,
@@ -1267,8 +1289,8 @@
    "id": "bk7",
    "class": "shenbing",
    "side": "enemy",
-   "x": 20,
-   "y": 31,
+   "x": 28,
+   "y": 30,
    "level": 30,
    "facing": 0,
    "ai": 0,
@@ -1276,8 +1298,80 @@
    "levelOffset": 2
   },
   {
+   "id": "bk8",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 29,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk9",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 30,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 26,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 27,
+   "y": 25,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 27,
+   "y": 26,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
    "id": "mb0",
-   "class": "yiling-tiger",
+   "class": "lion",
    "side": "enemy",
    "x": 6,
    "y": 15,
@@ -1285,12 +1379,11 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
    "levelOffset": -1
   },
   {
    "id": "mb1",
-   "class": "yiling-tigress",
+   "class": "yiling-tiger",
    "side": "enemy",
    "x": 7,
    "y": 15,
@@ -1298,12 +1391,12 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
-   "levelOffset": -1
+   "levelOffset": -1,
+   "name": "猛虎"
   },
   {
    "id": "mb2",
-   "class": "yiling-tigress",
+   "class": "wolf",
    "side": "enemy",
    "x": 8,
    "y": 15,
@@ -1311,12 +1404,11 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
    "levelOffset": -1
   },
   {
    "id": "mb3",
-   "class": "yiling-tiger",
+   "class": "bear",
    "side": "enemy",
    "x": 9,
    "y": 15,
@@ -1324,12 +1416,11 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
    "levelOffset": -1
   },
   {
    "id": "mb4",
-   "class": "yiling-tigress",
+   "class": "boar",
    "side": "enemy",
    "x": 10,
    "y": 15,
@@ -1337,12 +1428,11 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
    "levelOffset": -1
   },
   {
    "id": "mb5",
-   "class": "yiling-tiger",
+   "class": "lion",
    "side": "enemy",
    "x": 11,
    "y": 15,
@@ -1350,7 +1440,116 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "name": "猛兽",
+   "levelOffset": -1
+  },
+  {
+   "id": "mb6",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 12,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1,
+   "name": "猛虎"
+  },
+  {
+   "id": "mb7",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 13,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb8",
+   "class": "bear",
+   "side": "enemy",
+   "x": 14,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb9",
+   "class": "boar",
+   "side": "enemy",
+   "x": 15,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb10",
+   "class": "lion",
+   "side": "enemy",
+   "x": 16,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb11",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 17,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1,
+   "name": "猛虎"
+  },
+  {
+   "id": "mb12",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 18,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb13",
+   "class": "bear",
+   "side": "enemy",
+   "x": 19,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": -1
+  },
+  {
+   "id": "mb14",
+   "class": "boar",
+   "side": "enemy",
+   "x": 20,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
    "levelOffset": -1
   }
  ],
@@ -1540,6 +1739,14 @@
     [
      "spectate",
      "baisheng"
+    ],
+    [
+     "spectate",
+     "yangxiong"
+    ],
+    [
+     "spectate",
+     "shixiu"
     ],
     [
      "spectate",
@@ -1935,6 +2142,16 @@
     ],
     [
      "spectate",
+     "yangxiong",
+     false
+    ],
+    [
+     "spectate",
+     "shixiu",
+     false
+    ],
+    [
+     "spectate",
      "la0",
      false
     ],
@@ -2061,6 +2278,16 @@
     [
      "setAi",
      "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "yangxiong",
+     0
+    ],
+    [
+     "setAi",
+     "shixiu",
      0
     ],
     [
@@ -2217,6 +2444,34 @@
     [
      "appear",
      "bk7"
+    ],
+    [
+     "appear",
+     "bk8"
+    ],
+    [
+     "appear",
+     "bk9"
+    ],
+    [
+     "narrate",
+     "两翼也各卷起一股黄砂，又有几个飞天神兵从侧里抄了过来！"
+    ],
+    [
+     "appear",
+     "fl0"
+    ],
+    [
+     "appear",
+     "fl1"
+    ],
+    [
+     "appear",
+     "fl2"
+    ],
+    [
+     "appear",
+     "fl3"
     ],
     [
      "flag",
@@ -2442,6 +2697,16 @@
     ],
     [
      "spectate",
+     "yangxiong",
+     false
+    ],
+    [
+     "spectate",
+     "shixiu",
+     false
+    ],
+    [
+     "spectate",
      "la0",
      false
     ],
@@ -2568,6 +2833,16 @@
     [
      "setAi",
      "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "yangxiong",
+     0
+    ],
+    [
+     "setAi",
+     "shixiu",
      0
     ],
     [
@@ -2724,6 +2999,34 @@
     [
      "appear",
      "bk7"
+    ],
+    [
+     "appear",
+     "bk8"
+    ],
+    [
+     "appear",
+     "bk9"
+    ],
+    [
+     "narrate",
+     "两翼也各卷起一股黄砂，又有几个飞天神兵从侧里抄了过来！"
+    ],
+    [
+     "appear",
+     "fl0"
+    ],
+    [
+     "appear",
+     "fl1"
+    ],
+    [
+     "appear",
+     "fl2"
+    ],
+    [
+     "appear",
+     "fl3"
     ],
     [
      "flag",
@@ -3003,7 +3306,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3015,6 +3318,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -3281,7 +3605,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3293,6 +3617,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -3592,7 +3937,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3604,6 +3949,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -3946,7 +4312,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3958,6 +4324,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -4100,18 +4487,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -4338,7 +4746,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -4350,6 +4758,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -4616,18 +5045,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -4854,7 +5304,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -4866,6 +5316,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -5165,18 +5636,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -5403,7 +5895,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -5415,6 +5907,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -5757,18 +6270,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -5995,7 +6529,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -6007,6 +6541,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -6149,18 +6704,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb4",
+     "mb10",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb5",
+     "mb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb14",
      {
       "near": "gaolian"
      }
@@ -6387,18 +6963,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -6625,7 +7222,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -6637,6 +7234,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -6779,18 +7397,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb4",
+     "mb10",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb5",
+     "mb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb14",
      {
       "near": "gaolian"
      }
@@ -7017,18 +7656,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -7255,7 +7915,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7267,6 +7927,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -7409,18 +8090,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb4",
+     "mb10",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb5",
+     "mb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb14",
      {
       "near": "gaolian"
      }
@@ -7647,18 +8349,39 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
-     "mb2",
+     "mb5",
      {
       "near": "gaolian"
      }
     ],
     [
      "appear",
-     "mb3",
+     "mb6",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb7",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb8",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb9",
      {
       "near": "gaolian"
      }
@@ -7885,7 +8608,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出几头猛虎来！"
+     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7897,6 +8620,27 @@
     [
      "appear",
      "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb4",
      {
       "near": "gaolian"
      }
@@ -8034,76 +8778,124 @@
    "do": [
     [
      "narrate",
-     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，身边黄砂卷起，十个飞天神兵护住了他！"
+     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，平地卷起一阵狂风，把杀到跟前的好汉都吹了回去；黄砂里十个飞天神兵散开护住了他！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "push": 5,
+      "style": "wind"
+     }
     ],
     [
      "appear",
      "hw0",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw1",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw2",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw3",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw4",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw5",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw6",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw7",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw8",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw9",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
@@ -8138,14 +8930,17 @@
       "banish": 50,
       "of": [
        "shenbing",
+       "lion",
        "yiling-tiger",
-       "yiling-tigress"
+       "wolf",
+       "bear",
+       "boar"
       ]
      }
     ],
     [
      "narrate",
-     "场上的飞天神兵、猛虎被风一卷，倒有一半跌落尘埃，原来都是纸剪的人马、纸扎的老虎！"
+     "场上的飞天神兵、猛兽被风一卷，倒有一半跌落尘埃，原来都是纸剪的人马、纸扎的野兽！"
     ],
     [
      "say",
