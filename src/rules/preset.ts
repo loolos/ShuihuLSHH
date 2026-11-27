@@ -186,3 +186,25 @@ export function mainlineGold(files: FileSource, data: GameData, stages: Stage[],
   for (const x of before) if (isInsertKey(x)) sum += insertGold(x);
   return Math.round(sum);
 }
+
+/**
+ * 跳到主线插关（续篇）时的人物等级【新】（负责人 2026-11-27 发现：从选关进第三十四章，后面几关柴进、宋江等只有 30 级上下）：
+ * jumpTo 按插关挂靠的原版关卡（续篇都挂在最后一个原版关 N14 之后）配人，等级是 N14 那时的；
+ * 只有跳进的那一关按自己的预设等级开打，接着往下打的插关里其他人还停在 N14 的等级。
+ * 这里把每个人改成章节表里到这一关为止、最后一次出场时的估算等级（entry-levels.json），和照常打过来一致；表里没出现过的人不动。
+ */
+export function insertJumpLevels(data: GameData, c: CampaignState, ref: string): CampaignState {
+  const seq = chapterSequence().map((x) => x.key.toLowerCase());
+  const end = seq.indexOf(ref.toLowerCase());
+  if (end < 0) return c;
+  const last = new Map<number, number>();
+  for (const key of seq.slice(0, end + 1)) for (const [id, lv] of Object.entries(ENTRY_LEVELS[key] ?? {})) if (/^\d+$/.test(id)) last.set(Number(id), lv);
+  const members = c.members.map((m) => {
+    const level = last.get(m.classId);
+    if (level === undefined || level === m.level) return m;
+    const slots = [...m.slots];
+    levelKit(data, data.classes[m.classId], level, slots);
+    return { ...m, level, exp: 0, slots };
+  });
+  return { ...c, members };
+}

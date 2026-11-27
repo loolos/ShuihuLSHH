@@ -1,4 +1,4 @@
-// 第三十四章「大破高唐州」：打死殷天锡、飞天神兵（docs/game-design.md §15.35）
+// 第三十四章「大破高唐州」：打死殷天锡、妖法困宋江（docs/game-design.md §15.35）
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -81,5 +81,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     gl.hp = Math.floor(gl.stats.maxHp * 0.3);
     b.endPlayerPhase();
     expect(b.status).toBe('won');
+  });
+});
+
+describe('跳到续篇插关的等级', () => {
+  it('按章节表里到这一关为止最后一次出场的估算等级配人，不停在 N14', async () => {
+    const { insertJumpLevels } = await import('../src/rules/preset.ts');
+    const { newCampaign } = await import('../src/rules/campaign.ts');
+    const rt = loadPackFromDisk('mainline');
+    const c = { ...newCampaign(0), members: [{ classId: 11, level: 28, exp: 5, slots: [0, 0, 0, 0, 0, 0, 0, 0], forge: [0, 0, 0, 0, 0, 0, 0, 0] }, { classId: 999, level: 7, exp: 0, slots: [], forge: [] }] };
+    const out = insertJumpLevels(rt.data, c as never, 'mainline/shenbing');
+    expect(out.members[0].level).toBe(40); // 吴用：飞天神兵的估算等级
+    expect(out.members[0].exp).toBe(0);
+    expect(out.members[1].level).toBe(7); // 表里没有的人不动
   });
 });

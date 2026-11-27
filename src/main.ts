@@ -19,7 +19,7 @@ import { TitleScreen, type TitleOptions, type TitleStageItem } from './game/titl
 import { stageLabel, townName } from './game/stage-names.ts';
 import { CHAPTERS, PROLOGUE, chapterLabel, insertPlaces, isInsertKey, validateChapters } from './rules/chapters.ts';
 import { stageJson, stageMapName } from './rules/load.ts';
-import { jumpTo, jumpToTown, mainlineGold, packStageGold, townRoster } from './rules/preset.ts';
+import { jumpTo, insertJumpLevels, jumpToTown, mainlineGold, packStageGold, townRoster } from './rules/preset.ts';
 import type { Battle } from './rules/battle.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from './packs/campaign.ts';
 import { insertTownName, prepareInsertTown, insertTownIntro, shopTierOf } from './packs/towns.ts';
@@ -236,7 +236,7 @@ function startGame(assets: Assets) {
       const s = anchor && stages.find((x) => x.mapName.toLowerCase() === anchor.toLowerCase());
       if (e && s) {
         const done = replayInsertProgress(c, inserts, e.ref);
-        return { ...(!fresh(c) ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : { ...jumpTo(assets.files, assets.data, stages, s.index, c, { insertGold }), gold: presetGold(e.ref, false) }), insert: e.ref, insertPreset: fresh(c) ? e.ref : undefined, inserts: done, finished: undefined };
+        return { ...(!fresh(c) ? { ...c, stage: s.index, town: undefined, insertTown: undefined } : { ...insertJumpLevels(assets.data, jumpTo(assets.files, assets.data, stages, s.index, c, { insertGold }), e.ref), gold: presetGold(e.ref, false) }), insert: e.ref, insertPreset: fresh(c) ? e.ref : undefined, inserts: done, finished: undefined };
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
