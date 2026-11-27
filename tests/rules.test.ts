@@ -587,8 +587,11 @@ describe('战斗流程', () => {
     q.alive = false;
     r.ended = true; // 昏迷的人在回合开始时就是 ended
     expect(b.playerPhaseDone()).toBe(false);
-    b.move(p, 3, 0);
-    expect(b.playerPhaseDone()).toBe(false); // 移动后还能攻击/待机
+    b.move(p, 1, 0);
+    p.x = 8; p.y = 9; // 站到敌人旁边
+    expect(b.playerPhaseDone()).toBe(false); // 走过了、身边还有敌人：还能攻击
+    p.x = 3; p.y = 0;
+    expect(b.playerPhaseDone()).toBe(true); // 走过了、够不着敌人：算行动完（负责人 2026-11-27）
     b.wait(p);
     expect(b.playerPhaseDone()).toBe(true);
   });
