@@ -83,6 +83,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十三
     const { b, get, ev } = open('zhuguidian');
     expect(ev.some((e) => e.type === 'say' && /旱地忽律朱贵/.test(e.text))).toBe(true);
     expect(b.isBound(get('daizong'))).toBe(false);
+    for (const id of ['huojia-1', 'huojia-2', 'huojia-3']) expect(get(id).present, id).toBe(false); // 官军一到，火家说一句就躲进后屋（负责人 2026-11-27）
     expect(get('zhangheng').present).toBe(false);
     killAll(b, true);
     expect(b.status).toBe('playing'); // 还没放号箭
