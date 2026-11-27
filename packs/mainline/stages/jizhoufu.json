@@ -1,6 +1,6 @@
 {
  "id": "jizhoufu",
- "title": "蓟州府吃苦",
+ "title": "云坠蓟州衙",
  "dynamicLevels": true,
  "rewards": {
   "gold": 400
@@ -47,7 +47,7 @@
    "id": "h0",
    "class": "gouxue",
    "side": "enemy",
-   "x": 13,
+   "x": 12,
    "y": 12,
    "level": 30,
    "facing": 1,
@@ -59,8 +59,8 @@
    "id": "h1",
    "class": 32,
    "side": "enemy",
-   "x": 14,
-   "y": 12,
+   "x": 16,
+   "y": 13,
    "level": 30,
    "facing": 1,
    "levelOffset": -8,
@@ -71,8 +71,8 @@
    "id": "h2",
    "class": "gouxue",
    "side": "enemy",
-   "x": 15,
-   "y": 12,
+   "x": 20,
+   "y": 13,
    "level": 30,
    "facing": 1,
    "levelOffset": -8,
@@ -83,20 +83,8 @@
    "id": "h3",
    "class": 34,
    "side": "enemy",
-   "x": 14,
-   "y": 13,
-   "level": 30,
-   "facing": 1,
-   "levelOffset": -8,
-   "enemyRank": "troop",
-   "name": "弓手"
-  },
-  {
-   "id": "h4",
-   "class": 34,
-   "side": "enemy",
-   "x": 16,
-   "y": 13,
+   "x": 17,
+   "y": 10,
    "level": 30,
    "facing": 1,
    "levelOffset": -8,
@@ -105,10 +93,10 @@
   },
   {
    "id": "g0",
-   "class": 32,
+   "class": "gouxue",
    "side": "enemy",
-   "x": 11,
-   "y": 22,
+   "x": 7,
+   "y": 21,
    "level": 30,
    "facing": 0,
    "hidden": true,
@@ -118,9 +106,9 @@
   },
   {
    "id": "g1",
-   "class": "gouxue",
+   "class": 32,
    "side": "enemy",
-   "x": 12,
+   "x": 11,
    "y": 22,
    "level": 30,
    "facing": 0,
@@ -131,10 +119,10 @@
   },
   {
    "id": "g2",
-   "class": 32,
+   "class": 33,
    "side": "enemy",
-   "x": 13,
-   "y": 22,
+   "x": 17,
+   "y": 20,
    "level": 30,
    "facing": 0,
    "hidden": true,
@@ -144,36 +132,10 @@
   },
   {
    "id": "g3",
-   "class": "gouxue",
-   "side": "enemy",
-   "x": 10,
-   "y": 22,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": -8,
-   "enemyRank": "troop",
-   "name": "公人"
-  },
-  {
-   "id": "g4",
-   "class": 33,
-   "side": "enemy",
-   "x": 12,
-   "y": 21,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": -8,
-   "enemyRank": "troop",
-   "name": "公人"
-  },
-  {
-   "id": "g5",
    "class": 38,
    "side": "enemy",
-   "x": 11,
-   "y": 21,
+   "x": 13,
+   "y": 22,
    "level": 30,
    "facing": 0,
    "hidden": true,
@@ -198,8 +160,8 @@
    "id": "w1",
    "class": "gouxue",
    "side": "enemy",
-   "x": 3,
-   "y": 14,
+   "x": 2,
+   "y": 16,
    "level": 30,
    "facing": 3,
    "hidden": true,
@@ -209,36 +171,10 @@
   },
   {
    "id": "w2",
-   "class": "gouxue",
-   "side": "enemy",
-   "x": 4,
-   "y": 13,
-   "level": 30,
-   "facing": 3,
-   "hidden": true,
-   "levelOffset": -8,
-   "enemyRank": "troop",
-   "name": "公人"
-  },
-  {
-   "id": "w3",
-   "class": 34,
-   "side": "enemy",
-   "x": 2,
-   "y": 15,
-   "level": 30,
-   "facing": 3,
-   "hidden": true,
-   "levelOffset": -8,
-   "enemyRank": "troop",
-   "name": "弓手"
-  },
-  {
-   "id": "w4",
    "class": 32,
    "side": "enemy",
    "x": 4,
-   "y": 15,
+   "y": 18,
    "level": 30,
    "facing": 3,
    "hidden": true,
@@ -335,14 +271,6 @@
     [
      "appear",
      "g3"
-    ],
-    [
-     "appear",
-     "g4"
-    ],
-    [
-     "appear",
-     "g5"
     ]
    ]
   },
@@ -366,14 +294,6 @@
     [
      "appear",
      "w2"
-    ],
-    [
-     "appear",
-     "w3"
-    ],
-    [
-     "appear",
-     "w4"
     ]
    ]
   },
@@ -385,6 +305,42 @@
     [
      "defeat",
      "李逵被打倒在厅前……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "did": "likui",
+    "action": "stunned"
+   },
+   "do": [
+    [
+     "say",
+     "likui",
+     "呸！呸呸！……这是甚么腌臜东西？又腥又臭，糊了俺一脸，眼睛都睁不开！"
+    ],
+    [
+     "say",
+     "likui",
+     "你这伙鸟公人！等俺抹干净了，一个个劈做两半！"
+    ],
+    [
+     "flag",
+     "doused"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "did": "likui",
+    "action": "stunned"
+   },
+   "if": "doused",
+   "do": [
+    [
+     "say",
+     "likui",
+     "又来！又来！俺这身衣裳……戴宗哥哥若见了，要笑掉大牙！"
     ]
    ]
   },
@@ -404,6 +360,11 @@
     [
      "bind",
      "likui"
+    ],
+    [
+     "say",
+     "likui",
+     "（满头狗血尿粪）呕——！罗真人！你这老道，害苦俺了！"
     ],
     [
      "standDown",
@@ -432,14 +393,6 @@
     [
      "standDown",
      "h3",
-     {
-      "leave": true,
-      "quiet": true
-     }
-    ],
-    [
-     "standDown",
-     "h4",
      {
       "leave": true,
       "quiet": true
@@ -479,22 +432,6 @@
     ],
     [
      "standDown",
-     "g4",
-     {
-      "leave": true,
-      "quiet": true
-     }
-    ],
-    [
-     "standDown",
-     "g5",
-     {
-      "leave": true,
-      "quiet": true
-     }
-    ],
-    [
-     "standDown",
      "w0",
      {
       "leave": true,
@@ -512,22 +449,6 @@
     [
      "standDown",
      "w2",
-     {
-      "leave": true,
-      "quiet": true
-     }
-    ],
-    [
-     "standDown",
-     "w3",
-     {
-      "leave": true,
-      "quiet": true
-     }
-    ],
-    [
-     "standDown",
-     "w4",
      {
       "leave": true,
       "quiet": true

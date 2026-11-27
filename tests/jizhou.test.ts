@@ -34,7 +34,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     for (const id of IDS) expect(chapterOf(`mainline/${id}`)).toBe(34);
   });
 
-  it('甲马戏铁牛：开场李逵缚了甲马变成停不住脚的友军；戴宗赶到身边收法，李逵回到我方；毛贼打完过关', () => {
+  it('荤酒误神行：开场李逵缚了甲马变成停不住脚的友军；戴宗赶到身边收法，李逵回到我方；毛贼打完过关', () => {
     const { b, get } = open('jiama');
     const likui = get('likui'), dz = get('daizong');
     expect(likui.side).toBe('ally');
@@ -51,7 +51,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     expect(b.status).toBe('won');
   });
 
-  it('甲马戏铁牛：李逵每回合跑到别处；戴宗一直追不上，第 6 回合也自动收法', () => {
+  it('荤酒误神行：李逵每回合跑到别处；戴宗一直追不上，第 6 回合也自动收法', () => {
     const { b, get } = open('jiama');
     const likui = get('likui');
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.stats.attack = 0;
@@ -64,7 +64,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     expect(ma0.hp).toBeLessThan(ma0.stats.maxHp * 0.2);
   });
 
-  it('二仙山访道：两次选项都能走到公孙胜出来、过关', () => {
+  it('智取公孙胜：两次选项都能走到公孙胜出来、过关', () => {
     for (const picks of [[0, 1], [1, 0, 0], [0, 0]]) {
       const { b, get } = open('erxianshan');
       for (const k of picks) if (b.pendingChoice) b.answer(k);
@@ -73,7 +73,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     }
   });
 
-  it('斧劈罗真人：潜行关，李逵走到罗真人身边就劈、次日罗真人好端端坐着，李逵被白云卷走，过关', () => {
+  it('夜斧松鹤轩：潜行关，李逵走到罗真人身边就劈、次日罗真人好端端坐着，李逵被白云卷走，过关', () => {
     const { b, get } = open('pijian');
     const likui = get('likui'), luo = get('luo');
     expect(b.watchZones().length).toBeGreaterThan(0);
@@ -84,18 +84,21 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     expect(luo.present).toBe(true);
   });
 
-  it('蓟州府吃苦：撑过第 6 回合，李逵被狗血淋倒、在牢里吓唬节级，黄巾力士取走他，过关', () => {
+  it('云坠蓟州衙：撑过第 6 回合，李逵被狗血淋倒、在牢里吓唬节级，黄巾力士取走他，过关', () => {
     const { b, get } = open('jizhoufu');
     const likui = get('likui');
     expect(likui.present).toBe(true);
     const gx = b.units.find((u) => u.side === 'enemy' && u.present && learnedSkills(u, b.data).some((s) => s.name === '狗血淋头'));
     expect(gx).toBeTruthy();
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.stats.attack = 0;
-    for (let t = 0; t < 8 && b.status === 'playing'; t++) b.endPlayerPhase();
+    const said: string[] = [];
+    for (let t = 0; t < 8 && b.status === 'playing'; t++) for (const e of b.endPlayerPhase()) if (e.type === 'say') said.push(e.text);
     expect(b.status).toBe('won');
+    // 被狗血淋头泼倒时李逵骂一句（did stunned）
+    expect(said.some((x) => x.includes('腌臜东西'))).toBe(true);
   });
 
-  it('罗真人传法：纯剧情，开场演完就过关', () => {
+  it('真人授五雷：纯剧情，开场演完就过关', () => {
     const { b } = open('chuanfa');
     expect(b.status).toBe('won');
   });

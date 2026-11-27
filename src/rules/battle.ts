@@ -1946,6 +1946,8 @@ export class Battle {
         // 回合开始先减 1：本回合他已经动过（敌人打我方 / 友军），要多记 1 回合；他还没轮到（我方打敌人）就照记
         t.stunTurns = skill.stunFor !== undefined ? skill.stunFor + (this.actsLater(t) ? 0 : 1) : this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
+        // did stunned【新】（云坠蓟州衙：李逵被狗血淋头泼倒时说话）
+        this.noteDid(t, 'stunned');
       }
       if (!this.doors.has(t.uid)) exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
       if (t.side === 'player') this.gainExp(t, takenExp(r.damage, t.defending, this.rng), 'taken');
@@ -2732,7 +2734,7 @@ export class Battle {
             // args.toward【新】（火烧祝家店：挠钩手钩走时迁）：登场在这个人身边，不在自己的开场格
             const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
             if (t?.present) (sel.x = t.x), (sel.y = t.y);
-            // args.x / y【新】（斧劈罗真人：李逵夜里从侧门、次日从山门进来）：在这一格（被占就最近的空格）登场，不在退场时的位置
+            // args.x / y【新】（夜斧松鹤轩：李逵夜里从侧门、次日从山门进来）：在这一格（被占就最近的空格）登场，不在退场时的位置
             else if (op.args?.x !== undefined && op.args?.y !== undefined) (sel.x = op.args.x), (sel.y = op.args.y);
             // args.ring【新】（妖法困宋江，负责人 2026-11-27）：在离我方 / 友军最近的人 [min, max] 步的空格里随机挑一格冒出来（飞天神兵突然杀出）
             const ring = op.args?.ring;
