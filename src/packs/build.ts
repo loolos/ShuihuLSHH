@@ -732,10 +732,12 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'gust': {
         // ['gust', {style: dust|wind, radius, turns, panic, spare, x, y, focus}] 黑尘迷眼 / 怪风（指令 126）：中心（区域触发的区域中心，或 x, y）
         // radius 格内的敌人逃窜 turns 回合（同放火），画面冒黑尘或卷起怪风【新】（还道村受天书）
-        const o = (a[0] ?? {}) as { style?: string; radius?: number; turns?: number; panic?: number; spare?: unknown[]; x?: number; y?: number; focus?: boolean };
+        // 妖风【新】（飞天神兵，高廉作法）：caster = 施法的人，风落在离他最近的我方 / 友军身上，radius 格内的我方、友军昏迷 stun 回合、
+        // 体力减最大值的 hurt%（至少留 1 点）；再写 back 就是风吹回施法的人那边、吹散他身边的敌人（回风返火）；不写 caster 就是原来的吹散敌人
+        const o = (a[0] ?? {}) as { style?: string; radius?: number; turns?: number; panic?: number; spare?: unknown[]; x?: number; y?: number; focus?: boolean; caster?: string; stun?: number; hurt?: number; back?: boolean };
         if (typeof o !== 'object' || Array.isArray(o)) fail(`第 ${index} 个区块：gust 要写成 ["gust", {style, radius, turns}]`);
         if (o.style && o.style !== 'dust' && o.style !== 'wind' && o.style !== 'none') fail(`第 ${index} 个区块：gust 的 style 只能是 dust / wind / none（none = 不画风尘，只让人乱逃）`);
-        const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined }).filter(([, v]) => v !== undefined));
+        const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined, caster: o.caster !== undefined ? r.unitRef(o.caster).act.group : undefined, stun: o.stun, hurt: o.hurt, back: o.back || undefined }).filter(([, v]) => v !== undefined));
         ops.push({ op: 126, flag: null, value: 0, args });
         break;
       }

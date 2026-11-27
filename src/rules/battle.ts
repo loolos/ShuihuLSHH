@@ -2988,9 +2988,40 @@ export class Battle {
         case 126: {
           const a = op.args ?? {};
           const t = b.trigger;
-          const at = t.kind === 'area' && a.x === undefined ? { x: Math.round((t.x1 + t.x2) / 2), y: Math.round((t.y1 + t.y2) / 2) } : { x: a.x ?? 0, y: a.y ?? 0 };
+          let at = t.kind === 'area' && a.x === undefined ? { x: Math.round((t.x1 + t.x2) / 2), y: Math.round((t.y1 + t.y2) / 2) } : { x: a.x ?? 0, y: a.y ?? 0 };
           const radius = a.radius ?? 3;
           const d = (u: Cell) => Math.abs(u.x - at.x) + Math.abs(u.y - at.y);
+          // 妖风【新】（飞天神兵）：施法的人（args.caster 编组）把风刮到离他最近的我方 / 友军身上，范围内的我方、友军昏迷、掉血
+          const c = a.caster !== undefined ? this.unit(this.groups.get(a.caster) ?? -1) : undefined;
+          if (a.caster !== undefined && (!c?.present || !c.alive)) break;
+          // back：风被吹回施法的人那边（宋江回风返火），照旧吹散他身边的敌人
+          if (c && a.back) at = { x: c.x, y: c.y };
+          else if (c) {
+            const dc = (u: Cell) => Math.abs(u.x - c.x) + Math.abs(u.y - c.y);
+            const near = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid)).sort((p, q) => dc(p) - dc(q) || p.uid - q.uid)[0];
+            if (!near) break;
+            at = { x: near.x, y: near.y };
+            this.emit({ type: 'focus', x: at.x, y: at.y });
+            this.emit({ type: 'gust', x: at.x, y: at.y, radius, style: a.style === 'dust' ? 'dust' : 'wind' });
+            const hit = this.active().filter((u) => u.side !== 'enemy' && !this.spectators.has(u.uid) && d(u) <= radius).sort((p, q) => d(p) - d(q) || p.uid - q.uid);
+            for (const u of hit) {
+              if (a.hurt) {
+                const loss = Math.min(u.hp - 1, Math.floor((u.stats.maxHp * a.hurt) / 100));
+                if (loss > 0) {
+                  u.hp -= loss;
+                  this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: -loss });
+                }
+              }
+              if (a.stun) {
+                u.stunTurns = Math.max(u.stunTurns, a.stun);
+                u.defending = false;
+                this.emit({ type: 'status', uid: u.uid, text: '飛沙迷眼' });
+              }
+            }
+            sel = hit[0] ?? sel;
+            selName = sel?.name ?? selName;
+            break;
+          }
           if (a.focus) this.emit({ type: 'focus', x: at.x, y: at.y });
           // style none【新】（盘陀路灯落）：没有风尘画面，只让人乱逃
           if (a.style !== 'none') this.emit({ type: 'gust', x: at.x, y: at.y, radius, style: a.style === 'wind' ? 'wind' : 'dust' });

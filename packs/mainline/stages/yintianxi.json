@@ -1,0 +1,617 @@
+{
+ "id": "yintianxi",
+ "title": "打死殷天锡",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 600
+ },
+ "map": {
+  "custom": "guanfu"
+ },
+ "bgm": [
+  "manor",
+  "tense"
+ ],
+ "goals": [
+  {
+   "unless": "killed",
+   "win": "打死殷天锡（第 2 回合起他要往府门逃）",
+   "lose": [
+    "殷天锡逃出府门（地图上标出）",
+    "李逵或柴进倒下"
+   ],
+   "hint": "柴进的「丹书铁券」能镇住身前一片的人一回合，让李逵冲过去"
+  },
+  {
+   "if": "killed",
+   "win": "李逵从后门（地图上标出）逃走",
+   "lose": "李逵倒下",
+   "hint": "柴进留下顶罪，公人只追李逵"
+  }
+ ],
+ "units": [
+  {
+   "id": "chaijin",
+   "class": 26,
+   "side": "player",
+   "x": 17,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "name": "柴进",
+   "skills": [
+    "cj-tiequan"
+   ]
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 17,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "hidden": true
+  },
+  {
+   "id": "yintianxi",
+   "class": "yintianxi",
+   "side": "enemy",
+   "x": 17,
+   "y": 7,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "point": [
+    11,
+    22
+   ],
+   "enemyRank": "leader",
+   "levelOffset": -2,
+   "hpMultiplier": 1.5,
+   "name": "殷天锡"
+  },
+  {
+   "id": "xh0",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 6,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 1,
+   "target": "chaijin"
+  },
+  {
+   "id": "xh1",
+   "class": 40,
+   "side": "enemy",
+   "x": 17,
+   "y": 6,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 1,
+   "target": "chaijin"
+  },
+  {
+   "id": "xh2",
+   "class": 40,
+   "side": "enemy",
+   "x": 18,
+   "y": 6,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 1,
+   "target": "chaijin"
+  },
+  {
+   "id": "xh3",
+   "class": 40,
+   "side": "enemy",
+   "x": 16,
+   "y": 8,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 0
+  },
+  {
+   "id": "xh4",
+   "class": 40,
+   "side": "enemy",
+   "x": 18,
+   "y": 8,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 0
+  },
+  {
+   "id": "xh5",
+   "class": 40,
+   "side": "enemy",
+   "x": 15,
+   "y": 7,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -6,
+   "name": "闲汉",
+   "ai": 0
+  },
+  {
+   "id": "xs0",
+   "class": 41,
+   "side": "enemy",
+   "x": 7,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "levelOffset": -6,
+   "name": "闲汉"
+  },
+  {
+   "id": "xs1",
+   "class": 41,
+   "side": "enemy",
+   "x": 8,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "levelOffset": -6,
+   "name": "闲汉"
+  },
+  {
+   "id": "xs2",
+   "class": 41,
+   "side": "enemy",
+   "x": 6,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "levelOffset": -6,
+   "name": "闲汉"
+  },
+  {
+   "id": "xs3",
+   "class": 41,
+   "side": "enemy",
+   "x": 17,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "levelOffset": -6,
+   "name": "闲汉"
+  },
+  {
+   "id": "xs4",
+   "class": 41,
+   "side": "enemy",
+   "x": 18,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "levelOffset": -6,
+   "name": "闲汉"
+  },
+  {
+   "id": "gr0",
+   "class": 34,
+   "side": "enemy",
+   "x": 10,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -4,
+   "name": "公人"
+  },
+  {
+   "id": "dutou",
+   "class": 38,
+   "side": "enemy",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -1,
+   "enemyRank": "leader",
+   "name": "都头"
+  },
+  {
+   "id": "gr2",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -4,
+   "name": "公人"
+  },
+  {
+   "id": "gr3",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -4,
+   "name": "公人"
+  },
+  {
+   "id": "gr4",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -4,
+   "name": "公人"
+  },
+  {
+   "id": "gr5",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "ai": 1,
+   "target": "likui",
+   "hidden": true,
+   "levelOffset": -4,
+   "name": "公人"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "高唐州 · 柴皇城宅"
+    ],
+    [
+     "narrate",
+     "李逵在柴进庄上住了些时，正赶上高唐州来信：柴进的叔叔柴皇城，宅后有一座花园，被知府高廉的妻舅殷天锡看上了，带人来强占，又把柴皇城推抢殴打了一顿。柴皇城气得一病不起。"
+    ],
+    [
+     "narrate",
+     "柴进带了李逵，星夜赶到高唐州，叔叔已经咽了气。柴进停丧在堂。这一日，殷天锡又引着一伙闲汉，耀武扬威来到宅里。李逵在后面听得吵嚷，躲在门缝里张望。"
+    ],
+    [
+     "say",
+     "yintianxi",
+     "你是他家甚么人？"
+    ],
+    [
+     "say",
+     "chaijin",
+     "小可是柴皇城的亲侄柴进。"
+    ],
+    [
+     "say",
+     "yintianxi",
+     "我前日分付道，教他家搬出屋去，如何不依我言语？"
+    ],
+    [
+     "say",
+     "chaijin",
+     "叔叔卧病不起，如今身故，待断七了搬出去。况且我家是龙子龙孙，放着先朝太祖誓书铁券在家，诸人不许欺侮！"
+    ],
+    [
+     "say",
+     "yintianxi",
+     "你便有誓书铁券，我也不怕！左右，与我打这厮！"
+    ],
+    [
+     "bgm",
+     [
+      "likui",
+      "battle"
+     ]
+    ],
+    [
+     "narrate",
+     "李逵在门缝里都看见了，大吼一声，直抢出来！"
+    ],
+    [
+     "appear",
+     "likui",
+     {
+      "near": "chaijin"
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "直娘贼！敢在俺柴大官人面前撒野！"
+    ],
+    [
+     "say",
+     "yintianxi",
+     "哪里钻出这个黑大汉……给我拦住他！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "unless": "killed",
+   "do": [
+    [
+     "say",
+     "yintianxi",
+     "这黑厮好凶……走，走！回衙门叫姐夫拿人！"
+    ],
+    [
+     "setAi",
+     "yintianxi",
+     4
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "yintianxi",
+    "area": [
+     10,
+     22,
+     13,
+     23
+    ],
+    "label": "府门"
+   },
+   "unless": "killed",
+   "do": [
+    [
+     "defeat",
+     "殷天锡逃出府门，回去告诉了高廉。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "chaijin"
+   },
+   "do": [
+    [
+     "defeat",
+     "柴进被闲汉打倒了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "李逵倒下了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "yintianxi"
+   },
+   "do": [
+    [
+     "flag",
+     "killed"
+    ],
+    [
+     "narrate",
+     "李逵揪住殷天锡，拳头脚尖一发上，早打死在地。"
+    ],
+    [
+     "narrate",
+     "众闲汉见打死了殷天锡，发一声喊，四散都跑了。"
+    ],
+    [
+     "standDown",
+     "xh0",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xh1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xh2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xh3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xh4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xh5",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xs0",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xs1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xs2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xs3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "xs4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "approach",
+     "chaijin",
+     "likui"
+    ],
+    [
+     "say",
+     "chaijin",
+     "罢了，闯下大祸了！兄弟，你快走，从后门出去，连夜回梁山泊。这里的官司，我自去支吾。"
+    ],
+    [
+     "say",
+     "likui",
+     "俺走了，须连累大官人。"
+    ],
+    [
+     "say",
+     "chaijin",
+     "我有誓书铁券护身，他不敢把我怎地。你在这里，倒是两个都走不脱。快去！"
+    ],
+    [
+     "leave",
+     "chaijin"
+    ],
+    [
+     "narrate",
+     "话犹未了，府门外一片声喊，高廉差来的公人已经到了。"
+    ],
+    [
+     "appear",
+     "gr0"
+    ],
+    [
+     "appear",
+     "dutou"
+    ],
+    [
+     "appear",
+     "gr2"
+    ],
+    [
+     "appear",
+     "gr3"
+    ],
+    [
+     "appear",
+     "gr4"
+    ],
+    [
+     "appear",
+     "gr5"
+    ],
+    [
+     "say",
+     "dutou",
+     "殷直阁被人打死了！休走了那个黑大汉！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "likui",
+    "area": [
+     3,
+     2,
+     4,
+     3
+    ],
+    "label": "后门"
+   },
+   "if": "killed",
+   "do": [
+    [
+     "narrate",
+     "李逵从后门翻出去，连夜奔回梁山泊报信。"
+    ],
+    [
+     "narrate",
+     "柴进被公人拿到厅前。高廉不由分说，喝令把他打得皮开肉绽，枷了，下在死囚牢里；那誓书铁券，也被搜了去。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

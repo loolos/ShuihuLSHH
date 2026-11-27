@@ -97,7 +97,7 @@ describe('章节表', () => {
     expect(chapterOf('mainline/liying-shangshan')).toBe(33);
     expect(chapterLabel(33)).toBe('第三十三章 三打祝家庄');
     expect(chapterOf('mainline/leiheng-zhutong')).toBe(34);
-    expect(chapterLabel(34)).toBe('第三十四章 误失小衙内');
+    expect(chapterLabel(34)).toBe('第三十四章 大破高唐州');
     expect(CHAPTERS).toHaveLength(34);
   });
 });
