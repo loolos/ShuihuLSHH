@@ -114,6 +114,8 @@ export type BattleEvent =
   | { type: 'pickup'; uid: number; x: number; y: number; item: number }
   /** 地上新冒出一个宝箱【新】（好汉聚义刷宝箱、小头目掉药） */
   | { type: 'chest'; x: number; y: number; item: number }
+  /** 好汉聚义：缩圈时圈外的宝箱消失 */
+  | { type: 'chestGone'; x: number; y: number }
   /** 毒圈变了【新】（好汉聚义）：现在的圈和下一个圈 */
   | { type: 'zone'; zone: Zone; next: Zone | null }
   | { type: 'end'; result: 'won' | 'lost'; text: string }
@@ -3597,21 +3599,14 @@ export class Battle {
     for (const u of this.active()) {
       if (this.spectators.has(u.uid) || inZone(st.zone, u)) continue;
       const hp0 = u.hp;
-      u.hp = Math.max(0, u.hp - Math.max(1, Math.floor(u.stats.maxHp / r.damageDivisor)));
-      hurt++;
+      // 小头目不跑圈，在圈外直接倒下（负责人 2026-11-27）；好汉掉最大体力的 1/damageDivisor
+      u.hp = u.team === NPC_TEAM ? 0 : Math.max(0, u.hp - Math.max(1, Math.floor(u.stats.maxHp / r.damageDivisor)));
+      if (u.team !== NPC_TEAM) hurt++;
       this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: u.hp - hp0, text: '毒圈' });
       if (u.hp <= 0) dead.push(u);
     }
     if (hurt) this.emit({ type: 'message', text: `圈外 ${hurt} 人中了毒，各掉 1/${r.damageDivisor} 体力。` });
-    for (const u of dead) {
-      u.alive = false;
-      u.defending = false;
-      this.emit({ type: 'die', uid: u.uid });
-      this.emit({ type: 'message', text: `${u.name}倒在了毒圈里。` });
-      this.pendingDeaths.push(u.classId);
-      this.royaleOut(u, null);
-    }
-    if (dead.length) this.afterAction();
+    this.royalePoisoned(dead);
     if (this.status !== 'playing') return;
     if (st.next && t >= st.shrinkAt) {
       st.zone = st.next;
@@ -3620,8 +3615,37 @@ export class Battle {
       this.planShrink();
       this.emit({ type: 'zone', zone: st.zone, next: st.next });
       this.emit({ type: 'message', text: `毒圈缩小了！${st.next ? `下一圈已经标出，${r.shrinkEvery} 回合后再缩。` : '这是最后一圈。'}` });
+      // 缩圈后落在圈外的小头目当场倒下
+      const npcs = this.active().filter((u) => u.team === NPC_TEAM && !this.spectators.has(u.uid) && !inZone(st.zone, u));
+      for (const u of npcs) {
+        this.emit({ type: 'hp', uid: u.uid, hp: 0, mp: u.mp, delta: -u.hp, text: '毒圈' });
+        u.hp = 0;
+      }
+      this.royalePoisoned(npcs);
+      if (this.status !== 'playing') return;
+      // 被圈甩在外面的宝箱（含掉在地上的药）消失（负责人 2026-11-27：没人能开，留着只占地图）
+      const gone = this.items.filter((g) => !inZone(st.zone, g));
+      if (gone.length) {
+        for (const g of gone) this.items.splice(this.items.indexOf(g), 1);
+        for (const g of gone) this.emit({ type: 'chestGone', x: g.x, y: g.y });
+        this.emit({ type: 'message', text: `圈外的 ${gone.length} 个宝箱被毒雾吞没了。` });
+      }
     }
-    if (t > 1 && r.chestEvery > 0 && (t - 1) % r.chestEvery === 0) this.spawnChests(r.chestCount, true);
+    if (t > 1 && r.chestEvery > 0 && (t - 1) % r.chestEvery === 0) this.spawnChests(this.royaleChestRefill(), true);
+  }
+
+  /**
+   * 这一批刷几个宝箱（负责人 2026-11-27：原来每批固定 chestCount 个，人越打越少宝箱越堆越多）：
+   * 按还活着的好汉占开局人数的比例缩（向上取整），圈里（下一圈）没开的宝箱已经够每人一个就少刷 / 不刷。
+   */
+  private royaleChestRefill(): number {
+    const st = this.royale!, r = this.royaleRules!;
+    const alive = this.royaleHeroes().length;
+    const total = this.units.filter((u) => u.team !== undefined && u.team !== NPC_TEAM).length;
+    const want = Math.ceil((r.chestCount * alive) / Math.max(1, total));
+    const zone = st.next ?? st.zone;
+    const waiting = this.items.filter((g) => inZone(zone, g)).length;
+    return Math.max(0, Math.min(want, alive - waiting));
   }
 
   /** 在下一个圈里（没有就现在的圈）随机的空格上刷宝箱 */
@@ -3642,6 +3666,19 @@ export class Battle {
     if (announce && placed) this.emit({ type: 'message', text: `地上冒出了 ${placed} 个宝箱。` });
   }
 
+  /** 毒圈里倒下的人（体力已经是 0） */
+  private royalePoisoned(dead: Unit[]) {
+    for (const u of dead) {
+      u.alive = false;
+      u.defending = false;
+      this.emit({ type: 'die', uid: u.uid });
+      this.emit({ type: 'message', text: `${u.name}倒在了毒圈里。` });
+      this.pendingDeaths.push(u.classId);
+      this.royaleOut(u, null);
+    }
+    if (dead.length) this.afterAction();
+  }
+
   /** 有人出局：小头目掉药（打倒他的人包里有空就直接拿到，否则落在地上成宝箱）；好汉记进出局顺序 */
   private royaleOut(t: Unit, by: Unit | null) {
     const st = this.royale!;
@@ -3650,8 +3687,9 @@ export class Battle {
       tally[by.uid] = (tally[by.uid] ?? 0) + 1;
     }
     if (t.team === NPC_TEAM) {
+      // 毒死的小头目不掉（掉了也在圈外，马上被吞掉）
       const drops = this.royaleRules!.npcs.drops;
-      if (drops.length) this.royaleLoot(t, by, drops[this.rng.int(drops.length)]);
+      if (by && drops.length) this.royaleLoot(t, by, drops[this.rng.int(drops.length)]);
       return;
     }
     st.out.push(t.uid);
