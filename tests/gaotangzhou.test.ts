@@ -30,7 +30,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
   const skill = (b: Battle, u: Unit, name: string) => learnedSkills(u, b.data).find((s) => s.name === name);
 
   it('三关都排在第三十四章「大破高唐州」', () => {
-    for (const id of ['leiheng-zhutong', 'yintianxi', 'shenbing']) expect(chapterOf(`mainline/${id}`)).toBe(34);
+    for (const id of ['leiheng-zhutong', 'yintianxi', 'baoxin', 'shenbing']) expect(chapterOf(`mainline/${id}`)).toBe(34);
     expect(chapterLabel(34)).toBe('第三十四章 大破高唐州');
   });
 
@@ -78,7 +78,12 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(b.turn).toBe(3);
     const qi = ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length;
     expect(qi).toBeGreaterThanOrEqual(Math.round(mine().length / 3) - 1);
+    // 几阵风、几个中毒挨在一起（画面上一起放），作过一次法吴用才提天书
+    const kinds = ev.filter((e) => e.type === 'gust' || (e.type === 'status' && e.text === '黑氣入體')).map((e) => e.type);
+    expect(kinds.join(',')).toMatch(/^(gust,)+(status,)*status$/);
+    expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
     ev = b.endPlayerPhase();
+    expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(false);
     expect(ev.filter((e) => e.type === 'status' && e.text === '飛沙迷眼').length).toBeGreaterThan(0);
     b.endPlayerPhase();
     expect(b.turn).toBe(5);

@@ -3023,8 +3023,9 @@ export class Battle {
             while (hit.length < n) hit.push(pool.splice(this.rng.int(pool.length), 1)[0]);
             if (!hit.length) break;
             this.emit({ type: 'focus', x: hit[0].x, y: hit[0].y });
+            // 先一起刮风，再一起掉血、上状态：同类事件挨着，画面上所有人同时生效（负责人 2026-11-27）
+            for (const u of hit) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'wind' ? 'wind' : 'dust' });
             for (const u of hit) {
-              this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'wind' ? 'wind' : 'dust' });
               if (a.hurt) {
                 const loss = Math.min(u.hp - 1, Math.floor((u.stats.maxHp * a.hurt) / 100));
                 if (loss > 0) {
@@ -3032,6 +3033,8 @@ export class Battle {
                   this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta: -loss });
                 }
               }
+            }
+            for (const u of hit) {
               if (a.poison && !resists(u, 'resistPoison')) {
                 u.poisonTurns = Math.max(u.poisonTurns, a.poison);
                 refreshStats(u, this.data);
