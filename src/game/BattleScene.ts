@@ -895,7 +895,10 @@ export class BattleScene extends Phaser.Scene {
   private autoEndTurn() {
     if (!this.battle.playerPhaseDone()) return;
     this.time.delayedCall(400, () => {
-      if (this.busy || this.ui.inDialog || !this.battle.playerPhaseDone()) return;
+      if (!this.battle.playerPhaseDone()) return;
+      // 动画、对白还没播完（剧本区块、触发的对白、正在结算的回合终了）就等一等再看，不能直接放弃【新】
+      //（负责人 2026-11-27：好汉都动完了回合却不结束，要自己点；原来这里碰上忙着就不再结束了）
+      if (this.busy || this.ending || this.ui.inDialog) return void this.autoEndTurn();
       this.endTurn();
     });
   }
