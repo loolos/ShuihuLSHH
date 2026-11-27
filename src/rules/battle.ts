@@ -716,16 +716,7 @@ export class Battle {
   }
   /** 我方回合里已经没有能行动的我方人物（死亡、未登场、昏迷、行动完毕的都不算） */
   playerPhaseDone() {
-    return this.status === 'playing' && this.phase === 'player' && !this.units.some((u) => u.side === 'player' && this.canAct(u) && !this.movedOutOfReach(u));
-  }
-  /**
-   * 走过了、却够不着任何敌人（普通攻击和技能都打不到）【新】：自动结束回合时算他行动完，回合终了照默认规则休息或防御
-   *（负责人 2026-11-27：好汉都动完了回合却不结束，要自己点）。他本人照样能再点开菜单防御、休息、用道具。
-   */
-  movedOutOfReach(u: Unit) {
-    if (u.acted || this.cuju || u.movementRemaining >= u.stats.move || this.attackTargets(u).length) return false;
-    const foes = new Set(this.foesOf(u));
-    return !this.skillsOf(u).some((k) => k.usable && this.skillCells(u, k.skill).some((c) => this.affected(u, k.skill, c).some((t) => foes.has(t))));
+    return this.status === 'playing' && this.phase === 'player' && !this.units.some((u) => u.side === 'player' && this.canAct(u));
   }
   attackTargets(u: Unit): Unit[] {
     if (!this.canAct(u) || u.acted || this.cuju) return [];
