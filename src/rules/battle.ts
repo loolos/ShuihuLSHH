@@ -1375,6 +1375,12 @@ export class Battle {
     this.startPhase('player');
   }
 
+  /** 这个人本回合还会轮到自己行动吗（顺序：我方 → 友军 → 敌方） */
+  private actsLater(u: Unit) {
+    const order = { player: 0, ally: 1, enemy: 2 } as const;
+    return order[u.side] > order[this.phase];
+  }
+
   private startPhase(side: Side) {
     this.phase = side;
     if (this.cuju) {
@@ -1936,7 +1942,9 @@ export class Battle {
         this.noteDid(t, 'wake');
       }
       if (r.stunned && t.stunTurns === 0 && !resists(t, 'resistStun') && !this.doors.has(t.uid)) {
-        t.stunTurns = skill.stunFor ?? this.rng.range(2, 4);
+        // stunFor【新】= 被打的人要跳过几次自己的行动（负责人 2026-11-27：芦哨昏迷一回合，到我方回合就醒了等于没效果）。
+        // 回合开始先减 1：本回合他已经动过（敌人打我方 / 友军），要多记 1 回合；他还没轮到（我方打敌人）就照记
+        t.stunTurns = skill.stunFor !== undefined ? skill.stunFor + (this.actsLater(t) ? 0 : 1) : this.rng.range(2, 4);
         this.emit({ type: 'status', uid: t.uid, text: '昏迷了！' });
       }
       if (!this.doors.has(t.uid)) exp += hitExp(r.damage, this.rng) + (counter ? counterExp(this.rng) : 0);
