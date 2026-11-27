@@ -10,6 +10,7 @@ import { fxSpots, skillFx } from '../src/game/effects.ts';
 import { Battle, type BattleEvent } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData, loadStage } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
+import { CHARGE_DIVISOR } from '../src/rules/data.ts';
 import { paintShoes, recolorLut } from '../src/packs/recolor.ts';
 import { DIRS, attackSkill, type Unit } from '../src/rules/unit.ts';
 import { packParty, townParty, saveTownParty, recordPackResult } from '../src/packs/campaign.ts';
@@ -621,23 +622,24 @@ describe.skipIf(!has)('主线插关：火烧瓦罐寺、说三阮撞筹（§15.8
     expect(enemyCount()).toBe(14);
   });
 
-  it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复三分之一', () => {
+  it('义释宋公明：朱仝横扫、直线破阵，雷横四段连击，两人集气实际回复一半（CHARGE_DIVISOR）', () => {
     const b = new Battle(compileStage(rt, stageOf('songjiazhuang'), files, { seed: 1, text: tr }));
     b.begin();
     const zt = b.units.find((u) => u.classId === rt.classIds.get('zhutong'))!;
     const lh = b.units.find((u) => u.classId === rt.classIds.get('leiheng'))!;
     const skills = (u: Unit) => b.data.classes[u.classId].skills;
-    expect(areaCells(b.board, zt, skills(zt)[1], { x: zt.x + 1, y: zt.y })).toHaveLength(3);
-    expect(areaCells(b.board, zt, skills(zt)[2], { x: zt.x + 1, y: zt.y })).toEqual([
+    const named = (u: Unit, n: string) => skills(u).find((s) => s.name === n)!;
+    expect(areaCells(b.board, zt, named(zt, '长髯偃月'), { x: zt.x + 1, y: zt.y })).toHaveLength(3);
+    expect(areaCells(b.board, zt, named(zt, '千里流光'), { x: zt.x + 1, y: zt.y })).toEqual([
       { x: zt.x + 1, y: zt.y }, { x: zt.x + 2, y: zt.y }, { x: zt.x + 3, y: zt.y },
     ]);
-    expect(skills(lh)[1].hits.map((h) => h.percent)).toEqual([30, 20, 20, 30]);
+    expect(named(lh, '风雷振翮').hits.map((h) => h.percent)).toEqual([30, 20, 20, 30]);
     for (const u of [zt, lh]) {
       u.mp = 0;
       const charge = skills(u).find((s) => s.type === 8)!;
       expect(charge.learnLevel).toBe(6);
       b.useSkill(u, charge, u);
-      expect(u.mp).toBe(Math.floor(u.stats.maxMp / 3));
+      expect(u.mp).toBe(Math.floor(u.stats.maxMp / CHARGE_DIVISOR));
     }
   });
 
