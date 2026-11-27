@@ -235,6 +235,34 @@
      "xiaoer"
     ],
     [
+     "leave",
+     "daizong"
+    ],
+    [
+     "leave",
+     "likui"
+    ],
+    [
+     "appear",
+     "daizong",
+     {
+      "at": [
+       1,
+       12
+      ]
+     }
+    ],
+    [
+     "appear",
+     "likui",
+     {
+      "at": [
+       2,
+       13
+      ]
+     }
+    ],
+    [
      "move",
      "daizong",
      5,

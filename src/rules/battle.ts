@@ -2732,6 +2732,8 @@ export class Battle {
             // args.toward【新】（火烧祝家店：挠钩手钩走时迁）：登场在这个人身边，不在自己的开场格
             const t = op.args?.toward !== undefined ? this.unit(this.groups.get(op.args.toward) ?? -1) : undefined;
             if (t?.present) (sel.x = t.x), (sel.y = t.y);
+            // args.x / y【新】（斧劈罗真人：李逵夜里从侧门、次日从山门进来）：在这一格（被占就最近的空格）登场，不在退场时的位置
+            else if (op.args?.x !== undefined && op.args?.y !== undefined) (sel.x = op.args.x), (sel.y = op.args.y);
             // args.ring【新】（妖法困宋江，负责人 2026-11-27）：在离我方 / 友军最近的人 [min, max] 步的空格里随机挑一格冒出来（飞天神兵突然杀出）
             const ring = op.args?.ring;
             if (ring) {
