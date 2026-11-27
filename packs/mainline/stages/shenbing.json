@@ -962,30 +962,6 @@
    "levelOffset": 2
   },
   {
-   "id": "sb08",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 4,
-   "y": 0,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "sb09",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 1,
-   "y": 10,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
    "id": "sb16",
    "class": "shenbing",
    "side": "enemy",
@@ -1010,30 +986,6 @@
    "levelOffset": 2
   },
   {
-   "id": "sb18",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 6,
-   "y": 0,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "sb19",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 5,
-   "y": 10,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
    "id": "sb26",
    "class": "shenbing",
    "side": "enemy",
@@ -1051,30 +1003,6 @@
    "side": "enemy",
    "x": 1,
    "y": 11,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "sb28",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 2,
-   "y": 11,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "sb29",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 7,
-   "y": 0,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -1178,30 +1106,6 @@
    "levelOffset": 2
   },
   {
-   "id": "hw8",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 11,
-   "y": 9,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "hw9",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 0,
-   "y": 10,
-   "level": 30,
-   "facing": 2,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
    "id": "bk0",
    "class": "shenbing",
    "side": "enemy",
@@ -1255,30 +1159,6 @@
    "side": "enemy",
    "x": 18,
    "y": 31,
-   "level": 30,
-   "facing": 0,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "bk5",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 19,
-   "y": 31,
-   "level": 30,
-   "facing": 0,
-   "ai": 0,
-   "hidden": true,
-   "levelOffset": 2
-  },
-  {
-   "id": "bk6",
-   "class": "shenbing",
-   "side": "enemy",
-   "x": 18,
-   "y": 32,
    "level": 30,
    "facing": 0,
    "ai": 0,
@@ -2390,26 +2270,6 @@
      }
     ],
     [
-     "appear",
-     "sb08",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb09",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "narrate",
      "梁山阵后也卷起一阵黄砂，又一彪飞天神兵从背后杀来，直扑后队的众头领！"
     ],
@@ -2432,14 +2292,6 @@
     [
      "appear",
      "bk4"
-    ],
-    [
-     "appear",
-     "bk5"
-    ],
-    [
-     "appear",
-     "bk6"
     ],
     [
      "appear",
@@ -2945,26 +2797,6 @@
      }
     ],
     [
-     "appear",
-     "sb08",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb09",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "narrate",
      "梁山阵后也卷起一阵黄砂，又一彪飞天神兵从背后杀来，直扑后队的众头领！"
     ],
@@ -2987,14 +2819,6 @@
     [
      "appear",
      "bk4"
-    ],
-    [
-     "appear",
-     "bk5"
-    ],
-    [
-     "appear",
-     "bk6"
     ],
     [
      "appear",
@@ -3564,26 +3388,6 @@
      }
     ],
     [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k5"
     ]
@@ -3888,26 +3692,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -4263,26 +4047,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -4697,26 +4461,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -5004,26 +4748,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -5255,26 +4979,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -5595,26 +5299,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -5846,26 +5530,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -6229,26 +5893,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -6480,26 +6124,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -6922,26 +6546,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -7173,26 +6777,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -7615,26 +7199,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -7866,26 +7430,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -8308,26 +7852,6 @@
      }
     ],
     [
-     "appear",
-     "sb28",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb29",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "flag",
      "k9"
     ]
@@ -8559,26 +8083,6 @@
     [
      "appear",
      "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb18",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb19",
      {
       "ring": [
        4,
@@ -8778,7 +8282,7 @@
    "do": [
     [
      "narrate",
-     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，平地卷起一阵狂风，把杀到跟前的好汉都吹了回去；黄砂里十个飞天神兵散开护住了他！"
+     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，平地卷起一阵狂风，把杀到跟前的好汉都吹了回去；黄砂里八个飞天神兵散开护住了他！"
     ],
     [
      "gust",
@@ -8868,28 +8372,6 @@
     [
      "appear",
      "hw7",
-     {
-      "near": "gaolian",
-      "ring": [
-       2,
-       4
-      ]
-     }
-    ],
-    [
-     "appear",
-     "hw8",
-     {
-      "near": "gaolian",
-      "ring": [
-       2,
-       4
-      ]
-     }
-    ],
-    [
-     "appear",
-     "hw9",
      {
       "near": "gaolian",
       "ring": [
@@ -9502,26 +8984,6 @@
      }
     ],
     [
-     "appear",
-     "sb08",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb09",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
      "narrate",
      "梁山阵后也卷起一阵黄砂，又一彪飞天神兵从背后杀来，直扑后队的众头领！"
     ],
@@ -9544,14 +9006,6 @@
     [
      "appear",
      "bk4"
-    ],
-    [
-     "appear",
-     "bk5"
-    ],
-    [
-     "appear",
-     "bk6"
     ],
     [
      "appear",

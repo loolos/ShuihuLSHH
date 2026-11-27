@@ -82,7 +82,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(ev.some((e) => e.type === 'say' && e.text.includes('一齐掩杀'))).toBe(true);
     expect(b.spectators.has(get('songjiang').uid)).toBe(false);
     expect(get('yuzhi').ai.mode).toBe(0);
-    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(24);
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(20);
     // 同一回合只作这一次法
     expect(ev.filter((e) => e.type === 'status' && e.text === '黑氣入體')).toHaveLength(0);
   });
@@ -96,8 +96,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
     let ev = step();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
-    // 好汉四周十个，梁山阵后三堆十个，两翼各两个
-    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(24);
+    // 好汉四周八个，梁山阵后三堆八个，两翼各两个
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(20);
     const mine = () => b.units.filter((u) => u.present && u.alive && u.side !== 'enemy' && !b.spectators.has(u.uid));
     expect(b.turn).toBe(2);
     const qi = ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length;
@@ -128,7 +128,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(sbs().some((u) => dist(u) > 3)).toBe(true);
   });
 
-  it('妖法困宋江：好汉杀到高廉 3 格以内，一阵风把最近的五人吹开，他身边 2–4 步散开冒出十个飞天神兵', () => {
+  it('妖法困宋江：好汉杀到高廉 3 格以内，一阵风把最近的五人吹开，他身边 2–4 步散开冒出八个飞天神兵', () => {
     const { b, get } = open('shenbing');
     duel(b, get);
     const gl = get('gaolian'), lc = get('linchong');
@@ -138,9 +138,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     const ev = b.endPlayerPhase();
     // 出场那一刻的位置（之后敌方回合会走开）
     const guards = ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').map((e) => e as { x: number; y: number }).filter((c) => d(c as Unit) <= 4);
-    expect(guards.length).toBeGreaterThanOrEqual(10);
+    expect(guards.length).toBeGreaterThanOrEqual(8);
     expect(guards.every((c) => d(c as Unit) >= 2)).toBe(true);
-    expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThanOrEqual(n0 + 10);
+    expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThanOrEqual(n0 + 8);
     const pushed = ev.filter((e) => e.type === 'move' && e.script && e.uid === lc.uid);
     expect(pushed.length).toBeGreaterThan(0);
   });
