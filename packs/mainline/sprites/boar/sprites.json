@@ -1,0 +1,104 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50,
+ "actions": {
+  "idle": {
+   "source": "Idle_1",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 521
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 521
+   }
+  },
+  "walk": {
+   "source": "Walk_F_IP",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 125
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 125
+   }
+  },
+  "gore": {
+   "source": "Attack_F",
+   "front": {
+    "file": "gore-front.png",
+    "frames": 8,
+    "ms": 130
+   },
+   "back": {
+    "file": "gore-back.png",
+    "frames": 8,
+    "ms": 130
+   }
+  },
+  "gore-up": {
+   "source": "Attack_Up",
+   "front": {
+    "file": "gore-up-front.png",
+    "frames": 8,
+    "ms": 130
+   },
+   "back": {
+    "file": "gore-up-back.png",
+    "frames": 8,
+    "ms": 130
+   }
+  },
+  "charge": {
+   "source": "Attack_Run_IP",
+   "front": {
+    "file": "charge-front.png",
+    "frames": 8,
+    "ms": 62
+   },
+   "back": {
+    "file": "charge-back.png",
+    "frames": 8,
+    "ms": 62
+   }
+  },
+  "hit": {
+   "source": "Hit_F",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 104
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 104
+   }
+  },
+  "death": {
+   "source": "Death_L",
+   "front": {
+    "file": "death-front.png",
+    "frames": 8,
+    "ms": 151
+   },
+   "back": {
+    "file": "death-back.png",
+    "frames": 8,
+    "ms": 151
+   }
+  }
+ }
+}

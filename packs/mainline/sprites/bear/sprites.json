@@ -1,0 +1,91 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50,
+ "actions": {
+  "idle": {
+   "source": "Stand_Idle_01",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 833
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 833
+   }
+  },
+  "walk": {
+   "source": "Walk",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 208
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 208
+   }
+  },
+  "rear-swipe": {
+   "source": "Attack_StandAngry_01_High",
+   "front": {
+    "file": "rear-swipe-front.png",
+    "frames": 8,
+    "ms": 375
+   },
+   "back": {
+    "file": "rear-swipe-back.png",
+    "frames": 8,
+    "ms": 375
+   }
+  },
+  "hit": {
+   "source": "Hit_Stand_F01",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 358
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 358
+   }
+  },
+  "defend": {
+   "source": "StandAngry_Breathing_01",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 500
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 500
+   }
+  },
+  "death": {
+   "source": "Death_Stand_R01",
+   "front": {
+    "file": "death-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "death-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  }
+ }
+}

@@ -26,12 +26,20 @@
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 | `wolf/`、`fox/` | 狼、狐狸：idle 待机、walk 走、attack 扑咬、pounce 飞扑（`Gallop_Jump`）、hit 受击、defend 低头伏身（`Idle_2_HeadLow`）、death 倒地 |
 | `stag/`、`donkey/`、`cow/`、`bull/` | 鹿、驴、牛、公牛：idle、walk、headbutt 低头顶、kick 后踢、charge 奔跑（`Gallop`）、hit、defend 低头（`Idle_Headlow`）、death |
+| `lion/` | 狮子：idle、walk、bite 扑咬（`Attack Jaw`）、paw 拍击（`Attack Right Paw`）、pounce 飞扑（`Jumping`，带前冲位移）、roar 吼（也当防御）、recoil 后退（`Walk Back`，当受击；模型没有受击动作）、death |
+| `bear/` | 熊：idle（`Stand_Idle_01`）、walk（原动作带根位移，渲染后按身体质心逐帧对齐成原地走）、rear-swipe 人立拍击（`Attack_StandAngry_01_High`）、hit（`Hit_Stand_F01`）、defend（`StandAngry_Breathing_01`）、death（`Death_Stand_R01`）。模型里 `_L` / `_R`、`Attack_StandAngry_01_Low` 等动作中途会转身，没用 |
+| `boar/` | 野猪：idle、walk（`Walk_F_IP`）、gore 拱（`Attack_F`）、gore-up 挑（`Attack_Up`）、charge 冲撞（`Attack_Run_IP`）、hit（也当防御）、death（`Death_L`） |
 
 ## 来源与授权
 
 - **武松**：Quaternius「Universal Animation Library」`UAL1_Standard.glb`。授权 CC0 1.0（公有领域）。衣服由 `src/outfit-wusong.json` 生成。
 - **李逵**：同一个 `UAL1_Standard.glb`，CC0 1.0。坎肩、红腰带、宽裤、裹腿、发髻、络腮胡、两把板斧由 `src/outfit-likui.json` 生成（原在江州外传包，外传删除后搬到这里）。
 - **狼、狐狸、鹿、驴、牛、公牛**：Quaternius「Ultimate Animated Animals」，CC0 1.0。模型在 `gamedata/models/animals/`。渲染参数：`--frames 8 --length 1.6`（狼）/ `1.0`（狐）/ `1.7`（鹿）/ `1.5`（驴）/ `1.9`（牛）/ `2.1`（公牛），其余默认（不用 `--outfit`，模型自带纯色材质）；`--actions` 只渲染上表用到的动作，再按上表改名。
+- **狮子**：Sketchfab「Lion」by planeta-elefante（和老虎同一作者），CC BY 4.0，`--yaw 180 --length 1.7`。
+- **熊**：Sketchfab「Realistic Animated Bear 3D Model」by WildMesh 3D，CC BY 4.0，`--yaw 0 --length 1.4`。
+- **野猪**：Sketchfab「Wild Boar - Male」by Dakta.Grower.Nzl，CC BY 4.0。原文件没有贴图（全白），把材质 `baseColorFactor` 改成深棕 (0.08, 0.055, 0.04) 再渲染，`--yaw 45 --length 1.1`。
+- 这三个原始模型较大（熊 14 MB、野猪 16 MB），只放在项目文件夹 `shuihu-design/models/animals/`，不入库；三者都要在游戏里署名（已写进 pack.json 的 credits）。
+- 注意：一次渲染多个动作时，狮子的 idle 正面条第一次渲染成了倒地姿势（紧跟在 Death 后面），单独重渲 `--actions Idle` 就正常；渲完要逐条看一眼。
 - **老虎**：Sketchfab 上 planeta-elefante 的「Tiger」模型。授权 CC BY 4.0，**游戏里要署名**（制作人员名单写：Tiger model by planeta-elefante, CC BY 4.0）。
 
 2026-11-23 起通用假人和动作库已入库（`gamedata/models/`），新人物按配方用 `tools/render-character.py` 渲染，见 `gamedata/models/README.md`。
