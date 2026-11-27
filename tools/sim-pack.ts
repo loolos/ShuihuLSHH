@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Battle } from '../src/rules/battle.ts';
-import { bestAttack, planAi } from '../src/rules/ai.ts';
+import { bestAttack, mpItemSlot, planAi } from '../src/rules/ai.ts';
 import { attackSkill, facingTowards } from '../src/rules/unit.ts';
 import { watcherSees } from '../src/rules/combat.ts';
 import { buildT2S, exeTables, loadGameData, loadStage } from '../src/rules/load.ts';
@@ -223,6 +223,9 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         // 我方也按敌方 AI 走：打得到就打（含技能），血少于一半先吃药，否则朝老虎走
         const heal = u.hp < u.stats.maxHp * 0.45 ? b.usableSlots(u)[0] : undefined;
         if (heal !== undefined) ev.push(...b.useItem(u, heal, u));
+        // 气不到三成：包里有只回气的药（包子之类）就吃（负责人 2026-11-27）
+        const mpSlot = mpItemSlot(b, u);
+        if (mpSlot >= 0 && b.usableSlots(u).includes(mpSlot)) ev.push(...b.useItem(u, mpSlot, u));
         if (!b.foesOf(u).length) {
           // 还没遇到敌人：往冈上（地图上方）走
           const c = b.moveRange(u).green.reduce((a, x) => (x.x + x.y < a.x + a.y ? x : a), { x: u.x, y: u.y });

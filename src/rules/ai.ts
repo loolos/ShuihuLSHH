@@ -167,9 +167,18 @@ export function marchPlan(b: Battle, u: Unit, goals: Cell[]): AiPlan | null {
 }
 
 function healIfLow(b: Battle, u: Unit): AiPlan | null {
-  if (u.hp >= u.stats.maxHp / 5) return null;
-  const slot = u.slots.findIndex((id) => isHealing(itemOf(b.data, id)) && itemOf(b.data, id)!.healHp !== 0);
-  return slot >= 0 ? { healSlot: slot } : null;
+  if (u.hp < u.stats.maxHp / 5) {
+    const slot = u.slots.findIndex((id) => isHealing(itemOf(b.data, id)) && itemOf(b.data, id)!.healHp !== 0);
+    if (slot >= 0) return { healSlot: slot };
+  }
+  const mp = mpItemSlot(b, u);
+  return mp >= 0 ? { healSlot: mp } : null;
+}
+
+/** 气不到三成时包里只回气的药（包子之类，负责人 2026-11-27）；没有就 -1。敌方、友军、试打的我方都用 */
+export function mpItemSlot(b: Battle, u: Unit): number {
+  if (u.stats.maxMp <= 0 || u.mp >= u.stats.maxMp * 0.3) return -1;
+  return u.slots.findIndex((id) => { const it = itemOf(b.data, id); return isHealing(it) && it!.healHp === 0 && it!.healMp > 0; });
 }
 
 /** 体力低于一半时用回复技（原地施放）【新】 */
