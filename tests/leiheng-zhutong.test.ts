@@ -7,12 +7,14 @@ import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
 import { DATA, NodeFiles } from '../tools/sim-lib.ts';
+import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 
-describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('美髯公误失小衙内', () => {
+describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('梁山叙旧', () => {
+  useDiskCustomMaps();
   const rt = loadPackFromDisk('mainline'), files = new NodeFiles(DATA);
   const stage = rt.stages.find((s) => s.id === 'leiheng-zhutong')!;
 
-  it('接在扑天雕李应上山之后；单位站位可通行、不重叠，走位终点也可通行；开场演完就过关，朱仝、吴用登场', () => {
+  it('接在扑天雕李应上山之后；在朱贵酒店的酒桌两边；单位站位可通行、不重叠，走位终点也可通行；开场演完就过关，朱仝、吴用登场', () => {
     expect(chapterOf('mainline/leiheng-zhutong')).toBe(34);
     const b = new Battle(compileStage(rt, stage, files, { seed: 1 }));
     const seen = new Set<string>();
@@ -23,6 +25,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('美髯公误
     }
     const raw = JSON.parse(fs.readFileSync(path.join('packs/mainline/stages/leiheng-zhutong.json'), 'utf8'));
     for (const s of raw.script[0].do) if (s[0] === 'move') expect(b.board.passable(s[2], s[3]), `${s[1]} → ${s[2]},${s[3]}`).toBe(true);
+    // 武龙、雷横隔着酒桌对坐
+    expect(b.board.passable(17, 16)).toBe(false);
     b.begin();
     expect(b.status).toBe('won');
     for (const id of ['zhutong', 'wuyong', 'leiheng']) expect(b.units[stage.units.findIndex((u) => u.id === id)].present, id).toBe(true);
