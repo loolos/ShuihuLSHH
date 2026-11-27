@@ -4,7 +4,7 @@ import type { ActUnit } from '../src/formats/act.ts';
 import { Board } from '../src/rules/board.ts';
 import { Battle } from '../src/rules/battle.ts';
 import type { ClassDef, GameData, SkillDef } from '../src/rules/data.ts';
-import { marchPlan, healPlan, planAi, withCharge } from '../src/rules/ai.ts';
+import { marchPlan, healPlan, mpItemSlot, planAi, withCharge } from '../src/rules/ai.ts';
 
 const basic: SkillDef = {
   name: '普通攻擊', skillId: 221, type: 5, group: 0, hidden: false,
@@ -91,5 +91,21 @@ describe('AI 回复与增益', () => {
     foe.hp = foe.stats.maxHp;
     hero.y = 8;
     expect(planAi(b, foe).target).toBe(hero);
+  });
+
+  it('气不到三成时吃包里只回气的药（包子），回血的丹药不拿来回气', () => {
+    const items = [
+      { name: '小還丹', type: 17, healHp: 100, healMp: 20 },
+      { name: '肉包子', type: 16, healHp: 0, healMp: 100 },
+    ] as unknown as GameData['items'];
+    const b = new Battle({ name: 'test-mp-item', board: new Board(30, 30), data: { ...data, items }, units: [act(0, 2, 'enemy', 5, 5), act(1, 1, 'player', 28, 28)], blocks: [], seed: 5 });
+    b.begin();
+    const me = b.unit(0)!;
+    me.slots = [0, 0, 0, 1, 2, 0, 0, 0];
+    expect(mpItemSlot(b, me)).toBe(-1); // 气满
+    me.mp = Math.floor(me.stats.maxMp * 0.25);
+    expect(mpItemSlot(b, me)).toBe(4);
+    me.slots[4] = 0;
+    expect(mpItemSlot(b, me)).toBe(-1); // 只有回血的丹药
   });
 });
