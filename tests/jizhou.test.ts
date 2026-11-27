@@ -59,6 +59,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     for (let t = 0; t < 5 && b.status === 'playing'; t++) { spots.add(`${likui.x},${likui.y}`); b.endPlayerPhase(); }
     expect(spots.size).toBe(5);
     expect(likui.side).toBe('player');
+    // 第 3 回合甲马带他撞进岭腰的毛贼，先劈翻一个再跑
+    const ma0 = get('ma0');
+    expect(ma0.hp).toBeLessThan(ma0.stats.maxHp * 0.2);
   });
 
   it('二仙山访道：两次选项都能走到公孙胜出来、过关', () => {

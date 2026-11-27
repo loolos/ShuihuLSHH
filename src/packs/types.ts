@@ -389,7 +389,7 @@ export type PackTrigger =
 
 /**
  * 指令（数组，第一项是名字）：
- * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场（["appear", 单位, {near: 另一个人}]：登场在那人身边）；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
+ * ["narrate", 文字] 旁白；["say", 单位, 文字] 对白；["appear", 单位] 登场（["appear", 单位, {near: 另一个人}]：登场在那人身边；{at: [x, y]}：登场在这一格）；["leave", 单位] 退场（之后 appear / say 点名时再登场）；["move", 单位, x, y] 走过去；
  * ["objective", 文字] 胜负条件；["turnLimit", n]；["victory", 文字] 过关；["defeat", 文字] 失败；
  * ["setEquip", 单位, 格号, 道具（0 = 卸掉）]；["transform", 单位, 职业, 新名字（可省）] 换成另一个职业（样子、属性、头像都换，血气回满）；["buff", 单位, 属性, {"pct"|"add", "turns"}]；["sound", 原版音效名]；["flag", 名字] 设剧本标志（配合区块的 if / unless）；
  * ["show", 单位, 站在谁身边（可省）] 已倒下 / 退场的人临时回到地图上（只放画面，不复活，战后对话用）；["hide", 单位] 收起；
