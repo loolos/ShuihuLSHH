@@ -252,9 +252,15 @@ export interface PackStageJson {
    * 参赛好汉和小头目在开打前按地图自动摆（src/packs/royale.ts），units 里只写别的东西（通常为空）。
    * 道具写原版道具号或本包道具 id；小头目的职业写原版职业号或本包职业 id。
    */
-  royale?: Omit<import('../rules/royale.ts').RoyaleRules, 'chestItems' | 'npcs'> & {
+  royale?: Omit<import('../rules/royale.ts').RoyaleRules, 'chestItems' | 'npcs' | 'heroDrops'> & {
     chestItems: (number | string)[];
+    heroDrops?: { chance: number; items: (number | string)[] };
     npcs: { classes: (number | string)[]; count: number; level: number; drops: (number | string)[] };
+    /**
+     * 开局可选的人数【新：负责人 2026-11-27】：每档换一张地图（人越多地图越大），并覆盖毒圈半径、宝箱数、小头目数等；
+     * 对手人数 = players − 1。不写就只有上面这一档（opponents + 1 人、关卡的 map）。
+     */
+    sizes?: RoyaleSize[];
   };
   /** 主线包里的独立外传【新】：不进章节表，列在选关的「外传」组，等级固定、不碰主线存档（蹴鞠） */
   sideStory?: boolean;
@@ -412,4 +418,18 @@ export interface PackBlockJson {
   if?: string | string[];
   unless?: string | string[];
   do: PackOpJson[];
+}
+
+/** 好汉聚义的一档人数（§15.31.1） */
+export interface RoyaleSize {
+  /** 参赛好汉总数（含玩家） */
+  players: number;
+  /** 这一档用的地图（写法同关卡 map） */
+  map: PackStageJson['map'];
+  radii: number[];
+  shrinkEvery?: number;
+  chestStart?: number;
+  chestCount?: number;
+  /** 小头目个数（职业按 npcs.classes 轮流） */
+  npcCount?: number;
 }

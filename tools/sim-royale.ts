@@ -1,6 +1,7 @@
 // 好汉聚义（吃鸡外传，docs/game-design.md §15.31）试打：玩家的好汉也交给吃鸡 AI，跑若干局，
 // 打印玩家吃鸡率（16 人随机应在 1/16 上下）、平均名次、打几回合、多少人死在毒圈里、宝箱开了多少，以及每回合 AI 耗时。
-// 用法：node --experimental-transform-types tools/sim-royale.ts [局数] [玩家职业号]；WATCH=1 玩家倒下后接着打完（看整局回合数）
+// 用法：node --experimental-transform-types tools/sim-royale.ts [局数] [玩家职业号]；WATCH=1 玩家倒下后接着打完（看整局回合数）；
+//       PLAYERS=8|16|32|64 选参赛人数那一档（§15.31.1，不填用关卡默认）
 import { Battle } from '../src/rules/battle.ts';
 import { buildT2S, loadGameData } from '../src/rules/load.ts';
 import { compileStage } from '../src/packs/build.ts';
@@ -18,7 +19,7 @@ const stage = rt.stages.find((s) => s.id === 'juyi')!;
 let wins = 0, rankSum = 0, turnSum = 0, zoneDeaths = 0, chests = 0, npcKills = 0, ms = 0, rounds = 0;
 const winners = new Map<string, number>();
 for (let seed = 1; seed <= Number(n); seed++) {
-  const b = new Battle(compileStage(rt, stage, files, { seed, text: tr, royalePick: pickArg ? Number(pickArg) : undefined }));
+  const b = new Battle(compileStage(rt, stage, files, { seed, text: tr, royalePick: pickArg ? Number(pickArg) : undefined, royalePlayers: process.env.PLAYERS ? Number(process.env.PLAYERS) : undefined }));
   const msgs: string[] = [];
   const log = (ev: { type: string; text?: string }[]) => { for (const e of ev) if (e.type === 'message' && e.text) msgs.push(e.text); };
   b.royaleWatch = process.env.WATCH === '1';
@@ -26,7 +27,7 @@ for (let seed = 1; seed <= Number(n); seed++) {
   const me = b.units.find((u) => u.side === 'player')!;
   const chests0 = b.items.length;
   let spawned = 0;
-  while (b.status === 'playing' && b.turn < 80) {
+  while (b.status === 'playing' && b.turn < 120) {
     const t0 = performance.now();
     for (const u of b.units.filter((x) => x.side === 'player')) log(b.aiAct(u));
     if (b.status !== 'playing') break;

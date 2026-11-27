@@ -49,7 +49,8 @@ export function royalePool(rt: PackRuntime, files: FileSource, text: (s: string)
  * 摆好开局：玩家选的好汉（不填随机）+ 随机 opponents 个对手 + 小头目，在地图最大的一块可走区域里尽量分散地站开；
  * 离地图中心最近的几个位置给小头目（守着最后的圈附近），其余随机分给好汉。都朝地图中心站。
  */
-export function royaleStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { pick?: number; seed?: number; text?: (s: string) => string } = {}): PackStageJson {
+export function royaleStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { pick?: number; seed?: number; text?: (s: string) => string; /** 参赛人数（royale.sizes 里的一档），不填用关卡默认那档 */ players?: number } = {}): PackStageJson {
+  stage = royaleSized(stage, opts.players);
   const r = stage.royale!;
   const rng = new Rng(opts.seed ?? Date.now() ^ Math.floor(Math.random() * 0x100000000));
   const pool = royalePool(rt, files, opts.text ?? buildT2S(files));
@@ -83,13 +84,48 @@ export function royaleStage(rt: PackRuntime, stage: PackStageJson, files: FileSo
   return { ...stage, units };
 }
 
+/** 开局可选的人数（从少到多）；关卡没写 sizes 时只有一档 */
+export function royaleSizes(stage: PackStageJson): number[] {
+  const r = stage.royale!;
+  return r.sizes?.length ? r.sizes.map((s) => s.players).sort((a, b) => a - b) : [r.opponents + 1];
+}
+
+/** 关卡默认的人数（royale.opponents + 1） */
+export function royaleDefaultPlayers(stage: PackStageJson): number {
+  return stage.royale!.opponents + 1;
+}
+
+/**
+ * 换成 players 人那一档（§15.31.1）：地图、对手人数、毒圈半径、宝箱和小头目个数按 royale.sizes 改；
+ * 没有这一档（或不填）就原样返回。
+ */
+export function royaleSized(stage: PackStageJson, players?: number): PackStageJson {
+  const r = stage.royale!;
+  const size = players === undefined ? undefined : r.sizes?.find((s) => s.players === players);
+  if (!size) return stage;
+  return {
+    ...stage,
+    map: size.map,
+    royale: {
+      ...r,
+      opponents: size.players - 1,
+      radii: size.radii,
+      shrinkEvery: size.shrinkEvery ?? r.shrinkEvery,
+      chestStart: size.chestStart ?? r.chestStart,
+      chestCount: size.chestCount ?? r.chestCount,
+      npcs: { ...r.npcs, count: size.npcCount ?? r.npcs.count },
+    },
+  };
+}
+
 /** 关卡 JSON 的 royale → 战斗用的规则（道具、职业换成运行时编号）和各单位的阵营号 */
 export function royaleInput(rt: PackRuntime, stage: PackStageJson): NonNullable<StageInput['royale']> {
   const r = stage.royale!;
   const item = (v: number | string) => (typeof v === 'number' ? v : (rt.itemIds.get(v) ?? fail(`没有道具 ${v}`)));
   const cls = (v: number | string) => (typeof v === 'number' ? v : (rt.classIds.get(v) ?? fail(`没有职业 ${v}`)));
+  const { heroDrops, sizes: _sizes, ...base } = r;
   return {
-    rules: { ...r, chestItems: r.chestItems.map(item), npcs: { ...r.npcs, classes: r.npcs.classes.map(cls), drops: r.npcs.drops.map(item) } },
+    rules: { ...base, chestItems: r.chestItems.map(item), npcs: { ...r.npcs, classes: r.npcs.classes.map(cls), drops: r.npcs.drops.map(item) }, ...(heroDrops ? { heroDrops: { chance: heroDrops.chance, items: heroDrops.items.map(item) } } : {}) },
     teams: Object.fromEntries(stage.units.flatMap((u, i) => (u.team === undefined ? [] : [[i, u.team]]))),
   };
 }

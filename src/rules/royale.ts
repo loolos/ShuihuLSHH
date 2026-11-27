@@ -25,6 +25,11 @@ export interface RoyaleRules {
   chestItems: number[];
   /** 小头目（各自守一处，打倒掉药） */
   npcs: { classes: number[]; count: number; level: number; /** 打倒后掉的药（道具号，随机一样） */ drops: number[] };
+  /**
+   * 打倒好汉的战利品【新：负责人 2026-11-27】：有 chance（0–1）的机会从他身上搜出 items 里随机一样（回体、回气、加状态的药酒），
+   * 直接放进打倒他的好汉的随身物品栏；栏满了就落在地上成宝箱。被毒圈毒死的不掉。
+   */
+  heroDrops?: { chance: number; items: number[] };
 }
 
 /** 毒圈：圆心（格子）和半径（格） */
