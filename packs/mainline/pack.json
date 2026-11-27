@@ -612,6 +612,154 @@
           "learnLevel": 8
         },
         {
+          "id": "zt-yanyue-2",
+          "name": "长髯偃月LV2",
+          "from": 151,
+          "anim": 0,
+          "effect": 35,
+          "type": 14,
+          "area": 2,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 40,
+          "mpCost": 50,
+          "learnLevel": 20
+        },
+        {
+          "id": "zt-yanyue-3",
+          "name": "长髯偃月LV3",
+          "from": 151,
+          "anim": 0,
+          "effect": 35,
+          "type": 14,
+          "area": 3,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 55,
+          "mpCost": 80,
+          "hitMod": 5,
+          "learnLevel": 34
+        },
+        {
+          "id": "zt-yanyue-4",
+          "name": "长髯偃月LV4",
+          "from": 151,
+          "anim": 0,
+          "effect": 35,
+          "type": 14,
+          "area": 4,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 70,
+          "mpCost": 110,
+          "hitMod": 10,
+          "learnLevel": 44,
+          "selfBuffs": [
+            {
+              "stat": "defense",
+              "value": 30,
+              "turns": 2
+            }
+          ]
+        },
+        {
+          "id": "zt-tuodao",
+          "name": "美髯拖刀",
+          "from": 151,
+          "anim": 0,
+          "type": 6,
+          "area": 1,
+          "rangeMin": 1,
+          "rangeMax": 2,
+          "power": 35,
+          "mpCost": 30,
+          "hitMod": 10,
+          "effect": 0,
+          "hitFx": "blood",
+          "castCycles": 2,
+          "castSpeed": 1.5,
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 50,
+              "dir": 0
+            },
+            {
+              "frame": 37,
+              "percent": 50,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 10
+        },
+        {
+          "id": "zt-tuodao-2",
+          "name": "美髯拖刀LV2",
+          "from": 151,
+          "anim": 0,
+          "type": 6,
+          "area": 1,
+          "rangeMin": 1,
+          "rangeMax": 2,
+          "power": 50,
+          "mpCost": 45,
+          "hitMod": 15,
+          "stun": 15,
+          "effect": 0,
+          "hitFx": "blood",
+          "castCycles": 2,
+          "castSpeed": 1.5,
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 50,
+              "dir": 0
+            },
+            {
+              "frame": 37,
+              "percent": 50,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 24
+        },
+        {
+          "id": "zt-tuodao-3",
+          "name": "美髯拖刀LV3",
+          "from": 151,
+          "anim": 0,
+          "type": 6,
+          "area": 1,
+          "rangeMin": 1,
+          "rangeMax": 2,
+          "power": 65,
+          "mpCost": 60,
+          "hitMod": 20,
+          "stun": 25,
+          "effect": 0,
+          "hitFx": "blood",
+          "castCycles": 3,
+          "castSpeed": 2,
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 33,
+              "dir": 0
+            },
+            {
+              "frame": 37,
+              "percent": 33,
+              "dir": 0
+            },
+            {
+              "frame": 62,
+              "percent": 34,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 38
+        },
+        {
           "id": "zt-qianli",
           "name": "千里流光",
           "from": 151,
@@ -623,6 +771,18 @@
           "learnLevel": 16
         },
         {
+          "id": "zt-qianli-2",
+          "name": "千里流光LV2",
+          "from": 151,
+          "anim": 0,
+          "effect": 32,
+          "area": 5,
+          "power": 60,
+          "mpCost": 80,
+          "hitMod": 10,
+          "learnLevel": 40
+        },
+        {
           "id": "zt-haoran",
           "name": "浩然养气",
           "from": 178,
@@ -631,10 +791,16 @@
           "rangeMin": 0,
           "rangeMax": 0,
           "area": 0,
-          "power": 3,
           "mpCost": 0,
           "hits": [],
-          "learnLevel": 6
+          "learnLevel": 6,
+          "selfBuffs": [
+            {
+              "stat": "defense",
+              "value": 20,
+              "turns": 5
+            }
+          ]
         }
       ]
     },
@@ -709,6 +875,81 @@
           "learnLevel": 8
         },
         {
+          "id": "lh-fenglei-2",
+          "name": "风雷振翮LV2",
+          "from": 177,
+          "anim": 1,
+          "power": 52,
+          "mpCost": 55,
+          "stun": 0,
+          "hitMod": 25,
+          "critMod": 15,
+          "hits": [
+            {
+              "frame": 6,
+              "percent": 30,
+              "dir": 0
+            },
+            {
+              "frame": 13,
+              "percent": 20,
+              "dir": 0
+            },
+            {
+              "frame": 19,
+              "percent": 20,
+              "dir": 0
+            },
+            {
+              "frame": 24,
+              "percent": 30,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 26
+        },
+        {
+          "id": "lh-fenglei-3",
+          "name": "风雷振翮LV3",
+          "from": 177,
+          "anim": 1,
+          "power": 68,
+          "mpCost": 70,
+          "stun": 15,
+          "hitMod": 30,
+          "critMod": 20,
+          "hits": [
+            {
+              "frame": 6,
+              "percent": 25,
+              "dir": 0
+            },
+            {
+              "frame": 13,
+              "percent": 25,
+              "dir": 0
+            },
+            {
+              "frame": 19,
+              "percent": 25,
+              "dir": 0
+            },
+            {
+              "frame": 24,
+              "percent": 25,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 40,
+          "selfBuffs": [
+            {
+              "stat": "agility",
+              "value": 30,
+              "turns": 2
+            }
+          ]
+        },
+        {
           "id": "lh-duanjiang",
           "name": "横江断流",
           "from": 175,
@@ -721,12 +962,267 @@
           "learnLevel": 16
         },
         {
+          "id": "lh-duanjiang-2",
+          "name": "横江断流LV2",
+          "from": 175,
+          "anim": 0,
+          "type": 12,
+          "area": 1,
+          "rangeMin": 0,
+          "rangeMax": 0,
+          "power": 40,
+          "mpCost": 60,
+          "stun": 0,
+          "hitFx": "blood",
+          "learnLevel": 32
+        },
+        {
+          "id": "lh-duanjiang-3",
+          "name": "横江断流LV3",
+          "from": 175,
+          "anim": 0,
+          "type": 12,
+          "area": 1,
+          "rangeMin": 0,
+          "rangeMax": 0,
+          "power": 55,
+          "mpCost": 80,
+          "stun": 0,
+          "hitMod": 10,
+          "hitFx": "blood",
+          "hits": [
+            {
+              "frame": 6,
+              "percent": 50,
+              "dir": 0
+            },
+            {
+              "frame": 12,
+              "percent": 50,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 44
+        },
+        {
+          "id": "lh-feijian",
+          "name": "插翅飞涧",
+          "from": 175,
+          "anim": 0,
+          "targetShape": "diamond",
+          "rangeMin": 2,
+          "rangeMax": 3,
+          "areaPattern": [
+            [
+              0,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "power": 35,
+          "mpCost": 50,
+          "stun": 0,
+          "effect": 0,
+          "hitFx": "impact",
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 100,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 20
+        },
+        {
+          "id": "lh-feijian-2",
+          "name": "插翅飞涧LV2",
+          "from": 175,
+          "anim": 0,
+          "targetShape": "diamond",
+          "rangeMin": 2,
+          "rangeMax": 4,
+          "areaPattern": [
+            [
+              -1,
+              -1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "power": 50,
+          "mpCost": 80,
+          "stun": 0,
+          "hitMod": 5,
+          "effect": 0,
+          "hitFx": "impact",
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 100,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 36
+        },
+        {
+          "id": "lh-feijian-3",
+          "name": "插翅飞涧LV3",
+          "from": 175,
+          "anim": 0,
+          "targetShape": "diamond",
+          "rangeMin": 2,
+          "rangeMax": 5,
+          "areaPattern": [
+            [
+              -1,
+              -1
+            ],
+            [
+              0,
+              -1
+            ],
+            [
+              1,
+              -1
+            ],
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              -1,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              -2
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              -2,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "power": 65,
+          "mpCost": 115,
+          "stun": 20,
+          "hitMod": 10,
+          "effect": 0,
+          "hitFx": "impact",
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 100,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 48
+        },
+        {
+          "id": "lh-jia",
+          "name": "怒枷击",
+          "from": 175,
+          "anim": 0,
+          "type": 6,
+          "area": 1,
+          "rangeMin": 1,
+          "rangeMax": 1,
+          "power": 45,
+          "mpCost": 45,
+          "stun": 50,
+          "hitMod": 10,
+          "effect": 0,
+          "hitFx": "stars",
+          "hits": [
+            {
+              "frame": 12,
+              "percent": 100,
+              "dir": 0
+            }
+          ],
+          "learnLevel": 30
+        },
+        {
           "id": "lh-lianyi",
           "name": "敛翼息风",
           "from": 178,
           "anim": 2,
-          "power": 3,
-          "learnLevel": 6
+          "learnLevel": 6,
+          "selfBuffs": [
+            {
+              "stat": "agility",
+              "value": 20,
+              "turns": 5
+            }
+          ]
         }
       ]
     },
