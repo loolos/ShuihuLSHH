@@ -77,7 +77,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
     let ev = b.endPlayerPhase();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
-    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(10);
+    // 高廉身边十个，梁山阵后再来八个
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(18);
     const mine = () => b.units.filter((u) => u.present && u.alive && u.side !== 'enemy' && !b.spectators.has(u.uid));
     expect(b.turn).toBe(2);
     const qi = ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length;
@@ -117,23 +118,34 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThanOrEqual(n0 + 10);
   });
 
-  it('妖法困宋江：宋江念过回风返火，下一次作法被吹回去（神兵、猛虎吹散），之后照常作法；高廉打到三成半以下就收兵过关', () => {
+  it('妖法困宋江：宋江身上带着天书，用一次场上神兵猛虎吹散一半、下一次作法被吹回去，之后照常作法；高廉打到三成半以下就收兵过关', () => {
     const { b, get } = open('shenbing');
     const sj = get('songjiang');
-    duel(b, get);
-    b.endPlayerPhase(); b.endPlayerPhase(); b.endPlayerPhase();
+    const slot = sj.slots.indexOf(rt.itemIds.get('tianshu')!);
+    expect(slot).toBeGreaterThanOrEqual(0);
+    // 敌人多，只看作法：敌人都原地不动，免得宋江、吴用先倒下
+    const freeze = () => { for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8; };
+    const next = () => { freeze(); const ev = b.endPlayerPhase(); freeze(); return ev; };
+    for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
+    next(); next(); next(); next();
     expect(b.turn).toBe(5);
-    expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThan(0);
-    b.useSkill(sj, skill(b, sj, '回风返火')!, sj);
-    b.endPlayerPhase();
+    const summons = () => b.units.filter((u) => u.present && u.alive && (u.name === '飞天神兵' || u.name === '猛兽'));
+    const n0 = summons().length;
+    expect(n0).toBeGreaterThan(1);
+    b.useItem(sj, slot);
+    expect(sj.slots[slot]).toBe(0);
+    expect(summons().length).toBe(n0 - Math.round(n0 / 2));
+    const n1 = summons().length;
+    let ev = next();
     expect(b.turn).toBe(6);
-    expect(b.units.filter((u) => u.present && u.alive && (u.name === '飞天神兵' || u.name === '猛兽'))).toHaveLength(0);
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵')).toHaveLength(0);
+    expect(summons().length).toBeLessThanOrEqual(n1);
     expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.panicTurns).length).toBeGreaterThan(0);
-    const ev = b.endPlayerPhase();
+    ev = next();
     expect(ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length).toBeGreaterThan(0);
     const gl = get('gaolian');
     gl.hp = Math.floor(gl.stats.maxHp * 0.3);
-    b.endPlayerPhase();
+    next();
     expect(b.status).toBe('won');
   });
 });

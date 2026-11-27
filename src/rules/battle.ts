@@ -475,7 +475,7 @@ export class Battle {
   /** 每个单位出手用过的技能号（按顺序，含普通攻击和反击），扩展包的 used 触发用 */
   private used: Record<number, number[]> = {};
   /** 刚做过、还没判过 did 触发的操作（教学关，§15.26）；判完就清空，不进存档 */
-  private didQueue: { uid: number; action: DidAction }[] = [];
+  private didQueue: { uid: number; action: DidAction; item?: number }[] = [];
   /** 扩展包：AI 优先用的技能（StageInput.aiPrefer） */
   private readonly aiPrefer: Record<number, number[]>;
 
@@ -1623,12 +1623,13 @@ export class Battle {
     this.out = [];
     if (!this.itemTargets(u, slot).includes(target)) return [];
     const area = itemOf(this.data, u.slots[slot])?.area ? this.areaTargets(u) : [];
+    const used = u.slots[slot];
     this.applyItem(u, slot, target);
     this.gainExp(u, itemExp(this.rng), 'item');
     u.turnStart = null;
     target.turnStart = null; // 用在别人身上：对方也不能再撤销移动
     for (const x of area) x.turnStart = null;
-    this.noteDid(u, 'item');
+    this.noteDid(u, 'item', used);
     this.checkDid();
     return this.flush();
   }
@@ -1775,7 +1776,7 @@ export class Battle {
     refreshStats(t, this.data);
     this.adjustMovement(t, t.stats.move - move0);
     if (buffs.length) this.emit({ type: 'message', text: `${who}${buffs.map((b) => `${buffName(b.stat)}${b.value ? `+${b.value}` : ''}`).join('、')}，持續 ${Math.max(...buffs.map((b) => b.turns))} 回合。` });
-    if (!it.healHp && !it.healMp && !cured && !buffs.length) this.emit({ type: 'message', text: `${who}沒有效果。` });
+    if (!it.healHp && !it.healMp && !cured && !buffs.length && !it.story) this.emit({ type: 'message', text: `${who}沒有效果。` });
     this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
   }
 
@@ -2278,7 +2279,7 @@ export class Battle {
         if (!t.atTurnEnd) continue;
       } else if (t.playerPhase && this.phase !== 'player') continue;
       const who = this.units.find((u) => (t.uid !== undefined ? u.uid === t.uid : u.classId === t.char) && u.alive && u.present);
-      const by = who && this.units.find((u) => u !== who && u.side === 'player' && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1));
+      const by = who && this.units.find((u) => u !== who && (t.ours ? u.side !== 'enemy' && !this.spectators.has(u.uid) : u.side === 'player') && (t.by === undefined || u.classId === t.by) && u.alive && u.present && !this.isBound(u) && dist(u, who) >= 1 && dist(u, who) <= (t.range ?? 1));
       if (by && t.atTurnEnd && !turnEnd) {
         // 我方回合里走到身边先提示一次（每回合每个区块一次）
         const key = `${b.index}:${this.turn}`;
@@ -2352,8 +2353,8 @@ export class Battle {
   }
 
   /** 记下刚做的操作，等 checkDid 判 did 触发（只记剧本里用得到的人，免得队列白长） */
-  private noteDid(u: Unit, action: DidAction) {
-    if (this.blocks.some((b) => b.trigger.kind === 'did' && !this.fired.has(b.index))) this.didQueue.push({ uid: u.uid, action });
+  private noteDid(u: Unit, action: DidAction, item?: number) {
+    if (this.blocks.some((b) => b.trigger.kind === 'did' && !this.fired.has(b.index))) this.didQueue.push({ uid: u.uid, action, ...(item !== undefined ? { item } : {}) });
   }
 
   /**
@@ -2362,12 +2363,13 @@ export class Battle {
    */
   private checkDid() {
     while (this.didQueue.length && this.status === 'playing') {
-      const { uid, action } = this.didQueue.shift()!;
+      const { uid, action, item } = this.didQueue.shift()!;
       const u = this.unit(uid);
       if (!u) continue;
       for (const b of this.blocks) {
         const t = b.trigger;
         if (t.kind !== 'did' || t.action !== action || this.fired.has(b.index)) continue;
+        if (t.item !== undefined && t.item !== item) continue;
         if (t.uid !== undefined ? t.uid !== uid : t.char !== u.classId) continue;
         if (!this.flagsOk(b)) continue;
         // 教学提示（did 区块）只是讲解刚做的操作，说话、旁白不锁撤销移动；真改了局面（登场、退场……）的照样锁
@@ -2824,6 +2826,10 @@ export class Battle {
         // 100 起：扩展包的新指令【新】（src/packs/script.ts）
         // 100 换装备：flag = 格号（0 武器、1 衣服、2 头饰），value = 道具号，0 = 卸掉（武松的哨棒折断）
         case 107:
+          if (sel && op.flag === -1) {
+            const k = freeBagSlot(sel.slots);
+            op = { ...op, flag: k >= 0 ? k : SLOT_COUNT - 1 };
+          }
           if (sel) {
             const slot = op.flag ?? 0;
             sel.storyGear ??= {};
@@ -3005,6 +3011,16 @@ export class Battle {
         // args.style = dust（黑尘迷眼）/ wind（怪风）只管画面。之后的指令 13 由离中心最近的逃窜者来喊
         case 126: {
           const a = op.args ?? {};
+          // 吹散【新】（神兵困公明的天书，负责人 2026-11-27）：场上这几种职业的敌人随机吹散 banish%（至少 1 个），各起一阵风后一起退场
+          if (a.banish) {
+            const pool = this.active().filter((u) => u.side === 'enemy' && (a.classes ?? []).includes(u.classId));
+            const n = pool.length ? Math.min(pool.length, Math.max(1, Math.round((pool.length * a.banish) / 100))) : 0;
+            const gone: Unit[] = [];
+            while (gone.length < n) gone.push(pool.splice(this.rng.int(pool.length), 1)[0]);
+            for (const u of gone) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: 'wind' });
+            for (const u of gone) this.hide(u, false);
+            break;
+          }
           const t = b.trigger;
           let at = t.kind === 'area' && a.x === undefined ? { x: Math.round((t.x1 + t.x2) / 2), y: Math.round((t.y1 + t.y2) / 2) } : { x: a.x ?? 0, y: a.y ?? 0 };
           const radius = a.radius ?? 3;
