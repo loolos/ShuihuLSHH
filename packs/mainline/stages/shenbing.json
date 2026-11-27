@@ -262,6 +262,28 @@
    "levelOffset": -3
   },
   {
+   "id": "shixiu",
+   "class": "shixiu",
+   "side": "ally",
+   "x": 15,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "yangxiong",
+   "class": "yangxiong",
+   "side": "ally",
+   "x": 23,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
    "id": "gaolian",
    "class": "gaolian",
    "side": "enemy",
@@ -1183,7 +1205,7 @@
    "id": "bk0",
    "class": "shenbing",
    "side": "enemy",
-   "x": 13,
+   "x": 12,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1195,7 +1217,7 @@
    "id": "bk1",
    "class": "shenbing",
    "side": "enemy",
-   "x": 14,
+   "x": 13,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1207,7 +1229,7 @@
    "id": "bk2",
    "class": "shenbing",
    "side": "enemy",
-   "x": 15,
+   "x": 14,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1219,7 +1241,7 @@
    "id": "bk3",
    "class": "shenbing",
    "side": "enemy",
-   "x": 16,
+   "x": 17,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1231,7 +1253,7 @@
    "id": "bk4",
    "class": "shenbing",
    "side": "enemy",
-   "x": 17,
+   "x": 18,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1243,7 +1265,7 @@
    "id": "bk5",
    "class": "shenbing",
    "side": "enemy",
-   "x": 18,
+   "x": 19,
    "y": 31,
    "level": 30,
    "facing": 0,
@@ -1255,8 +1277,8 @@
    "id": "bk6",
    "class": "shenbing",
    "side": "enemy",
-   "x": 19,
-   "y": 31,
+   "x": 18,
+   "y": 32,
    "level": 30,
    "facing": 0,
    "ai": 0,
@@ -1267,10 +1289,82 @@
    "id": "bk7",
    "class": "shenbing",
    "side": "enemy",
-   "x": 20,
-   "y": 31,
+   "x": 28,
+   "y": 30,
    "level": 30,
    "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk8",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 29,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "bk9",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 30,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 25,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 26,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 27,
+   "y": 25,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2
+  },
+  {
+   "id": "fl3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 27,
+   "y": 26,
+   "level": 30,
+   "facing": 1,
    "ai": 0,
    "hidden": true,
    "levelOffset": 2
@@ -1645,6 +1739,14 @@
     [
      "spectate",
      "baisheng"
+    ],
+    [
+     "spectate",
+     "yangxiong"
+    ],
+    [
+     "spectate",
+     "shixiu"
     ],
     [
      "spectate",
@@ -2040,6 +2142,16 @@
     ],
     [
      "spectate",
+     "yangxiong",
+     false
+    ],
+    [
+     "spectate",
+     "shixiu",
+     false
+    ],
+    [
+     "spectate",
      "la0",
      false
     ],
@@ -2166,6 +2278,16 @@
     [
      "setAi",
      "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "yangxiong",
+     0
+    ],
+    [
+     "setAi",
+     "shixiu",
      0
     ],
     [
@@ -2322,6 +2444,34 @@
     [
      "appear",
      "bk7"
+    ],
+    [
+     "appear",
+     "bk8"
+    ],
+    [
+     "appear",
+     "bk9"
+    ],
+    [
+     "narrate",
+     "两翼也各卷起一股黄砂，又有几个飞天神兵从侧里抄了过来！"
+    ],
+    [
+     "appear",
+     "fl0"
+    ],
+    [
+     "appear",
+     "fl1"
+    ],
+    [
+     "appear",
+     "fl2"
+    ],
+    [
+     "appear",
+     "fl3"
     ],
     [
      "flag",
@@ -2547,6 +2697,16 @@
     ],
     [
      "spectate",
+     "yangxiong",
+     false
+    ],
+    [
+     "spectate",
+     "shixiu",
+     false
+    ],
+    [
+     "spectate",
      "la0",
      false
     ],
@@ -2673,6 +2833,16 @@
     [
      "setAi",
      "zhangheng",
+     0
+    ],
+    [
+     "setAi",
+     "yangxiong",
+     0
+    ],
+    [
+     "setAi",
+     "shixiu",
      0
     ],
     [
@@ -2829,6 +2999,34 @@
     [
      "appear",
      "bk7"
+    ],
+    [
+     "appear",
+     "bk8"
+    ],
+    [
+     "appear",
+     "bk9"
+    ],
+    [
+     "narrate",
+     "两翼也各卷起一股黄砂，又有几个飞天神兵从侧里抄了过来！"
+    ],
+    [
+     "appear",
+     "fl0"
+    ],
+    [
+     "appear",
+     "fl1"
+    ],
+    [
+     "appear",
+     "fl2"
+    ],
+    [
+     "appear",
+     "fl3"
     ],
     [
      "flag",
@@ -8580,76 +8778,124 @@
    "do": [
     [
      "narrate",
-     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，身边黄砂卷起，十个飞天神兵护住了他！"
+     "高廉见有人杀到跟前，把太阿宝剑往聚兽铜牌上连敲三下，平地卷起一阵狂风，把杀到跟前的好汉都吹了回去；黄砂里十个飞天神兵散开护住了他！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "push": 5,
+      "style": "wind"
+     }
     ],
     [
      "appear",
      "hw0",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw1",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw2",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw3",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw4",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw5",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw6",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw7",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw8",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "hw9",
      {
-      "near": "gaolian"
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [

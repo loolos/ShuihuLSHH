@@ -80,8 +80,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
     let ev = step();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
-    // 高廉身边十个，梁山阵后再来八个
-    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(18);
+    // 好汉四周十个，梁山阵后三堆十个，两翼各两个
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(24);
     const mine = () => b.units.filter((u) => u.present && u.alive && u.side !== 'enemy' && !b.spectators.has(u.uid));
     expect(b.turn).toBe(2);
     const qi = ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length;
@@ -112,14 +112,21 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(sbs().some((u) => dist(u) > 3)).toBe(true);
   });
 
-  it('妖法困宋江：好汉杀到高廉跟前，他身边冒出十个飞天神兵', () => {
+  it('妖法困宋江：好汉杀到高廉 3 格以内，一阵风把最近的五人吹开，他身边 2–4 步散开冒出十个飞天神兵', () => {
     const { b, get } = open('shenbing');
     duel(b, get);
     const gl = get('gaolian'), lc = get('linchong');
+    const d = (u: Unit) => Math.abs(u.x - gl.x) + Math.abs(u.y - gl.y);
     const n0 = b.units.filter((u) => u.present && u.name === '飞天神兵').length;
     lc.x = gl.x; lc.y = gl.y + 2;
-    b.endPlayerPhase();
+    const ev = b.endPlayerPhase();
+    // 出场那一刻的位置（之后敌方回合会走开）
+    const guards = ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').map((e) => e as { x: number; y: number }).filter((c) => d(c as Unit) <= 4);
+    expect(guards.length).toBeGreaterThanOrEqual(10);
+    expect(guards.every((c) => d(c as Unit) >= 2)).toBe(true);
     expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThanOrEqual(n0 + 10);
+    const pushed = ev.filter((e) => e.type === 'move' && e.script && e.uid === lc.uid);
+    expect(pushed.length).toBeGreaterThan(0);
   });
 
   it('妖法困宋江：宋江身上带着天书，用一次场上神兵猛虎吹散一半、下一次作法被吹回去，之后照常作法；高廉打到三成半以下就收兵过关', () => {
