@@ -494,7 +494,7 @@ function takeLineId(step: unknown[]): string | undefined {
 }
 
 const NARRATOR = 0xffffffff;
-const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give', 'drunk', 'refuse', 'wake'];
+const DID_ACTIONS: DidAction[] = ['move', 'attack', 'skill', 'flank', 'defend', 'guard', 'counter', 'rest', 'item', 'give', 'drunk', 'refuse', 'wake', 'stunned'];
 
 /** if / unless 写成数组时：每个标志都要设上 / 都没设（AND）【新】 */
 function flagConds(b: PackBlockJson, r: Refs): PasCond[] {
@@ -570,7 +570,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         const near = (a[1] as { near?: unknown } | undefined)?.near;
         // ['appear', 谁, {ring: [4, 7]}]：在离我方 / 友军 4–7 步的空格里随机冒出来（飞天神兵突然杀出）【新】
         const ring = (a[1] as { ring?: [number, number] } | undefined)?.ring;
-        // ['appear', 谁, {at: [x, y]}]：在这一格登场（退场过的人换个地方再进来，斧劈罗真人李逵夜里从侧门进观）【新】
+        // ['appear', 谁, {at: [x, y]}]：在这一格登场（退场过的人换个地方再进来，夜斧松鹤轩李逵夜里从侧门进观）【新】
         const at = (a[1] as { at?: [number, number] } | undefined)?.at;
         // ['appear', 谁, {near: 另一个人, ring: [2, 4]}]：在离那个人 2–4 步的空格里随机冒出来（高廉身边的护法神兵散开站）【新】
         if (ring) op(12, 1000 + r.unitRef(a[0]).act.group, { args: { ring, ...(near !== undefined ? { toward: r.unitRef(near).act.group } : {}) } });
