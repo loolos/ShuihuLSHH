@@ -1,0 +1,1842 @@
+{
+ "id": "shenbing",
+ "title": "飞天神兵",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 1200
+ },
+ "map": {
+  "base": "N-add05"
+ },
+ "bgm": [
+  "sorcery",
+  "battle"
+ ],
+ "goals": [
+  {
+   "win": "把高廉打到三成半体力以下，或撑过第 12 回合",
+   "lose": "宋江倒下",
+   "hint": "高廉每三回合作一次法（前一回合会念咒）：怪风刮向离他最近的人，那人周围两格迷眼一回合、掉血，还会召来一队飞天神兵"
+  },
+  {
+   "unless": "huifeng",
+   "hint": "宋江可以用一次天书上的「回风返火」，下一阵怪风就会被吹回去"
+  },
+  {
+   "if": "huifeng",
+   "unless": "reversed",
+   "hint": "天书已经念过，等高廉下一次作法"
+  },
+  {
+   "if": "reversed",
+   "hint": "妖法破了，神兵都是纸人；高廉又敲铜牌召来猛兽"
+  }
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "player",
+   "x": 19,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "skills": [
+    "sj-huifeng"
+   ]
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "player",
+   "x": 18,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "name": "吴用"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 19,
+   "y": 25,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 17,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "name": "林冲"
+  },
+  {
+   "id": "huarong",
+   "class": "huarong",
+   "side": "player",
+   "x": 20,
+   "y": 27,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "side": "player",
+   "x": 21,
+   "y": 25,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 16,
+   "y": 25,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "leiheng",
+   "class": "leiheng",
+   "side": "player",
+   "x": 22,
+   "y": 25,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "gaolian",
+   "class": "gaolian",
+   "side": "enemy",
+   "x": 19,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 11,
+   "enemyRank": "leader",
+   "levelOffset": 2,
+   "hpMultiplier": 4,
+   "name": "高唐州知府高廉"
+  },
+  {
+   "id": "gw0",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "gw1",
+   "class": 34,
+   "side": "enemy",
+   "x": 18,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "gw2",
+   "class": 34,
+   "side": "enemy",
+   "x": 20,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "gw3",
+   "class": 34,
+   "side": "enemy",
+   "x": 21,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "yuzhi",
+   "class": 42,
+   "side": "enemy",
+   "x": 14,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "name": "统制于直"
+  },
+  {
+   "id": "ya0",
+   "class": 32,
+   "side": "enemy",
+   "x": 12,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "ya1",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "ya2",
+   "class": 32,
+   "side": "enemy",
+   "x": 14,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "ya3",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "ya4",
+   "class": 32,
+   "side": "enemy",
+   "x": 16,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "yb0",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手"
+  },
+  {
+   "id": "yb1",
+   "class": 34,
+   "side": "enemy",
+   "x": 15,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "弓手"
+  },
+  {
+   "id": "wenwenbao",
+   "class": 43,
+   "side": "enemy",
+   "x": 23,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "name": "统制温文宝"
+  },
+  {
+   "id": "wa0",
+   "class": 32,
+   "side": "enemy",
+   "x": 21,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "wa1",
+   "class": 32,
+   "side": "enemy",
+   "x": 22,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "wa2",
+   "class": 32,
+   "side": "enemy",
+   "x": 24,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "官兵"
+  },
+  {
+   "id": "wb0",
+   "class": 43,
+   "side": "enemy",
+   "x": 25,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军"
+  },
+  {
+   "id": "wb1",
+   "class": 43,
+   "side": "enemy",
+   "x": 26,
+   "y": 11,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军"
+  },
+  {
+   "id": "wb2",
+   "class": 43,
+   "side": "enemy",
+   "x": 20,
+   "y": 10,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "name": "马军"
+  },
+  {
+   "id": "sb00",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb01",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb02",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 8,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb03",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 9,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb04",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 10,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb05",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb10",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb11",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb12",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 8,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb13",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 9,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb14",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 10,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb15",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb20",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb21",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb22",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 8,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb23",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 9,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb24",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 10,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "sb25",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 11,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "mb0",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 6,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "name": "猛兽",
+   "levelOffset": -1
+  },
+  {
+   "id": "mb1",
+   "class": "yiling-tigress",
+   "side": "enemy",
+   "x": 7,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "name": "猛兽",
+   "levelOffset": -1
+  },
+  {
+   "id": "mb2",
+   "class": "yiling-tigress",
+   "side": "enemy",
+   "x": 8,
+   "y": 15,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "name": "猛兽",
+   "levelOffset": -1
+  },
+  {
+   "id": "r00",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r01",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r02",
+   "class": 32,
+   "side": "enemy",
+   "x": 17,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r03",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r04",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r05",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r06",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "r07",
+   "class": 34,
+   "side": "enemy",
+   "x": 19,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "r10",
+   "class": 32,
+   "side": "enemy",
+   "x": 21,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r11",
+   "class": 32,
+   "side": "enemy",
+   "x": 23,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r12",
+   "class": 32,
+   "side": "enemy",
+   "x": 25,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r13",
+   "class": 32,
+   "side": "enemy",
+   "x": 27,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r14",
+   "class": 32,
+   "side": "enemy",
+   "x": 21,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r15",
+   "class": 32,
+   "side": "enemy",
+   "x": 23,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "r16",
+   "class": 34,
+   "side": "enemy",
+   "x": 25,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "r17",
+   "class": 34,
+   "side": "enemy",
+   "x": 27,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "fl0",
+   "class": 43,
+   "side": "enemy",
+   "x": 30,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  },
+  {
+   "id": "fl1",
+   "class": 43,
+   "side": "enemy",
+   "x": 31,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  },
+  {
+   "id": "fl2",
+   "class": 43,
+   "side": "enemy",
+   "x": 30,
+   "y": 16,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  },
+  {
+   "id": "fl3",
+   "class": 43,
+   "side": "enemy",
+   "x": 30,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  },
+  {
+   "id": "fl4",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  },
+  {
+   "id": "fl5",
+   "class": 43,
+   "side": "enemy",
+   "x": 29,
+   "y": 17,
+   "level": 30,
+   "facing": 1,
+   "ai": 1,
+   "target": "songjiang",
+   "hidden": true,
+   "name": "马军"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "高唐州 · 城外"
+    ],
+    [
+     "narrate",
+     "李逵奔回梁山泊，说了柴进陷在高唐州死囚牢里。宋江亲自点起人马，吴用同行，林冲、花荣、秦明、李逵、雷横和武龙跟随，杀奔高唐州来。朱仝不愿与李逵同路，留守山寨。"
+    ],
+    [
+     "narrate",
+     "知府高廉听得梁山泊兵到，并不慌张，点起本州兵马，引着他亲手调教的三百飞天神兵，大开城门迎敌。"
+    ],
+    [
+     "say",
+     "gaolian",
+     "你这伙不知死的草寇，怎敢直犯我的城池！"
+    ],
+    [
+     "say",
+     "songjiang",
+     "高廉！你纵容妻舅强占民宅，又把柴大官人屈打下狱。今日特来问罪！"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好，好。且教你见识我的手段。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥，听说这高廉会些妖术，不可轻敌。九天玄女娘娘传的天书里，有一道回风返火之法，或许用得着。"
+    ],
+    [
+     "say",
+     "hero",
+     "铁牛，殷天锡是自己找死；可柴大官人替你吃了官司，这一仗你可得把力气使在正处。"
+    ],
+    [
+     "say",
+     "likui",
+     "那还用说！先砍了那鸟知府，再去牢里背大官人出来！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词……（下回合他要作法了）"
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥，那厮在念咒！天书上的回风返火，正是破这风沙的法子。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "unless": [
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉喝一声「疾！」，只见一道黑气卷起，化作怪风，飞沙走石，直扑过来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "radius": 2,
+      "stun": 2,
+      "hurt": 10,
+      "style": "dust"
+     }
+    ],
+    [
+     "narrate",
+     "黑气里杀出一彪飞天神兵，个个披发仗剑，口中吐火！"
+    ],
+    [
+     "appear",
+     "sb00",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb01",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb02",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb03",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb04",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb05",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "huifeng",
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "flag",
+     "reversed"
+    ],
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，怪风才起，却被宋江的回风返火之法一逼，倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "那些飞天神兵被风一卷，一个个跌落尘埃，原来都是纸剪的人马！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！再教你看——"
+    ],
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，阵中又卷起一阵黑气，黑气里窜出几头猛兽来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词……（下回合他要作法了）"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "unless": [
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉喝一声「疾！」，只见一道黑气卷起，化作怪风，飞沙走石，直扑过来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "radius": 2,
+      "stun": 2,
+      "hurt": 10,
+      "style": "dust"
+     }
+    ],
+    [
+     "narrate",
+     "黑气里杀出一彪飞天神兵，个个披发仗剑，口中吐火！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "huifeng",
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "flag",
+     "reversed"
+    ],
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，怪风才起，却被宋江的回风返火之法一逼，倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "那些飞天神兵被风一卷，一个个跌落尘埃，原来都是纸剪的人马！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！再教你看——"
+    ],
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，阵中又卷起一阵黑气，黑气里窜出几头猛兽来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词……（下回合他要作法了）"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "unless": [
+    "huifeng",
+    "retreat"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉喝一声「疾！」，只见一道黑气卷起，化作怪风，飞沙走石，直扑过来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "radius": 2,
+      "stun": 2,
+      "hurt": 10,
+      "style": "dust"
+     }
+    ],
+    [
+     "narrate",
+     "黑气里杀出一彪飞天神兵，个个披发仗剑，口中吐火！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": "huifeng",
+   "unless": [
+    "reversed",
+    "retreat"
+   ],
+   "do": [
+    [
+     "flag",
+     "reversed"
+    ],
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，怪风才起，却被宋江的回风返火之法一逼，倒卷回去，刮得高廉阵中飞沙走石，人马乱撞！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "back": true,
+      "radius": 4,
+      "panic": 8,
+      "turns": 2,
+      "style": "wind",
+      "spare": [
+       "gaolian"
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "那些飞天神兵被风一卷，一个个跌落尘埃，原来都是纸剪的人马！"
+    ],
+    [
+     "leave",
+     "sb00"
+    ],
+    [
+     "leave",
+     "sb01"
+    ],
+    [
+     "leave",
+     "sb02"
+    ],
+    [
+     "leave",
+     "sb03"
+    ],
+    [
+     "leave",
+     "sb04"
+    ],
+    [
+     "leave",
+     "sb05"
+    ],
+    [
+     "leave",
+     "sb10"
+    ],
+    [
+     "leave",
+     "sb11"
+    ],
+    [
+     "leave",
+     "sb12"
+    ],
+    [
+     "leave",
+     "sb13"
+    ],
+    [
+     "leave",
+     "sb14"
+    ],
+    [
+     "leave",
+     "sb15"
+    ],
+    [
+     "leave",
+     "sb20"
+    ],
+    [
+     "leave",
+     "sb21"
+    ],
+    [
+     "leave",
+     "sb22"
+    ],
+    [
+     "leave",
+     "sb23"
+    ],
+    [
+     "leave",
+     "sb24"
+    ],
+    [
+     "leave",
+     "sb25"
+    ],
+    [
+     "say",
+     "gaolian",
+     "好个宋江，也会些法术！再教你看——"
+    ],
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，阵中又卷起一阵黑气，黑气里窜出几头猛兽来！"
+    ],
+    [
+     "appear",
+     "mb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb2",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "unless": "retreat",
+   "do": [
+    [
+     "narrate",
+     "城门开处，又一彪官兵杀出城来！"
+    ],
+    [
+     "appear",
+     "r00"
+    ],
+    [
+     "appear",
+     "r01"
+    ],
+    [
+     "appear",
+     "r02"
+    ],
+    [
+     "appear",
+     "r03"
+    ],
+    [
+     "appear",
+     "r04"
+    ],
+    [
+     "appear",
+     "r05"
+    ],
+    [
+     "appear",
+     "r06"
+    ],
+    [
+     "appear",
+     "r07"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "unless": "retreat",
+   "do": [
+    [
+     "narrate",
+     "城里又涌出一彪官兵！"
+    ],
+    [
+     "appear",
+     "r10"
+    ],
+    [
+     "appear",
+     "r11"
+    ],
+    [
+     "appear",
+     "r12"
+    ],
+    [
+     "appear",
+     "r13"
+    ],
+    [
+     "appear",
+     "r14"
+    ],
+    [
+     "appear",
+     "r15"
+    ],
+    [
+     "appear",
+     "r16"
+    ],
+    [
+     "appear",
+     "r17"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "unless": "retreat",
+   "do": [
+    [
+     "narrate",
+     "东边尘头起处，一队马军抄到宋江背后来了！"
+    ],
+    [
+     "appear",
+     "fl0"
+    ],
+    [
+     "appear",
+     "fl1"
+    ],
+    [
+     "appear",
+     "fl2"
+    ],
+    [
+     "appear",
+     "fl3"
+    ],
+    [
+     "appear",
+     "fl4"
+    ],
+    [
+     "appear",
+     "fl5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "used": "songjiang",
+    "skills": [
+     "sj-huifeng"
+    ]
+   },
+   "do": [
+    [
+     "flag",
+     "huifeng"
+    ],
+    [
+     "narrate",
+     "宋江取出天书，按上面的法，左手捏诀，右手仗剑，念动回风返火的咒语。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "且看那厮的风，往哪里刮！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "gaolian",
+    "below": 35,
+    "spare": true
+   },
+   "do": [
+    [
+     "flag",
+     "retreat"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "do": [
+    [
+     "flag",
+     "retreat"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "retreat"
+   },
+   "do": [
+    [
+     "narrate",
+     "高廉见折了许多人马，鸣金收兵，退入城中，拽起吊桥，紧闭城门，再不出战。"
+    ],
+    [
+     "leave",
+     "gaolian"
+    ],
+    [
+     "bgm",
+     [
+      "camp",
+      "story"
+     ]
+    ],
+    [
+     "say",
+     "songjiang",
+     "这厮的妖法好生厉害，天书也只抵得一阵。城池坚固，柴大官人还在他牢里……"
+    ],
+    [
+     "say",
+     "wuyong",
+     "要破此法，只除非快教人去蓟州寻取公孙胜来。"
+    ],
+    [
+     "say",
+     "hero",
+     "公孙先生回乡侍奉老母，说好百日便回，如今早过了期限。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "正是。这一番，须得戴院长再走一遭蓟州，务必请他下山。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "songjiang"
+   },
+   "do": [
+    [
+     "defeat",
+     "宋江倒下了。"
+    ]
+   ]
+  }
+ ]
+}

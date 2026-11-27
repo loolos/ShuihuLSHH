@@ -81,9 +81,10 @@ export const CHAPTERS: ChapterDef[] = [
   { name: '登州劫牢', stages: ['mainline/shehu', 'mainline/laihu', 'mainline/qingsunli', 'mainline/jielao'] },
   // 负责人 2026-11-25：三打祝家庄。过场孙立假投祝家庄（献石秀表忠心、夜里密议内应）；大仗宋公明三打祝家庄（里应外合、三座庄门）；战后过场黑旋风扈家庄、赏粮钟离老人、扑天雕李应上山
   { name: '三打祝家庄', stages: ['mainline/ruzhuang', 'mainline/sanda', 'mainline/zhongli', 'mainline/liying-shangshan'] },
-  // 负责人 2026-11-27：美髯公误失小衙内（原著第 51 回，改写）。三打祝家庄之后隔些时日，雷横已在梁山，和武龙喝酒讲枷打白秀英、
-  // 谢朱仝私放之恩；朱仝随吴用上山，讲盂兰盆节小衙内被李逵抱走害死（雷横不知情，此时才听说）；武龙拿秦明、李应的事对比吐槽
-  { name: '误失小衙内', stages: ['mainline/leiheng-zhutong'] },
+  // 负责人 2026-11-27：大破高唐州（原著第 51–54 回）。开头过场梁山叙旧（第 51 回，改写）：三打祝家庄之后隔些时日，雷横已在梁山，和武龙喝酒讲枷打白秀英、
+  // 谢朱仝私放之恩；朱仝随吴用上山，讲盂兰盆节小衙内被李逵抱走害死（雷横不知情，此时才听说）；武龙拿秦明、李应的事对比吐槽；
+  // 小关打死殷天锡（李逵追殷天锡、柴进丹书铁券镇住闲汉，打死后从后门逃）；中关飞天神兵（高廉每三回合妖风 + 神兵，宋江天书回风返火吹回去，铜牌召猛兽）
+  { name: '大破高唐州', stages: ['mainline/leiheng-zhutong', 'mainline/yintianxi', 'mainline/shenbing'] },
 ];
 
 /**

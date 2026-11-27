@@ -55,7 +55,7 @@ export const STAGE_ORDERS: Record<string, SimOrder[]> = {
 };
 
 /** 过关区域还没启用时先照常打（劫牢：包节级没倒下之前，要逃的三个人别守在原地） */
-export const FIGHT_FIRST = new Set(['mainline/jielao']);
+export const FIGHT_FIRST = new Set(['mainline/jielao', 'mainline/yintianxi']);
 
 export const AUTO_TURNS = 2;
 export const AUTO_THREATS = Number(process.env.AUTO_THREATS ?? 5);
