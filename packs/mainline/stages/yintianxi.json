@@ -36,16 +36,13 @@
  "units": [
   {
    "id": "chaijin",
-   "class": 26,
+   "class": "chaijin",
    "side": "player",
    "x": 17,
    "y": 5,
    "level": 30,
    "facing": 2,
-   "name": "柴进",
-   "skills": [
-    "cj-tiequan"
-   ]
+   "name": "柴进"
   },
   {
    "id": "likui",
