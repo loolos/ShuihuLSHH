@@ -70,29 +70,51 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(b.spectators.has(get('gaolian').uid)).toBe(false);
   });
 
-  it('妖法困宋江：单挑之后高廉每回合轮着作法：黑气中毒、飞沙昏迷、四周杀出神兵、召猛虎', () => {
+  it('妖法困宋江：单挑一结束高廉先召十个飞天神兵（吴用随即提天书），之后每回合轮着作法：黑气中毒、飞沙昏迷并吹开最近的五人、召猛虎、再召神兵', () => {
     const { b, get } = open('shenbing');
-    duel(b, get);
-    const mine = () => b.units.filter((u) => u.present && u.alive && u.side !== 'enemy' && !b.spectators.has(u.uid));
+    const gl = get('gaolian');
+    const sbs = () => b.units.filter((u) => u.present && u.alive && u.name === '飞天神兵');
+    for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
     let ev = b.endPlayerPhase();
-    expect(b.turn).toBe(3);
+    expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(10);
+    const mine = () => b.units.filter((u) => u.present && u.alive && u.side !== 'enemy' && !b.spectators.has(u.uid));
+    expect(b.turn).toBe(2);
     const qi = ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length;
     expect(qi).toBeGreaterThanOrEqual(Math.round(mine().length / 3) - 1);
-    // 几阵风、几个中毒挨在一起（画面上一起放），作过一次法吴用才提天书
+    // 几阵风、几个中毒挨在一起（画面上一起放）
     const kinds = ev.filter((e) => e.type === 'gust' || (e.type === 'status' && e.text === '黑氣入體')).map((e) => e.type);
     expect(kinds.join(',')).toMatch(/^(gust,)+(status,)*status$/);
-    expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
+    const dist = (u: Unit) => Math.abs(u.x - gl.x) + Math.abs(u.y - gl.y);
+    const before = new Map(mine().map((u) => [u.uid, dist(u)]));
     ev = b.endPlayerPhase();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(false);
     expect(ev.filter((e) => e.type === 'status' && e.text === '飛沙迷眼').length).toBeGreaterThan(0);
+    const pushed = ev.filter((e) => e.type === 'move' && e.script && b.units[e.uid].side !== 'enemy');
+    expect(pushed.length).toBeGreaterThan(0);
+    for (const e of pushed) {
+      const p = (e as { path: { x: number; y: number }[] }).path;
+      const end = p[p.length - 1];
+      expect(Math.abs(end.x - gl.x) + Math.abs(end.y - gl.y)).toBeGreaterThan(Math.abs(p[0].x - gl.x) + Math.abs(p[0].y - gl.y));
+    }
+    expect(before.size).toBeGreaterThan(0);
+    ev = b.endPlayerPhase();
+    expect(b.units.filter((u) => u.present && u.name === '猛兽').length).toBeGreaterThan(0);
+    const n0 = sbs().length;
     b.endPlayerPhase();
     expect(b.turn).toBe(5);
-    const sb = b.units.filter((u) => u.present && u.name === '飞天神兵');
-    expect(sb).toHaveLength(6);
-    const gl = get('gaolian');
-    expect(sb.some((u) => Math.abs(u.x - gl.x) + Math.abs(u.y - gl.y) > 3)).toBe(true);
+    expect(sbs().length).toBeGreaterThan(n0);
+    expect(sbs().some((u) => dist(u) > 3)).toBe(true);
+  });
+
+  it('妖法困宋江：好汉杀到高廉跟前，他身边冒出十个飞天神兵', () => {
+    const { b, get } = open('shenbing');
+    duel(b, get);
+    const gl = get('gaolian'), lc = get('linchong');
+    const n0 = b.units.filter((u) => u.present && u.name === '飞天神兵').length;
+    lc.x = gl.x; lc.y = gl.y + 2;
     b.endPlayerPhase();
-    expect(b.units.filter((u) => u.present && u.name === '猛兽').length).toBeGreaterThan(0);
+    expect(b.units.filter((u) => u.present && u.name === '飞天神兵').length).toBeGreaterThanOrEqual(n0 + 10);
   });
 
   it('妖法困宋江：宋江念过回风返火，下一次作法被吹回去（神兵、猛虎吹散），之后照常作法；高廉打到三成半以下就收兵过关', () => {
