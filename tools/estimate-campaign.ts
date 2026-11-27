@@ -37,10 +37,11 @@ export function estimateCampaign(limit=200):CampaignEstimateRow[]{
   const party=pack?packParty(campaign,rt):partyOf(campaign),join=pack?joinLevel({...campaign,members:[...party.values()]}):joinLevel(campaign);
   const input=pack?compileStage(rt,stage!,files,{party,joinLevel:join,text:tr,seed:1}):loadStage(files,data,map,{party,joinLevel:join,text:tr,seed:1});
   const b=new Battle(input),entry=new Map(b.units.filter(u=>u.side==='player').map(u=>[u.classId,u.level]));
-  b.begin();
+  // 观战的（单挑、分阶段出场，开场剧本里设的或关卡里写死的）也算在场：整关的经验按全部上阵的人均摊，不只分给开场能动的几个
+  const watch=new Set<number>();b.begin();
   const fight=pack?stage!.units.some(u=>u.side==='enemy'&&u.ai!==8):!(/^(act|train)/i.test(map))||map.toLowerCase()==='act5-2';
-  if(fight)for(const u of b.units)if(u.side==='player'&&!b.spectators.has(u.uid))u.present=true;
-  const mine=b.units.filter(u=>u.side==='player'&&u.alive&&!b.spectators.has(u.uid)),foes=fight?b.units.filter(u=>u.side==='enemy'&&u.alive&&(!pack||stage!.units[u.uid].ai!==8)):[];
+  if(fight)for(const u of b.units)if(u.side==='player'&&!watch.has(u.uid))u.present=true;
+  const mine=b.units.filter(u=>u.side==='player'&&u.alive&&!watch.has(u.uid)),foes=fight?b.units.filter(u=>u.side==='enemy'&&u.alive&&(!pack||stage!.units[u.uid].ai!==8)):[];
   const enter=avg(mine.map(u=>u.level));let kill=0,dmg=0,taken=0;
   for(const foe of foes){if(!mine.length)break;const k0=kill,d0=dmg,t0=taken;const out=mine.map(u=>expected(u,foe)),per=avg(out.map(v=>v.hit*v.damage)),hit=avg(out.map(v=>v.hit)),N=foe.stats.maxHp/Math.max(1,per);
    kill+=EXP_RULES.killBase+EXP_RULES.killPerLevel*foe.level+2;
