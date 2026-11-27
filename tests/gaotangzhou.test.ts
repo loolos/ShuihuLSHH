@@ -123,7 +123,7 @@ describe('跳到续篇插关的等级', () => {
     const rt = loadPackFromDisk('mainline');
     const c = { ...newCampaign(0), members: [{ classId: 11, level: 28, exp: 5, slots: [0, 0, 0, 0, 0, 0, 0, 0], forge: [0, 0, 0, 0, 0, 0, 0, 0] }, { classId: 999, level: 7, exp: 0, slots: [], forge: [] }] };
     const out = insertJumpLevels(rt.data, c as never, 'mainline/shenbing');
-    expect(out.members[0].level).toBe(40); // 吴用：飞天神兵的估算等级
+    expect(out.members[0].level).toBe(43); // 吴用：神兵困公明的估算等级
     expect(out.members[0].exp).toBe(0);
     expect(out.members[1].level).toBe(7); // 表里没有的人不动
   });
