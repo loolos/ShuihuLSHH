@@ -71,6 +71,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(b.spectators.has(get('gaolian').uid)).toBe(false);
   });
 
+  it('妖法困宋江：单挑打满 4 回合还没分出胜负，第 5 回合高廉下令全军掩杀，统制也加入战团，接着召第一波神兵', () => {
+    const { b, get } = open('shenbing');
+    // 测试里林冲、秦明站着不动，回满血免得先被统制打倒
+    const heal = () => { for (const id of ['linchong', 'qinming']) get(id).hp = get(id).stats.maxHp; };
+    for (let i = 0; i < 3; i++) { heal(); b.endPlayerPhase(); }
+    heal();
+    expect(b.spectators.has(get('songjiang').uid)).toBe(true);
+    const ev = b.endPlayerPhase();
+    expect(ev.some((e) => e.type === 'say' && e.text.includes('一齐掩杀'))).toBe(true);
+    expect(b.spectators.has(get('songjiang').uid)).toBe(false);
+    expect(get('yuzhi').ai.mode).toBe(0);
+    expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(24);
+    // 同一回合只作这一次法
+    expect(ev.filter((e) => e.type === 'status' && e.text === '黑氣入體')).toHaveLength(0);
+  });
+
   it('妖法困宋江：单挑一结束高廉先召十个飞天神兵（吴用随即提天书），之后每回合轮着作法：黑气中毒、飞沙昏迷并吹开最近的五人、召猛虎、再召神兵', () => {
     const { b, get } = open('shenbing');
     const gl = get('gaolian');
