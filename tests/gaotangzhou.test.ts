@@ -73,9 +73,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
   it('妖法困宋江：单挑一结束高廉先召十个飞天神兵（吴用随即提天书），之后每回合轮着作法：黑气中毒、飞沙昏迷并吹开最近的五人、召猛虎、再召神兵', () => {
     const { b, get } = open('shenbing');
     const gl = get('gaolian');
+    // 敌人多、中毒久，只看作法：敌人都原地不动，免得宋江先倒下
+    const step = () => { for (const u of b.units) if (u.side === 'enemy') u.ai.mode = 8; return b.endPlayerPhase(); };
     const sbs = () => b.units.filter((u) => u.present && u.alive && u.name === '飞天神兵');
     for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
-    let ev = b.endPlayerPhase();
+    let ev = step();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(true);
     // 高廉身边十个，梁山阵后再来八个
     expect(ev.filter((e) => e.type === 'appear' && b.units[e.uid].name === '飞天神兵').length).toBe(18);
@@ -88,7 +90,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(kinds.join(',')).toMatch(/^(gust,)+(status,)*status$/);
     const dist = (u: Unit) => Math.abs(u.x - gl.x) + Math.abs(u.y - gl.y);
     const before = new Map(mine().map((u) => [u.uid, dist(u)]));
-    ev = b.endPlayerPhase();
+    ev = step();
     expect(ev.some((e) => e.type === 'say' && e.text.includes('回风返火'))).toBe(false);
     expect(ev.filter((e) => e.type === 'status' && e.text === '飛沙迷眼').length).toBeGreaterThan(0);
     const pushed = ev.filter((e) => e.type === 'move' && e.script && b.units[e.uid].side !== 'enemy');
@@ -99,10 +101,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
       expect(Math.abs(end.x - gl.x) + Math.abs(end.y - gl.y)).toBeGreaterThan(Math.abs(p[0].x - gl.x) + Math.abs(p[0].y - gl.y));
     }
     expect(before.size).toBeGreaterThan(0);
-    ev = b.endPlayerPhase();
+    ev = step();
     expect(b.units.filter((u) => u.present && u.name === '猛兽').length).toBeGreaterThan(0);
     const n0 = sbs().length;
-    b.endPlayerPhase();
+    step();
     expect(b.turn).toBe(5);
     expect(sbs().length).toBeGreaterThan(n0);
     expect(sbs().some((u) => dist(u) > 3)).toBe(true);
