@@ -175,6 +175,26 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     next();
     expect(b.status).toBe('won');
   });
+
+  it('芦哨昏迷一回合：敌方回合打中好汉，好汉下个我方回合确实动不了（回合开始减 1 之前多记 1）', () => {
+    const { b, get } = open('shenbing');
+    duel(b, get);
+    const sb = b.units.find((u) => u.present && u.alive && u.name === '飞天神兵')!;
+    const lc = get('linchong');
+    const shao = { ...learnedSkills(sb, b.data).find((k) => k.name === '芦哨')!, stun: 1000, hitMod: 1000 };
+    lc.x = sb.x; lc.y = sb.y + 1;
+    lc.stunTurns = 0;
+    const cast = (b as unknown as { cast(u: Unit, s: unknown, c: { x: number; y: number }, x: boolean): void }).cast.bind(b);
+    (b as unknown as { phase: string }).phase = 'enemy';
+    for (let i = 0; i < 20 && !lc.stunTurns; i++) cast(sb, shao, { x: lc.x, y: lc.y }, false);
+    expect(lc.stunTurns).toBe(2);
+    // 我方打敌人：敌人本回合还没动，照记 1
+    (b as unknown as { phase: string }).phase = 'player';
+    sb.stunTurns = 0;
+    lc.x = sb.x; lc.y = sb.y + 1;
+    for (let i = 0; i < 20 && !sb.stunTurns; i++) cast(lc, { ...shao }, { x: sb.x, y: sb.y }, false);
+    expect(sb.stunTurns).toBe(1);
+  });
 });
 
 describe('跳到续篇插关的等级', () => {
