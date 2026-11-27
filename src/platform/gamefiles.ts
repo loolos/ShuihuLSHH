@@ -99,4 +99,14 @@ export class GameFiles {
     }));
     return bytes;
   }
+  /** 已解码图像一共占多少字节（每像素 1 字节） */
+  imageBytes(): number {
+    let n = 0;
+    for (const img of this.images.values()) n += img.pixels.length;
+    return n;
+  }
+  /** 丢掉已解码的图像（keep 返回 true 的留下），释放内存；以后用到时 ensure 会从浏览器缓存重新读出 */
+  forgetImages(keep: (path: string) => boolean): void {
+    for (const p of [...this.images.keys()]) if (!keep(p)) this.images.delete(p);
+  }
 }

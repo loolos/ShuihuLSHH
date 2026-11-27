@@ -14,9 +14,41 @@ export const ACTION = { walk: 0, hurt: 1, defend: 2, firstSkill: 3 } as const;
 export const FRAME_MS = 120;
 export { ACTION_FRAME_MS, EFFECT_FRAME_MS };
 
+/** 本文件建的纹理、动画（换关时 releaseSprites 一起删掉） */
+const madeTextures = new Set<string>();
+const madeAnims = new Set<string>();
+
 export function textureFor(scene: Phaser.Scene, key: string, make: () => HTMLCanvasElement): string {
-  if (!scene.textures.exists(key)) scene.textures.addCanvas(key, make());
+  // 用普通纹理，不用 addCanvas：addCanvas 建的 CanvasTexture 会 getImageData 再存一份像素（每张图多占一倍内存）。
+  // 这些画布画好后不再改，用不着 CanvasTexture。
+  if (!scene.textures.exists(key)) {
+    scene.textures.addImage(key, make() as unknown as HTMLImageElement);
+    madeTextures.add(key);
+  }
   return key;
+}
+
+function createAnim(scene: Phaser.Scene, config: Phaser.Types.Animations.Animation & { key: string }) {
+  scene.anims.create(config);
+  madeAnims.add(config.key);
+}
+
+/** 建过的纹理大约占多少字节（RGBA） */
+export function spriteBytes(game: Phaser.Game): number {
+  let n = 0;
+  for (const k of madeTextures) for (const s of game.textures.get(k)?.source ?? []) n += s.width * s.height * 4;
+  return n;
+}
+
+/**
+ * 删掉建过的人物、特效纹理和动画，释放内存（画布 + 显存）。只能在没有游戏对象还用着它们时调用（战斗场景已停）；
+ * 之后用到时会按需重新建。不删的话每换一关多占几十 MB，玩久了浏览器会因内存不足把网页重新载入。
+ */
+export function releaseSprites(game: Phaser.Game): void {
+  for (const k of madeAnims) game.anims.remove(k);
+  madeAnims.clear();
+  for (const k of madeTextures) if (game.textures.exists(k)) game.textures.remove(k);
+  madeTextures.clear();
 }
 
 /**
@@ -62,7 +94,7 @@ export function animFor(scene: Phaser.Scene, assets: Assets, cls: number, action
       f.pivotY = fr.anchorY / Math.max(1, fr.height);
       frames.push({ key: tk });
     }
-    scene.anims.create({ key, frames, frameRate: 1000 / (repeat === 0 ? ACTION_FRAME_MS : FRAME_MS), repeat });
+    createAnim(scene, { key, frames, frameRate: 1000 / (repeat === 0 ? ACTION_FRAME_MS : FRAME_MS), repeat });
   }
   return key;
 }
@@ -88,7 +120,7 @@ export function effectAnim(scene: Phaser.Scene, assets: Assets, group: number): 
       f.pivotY = fr.anchorY / Math.max(1, fr.height);
       frames.push({ key: tk });
     }
-    scene.anims.create({ key, frames, frameRate: 1000 / EFFECT_FRAME_MS, repeat: 0 });
+    createAnim(scene, { key, frames, frameRate: 1000 / EFFECT_FRAME_MS, repeat: 0 });
   }
   return key;
 }
@@ -105,7 +137,7 @@ export function blazeAnim(scene: Phaser.Scene, assets: Assets, group: number, fr
     const base = effectAnim(scene, assets, group);
     if (!base) return null;
     const frames = scene.anims.get(base)!.frames.slice(from, to + 1).map((f) => ({ key: f.textureKey }));
-    scene.anims.create({ key, frames, frameRate: 1000 / (EFFECT_FRAME_MS * 1.6), repeat: -1, yoyo: true });
+    createAnim(scene, { key, frames, frameRate: 1000 / (EFFECT_FRAME_MS * 1.6), repeat: -1, yoyo: true });
   }
   return key;
 }
@@ -224,7 +256,7 @@ function packAnim(scene: Phaser.Scene, pack: PackAssets, cls: number, action: nu
       frames.push({ key: tk });
     }
     const sequence = Array.from({ length: strip.cycles ?? 1 }, () => frames).flat();
-    scene.anims.create({ key, frames: sequence, frameRate: 1000 / strip.ms, repeat });
+    createAnim(scene, { key, frames: sequence, frameRate: 1000 / strip.ms, repeat });
   }
   return key;
 }

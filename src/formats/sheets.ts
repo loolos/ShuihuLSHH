@@ -25,6 +25,8 @@ export interface SpriteLib {
   /** 动作组 → 帧范围 */
   actions: LibGroup[];
   frame(i: number): Frame;
+  /** 丢掉切好的帧（换关释放内存时用；之后取帧要先重新载入所在的图） */
+  clear(): void;
   /** 动作组 g 的帧在哪张图里 */
   sheetOf(group: number): string;
 }
@@ -64,6 +66,7 @@ function sheetLib(actions: LibGroup[], classes: LibGroup[], place: (g: number) =
     classes,
     actions,
     sheetOf: (g) => place(g).path,
+    clear: () => cache.clear(),
     frame(i) {
       let f = cache.get(i);
       if (f) return f;
@@ -82,6 +85,8 @@ function sheetLib(actions: LibGroup[], classes: LibGroup[], place: (g: number) =
 export interface TileLib {
   count: number;
   frame(i: number): Frame;
+  /** 丢掉切好的帧（同 SpriteLib.clear） */
+  clear(): void;
   /** 第 i 块在哪张图里 */
   sheetOf(i: number): string;
 }
@@ -93,6 +98,7 @@ export function tileLib(kind: string, list: number[][], image: ImageGetter): Til
   return {
     count: list.length,
     sheetOf,
+    clear: () => cache.clear(),
     frame(i) {
       let f = cache.get(i);
       if (f) return f;
@@ -111,6 +117,7 @@ export function picLib(kind: string, list: Cell[], image: ImageGetter): TileLib 
   return {
     count: list.length,
     sheetOf,
+    clear: () => cache.clear(),
     frame(i) {
       let f = cache.get(i);
       if (f) return f;
