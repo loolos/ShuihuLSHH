@@ -66,6 +66,7 @@ const sameCell = (a: Cell, b: Cell) => a.x === b.x && a.y === b.y;
 
 type AppearEvent = Extract<BattleEvent, { type: 'appear' }>;
 type LeaveEvent = Extract<BattleEvent, { type: 'leave' }>;
+type GustEvent = Extract<BattleEvent, { type: 'gust' }>;
 /** 剧情登场淡入、退场淡出的时长（ms）。原来分别是 400 / 500，而且一个接一个播；现在缩短，连着的几个人同时播【新】 */
 const APPEAR_MS = 250;
 const LEAVE_MS = 250;
@@ -1354,6 +1355,13 @@ export class BattleScene extends Phaser.Scene {
             await (e.type === 'appear' ? this.appearAll(group as AppearEvent[]) : this.leaveAll(group as LeaveEvent[]));
             continue;
           }
+        }
+        // 连着的几阵妖风（高廉点人作法）一起刮【新】（负责人 2026-11-27：挨个来动画太慢）
+        if (!this.fast && !this.ui.skipping && e.type === 'gust' && events[i + 1]?.type === 'gust') {
+          const group: GustEvent[] = [e];
+          while (events[i + 1]?.type === 'gust') group.push(events[++i] as GustEvent);
+          await Promise.all(group.map((g) => this.gust(g.x, g.y, g.radius, g.style)));
+          continue;
         }
         // 几个人连着的状态变化（收手、归顺、绑缚、增减益、群体回复、一起倒下、剧本里一起走位 / 一起倒地……）同时播放【新】
         //（负责人 2026-11-20：一个个挨着显示太拖沓）
