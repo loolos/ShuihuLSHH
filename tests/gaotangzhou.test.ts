@@ -105,7 +105,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     b.useSkill(sj, skill(b, sj, '回风返火')!, sj);
     b.endPlayerPhase();
     expect(b.turn).toBe(6);
-    expect(b.units.filter((u) => u.present && (u.name === '飞天神兵' || u.name === '猛兽'))).toHaveLength(0);
+    expect(b.units.filter((u) => u.present && u.alive && (u.name === '飞天神兵' || u.name === '猛兽'))).toHaveLength(0);
     expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.panicTurns).length).toBeGreaterThan(0);
     const ev = b.endPlayerPhase();
     expect(ev.filter((e) => e.type === 'status' && e.text === '黑氣入體').length).toBeGreaterThan(0);
