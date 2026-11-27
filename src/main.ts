@@ -26,7 +26,7 @@ import { insertTownName, prepareInsertTown, insertTownIntro, shopTierOf } from '
 import { insertTavern } from './packs/tavern.ts';
 import { FEAST_PLACES, feastFor } from './rules/feast.ts';
 import { compileStage, stageClasses, stageKind, stageSealTiles, type PackRuntime } from './packs/build.ts';
-import { royalePool, royaleStage } from './packs/royale.ts';
+import { royaleDefaultPlayers, royalePool, royaleSizes, royaleStage } from './packs/royale.ts';
 import { levelKit } from './rules/equipment.ts';
 import { computeStats } from './rules/unit.ts';
 import { BAG_SLOTS } from './rules/data.ts';
@@ -79,6 +79,23 @@ function writeSave(c: CampaignState) {
 
 /** 好汉聚义上次选的好汉（职业号） */
 const ROYALE_PICK_KEY = 'shuihu.juyi.pick';
+/** 好汉聚义上次选的参赛人数 */
+const ROYALE_PLAYERS_KEY = 'shuihu.juyi.players';
+function loadRoyalePlayers(): number | undefined {
+  try {
+    const v = localStorage.getItem(ROYALE_PLAYERS_KEY);
+    return v === null ? undefined : Number(v);
+  } catch {
+    return undefined;
+  }
+}
+function saveRoyalePlayers(n: number) {
+  try {
+    localStorage.setItem(ROYALE_PLAYERS_KEY, String(n));
+  } catch {
+    /* 隐私模式 */
+  }
+}
 function loadRoyalePick(): number | undefined {
   try {
     const v = localStorage.getItem(ROYALE_PICK_KEY);
@@ -460,11 +477,12 @@ function startGame(assets: Assets) {
       // 好汉聚义（§15.31）：先选好汉，再随机对手、摆好开局（预载要知道有哪些职业）
       if (stage.royale) {
         setupEl.hidden = true;
-        const pick = await ui.pickHero(royaleCards(rt, assets.files, assets.tr), loadRoyalePick());
+        const { classId: pick, players } = await ui.pickHero(royaleCards(rt, assets.files, assets.tr), loadRoyalePick(), { options: royaleSizes(stage), preset: loadRoyalePlayers() ?? royaleDefaultPlayers(stage) });
         if (ticket !== loading) return;
         saveRoyalePick(pick);
+        saveRoyalePlayers(players);
         setupEl.hidden = false;
-        stage = royaleStage(rt, stage, assets.files, { pick, seed, text: assets.tr });
+        stage = royaleStage(rt, stage, assets.files, { pick, players, seed, text: assets.tr });
       }
       const st = stage;
       const classes = stageClasses(rt, stage);

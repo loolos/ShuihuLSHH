@@ -6,7 +6,7 @@ import type { Cell } from './board.ts';
 import type { Battle } from './battle.ts';
 import { forcedExtra } from './battle.ts';
 import { alertRadius, bestAttack, healSkill, withCharge, type AiPlan } from './ai.ts';
-import { freeBagSlot, isHealing, itemOf } from './data.ts';
+import { freeBagSlot, isHealing, itemBuffs, itemOf } from './data.ts';
 import { inZone, NPC_TEAM, type Zone } from './royale.ts';
 import { dist, type Unit } from './unit.ts';
 
@@ -36,6 +36,30 @@ export function royaleHealSlot(b: Battle, u: Unit): number {
     if (score > bestScore) { bestScore = score; best = k; }
   });
   return best;
+}
+
+/** 气低于这个比例就吃回气的药（包子） */
+const QI_BELOW = 0.35;
+/** 对手在这么多步以内就先喝加状态的药酒 */
+const BOOST_NEAR = 8;
+
+/**
+ * 回体以外的药（打倒好汉搜出来的）【新】：气不够就吃回气的；附近有对手、身上又没有这种增益，就喝加状态的药酒。
+ * 跟吃回体药一样不算行动；一回合最多再吃一样。
+ */
+export function royaleBoostSlot(b: Battle, u: Unit): number {
+  if (!b.royale || !u.alive || !u.present || b.spectators.has(u.uid) || u.team === NPC_TEAM) return -1;
+  let qi = -1, boost = -1;
+  const foeNear = () => b.units.some((v) => v !== u && v.alive && v.present && v.team !== undefined && v.team !== u.team && dist(u, v) <= BOOST_NEAR);
+  u.slots.forEach((id, k) => {
+    const it = itemOf(b.data, id);
+    if (k < 3 || !it || it.healHp) return;
+    if (it.healMp && qi < 0 && u.mp < u.stats.maxMp * QI_BELOW) qi = k;
+    const buffs = itemBuffs(it).filter((x) => x.value > 0);
+    if (buffs.length && boost < 0 && !buffs.every((x) => u.buffs.some((y) => y.stat === x.stat && y.value >= x.value))) boost = k;
+  });
+  if (qi >= 0) return qi;
+  return boost >= 0 && foeNear() ? boost : -1;
 }
 
 const hasHeal = (b: Battle, u: Unit) => u.slots.some((id, k) => k >= 3 && isHealing(itemOf(b.data, id)) && !!itemOf(b.data, id)!.healHp);

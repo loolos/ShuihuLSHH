@@ -17,7 +17,7 @@ import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
 import { firstZone, inZone, mainArea, nextZone, openCells, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
-import { planRoyale, royaleHealSlot } from './royale-ai.ts';
+import { planRoyale, royaleBoostSlot, royaleHealSlot } from './royale-ai.ts';
 import { relativeEnemyLevel, type EnemyRank, enemyFloor, ENEMY_LEVEL } from './enemy-level.ts';
 import type { StageRules } from '../formats/stage-json.ts';
 import {
@@ -2145,6 +2145,8 @@ export class Battle {
     if (this.royale) {
       const slot = royaleHealSlot(this, u);
       if (slot >= 0) this.applyItem(u, slot);
+      const boost = royaleBoostSlot(this, u);
+      if (boost >= 0) this.applyItem(u, boost);
     }
     const plan = this.royale ? planRoyale(this, u) : planAi(this, u);
     if (plan.healSlot !== undefined) {
@@ -3522,26 +3524,32 @@ export class Battle {
     }
     if (t.team === NPC_TEAM) {
       const drops = this.royaleRules!.npcs.drops;
-      if (!drops.length) return;
-      const item = drops[this.rng.int(drops.length)];
-      const name = this.tr(itemOf(this.data, item)?.name ?? '');
-      const slot = by && by.alive && by.team !== NPC_TEAM ? freeBagSlot(by.slots) : -1;
-      if (by && slot >= 0) {
-        by.slots[slot] = item;
-        by.forge[slot] = 0;
-        this.emit({ type: 'message', text: `${by.name}从${t.name}身上搜出了${name}。` });
-        return;
-      }
-      const taken = new Set([...this.active().map((u) => key(u.x, u.y)), ...this.items.map((g) => key(g.x, g.y))]);
-      const c = this.board.nearestFree(t.x, t.y, taken);
-      if (!c) return;
-      this.items.push({ x: c.x, y: c.y, item, hidden: false });
-      this.emit({ type: 'chest', x: c.x, y: c.y, item });
-      this.emit({ type: 'message', text: `${t.name}掉下了${name}。` });
+      if (drops.length) this.royaleLoot(t, by, drops[this.rng.int(drops.length)]);
       return;
     }
     st.out.push(t.uid);
     this.emit({ type: 'message', text: `${t.name}出局${by ? `（被${by.name}打倒）` : ''}，还剩 ${this.royaleHeroes().length} 位好汉。` });
+    // 打倒好汉：有机会搜出药、药酒（毒死的不掉）
+    const hd = this.royaleRules!.heroDrops;
+    if (by && by !== t && hd?.items.length && this.rng.next() < hd.chance) this.royaleLoot(t, by, hd.items[this.rng.int(hd.items.length)]);
+  }
+
+  /** 战利品：打倒 t 的好汉包里有空就直接拿到，否则落在 t 旁边的地上成宝箱 */
+  private royaleLoot(t: Unit, by: Unit | null, item: number) {
+    const name = this.tr(itemOf(this.data, item)?.name ?? '');
+    const slot = by && by.alive && by.team !== NPC_TEAM ? freeBagSlot(by.slots) : -1;
+    if (by && slot >= 0) {
+      by.slots[slot] = item;
+      by.forge[slot] = 0;
+      this.emit({ type: 'message', text: `${by.name}从${t.name}身上搜出了${name}。` });
+      return;
+    }
+    const taken = new Set([...this.active().map((u) => key(u.x, u.y)), ...this.items.map((g) => key(g.x, g.y))]);
+    const c = this.board.nearestFree(t.x, t.y, taken);
+    if (!c) return;
+    this.items.push({ x: c.x, y: c.y, item, hidden: false });
+    this.emit({ type: 'chest', x: c.x, y: c.y, item });
+    this.emit({ type: 'message', text: `${t.name}掉下了${name}。` });
   }
 
   private killText(u: Unit) {

@@ -4,7 +4,8 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle } from '../src/rules/battle.ts';
 import { compileStage } from '../src/packs/build.ts';
-import { royalePool } from '../src/packs/royale.ts';
+import { royalePool, royaleSizes } from '../src/packs/royale.ts';
+import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { loadGameData } from '../src/rules/load.ts';
 import { firstZone, inZone, mainArea, nextZone, NPC_TEAM } from '../src/rules/royale.ts';
 import { Rng } from '../src/rules/rng.ts';
@@ -28,6 +29,7 @@ describe('毒圈几何', () => {
   });
 });
 
+useDiskCustomMaps();
 const has = fs.existsSync(path.join(DATA, 'ShuiHu.exe'));
 describe.skipIf(!has)('好汉聚义', () => {
   const files = new NodeFiles(DATA);
@@ -113,6 +115,43 @@ describe.skipIf(!has)('好汉聚义', () => {
     const foe = b.royaleHeroes().find((u) => u !== me)!;
     (b as unknown as { kill(u: unknown, t: unknown): void }).kill(me, foe);
     expect(b.royaleKills(me)).toEqual({ heroes: 1, npcs: 1 });
+  });
+
+  it('打倒好汉：有一半机会搜出药或药酒，直接进打倒的人包里', () => {
+    const hd = stage.royale!.heroDrops!;
+    expect(hd.chance).toBe(0.5);
+    let got = 0;
+    for (let seed = 1; seed <= 40; seed++) {
+      const b = make(seed);
+      b.begin();
+      const me = b.units.find((u) => u.side === 'player')!;
+      const foe = b.royaleHeroes().find((u) => u !== me)!;
+      (b as unknown as { kill(u: unknown, t: unknown): void }).kill(me, foe);
+      const bag = me.slots.slice(3).filter(Boolean);
+      expect(bag.length).toBeLessThanOrEqual(1);
+      if (bag.length) {
+        expect(hd.items).toContain(bag[0]);
+        got++;
+      }
+    }
+    expect(got).toBeGreaterThan(8);
+    expect(got).toBeLessThan(32);
+  });
+
+  it('参赛人数 8/16/32/64：人越多地图越大，人数对得上', () => {
+    expect(royaleSizes(stage)).toEqual([8, 16, 32, 64]);
+    let last = 0;
+    for (const players of [8, 16, 32, 64]) {
+      const b = new Battle(compileStage(rt, stage, files, { seed: 9, royalePlayers: players }));
+      b.begin();
+      const heroes = b.units.filter((u) => u.team !== undefined && u.team !== NPC_TEAM);
+      expect(heroes).toHaveLength(players);
+      expect(new Set(heroes.map((u) => u.classId)).size).toBe(players);
+      expect(new Set(b.units.map((u) => `${u.x},${u.y}`)).size).toBe(b.units.length);
+      const size = b.board.width * b.board.height;
+      expect(size).toBeGreaterThan(last);
+      last = size;
+    }
   });
 
   it('整局对打：AI 会跑圈，最后只剩一位好汉', () => {

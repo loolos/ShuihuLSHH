@@ -219,6 +219,11 @@ code { color: var(--ink); }
 #unit-pick-ok { align-self: center; min-width: 140px; }
 #unit-pick-row { display: flex; justify-content: center; gap: 12px; }
 #unit-pick-random { min-width: 110px; }
+#unit-pick-sizes { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; color: var(--muted); }
+#unit-pick-sizes span { margin-right: 4px; }
+#unit-pick-sizes button { font: inherit; color: var(--ink); background: #1f1912; border: 1px solid #5a4832; border-radius: 6px; padding: 3px 12px; cursor: pointer; }
+#unit-pick-sizes button:hover { border-color: var(--accent); }
+#unit-pick-sizes button.on { border-color: var(--accent); background: #4a3720; color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 #unit-pick-row #unit-pick-ok { min-width: 110px; }
 #unit-pick-ok:disabled { opacity: 0.45; cursor: default; }
 @media (max-width: 640px) {

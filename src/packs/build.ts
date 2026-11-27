@@ -353,9 +353,9 @@ export function stageBoard(files: FileSource, stage: PackStageJson): Board {
   return board;
 }
 
-export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean; /** 好汉聚义：玩家选的好汉（职业号），不填随机 */ royalePick?: number } = {}): StageInput {
+export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileSource, opts: { seed?: number; text?: (s: string) => string; party?: Map<number, Member>; joinLevel?: number; preset?: boolean; /** 好汉聚义：玩家选的好汉（职业号），不填随机 */ royalePick?: number; /** 好汉聚义：参赛人数 */ royalePlayers?: number } = {}): StageInput {
   // 好汉聚义：还没摆好参赛的人就先摆（网页版在载入前已经摆好，免得预载的职业和开打的不一样）
-  if (stage.royale && !stage.units.some((u) => u.team !== undefined)) stage = royaleStage(rt, stage, files, { pick: opts.royalePick, seed: opts.seed, text: opts.text });
+  if (stage.royale && !stage.units.some((u) => u.team !== undefined)) stage = royaleStage(rt, stage, files, { pick: opts.royalePick, players: opts.royalePlayers, seed: opts.seed, text: opts.text });
   const board = stageBoard(files, stage);
   // 选关预设只用于新建试玩，不覆盖正常主线存档；表里的包职业使用稳定key。
   const preset: Record<string,number> = opts.preset ? (entryLevels.levels as Record<string,Record<string,number>>)[`${rt.id}/${stage.id}`] ?? {} : {};

@@ -310,14 +310,45 @@ export class BattleUI {
 
   /**
    * 好汉聚义选将【新】（§15.31）：借选人面板，列出全部可选的好汉（30 级时的属性），点一个再按「出战」；「随机」随便挑一个。
-   * preset：默认选中的（上次选的）。返回选中的职业号。
+   * preset：默认选中的（上次选的）。sizes：可选的参赛人数（§15.31.1，人越多地图越大）和默认选中的人数。
+   * 返回选中的职业号和人数。
    */
-  pickHero(heroes: { classId: number; name: string; hp: number; attack: number; defense: number; move: number; skills: number }[], preset?: number): Promise<number> {
+  pickHero(heroes: { classId: number; name: string; hp: number; attack: number; defense: number; move: number; skills: number }[], preset: number | undefined, sizes: { options: number[]; preset: number }): Promise<{ classId: number; players: number }> {
     let chosen = heroes.some((h) => h.classId === preset) ? preset! : heroes[0].classId;
+    let players = sizes.options.includes(sizes.preset) ? sizes.preset : sizes.options[0];
     const list = $('unit-pick-list');
     const ok = $<HTMLButtonElement>('unit-pick-ok');
     $('unit-pick-title').textContent = '好汉聚义 · 选一位好汉';
-    $('unit-pick-hint').textContent = `共 ${heroes.length} 位出场过的好汉；另外随机 15 位做对手，各自为战，活到最后获胜。`;
+    const hint = () => {
+      $('unit-pick-hint').textContent = `共 ${heroes.length} 位出场过的好汉；另外随机 ${Math.min(players, heroes.length) - 1} 位做对手，各自为战，活到最后获胜。人越多，地图越大。`;
+    };
+    // 参赛人数（一排按钮，放在提示下面）
+    const sizeRow = document.createElement('div');
+    sizeRow.id = 'unit-pick-sizes';
+    const sizeBtns = sizes.options.map((n) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = `${n} 人`;
+      b.dataset.players = String(n);
+      b.onclick = (e) => {
+        e.stopPropagation();
+        players = n;
+        void sound.sfx('m01');
+        refreshSize();
+      };
+      return b;
+    });
+    const refreshSize = () => {
+      for (const b of sizeBtns) b.classList.toggle('on', Number(b.dataset.players) === players);
+      hint();
+    };
+    if (sizes.options.length > 1) {
+      const label = document.createElement('span');
+      label.textContent = '参赛人数';
+      sizeRow.append(label, ...sizeBtns);
+      $('unit-pick-hint').after(sizeRow);
+    }
+    refreshSize();
     const cards = heroes.map((h) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -357,8 +388,9 @@ export class BattleUI {
         $('unit-pick').hidden = true;
         row.before(ok);
         row.remove();
+        sizeRow.remove();
         ok.textContent = '确定';
-        r(id);
+        r({ classId: id, players });
       };
       ok.onclick = (e) => {
         e.stopPropagation();
