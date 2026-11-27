@@ -1,0 +1,645 @@
+{
+ "id": "pijian",
+ "title": "斧劈罗真人",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 300
+ },
+ "map": {
+  "custom": "xuannvmiao"
+ },
+ "bgm": [
+  "infiltrate",
+  "maze"
+ ],
+ "stealth": {
+  "lose": "道童敲起云板，满观道众都惊醒了，松鹤轩的门紧紧闭上……",
+  "flag": "spotted"
+ },
+ "goals": [
+  {
+   "unless": "chopped",
+   "win": "李逵摸到松鹤轩，走到罗真人身边",
+   "lose": [
+    "道童看见李逵，喊起人来（被看见后一回合内没打倒他）",
+    "第 12 回合还没摸到（天亮）"
+   ],
+   "hint": "道童提着灯巡观，正前方有警戒范围（地上黄色）。黑夜里摸着走，李逵移动少 3 格。从背后摸过去，或者绕开走"
+  }
+ ],
+ "units": [
+  {
+   "id": "luo",
+   "class": "luozhenren",
+   "side": "ally",
+   "x": 10,
+   "y": 3,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true,
+   "name": "罗真人"
+  },
+  {
+   "id": "gongsun",
+   "class": 2,
+   "side": "ally",
+   "x": 9,
+   "y": 6,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "spectator": true,
+   "name": "公孙胜"
+  },
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "ally",
+   "x": 10,
+   "y": 7,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "spectator": true
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 11,
+   "y": 7,
+   "level": 30,
+   "facing": 0
+  },
+  {
+   "id": "tong0",
+   "class": "daotong",
+   "side": "ally",
+   "x": 12,
+   "y": 4,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "spectator": true,
+   "hidden": true,
+   "name": "青衣童子"
+  },
+  {
+   "id": "t1",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 7,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     7,
+     11
+    ],
+    [
+     13,
+     11
+    ]
+   ],
+   "watch": 3,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t2",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 13,
+   "y": 14,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     13,
+     14
+    ],
+    [
+     7,
+     14
+    ]
+   ],
+   "watch": 3,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t3",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 2,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     2,
+     12
+    ],
+    [
+     2,
+     6
+    ]
+   ],
+   "watch": 2,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t4",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 18,
+   "y": 5,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     18,
+     5
+    ],
+    [
+     18,
+     12
+    ]
+   ],
+   "watch": 2,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t5",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 10,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     9,
+     8
+    ],
+    [
+     12,
+     8
+    ]
+   ],
+   "watch": 2,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t6",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 15,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "watch": 3,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t7",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 3,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t8",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 17,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "watch": 2,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t9",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 7,
+   "y": 4,
+   "level": 30,
+   "facing": 3,
+   "ai": 13,
+   "patrol": [
+    [
+     7,
+     4
+    ],
+    [
+     7,
+     7
+    ]
+   ],
+   "watch": 3,
+   "levelOffset": -8,
+   "name": "道童"
+  },
+  {
+   "id": "t10",
+   "class": "daotong",
+   "side": "enemy",
+   "x": 13,
+   "y": 6,
+   "level": 30,
+   "facing": 1,
+   "ai": 13,
+   "patrol": [
+    [
+     13,
+     6
+    ],
+    [
+     13,
+     3
+    ]
+   ],
+   "watch": 3,
+   "levelOffset": -8,
+   "name": "道童"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "二仙山 · 紫虚观 · 松鹤轩"
+    ],
+    [
+     "narrate",
+     "次日，公孙胜引着戴宗、李逵上二仙山来。紫虚观里，童子报了，请入松鹤轩。罗真人坐在云床上。"
+    ],
+    [
+     "say",
+     "daizong",
+     "（下拜）弟子戴宗，从山东梁山泊来，特求真人放清道人下山，去高唐州救宋公明哥哥一行人。"
+    ],
+    [
+     "say",
+     "luo",
+     "吾弟子既脱火坑，学炼长生，何得再慕此境？"
+    ],
+    [
+     "say",
+     "daizong",
+     "（再拜）万望真人慈悲，只借一遭。"
+    ],
+    [
+     "say",
+     "luo",
+     "此非出家人闲管之事。汝等自下山去商议。"
+    ],
+    [
+     "narrate",
+     "三个只得下山。公孙胜留二人在家里歇。"
+    ],
+    [
+     "leave",
+     "daizong"
+    ],
+    [
+     "leave",
+     "gongsun"
+    ],
+    [
+     "narrate",
+     "当夜戴宗睡熟了。李逵翻来覆去睡不着，心里只想："
+    ],
+    [
+     "say",
+     "likui",
+     "（自言自语）这老贼道好不晓事！哥哥在高唐州等着救命，他倒说甚么闲管不闲管。俺今夜摸上山去，一斧砍了他，看他还拦谁！"
+    ],
+    [
+     "move",
+     "likui",
+     1,
+     18,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "title",
+     "紫虚观 · 三更"
+    ],
+    [
+     "narrate",
+     "李逵摸上山来，翻过观墙，悄悄落在西边侧门里。观里还有几个小道童提着灯来回巡看。"
+    ],
+    [
+     "buff",
+     "likui",
+     "move",
+     {
+      "add": -3,
+      "turns": 20
+     }
+    ],
+    [
+     "face",
+     "likui",
+     3
+    ],
+    [
+     "focus",
+     "likui"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "luo",
+    "by": "likui"
+   },
+   "unless": "chopped",
+   "do": [
+    [
+     "stealthEnd"
+    ],
+    [
+     "narrate",
+     "李逵从窗眼里张时，见罗真人独自坐在云床上，面前桌上烧着一炉香，点着两枝画烛，口里念诵玉枢宝经。"
+    ],
+    [
+     "face",
+     "likui",
+     "luo"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "luo"
+    ],
+    [
+     "narrate",
+     "李逵推开门，抢将入去，一斧劈下。罗真人倒在云床上，流出来的却是白血。"
+    ],
+    [
+     "act",
+     "luo",
+     "hurt"
+    ],
+    [
+     "say",
+     "likui",
+     "（看了笑）眼见得这贼道是童男子身，颐养得元阳真气，不曾走泄，正没半点的红！"
+    ],
+    [
+     "appear",
+     "tong0"
+    ],
+    [
+     "say",
+     "tong0",
+     "（青衣童子拦住）你杀了我本师，待走哪里去！"
+    ],
+    [
+     "face",
+     "likui",
+     "tong0"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "tong0"
+    ],
+    [
+     "narrate",
+     "李逵手起一斧，把那童子也砍翻了。"
+    ],
+    [
+     "leave",
+     "tong0"
+    ],
+    [
+     "leave",
+     "luo"
+    ],
+    [
+     "say",
+     "likui",
+     "这回没人拦着哥哥下山了！"
+    ],
+    [
+     "narrate",
+     "李逵溜出观门，飞奔下山，回到公孙胜家里，轻轻闩上门，倒头便睡，一声也不言语。"
+    ],
+    [
+     "flag",
+     "chopped"
+    ],
+    [
+     "title",
+     "次日 · 紫虚观"
+    ],
+    [
+     "move",
+     "likui",
+     10,
+     18,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "appear",
+     "daizong",
+     {
+      "near": "likui"
+     }
+    ],
+    [
+     "appear",
+     "gongsun",
+     {
+      "near": "likui"
+     }
+    ],
+    [
+     "narrate",
+     "次日一早，公孙胜又引着二人上山。李逵心里暗笑：「那贼道已吃俺砍了，看他今日怎地见人。」"
+    ],
+    [
+     "appear",
+     "tong0"
+    ],
+    [
+     "say",
+     "tong0",
+     "真人在云床上养性。"
+    ],
+    [
+     "appear",
+     "luo"
+    ],
+    [
+     "move",
+     "likui",
+     10,
+     7,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "daizong",
+     9,
+     7,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "gongsun",
+     11,
+     7,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "likui",
+     "luo"
+    ],
+    [
+     "narrate",
+     "李逵抬头看时，罗真人好端端坐在云床上。李逵吃了一惊，把舌头伸将出来，半日缩不入去。"
+    ],
+    [
+     "say",
+     "luo",
+     "汝等三人又来何干？"
+    ],
+    [
+     "say",
+     "daizong",
+     "特来哀告我师，慈悲救取众人免难。"
+    ],
+    [
+     "face",
+     "luo",
+     "likui"
+    ],
+    [
+     "say",
+     "luo",
+     "这黑大汉是谁？昨夜越墙而过，入来把斧劈我。虽然只是砍了我两个葫芦，其心不善。"
+    ],
+    [
+     "say",
+     "likui",
+     "（腿软）俺……俺……"
+    ],
+    [
+     "say",
+     "luo",
+     "贫道与你三人一个耍子。"
+    ],
+    [
+     "narrate",
+     "罗真人取出三个手帕：一个红的铺在公孙胜脚下，一个青的铺在戴宗脚下，一个白的叫李逵踏上。罗真人把袖一拂，喝声「起」，那红、青两个手帕化作两片云彩，载着公孙胜、戴宗，离地二三十丈，又轻轻落下。"
+    ],
+    [
+     "say",
+     "likui",
+     "（踏在白手帕上）俺也要飞一遭！"
+    ],
+    [
+     "say",
+     "luo",
+     "去！"
+    ],
+    [
+     "gust",
+     {
+      "style": "wind",
+      "x": 10,
+      "y": 7,
+      "radius": 0,
+      "turns": 0
+     }
+    ],
+    [
+     "narrate",
+     "那白手帕化作一片白云，一阵恶风，把李逵直卷上云端，只听得他在半天里叫：「哎呀！放俺下来！」"
+    ],
+    [
+     "leave",
+     "likui"
+    ],
+    [
+     "say",
+     "daizong",
+     "（慌忙拜倒）真人，这人是粗鲁，饶他则个！"
+    ],
+    [
+     "say",
+     "luo",
+     "此人罪业深重，叫他去吃些苦头。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "李逵倒下了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "unless": "chopped",
+   "do": [
+    [
+     "defeat",
+     "天色发白，观里道众都起来做早课了，李逵只得空手溜下山去。"
+    ]
+   ]
+  }
+ ]
+}

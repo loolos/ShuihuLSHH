@@ -147,6 +147,11 @@
     "mainline/yintianxi": {"chaijin":47,"likui":47},
     "mainline/baoxin": {"0":55,"likui":48},
     "mainline/shenbing": {"0":55,"10":43,"11":43,"sj-fugitive":49,"qinming":44,"zhutong":37,"leiheng":37},
+    "mainline/jiama": {"daizong":39,"likui":48},
+    "mainline/erxianshan": {"daizong":41,"likui":48},
+    "mainline/pijian": {"likui":48},
+    "mainline/jizhoufu": {"likui":49},
+    "mainline/chuanfa": {"daizong":48,"likui":51},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":21,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }

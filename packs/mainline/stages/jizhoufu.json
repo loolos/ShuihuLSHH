@@ -1,0 +1,644 @@
+{
+ "id": "jizhoufu",
+ "title": "蓟州府吃苦",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 400
+ },
+ "map": {
+  "custom": "guanfu"
+ },
+ "bgm": [
+  "tense",
+  "battle2"
+ ],
+ "goals": [
+  {
+   "win": "在府里撑过第 7 回合",
+   "lose": "李逵倒下",
+   "hint": "公人的「狗血淋头」能把人泼得一回合动不了，别让一伙人围住"
+  }
+ ],
+ "units": [
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 10,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "hidden": true
+  },
+  {
+   "id": "ma",
+   "class": "mazhifu",
+   "side": "enemy",
+   "x": 17,
+   "y": 5,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true,
+   "enemyRank": "leader",
+   "name": "蓟州知府马士弘"
+  },
+  {
+   "id": "h0",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 13,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "h1",
+   "class": 32,
+   "side": "enemy",
+   "x": 14,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "h2",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 15,
+   "y": 12,
+   "level": 30,
+   "facing": 1,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "h3",
+   "class": 34,
+   "side": "enemy",
+   "x": 14,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "弓手"
+  },
+  {
+   "id": "h4",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 13,
+   "level": 30,
+   "facing": 1,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "弓手"
+  },
+  {
+   "id": "g0",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "g1",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 12,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "g2",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "g3",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 10,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "g4",
+   "class": 33,
+   "side": "enemy",
+   "x": 12,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "g5",
+   "class": 38,
+   "side": "enemy",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "leader",
+   "name": "节级"
+  },
+  {
+   "id": "w0",
+   "class": 32,
+   "side": "enemy",
+   "x": 3,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "w1",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 3,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "w2",
+   "class": "gouxue",
+   "side": "enemy",
+   "x": 4,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "w3",
+   "class": 34,
+   "side": "enemy",
+   "x": 2,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "弓手"
+  },
+  {
+   "id": "w4",
+   "class": 32,
+   "side": "enemy",
+   "x": 4,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "hidden": true,
+   "levelOffset": -8,
+   "enemyRank": "troop",
+   "name": "公人"
+  },
+  {
+   "id": "jieji",
+   "class": 38,
+   "side": "enemy",
+   "x": 12,
+   "y": 18,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "spectator": true,
+   "name": "牢里节级"
+  },
+  {
+   "id": "lishi",
+   "class": "lishi",
+   "side": "ally",
+   "x": 13,
+   "y": 18,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "hidden": true,
+   "spectator": true,
+   "name": "黄巾力士"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州府 · 厅前"
+    ],
+    [
+     "narrate",
+     "却说蓟州府尹马士弘正坐厅，只听得半天里一声响，一个黑大汉从云端里倒撞下来，跌在厅屋上，骨碌碌滚下檐来。"
+    ],
+    [
+     "appear",
+     "likui"
+    ],
+    [
+     "say",
+     "likui",
+     "（爬起来，揉着脑袋）哎哟……这是甚么所在？"
+    ],
+    [
+     "say",
+     "ma",
+     "（大惊）必是个妖人！左右，与我拿下！快取狗血、尿粪来，泼这厮一身，破了他的妖法！"
+    ],
+    [
+     "say",
+     "likui",
+     "俺是罗真人的伴当！你们哪个敢动俺！"
+    ],
+    [
+     "say",
+     "ma",
+     "罗真人是得道的神仙，岂有你这等伴当！拿下！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "do": [
+    [
+     "narrate",
+     "府门外的公人听得厅上叫拿妖人，也都拥了进来。"
+    ],
+    [
+     "appear",
+     "g0"
+    ],
+    [
+     "appear",
+     "g1"
+    ],
+    [
+     "appear",
+     "g2"
+    ],
+    [
+     "appear",
+     "g3"
+    ],
+    [
+     "appear",
+     "g4"
+    ],
+    [
+     "appear",
+     "g5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "do": [
+    [
+     "narrate",
+     "西厢下又转出一伙公人，提着狗血桶。"
+    ],
+    [
+     "appear",
+     "w0"
+    ],
+    [
+     "appear",
+     "w1"
+    ],
+    [
+     "appear",
+     "w2"
+    ],
+    [
+     "appear",
+     "w3"
+    ],
+    [
+     "appear",
+     "w4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "李逵被打倒在厅前……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "do": [
+    [
+     "flag",
+     "caught"
+    ],
+    [
+     "narrate",
+     "李逵正杀得性起，背后一桶狗血尿粪劈头淋下，糊得满头满脸，眼睛也睁不开。众公人一拥而上，把他按倒在地。"
+    ],
+    [
+     "bind",
+     "likui"
+    ],
+    [
+     "standDown",
+     "h0",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "h4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g0",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "g5",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "w0",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "w1",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "w2",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "w3",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "standDown",
+     "w4",
+     {
+      "leave": true,
+      "quiet": true
+     }
+    ],
+    [
+     "say",
+     "ma",
+     "你这妖人，从哪里来？叫甚么名字？"
+    ],
+    [
+     "say",
+     "likui",
+     "（被打得受不过）……俺、俺叫李二……"
+    ],
+    [
+     "say",
+     "ma",
+     "原来是妖人李二！打！钉了大枷，押下死囚牢里去！"
+    ],
+    [
+     "title",
+     "蓟州府 · 大牢"
+    ],
+    [
+     "move",
+     "likui",
+     12,
+     17,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "appear",
+     "jieji"
+    ],
+    [
+     "face",
+     "jieji",
+     "likui"
+    ],
+    [
+     "face",
+     "likui",
+     "jieji"
+    ],
+    [
+     "say",
+     "likui",
+     "（瞪眼）你们晓得俺是谁？俺是罗真人亲随的直日神将！一时有些过失，罚俺下来吃些苦，早晚便回去。你们好生看承俺，万事皆休；若不与俺酒肉吃，教你们众人全家都死！"
+    ],
+    [
+     "say",
+     "jieji",
+     "（吓得变了色）神将息怒！小人这就去买酒肉来！"
+    ],
+    [
+     "narrate",
+     "那节级和牢里众人都怕他，买些酒肉来请他吃，又替他烧汤洗了身子，换了干净衣裳。"
+    ],
+    [
+     "say",
+     "likui",
+     "（大口嚼着牛肉）嘿！这回吃牛肉，戴宗哥哥的甲马可缚不着俺了。"
+    ],
+    [
+     "wait",
+     600
+    ],
+    [
+     "appear",
+     "lishi"
+    ],
+    [
+     "face",
+     "lishi",
+     "likui"
+    ],
+    [
+     "narrate",
+     "忽然一阵风过，牢里现出一个黄巾力士，身长一丈，一把揪住李逵的枷。"
+    ],
+    [
+     "say",
+     "lishi",
+     "奉罗真人法旨，取你回去！"
+    ],
+    [
+     "say",
+     "likui",
+     "（嘴里还衔着牛肉）且慢！且慢！俺这块肉还没吃完——"
+    ],
+    [
+     "leave",
+     "lishi"
+    ],
+    [
+     "leave",
+     "likui"
+    ],
+    [
+     "say",
+     "jieji",
+     "（瘫在地上）真、真个是神将……"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}
