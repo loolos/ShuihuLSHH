@@ -17,7 +17,7 @@
    "unless": "freed",
    "win": "打退岭下的毛贼",
    "lose": "李逵或戴宗倒下",
-   "hint": "李逵腿上缚了甲马停不住脚，由不得你指挥。戴宗赶到他身边两格以内，就能替他收了神行法"
+   "hint": "李逵腿上缚了甲马停不住脚，由不得你指挥，每回合开头都会跑到别处去。戴宗赶到他身边两格以内，就能替他收了神行法"
   },
   {
    "if": "freed",
@@ -42,11 +42,7 @@
    "x": 10,
    "y": 13,
    "level": 30,
-   "facing": 3,
-   "point": [
-    3,
-    27
-   ]
+   "facing": 3
   },
   {
    "id": "xiaoer",
@@ -116,17 +112,6 @@
    "name": "毛贼"
   },
   {
-   "id": "ma5",
-   "class": 45,
-   "side": "enemy",
-   "x": 17,
-   "y": 20,
-   "level": 30,
-   "facing": 0,
-   "levelOffset": -5,
-   "name": "毛贼"
-  },
-  {
    "id": "mb0",
    "class": 44,
    "side": "enemy",
@@ -182,17 +167,6 @@
    "name": "毛贼"
   },
   {
-   "id": "mb5",
-   "class": 45,
-   "side": "enemy",
-   "x": 23,
-   "y": 26,
-   "level": 30,
-   "facing": 0,
-   "levelOffset": -5,
-   "name": "毛贼"
-  },
-  {
    "id": "touling",
    "class": 65,
    "side": "enemy",
@@ -200,7 +174,8 @@
    "y": 23,
    "level": 30,
    "facing": 0,
-   "levelOffset": -3,
+   "levelOffset": 2,
+   "hpMultiplier": 1.5,
    "enemyRank": "leader",
    "name": "剪径头领"
   }
@@ -287,22 +262,13 @@
     [
      "setAi",
      "likui",
-     4
-    ],
-    [
-     "buff",
-     "likui",
-     "move",
-     {
-      "add": 5,
-      "turns": 4
-     }
+     8
     ],
     [
      "move",
      "likui",
-     8,
-     18,
+     3,
+     27,
      {
       "nearest": true
      }
@@ -314,8 +280,13 @@
     ],
     [
      "say",
+     "likui",
+     "（远远地）哥哥——！救命——！"
+    ],
+    [
+     "say",
      "daizong",
-     "（不慌不忙，在后面慢慢跟着）你只管走，我随后便来。"
+     "（不慌不忙）你只管走，我随后便来。"
     ],
     [
      "narrate",
@@ -416,7 +387,99 @@
   },
   {
    "on": {
+    "turn": 2
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "move",
+     "likui",
+     1,
+     18,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "爷爷！这腿又往北跑了！俺管不住它！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "move",
+     "likui",
+     2,
+     2,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "俺肚里饥了……两条腿倒比肚子还急！"
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 4
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "move",
+     "likui",
+     20,
+     1,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥！俺看见你了！你倒是快些赶上来啊！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "move",
+     "likui",
+     30,
+     13,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "（声音都哑了）爷爷……且住一住……"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
    },
    "if": "run",
    "unless": "freed",
