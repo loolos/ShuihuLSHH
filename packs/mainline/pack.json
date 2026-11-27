@@ -951,7 +951,7 @@
         },
         {
           "id": "lh-duanjiang",
-          "name": "横江断流",
+          "name": "朴刀卷雷",
           "from": 175,
           "anim": 0,
           "type": 13,
@@ -963,7 +963,7 @@
         },
         {
           "id": "lh-duanjiang-2",
-          "name": "横江断流LV2",
+          "name": "朴刀卷雷LV2",
           "from": 175,
           "anim": 0,
           "type": 12,
@@ -978,7 +978,7 @@
         },
         {
           "id": "lh-duanjiang-3",
-          "name": "横江断流LV3",
+          "name": "朴刀卷雷LV3",
           "from": 175,
           "anim": 0,
           "type": 12,

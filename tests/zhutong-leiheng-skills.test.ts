@@ -13,7 +13,7 @@ describe.skipIf(!available)('朱仝、雷横技能', () => {
   const main = loadPackFromDisk('mainline');
   const PLAN: Record<string, { single: string[]; aoe: string[]; charge: string }> = {
     zhutong: { single: ['美髯拖刀', '美髯拖刀LV2', '美髯拖刀LV3'], aoe: ['长髯偃月', '长髯偃月LV2', '长髯偃月LV3', '长髯偃月LV4', '千里流光', '千里流光LV2'], charge: '浩然养气' },
-    leiheng: { single: ['风雷振翮', '风雷振翮LV2', '风雷振翮LV3', '怒枷击'], aoe: ['横江断流', '横江断流LV2', '横江断流LV3', '插翅飞涧', '插翅飞涧LV2', '插翅飞涧LV3'], charge: '敛翼息风' },
+    leiheng: { single: ['风雷振翮', '风雷振翮LV2', '风雷振翮LV3', '怒枷击'], aoe: ['朴刀卷雷', '朴刀卷雷LV2', '朴刀卷雷LV3', '插翅飞涧', '插翅飞涧LV2', '插翅飞涧LV3'], charge: '敛翼息风' },
   };
   const cells = (s: { type: number; area: number; areaPattern?: readonly unknown[] }) => s.areaPattern?.length ?? (s.type === 12 ? 8 : s.type === 13 ? 3 : s.type === 14 ? 3 * s.area : s.area);
 
