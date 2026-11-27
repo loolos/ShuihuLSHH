@@ -585,7 +585,8 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
       case 'leave':
         // 退场（原版指令 17 动作位 2）：之后再 appear / say 点名时重新登场
         // ['leave', 谁, {awake: true}]：只在他醒着时退场（麻翻、昏迷的留在原地）【新】
-        select(a[0]);
+        // 只点名不登场（quiet）：还没出场的人退场什么也不做，不会先冒出来再消失（神兵困公明：回风返火吹散召出来的神兵）
+        op(12, 1000 + r.unitRef(a[0]).act.group, { quiet: true });
         op(17, 2, (a[1] as { awake?: boolean } | undefined)?.awake ? { args: { awake: true } } : {});
         break;
       case 'move':

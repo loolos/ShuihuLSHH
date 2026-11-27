@@ -212,6 +212,51 @@
    "levelOffset": -3
   },
   {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "ally",
+   "x": 20,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "zhangheng",
+   "class": "zhangheng",
+   "side": "ally",
+   "x": 21,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "zhangshun",
+   "class": "zhangshun",
+   "side": "ally",
+   "x": 22,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
+   "id": "baisheng",
+   "class": 4,
+   "side": "ally",
+   "x": 19,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "name": "白胜",
+   "ai": 11,
+   "levelOffset": -3
+  },
+  {
    "id": "gaolian",
    "class": "gaolian",
    "side": "enemy",
@@ -1314,6 +1359,22 @@
      "wb2"
     ],
     [
+     "spectate",
+     "daizong"
+    ],
+    [
+     "spectate",
+     "zhangheng"
+    ],
+    [
+     "spectate",
+     "zhangshun"
+    ],
+    [
+     "spectate",
+     "baisheng"
+    ],
+    [
      "narrate",
      "两阵对圆，高廉阵中门旗开处，统制于直拍马出阵。"
     ],
@@ -1622,6 +1683,26 @@
      false
     ],
     [
+     "spectate",
+     "daizong",
+     false
+    ],
+    [
+     "spectate",
+     "zhangheng",
+     false
+    ],
+    [
+     "spectate",
+     "zhangshun",
+     false
+    ],
+    [
+     "spectate",
+     "baisheng",
+     false
+    ],
+    [
      "say",
      "wuyong",
      "哥哥，两员统制已除，趁势杀过去，拿了高廉，救出柴大官人！"
@@ -1803,6 +1884,26 @@
     [
      "spectate",
      "wb2",
+     false
+    ],
+    [
+     "spectate",
+     "daizong",
+     false
+    ],
+    [
+     "spectate",
+     "zhangheng",
+     false
+    ],
+    [
+     "spectate",
+     "zhangshun",
+     false
+    ],
+    [
+     "spectate",
+     "baisheng",
      false
     ],
     [
