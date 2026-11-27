@@ -1050,8 +1050,18 @@
           "hitFx": "impact",
           "hits": [
             {
+              "frame": 6,
+              "percent": 30,
+              "dir": 0
+            },
+            {
+              "frame": 9,
+              "percent": 30,
+              "dir": 0
+            },
+            {
               "frame": 12,
-              "percent": 100,
+              "percent": 40,
               "dir": 0
             }
           ],
@@ -1111,8 +1121,18 @@
           "hitFx": "impact",
           "hits": [
             {
+              "frame": 6,
+              "percent": 30,
+              "dir": 0
+            },
+            {
+              "frame": 9,
+              "percent": 30,
+              "dir": 0
+            },
+            {
               "frame": 12,
-              "percent": 100,
+              "percent": 40,
               "dir": 0
             }
           ],
@@ -1188,8 +1208,18 @@
           "hitFx": "impact",
           "hits": [
             {
+              "frame": 6,
+              "percent": 30,
+              "dir": 0
+            },
+            {
+              "frame": 9,
+              "percent": 30,
+              "dir": 0
+            },
+            {
               "frame": 12,
-              "percent": 100,
+              "percent": 40,
               "dir": 0
             }
           ],
