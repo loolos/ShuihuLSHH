@@ -1267,6 +1267,10 @@ export class BattleScene extends Phaser.Scene {
       case 'chest':
         this.addChest(e);
         break;
+      case 'chestGone':
+        this.groundItems.get(`${e.x},${e.y}`)?.destroy();
+        this.groundItems.delete(`${e.x},${e.y}`);
+        break;
       case 'zone':
         this.ring = { zone: e.zone, next: e.next };
         break;
@@ -2142,6 +2146,10 @@ export class BattleScene extends Phaser.Scene {
         break;
       case 'chest':
         this.addChest(e);
+        break;
+      case 'chestGone':
+        this.groundItems.get(`${e.x},${e.y}`)?.destroy();
+        this.groundItems.delete(`${e.x},${e.y}`);
         break;
       case 'zone':
         this.ring = { zone: e.zone, next: e.next };

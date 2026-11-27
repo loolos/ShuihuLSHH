@@ -103,6 +103,37 @@ describe.skipIf(!has)('好汉聚义', () => {
     expect(ev.some((e) => e.type === 'hp' && e.uid === me.uid && e.delta === -Math.floor(me.stats.maxHp / 5))).toBe(true);
   });
 
+  it('缩圈：圈外的小头目当场倒下（不掉药），圈外的宝箱消失', () => {
+    const b = make(6);
+    b.begin();
+    const st = b.royale!;
+    const npcs = b.units.filter((u) => u.team === NPC_TEAM && u.alive);
+    const centre = npcs[0];
+    st.next = { x: centre.x, y: centre.y, r: 0 };
+    st.shrinkAt = 0;
+    const items0 = b.items.length;
+    expect(items0).toBeGreaterThan(0);
+    const ev = b.endPlayerPhase();
+    for (const u of npcs.slice(1)) expect(u.alive).toBe(false);
+    expect(b.items.every((g) => inZone(st.zone, g))).toBe(true);
+    expect(ev.filter((e) => e.type === 'chestGone').length).toBeGreaterThan(0);
+    expect(ev.some((e) => e.type === 'message' && e.text.includes('掉下了'))).toBe(false);
+  });
+
+  it('补刷宝箱：按剩下的好汉比例刷，圈里的宝箱够每人一个就不刷', () => {
+    const b = make(8);
+    b.begin();
+    const refill = () => (b as unknown as { royaleChestRefill(): number }).royaleChestRefill();
+    b.items.length = 0;
+    expect(refill()).toBe(stage.royale!.chestCount);
+    const heroes = b.royaleHeroes();
+    for (const u of heroes.slice(4)) u.alive = false;
+    expect(refill()).toBe(Math.ceil((stage.royale!.chestCount * 4) / heroes.length));
+    const z = b.royale!.next ?? b.royale!.zone;
+    for (let i = 0; i < 4; i++) b.items.push({ x: z.x, y: z.y, item: 157, hidden: false });
+    expect(refill()).toBe(0);
+  });
+
   it('小头目被打倒：打倒的人包里有空就直接拿到药', () => {
     const b = make(5);
     b.begin();

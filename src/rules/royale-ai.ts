@@ -73,15 +73,17 @@ export function goalZone(b: Battle): Zone {
 
 export function planRoyale(b: Battle, u: Unit): AiPlan {
   if (b.spectators.has(u.uid) || !b.royale) return {};
-  const goal = goalZone(b);
-  const safe = (c: Cell) => inZone(goal, c);
-  if (!safe(u)) return run(b, u, goal);
   if (u.team === NPC_TEAM) {
-    // 小头目：守自己那一片，警戒范围里有人才动手，不出圈
+    // 小头目：不跑圈（圈外的缩圈时直接倒下，负责人 2026-11-27）；守自己那一片，警戒范围里有人才动手，不走出现在的圈
+    const zone = b.royale.zone;
+    const safe = (c: Cell) => inZone(zone, c);
     const near = b.aiFoesOf(u).filter((t) => dist(u, t) <= alertRadius(b, u));
     if (!near.length) return withCharge(b, u, {});
     return bestAttack(b, u, undefined, u.stats.move, safe) ?? withCharge(b, u, approach(b, u, near, safe));
   }
+  const goal = goalZone(b);
+  const safe = (c: Cell) => inZone(goal, c);
+  if (!safe(u)) return run(b, u, goal);
   const heal = u.hp < u.stats.maxHp / 2 ? healSkill(b, u) : null;
   if (heal) return heal;
   if (u.hp < u.stats.maxHp * LOOT_BELOW && !hasHeal(b, u)) {
