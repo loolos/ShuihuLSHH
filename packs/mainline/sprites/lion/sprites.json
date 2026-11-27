@@ -1,0 +1,117 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50,
+ "actions": {
+  "idle": {
+   "source": "Idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 214
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 214
+   }
+  },
+  "walk": {
+   "source": "Walk",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 172
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 172
+   }
+  },
+  "bite": {
+   "source": "Attack Jaw",
+   "front": {
+    "file": "bite-front.png",
+    "frames": 8,
+    "ms": 130
+   },
+   "back": {
+    "file": "bite-back.png",
+    "frames": 8,
+    "ms": 130
+   }
+  },
+  "paw": {
+   "source": "Attack Right Paw",
+   "front": {
+    "file": "paw-front.png",
+    "frames": 8,
+    "ms": 130
+   },
+   "back": {
+    "file": "paw-back.png",
+    "frames": 8,
+    "ms": 130
+   }
+  },
+  "pounce": {
+   "source": "Jumping",
+   "front": {
+    "file": "pounce-front.png",
+    "frames": 8,
+    "ms": 109
+   },
+   "back": {
+    "file": "pounce-back.png",
+    "frames": 8,
+    "ms": 109
+   }
+  },
+  "roar": {
+   "source": "Roarning",
+   "front": {
+    "file": "roar-front.png",
+    "frames": 8,
+    "ms": 208
+   },
+   "back": {
+    "file": "roar-back.png",
+    "frames": 8,
+    "ms": 208
+   }
+  },
+  "recoil": {
+   "source": "Walk Back",
+   "front": {
+    "file": "recoil-front.png",
+    "frames": 8,
+    "ms": 229
+   },
+   "back": {
+    "file": "recoil-back.png",
+    "frames": 8,
+    "ms": 229
+   }
+  },
+  "death": {
+   "source": "Death",
+   "front": {
+    "file": "death-front.png",
+    "frames": 8,
+    "ms": 89
+   },
+   "back": {
+    "file": "death-back.png",
+    "frames": 8,
+    "ms": 89
+   }
+  }
+ }
+}
