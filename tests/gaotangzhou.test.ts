@@ -53,13 +53,31 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     expect(b.status).toBe('won');
   });
 
-  it('飞天神兵：高廉第 3 回合作法，离他最近的我方一片人迷眼，召出神兵', () => {
+  const duel = (b: Battle, get: (id: string) => Unit) => {
+    for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
+    b.endPlayerPhase();
+  };
+
+  it('妖法困宋江：开场只有林冲、秦明能动，两员统制打到一成以下就退场，全军出战', () => {
+    const { b, get } = open('shenbing');
+    expect(b.spectators.has(get('songjiang').uid)).toBe(true);
+    expect(b.spectators.has(get('linchong').uid)).toBe(false);
+    expect(b.spectators.has(get('gaolian').uid)).toBe(true);
+    duel(b, get);
+    expect(get('yuzhi').present).toBe(false);
+    expect(get('wenwenbao').present).toBe(false);
+    expect(b.spectators.has(get('songjiang').uid)).toBe(false);
+    expect(b.spectators.has(get('gaolian').uid)).toBe(false);
+  });
+
+  it('妖法困宋江：单挑之后高廉第 5 回合作法，离他最近的我方一片人迷眼，召出神兵', () => {
     const { b, get } = open('shenbing');
     const sj = get('songjiang');
     expect(skill(b, sj, '回风返火')).toBeTruthy();
-    b.endPlayerPhase();
+    duel(b, get);
+    b.endPlayerPhase(); b.endPlayerPhase();
     const ev = b.endPlayerPhase();
-    expect(b.turn).toBe(3);
+    expect(b.turn).toBe(5);
     const hit = ev.filter((e) => e.type === 'status' && e.text === '飛沙迷眼').map((e) => (e as { uid: number }).uid);
     expect(hit.length).toBeGreaterThan(0);
     for (const uid of hit) expect(b.units[uid].side === 'enemy' || !b.units[uid].alive || b.units[uid].stunTurns > 0).toBe(true);
@@ -70,10 +88,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
   it('飞天神兵：宋江念过回风返火，下一阵风吹回高廉阵中，神兵退场、猛兽登场；高廉打到三成半以下就收兵过关', () => {
     const { b, get } = open('shenbing');
     const sj = get('songjiang');
+    duel(b, get);
     b.useSkill(sj, skill(b, sj, '回风返火')!, sj);
-    b.endPlayerPhase();
-    b.endPlayerPhase();
-    expect(b.turn).toBe(3);
+    b.endPlayerPhase(); b.endPlayerPhase(); b.endPlayerPhase();
+    expect(b.turn).toBe(5);
     expect(b.units.filter((u) => u.present && u.name === '飞天神兵')).toHaveLength(0);
     expect(b.units.filter((u) => u.present && u.name === '猛兽').length).toBeGreaterThan(0);
     expect(b.units.filter((u) => u.side === 'enemy' && u.present && u.panicTurns).length).toBeGreaterThan(0);
