@@ -1,0 +1,104 @@
+{
+ "frame": [
+  160,
+  160
+ ],
+ "anchor": [
+  80,
+  120
+ ],
+ "ppm": 50,
+ "actions": {
+  "idle": {
+   "source": "Idle",
+   "front": {
+    "file": "idle-front.png",
+    "frames": 8,
+    "ms": 417
+   },
+   "back": {
+    "file": "idle-back.png",
+    "frames": 8,
+    "ms": 417
+   }
+  },
+  "walk": {
+   "source": "Walk",
+   "front": {
+    "file": "walk-front.png",
+    "frames": 8,
+    "ms": 133
+   },
+   "back": {
+    "file": "walk-back.png",
+    "frames": 8,
+    "ms": 133
+   }
+  },
+  "attack": {
+   "source": "Attack",
+   "front": {
+    "file": "attack-front.png",
+    "frames": 8,
+    "ms": 167
+   },
+   "back": {
+    "file": "attack-back.png",
+    "frames": 8,
+    "ms": 167
+   }
+  },
+  "pounce": {
+   "source": "Gallop_Jump",
+   "front": {
+    "file": "pounce-front.png",
+    "frames": 8,
+    "ms": 117
+   },
+   "back": {
+    "file": "pounce-back.png",
+    "frames": 8,
+    "ms": 117
+   }
+  },
+  "hit": {
+   "source": "Idle_HitReact1",
+   "front": {
+    "file": "hit-front.png",
+    "frames": 8,
+    "ms": 83
+   },
+   "back": {
+    "file": "hit-back.png",
+    "frames": 8,
+    "ms": 83
+   }
+  },
+  "defend": {
+   "source": "Idle_2_HeadLow",
+   "front": {
+    "file": "defend-front.png",
+    "frames": 8,
+    "ms": 500
+   },
+   "back": {
+    "file": "defend-back.png",
+    "frames": 8,
+    "ms": 500
+   }
+  },
+  "death": {
+   "source": "Death",
+   "front": {
+    "file": "death-front.png",
+    "frames": 8,
+    "ms": 133
+   },
+   "back": {
+    "file": "death-back.png",
+    "frames": 8,
+    "ms": 133
+   }
+  }
+ }
+}

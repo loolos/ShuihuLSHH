@@ -16,6 +16,7 @@
 | `outfits/weapon-spear\|staff\|dadao\|bow.json` | 双手兵器（长枪、齐眉棍、长柄大刀、弓）：写在服装的 `weapon` 里，渲染时会在骨架上加兵器骨骼（见下） |
 | `poses/weapons.json` | 自拼的兵器动作：`Spear_` / `Staff_` / `Blade_` 加 `Idle`、`Thrust`（突刺）、`Sweep`（横扫）、`Smash`（下劈），`Bow_Shoot`（拉弓放箭） |
 | `characters/<id>.json` | 人物配方 |
+| `animals/{Wolf,Fox,Stag,Donkey,Cow,Bull}.glb` | Quaternius「Ultimate Animated Animals」（CC0）：狼、狐、鹿、驴、牛、公牛。每只 12–13 个动作：`Idle`、`Walk`、`Gallop`、`Gallop_Jump`、`Idle_HitReact1/2`、`Death`、`Eating`；狼狐有 `Attack`（扑咬），蹄类有 `Attack_Headbutt`（顶）、`Attack_Kick`（后踢）。原包是带内嵌数据的 .gltf，转成 .glb 入库。渲染成 `packs/mainline/sprites/<狼…>`，命令见那里的 README |
 
 所有动作名：`python3 -c "import json,struct;d=open('gamedata/models/UAL2_Standard.glb','rb').read();n=struct.unpack('<I',d[12:16])[0];print([a['name'] for a in json.loads(d[20:20+n])['animations']])"`，也可以在 <https://quaternius.com/animviewer.html> 里看。
 
