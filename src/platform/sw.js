@@ -1,5 +1,5 @@
 // 服务工作线程：让网页版断网也能打开（docs/game-design.md §12.3）。vite.config.ts 构建时填入版本号和 shell 清单，输出为 dist/sw.js。
-// - 安装时缓存页面、脚本、样式（shell-<版本>），换版后删掉旧的。
+// - 安装时缓存页面、脚本、样式（shell-<版本>），换版后旧的只留最近两版（给还开着的旧页面用）。
 // - 页面（导航）和 offline.json 等同源小文件：先走网络（4 秒没回应就用缓存），断网时用缓存。
 // - 带哈希的 assets/：先查缓存。
 // - 仓库 gamedata/ 的图像、音效、配乐：离线包（OFFLINE_DATA，由页面上的「离线包」按钮下载）里有就用，没有走网络。
@@ -23,7 +23,11 @@ self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('shell-') && k !== SHELL_CACHE).map((k) => caches.delete(k))))
+      // 旧版的 shell 留两份：换版时还开着的旧页面要的脚本（线上已换成新文件名）还能从这里取到，不会出错
+      .then((keys) => {
+        const old = keys.filter((k) => k.startsWith('shell-') && k !== SHELL_CACHE);
+        return Promise.all(old.slice(0, Math.max(0, old.length - 2)).map((k) => caches.delete(k)));
+      })
       .then(() => self.clients.claim()),
   );
 });

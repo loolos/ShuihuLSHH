@@ -143,6 +143,18 @@ export async function preloadStage(assets: Assets, stage: string, progress?: Pro
 }
 
 const skillJobs = new WeakMap<Assets, Map<string, Promise<unknown>>>();
+
+/**
+ * 换关前释放上一关的图：丢掉已解码的人物、特效、地图图块和切好的帧（头像、道具图标、格子光标常驻）。
+ * 下一关要用的由 preloadStage / ensureSkill 从浏览器缓存（IndexedDB 或离线包）重新读出。
+ * 要和 releaseSprites 一起用：纹理是从这些帧画出来的。
+ */
+export function releaseStageImages(assets: Assets): void {
+  const keep = new Set(startupImages(assets).map((p) => p.toLowerCase()));
+  assets.files.forgetImages((p) => keep.has(p));
+  for (const lib of [assets.man, assets.effects, assets.ground, assets.upper]) lib.clear();
+  skillJobs.delete(assets);
+}
 const skillKey = (cls: number, sk: SkillDef) => `${cls}:${sk.group}:${sk.type}:${sk.effect}:${sk.effect2}:${sk.effect3}`;
 
 /** 一次下载若干技能的帧（合并成尽量少的请求）；每个技能只下载一次，失败的下次再试，不卡住战斗 */

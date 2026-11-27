@@ -5,7 +5,8 @@ import { GAMEDATA_JSON } from './platform/gamedata-json.ts';
 import { idbClear } from './platform/idb.ts';
 import { deleteOffline, downloadOffline, initOffline, mb, offlineStatus } from './platform/offline.ts';
 import { BUILD, applyUpdate, checkForUpdate, versionLabel } from './platform/update.ts';
-import { frameToCanvas, loadAssets, preloadStage, startupImages, type Assets } from './game/assets.ts';
+import { frameToCanvas, loadAssets, preloadStage, releaseStageImages, startupImages, type Assets } from './game/assets.ts';
+import { releaseSprites, spriteBytes } from './game/sprites.ts';
 import { PRISON_CART_TILES } from './game/prison-cart.ts';
 import { BattleScene } from './game/BattleScene.ts';
 import { installSound } from './game/sound.ts';
@@ -299,6 +300,18 @@ function startGame(assets: Assets) {
     scene: [],
   });
   const scene = () => game.scene.getScene('battle') as BattleScene | null;
+  /**
+   * 进下一关前：之前几关的人物、特效、图块（解码后的图 + 纹理）超过 STAGE_MEMORY 就全部释放，本关要用的再从浏览器缓存读。
+   * 不释放的话每换一关多占几十 MB，连着玩几十关后浏览器会因内存不足把网页重新载入（看起来像游戏自己重启）。
+   */
+  const STAGE_MEMORY = 200e6;
+  const freeStageMemory = () => {
+    if (assets.files.imageBytes() + spriteBytes(game) < STAGE_MEMORY) return;
+    // 先停掉战斗场景，没有游戏对象再用旧纹理；之后进关用 scene.restart 照常重开
+    if (scene()?.sys.isActive()) game.scene.stop('battle');
+    releaseSprites(game);
+    releaseStageImages(assets);
+  };
   // 开发模式下给 Playwright 截图脚本用
   if (import.meta.env.DEV) (window as unknown as { __game: Phaser.Game; __ui: BattleUI }).__game = game, ((window as unknown as { __ui: BattleUI }).__ui = ui);
   const stageOf = (i: number) => stages.find((s) => s.index === i)!;
@@ -486,6 +499,7 @@ function startGame(assets: Assets) {
       }
       const st = stage;
       const classes = stageClasses(rt, stage);
+      freeStageMemory();
       await preloadStage(pa, stageMapName(stage.map), progress, classes, [...(stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []), ...stageSealTiles(stage)]);
       if (ticket !== loading) return;
       setupEl.hidden = true;
@@ -541,6 +555,7 @@ function startGame(assets: Assets) {
       const stage = rt.stages.find((s) => s.id === stageId);
       if (!stage || !e) throw new Error(`没有插关 ${ref}`);
       const pa: Assets = { ...assets, data: rt.data, pack };
+      freeStageMemory();
       await preloadStage(pa, stageMapName(stage.map), progress, stageClasses(rt, stage), [...(stage.units.some((u) => u.prisonCart) ? PRISON_CART_TILES : []), ...stageSealTiles(stage)]);
       if (ticket !== loading) return;
       setupEl.hidden = true;
@@ -675,6 +690,7 @@ function startGame(assets: Assets) {
     const stage = stageOf(campaign.stage).mapName;
     // 网页版：先下载本关要用的人物、特效和图块（已缓存的不再下载）
     const ticket = ++loading;
+    freeStageMemory();
     try {
       await preloadStage(assets, stage, (m, r) => {
         setupEl.hidden = false;

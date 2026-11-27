@@ -1754,6 +1754,7 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 - **原版文件来源**：
   - 网页版从 `raw.githubusercontent.com/loolos/ShuihuLSHH/main/gamedata/shuihu/` 下载（`loadFromRepo`）。小文件（剧本、地图、数据表、头像，约 3 MB）启动时整份下载；`Man.lib`、`Effect.lib`、`Ground.grp`、`Upper.grp` 只先取文件头和索引，进关前（`preloadStage`）用 HTTP Range 只取地图用到的图块，以及本关出场职业的走路、受击、防御动作和普通攻击（含特效）；各单位已学会的技能动画和特效开打后在后台下载（`prefetchSkills`），出招时还没下完就等它下完（`ensureSkill`，升级后新学的技能也在这时下载）。`Man.lib` 有 6480 帧、`Effect.lib` 有 76 帧与前面的帧字节完全相同（共约 11.5 MB），只下载第一份再复制过去（帧号表 `src/data/frame-alias.json`，由 `npm run gen:manifest` 生成）。`Panel.lib` 暂不使用，不下载。各关下载量用 `node --experimental-transform-types tools/measure-assets.ts` 统计：单关进关前最多从约 27 MB 降到约 12 MB，全部关卡玩完共下载约 42 MB（原来约 56 MB）。【新】
   - 下载过的文件和分段都存进 IndexedDB，再次打开或回到玩过的关卡不再下载。
+  - **内存**【新：2026-11-27】：解码后的图像、切好的帧、人物 / 特效纹理和动画原先一直留着，每换一关多占约 45 MB，连玩几十关后浏览器会因内存不足把网页重新载入（玩家看到的是“突然回到读素材”）。现在：纹理用普通纹理（`textureFor` 改 `addImage`，不用会再存一份像素的 `CanvasTexture`）；进下一关前，若解码图像 + 纹理超过 200 MB（`main.ts` 的 `STAGE_MEMORY`），先停战斗场景，再删掉 `sprites.ts` 建过的纹理和动画（`releaseSprites`）、丢掉人物 / 特效 / 图块的解码图和帧（`releaseStageImages`，头像、道具图标、格子光标常驻），本关要用的从 IndexedDB 或离线包重新读出。实测连换 15 关：原先 JS 内存 107→783 MB、纹理 13→166 MB 一路上涨；现在纹理稳定在 3–37 MB，JS 内存在 120–320 MB 间来回。
   - 下载失败时退回到选择原版目录：File System Access API，不支持的浏览器用 `<input webkitdirectory>` 兜底。
   - 对照 `src/data/manifest.json`（267 个文件，65 MB）检查文件是否齐全、SHA256 是否一致；不一致时提示，但允许继续。
   - 原始文件字节缓存到 IndexedDB，下次启动不用再选目录；图像按需解码，解码结果只留在内存里。
@@ -1774,7 +1775,7 @@ tools/       Node 工具：gen-design-docs（生成 reference/）、render-maps�
 
 负责人要求能先把游戏内容全部下载好，断网（如在飞机上）也能玩。做法是服务工作线程 + Cache Storage，同一个网址断网照样打开：
 
-- **页面本身**：`dist/sw.js`（源码 `src/platform/sw.js`，构建时由 `vite.config.ts` 填入版本号和文件清单）安装时缓存页面、全部脚本和样式（约 6.5 MB，缓存名 `shell-<构建号>`，换版后删旧的）。页面导航和同源小文件先走网络、4 秒无回应或断网时用缓存；带哈希的 `assets/` 先查缓存；`version.json` 不缓存（检查更新要拿线上的）。开发模式不注册。
+- **页面本身**：`dist/sw.js`（源码 `src/platform/sw.js`，构建时由 `vite.config.ts` 填入版本号和文件清单）安装时缓存页面、全部脚本和样式（约 6.5 MB，缓存名 `shell-<构建号>`，换版后旧的只留最近两版，给换版时还开着的旧页面取脚本用）。页面导航和同源小文件先走网络、4 秒无回应或断网时用缓存；带哈希的 `assets/` 先查缓存；`version.json` 不缓存（检查更新要拿线上的）。开发模式不注册。
 - **离线包**：标题画面（主菜单）底部的「离线包」按钮（游戏顶栏不放）。清单是构建时生成的 `offline.json`：扩展包图像（`dist/assets` 的 PNG）+ 仓库 `gamedata/` 的 `sprites`、`tiles`、`portraits`、`icons`、`sound`、`bgm` 全部文件（2026-11-26 共约 1370 个文件、171 MB），每个带内容哈希。按钮弹出提示条，显示文件数、总大小和浏览器给的空间，「下载全部」后按钮上显示百分比，可暂停（已下的保留，下次接着下）、可删除。下载前请求 `navigator.storage.persist()`。下完按钮显示「离线包✓」。下载时校验实际内容的哈希（raw 网址刚推送后几分钟可能还是旧文件，那样记成旧哈希，下次当作要更新）。
 - **服务**：仓库 raw 网址的请求先查离线包，没有再走网络（不在请求时顺手缓存，离线包内容只由按钮下载，哈希记录才可靠）；`<audio>` 的分段请求（Range）从缓存里切出那一段回 206。
 - **换版**：启动时（载入图像之前）拿新清单比对已下载文件的哈希，变了或删掉的文件从离线包和 IndexedDB 图像缓存（`img:` 键）里删掉，在线时按需下载新的；按钮变成「离线包…」，提示条显示还差几个文件，按「继续下载」补齐。
