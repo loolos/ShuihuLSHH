@@ -27,6 +27,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     return { b, stage, get: (uid: string) => b.units[stage.units.findIndex((u) => u.id === uid)] };
   };
   const kill = (b: Battle, t: Unit, by: Unit) => (b as unknown as { kill(u: Unit, k: Unit): void }).kill(by, t);
+  const BEASTS = ['狮子', '猛虎', '狼', '熊', '野猪'];
   const skill = (b: Battle, u: Unit, name: string) => learnedSkills(u, b.data).find((s) => s.name === name);
 
   it('三关都排在第三十四章「大破高唐州」', () => {
@@ -102,7 +103,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     }
     expect(before.size).toBeGreaterThan(0);
     ev = step();
-    expect(b.units.filter((u) => u.present && u.name === '猛兽').length).toBeGreaterThan(0);
+    const beasts = b.units.filter((u) => u.present && BEASTS.includes(u.name)).map((u) => u.name).sort();
+    expect(beasts).toEqual([...BEASTS].sort()); // 狮子、老虎、狼、熊、野猪各一
     const n0 = sbs().length;
     step();
     expect(b.turn).toBe(5);
@@ -131,7 +133,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('大破高唐
     for (const id of ['yuzhi', 'wenwenbao']) get(id).hp = Math.floor(get(id).stats.maxHp * 0.05);
     next(); next(); next(); next();
     expect(b.turn).toBe(5);
-    const summons = () => b.units.filter((u) => u.present && u.alive && (u.name === '飞天神兵' || u.name === '猛兽'));
+    const summons = () => b.units.filter((u) => u.present && u.alive && (u.name === '飞天神兵' || BEASTS.includes(u.name)));
     const n0 = summons().length;
     expect(n0).toBeGreaterThan(1);
     b.useItem(sj, slot);
