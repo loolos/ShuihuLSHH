@@ -14,21 +14,38 @@
  ],
  "goals": [
   {
-   "win": "把高廉打到三成半体力以下，或撑过第 12 回合",
+   "unless": "dueled",
+   "win": "林冲单挑统制于直、秦明单挑统制温文宝，两个都打倒",
+   "lose": [
+    "林冲或秦明倒下",
+    "宋江倒下"
+   ],
+   "hint": "两军列阵观战，只有林冲、秦明能动。打倒两员统制以后全军出战，高廉开始作法"
+  },
+  {
+   "win": "把高廉打到三成半体力以下，或撑过第 14 回合",
    "lose": "宋江倒下",
-   "hint": "高廉每三回合作一次法（前一回合会念咒）：怪风刮向离他最近的人，那人周围两格迷眼一回合、掉血，还会召来一队飞天神兵"
+   "hint": "高廉每三回合作一次法（前一回合会念咒）：怪风刮向离他最近的人，那人周围两格迷眼一回合、掉血，还会召来一队飞天神兵",
+   "if": "dueled"
   },
   {
    "unless": "huifeng",
-   "hint": "宋江可以用一次天书上的「回风返火」，下一阵怪风就会被吹回去"
+   "hint": "宋江可以用一次天书上的「回风返火」，下一阵怪风就会被吹回去",
+   "if": "dueled"
   },
   {
-   "if": "huifeng",
+   "if": [
+    "huifeng",
+    "dueled"
+   ],
    "unless": "reversed",
    "hint": "天书已经念过，等高廉下一次作法"
   },
   {
-   "if": "reversed",
+   "if": [
+    "reversed",
+    "dueled"
+   ],
    "hint": "妖法破了，神兵都是纸人；高廉又敲铜牌召来猛兽"
   }
  ],
@@ -88,13 +105,11 @@
   {
    "id": "qinming",
    "class": "qinming",
-   "side": "ally",
+   "side": "player",
    "x": 21,
    "y": 25,
    "level": 30,
-   "facing": 0,
-   "ai": 0,
-   "levelOffset": -3
+   "facing": 0
   },
   {
    "id": "zhutong",
@@ -205,7 +220,7 @@
    "ai": 11,
    "enemyRank": "leader",
    "levelOffset": 2,
-   "hpMultiplier": 5.0,
+   "hpMultiplier": 9.0,
    "name": "高唐州知府高廉"
   },
   {
@@ -217,7 +232,8 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "gw1",
@@ -228,7 +244,8 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "gw2",
@@ -239,7 +256,8 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "gw3",
@@ -250,7 +268,8 @@
    "level": 30,
    "facing": 2,
    "ai": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "yuzhi",
@@ -260,10 +279,11 @@
    "y": 9,
    "level": 30,
    "facing": 2,
-   "ai": 0,
+   "ai": 1,
    "enemyRank": "leader",
    "levelOffset": 1,
-   "name": "统制于直"
+   "name": "统制于直",
+   "target": "linchong"
   },
   {
    "id": "ya0",
@@ -274,7 +294,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "ya1",
@@ -285,7 +306,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "ya2",
@@ -296,7 +318,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "ya3",
@@ -307,7 +330,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "ya4",
@@ -318,7 +342,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "yb0",
@@ -329,7 +354,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "yb1",
@@ -340,7 +366,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "弓手"
+   "name": "弓手",
+   "levelOffset": 2
   },
   {
    "id": "wenwenbao",
@@ -350,10 +377,11 @@
    "y": 9,
    "level": 30,
    "facing": 2,
-   "ai": 0,
+   "ai": 1,
    "enemyRank": "leader",
    "levelOffset": 1,
-   "name": "统制温文宝"
+   "name": "统制温文宝",
+   "target": "qinming"
   },
   {
    "id": "wa0",
@@ -364,7 +392,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "wa1",
@@ -375,7 +404,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "wa2",
@@ -386,7 +416,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "官兵"
+   "name": "官兵",
+   "levelOffset": 2
   },
   {
    "id": "wb0",
@@ -397,7 +428,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "wb1",
@@ -408,7 +440,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "wb2",
@@ -419,7 +452,8 @@
    "level": 30,
    "facing": 2,
    "ai": 0,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "sb00",
@@ -431,7 +465,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb01",
@@ -443,7 +477,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb02",
@@ -455,7 +489,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb03",
@@ -467,7 +501,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb04",
@@ -479,7 +513,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb05",
@@ -491,7 +525,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb10",
@@ -503,7 +537,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb11",
@@ -515,7 +549,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb12",
@@ -527,7 +561,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb13",
@@ -539,7 +573,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb14",
@@ -551,7 +585,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb15",
@@ -563,7 +597,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb20",
@@ -575,7 +609,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb21",
@@ -587,7 +621,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb22",
@@ -599,7 +633,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb23",
@@ -611,7 +645,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb24",
@@ -623,7 +657,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "sb25",
@@ -635,7 +669,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1
+   "levelOffset": 2
   },
   {
    "id": "mb0",
@@ -686,7 +720,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -699,7 +733,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -712,7 +746,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -725,7 +759,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -738,7 +772,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -751,7 +785,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -764,7 +798,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "弓手"
   },
   {
@@ -777,7 +811,111 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "r20",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r21",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r22",
+   "class": 32,
+   "side": "enemy",
+   "x": 17,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r23",
+   "class": 32,
+   "side": "enemy",
+   "x": 19,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r24",
+   "class": 32,
+   "side": "enemy",
+   "x": 13,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r25",
+   "class": 32,
+   "side": "enemy",
+   "x": 15,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "官兵"
+  },
+  {
+   "id": "r26",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
+   "name": "弓手"
+  },
+  {
+   "id": "r27",
+   "class": 34,
+   "side": "enemy",
+   "x": 19,
+   "y": 9,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 2,
    "name": "弓手"
   },
   {
@@ -790,7 +928,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -803,7 +941,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -816,7 +954,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -829,7 +967,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -842,7 +980,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -855,7 +993,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "官兵"
   },
   {
@@ -868,7 +1006,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "弓手"
   },
   {
@@ -881,7 +1019,7 @@
    "facing": 2,
    "ai": 0,
    "hidden": true,
-   "levelOffset": 1,
+   "levelOffset": 2,
    "name": "弓手"
   },
   {
@@ -895,7 +1033,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "fl1",
@@ -908,7 +1047,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "fl2",
@@ -921,7 +1061,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "fl3",
@@ -934,7 +1075,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "fl4",
@@ -947,7 +1089,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   },
   {
    "id": "fl5",
@@ -960,7 +1103,8 @@
    "ai": 1,
    "target": "songjiang",
    "hidden": true,
-   "name": "马军"
+   "name": "马军",
+   "levelOffset": 2
   }
  ],
  "script": [
@@ -1008,12 +1152,681 @@
      "say",
      "zhutong",
      "柴大官人仗义疏财，天下闻名。朱仝这一条命，今日便替他拼了。"
+    ],
+    [
+     "spectate",
+     "songjiang"
+    ],
+    [
+     "spectate",
+     "wuyong"
+    ],
+    [
+     "spectate",
+     "hero"
+    ],
+    [
+     "spectate",
+     "huarong"
+    ],
+    [
+     "spectate",
+     "zhutong"
+    ],
+    [
+     "spectate",
+     "leiheng"
+    ],
+    [
+     "spectate",
+     "malin"
+    ],
+    [
+     "spectate",
+     "dengfei"
+    ],
+    [
+     "spectate",
+     "yanglin"
+    ],
+    [
+     "spectate",
+     "oupeng"
+    ],
+    [
+     "spectate",
+     "guosheng"
+    ],
+    [
+     "spectate",
+     "lvfang"
+    ],
+    [
+     "spectate",
+     "sunli"
+    ],
+    [
+     "spectate",
+     "gaolian"
+    ],
+    [
+     "spectate",
+     "gw0"
+    ],
+    [
+     "spectate",
+     "gw1"
+    ],
+    [
+     "spectate",
+     "gw2"
+    ],
+    [
+     "spectate",
+     "gw3"
+    ],
+    [
+     "spectate",
+     "ya0"
+    ],
+    [
+     "spectate",
+     "ya1"
+    ],
+    [
+     "spectate",
+     "ya2"
+    ],
+    [
+     "spectate",
+     "ya3"
+    ],
+    [
+     "spectate",
+     "ya4"
+    ],
+    [
+     "spectate",
+     "yb0"
+    ],
+    [
+     "spectate",
+     "yb1"
+    ],
+    [
+     "spectate",
+     "wa0"
+    ],
+    [
+     "spectate",
+     "wa1"
+    ],
+    [
+     "spectate",
+     "wa2"
+    ],
+    [
+     "spectate",
+     "wb0"
+    ],
+    [
+     "spectate",
+     "wb1"
+    ],
+    [
+     "spectate",
+     "wb2"
+    ],
+    [
+     "narrate",
+     "两阵对圆，高廉阵中门旗开处，统制于直拍马出阵。"
+    ],
+    [
+     "move",
+     "yuzhi",
+     15,
+     17,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "yuzhi",
+     "梁山草寇，谁敢出来与我交锋！"
+    ],
+    [
+     "say",
+     "linchong",
+     "林冲在此！"
+    ],
+    [
+     "move",
+     "linchong",
+     15,
+     20,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "linchong",
+     "yuzhi"
+    ],
+    [
+     "face",
+     "yuzhi",
+     "linchong"
+    ],
+    [
+     "narrate",
+     "温文宝见了，也挺枪跃马，从侧里杀出。秦明舞起狼牙棍迎上去。"
+    ],
+    [
+     "move",
+     "wenwenbao",
+     23,
+     17,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "qinming",
+     23,
+     20,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "qinming",
+     "wenwenbao"
+    ],
+    [
+     "face",
+     "wenwenbao",
+     "qinming"
+    ],
+    [
+     "say",
+     "qinming",
+     "这一个交给秦明！"
     ]
    ]
   },
   {
    "on": {
-    "turn": 2
+    "hp": "yuzhi",
+    "below": 10,
+    "spare": true
+   },
+   "do": [
+    [
+     "flag",
+     "yu"
+    ],
+    [
+     "say",
+     "linchong",
+     "着！"
+    ],
+    [
+     "narrate",
+     "两个斗到五合，林冲卖个破绽，让于直一刀砍将入来，把蛇矛逼个住，直挺入去，一矛刺中心窝。于直翻筋斗倒撞下马去，死了。"
+    ],
+    [
+     "leave",
+     "yuzhi"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "wenwenbao",
+    "below": 10,
+    "spare": true
+   },
+   "do": [
+    [
+     "flag",
+     "wen"
+    ],
+    [
+     "say",
+     "qinming",
+     "看棍！"
+    ],
+    [
+     "narrate",
+     "斗不到十合，秦明放个门户，让温文宝一枪搠将入来，手起棍落，把温文宝削去半个天灵盖，死于马下。"
+    ],
+    [
+     "leave",
+     "wenwenbao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "yu"
+   },
+   "do": [
+    [
+     "flag",
+     "dueled"
+    ],
+    [
+     "narrate",
+     "高廉见连折了两员统制，大怒，把太阿宝剑一挥：「众军齐上！」"
+    ],
+    [
+     "bgm",
+     [
+      "sorcery",
+      "battle"
+     ]
+    ],
+    [
+     "spectate",
+     "songjiang",
+     false
+    ],
+    [
+     "spectate",
+     "wuyong",
+     false
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "zhutong",
+     false
+    ],
+    [
+     "spectate",
+     "leiheng",
+     false
+    ],
+    [
+     "spectate",
+     "malin",
+     false
+    ],
+    [
+     "spectate",
+     "dengfei",
+     false
+    ],
+    [
+     "spectate",
+     "yanglin",
+     false
+    ],
+    [
+     "spectate",
+     "oupeng",
+     false
+    ],
+    [
+     "spectate",
+     "guosheng",
+     false
+    ],
+    [
+     "spectate",
+     "lvfang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "gaolian",
+     false
+    ],
+    [
+     "spectate",
+     "gw0",
+     false
+    ],
+    [
+     "spectate",
+     "gw1",
+     false
+    ],
+    [
+     "spectate",
+     "gw2",
+     false
+    ],
+    [
+     "spectate",
+     "gw3",
+     false
+    ],
+    [
+     "spectate",
+     "ya0",
+     false
+    ],
+    [
+     "spectate",
+     "ya1",
+     false
+    ],
+    [
+     "spectate",
+     "ya2",
+     false
+    ],
+    [
+     "spectate",
+     "ya3",
+     false
+    ],
+    [
+     "spectate",
+     "ya4",
+     false
+    ],
+    [
+     "spectate",
+     "yb0",
+     false
+    ],
+    [
+     "spectate",
+     "yb1",
+     false
+    ],
+    [
+     "spectate",
+     "wa0",
+     false
+    ],
+    [
+     "spectate",
+     "wa1",
+     false
+    ],
+    [
+     "spectate",
+     "wa2",
+     false
+    ],
+    [
+     "spectate",
+     "wb0",
+     false
+    ],
+    [
+     "spectate",
+     "wb1",
+     false
+    ],
+    [
+     "spectate",
+     "wb2",
+     false
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥，两员统制已除，高廉要使妖法了，小心他的怪风！"
+    ]
+   ],
+   "if": "wen",
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "flag": "wen"
+   },
+   "do": [
+    [
+     "flag",
+     "dueled"
+    ],
+    [
+     "narrate",
+     "高廉见连折了两员统制，大怒，把太阿宝剑一挥：「众军齐上！」"
+    ],
+    [
+     "bgm",
+     [
+      "sorcery",
+      "battle"
+     ]
+    ],
+    [
+     "spectate",
+     "songjiang",
+     false
+    ],
+    [
+     "spectate",
+     "wuyong",
+     false
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "zhutong",
+     false
+    ],
+    [
+     "spectate",
+     "leiheng",
+     false
+    ],
+    [
+     "spectate",
+     "malin",
+     false
+    ],
+    [
+     "spectate",
+     "dengfei",
+     false
+    ],
+    [
+     "spectate",
+     "yanglin",
+     false
+    ],
+    [
+     "spectate",
+     "oupeng",
+     false
+    ],
+    [
+     "spectate",
+     "guosheng",
+     false
+    ],
+    [
+     "spectate",
+     "lvfang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "gaolian",
+     false
+    ],
+    [
+     "spectate",
+     "gw0",
+     false
+    ],
+    [
+     "spectate",
+     "gw1",
+     false
+    ],
+    [
+     "spectate",
+     "gw2",
+     false
+    ],
+    [
+     "spectate",
+     "gw3",
+     false
+    ],
+    [
+     "spectate",
+     "ya0",
+     false
+    ],
+    [
+     "spectate",
+     "ya1",
+     false
+    ],
+    [
+     "spectate",
+     "ya2",
+     false
+    ],
+    [
+     "spectate",
+     "ya3",
+     false
+    ],
+    [
+     "spectate",
+     "ya4",
+     false
+    ],
+    [
+     "spectate",
+     "yb0",
+     false
+    ],
+    [
+     "spectate",
+     "yb1",
+     false
+    ],
+    [
+     "spectate",
+     "wa0",
+     false
+    ],
+    [
+     "spectate",
+     "wa1",
+     false
+    ],
+    [
+     "spectate",
+     "wa2",
+     false
+    ],
+    [
+     "spectate",
+     "wb0",
+     false
+    ],
+    [
+     "spectate",
+     "wb1",
+     false
+    ],
+    [
+     "spectate",
+     "wb2",
+     false
+    ],
+    [
+     "say",
+     "wuyong",
+     "哥哥，两员统制已除，高廉要使妖法了，小心他的怪风！"
+    ]
+   ],
+   "if": "yu",
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "dead": "linchong"
+   },
+   "do": [
+    [
+     "flag",
+     "lcdown"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "qinming"
+   },
+   "do": [
+    [
+     "flag",
+     "qmdown"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "lcdown"
+   },
+   "do": [
+    [
+     "defeat",
+     "林冲单挑落败。"
+    ]
+   ],
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "flag": "qmdown"
+   },
+   "do": [
+    [
+     "defeat",
+     "秦明单挑落败。"
+    ]
+   ],
+   "unless": "dueled"
+  },
+  {
+   "on": {
+    "turn": 4
    },
    "unless": [
     "reversed",
@@ -1029,11 +1842,12 @@
      "wuyong",
      "哥哥，那厮在念咒！天书上的回风返火，正是破这风沙的法子。"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 3
+    "turn": 5
    },
    "unless": [
     "huifeng",
@@ -1100,13 +1914,17 @@
       "near": "gaolian"
      }
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 3
+    "turn": 5
    },
-   "if": "huifeng",
+   "if": [
+    "huifeng",
+    "dueled"
+   ],
    "unless": [
     "reversed",
     "retreat"
@@ -1244,7 +2062,7 @@
   },
   {
    "on": {
-    "turn": 5
+    "turn": 7
    },
    "unless": [
     "reversed",
@@ -1255,11 +2073,12 @@
      "narrate",
      "高廉把太阿宝剑望空一指，口中念念有词……（下回合他要作法了）"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 6
+    "turn": 8
    },
    "unless": [
     "huifeng",
@@ -1326,13 +2145,17 @@
       "near": "gaolian"
      }
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 6
+    "turn": 8
    },
-   "if": "huifeng",
+   "if": [
+    "huifeng",
+    "dueled"
+   ],
    "unless": [
     "reversed",
     "retreat"
@@ -1470,7 +2293,7 @@
   },
   {
    "on": {
-    "turn": 8
+    "turn": 10
    },
    "unless": [
     "reversed",
@@ -1481,11 +2304,12 @@
      "narrate",
      "高廉把太阿宝剑望空一指，口中念念有词……（下回合他要作法了）"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 9
+    "turn": 11
    },
    "unless": [
     "huifeng",
@@ -1552,13 +2376,17 @@
       "near": "gaolian"
      }
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 9
+    "turn": 11
    },
-   "if": "huifeng",
+   "if": [
+    "huifeng",
+    "dueled"
+   ],
    "unless": [
     "reversed",
     "retreat"
@@ -1696,7 +2524,7 @@
   },
   {
    "on": {
-    "turn": 4
+    "turn": 6
    },
    "unless": "retreat",
    "do": [
@@ -1736,11 +2564,12 @@
      "appear",
      "r07"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 7
+    "turn": 9
    },
    "unless": "retreat",
    "do": [
@@ -1780,11 +2609,57 @@
      "appear",
      "r17"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
-    "turn": 5
+    "turn": 11
+   },
+   "unless": "retreat",
+   "do": [
+    [
+     "narrate",
+     "高廉又调出城中最后一彪人马，要把宋江困死在城下！"
+    ],
+    [
+     "appear",
+     "r20"
+    ],
+    [
+     "appear",
+     "r21"
+    ],
+    [
+     "appear",
+     "r22"
+    ],
+    [
+     "appear",
+     "r23"
+    ],
+    [
+     "appear",
+     "r24"
+    ],
+    [
+     "appear",
+     "r25"
+    ],
+    [
+     "appear",
+     "r26"
+    ],
+    [
+     "appear",
+     "r27"
+    ]
+   ],
+   "if": "dueled"
+  },
+  {
+   "on": {
+    "turn": 7
    },
    "unless": "retreat",
    "do": [
@@ -1816,7 +2691,8 @@
      "appear",
      "fl5"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
@@ -1856,14 +2732,15 @@
   },
   {
    "on": {
-    "turn": 13
+    "turn": 15
    },
    "do": [
     [
      "flag",
      "retreat"
     ]
-   ]
+   ],
+   "if": "dueled"
   },
   {
    "on": {
