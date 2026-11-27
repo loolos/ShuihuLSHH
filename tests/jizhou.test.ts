@@ -38,8 +38,11 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     const { b, get } = open('jiama');
     const likui = get('likui'), dz = get('daizong');
     expect(likui.side).toBe('ally');
-    expect(likui.ai.mode).toBe(4);
-    // 戴宗走到李逵身边
+    expect(likui.ai.mode).toBe(8);
+    // 起点离戴宗远，一回合走不到（负责人 2026-11-27）
+    expect(Math.abs(likui.x - dz.x) + Math.abs(likui.y - dz.y)).toBeGreaterThan(dz.stats.move + 2);
+    // 戴宗追到李逵附近，再走到他身边
+    dz.x = 6; dz.y = 26;
     const spot = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dy]) => ({ x: likui.x + dx, y: likui.y + dy })).find((c) => b.board.passable(c.x, c.y) && !b.active().some((u) => u.x === c.x && u.y === c.y))!;
     b.move(dz, spot.x, spot.y);
     expect(likui.side).toBe('player');
@@ -48,11 +51,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('蓟州寻公
     expect(b.status).toBe('won');
   });
 
-  it('甲马戏铁牛：戴宗一直追不上，第 4 回合也自动收法', () => {
+  it('甲马戏铁牛：李逵每回合跑到别处；戴宗一直追不上，第 6 回合也自动收法', () => {
     const { b, get } = open('jiama');
     const likui = get('likui');
     for (const u of b.units.filter((x) => x.side === 'enemy')) u.stats.attack = 0;
-    for (let t = 0; t < 3 && b.status === 'playing'; t++) b.endPlayerPhase();
+    const spots = new Set<string>();
+    for (let t = 0; t < 5 && b.status === 'playing'; t++) { spots.add(`${likui.x},${likui.y}`); b.endPlayerPhase(); }
+    expect(spots.size).toBe(5);
     expect(likui.side).toBe('player');
   });
 
