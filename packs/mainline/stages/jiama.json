@@ -1,0 +1,523 @@
+{
+ "id": "jiama",
+ "title": "甲马戏铁牛",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 500
+ },
+ "map": {
+  "custom": "jieyangling"
+ },
+ "bgm": [
+  "comic",
+  "battle"
+ ],
+ "goals": [
+  {
+   "unless": "freed",
+   "win": "打退岭下的毛贼",
+   "lose": "李逵或戴宗倒下",
+   "hint": "李逵腿上缚了甲马停不住脚，由不得你指挥。戴宗赶到他身边两格以内，就能替他收了神行法"
+  },
+  {
+   "if": "freed",
+   "win": "打退岭下的毛贼",
+   "lose": "李逵或戴宗倒下"
+  }
+ ],
+ "units": [
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 9,
+   "y": 12,
+   "level": 30,
+   "facing": 3
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 10,
+   "y": 13,
+   "level": 30,
+   "facing": 3,
+   "point": [
+    3,
+    27
+   ]
+  },
+  {
+   "id": "xiaoer",
+   "class": "jiubao",
+   "side": "ally",
+   "x": 8,
+   "y": 11,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "spectator": true,
+   "name": "店小二"
+  },
+  {
+   "id": "ma0",
+   "class": 44,
+   "side": "enemy",
+   "x": 14,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "ma1",
+   "class": 44,
+   "side": "enemy",
+   "x": 15,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "ma2",
+   "class": 44,
+   "side": "enemy",
+   "x": 16,
+   "y": 19,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "ma3",
+   "class": 45,
+   "side": "enemy",
+   "x": 14,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "ma4",
+   "class": 45,
+   "side": "enemy",
+   "x": 15,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "ma5",
+   "class": 45,
+   "side": "enemy",
+   "x": 17,
+   "y": 20,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb0",
+   "class": 44,
+   "side": "enemy",
+   "x": 21,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb1",
+   "class": 44,
+   "side": "enemy",
+   "x": 22,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb2",
+   "class": 44,
+   "side": "enemy",
+   "x": 23,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb3",
+   "class": 45,
+   "side": "enemy",
+   "x": 21,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb4",
+   "class": 45,
+   "side": "enemy",
+   "x": 22,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "mb5",
+   "class": 45,
+   "side": "enemy",
+   "x": 23,
+   "y": 26,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -5,
+   "name": "毛贼"
+  },
+  {
+   "id": "touling",
+   "class": 65,
+   "side": "enemy",
+   "x": 20,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": -3,
+   "enemyRank": "leader",
+   "name": "剪径头领"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "往蓟州路上 · 村店"
+    ],
+    [
+     "narrate",
+     "却说吴用定计，要去蓟州寻取公孙胜来破高廉的妖法。戴宗领了这件事，李逵吵着要同去。"
+    ],
+    [
+     "say",
+     "daizong",
+     "你要跟我去，须一路上吃素，凡事听我的言语。"
+    ],
+    [
+     "say",
+     "likui",
+     "这个有甚么难！俺都依你。"
+    ],
+    [
+     "narrate",
+     "两个离了高唐州，行了一日，投村店歇了。戴宗只叫店家安排素饭，自去房里歇。"
+    ],
+    [
+     "face",
+     "likui",
+     "xiaoer"
+    ],
+    [
+     "say",
+     "likui",
+     "（低声）店家，有牛肉么？切一盘来，再打两角酒。悄悄的，休叫那个瘦子知道。"
+    ],
+    [
+     "say",
+     "xiaoer",
+     "有，有。客官稍待。"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "xiaoer"
+    ],
+    [
+     "narrate",
+     "李逵背着戴宗，一盘牛肉、两角酒，吃得干干净净，抹抹嘴回房，倒头便睡。戴宗在窗外都看在眼里，只暗暗地笑，也不说破。"
+    ],
+    [
+     "narrate",
+     "次日五更，两个起来上路。"
+    ],
+    [
+     "face",
+     "daizong",
+     "likui"
+    ],
+    [
+     "say",
+     "daizong",
+     "兄弟，今日我与你行个神行法，好赶路。腿上缚四个甲马，跟着我走。"
+    ],
+    [
+     "narrate",
+     "戴宗取出四个甲马，在李逵两只腿上各缚两个，口里念念有词，吹一口气。"
+    ],
+    [
+     "say",
+     "daizong",
+     "起！"
+    ],
+    [
+     "defect",
+     "likui",
+     "ally"
+    ],
+    [
+     "setAi",
+     "likui",
+     4
+    ],
+    [
+     "buff",
+     "likui",
+     "move",
+     {
+      "add": 5,
+      "turns": 4
+     }
+    ],
+    [
+     "move",
+     "likui",
+     8,
+     18,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "likui",
+     "哎呀！俺的腿！腿不由人了！……停不住！停不住！"
+    ],
+    [
+     "say",
+     "daizong",
+     "（不慌不忙，在后面慢慢跟着）你只管走，我随后便来。"
+    ],
+    [
+     "narrate",
+     "岭下正有一伙剪径的毛贼守在路口，见一条黑大汉脚不点地飞奔下来，都吃了一惊。"
+    ],
+    [
+     "say",
+     "touling",
+     "那黑厮跑恁地快做甚么？……拦住他！包裹留下！"
+    ],
+    [
+     "focus",
+     "daizong"
+    ],
+    [
+     "flag",
+     "run"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "likui",
+    "by": "daizong",
+    "range": 2
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "face",
+     "likui",
+     "daizong"
+    ],
+    [
+     "say",
+     "likui",
+     "爷爷，且住一住！"
+    ],
+    [
+     "say",
+     "daizong",
+     "怪哉！我的神行法，从来不曾这般收不住脚。兄弟，你莫不是昨夜吃了牛肉？"
+    ],
+    [
+     "say",
+     "likui",
+     "（慌）不曾，不曾！……只、只吃了一盘。"
+    ],
+    [
+     "say",
+     "daizong",
+     "我这法，不许吃荤，第一戒的是牛肉。若还吃了一块牛肉，直要走十万里，方才得住。"
+    ],
+    [
+     "say",
+     "likui",
+     "苦也！十万里走下来，俺这两条腿都没了！好哥哥，饶俺这一遭，俺再也不敢了！"
+    ],
+    [
+     "say",
+     "daizong",
+     "你今后都依我？"
+    ],
+    [
+     "say",
+     "likui",
+     "依！都依！便是一块肉也不吃了！"
+    ],
+    [
+     "narrate",
+     "戴宗把衣袖去李逵腿上只一拂，喝声「住」，李逵的脚才立定了，却似钉住在地上一般。"
+    ],
+    [
+     "defect",
+     "likui",
+     "player"
+    ],
+    [
+     "cleanse",
+     "likui"
+    ],
+    [
+     "setAi",
+     "likui",
+     0
+    ],
+    [
+     "say",
+     "likui",
+     "（喘气）哥哥……这几个毛贼，就交与俺出气罢！"
+    ],
+    [
+     "flag",
+     "freed"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "run",
+   "unless": "freed",
+   "do": [
+    [
+     "say",
+     "daizong",
+     "（远远地）兄弟，你可晓得错了？"
+    ],
+    [
+     "say",
+     "likui",
+     "（远远地）爷爷，俺晓得了！再不敢吃牛肉了！"
+    ],
+    [
+     "narrate",
+     "戴宗远远地念个咒，李逵的脚这才停住。"
+    ],
+    [
+     "defect",
+     "likui",
+     "player"
+    ],
+    [
+     "cleanse",
+     "likui"
+    ],
+    [
+     "setAi",
+     "likui",
+     0
+    ],
+    [
+     "flag",
+     "freed"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "likui"
+   },
+   "do": [
+    [
+     "defeat",
+     "李逵倒下了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "daizong"
+   },
+   "do": [
+    [
+     "defeat",
+     "戴宗倒下了。"
+    ]
+   ]
+  },
+  {
+   "on": "allEnemiesDefeated",
+   "do": [
+    [
+     "narrate",
+     "毛贼丢下刀枪，四散逃进林子里去了。"
+    ],
+    [
+     "approach",
+     "daizong",
+     "likui"
+    ],
+    [
+     "say",
+     "daizong",
+     "兄弟，再上路罢。这回我只缚两个甲马，你也慢些。"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥，前头若有酒店……"
+    ],
+    [
+     "say",
+     "daizong",
+     "素面。"
+    ],
+    [
+     "say",
+     "likui",
+     "……素面就素面。"
+    ],
+    [
+     "narrate",
+     "两个用神行法，不数日到了蓟州。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,473 @@
+{
+ "id": "erxianshan",
+ "title": "二仙山访道",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "baihu-cundian"
+ },
+ "bgm": [
+  "inn",
+  "comic"
+ ],
+ "units": [
+  {
+   "id": "daizong",
+   "class": "daizong",
+   "side": "player",
+   "x": 13,
+   "y": 15,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "likui",
+   "class": "likui",
+   "side": "player",
+   "x": 13,
+   "y": 16,
+   "level": 30,
+   "facing": 1
+  },
+  {
+   "id": "laozhang",
+   "class": "laozhang",
+   "side": "ally",
+   "x": 12,
+   "y": 15,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "老丈"
+  },
+  {
+   "id": "xiaoer",
+   "class": "jiubao",
+   "side": "ally",
+   "x": 12,
+   "y": 14,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "面店伙计"
+  },
+  {
+   "id": "mu",
+   "class": "gongsun-mu",
+   "side": "ally",
+   "x": 3,
+   "y": 9,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "name": "公孙胜老母"
+  },
+  {
+   "id": "gongsun",
+   "class": 2,
+   "side": "ally",
+   "x": 4,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "公孙胜"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "蓟州城外 · 村镇素面店"
+    ],
+    [
+     "narrate",
+     "两个到了蓟州，城里城外寻了几日，并无一个人晓得公孙胜。这日到城外一个村镇上，入一家素面店里吃面。店里客多，只剩一张桌子，和一个老丈合坐了。"
+    ],
+    [
+     "say",
+     "likui",
+     "（等了半晌）面怎地还不来！"
+    ],
+    [
+     "say",
+     "xiaoer",
+     "客官稍待，这位老丈先叫的。"
+    ],
+    [
+     "narrate",
+     "伙计先端一碗热面给那老丈。李逵等得焦躁，把桌子只一拍——那碗热面跳将起来，泼了老丈一脸热汁。"
+    ],
+    [
+     "act",
+     "laozhang",
+     "hurt"
+    ],
+    [
+     "say",
+     "laozhang",
+     "（跳起来）你是甚么道理！打翻我的面！"
+    ],
+    [
+     "say",
+     "likui",
+     "（瞪眼）哪个叫你先吃！"
+    ],
+    [
+     "choice",
+     "老丈揪住李逵不放。戴宗怎么办？",
+     [
+      "替李逵赔礼",
+      "apologize"
+     ],
+     [
+      "装作不认得这黑厮",
+      "pretend"
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "pretend"
+   },
+   "do": [
+    [
+     "face",
+     "daizong",
+     "xiaoer"
+    ],
+    [
+     "say",
+     "daizong",
+     "（低头吃面）伙计，再添些醋。"
+    ],
+    [
+     "say",
+     "likui",
+     "哥哥！你怎地不帮俺说句话？"
+    ],
+    [
+     "say",
+     "laozhang",
+     "原来是一路的！今日不说个明白，休想出这店门！"
+    ],
+    [
+     "say",
+     "daizong",
+     "（叹气）……罢，罢。"
+    ],
+    [
+     "flag",
+     "apologize"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "apologize"
+   },
+   "do": [
+    [
+     "face",
+     "daizong",
+     "laozhang"
+    ],
+    [
+     "say",
+     "daizong",
+     "老丈休怪，这是小可的伴当，粗鲁不晓事。小可再赔老丈一碗面。"
+    ],
+    [
+     "face",
+     "laozhang",
+     "daizong"
+    ],
+    [
+     "say",
+     "laozhang",
+     "（拭脸）罢了，看你这位客官面上。老汉是本府九宫县二仙山下人，因来城中买些香，回去听山上罗真人讲说长生不老之法，正要赶路。"
+    ],
+    [
+     "say",
+     "daizong",
+     "老丈，你那里可有个公孙胜么？"
+    ],
+    [
+     "say",
+     "laozhang",
+     "别人问时不知，若问老汉，正是老汉的间壁邻舍。他只有个老母在堂。这人如今不叫公孙胜，唤作清道人，是罗真人的上首徒弟。罗真人不放他离左右，轻易也不下山。"
+    ],
+    [
+     "say",
+     "daizong",
+     "（喜）踏破铁鞋无觅处，得来全不费工夫！"
+    ],
+    [
+     "say",
+     "likui",
+     "哈！这碗面泼得好！"
+    ],
+    [
+     "say",
+     "daizong",
+     "住口。"
+    ],
+    [
+     "narrate",
+     "老丈说二仙山离县四十五里。两个随即赶到九宫县，问到二仙山下，打听得清道人家就在山下，屋后炼丹。"
+    ],
+    [
+     "title",
+     "九宫县 · 二仙山下"
+    ],
+    [
+     "leave",
+     "laozhang"
+    ],
+    [
+     "leave",
+     "xiaoer"
+    ],
+    [
+     "move",
+     "daizong",
+     5,
+     10,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "move",
+     "likui",
+     7,
+     12,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "daizong",
+     "mu"
+    ],
+    [
+     "face",
+     "mu",
+     "daizong"
+    ],
+    [
+     "say",
+     "daizong",
+     "老娘，小可是清道人的旧友，特来相探，有要紧的话说。"
+    ],
+    [
+     "say",
+     "mu",
+     "孩儿出外云游，不曾还家。"
+    ],
+    [
+     "say",
+     "daizong",
+     "小可明日再来。"
+    ],
+    [
+     "move",
+     "daizong",
+     7,
+     11,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "daizong",
+     "likui"
+    ],
+    [
+     "say",
+     "daizong",
+     "他娘说不在家，我看是不肯出来见人。"
+    ],
+    [
+     "choice",
+     "怎么叫公孙胜出来？",
+     [
+      "再去好言相求",
+      "beg"
+     ],
+     [
+      "叫李逵去吓他一吓",
+      "scare"
+     ]
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "beg"
+   },
+   "do": [
+    [
+     "move",
+     "daizong",
+     5,
+     10,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "daizong",
+     "老娘，小可从山东远路来，实有性命相关的大事，只求见清道人一面。"
+    ],
+    [
+     "say",
+     "mu",
+     "（摇头）出外云游去了，老身也不知几时回来。"
+    ],
+    [
+     "move",
+     "daizong",
+     7,
+     11,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "say",
+     "daizong",
+     "……只得依计行事了。兄弟，你如此如此。只吓他，休真伤了老人家。"
+    ],
+    [
+     "say",
+     "likui",
+     "俺省得！"
+    ],
+    [
+     "flag",
+     "scare"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "flag": "scare"
+   },
+   "do": [
+    [
+     "bgm",
+     "likui"
+    ],
+    [
+     "narrate",
+     "李逵拔出两把板斧，大踏步抢进门里去。"
+    ],
+    [
+     "move",
+     "likui",
+     4,
+     10,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "likui",
+     "mu"
+    ],
+    [
+     "say",
+     "likui",
+     "快叫你儿子出来！不出来时，一把火烧了你这屋！"
+    ],
+    [
+     "act",
+     "likui",
+     "attack",
+     "mu"
+    ],
+    [
+     "narrate",
+     "李逵一斧砍在壁上，泥土簌簌地落。老母吓得跌倒在地。"
+    ],
+    [
+     "act",
+     "mu",
+     "hurt"
+    ],
+    [
+     "appear",
+     "gongsun"
+    ],
+    [
+     "face",
+     "gongsun",
+     "likui"
+    ],
+    [
+     "say",
+     "gongsun",
+     "不得无礼！"
+    ],
+    [
+     "move",
+     "daizong",
+     5,
+     10,
+     {
+      "nearest": true
+     }
+    ],
+    [
+     "face",
+     "daizong",
+     "gongsun"
+    ],
+    [
+     "say",
+     "daizong",
+     "兄长休怪，若不如此，兄长不肯出来。"
+    ],
+    [
+     "narrate",
+     "戴宗扶起老母，李逵撇了板斧，唱个大喏赔礼。"
+    ],
+    [
+     "say",
+     "likui",
+     "老娘休怪，俺是粗人……哥哥，俺不是真要砍。"
+    ],
+    [
+     "say",
+     "gongsun",
+     "（叹）罢了。二位随我到净室里说话。"
+    ],
+    [
+     "say",
+     "daizong",
+     "高唐州知府高廉会妖法，宋公明哥哥连输几阵，柴大官人还陷在牢里。军师说，除非兄长去，破不得他的法。"
+    ],
+    [
+     "say",
+     "gongsun",
+     "贫道自从回乡，本师罗真人留在左右，所以改了名号，只怕人寻来。去不去，须得本师答应。明日同上山去问他。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}
