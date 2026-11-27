@@ -24,11 +24,14 @@
 | `jiebao/` | 解宝（绿头巾、豹斑皮坎肩、绿裤、钢叉）：idle（Staff_Idle）、walk、hit、defend、thrust、sweep、smash、two-tail（扫 + 砸）、chest-thump（聚气）。配方 `characters/jiebao.json` |
 | `jiezhen-jia/`、`jiebao-jia/` | 带枷的解珍、解宝（去掉钢叉，脖子上套木枷）：idle、walk、hit、defend、ram（枷撞）、spin（枷打）。配方 `characters/jiezhen-jia.json`、`jiebao-jia.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
+| `wolf/`、`fox/` | 狼、狐狸：idle 待机、walk 走、attack 扑咬、pounce 飞扑（`Gallop_Jump`）、hit 受击、defend 低头伏身（`Idle_2_HeadLow`）、death 倒地 |
+| `stag/`、`donkey/`、`cow/`、`bull/` | 鹿、驴、牛、公牛：idle、walk、headbutt 低头顶、kick 后踢、charge 奔跑（`Gallop`）、hit、defend 低头（`Idle_Headlow`）、death |
 
 ## 来源与授权
 
 - **武松**：Quaternius「Universal Animation Library」`UAL1_Standard.glb`。授权 CC0 1.0（公有领域）。衣服由 `src/outfit-wusong.json` 生成。
 - **李逵**：同一个 `UAL1_Standard.glb`，CC0 1.0。坎肩、红腰带、宽裤、裹腿、发髻、络腮胡、两把板斧由 `src/outfit-likui.json` 生成（原在江州外传包，外传删除后搬到这里）。
+- **狼、狐狸、鹿、驴、牛、公牛**：Quaternius「Ultimate Animated Animals」，CC0 1.0。模型在 `gamedata/models/animals/`。渲染参数：`--frames 8 --length 1.6`（狼）/ `1.0`（狐）/ `1.7`（鹿）/ `1.5`（驴）/ `1.9`（牛）/ `2.1`（公牛），其余默认（不用 `--outfit`，模型自带纯色材质）；`--actions` 只渲染上表用到的动作，再按上表改名。
 - **老虎**：Sketchfab 上 planeta-elefante 的「Tiger」模型。授权 CC BY 4.0，**游戏里要署名**（制作人员名单写：Tiger model by planeta-elefante, CC BY 4.0）。
 
 2026-11-23 起通用假人和动作库已入库（`gamedata/models/`），新人物按配方用 `tools/render-character.py` 渲染，见 `gamedata/models/README.md`。
