@@ -82,10 +82,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     const s0 = summons()[0];
     gs.x = s0.x; gs.y = s0.y + 1;
     if (!b.board.passable(gs.x, gs.y) || b.units.some((u) => u !== gs && u.present && u.x === gs.x && u.y === gs.y)) { gs.x = s0.x + 1; gs.y = s0.y; }
+    const before = new Map(summons().map((u) => [u.uid, u.hp]));
     b.useItem(gs, slot());
-    const near = summons().filter((u) => Math.abs(u.x - gs.x) + Math.abs(u.y - gs.y) <= 8);
-    expect(near.length).toBeGreaterThan(0);
-    for (const u of near) expect(u.hp).toBeLessThanOrEqual(Math.floor(u.stats.maxHp * 0.1));
+    // 全场神兵猛兽都掉血：紧挨着的掉九成（最低留一成），越远掉得越少，最远也掉三成
+    const d = (u: Unit) => Math.abs(u.x - gs.x) + Math.abs(u.y - gs.y);
+    for (const u of summons()) {
+      const lost = (before.get(u.uid)! - u.hp) / u.stats.maxHp;
+      if (before.get(u.uid)! >= u.stats.maxHp * 0.95) expect(lost, `${u.name} 距离 ${d(u)}`).toBeGreaterThanOrEqual(0.29);
+      if (d(u) <= 1) expect(u.hp).toBeLessThanOrEqual(Math.ceil(u.stats.maxHp * 0.1));
+      expect(u.hp).toBeGreaterThanOrEqual(Math.min(before.get(u.uid)!, Math.floor(u.stats.maxHp * 0.1)));
+    }
+    const far = summons().filter((u) => d(u) >= 16 && before.get(u.uid)! === u.stats.maxHp);
+    for (const u of far) expect(Math.round((u.stats.maxHp - u.hp) / u.stats.maxHp * 100)).toBe(30);
     // 天书还在（共三次）；下一回合高廉的法被破，他阵中有人逃窜
     expect(slot()).toBeGreaterThanOrEqual(0);
     said.length = 0;
