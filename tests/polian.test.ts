@@ -112,6 +112,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     gl.hp = Math.floor(gl.stats.maxHp * 0.5);
     step();
     expect(gl.ai.mode === 4 || get('sunli').present).toBe(true);
+    // 退的时候最后一搏：又招出 6 个飞天神兵、五种猛兽各一
+    for (const id of ['ls0', 'ls5', 'lm0', 'lm4']) expect(get(id).present || !get(id).alive, id).toBe(true);
     if (!get('sunli').present) step();
     for (const id of ['sunli', 'zhutong', 'leiheng']) expect(get(id).present, id).toBe(true);
     gl.hp = Math.floor(gl.stats.maxHp * 0.15);
