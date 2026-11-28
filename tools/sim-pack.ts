@@ -97,8 +97,10 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         const c = { x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1 };
         const field = b.board.distanceField([c]);
         const free = b.active().filter((x) => x.side === 'player' && !assigned.has(x.uid) && b.canAct(x));
+        // 全员都要进去的区域（呼延灼挂帅的水寨）：每个人都派去
+        if (z.all) for (const x of free) assigned.set(x.uid, z);
         const who = free.sort((p, q) => field[p.y * b.board.width + p.x] - field[q.y * b.board.width + q.x])[0];
-        if (who) assigned.set(who.uid, z);
+        if (who && !z.all) assigned.set(who.uid, z);
       }
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;

@@ -78,6 +78,8 @@ export interface ClassDef {
   goldCap: number;
   defaultItems: number[];
   skills: SkillDef[];
+  /** 连环马【新】（呼延灼挂帅，负责人 2026-11-28）：4 格内有同阵营的连环马就加防御、减受伤（Battle.refreshChains） */
+  chain?: boolean;
 }
 
 export interface GameData {

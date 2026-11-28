@@ -1,0 +1,352 @@
+{
+ "id": "gaotaiwei",
+ "title": "高太尉大兴三路兵",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 0
+ },
+ "map": {
+  "custom": "guanfu"
+ },
+ "bgm": [
+  "intrigue",
+  "warlord"
+ ],
+ "units": [
+  {
+   "id": "tianzi",
+   "class": "tianzi",
+   "side": "ally",
+   "x": 18,
+   "y": 4,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "hidden": true,
+   "name": "天子"
+  },
+  {
+   "id": "gaoqiu",
+   "class": 56,
+   "side": "ally",
+   "x": 17,
+   "y": 7,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "殿帅府太尉高俅"
+  },
+  {
+   "id": "guan0",
+   "class": 36,
+   "side": "ally",
+   "x": 15,
+   "y": 6,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "文官"
+  },
+  {
+   "id": "guan1",
+   "class": 36,
+   "side": "ally",
+   "x": 15,
+   "y": 8,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "文官"
+  },
+  {
+   "id": "guan2",
+   "class": 42,
+   "side": "ally",
+   "x": 20,
+   "y": 6,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "hidden": true,
+   "name": "武官"
+  },
+  {
+   "id": "guan3",
+   "class": 42,
+   "side": "ally",
+   "x": 21,
+   "y": 8,
+   "level": 30,
+   "facing": 1,
+   "ai": 8,
+   "hidden": true,
+   "name": "武官"
+  },
+  {
+   "id": "huyanzhuo",
+   "class": "huyanzhuo",
+   "side": "ally",
+   "x": 13,
+   "y": 12,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "双鞭呼延灼"
+  },
+  {
+   "id": "hantao",
+   "class": "hantao",
+   "side": "ally",
+   "x": 12,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "百胜将韩滔"
+  },
+  {
+   "id": "pengqi",
+   "class": "pengqi",
+   "side": "ally",
+   "x": 14,
+   "y": 13,
+   "level": 30,
+   "facing": 0,
+   "ai": 8,
+   "hidden": true,
+   "name": "天目将彭玘"
+  },
+  {
+   "id": "zuohou",
+   "class": 32,
+   "side": "ally",
+   "x": 11,
+   "y": 12,
+   "level": 30,
+   "facing": 3,
+   "ai": 8,
+   "hidden": true,
+   "name": "虞候"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "梁山泊 · 聚义厅"
+    ],
+    [
+     "narrate",
+     "宋江打破高唐州，救了柴进，收拾府库钱粮，大小三军回到梁山泊。柴进拜谢众头领救命之恩，晁盖、宋江大排筵席，又添了柴进、汤隆两个头领。"
+    ],
+    [
+     "narrate",
+     "高唐州一破、知府高廉身死的消息，早有人报上东京。高廉正是殿帅府太尉高俅的叔伯兄弟。"
+    ],
+    [
+     "title",
+     "东京 · 紫宸殿"
+    ],
+    [
+     "appear",
+     "tianzi"
+    ],
+    [
+     "appear",
+     "guan0"
+    ],
+    [
+     "appear",
+     "guan1"
+    ],
+    [
+     "appear",
+     "guan2"
+    ],
+    [
+     "appear",
+     "guan3"
+    ],
+    [
+     "narrate",
+     "次日五更三点，天子驾坐紫宸殿，文武百官朝贺已毕。"
+    ],
+    [
+     "appear",
+     "gaoqiu"
+    ],
+    [
+     "focus",
+     "gaoqiu"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "（出班奏道）今有济州梁山泊贼首晁盖、宋江，累造大恶，打劫城池，抢掳仓廒，聚集凶徒恶党。现在济州杀害官军，闹了江州无为军；今又将高唐州官民杀戮一空，仓廒库藏尽被掳去。此是心腹大患，若不早行诛剿，他日养成贼势，难以制伏。伏乞圣断。"
+    ],
+    [
+     "say",
+     "tianzi",
+     "（大惊）竟有这等事！卿家既知此贼，可保何人领兵去剿？"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "臣保一人，可去收复梁山泊：乃开国之初河东名将呼延赞嫡派子孙，单名个灼字，使两条铜鞭，人不可近，现受汝宁郡都统制，手下多有精兵勇将。"
+    ],
+    [
+     "say",
+     "tianzi",
+     "既是将门之后，准卿所奏。就着枢密院差人，星夜往汝宁州宣取呼延灼赴京。"
+    ],
+    [
+     "narrate",
+     "天子退朝，高俅就殿帅府差官，赍了圣旨，往汝宁州星夜宣取呼延灼。"
+    ],
+    [
+     "leave",
+     "tianzi"
+    ],
+    [
+     "leave",
+     "guan0"
+    ],
+    [
+     "leave",
+     "guan1"
+    ],
+    [
+     "leave",
+     "guan2"
+    ],
+    [
+     "leave",
+     "guan3"
+    ],
+    [
+     "title",
+     "东京 · 殿帅府"
+    ],
+    [
+     "narrate",
+     "不一日，呼延灼来到京师，先到殿帅府参见高太尉。次日早朝引见天子，天子见了呼延灼一表非俗，喜动天颜，就赐踢雪乌骓一匹。那马浑身墨锭似黑，四蹄雪练价白，日行千里。"
+    ],
+    [
+     "appear",
+     "huyanzhuo"
+    ],
+    [
+     "move",
+     "huyanzhuo",
+     16,
+     8
+    ],
+    [
+     "face",
+     "gaoqiu",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "呼延将军，梁山贼寇猖獗，此番全仗将军。军马、钱粮但用多少，只管说来。"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "（躬身）禀恩相：小人探知梁山泊兵多将广、马军精锐，不可轻敌小觑。小人保举二将为先锋，同提军马到彼，必获大功。"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "是哪二将？"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "一个是陈州团练使，姓韩名滔，原是东京人氏，曾应过武举出身，使一条枣木槊，人呼为百胜将军。"
+    ],
+    [
+     "appear",
+     "hantao"
+    ],
+    [
+     "move",
+     "hantao",
+     15,
+     9
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "一个是颍州团练使，姓彭名玘，亦是东京人氏，乃累代将门之子，使一口三尖两刃刀，武艺出众，人呼为天目将军。此二人可为前部先锋。"
+    ],
+    [
+     "appear",
+     "pengqi"
+    ],
+    [
+     "move",
+     "pengqi",
+     17,
+     9
+    ],
+    [
+     "face",
+     "hantao",
+     "gaoqiu"
+    ],
+    [
+     "face",
+     "pengqi",
+     "gaoqiu"
+    ],
+    [
+     "say",
+     "hantao",
+     "末将韩滔，愿随都统制扫平梁山！"
+    ],
+    [
+     "say",
+     "pengqi",
+     "末将彭玘，愿为前部先锋，誓擒宋江！"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "好！三路军马，就是你三个领去。只是那伙草寇也有些本事，将军可有破敌之策？"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "恩相放心。梁山泊多是步军，水泊边上一片旷野，正好驰骋。小人有一阵法，唤做「连环马」：马带马甲，人披铁铠，马只露得四蹄悬地，人只露着一对眼睛；三十匹一排，用铁环连锁。远的用箭射，近的用枪戳，直冲入去，任他千军万马，一冲便倒！"
+    ],
+    [
+     "say",
+     "gaoqiu",
+     "（大喜）好计！便教甲仗库支给铁甲，御马监拣选好马，限日起程。"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "（转身向二将）二位贤弟，回去各点本部军马。此番教那伙草寇见识见识呼延家的连环马！"
+    ],
+    [
+     "narrate",
+     "呼延灼领了圣旨，辞了高太尉，与韩滔、彭玘点起三路军马，马步三军共一万余人，浩浩荡荡杀奔梁山泊来。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  }
+ ]
+}

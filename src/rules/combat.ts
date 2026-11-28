@@ -106,7 +106,9 @@ export function baseDamage(att: Unit, def: Unit, skill: SkillDef): [number, numb
   // 骑兵气功技伤害减半；按施术职业限定，避免影响借用同一原版技能的好汉。
   const cavalryQigong = att.classId === 43 && skill.skillId === 226 && skill.type === 0 ? 0.5 : 1;
   const f = rangedFactor(att, def, skill) * (def.defending ? 1 : (def.unaware ? SNEAK_DAMAGE_FACTOR : FACING_DAMAGE_FACTOR)[relation]) * cavalryQigong
-    * (skill.vsStunned && def.stunTurns > 0 ? skill.vsStunned : 1);
+    * (skill.vsStunned && def.stunTurns > 0 ? skill.vsStunned : 1)
+    // 连环马【新】：加成 b% 时受伤 ×100/(100+b)，和体力多 b% 一样耐打，血条不用跟着变（负责人 2026-11-28）
+    * (def.chainBonus ? 100 / (100 + def.chainBonus) : 1);
   const d = Math.max(0, def.stats.defense);
   const normal = ratioDamage(a, d);
   const critical = a > 0 ? normal + (1 + critChance(att, skill) / 100) * a * a / (a + 3 * d) : 0;

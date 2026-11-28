@@ -1,0 +1,1950 @@
+{
+ "id": "guashuai",
+ "title": "呼延灼挂帅",
+ "dynamicLevels": true,
+ "rewards": {
+  "gold": 1500
+ },
+ "map": {
+  "custom": "yazuitan"
+ },
+ "bgm": [
+  "cavalry",
+  "army"
+ ],
+ "goals": [
+  {
+   "win": "活捉彭玘",
+   "lose": [
+    "%N倒下",
+    "我方阵亡达到 4 人",
+    "超过 18 回合"
+   ],
+   "hint": "呼延灼、韩滔打不死，体力不到三成就退回本阵；彭玘体力不到三成就被活捉。拖到第 6 回合，官军的连环马也会出阵"
+  },
+  {
+   "if": "p2",
+   "win": "打倒 8 匹连环马"
+  },
+  {
+   "if": "p2",
+   "unless": "eight",
+   "hint": "连环马 4 格以内有别的连环马就加防御、少受伤，挤得越多越硬（最多加六成）；把单匹引开再打。打倒一匹，紧挨着它的马被绊住，少走 3 格"
+  },
+  {
+   "if": "p2",
+   "unless": "w2",
+   "hint": "过三回合第二批连环马会从两翼冲出来；连环马一冲锋，撞到的人受伤、被挤开，喽啰会吓得逃窜"
+  },
+  {
+   "if": "eight",
+   "win": "在场的好汉全部退进水寨（地图上标出）"
+  }
+ ],
+ "units": [
+  {
+   "id": "songjiang",
+   "class": "sj-fugitive",
+   "side": "ally",
+   "x": 17,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true
+  },
+  {
+   "id": "wuyong",
+   "class": 10,
+   "side": "ally",
+   "x": 18,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 8,
+   "spectator": true,
+   "name": "吴用"
+  },
+  {
+   "id": "hero",
+   "class": 0,
+   "side": "player",
+   "x": 18,
+   "y": 13,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "qinming",
+   "class": "qinming",
+   "side": "player",
+   "x": 14,
+   "y": 14,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "linchong",
+   "class": 11,
+   "side": "player",
+   "x": 16,
+   "y": 14,
+   "level": 30,
+   "facing": 2,
+   "name": "林冲"
+  },
+  {
+   "id": "huarong",
+   "class": "huarong",
+   "side": "player",
+   "x": 18,
+   "y": 12,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "husanniang",
+   "class": "husanniang",
+   "side": "player",
+   "x": 20,
+   "y": 14,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "sunli",
+   "class": "sunli",
+   "side": "player",
+   "x": 22,
+   "y": 14,
+   "level": 30,
+   "facing": 2
+  },
+  {
+   "id": "pengqi-p",
+   "class": "pengqi",
+   "side": "player",
+   "x": 18,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "hidden": true,
+   "name": "天目将彭玘"
+  },
+  {
+   "id": "lb0",
+   "class": 44,
+   "side": "ally",
+   "x": 13,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "lb1",
+   "class": 45,
+   "side": "ally",
+   "x": 15,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "lb2",
+   "class": 44,
+   "side": "ally",
+   "x": 17,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "lb3",
+   "class": 45,
+   "side": "ally",
+   "x": 19,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "lb4",
+   "class": 44,
+   "side": "ally",
+   "x": 21,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "lb5",
+   "class": 45,
+   "side": "ally",
+   "x": 23,
+   "y": 12,
+   "level": 30,
+   "facing": 2,
+   "name": "梁山喽啰"
+  },
+  {
+   "id": "huyanzhuo",
+   "class": "huyanzhuo",
+   "side": "enemy",
+   "x": 18,
+   "y": 25,
+   "level": 30,
+   "facing": 0,
+   "enemyRank": "leader",
+   "levelOffset": 2,
+   "hpMultiplier": 3,
+   "name": "双鞭呼延灼"
+  },
+  {
+   "id": "hantao",
+   "class": "hantao",
+   "side": "enemy",
+   "x": 12,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "enemyRank": "leader",
+   "levelOffset": 2,
+   "hpMultiplier": 2,
+   "name": "百胜将韩滔"
+  },
+  {
+   "id": "pengqi",
+   "class": "pengqi",
+   "side": "enemy",
+   "x": 24,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "enemyRank": "leader",
+   "levelOffset": 1,
+   "hpMultiplier": 2,
+   "name": "天目将彭玘"
+  },
+  {
+   "id": "g00",
+   "class": 32,
+   "side": "enemy",
+   "x": 11,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "g01",
+   "class": 38,
+   "side": "enemy",
+   "x": 13,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "都头"
+  },
+  {
+   "id": "g02",
+   "class": 34,
+   "side": "enemy",
+   "x": 11,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "g03",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "g10",
+   "class": 32,
+   "side": "enemy",
+   "x": 17,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "g11",
+   "class": 38,
+   "side": "enemy",
+   "x": 19,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "都头"
+  },
+  {
+   "id": "g12",
+   "class": 34,
+   "side": "enemy",
+   "x": 17,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "g13",
+   "class": 34,
+   "side": "enemy",
+   "x": 19,
+   "y": 23,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "g20",
+   "class": 32,
+   "side": "enemy",
+   "x": 23,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "官兵"
+  },
+  {
+   "id": "g21",
+   "class": 38,
+   "side": "enemy",
+   "x": 25,
+   "y": 21,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "都头"
+  },
+  {
+   "id": "g22",
+   "class": 34,
+   "side": "enemy",
+   "x": 23,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "g23",
+   "class": 34,
+   "side": "enemy",
+   "x": 25,
+   "y": 22,
+   "level": 30,
+   "facing": 0,
+   "levelOffset": 1,
+   "name": "弓手"
+  },
+  {
+   "id": "ma0",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 12,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma1",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 15,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma2",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 18,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma3",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 21,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma4",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 13,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma5",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 16,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma6",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 19,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "ma7",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 22,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb0",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 5,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb1",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 7,
+   "y": 28,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb2",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 5,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb3",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 7,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb4",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 29,
+   "y": 27,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb5",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 31,
+   "y": 28,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb6",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 29,
+   "y": 29,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "mb7",
+   "class": "lianhuan",
+   "side": "enemy",
+   "x": 31,
+   "y": 30,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -2,
+   "name": "连环马"
+  },
+  {
+   "id": "nu0",
+   "class": 34,
+   "side": "enemy",
+   "x": 13,
+   "y": 32,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓弩手"
+  },
+  {
+   "id": "nu1",
+   "class": 34,
+   "side": "enemy",
+   "x": 16,
+   "y": 33,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓弩手"
+  },
+  {
+   "id": "nu2",
+   "class": 34,
+   "side": "enemy",
+   "x": 19,
+   "y": 32,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓弩手"
+  },
+  {
+   "id": "nu3",
+   "class": 34,
+   "side": "enemy",
+   "x": 22,
+   "y": 32,
+   "level": 30,
+   "facing": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "弓弩手"
+  }
+ ],
+ "script": [
+  {
+   "on": "start",
+   "do": [
+    [
+     "title",
+     "梁山泊 · 鸭嘴滩"
+    ],
+    [
+     "narrate",
+     "探子报上山来：呼延灼引韩滔、彭玘三路军马，已到水泊边下寨。宋江、吴用领众头领下山，在鸭嘴滩水寨前摆开阵势。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "官军远来，锐气正盛。我这里分作五队，轮番出阵，教他们一个个应接不暇：秦明打头阵，林冲第二，花荣第三，扈三娘第四，孙立第五。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "众兄弟只管向前。宋江与军师在水寨里压阵，缺甚么只管来讨。"
+    ],
+    [
+     "say",
+     "hero",
+     "（低声）军师，这呼延灼是开国名将之后，怕没这么好打。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "所以要车轮战。先拿他的先锋挫一挫锐气。"
+    ],
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "（横鞭立马）水洼草寇！天兵到此，还不下马受缚，更待何时！"
+    ],
+    [
+     "say",
+     "qinming",
+     "霹雳火秦明在此，谁来与我先战三百合！"
+    ],
+    [
+     "say",
+     "hantao",
+     "百胜将韩滔来也！"
+    ],
+    [
+     "turnLimit",
+     18
+    ]
+   ]
+  },
+  {
+   "on": {
+    "near": "huyanzhuo",
+    "by": "sunli"
+   },
+   "do": [
+    [
+     "face",
+     "sunli",
+     "huyanzhuo"
+    ],
+    [
+     "face",
+     "huyanzhuo",
+     "sunli"
+    ],
+    [
+     "say",
+     "sunli",
+     "呼延灼！病尉迟孙立来会你！"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "你也使鞭？好，看是你的鞭硬，还是呼延家的鞭硬！"
+    ],
+    [
+     "narrate",
+     "两个都使钢鞭，一来一往，鞭打鞭，铮铮直响，斗到三十余合，不分胜败。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "huyanzhuo",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "好草寇，倒有几分本事！……且回本阵，再与你们计较！"
+    ],
+    [
+     "narrate",
+     "呼延灼拨转踢雪乌骓，退回本阵去了。"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "flag",
+     "hyz-back"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "hantao",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "hantao",
+     "（伤了一臂）好厉害！……走！"
+    ],
+    [
+     "narrate",
+     "韩滔抵挡不住，拖着枣木槊败回本阵。"
+    ],
+    [
+     "leave",
+     "hantao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "pengqi",
+    "below": 30,
+    "spare": true
+   },
+   "do": [
+    [
+     "say",
+     "pengqi",
+     "（刀法散乱）不好……！"
+    ],
+    [
+     "approach",
+     "husanniang",
+     "pengqi"
+    ],
+    [
+     "face",
+     "husanniang",
+     "pengqi"
+    ],
+    [
+     "say",
+     "husanniang",
+     "哪里走！"
+    ],
+    [
+     "act",
+     "husanniang",
+     "attack",
+     "pengqi"
+    ],
+    [
+     "narrate",
+     "扈三娘把双刀挂了，从袍底下取出红锦套索，上有二十四个金钩，望彭玘一抛，套个正着，拖下马来。众喽啰一齐上前，把彭玘活捉了。"
+    ],
+    [
+     "capture",
+     "pengqi"
+    ],
+    [
+     "flag",
+     "caught"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "（远远望见）彭玘被捉了！……鸣金！叫连环马出阵！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": "caught",
+   "unless": "ready",
+   "do": [
+    [
+     "flag",
+     "ready"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "caught",
+   "unless": "ready",
+   "do": [
+    [
+     "flag",
+     "ready"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": "caught",
+   "unless": "ready",
+   "do": [
+    [
+     "flag",
+     "ready"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": "caught",
+   "unless": "ready",
+   "do": [
+    [
+     "flag",
+     "ready"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": "caught",
+   "unless": "ready",
+   "do": [
+    [
+     "flag",
+     "ready"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2,
+    "enemyPhase": true
+   },
+   "unless": "p2",
+   "do": [
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵门开处，冲出一排排连环马来：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "appear",
+     "ma0"
+    ],
+    [
+     "appear",
+     "ma1"
+    ],
+    [
+     "appear",
+     "ma2"
+    ],
+    [
+     "appear",
+     "ma3"
+    ],
+    [
+     "appear",
+     "ma4"
+    ],
+    [
+     "appear",
+     "ma5"
+    ],
+    [
+     "appear",
+     "ma6"
+    ],
+    [
+     "appear",
+     "ma7"
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "flag",
+     "p2t2"
+    ]
+   ],
+   "if": "ready"
+  },
+  {
+   "on": {
+    "turn": 3,
+    "enemyPhase": true
+   },
+   "unless": "p2",
+   "do": [
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵门开处，冲出一排排连环马来：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "appear",
+     "ma0"
+    ],
+    [
+     "appear",
+     "ma1"
+    ],
+    [
+     "appear",
+     "ma2"
+    ],
+    [
+     "appear",
+     "ma3"
+    ],
+    [
+     "appear",
+     "ma4"
+    ],
+    [
+     "appear",
+     "ma5"
+    ],
+    [
+     "appear",
+     "ma6"
+    ],
+    [
+     "appear",
+     "ma7"
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "flag",
+     "p2t3"
+    ]
+   ],
+   "if": "ready"
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "unless": "p2",
+   "do": [
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵门开处，冲出一排排连环马来：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "appear",
+     "ma0"
+    ],
+    [
+     "appear",
+     "ma1"
+    ],
+    [
+     "appear",
+     "ma2"
+    ],
+    [
+     "appear",
+     "ma3"
+    ],
+    [
+     "appear",
+     "ma4"
+    ],
+    [
+     "appear",
+     "ma5"
+    ],
+    [
+     "appear",
+     "ma6"
+    ],
+    [
+     "appear",
+     "ma7"
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "flag",
+     "p2t4"
+    ]
+   ],
+   "if": "ready"
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
+   },
+   "unless": "p2",
+   "do": [
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵门开处，冲出一排排连环马来：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "appear",
+     "ma0"
+    ],
+    [
+     "appear",
+     "ma1"
+    ],
+    [
+     "appear",
+     "ma2"
+    ],
+    [
+     "appear",
+     "ma3"
+    ],
+    [
+     "appear",
+     "ma4"
+    ],
+    [
+     "appear",
+     "ma5"
+    ],
+    [
+     "appear",
+     "ma6"
+    ],
+    [
+     "appear",
+     "ma7"
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "flag",
+     "p2t5"
+    ]
+   ],
+   "if": "ready"
+  },
+  {
+   "on": {
+    "turn": 6,
+    "enemyPhase": true
+   },
+   "unless": "p2",
+   "do": [
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵门开处，冲出一排排连环马来：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "appear",
+     "ma0"
+    ],
+    [
+     "appear",
+     "ma1"
+    ],
+    [
+     "appear",
+     "ma2"
+    ],
+    [
+     "appear",
+     "ma3"
+    ],
+    [
+     "appear",
+     "ma4"
+    ],
+    [
+     "appear",
+     "ma5"
+    ],
+    [
+     "appear",
+     "ma6"
+    ],
+    [
+     "appear",
+     "ma7"
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "flag",
+     "p2t6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": "p2t1",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
+   },
+   "if": "p2t2",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6,
+    "enemyPhase": true
+   },
+   "if": "p2t3",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7,
+    "enemyPhase": true
+   },
+   "if": "p2t4",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": "p2t5",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
+   },
+   "if": "p2t6",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，第二批连环马从两翼包抄过来！"
+    ],
+    [
+     "appear",
+     "mb0"
+    ],
+    [
+     "appear",
+     "mb1"
+    ],
+    [
+     "appear",
+     "mb2"
+    ],
+    [
+     "appear",
+     "mb3"
+    ],
+    [
+     "appear",
+     "mb4"
+    ],
+    [
+     "appear",
+     "mb5"
+    ],
+    [
+     "appear",
+     "mb6"
+    ],
+    [
+     "appear",
+     "mb7"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 12,
+      "hurt": 0.6,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": "lianhuan",
+    "count": 8
+   },
+   "if": "p2",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "all",
+    "area": [
+     11,
+     4,
+     24,
+     9
+    ],
+    "label": "水寨",
+    "atTurnEnd": true
+   },
+   "if": "eight",
+   "do": [
+    [
+     "narrate",
+     "众好汉且战且退，都退进鸭嘴滩水寨。官军的连环马到了水边，冲不过来，只得收兵回去。"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（叹）好厉害的连环马！今日若不是众兄弟死战，几乎全军覆没。"
+    ],
+    [
+     "narrate",
+     "小喽啰押过彭玘来。宋江见了，连忙下阶，亲解其缚，扶入帐中，分宾主坐定。"
+    ],
+    [
+     "appear",
+     "pengqi-p"
+    ],
+    [
+     "face",
+     "songjiang",
+     "pengqi-p"
+    ],
+    [
+     "say",
+     "pengqi-p",
+     "小人被擒之将，理合就死，何故以宾礼待之？"
+    ],
+    [
+     "say",
+     "songjiang",
+     "某等众兄弟，只因官府相逼，暂借水泊里随时避难，专等朝廷招安，与国家出力。今日冒犯虎威，切乞恕罪。"
+    ],
+    [
+     "say",
+     "pengqi-p",
+     "（拜伏于地）久闻宋公明仗义疏财、扶危济困，原来果然如此！彭玘情愿在此执鞭坠镫，与众头领出力。"
+    ],
+    [
+     "say",
+     "hero",
+     "（向彭玘抱拳）彭将军，往后同在一处厮杀了。"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马却是个大患。铁甲刀枪不入，须得另寻破法……容小生细细思量。"
+    ],
+    [
+     "victory",
+     ""
+    ]
+   ]
+  },
+  {
+   "on": {
+    "dead": "hero"
+   },
+   "do": [
+    [
+     "defeat",
+     "%N倒下了。"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "fallen": 4
+   },
+   "do": [
+    [
+     "defeat",
+     "折了四位头领，梁山大败。"
+    ]
+   ]
+  }
+ ]
+}
