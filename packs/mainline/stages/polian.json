@@ -157,7 +157,7 @@
    ],
    "enemyRank": "leader",
    "levelOffset": 2,
-   "hpMultiplier": 5,
+   "hpMultiplier": 7,
    "name": "高唐州知府高廉"
   },
   {
@@ -1801,6 +1801,14 @@
     [
      "appear",
      "gaolian"
+    ],
+    [
+     "buff",
+     "gaolian",
+     "defense",
+     {
+      "pct": 100
+     }
     ],
     [
      "appear",
