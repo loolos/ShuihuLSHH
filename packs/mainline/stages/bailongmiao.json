@@ -4,7 +4,11 @@
   "map": {
     "custom": "bailongmiao"
   },
-  "bgm": ["escape", "army", "battle2"],
+  "bgm": [
+    "escape",
+    "army",
+    "battle2"
+  ],
   "units": [
     {
       "id": "likui",
@@ -67,67 +71,61 @@
       "id": "ruanxiaoer",
       "class": 7,
       "side": "player",
-      "x": 30,
-      "y": 44,
-      "facing": 2,
+      "x": 28,
+      "y": 42,
+      "facing": 3,
       "level": 27,
-      "name": "阮小二",
-      "hidden": true
+      "name": "阮小二"
     },
     {
       "id": "ruanxiaowu",
       "class": 8,
       "side": "player",
-      "x": 30,
-      "y": 43,
-      "facing": 2,
+      "x": 28,
+      "y": 41,
+      "facing": 3,
       "level": 27,
-      "name": "阮小五",
-      "hidden": true
+      "name": "阮小五"
     },
     {
       "id": "ruanxiaoqi",
       "class": 9,
       "side": "player",
-      "x": 29,
-      "y": 44,
-      "facing": 2,
+      "x": 27,
+      "y": 42,
+      "facing": 3,
       "level": 27,
-      "name": "阮小七",
-      "hidden": true
+      "name": "阮小七"
     },
     {
       "id": "baisheng",
       "class": 4,
       "side": "player",
-      "x": 31,
-      "y": 44,
-      "facing": 2,
+      "x": 29,
+      "y": 42,
+      "facing": 3,
       "level": 26,
-      "name": "白胜",
-      "hidden": true
+      "name": "白胜"
     },
     {
       "id": "duqian",
       "class": 69,
       "side": "player",
-      "x": 30,
-      "y": 45,
-      "facing": 2,
+      "x": 28,
+      "y": 43,
+      "facing": 3,
       "level": 26,
-      "name": "摸着天杜迁",
-      "hidden": true
+      "name": "摸着天杜迁"
     },
     {
       "id": "songwan",
       "class": 70,
       "side": "player",
-      "x": 30,
-      "y": 42,
-      "facing": 2,
+      "x": 28,
+      "y": 40,
+      "facing": 3,
       "level": 26,
-      "name": "云里金刚宋万",
-      "hidden": true
+      "name": "云里金刚宋万"
     },
     {
       "id": "huarong",
@@ -143,9 +141,9 @@
       "id": "huangxin",
       "class": "huangxin",
       "side": "player",
-      "x": 43,
-      "y": 33,
-      "facing": 2,
+      "x": 29,
+      "y": 41,
+      "facing": 3,
       "level": 27,
       "name": "镇三山黄信",
       "hidden": true
@@ -154,9 +152,9 @@
       "id": "lufang",
       "class": "lvfang",
       "side": "ally",
-      "x": 44,
-      "y": 38,
-      "facing": 2,
+      "x": 28,
+      "y": 45,
+      "facing": 3,
       "level": 26,
       "name": "小温侯吕方",
       "hidden": true
@@ -165,9 +163,9 @@
       "id": "guosheng",
       "class": "guosheng",
       "side": "ally",
-      "x": 44,
-      "y": 37,
-      "facing": 2,
+      "x": 28,
+      "y": 38,
+      "facing": 3,
       "level": 26,
       "name": "赛仁贵郭盛",
       "hidden": true
@@ -176,9 +174,9 @@
       "id": "yanshun",
       "class": "yanshun",
       "side": "ally",
-      "x": 43,
-      "y": 34,
-      "facing": 2,
+      "x": 27,
+      "y": 41,
+      "facing": 3,
       "level": 27,
       "name": "锦毛虎燕顺",
       "hidden": true
@@ -187,9 +185,9 @@
       "id": "zhugui",
       "class": 65,
       "side": "ally",
-      "x": 44,
-      "y": 34,
-      "facing": 2,
+      "x": 30,
+      "y": 42,
+      "facing": 3,
       "level": 26,
       "name": "旱地忽律朱贵",
       "hidden": true
@@ -198,9 +196,9 @@
       "id": "wangying",
       "class": "wangying",
       "side": "player",
-      "x": 42,
-      "y": 34,
-      "facing": 2,
+      "x": 26,
+      "y": 42,
+      "facing": 3,
       "level": 26,
       "name": "矮脚虎王英",
       "hidden": true
@@ -209,9 +207,9 @@
       "id": "zhengtianshou",
       "class": 67,
       "side": "ally",
-      "x": 43,
-      "y": 35,
-      "facing": 2,
+      "x": 27,
+      "y": 43,
+      "facing": 3,
       "level": 26,
       "name": "白面郎君郑天寿",
       "hidden": true
@@ -220,9 +218,9 @@
       "id": "shiyong",
       "class": "shiyong",
       "side": "ally",
-      "x": 43,
-      "y": 32,
-      "facing": 2,
+      "x": 29,
+      "y": 43,
+      "facing": 3,
       "level": 26,
       "name": "石将军石勇",
       "hidden": true
@@ -231,9 +229,9 @@
       "id": "zhangshun",
       "class": "zhangshun",
       "side": "ally",
-      "x": 31,
-      "y": 47,
-      "facing": 1,
+      "x": 28,
+      "y": 44,
+      "facing": 3,
       "level": 27,
       "hidden": true,
       "name": "浪里白条张顺"
@@ -242,9 +240,9 @@
       "id": "zhangheng",
       "class": "zhangheng",
       "side": "ally",
-      "x": 31,
-      "y": 46,
-      "facing": 1,
+      "x": 28,
+      "y": 39,
+      "facing": 3,
       "level": 26,
       "hidden": true,
       "name": "船火儿张横"
@@ -253,9 +251,9 @@
       "id": "lijun",
       "class": "lijun",
       "side": "player",
-      "x": 30,
-      "y": 47,
-      "facing": 1,
+      "x": 27,
+      "y": 40,
+      "facing": 3,
       "level": 27,
       "hidden": true,
       "name": "混江龙李俊"
@@ -264,9 +262,9 @@
       "id": "lili",
       "class": "lili",
       "side": "ally",
-      "x": 31,
-      "y": 48,
-      "facing": 1,
+      "x": 29,
+      "y": 40,
+      "facing": 3,
       "level": 26,
       "hidden": true
     },
@@ -274,9 +272,9 @@
       "id": "muhong",
       "class": "muhong",
       "side": "ally",
-      "x": 31,
-      "y": 45,
-      "facing": 1,
+      "x": 30,
+      "y": 41,
+      "facing": 3,
       "level": 27,
       "hidden": true
     },
@@ -284,9 +282,9 @@
       "id": "muchun",
       "class": "muchun",
       "side": "ally",
-      "x": 30,
-      "y": 46,
-      "facing": 1,
+      "x": 31,
+      "y": 42,
+      "facing": 3,
       "level": 26,
       "hidden": true
     },
@@ -294,9 +292,9 @@
       "id": "tongwei",
       "class": "tongwei",
       "side": "ally",
-      "x": 32,
-      "y": 46,
-      "facing": 1,
+      "x": 26,
+      "y": 43,
+      "facing": 3,
       "level": 26,
       "hidden": true
     },
@@ -304,9 +302,9 @@
       "id": "tongmeng",
       "class": "tongmeng",
       "side": "ally",
-      "x": 29,
-      "y": 47,
-      "facing": 1,
+      "x": 30,
+      "y": 43,
+      "facing": 3,
       "level": 26,
       "hidden": true
     },
@@ -314,9 +312,9 @@
       "id": "xueyong",
       "class": "xueyong",
       "side": "ally",
-      "x": 30,
-      "y": 48,
-      "facing": 1,
+      "x": 27,
+      "y": 44,
+      "facing": 3,
       "level": 26,
       "hidden": true
     },
@@ -329,7 +327,7 @@
       "facing": 2,
       "level": 29,
       "name": "江州都头",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -341,7 +339,7 @@
       "facing": 2,
       "level": 29,
       "name": "江州官吏",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -352,7 +350,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -364,7 +362,7 @@
       "facing": 2,
       "level": 29,
       "name": "江州都头",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -376,7 +374,7 @@
       "facing": 2,
       "level": 29,
       "name": "江州官吏",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -387,7 +385,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -399,7 +397,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -411,7 +409,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -423,7 +421,7 @@
       "facing": 2,
       "level": 30,
       "name": "骑兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 2
     },
     {
@@ -435,7 +433,7 @@
       "facing": 2,
       "level": 30,
       "name": "骑兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 2
     },
     {
@@ -447,7 +445,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -459,7 +457,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -471,7 +469,7 @@
       "facing": 2,
       "level": 30,
       "name": "骑兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 2
     },
     {
@@ -483,7 +481,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -494,7 +492,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -506,7 +504,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -518,7 +516,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -529,7 +527,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -554,7 +552,7 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -601,46 +599,8 @@
       "facing": 2,
       "level": 29,
       "name": "官兵",
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
-    },
-    {
-      "id": "r2_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 46,
-      "y": 47,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r2_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 47,
-      "y": 47,
-      "facing": 1,
-      "level": 27,
-      "hidden": true,
-      "ai": 0,
-      "levelOffset": -1
-    },
-    {
-      "id": "r2_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 48,
-      "y": 47,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
     },
     {
       "id": "r3_1",
@@ -681,45 +641,6 @@
       "levelOffset": -1
     },
     {
-      "id": "r4_1",
-      "class": 32,
-      "side": "enemy",
-      "x": 43,
-      "y": 45,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "r4_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 44,
-      "y": 45,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r4_3",
-      "class": 33,
-      "side": "enemy",
-      "x": 45,
-      "y": 45,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
       "id": "r5_1",
       "class": 34,
       "side": "enemy",
@@ -751,44 +672,6 @@
       "x": 51,
       "y": 9,
       "facing": 2,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "r6_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 45,
-      "y": 42,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r6_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 46,
-      "y": 42,
-      "facing": 1,
-      "level": 27,
-      "hidden": true,
-      "ai": 0,
-      "levelOffset": -1
-    },
-    {
-      "id": "r6_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 47,
-      "y": 42,
-      "facing": 1,
       "level": 28,
       "hidden": true,
       "name": "官兵",
@@ -834,45 +717,6 @@
       "levelOffset": -1
     },
     {
-      "id": "r8_1",
-      "class": 32,
-      "side": "enemy",
-      "x": 43,
-      "y": 48,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "r8_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 44,
-      "y": 48,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r8_3",
-      "class": 33,
-      "side": "enemy",
-      "x": 45,
-      "y": 48,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
       "id": "r9_1",
       "class": 34,
       "side": "enemy",
@@ -903,44 +747,6 @@
       "side": "enemy",
       "x": 45,
       "y": 19,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "r10_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 49,
-      "y": 48,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r10_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 50,
-      "y": 48,
-      "facing": 1,
-      "level": 27,
-      "hidden": true,
-      "ai": 0,
-      "levelOffset": -1
-    },
-    {
-      "id": "r10_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 51,
-      "y": 48,
       "facing": 1,
       "level": 28,
       "hidden": true,
@@ -987,45 +793,6 @@
       "levelOffset": -1
     },
     {
-      "id": "r12_1",
-      "class": 32,
-      "side": "enemy",
-      "x": 40,
-      "y": 46,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "r12_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 41,
-      "y": 46,
-      "facing": 1,
-      "level": 29,
-      "hidden": true,
-      "name": "骑兵",
-      "ai": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "r12_3",
-      "class": 33,
-      "side": "enemy",
-      "x": 42,
-      "y": 46,
-      "facing": 1,
-      "level": 28,
-      "hidden": true,
-      "name": "官兵",
-      "ai": 0,
-      "levelOffset": 0
-    },
-    {
       "id": "g1",
       "class": 43,
       "side": "enemy",
@@ -1033,7 +800,7 @@
       "y": 26,
       "facing": 2,
       "level": 30,
-      "ai": 0,
+      "ai": 2,
       "name": "骑兵",
       "levelOffset": 2
     },
@@ -1045,7 +812,7 @@
       "y": 28,
       "facing": 2,
       "level": 30,
-      "ai": 0,
+      "ai": 2,
       "name": "骑兵",
       "levelOffset": 2
     },
@@ -1057,7 +824,7 @@
       "y": 28,
       "facing": 2,
       "level": 30,
-      "ai": 0,
+      "ai": 2,
       "name": "骑兵",
       "levelOffset": 2
     },
@@ -1069,7 +836,7 @@
       "y": 30,
       "facing": 2,
       "level": 30,
-      "ai": 0,
+      "ai": 2,
       "name": "骑兵",
       "levelOffset": 2
     },
@@ -1081,7 +848,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -1092,7 +859,7 @@
       "y": 24,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -1103,7 +870,7 @@
       "y": 26,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -1114,7 +881,7 @@
       "y": 26,
       "facing": 2,
       "level": 29,
-      "ai": 0,
+      "ai": 2,
       "levelOffset": 1
     },
     {
@@ -1125,7 +892,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1137,7 +904,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1149,7 +916,7 @@
       "y": 30,
       "level": 28,
       "name": "江州马军",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1161,7 +928,7 @@
       "y": 26,
       "level": 28,
       "name": "江州弓手",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1173,7 +940,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1185,7 +952,7 @@
       "y": 32,
       "level": 28,
       "name": "江州马军",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1197,7 +964,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1209,7 +976,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1221,7 +988,7 @@
       "y": 32,
       "level": 28,
       "name": "江州马军",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1233,7 +1000,7 @@
       "y": 26,
       "level": 28,
       "name": "江州弓手",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1245,7 +1012,7 @@
       "y": 32,
       "level": 28,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1257,7 +1024,7 @@
       "y": 34,
       "level": 28,
       "name": "江州马军",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 0
     },
@@ -1269,7 +1036,7 @@
       "y": 34,
       "level": 29,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 1
     },
@@ -1281,7 +1048,7 @@
       "y": 34,
       "level": 29,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 1
     },
@@ -1293,7 +1060,7 @@
       "y": 34,
       "level": 29,
       "name": "江州马军",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 1
     },
@@ -1305,7 +1072,7 @@
       "y": 26,
       "level": 29,
       "name": "江州弓手",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 1
     },
@@ -1317,7 +1084,7 @@
       "y": 34,
       "level": 29,
       "name": "江州官兵",
-      "ai": 0,
+      "ai": 2,
       "facing": 2,
       "levelOffset": 1
     },
@@ -1332,32 +1099,6 @@
       "ai": 2,
       "facing": 2,
       "levelOffset": 1
-    },
-    {
-      "id": "r2_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 46,
-      "y": 49,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r2_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 47,
-      "y": 49,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
     },
     {
       "id": "r3_4",
@@ -1383,32 +1124,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "r4_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 43,
-      "y": 47,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r4_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 44,
-      "y": 47,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -1438,32 +1153,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r6_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 45,
-      "y": 44,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r6_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 46,
-      "y": 44,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r7_4",
       "class": 38,
       "side": "enemy",
@@ -1490,32 +1179,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r8_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 43,
-      "y": 50,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r8_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 44,
-      "y": 50,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r9_4",
       "class": 38,
       "side": "enemy",
@@ -1534,32 +1197,6 @@
       "side": "enemy",
       "x": 44,
       "y": 21,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r10_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 49,
-      "y": 50,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r10_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 50,
-      "y": 50,
       "level": 28,
       "name": "江州弓手",
       "hidden": true,
@@ -1591,32 +1228,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "r12_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 40,
-      "y": 48,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r12_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 41,
-      "y": 48,
-      "level": 28,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -1685,71 +1296,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r14_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 47,
-      "y": 39,
-      "level": 28,
-      "name": "江州马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r14_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 48,
-      "y": 39,
-      "level": 29,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 1
-    },
-    {
-      "id": "r14_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 49,
-      "y": 39,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r14_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 47,
-      "y": 41,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r14_5",
-      "class": 32,
-      "side": "enemy",
-      "x": 48,
-      "y": 41,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r15_1",
       "class": 43,
       "side": "enemy",
@@ -1812,71 +1358,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "r16_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 50,
-      "y": 40,
-      "level": 28,
-      "name": "江州马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r16_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 51,
-      "y": 40,
-      "level": 29,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 1
-    },
-    {
-      "id": "r16_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 52,
-      "y": 40,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r16_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 50,
-      "y": 42,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r16_5",
-      "class": 32,
-      "side": "enemy",
-      "x": 51,
-      "y": 42,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -1945,71 +1426,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r18_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 39,
-      "y": 49,
-      "level": 28,
-      "name": "江州马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r18_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 40,
-      "y": 49,
-      "level": 29,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 1
-    },
-    {
-      "id": "r18_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 41,
-      "y": 49,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r18_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 39,
-      "y": 51,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r18_5",
-      "class": 32,
-      "side": "enemy",
-      "x": 40,
-      "y": 51,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r19_1",
       "class": 43,
       "side": "enemy",
@@ -2075,71 +1491,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r20_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 36,
-      "y": 50,
-      "level": 28,
-      "name": "江州马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r20_2",
-      "class": 34,
-      "side": "enemy",
-      "x": 37,
-      "y": 50,
-      "level": 29,
-      "name": "江州弓手",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 1
-    },
-    {
-      "id": "r20_3",
-      "class": 32,
-      "side": "enemy",
-      "x": 38,
-      "y": 50,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r20_4",
-      "class": 38,
-      "side": "enemy",
-      "x": 36,
-      "y": 52,
-      "level": 28,
-      "name": "江州都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r20_5",
-      "class": 32,
-      "side": "enemy",
-      "x": 37,
-      "y": 52,
-      "level": 28,
-      "name": "江州官兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "boss-cav-1-1",
       "class": 43,
       "side": "enemy",
@@ -2148,7 +1499,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2161,7 +1512,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2174,7 +1525,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2187,7 +1538,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2200,7 +1551,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2213,7 +1564,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2226,7 +1577,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2239,7 +1590,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2252,7 +1603,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2265,7 +1616,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2278,7 +1629,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2291,7 +1642,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2304,7 +1655,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2317,7 +1668,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2330,7 +1681,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2343,7 +1694,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2356,7 +1707,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2369,7 +1720,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2382,7 +1733,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2395,7 +1746,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2408,7 +1759,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2421,7 +1772,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2434,7 +1785,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2447,7 +1798,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2460,7 +1811,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2473,7 +1824,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2486,7 +1837,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2499,7 +1850,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2512,7 +1863,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2525,7 +1876,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2538,7 +1889,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2551,7 +1902,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2564,7 +1915,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2577,7 +1928,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2590,7 +1941,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2603,7 +1954,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2616,7 +1967,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2629,7 +1980,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2642,7 +1993,7 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
     },
@@ -2655,22 +2006,9 @@
       "level": 30,
       "name": "都监亲随马军",
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "facing": 2,
       "levelOffset": 2
-    },
-    {
-      "id": "r2_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 48,
-      "y": 49,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
     },
     {
       "id": "r3_6",
@@ -2678,19 +2016,6 @@
       "side": "enemy",
       "x": 47,
       "y": 17,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r4_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 45,
-      "y": 47,
       "level": 28,
       "name": "江州官吏",
       "hidden": true,
@@ -2712,19 +2037,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r6_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 47,
-      "y": 44,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r7_6",
       "class": 36,
       "side": "enemy",
@@ -2738,37 +2050,11 @@
       "levelOffset": 0
     },
     {
-      "id": "r8_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 45,
-      "y": 50,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r9_6",
       "class": 36,
       "side": "enemy",
       "x": 45,
       "y": 21,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "r10_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 51,
-      "y": 50,
       "level": 28,
       "name": "江州官吏",
       "hidden": true,
@@ -2790,19 +2076,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r12_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 42,
-      "y": 48,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r13_6",
       "class": 36,
       "side": "enemy",
@@ -2813,19 +2086,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "r14_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 49,
-      "y": 41,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -2842,19 +2102,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r16_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 52,
-      "y": 42,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r17_6",
       "class": 36,
       "side": "enemy",
@@ -2868,19 +2115,6 @@
       "levelOffset": 0
     },
     {
-      "id": "r18_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 41,
-      "y": 51,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
       "id": "r19_6",
       "class": 36,
       "side": "enemy",
@@ -2891,19 +2125,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "r20_6",
-      "class": 36,
-      "side": "enemy",
-      "x": 38,
-      "y": 52,
-      "level": 28,
-      "name": "江州官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -2982,84 +2203,6 @@
       "hidden": true,
       "ai": 0,
       "facing": 2,
-      "levelOffset": 0
-    },
-    {
-      "id": "spike7_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 42,
-      "y": 22,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "spike7_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 43,
-      "y": 22,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "spike7_3",
-      "class": 38,
-      "side": "enemy",
-      "x": 44,
-      "y": 22,
-      "level": 28,
-      "name": "增援都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "spike7_4",
-      "class": 36,
-      "side": "enemy",
-      "x": 42,
-      "y": 24,
-      "level": 28,
-      "name": "增援官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 0
-    },
-    {
-      "id": "spike7_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 43,
-      "y": 24,
-      "level": 29,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
-      "levelOffset": 1
-    },
-    {
-      "id": "spike7_6",
-      "class": 32,
-      "side": "enemy",
-      "x": 44,
-      "y": 24,
-      "level": 28,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 1,
       "levelOffset": 0
     },
     {
@@ -3149,7 +2292,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3162,7 +2305,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3175,7 +2318,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3188,7 +2331,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3201,7 +2344,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3214,7 +2357,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3227,7 +2370,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3240,7 +2383,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3253,7 +2396,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3266,7 +2409,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3279,7 +2422,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3292,7 +2435,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3305,7 +2448,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3318,7 +2461,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3331,7 +2474,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3344,7 +2487,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3357,7 +2500,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3370,7 +2513,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3383,7 +2526,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3396,7 +2539,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3409,7 +2552,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3422,7 +2565,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3435,7 +2578,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3448,7 +2591,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3461,7 +2604,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3474,7 +2617,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3487,7 +2630,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3500,7 +2643,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3513,7 +2656,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3526,7 +2669,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3539,7 +2682,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3552,7 +2695,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3565,7 +2708,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3578,7 +2721,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3591,7 +2734,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3604,7 +2747,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3617,7 +2760,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3630,7 +2773,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3643,7 +2786,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3656,7 +2799,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3669,7 +2812,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3682,7 +2825,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3695,7 +2838,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3708,7 +2851,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3721,7 +2864,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3734,7 +2877,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3747,7 +2890,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3760,7 +2903,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3773,7 +2916,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3786,7 +2929,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3799,7 +2942,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3812,7 +2955,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3825,7 +2968,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3838,7 +2981,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3851,7 +2994,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3864,7 +3007,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3877,7 +3020,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3890,7 +3033,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3903,7 +3046,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随官吏",
       "levelOffset": 2
     },
@@ -3916,7 +3059,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随都头",
       "levelOffset": 2
     },
@@ -3925,9 +3068,9 @@
       "class": 2,
       "name": "入云龙公孙胜",
       "side": "player",
-      "x": 28,
-      "y": 45,
-      "facing": 2,
+      "x": 29,
+      "y": 44,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -3936,9 +3079,9 @@
       "class": 5,
       "name": "神机军师朱武",
       "side": "player",
-      "x": 38,
+      "x": 27,
       "y": 39,
-      "facing": 2,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -3947,9 +3090,9 @@
       "class": 13,
       "name": "跳涧虎陈达",
       "side": "player",
-      "x": 43,
-      "y": 40,
-      "facing": 2,
+      "x": 29,
+      "y": 39,
+      "facing": 3,
       "level": 27,
       "hidden": true
     },
@@ -3958,9 +3101,9 @@
       "class": 15,
       "name": "锦花蛇杨春",
       "side": "player",
-      "x": 42,
-      "y": 41,
-      "facing": 2,
+      "x": 26,
+      "y": 40,
+      "facing": 3,
       "level": 27,
       "hidden": true
     },
@@ -3969,9 +3112,9 @@
       "class": 3,
       "name": "九纹龙史进",
       "side": "player",
-      "x": 40,
-      "y": 36,
-      "facing": 2,
+      "x": 30,
+      "y": 40,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -3980,9 +3123,9 @@
       "class": 16,
       "name": "花和尚鲁智深",
       "side": "player",
-      "x": 37,
-      "y": 39,
-      "facing": 2,
+      "x": 31,
+      "y": 41,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -4001,9 +3144,9 @@
       "class": "wusong",
       "name": "行者武松",
       "side": "player",
-      "x": 37,
-      "y": 41,
-      "facing": 2,
+      "x": 32,
+      "y": 42,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -4012,9 +3155,9 @@
       "class": 11,
       "name": "豹子头林冲",
       "side": "player",
-      "x": 43,
-      "y": 41,
-      "facing": 2,
+      "x": 31,
+      "y": 43,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -4023,9 +3166,9 @@
       "class": 14,
       "name": "青面兽杨志",
       "side": "player",
-      "x": 40,
-      "y": 35,
-      "facing": 2,
+      "x": 30,
+      "y": 44,
+      "facing": 3,
       "level": 28,
       "hidden": true
     },
@@ -4034,245 +3177,11 @@
       "class": "qinming",
       "name": "霹雳火秦明",
       "side": "player",
-      "x": 39,
-      "y": 36,
-      "facing": 2,
+      "x": 27,
+      "y": 45,
+      "facing": 3,
       "level": 28,
       "hidden": true
-    },
-    {
-      "id": "left3_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 12,
-      "y": 35,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left3_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 13,
-      "y": 35,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left3_3",
-      "class": 38,
-      "side": "enemy",
-      "x": 14,
-      "y": 35,
-      "level": 28,
-      "name": "增援都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left3_4",
-      "class": 36,
-      "side": "enemy",
-      "x": 12,
-      "y": 37,
-      "level": 28,
-      "name": "增援官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left3_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 13,
-      "y": 37,
-      "level": 29,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "left3_6",
-      "class": 32,
-      "side": "enemy",
-      "x": 14,
-      "y": 37,
-      "level": 28,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left7_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 3,
-      "y": 37,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left7_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 4,
-      "y": 37,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left7_3",
-      "class": 38,
-      "side": "enemy",
-      "x": 5,
-      "y": 37,
-      "level": 28,
-      "name": "增援都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left7_4",
-      "class": 36,
-      "side": "enemy",
-      "x": 3,
-      "y": 39,
-      "level": 28,
-      "name": "增援官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left7_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 4,
-      "y": 39,
-      "level": 29,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "left7_6",
-      "class": 32,
-      "side": "enemy",
-      "x": 5,
-      "y": 39,
-      "level": 28,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left11_1",
-      "class": 43,
-      "side": "enemy",
-      "x": 17,
-      "y": 41,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left11_2",
-      "class": 43,
-      "side": "enemy",
-      "x": 18,
-      "y": 41,
-      "level": 28,
-      "name": "增援马军",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left11_3",
-      "class": 38,
-      "side": "enemy",
-      "x": 19,
-      "y": 41,
-      "level": 28,
-      "name": "增援都头",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left11_4",
-      "class": 36,
-      "side": "enemy",
-      "x": 17,
-      "y": 43,
-      "level": 28,
-      "name": "增援官吏",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
-    },
-    {
-      "id": "left11_5",
-      "class": 34,
-      "side": "enemy",
-      "x": 18,
-      "y": 43,
-      "level": 29,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 1
-    },
-    {
-      "id": "left11_6",
-      "class": 32,
-      "side": "enemy",
-      "x": 19,
-      "y": 43,
-      "level": 28,
-      "name": "江州增援兵",
-      "hidden": true,
-      "ai": 0,
-      "facing": 0,
-      "levelOffset": 0
     },
     {
       "id": "boss-support-1-4",
@@ -4283,7 +3192,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4296,7 +3205,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4309,7 +3218,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4322,7 +3231,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4335,7 +3244,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4348,7 +3257,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4361,7 +3270,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4374,7 +3283,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4387,7 +3296,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4400,7 +3309,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4413,7 +3322,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4426,7 +3335,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4439,7 +3348,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4452,7 +3361,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4465,7 +3374,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4478,7 +3387,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4491,7 +3400,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4504,7 +3413,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4517,7 +3426,7 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
     },
@@ -4530,9 +3439,669 @@
       "facing": 2,
       "level": 30,
       "hidden": true,
-      "ai": 0,
+      "ai": 18,
       "name": "都监亲随士兵",
       "levelOffset": 2
+    },
+    {
+      "id": "ferry-庙前渡-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 49,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-庙前渡-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 50,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-庙前渡-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 15,
+      "y": 51,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-庙前渡-4",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 14,
+      "y": 48,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-庙前渡-5",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 50,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-庙前渡-6",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 13,
+      "y": 49,
+      "facing": 3,
+      "level": 28,
+      "ai": 17,
+      "ferry": "庙前渡"
+    },
+    {
+      "id": "ferry-北塘渡-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 4,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 6,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-4",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 7,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-5",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 5,
+      "y": 11,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-6",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 6,
+      "y": 11,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-7",
+      "name": "江州马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 3,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-北塘渡-8",
+      "name": "江州马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 8,
+      "y": 12,
+      "facing": 2,
+      "level": 28,
+      "ai": 17,
+      "ferry": "北塘渡"
+    },
+    {
+      "id": "ferry-东湾渡-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 42,
+      "y": 25,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 25,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 44,
+      "y": 25,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-4",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 41,
+      "y": 22,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-5",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 43,
+      "y": 23,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-6",
+      "name": "江州弓手",
+      "class": 34,
+      "side": "enemy",
+      "x": 44,
+      "y": 23,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-7",
+      "name": "江州马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 41,
+      "y": 24,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-8",
+      "name": "江州马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 45,
+      "y": 25,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-东湾渡-9",
+      "name": "江州都头",
+      "class": 38,
+      "side": "enemy",
+      "x": 43,
+      "y": 24,
+      "facing": 1,
+      "level": 28,
+      "ai": 17,
+      "ferry": "东湾渡"
+    },
+    {
+      "id": "ferry-ours-0-0",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-0-1",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-0-2",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-0-3",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-enemy-0-0",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-0-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-0-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-0-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 13,
+      "y": 50,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-ours-1-0",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-1-1",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-1-2",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-1-3",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-enemy-1-0",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-1-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-1-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-1-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 5,
+      "y": 10,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-ours-2-0",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-2-1",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-2-2",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-ours-2-3",
+      "name": "梁山喽啰",
+      "class": 44,
+      "side": "ally",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -3
+    },
+    {
+      "id": "ferry-enemy-2-0",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-2-1",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-2-2",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-enemy-2-3",
+      "name": "江州官兵",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 23,
+      "facing": 2,
+      "level": 26,
+      "ai": 17,
+      "hidden": true,
+      "levelOffset": -1
+    },
+    {
+      "id": "ferry-allheld-0",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 25,
+      "y": 21,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
+    },
+    {
+      "id": "ferry-allheld-1",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 26,
+      "y": 22,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
+    },
+    {
+      "id": "ferry-allheld-2",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 27,
+      "y": 23,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
+    },
+    {
+      "id": "ferry-allheld-3",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 29,
+      "y": 23,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
+    },
+    {
+      "id": "ferry-allheld-4",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 30,
+      "y": 22,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
+    },
+    {
+      "id": "ferry-allheld-5",
+      "name": "都监亲随马军",
+      "class": 43,
+      "side": "enemy",
+      "x": 31,
+      "y": 21,
+      "facing": 2,
+      "level": 30,
+      "ai": 0,
+      "hidden": true
     }
   ],
   "script": [
@@ -4540,16 +4109,12 @@
       "on": "start",
       "do": [
         [
-          "title",
-          "江州江岸 · 白龙神庙"
-        ],
-        [
-          "objective",
-          "胜利：打倒地图中部的江州兵马都监，或守满20回合。\n失败：宋江倒下。\n宋江、吴用、戴宗等七人开场守在左侧白龙庙旁，其余好汉第2–6回合分批来援。\n敌军下方、右方交替增援；都监四倍体力，身边每回合另增2名骑兵、2名官吏、1名都头、1名士兵主动进攻。"
-        ],
-        [
           "turnLimit",
           20
+        ],
+        [
+          "title",
+          "江州江岸 · 白龙神庙"
         ],
         [
           "focus",
@@ -4641,7 +4206,17 @@
         [
           "say",
           "chaogai",
-          "背后是大江，已无退路！兄弟们只得背水一战：守住白龙庙撑过二十回合，或先打倒那都监，冲散官军！"
+          "背后是大江，已无退路！"
+        ],
+        [
+          "say",
+          "wuyong",
+          "官军先占了江边三处渡口，船靠不得岸。哥哥，须分兵去夺渡口：夺下一处，梁山弟兄便从那里上岸接应，后面赶来的兄弟也会得多。"
+        ],
+        [
+          "say",
+          "chaogai",
+          "好！兄弟们分头去夺渡口：撑到二十回合时手里至少有两处渡口，船才靠得了岸；若能先打倒那都监，更是干净！"
         ],
         [
           "appear",
@@ -4675,79 +4250,10 @@
     },
     {
       "on": {
-        "turn": 2
+        "turn": 2,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "左下芦苇边一声呼哨，阮氏三雄、白胜、杜迁、宋万摆脱追兵，奔着白龙庙赶来。"
-        ],
-        [
-          "appear",
-          "ruanxiaoer"
-        ],
-        [
-          "appear",
-          "ruanxiaowu"
-        ],
-        [
-          "appear",
-          "ruanxiaoqi"
-        ],
-        [
-          "appear",
-          "baisheng"
-        ],
-        [
-          "appear",
-          "duqian"
-        ],
-        [
-          "appear",
-          "songwan"
-        ],
-        [
-          "focus",
-          "ruanxiaoer"
-        ],
-        [
-          "say",
-          "ruanxiaoer",
-          "晁盖哥哥！宋公明哥哥！俺们断后回来，听见庙前厮杀，特来接应！"
-        ],
-        [
-          "say",
-          "chaogai",
-          "来得正好！宋江、戴宗在庙旁，兄弟们合兵守住通路。"
-        ],
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r2_1"
-        ],
-        [
-          "appear",
-          "r2_2"
-        ],
-        [
-          "appear",
-          "r2_3"
-        ],
-        [
-          "appear",
-          "r2_4"
-        ],
-        [
-          "appear",
-          "r2_5"
-        ],
-        [
-          "appear",
-          "r2_6"
-        ],
         [
           "focus",
           "dujian"
@@ -4780,56 +4286,10 @@
     },
     {
       "on": {
-        "turn": 3
+        "turn": 3,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "右下通路尘头起处，清风山一伙好汉杀开官军，赶到庙外。"
-        ],
-        [
-          "appear",
-          "yanshun"
-        ],
-        [
-          "appear",
-          "huangxin"
-        ],
-        [
-          "appear",
-          "wangying"
-        ],
-        [
-          "appear",
-          "zhugui"
-        ],
-        [
-          "appear",
-          "zhengtianshou"
-        ],
-        [
-          "appear",
-          "shiyong"
-        ],
-        [
-          "focus",
-          "yanshun"
-        ],
-        [
-          "say",
-          "yanshun",
-          "清风山兄弟都到了！公明哥哥休慌，我们来接应！"
-        ],
-        [
-          "say",
-          "wangying",
-          "官兵休想围住哥哥！兄弟们，一齐向庙前杀！"
-        ],
-        [
-          "say",
-          "songjiang",
-          "又劳动众位兄弟舍命，宋江深感厚义！"
-        ],
         [
           "narrate",
           "右方通路又有一队官军杀到！"
@@ -4913,142 +4373,15 @@
         [
           "appear",
           "spike3_6"
-        ],
-        [
-          "narrate",
-          "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
-        ],
-        [
-          "appear",
-          "left3_1"
-        ],
-        [
-          "appear",
-          "left3_2"
-        ],
-        [
-          "appear",
-          "left3_3"
-        ],
-        [
-          "appear",
-          "left3_4"
-        ],
-        [
-          "appear",
-          "left3_5"
-        ],
-        [
-          "appear",
-          "left3_6"
         ]
       ]
     },
     {
       "on": {
-        "turn": 4
+        "turn": 4,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "只见江面上三只大船，飞也似摇将来。船上的九位好汉各执兵器，奔白龙庙来。"
-        ],
-        [
-          "appear",
-          "zhangshun"
-        ],
-        [
-          "appear",
-          "zhangheng"
-        ],
-        [
-          "appear",
-          "lijun"
-        ],
-        [
-          "appear",
-          "lili"
-        ],
-        [
-          "appear",
-          "muhong"
-        ],
-        [
-          "appear",
-          "muchun"
-        ],
-        [
-          "appear",
-          "tongwei"
-        ],
-        [
-          "appear",
-          "tongmeng"
-        ],
-        [
-          "appear",
-          "xueyong"
-        ],
-        [
-          "narrate",
-          "公孙胜循着庙前喊杀声赶到，仗剑来接应众人。"
-        ],
-        [
-          "appear",
-          "gongsunsheng"
-        ],
-        [
-          "say",
-          "gongsunsheng",
-          "贫道公孙胜来也！军师，公明哥哥，且合兵守住庙前，待众兄弟赶齐！"
-        ],
-        [
-          "focus",
-          "zhangshun"
-        ],
-        [
-          "say",
-          "zhangshun",
-          "宋公明哥哥休慌，张顺来也！船只已到，弟兄们快往庙边会合！"
-        ],
-        [
-          "say",
-          "lijun",
-          "我们弟兄在揭阳得了消息，本要来劫法场，特来接应！"
-        ],
-        [
-          "say",
-          "daizong",
-          "江上有了船，众兄弟齐心杀退追兵，便可从庙后脱身！"
-        ],
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r4_1"
-        ],
-        [
-          "appear",
-          "r4_2"
-        ],
-        [
-          "appear",
-          "r4_3"
-        ],
-        [
-          "appear",
-          "r4_4"
-        ],
-        [
-          "appear",
-          "r4_5"
-        ],
-        [
-          "appear",
-          "r4_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5081,65 +4414,10 @@
     },
     {
       "on": {
-        "turn": 5
+        "turn": 5,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "右下路口又冲来两员使戟好汉，正是吕方、郭盛，挥戟截住了追来的骑兵。"
-        ],
-        [
-          "appear",
-          "lufang"
-        ],
-        [
-          "appear",
-          "guosheng"
-        ],
-        [
-          "narrate",
-          "少华山朱武、陈达、杨春会同史进，沿右下通路杀到白龙庙外。"
-        ],
-        [
-          "appear",
-          "zhuwu"
-        ],
-        [
-          "appear",
-          "chenda"
-        ],
-        [
-          "appear",
-          "yangchun"
-        ],
-        [
-          "appear",
-          "shijin"
-        ],
-        [
-          "say",
-          "zhuwu",
-          "少华山兄弟与各位好汉来迟了！官军虽众，诸位且守住阵脚，我等从侧面接应。"
-        ],
-        [
-          "focus",
-          "lufang"
-        ],
-        [
-          "say",
-          "lufang",
-          "吕方、郭盛在此！方才在后路与官军缠住，今日须护哥哥周全！"
-        ],
-        [
-          "say",
-          "guosheng",
-          "兄弟们只管往庙前会齐，背后有我两个！"
-        ],
-        [
-          "say",
-          "songjiang",
-          "又有兄弟赶来接应！宋江、戴宗蒙此大恩，容后重谢，先同心退敌！"
-        ],
         [
           "narrate",
           "右方通路又有一队官军杀到！"
@@ -5200,89 +4478,10 @@
     },
     {
       "on": {
-        "turn": 6
+        "turn": 6,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "又一阵喊杀声起，林冲、秦明引着接了书信从二龙山星夜赶来的鲁智深、武松、杨志，杀开追兵，赶来与庙前众人会合。"
-        ],
-        [
-          "appear",
-          "luzhishen"
-        ],
-        [
-          "appear",
-          "wusong"
-        ],
-        [
-          "appear",
-          "linchong"
-        ],
-        [
-          "appear",
-          "yangzhi"
-        ],
-        [
-          "appear",
-          "qinming"
-        ],
-        [
-          "focus",
-          "linchong"
-        ],
-        [
-          "say",
-          "linchong",
-          "林冲与鲁提辖、杨制使都在这里！众兄弟并力向前，先解庙前之围！"
-        ],
-        [
-          "say",
-          "qinming",
-          "秦明在此！待俺们杀开这条通路，与众兄弟会合！"
-        ],
-        [
-          "say",
-          "wusong",
-          "武松来也！众位哥哥齐心合力，莫叫官军困住了！"
-        ],
-        [
-          "narrate",
-          "宋江见了众好汉，又惊又喜。"
-        ],
-        [
-          "say",
-          "songjiang",
-          "今日四十一个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
-        ],
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r6_1"
-        ],
-        [
-          "appear",
-          "r6_2"
-        ],
-        [
-          "appear",
-          "r6_3"
-        ],
-        [
-          "appear",
-          "r6_4"
-        ],
-        [
-          "appear",
-          "r6_5"
-        ],
-        [
-          "appear",
-          "r6_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5315,7 +4514,8 @@
     },
     {
       "on": {
-        "turn": 7
+        "turn": 7,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -5373,98 +4573,15 @@
         [
           "appear",
           "boss-support-7-4"
-        ],
-        [
-          "narrate",
-          "右方又涌来一队官军，都头、官吏带着马步军一齐压上！"
-        ],
-        [
-          "appear",
-          "spike7_1"
-        ],
-        [
-          "appear",
-          "spike7_2"
-        ],
-        [
-          "appear",
-          "spike7_3"
-        ],
-        [
-          "appear",
-          "spike7_4"
-        ],
-        [
-          "appear",
-          "spike7_5"
-        ],
-        [
-          "appear",
-          "spike7_6"
-        ],
-        [
-          "narrate",
-          "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
-        ],
-        [
-          "appear",
-          "left7_1"
-        ],
-        [
-          "appear",
-          "left7_2"
-        ],
-        [
-          "appear",
-          "left7_3"
-        ],
-        [
-          "appear",
-          "left7_4"
-        ],
-        [
-          "appear",
-          "left7_5"
-        ],
-        [
-          "appear",
-          "left7_6"
         ]
       ]
     },
     {
       "on": {
-        "turn": 8
+        "turn": 8,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r8_1"
-        ],
-        [
-          "appear",
-          "r8_2"
-        ],
-        [
-          "appear",
-          "r8_3"
-        ],
-        [
-          "appear",
-          "r8_4"
-        ],
-        [
-          "appear",
-          "r8_5"
-        ],
-        [
-          "appear",
-          "r8_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5497,7 +4614,8 @@
     },
     {
       "on": {
-        "turn": 9
+        "turn": 9,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -5560,37 +4678,10 @@
     },
     {
       "on": {
-        "turn": 10
+        "turn": 10,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r10_1"
-        ],
-        [
-          "appear",
-          "r10_2"
-        ],
-        [
-          "appear",
-          "r10_3"
-        ],
-        [
-          "appear",
-          "r10_4"
-        ],
-        [
-          "appear",
-          "r10_5"
-        ],
-        [
-          "appear",
-          "r10_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5623,7 +4714,8 @@
     },
     {
       "on": {
-        "turn": 11
+        "turn": 11,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -5709,70 +4801,15 @@
         [
           "appear",
           "spike11_6"
-        ],
-        [
-          "narrate",
-          "左方通路又杀来一队官军，六名马步军绕向白龙庙！"
-        ],
-        [
-          "appear",
-          "left11_1"
-        ],
-        [
-          "appear",
-          "left11_2"
-        ],
-        [
-          "appear",
-          "left11_3"
-        ],
-        [
-          "appear",
-          "left11_4"
-        ],
-        [
-          "appear",
-          "left11_5"
-        ],
-        [
-          "appear",
-          "left11_6"
         ]
       ]
     },
     {
       "on": {
-        "turn": 12
+        "turn": 12,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r12_1"
-        ],
-        [
-          "appear",
-          "r12_2"
-        ],
-        [
-          "appear",
-          "r12_3"
-        ],
-        [
-          "appear",
-          "r12_4"
-        ],
-        [
-          "appear",
-          "r12_5"
-        ],
-        [
-          "appear",
-          "r12_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5805,7 +4842,8 @@
     },
     {
       "on": {
-        "turn": 13
+        "turn": 13,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -5868,37 +4906,10 @@
     },
     {
       "on": {
-        "turn": 14
+        "turn": 14,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r14_1"
-        ],
-        [
-          "appear",
-          "r14_2"
-        ],
-        [
-          "appear",
-          "r14_3"
-        ],
-        [
-          "appear",
-          "r14_4"
-        ],
-        [
-          "appear",
-          "r14_5"
-        ],
-        [
-          "appear",
-          "r14_6"
-        ],
         [
           "focus",
           "dujian"
@@ -5931,7 +4942,8 @@
     },
     {
       "on": {
-        "turn": 15
+        "turn": 15,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -5994,37 +5006,10 @@
     },
     {
       "on": {
-        "turn": 16
+        "turn": 16,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r16_1"
-        ],
-        [
-          "appear",
-          "r16_2"
-        ],
-        [
-          "appear",
-          "r16_3"
-        ],
-        [
-          "appear",
-          "r16_4"
-        ],
-        [
-          "appear",
-          "r16_5"
-        ],
-        [
-          "appear",
-          "r16_6"
-        ],
         [
           "focus",
           "dujian"
@@ -6057,7 +5042,8 @@
     },
     {
       "on": {
-        "turn": 17
+        "turn": 17,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -6120,37 +5106,10 @@
     },
     {
       "on": {
-        "turn": 18
+        "turn": 18,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r18_1"
-        ],
-        [
-          "appear",
-          "r18_2"
-        ],
-        [
-          "appear",
-          "r18_3"
-        ],
-        [
-          "appear",
-          "r18_4"
-        ],
-        [
-          "appear",
-          "r18_5"
-        ],
-        [
-          "appear",
-          "r18_6"
-        ],
         [
           "focus",
           "dujian"
@@ -6183,7 +5142,8 @@
     },
     {
       "on": {
-        "turn": 19
+        "turn": 19,
+        "enemyPhase": true
       },
       "do": [
         [
@@ -6246,37 +5206,10 @@
     },
     {
       "on": {
-        "turn": 20
+        "turn": 20,
+        "enemyPhase": true
       },
       "do": [
-        [
-          "narrate",
-          "下方通路又有一队官军杀到！"
-        ],
-        [
-          "appear",
-          "r20_1"
-        ],
-        [
-          "appear",
-          "r20_2"
-        ],
-        [
-          "appear",
-          "r20_3"
-        ],
-        [
-          "appear",
-          "r20_4"
-        ],
-        [
-          "appear",
-          "r20_5"
-        ],
-        [
-          "appear",
-          "r20_6"
-        ],
         [
           "focus",
           "dujian"
@@ -6313,27 +5246,8 @@
       },
       "do": [
         [
-          "narrate",
-          "都监一倒，官军大乱，四散奔逃。"
-        ],
-        [
           "victory",
-          "众好汉杀退官军，上了大船，往穆太公庄上去了。"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "turn": 21
-      },
-      "do": [
-        [
-          "narrate",
-          "众好汉守过二十回合，官军死伤大半，再不敢上前。"
-        ],
-        [
-          "victory",
-          "众好汉杀退官军，上了大船，往穆太公庄上去了。"
+          "众好汉打倒了江州兵马都监，官军四散，众人上了大船，往穆太公庄上去了。"
         ]
       ]
     },
@@ -6347,10 +5261,359 @@
           "宋江倒下了。"
         ]
       ]
+    },
+    {
+      "on": {
+        "flag": "w2"
+      },
+      "do": [
+        [
+          "narrate",
+          "右下通路尘头起处，清风山一伙好汉杀开官军，赶到庙外。"
+        ],
+        [
+          "focus",
+          "yanshun"
+        ],
+        [
+          "say",
+          "yanshun",
+          "清风山兄弟都到了！公明哥哥休慌，我们来接应！"
+        ],
+        [
+          "say",
+          "wangying",
+          "官兵休想围住哥哥！兄弟们，一齐向庙前杀！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "又劳动众位兄弟舍命，宋江深感厚义！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "w3"
+      },
+      "do": [
+        [
+          "narrate",
+          "只见江面上三只大船，飞也似摇将来。船上的九位好汉各执兵器，奔白龙庙来。"
+        ],
+        [
+          "narrate",
+          "公孙胜循着庙前喊杀声赶到，仗剑来接应众人。"
+        ],
+        [
+          "say",
+          "gongsunsheng",
+          "贫道公孙胜来也！军师，公明哥哥，且合兵守住庙前，待众兄弟赶齐！"
+        ],
+        [
+          "focus",
+          "zhangshun"
+        ],
+        [
+          "say",
+          "zhangshun",
+          "宋公明哥哥休慌，张顺来也！船只已到，弟兄们快往庙边会合！"
+        ],
+        [
+          "say",
+          "lijun",
+          "我们弟兄在揭阳得了消息，本要来劫法场，特来接应！"
+        ],
+        [
+          "say",
+          "daizong",
+          "江上有了船，众兄弟齐心杀退追兵，便可从庙后脱身！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "w4"
+      },
+      "do": [
+        [
+          "narrate",
+          "右下路口又冲来两员使戟好汉，正是吕方、郭盛，挥戟截住了追来的骑兵。"
+        ],
+        [
+          "narrate",
+          "少华山朱武、陈达、杨春会同史进，沿右下通路杀到白龙庙外。"
+        ],
+        [
+          "say",
+          "zhuwu",
+          "少华山兄弟与各位好汉来迟了！官军虽众，诸位且守住阵脚，我等从侧面接应。"
+        ],
+        [
+          "focus",
+          "lufang"
+        ],
+        [
+          "say",
+          "lufang",
+          "吕方、郭盛在此！方才在后路与官军缠住，今日须护哥哥周全！"
+        ],
+        [
+          "say",
+          "guosheng",
+          "兄弟们只管往庙前会齐，背后有我两个！"
+        ],
+        [
+          "say",
+          "songjiang",
+          "又有兄弟赶来接应！宋江、戴宗蒙此大恩，容后重谢，先同心退敌！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "w5"
+      },
+      "do": [
+        [
+          "narrate",
+          "又一阵喊杀声起，林冲、秦明引着接了书信从二龙山星夜赶来的鲁智深、武松、杨志，杀开追兵，赶来与庙前众人会合。"
+        ],
+        [
+          "focus",
+          "linchong"
+        ],
+        [
+          "say",
+          "linchong",
+          "林冲与鲁提辖、杨制使都在这里！众兄弟并力向前，先解庙前之围！"
+        ],
+        [
+          "say",
+          "qinming",
+          "秦明在此！待俺们杀开这条通路，与众兄弟会合！"
+        ],
+        [
+          "say",
+          "wusong",
+          "武松来也！众位哥哥齐心合力，莫叫官军困住了！"
+        ],
+        [
+          "narrate",
+          "宋江见了众好汉，又惊又喜。"
+        ],
+        [
+          "say",
+          "songjiang",
+          "今日四十一个好汉，在白龙庙里聚义，真是天幸！众兄弟同心，先杀退官军！"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "if": "two",
+      "do": [
+        [
+          "victory",
+          "众好汉守住了渡口，接着大船，杀退官军，往穆太公庄上去了。"
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "unless": "two",
+      "do": [
+        [
+          "defeat",
+          "手里的渡口不到两处，大船靠不得岸，众好汉被官军困在江边。"
+        ]
+      ]
     }
   ],
   "dynamicLevels": true,
   "rewards": {
     "gold": 1200
-  }
+  },
+  "ferries": {
+    "zones": [
+      {
+        "name": "庙前渡",
+        "rect": [
+          12,
+          49,
+          14,
+          51
+        ]
+      },
+      {
+        "name": "北塘渡",
+        "rect": [
+          4,
+          9,
+          6,
+          11
+        ]
+      },
+      {
+        "name": "东湾渡",
+        "rect": [
+          42,
+          22,
+          44,
+          24
+        ]
+      }
+    ],
+    "radius": 6,
+    "hold": 3,
+    "spawn": [
+      1,
+      2
+    ],
+    "pools": {
+      "ours": [
+        [
+          "ferry-ours-0-0",
+          "ferry-ours-0-1",
+          "ferry-ours-0-2",
+          "ferry-ours-0-3"
+        ],
+        [
+          "ferry-ours-1-0",
+          "ferry-ours-1-1",
+          "ferry-ours-1-2",
+          "ferry-ours-1-3"
+        ],
+        [
+          "ferry-ours-2-0",
+          "ferry-ours-2-1",
+          "ferry-ours-2-2",
+          "ferry-ours-2-3"
+        ]
+      ],
+      "enemy": [
+        [
+          "ferry-enemy-0-0",
+          "ferry-enemy-0-1",
+          "ferry-enemy-0-2",
+          "ferry-enemy-0-3"
+        ],
+        [
+          "ferry-enemy-1-0",
+          "ferry-enemy-1-1",
+          "ferry-enemy-1-2",
+          "ferry-enemy-1-3"
+        ],
+        [
+          "ferry-enemy-2-0",
+          "ferry-enemy-2-1",
+          "ferry-enemy-2-2",
+          "ferry-enemy-2-3"
+        ]
+      ]
+    },
+    "waves": [
+      {
+        "at": 2,
+        "name": "清风山众好汉",
+        "units": [
+          "yanshun",
+          "huangxin",
+          "wangying",
+          "zhugui",
+          "zhengtianshou",
+          "shiyong"
+        ],
+        "flag": "w2"
+      },
+      {
+        "at": 5,
+        "name": "张顺、李俊等揭阳好汉",
+        "units": [
+          "zhangshun",
+          "zhangheng",
+          "lijun",
+          "lili",
+          "muhong",
+          "muchun",
+          "tongwei",
+          "tongmeng",
+          "xueyong",
+          "gongsunsheng"
+        ],
+        "flag": "w3"
+      },
+      {
+        "at": 9,
+        "name": "少华山众好汉",
+        "units": [
+          "lufang",
+          "guosheng",
+          "zhuwu",
+          "chenda",
+          "yangchun",
+          "shijin"
+        ],
+        "flag": "w4"
+      },
+      {
+        "at": 14,
+        "name": "二龙山众好汉",
+        "units": [
+          "luzhishen",
+          "wusong",
+          "linchong",
+          "yangzhi",
+          "qinming"
+        ],
+        "flag": "w5"
+      }
+    ],
+    "held": [
+      {
+        "n": 2,
+        "flag": "two"
+      }
+    ],
+    "revive": 5,
+    "allHeld": [
+      "ferry-allheld-0",
+      "ferry-allheld-1",
+      "ferry-allheld-2",
+      "ferry-allheld-3",
+      "ferry-allheld-4",
+      "ferry-allheld-5"
+    ]
+  },
+  "goals": [
+    {
+      "unless": "two",
+      "win": "打倒江州兵马都监，或撑满20回合时手里至少有两处渡口",
+      "lose": [
+        "宋江倒下",
+        "撑满20回合时渡口不到两处"
+      ],
+      "hint": [
+        "官军占着江边三处渡口（地图上红色方块）。每回合结束时渡口里哪边人多，渡口就归哪边",
+        "我方占着的渡口每回合来1–2个梁山喽啰；每占一处渡口每回合攒1点援军点数，攒够了庙旁就来下一拨好汉（看顶栏）；援军到齐后再攒的点数用来复活倒下的好汉",
+        "眼下我方渡口不到两处"
+      ]
+    },
+    {
+      "if": "two",
+      "win": "打倒江州兵马都监，或撑满20回合时手里至少有两处渡口",
+      "lose": [
+        "宋江倒下",
+        "撑满20回合时渡口不到两处"
+      ],
+      "hint": [
+        "已占住两处以上渡口，守住它们；官军会来抢，渡口里人少了就会丢",
+        "每占一处渡口每回合攒1点援军点数，攒够了庙旁就来下一拨好汉（看顶栏）；援军到齐后再攒的点数用来复活倒下的好汉"
+      ]
+    }
+  ]
 }

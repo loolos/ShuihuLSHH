@@ -5,7 +5,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { Battle } from '../src/rules/battle.ts';
-import { bestAttack, mpItemSlot, planAi } from '../src/rules/ai.ts';
+import { bestAttack, holdFerry, mpItemSlot, planAi, takeFerry } from '../src/rules/ai.ts';
+import { zoneDist } from '../src/rules/ferry.ts';
 import { attackSkill, facingTowards } from '../src/rules/unit.ts';
 import { watcherSees } from '../src/rules/combat.ts';
 import { buildT2S, exeTables, loadGameData, loadStage } from '../src/rules/load.ts';
@@ -64,7 +65,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
     make = (seed) => compileStage(rt, ps, files, { seed, text: tr, preset: id === 'mainline' });
   }
   let wins = 0;
-  for (let seed = 1; seed <= Number(n); seed++) {
+  for (let seed = 1 + Number(process.env.SEED0 ?? 0); seed <= Number(n) + Number(process.env.SEED0 ?? 0); seed++) {
     const input = make(seed);
     const b = new Battle(input);
     const goalBlock = input.blocks.find((x) => x.trigger.kind === 'area' && !(x.trigger.side && x.trigger.flagged) && x.ops.some((o) => o.op === 29));
@@ -80,6 +81,14 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         if (d < bd) { bd = d; best = { x, y }; }
       }
       return best;
+    };
+    let sjHome: { x: number; y: number } | undefined;
+    const walkHome = (u: Battle['units'][number], home: { x: number; y: number }) => {
+      const reach = b.reachOf(u, u.stats.move);
+      const field = b.board.distanceField([home]);
+      let best = { x: u.x, y: u.y, cost: 0 };
+      for (const n of reach.values()) if (field[n.y * b.board.width + n.x] < field[best.y * b.board.width + best.x] && !b.unitAt(n.x, n.y)) best = n;
+      return best.x === u.x && best.y === u.y ? {} : { path: b.pathOf(reach, best) };
     };
     const ev = [...b.begin()];
     while (b.pendingChoice) ev.push(...b.answer(0));
@@ -101,6 +110,34 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         if (z.all) for (const x of free) assigned.set(x.uid, z);
         const who = free.sort((p, q) => field[p.y * b.board.width + p.x] - field[q.y * b.board.width + q.x])[0];
         if (who && !z.all) assigned.set(who.uid, z);
+      }
+      const ferryOrders = new Map<number, (u: Battle['units'][number]) => ReturnType<typeof planAi> | null>();
+      if (b.ferry && b.ferries) {
+        const fz = b.ferries.zones, st = b.ferry;
+        const heroes = b.active().filter((x) => x.side === 'player' && !b.spectators.has(x.uid));
+        const free = new Set(heroes.map((x) => x.uid));
+        const sj = heroes.find((x) => x.name.includes('宋江'));
+        if (sj) {
+          // 宋江和身边一人守在开场的位置附近（宋江倒下就输，真人也不会让他冲出去）
+          const home = (sjHome ??= { x: sj.x, y: sj.y });
+          const stay = (u: Battle['units'][number]) => bestAttack(b, u, undefined, u.stats.move, (c) => dist(c, home) <= 3) ?? (dist(u, home) > 3 ? walkHome(u, home) : {});
+          free.delete(sj.uid);
+          ferryOrders.set(sj.uid, stay);
+          const buddy = heroes.filter((x) => free.has(x.uid)).sort((p, q) => dist(p, sj) - dist(q, sj))[0];
+          if (buddy) { free.delete(buddy.uid); ferryOrders.set(buddy.uid, stay); }
+        }
+        fz.forEach((z, i) => {
+          if (st.owner[i] !== 'ours') return;
+          const c = { x: (z.x1 + z.x2) >> 1, y: (z.y1 + z.y2) >> 1 };
+          for (const h of heroes.filter((x) => free.has(x.uid)).sort((p, q) => dist(p, c) - dist(q, c)).slice(0, 2)) {
+            free.delete(h.uid);
+            ferryOrders.set(h.uid, (u) => holdFerry(b, u, z));
+          }
+        });
+        for (const uid of free) ferryOrders.set(uid, (u) => {
+          const open = fz.map((z, i) => ({ z, i })).filter(({ i }) => st.owner[i] !== 'ours').sort((p, q) => zoneDist(p.z, u) - zoneDist(q.z, u))[0];
+          return open ? takeFerry(b, u, open.z) : null;
+        });
       }
       for (const u of b.active().filter((x) => x.side === 'player')) {
         if (b.status !== 'playing') break;
@@ -241,7 +278,8 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           if (b.canAct(u)) ev.push(...b.wait(u));
           continue;
         }
-        const plan = planAi(b, u);
+        // 夺渡口（白龙庙）：宋江和身边一人照常打；每个我方渡口留离它最近的两人守；其余的人去夺离自己最近、不在我方手里的渡口
+        const plan = (b.ferry && ferryOrders.get(u.uid)?.(u)) || planAi(b, u);
         const last = plan.path?.at(-1);
         if (last && plan.path!.length > 1) ev.push(...b.move(u, last.x, last.y));
         if (plan.skill && plan.cell && plan.skill !== attackSkill(u, b.data)) ev.push(...b.useSkill(u, plan.skill, plan.cell));

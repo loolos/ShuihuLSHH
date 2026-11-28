@@ -238,6 +238,25 @@ export interface PackStageJson {
   /** 城楼【新】（三打祝家庄，§15.34）：站在这些格子上的敌人，射程 ≥ 2 的攻击和招式再远 bonus 格（远程伤害按加长后的射程递减） */
   towers?: { cells: [number, number][]; bonus: number };
   /**
+   * 夺渡口【新】（白龙庙，负责人 2026-11-28，§15.23.1）：zones 渡口（rect = [x1, y1, x2, y2]，含边界）；整回合结束比人数定归属，
+   * 占着的一边每回合在渡口从 pools 里刷 spawn[0]–spawn[1] 个兵（pools.ours / enemy 按渡口顺序各一组单位 id，同组同时最多活这么多人）；
+   * 渡口守满 hold 人后新刷的兵去进攻；守渡的人只理会 radius 格内的对手（AI 17）。我方每占一个渡口每回合攒 1 点，
+   * 到 waves[k].at 就让 units 登场并设上标志 flag；援军到齐后每再攒 revive 点复活一位倒下的好汉；held：我方占着至少 n 个渡口时设上 flag（不够就清掉）。单位字段 ferry = 开场守哪个渡口（渡口名）
+   */
+  ferries?: {
+    zones: { name: string; rect: [number, number, number, number] }[];
+    radius?: number;
+    hold?: number;
+    spawn?: [number, number];
+    pools: { ours: string[][]; enemy: string[][] };
+    waves: { at: number; name: string; units: string[]; flag: string }[];
+    held?: { n: number; flag: string }[];
+    /** 援军到齐后每再攒这么多点复活一位倒下的好汉 */
+    revive?: number;
+    /** 我方刚占齐全部渡口的那个回合末，在开场位置刷出这些人（藏着的单位 id；还活着的不重刷） */
+    allHeld?: string[];
+  };
+  /**
    * 抢囚车【新】（法场劫人，负责人 2026-11-28，§15.9）：unit 坐在囚车上（写 prisonCart + spectator，开场绑住），沿 route 走
    * （拐点 [[x, y], …]，相邻两点要同一行或同一列，中间的格子自动补上；第一个点是车开场的格子）。
    * 我方回合结束时车旁一格（周围 8 格）里我方 + 友军比敌人多，就往终点推 min(多出的人数, forward) 格（默认 3）；
@@ -341,6 +360,8 @@ export interface PackUnitJson {
   hidden?: boolean;
   /** 被押送者的囚车外观；解开绑缚后移除，只影响画面。 */
   prisonCart?: boolean;
+  /** 夺渡口【新】：开场守哪个渡口（stage.ferries.zones 的 name），配 AI 17 */
+  ferry?: string;
   /** 观战演员：不可行动、不可成为攻击或技能的目标；仍占据自己的格子。 */
   spectator?: boolean;
   /** 只在对话里出声、不上地图：开局隐藏，say 点名时也不登场（例如景阳冈的酒家） */
