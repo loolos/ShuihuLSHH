@@ -137,6 +137,21 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     expect(ev.slice(castAt).some((e) => e.type === 'attack' && sb.some((u) => u.uid === e.uid))).toBe(true);
   });
 
+  it('破高廉：第一次有好汉走到高廉身边 2 格以内，高廉当场招出 4 个飞天神兵和一群猛兽（负责人 2026-11-28）', () => {
+    const { b, get } = open('polian');
+    const gl = get('gaolian'), lk = get('likui');
+    const ids = ['ns0', 'ns3', 'nb0', 'nb4'];
+    for (const id of ids) expect(get(id).present, id).toBe(false);
+    // 把李逵挪到高廉 3 格外，再走进 2 格以内
+    const cells: [number, number][] = [[0, 3], [0, -3], [3, 0], [-3, 0]];
+    const free = (x: number, y: number) => b.board.passable(x, y) && !b.units.some((u) => u.present && u.x === x && u.y === y);
+    const [dx, dy] = cells.find(([dx, dy]) => free(gl.x + dx, gl.y + dy) && free(gl.x + Math.sign(dx) * 2, gl.y + Math.sign(dy) * 2))!;
+    lk.x = gl.x + dx; lk.y = gl.y + dy;
+    b.move(lk, gl.x + Math.sign(dx) * 2, gl.y + Math.sign(dy) * 2);
+    for (const id of ids) expect(get(id).present, id).toBe(true);
+    for (const id of ids) expect(Math.abs(get(id).x - gl.x) + Math.abs(get(id).y - gl.y), id).toBeLessThanOrEqual(4);
+  });
+
   it('救柴进：李逵在箩底，摸到井底的柴进，柴进跟着走；两人回到箩筐那里，过关', () => {
     const { b, get } = open('jiuchai');
     const likui = get('likui'), cj = get('chaijin');
