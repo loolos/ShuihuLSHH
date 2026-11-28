@@ -152,6 +152,18 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(any).toBe(true);
     Object.assign(lin, { x: 18, y: 21 });
     expect(hit()).toBe(false);
+    // 小兵和好汉都打得着：先打小兵，哪怕好汉体力更少
+    const lb = get('lb0');
+    Object.assign(lb, { present: true, x: 16, y: 21 });
+    Object.assign(lin, { x: 17, y: 20 });
+    let lbHit = false;
+    for (let i = 0; i < 6 && !lbHit; i++) {
+      lin.hp = 5; lb.hp = lb.stats.maxHp;
+      charge({ units: [b.units.indexOf(h)], dir: 0, dist: 0 });
+      expect(lin.hp).toBe(5);
+      lbHit = lb.hp < lb.stats.maxHp;
+    }
+    expect(lbHit).toBe(true);
   });
 
   it('车轮战：开场只有秦明、韩滔出阵单挑，其余人（连同阵后候着的连环马）观战；一阵打完换下一阵', () => {
@@ -218,7 +230,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     // 把秦明挪到马的正前方，结束回合
     Object.assign(qm, { x: m.x, y: m.y - 14 });
     const hp0 = qm.hp;
+    expect(b.turnLimit).toBe(0); // 单挑不限回合
+    const t0 = b.turn;
     const ev = b.endPlayerPhase();
+    expect(b.turnLimit).toBe(t0 + 20); // 冲阵那一回合起再给 20 回合
     const horseIds = new Set(lead.map((u) => u.uid));
     expect(ev.some((e) => e.type === 'attack' && horseIds.has((e as { uid: number }).uid))).toBe(true);
     // 呼延灼不退场，撤到兵后面观战；其余人都回来参战
