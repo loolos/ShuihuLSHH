@@ -3414,6 +3414,16 @@ export class Battle {
           for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = false;
           break;
         // 128 剧情受伤（扩展包【新】，李应中祝彪的回马箭）：生命降到最大值的 value%，已经更低就不动，至少留 1 点
+        case 136: {
+          // 剧情回血【新】：回到最大体力的 value%（已经更高就不动）
+          if (!sel?.present || !sel.alive) break;
+          const hp = Math.max(sel.hp, Math.round((sel.stats.maxHp * op.value) / 100));
+          const delta = hp - sel.hp;
+          if (!delta) break;
+          sel.hp = hp;
+          this.emit({ type: 'hp', uid: sel.uid, hp: sel.hp, mp: sel.mp, delta });
+          break;
+        }
         case 128: {
           if (!sel?.present || !sel.alive) break;
           const hp = Math.max(1, Math.min(sel.hp, Math.round((sel.stats.maxHp * op.value) / 100)));
