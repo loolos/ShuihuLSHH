@@ -1662,6 +1662,118 @@
    "levelOffset": 1
   },
   {
+   "id": "ns0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ns1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 1,
+   "y": 32,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ns2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 4,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ns3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 5,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "nb0",
+   "class": "lion",
+   "side": "enemy",
+   "x": 13,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "nb1",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 14,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "nb2",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 15,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "nb3",
+   "class": "bear",
+   "side": "enemy",
+   "x": 14,
+   "y": 33,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "nb4",
+   "class": "boar",
+   "side": "enemy",
+   "x": 15,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
    "id": "lvfang",
    "class": "lvfang",
    "side": "ally",
@@ -10433,6 +10545,90 @@
   },
   {
    "on": {
+    "near": "gaolian",
+    "range": 2
+   },
+   "unless": [
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "say",
+     "gaolian",
+     "好大胆的草寇，敢近我身！"
+    ],
+    [
+     "narrate",
+     "高廉把聚兽铜牌连敲三下，身边黄砂一卷，四个飞天神兵和一群猛兽扑了出来，把他团团护住！"
+    ],
+    [
+     "appear",
+     "ns0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "ns1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "ns2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "ns3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "nb0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "nb1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "nb2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "nb3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "nb4",
+     {
+      "near": "gaolian"
+     }
+    ]
+   ]
+  },
+  {
+   "on": {
     "turn": 1,
     "enemyPhase": true
    },
@@ -10634,6 +10830,42 @@
     "flag": "pofa"
    },
    "do": [
+    [
+     "leave",
+     "ns0"
+    ],
+    [
+     "leave",
+     "ns1"
+    ],
+    [
+     "leave",
+     "ns2"
+    ],
+    [
+     "leave",
+     "ns3"
+    ],
+    [
+     "leave",
+     "nb0"
+    ],
+    [
+     "leave",
+     "nb1"
+    ],
+    [
+     "leave",
+     "nb2"
+    ],
+    [
+     "leave",
+     "nb3"
+    ],
+    [
+     "leave",
+     "nb4"
+    ],
     [
      "leave",
      "os00"
@@ -11351,6 +11583,42 @@
     [
      "leave",
      "gaolian"
+    ],
+    [
+     "leave",
+     "ns0"
+    ],
+    [
+     "leave",
+     "ns1"
+    ],
+    [
+     "leave",
+     "ns2"
+    ],
+    [
+     "leave",
+     "ns3"
+    ],
+    [
+     "leave",
+     "nb0"
+    ],
+    [
+     "leave",
+     "nb1"
+    ],
+    [
+     "leave",
+     "nb2"
+    ],
+    [
+     "leave",
+     "nb3"
+    ],
+    [
+     "leave",
+     "nb4"
     ],
     [
      "leave",
