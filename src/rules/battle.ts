@@ -871,6 +871,8 @@ export class Battle {
     const at = near && near.alive && near.present ? near : cell ?? home;
     Object.assign(u, { alive: true, defending: false, poisonTurns: 0, stunTurns: 0, panicTurns: 0, buffs: [], x: at.x, y: at.y, ai: { ...home.ai, point: { ...home.ai.point } } });
     this.ambushers.delete(u.uid);
+    const fs = this.ferry;
+    if (fs?.sent?.[u.uid]) { delete fs.sent[u.uid]; delete fs.home[u.uid]; delete fs.role[u.uid]; }
     refreshStats(u, this.data);
     u.hp = u.stats.maxHp;
     u.mp = u.stats.maxMp;
@@ -1388,6 +1390,7 @@ export class Battle {
       const now: FerrySide = n.ours > n.enemy ? 'ours' : n.enemy > n.ours ? 'enemy' : st.owner[i];
       if (now === st.owner[i]) return;
       st.owner[i] = now;
+      if (now === 'ours' && f.dispatch) st.lostDue = [...(st.lostDue ?? []).filter((k) => k !== i), i];
       this.emit({ type: 'message', text: now === 'ours' ? `梁山好漢奪下了${z.name}！` : `官軍奪回了${z.name}！` });
       this.emit({ type: 'ferry', zone: i, owner: now });
     });
@@ -1440,12 +1443,38 @@ export class Battle {
         n--;
       }
     });
+    if (side === 'enemy' && st.lostDue?.length) this.ferryDispatch();
     if (side === 'enemy' && st.allHeldDue) {
       st.allHeldDue = false;
       const who = (f.allHeld ?? []).filter((uid) => this.offField(uid));
       for (const uid of who) { const u = this.unit(uid)!; this.respawn(u); ready(u); }
       if (who.length) this.emit({ type: 'message', text: '渡口盡失，都監大怒，又遣一隊馬軍殺來！' });
     }
+  }
+
+  /**
+   * 都监就近派兵夺渡口（负责人 2026-11-28：「指派离我方渡口最近的随机 3 到 6 个官兵去夺取」，本阵戒备的和亲随都算）：
+   * 刚被我方夺下、现在仍在我方手里的渡口，从不属于哪个渡口的敌兵里挑离它最近的几个，改成守这处渡口（AI 17：丢了就去夺）。
+   */
+  private ferryDispatch() {
+    const f = this.ferries!, st = this.ferry!, d = f.dispatch!;
+    const by = this.unit(d.by);
+    for (const i of st.lostDue!) {
+      if (st.owner[i] !== 'ours') continue;
+      const z = f.zones[i];
+      const pool = this.active().filter((u) => u.side === 'enemy' && u.uid !== d.by && st.home[u.uid] === undefined).sort((a, b) => zoneDist(z, a) - zoneDist(z, b));
+      const n = Math.min(pool.length, d.n[0] + this.rng.int(d.n[1] - d.n[0] + 1));
+      if (!n) continue;
+      for (const u of pool.slice(0, n)) {
+        st.home[u.uid] = i;
+        st.role[u.uid] = 'd';
+        (st.sent ??= {})[u.uid] = true;
+        u.ai.mode = 17;
+      }
+      if (by && by.alive && by.present) this.emit({ type: 'say', uid: by.uid, speaker: by.name, text: `${z.name}丟了！離得近的${n}個，速速給我奪回來！` });
+      else this.emit({ type: 'message', text: `官軍${n}人轉去奪${z.name}！` });
+    }
+    st.lostDue = [];
   }
 
   /** 援军随机挑一处渡口，在它旁边登场（不管渡口在哪边手里；负责人 2026-11-28） */
@@ -3810,7 +3839,8 @@ export class Battle {
           break;
         // 122 改 AI 模式（扩展包【新】）
         case 122:
-          if (sel) sel.ai.mode = op.value;
+          // 白龙庙：都监已派去夺渡口的人，本阵逐排出击的命令不再改它
+          if (sel && !this.ferry?.sent?.[sel.uid]) sel.ai.mode = op.value;
           break;
         // 103 设剧本标志（扩展包【新】）：之后条件 100 成立、101 不成立
         case 103:
