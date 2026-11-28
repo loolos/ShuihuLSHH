@@ -61,6 +61,9 @@ export interface SkillDef extends ClassSkill {
   selfBuffs?: Buff[];
   /** 架势技可以给自己或相邻一格的队友用（增益加在目标身上）【新】（负责人 2026-11-26：宋江 呼保义、戴宗 神行法） */
   buffAlly?: boolean;
+  /** 可给队友的集气技把气、体力、增益都给所选的人（自己或相邻一格的队友）【新】（负责人 2026-11-28：扈三娘 红颜回春）：
+   * 回最大气力 1/power、最大体力 1/restoreHp，再加 selfBuffs；不填就是普通 buffAlly 集气技（气回给施放者、增益给所选的人） */
+  restoreHp?: number;
   /** 回复技附加持续回体【新】（负责人 2026-11-26：吴用 如鱼得水）：每个受回复的人之后 turns 回合每回合回最大体力的 1/divisor */
   healRegen?: { divisor: number; turns: number };
   /** 回复技顺带解掉受回复者的中毒和昏迷【新】（负责人 2026-11-26：如魚得水、回復計） */

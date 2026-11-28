@@ -4,6 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, CHAIN_CAP } from '../src/rules/battle.ts';
 import { attackRange } from '../src/rules/unit.ts';
+import { learnedSkills, skillBonusText } from '../src/rules/skills.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -138,6 +139,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(active('husanniang') && active('pengqi')).toBe(true);
   });
 
+  it('扈三娘 红颜回春：给自己或相邻队友回一半气、三分之一体力，再加敏捷', () => {
+    const { b, get } = open('guashuai');
+    const hs = get('husanniang'), lin = get('linchong');
+    (b as unknown as { spectators: Set<number> }).spectators.clear();
+    const s = learnedSkills(hs, (b as unknown as { data: Parameters<typeof learnedSkills>[1] }).data).find((x) => x.name === '红颜回春')!;
+    expect(s).toMatchObject({ type: 8, buffAlly: true, restoreHp: 3, power: 2, mpCost: 0 });
+    expect(skillBonusText(s)).toContain('回体1/3');
+    Object.assign(lin, { x: hs.x + 1, y: hs.y });
+    lin.hp = 1; lin.mp = 0;
+    const hsMp = hs.mp, ag0 = lin.stats.agility;
+    b.useSkill(hs, s, { x: lin.x, y: lin.y });
+    expect(lin.mp).toBe(Math.floor(lin.stats.maxMp / 2));
+    expect(lin.hp).toBe(1 + Math.floor(lin.stats.maxHp / 3));
+    expect(lin.stats.agility).toBe(ag0 + 30);
+    expect(hs.mp).toBe(hsMp);
+  });
+
   it('冲锋完顺手那一枪不限直线：周围菱形 2 格内（斜对角也算）打得着，3 格外不打', () => {
     const { b, get } = open('guashuai');
     const hs = horses(b);
@@ -224,9 +242,15 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(b.turnLimit).toBe(t0 + 20); // 冲阵那一回合起再给 20 回合
     const horseIds = new Set(lead.map((u) => u.uid));
     expect(ev.some((e) => e.type === 'attack' && horseIds.has((e as { uid: number }).uid))).toBe(true);
-    // 呼延灼不退场，撤到兵后面观战；其余人都回来参战
-    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual(['双鞭呼延灼']);
-    expect(get('huyanzhuo').present).toBe(true);
+    // 所有人回来参战：单挑败回本阵的韩滔、呼延灼也照常应战（负责人 2026-11-28）
+    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
+    for (const id of ['huyanzhuo', 'hantao']) expect(get(id).present, id).toBe(true);
+    // 第二段再被打败就正常退场
+    for (const id of ['huyanzhuo', 'hantao']) {
+      get(id).hp = Math.floor(get(id).stats.maxHp * 0.2);
+      after(b);
+      expect(get(id).present, id).toBe(false);
+    }
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
     expect(m.y).toBeLessThan(y0);
     // 第一批冲 10 格，停在我方第一排喽啰（y=16）身前
@@ -283,9 +307,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     // 打倒 8 匹
     for (const u of ws) kill(b, u, hero);
     after(b);
-    expect(b.objectives.join('\n')).toContain('水寨');
-    // 留一个在外面：不过关
+    // 第二波连环马还没上阵：吴用还不叫撤（负责人 2026-11-28：起码撑到第二波上阵）
     const out = ps[1];
+    Object.assign(out, { x: 18, y: 20 });
+    const mb = get('mb0'), mbY = mb.y;
+    expect(b.objectives.join('\n')).toContain('撑到第二波连环马上阵');
+    expect(b.objectives.join('\n')).not.toContain('全部退进水寨');
+    // 第二波上阵（冲锋）后的下一回合：叫撤，胜利条件换成退进水寨
+    for (let i = 0; i < 4 && mb.y === mbY; i++) { freeze(b); b.endPlayerPhase(); }
+    expect(mb.y).toBeLessThan(mbY);
+    expect(b.objectives.join('\n')).toContain('全部退进水寨');
+    // 留一个在外面：不过关
     Object.assign(out, { x: 18, y: 20 });
     freeze(b);
     b.endPlayerPhase();

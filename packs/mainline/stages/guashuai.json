@@ -47,7 +47,7 @@
   },
   {
    "if": "p2",
-   "win": "打倒 8 匹连环马",
+   "win": "连环马冲阵：顶住两波连环马，打倒 8 匹连环马，撑到第二波连环马上阵",
    "lose": [
     "%N倒下",
     "我方阵亡达到 4 人",
@@ -57,12 +57,12 @@
   {
    "if": "p2",
    "unless": "eight",
-   "hint": "连环马 4 格以内有别的连环马就加防御、少受伤，挤得越多越硬（最多加六成）；把单匹引开再打。打倒一匹，紧挨着它的马被绊住，少走 3 格"
+   "hint": "连环马用铁环连着：4 格以内有别的连环马就加防御、少受伤（每多一匹多一点，最多加六成），挨打时近旁的马还替它分担一成伤害（最多五成）；把单匹引开再打。打倒一匹，紧挨着它的马被绊住，少走 3 格。马上铁甲长枪打 1–2 格"
   },
   {
    "if": "p2",
    "unless": "w2",
-   "hint": "连环马一冲锋，撞到的人受伤、被挤开，喽啰会吓得逃窜"
+   "hint": "连环马冲阵：一冲就是一大片，撞到的人受伤、被挤开，喽啰会吓得逃窜；冲完顺手刺一枪。阵后还有一队连环马候着。连环马 4 格以内有同伴就更硬，挨打时近旁的马替它分担伤害；把单匹引开再打"
   },
   {
    "if": "eight",
@@ -2170,26 +2170,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -2419,26 +2399,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -2672,26 +2632,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -2921,26 +2861,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -3174,26 +3094,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -3423,26 +3323,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -3676,26 +3556,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -3925,26 +3785,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -4178,26 +4018,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -4427,26 +4247,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -4680,26 +4480,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -4929,26 +4709,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -5182,26 +4942,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -5431,26 +5171,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -5684,26 +5404,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -5933,26 +5633,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -6186,26 +5866,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -6435,26 +6095,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -6688,26 +6328,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -6937,26 +6557,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -7190,26 +6790,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -7439,26 +7019,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -7692,26 +7252,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -7941,26 +7481,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -8194,26 +7714,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -8443,26 +7943,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -8696,26 +8176,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -8945,26 +8405,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -9198,26 +8638,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -9447,26 +8867,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -9700,26 +9100,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -9949,26 +9329,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -10202,26 +9562,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -10451,26 +9791,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -10704,26 +10024,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -10953,26 +10253,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -11206,26 +10486,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -11455,26 +10715,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -11708,26 +10948,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -11957,26 +11177,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -12210,26 +11410,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -12459,26 +11639,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -12712,26 +11872,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -12961,26 +12101,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -13214,26 +12334,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -13463,26 +12563,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -13716,26 +12796,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -13965,26 +13025,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -14218,26 +13258,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -14467,26 +13487,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -14720,26 +13720,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -14969,26 +13949,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -15222,26 +14182,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -15471,26 +14411,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -15724,26 +14644,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -15973,26 +14873,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -16226,26 +15106,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -16475,26 +15335,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -16728,26 +15568,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -16977,26 +15797,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -17238,26 +16038,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -17446,26 +16226,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -17658,26 +16418,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -17866,26 +16606,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -32374,27 +31094,34 @@
    "do": [
     [
      "narrate",
-     "韩滔抵挡不住，拖着枣木槊败回本阵。"
+     "韩滔又抵挡不住，拖着枣木槊败走了。"
     ],
     [
-     "move",
-     "hantao",
-     12,
-     25,
-     {
-      "nearest": true,
-      "through": true
-     }
+     "leave",
+     "hantao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "huyanzhuo",
+    "below": 30,
+    "spare": true
+   },
+   "if": "p2",
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "好厉害的草寇！……且收兵，来日再战！"
     ],
     [
-     "face",
-     "hantao",
-     0
+     "narrate",
+     "呼延灼拨转踢雪乌骓，败回本阵去了。"
     ],
     [
-     "spectate",
-     "hantao",
-     true
+     "leave",
+     "huyanzhuo"
     ]
    ]
   },
@@ -32426,6 +31153,1650 @@
     "count": 8
    },
    "if": "p2",
+   "do": [
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": "lianhuan",
+    "count": 8
+   },
+   "if": [
+    "p2",
+    "w2"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": "lianhuan",
+    "count": 8
+   },
+   "if": "p2",
+   "unless": "w2",
+   "do": [
+    [
+     "say",
+     "wuyong",
+     "阵后还有一队连环马没动！众兄弟且顶住，看他后队如何！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 1
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 27
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 28
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 29
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 30
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 31
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 32
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 33
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 34
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 35
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 36
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 37
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 38
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 39
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 40
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 41
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 42
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 43
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 44
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 45
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 46
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 47
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 48
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 49
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 50
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 51
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 52
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 53
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 54
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 55
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 56
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 57
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 58
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 59
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 60
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 61
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
+   "do": [
+    [
+     "flag",
+     "eight"
+    ],
+    [
+     "say",
+     "songjiang",
+     "（在寨里高叫）众兄弟，已折了他许多马，够了！快退回水寨！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "连环马破不尽，徒折人马。都退进寨来，再作计较！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 62
+   },
+   "if": [
+    "w2",
+    "k8"
+   ],
+   "unless": "eight",
    "do": [
     [
      "flag",
