@@ -165,6 +165,33 @@ export const TURN_HINT_STAGES = ['N13'] as const;
  * trap = 写了字、要敌人走进去的区域（登州山射虎的窝弓：老虎踩着就中箭）【新】，换一种颜色，免得和要我方走到的格子混在一起。
  * chars 是要进去的角色号（劫法场这类要几个人都到的，列出全部）。
  */
+/**
+ * 抢囚车【新】（法场劫人，负责人 2026-11-28，§15.9）：uid 是坐在囚车上的人（绑着、不能行动、不挨打），沿 route 一格格走。
+ * 我方回合（我方 + 友军）结束时，车旁一格（周围 8 格）里我方 + 友军比敌人多，就往终点推 min(多出的人数, forward) 格；
+ * 敌方回合结束时敌人多，就往起点拉回 min(多出的人数, back) 格；一样多不动。下一格站着敌人（或不相干的人）就停住，
+ * 站着自己人就和他换位置。推到终点设上 flag（剧本里接 { flag } 区块过关）。
+ */
+export interface CartInput {
+  uid: number;
+  route: Cell[];
+  forward: number;
+  back: number;
+  flag: number;
+  /** 终点旁写的字（默认「终点」） */
+  label?: string;
+}
+
+/** 囚车现在的情形（画面、AI 用） */
+export interface CartView {
+  uid: number;
+  route: readonly Cell[];
+  /** 车在 route 的第几格 */
+  at: number;
+  /** 车旁一格里我方 + 友军、敌人的人数 */
+  ours: number;
+  foes: number;
+}
+
 export interface ObjectiveZone {
   kind: 'goal' | 'danger' | 'trap';
   x1: number;
@@ -229,6 +256,8 @@ export interface StageInput {
   prisonCarts?: number[];
   /** 城楼【新】（三打祝家庄，负责人 2026-11-25）：站在这些格子上的敌人，射程 ≥ 2 的普通攻击和招式射程再加 bonus 格 */
   towers?: { cells: { x: number; y: number }[]; bonus: number };
+  /** 抢囚车【新】（法场劫人，负责人 2026-11-28）：见 CartInput */
+  cart?: CartInput;
   /** 攻庄【新】（三打祝家庄，§15.34）：庄门、门卫、囚车、挠钩拖人 */
   siege?: SiegeInput;
   /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
@@ -435,6 +464,9 @@ export class Battle {
   /** 城楼格子（y * 宽 + x）和射程加成【新】 */
   readonly towerCells: ReadonlySet<number>;
   private readonly towerBonus: number;
+  /** 抢囚车【新】：配置和车在路线上的位置 */
+  readonly cart: CartInput | undefined;
+  private cartAt = 0;
   /** 剧本区块是否已经触发过（试打工具用） */
   hasFired(index: number) {
     return this.fired.has(index);
@@ -512,6 +544,7 @@ export class Battle {
     this.prisonCarts = new Set(input.prisonCarts ?? []);
     this.towerCells = new Set((input.towers?.cells ?? []).map((c) => c.y * input.board.width + c.x));
     this.towerBonus = input.towers?.bonus ?? 0;
+    this.cart = input.cart?.route.length ? input.cart : undefined;
     this.siege = input.siege;
     input.siege?.gates.forEach((g, i) => {
       this.doors.set(g.door, i);
@@ -919,6 +952,89 @@ export class Battle {
     }
   }
 
+  // ───────────── 抢囚车【新】（法场劫人，负责人 2026-11-28） ─────────────
+
+  /** 车旁一格（周围 8 格）：c 是不是挨着囚车 */
+  nextToCart(c: Cell, at?: Cell): boolean {
+    const v = this.cart && (at ?? this.cart.route[this.cartAt]);
+    return !!v && Math.max(Math.abs(c.x - v.x), Math.abs(c.y - v.y)) === 1;
+  }
+  /** 算人数的人：在场、没倒下、没被绑、不是观战的 */
+  private cartCrowd(at: Cell): { ours: number; foes: number } {
+    let ours = 0, foes = 0;
+    for (const u of this.active()) {
+      if (this.spectators.has(u.uid) || this.isBound(u) || this.isDoor(u.uid) || !this.nextToCart(u, at)) continue;
+      if (u.side === 'enemy') foes++;
+      else ours++;
+    }
+    return { ours, foes };
+  }
+  cartView(): CartView | null {
+    const c = this.cart;
+    if (!c) return null;
+    const u = this.unit(c.uid);
+    if (!u?.alive || !u.present) return null;
+    return { uid: c.uid, route: c.route, at: this.cartAt, ...this.cartCrowd(u) };
+  }
+  private cartTick(who: 'ours' | 'enemy') {
+    const c = this.cart!;
+    const u = this.unit(c.uid);
+    if (!u?.alive || !u.present || this.cartAt >= c.route.length - 1) return;
+    const { ours, foes } = this.cartCrowd(u);
+    const diff = who === 'ours' ? ours - foes : foes - ours;
+    if (diff <= 0) return;
+    const dir = who === 'ours' ? 1 : -1;
+    const steps = Math.min(diff, who === 'ours' ? c.forward : c.back);
+    const path: Cell[] = [{ x: u.x, y: u.y }];
+    const swaps: { t: Unit; to: Cell }[] = [];
+    let blocker: Unit | undefined;
+    for (let k = 0; k < steps; k++) {
+      const i = this.cartAt + dir;
+      if (i < 0 || i >= c.route.length) break;
+      const next = c.route[i];
+      const t = this.unitAt(next.x, next.y);
+      // 推车时前面站着自己人就换位置；敌人（拉车时是我方）挡着就走不动
+      if (t && !(t.side !== 'enemy' && who === 'ours' && !this.spectators.has(t.uid) && !this.isBound(t))) {
+        blocker = t;
+        break;
+      }
+      const from = { x: u.x, y: u.y };
+      if (t) {
+        t.x = from.x;
+        t.y = from.y;
+        swaps.push({ t, to: from });
+      }
+      u.x = next.x;
+      u.y = next.y;
+      this.cartAt = i;
+      path.push({ x: next.x, y: next.y });
+    }
+    const moved = path.length - 1;
+    if (moved > 0) {
+      const last = path[moved], prev = path[moved - 1];
+      // 车头朝向终点（拉回时也不掉头）
+      const dx = (last.x - prev.x) * dir, dy = (last.y - prev.y) * dir;
+      u.facing = dx > 0 ? 3 : dx < 0 ? 1 : dy > 0 ? 2 : 0;
+      this.emit({ type: 'move', uid: u.uid, path, facing: u.facing, script: true });
+      for (const sw of swaps) this.emit({ type: 'move', uid: sw.t.uid, path: [sw.to], facing: sw.t.facing, script: true });
+    }
+    const left = c.route.length - 1 - this.cartAt;
+    if (who === 'ours') {
+      if (moved) this.emit({ type: 'status', uid: u.uid, text: `推進 ${moved} 格` });
+      if (blocker) this.emit({ type: 'message', text: `${blocker.name}擋在囚車前面，車推不動了！` });
+      else if (moved && left > 0) this.emit({ type: 'message', text: `好漢們推著囚車往前走了 ${moved} 格，還有 ${left} 格。` });
+    } else {
+      if (moved) {
+        this.emit({ type: 'status', uid: u.uid, text: `被拉回 ${moved} 格` });
+        this.emit({ type: 'message', text: `官兵把囚車往回拉了 ${moved} 格，還有 ${left} 格。` });
+      }
+    }
+    if (this.cartAt >= c.route.length - 1) {
+      this.flags.add(c.flag);
+      this.runCondBlocks();
+    }
+  }
+
   /** 城楼加射程【新】（三打祝家庄）：敌人站在城楼格上，射程上限 ≥ 2 的再远 towerBonus 格（近战不变） */
   onTower(u: Unit, [lo, hi]: [number, number], at: Cell = u): [number, number] {
     return u.side === 'enemy' && hi >= 2 && this.towerCells.has(at.y * this.board.width + at.x) ? [lo, hi + this.towerBonus] : [lo, hi];
@@ -1055,6 +1171,12 @@ export class Battle {
         if (same) same.chars.push(...chars.filter((c) => !same.chars.includes(c)));
         else out.push(z);
       }
+    }
+    // 抢囚车的终点【新】
+    const cv = this.cartView();
+    if (cv) {
+      const end = cv.route[cv.route.length - 1];
+      out.push({ kind: 'goal', x1: end.x, y1: end.y, x2: end.x, y2: end.y, chars: [this.unit(cv.uid)!.classId], label: this.cart!.label ?? '終點' });
     }
     return out;
   }
@@ -1215,6 +1337,11 @@ export class Battle {
         this.runAi(u);
       }
       if (this.status !== 'playing') return this.flush();
+      // 抢囚车【新】：我方（含友军）回合结束推车，敌方回合结束拉车
+      if (this.cart) {
+        this.cartTick(side === 'ally' ? 'ours' : 'enemy');
+        if (this.status !== 'playing') return this.flush();
+      }
     }
     this.startTurn(this.turn + 1);
     this.record();
@@ -1233,6 +1360,7 @@ export class Battle {
       spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, bgm: this.bgm, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
       ...(this.siege ? { carts: [...this.prisonCarts], homes: [...this.homes] } : {}),
+      ...(this.cart ? { cartAt: this.cartAt } : {}),
     });
   }
 
@@ -1309,6 +1437,7 @@ export class Battle {
     if (s.spectators) { const sp = this.spectators as Set<number>; sp.clear(); for (const id of s.spectators) sp.add(id); }
     if (s.carts) { const pc = this.prisonCarts as Set<number>; pc.clear(); for (const id of s.carts) pc.add(id); }
     if (s.homes) for (const [id, h] of s.homes) this.homes.set(id, h);
+    if (s.cartAt !== undefined) this.cartAt = s.cartAt;
     this.rng.reseed(seed);
     this.emit({ type: 'phase', side: 'player', turn: this.turn });
     const prompt = this.data.prompts?.[0];
@@ -2431,7 +2560,7 @@ export class Battle {
     this.runCondBlocks();
     if (this.status !== 'playing') return;
     // 选人关没被选上的人这一关不再登场，不算
-    if (this.hadPlayers && !this.royale && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid)))
+    if (this.hadPlayers && !this.royale && !this.units.some((u) => u.side === 'player' && u.alive && !this.benched.has(u.uid) && u.uid !== this.cart?.uid))
       this.finish('lost', '我方全軍覆沒。');
   }
 
