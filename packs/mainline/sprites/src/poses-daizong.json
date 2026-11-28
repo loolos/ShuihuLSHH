@@ -1,0 +1,13 @@
+{
+ "actions": [
+  {"name": "FlyKick", "base": "Idle_Loop", "baseFrame": 0, "frames": 20, "keys": [
+   {"t": 0},
+   {"t": 0.14, "rot": {"spine_01": [18, 0, 0], "thigh_r": [-45, 0, 0], "calf_r": [80, 0, 0], "thigh_l": [-45, 0, 0], "calf_l": [80, 0, 0], "upperarm_r": [-30, 0, 0], "upperarm_l": [-30, 0, 0]}, "move": {"pelvis": [0, 0, -0.18]}},
+   {"t": 0.32, "rot": {"spine_01": [5, 0, 0], "thigh_r": [-100, 0, 0], "calf_r": [130, 0, 0], "thigh_l": [-70, 0, 0], "calf_l": [130, 0, 0], "upperarm_r": [40, 0, 0], "upperarm_l": [40, 0, 0]}, "move": {"pelvis": [0, -0.12, 0.42]}},
+   {"t": 0.48, "rot": {"spine_01": [-22, 0, 0], "thigh_r": [-100, 0, 0], "calf_r": [-5, 0, 0], "foot_r": [-25, 0, 0], "thigh_l": [-35, 0, 0], "calf_l": [135, 0, 0], "upperarm_r": [-40, 0, 0], "upperarm_l": [55, 0, 0]}, "move": {"pelvis": [0, -0.3, 0.5]}},
+   {"t": 0.62, "rot": {"spine_01": [-22, 0, 0], "thigh_r": [-100, 0, 0], "calf_r": [-5, 0, 0], "foot_r": [-25, 0, 0], "thigh_l": [-35, 0, 0], "calf_l": [135, 0, 0], "upperarm_r": [-40, 0, 0], "upperarm_l": [55, 0, 0]}, "move": {"pelvis": [0, -0.32, 0.42]}},
+   {"t": 0.8, "rot": {"spine_01": [20, 0, 0], "thigh_r": [-55, 0, 0], "calf_r": [85, 0, 0], "thigh_l": [-35, 0, 0], "calf_l": [75, 0, 0], "upperarm_r": [15, 0, 0], "upperarm_l": [15, 0, 0]}, "move": {"pelvis": [0, -0.1, -0.14]}},
+   {"t": 1}
+  ]}
+ ]
+}
