@@ -252,7 +252,7 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
           continue;
         }
         // 有被绑的自己人：最近的一个人先过去松绑
-        const bound = b.cart ? undefined : b.active().find((x) => x.side === 'player' && x.stunTurns >= 1000);
+        const bound = b.active().find((x) => x.side === 'player' && x.stunTurns >= 1000 && x.uid !== b.cart?.uid);
         if (bound && b.active().filter((x) => x.side === 'player' && x.stunTurns < 1000).sort((p, q) => dist(p, bound) - dist(q, bound))[0] === u) {
           walkTo(b, u, bound.x, bound.y, ev);
           if (b.canAct(u)) ev.push(...b.defend(u));

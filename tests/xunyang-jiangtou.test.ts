@@ -127,7 +127,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     // 撤退方向（第 4–9 回合南街）的援兵各队翻倍，右下街口的第 2、3 回合不加
     expect(s.units.filter((u) => u.side === 'enemy' && u.id.endsWith('b')).map((u) => u.id.split('_')[0])).not.toContain('x2');
     // 开场和各回合登场的 76 人，另有 6 个街口各 3 组（每组 4 人）轮着刷出来抢囚车
-    expect(s.units.filter((u) => u.side === 'enemy' && !/^r[a-z]\d_\d$/.test(u.id))).toHaveLength(76);
+    expect(s.units.filter((u) => u.side === 'enemy' && !/^r[a-z]\d_\d$/.test(u.id))).toHaveLength(80); // 76 人 + 开场 4 个江州都头（负责人 2026-11-28）
     expect(s.units.filter((u) => /^r[a-z]\d_\d$/.test(u.id))).toHaveLength(72);
     expect(get('wulong').present).toBe(false);
     (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
@@ -201,6 +201,33 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     const plan = planAi(b, g);
     const end = plan.path?.at(-1) ?? g;
     expect(b.nextToCart(end)).toBe(true);
+    expect(plan.target).toBe(lk);
+  });
+
+  it('法场抢囚车：戴宗开场也关在囚车里，李逵走到身边就放出来、当回合能动；李逵没有额外防御', () => {
+    const { b, get, ev } = open('fachang');
+    const dz = get('daizong'), lk = get('likui');
+    expect(b.isBound(dz)).toBe(true);
+    expect(b.prisonCarts.has(dz.uid)).toBe(true);
+    expect(lk.buffs).toHaveLength(0);
+    expect(text(ev)).not.toContain('神行法');
+    const out = b.move(lk, dz.x, dz.y + 1);
+    expect(b.isBound(dz)).toBe(false);
+    expect(b.canAct(dz)).toBe(true);
+    expect(out.some((e) => e.type === 'status' && e.uid === dz.uid && e.text === '解開')).toBe(true);
+  });
+
+  it('法场抢囚车 AI：车旁已有 4 个官兵时，别的官兵不再去挤车，改打车旁的好汉或打得到的人', () => {
+    const { b, get } = open('fachang');
+    const sj = get('songjiang');
+    for (const u of b.units) if (u !== sj && u.present) u.present = false;
+    const guards = b.units.filter((u) => u.side === 'enemy' && u.ai.mode === 0).slice(0, 5);
+    for (const [k, [x, y]] of [[40, 12], [42, 12], [40, 13], [42, 13]].entries()) Object.assign(guards[k], { present: true, alive: true, x, y });
+    const lk = get('likui');
+    Object.assign(lk, { present: true, alive: true, x: 36, y: 13 });
+    const g = guards[4];
+    Object.assign(g, { present: true, alive: true, x: 33, y: 13 });
+    const plan = planAi(b, g);
     expect(plan.target).toBe(lk);
   });
 
