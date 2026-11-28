@@ -14,7 +14,7 @@ import { applyBuffs, BAG_SLOTS, buffName, buffShort, type Buff, type BuffStat, c
 import { areaCells, castCells, falloffSkill, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
-import { inZone as inFerry, zoneDist, type FerryInput, type FerrySide, type FerryState } from './ferry.ts';
+import { inZone as inFerry, zoneCenter, zoneDist, type FerryInput, type FerrySide, type FerryState } from './ferry.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
 import { firstZone, inZone, mainArea, nextZone, openCells, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
@@ -865,10 +865,10 @@ export class Battle {
     });
   }
   /** 重新刷出（已倒下或还没登场的）一个人：回到开场位置附近，血气回满，AI 照开场 */
-  private respawn(u: Unit, near?: Unit) {
+  private respawn(u: Unit, near?: Unit, cell?: Cell) {
     const home = this.homes.get(u.uid)!;
-    // near【新】（三打祝家庄祝氏三杰复活）：在这个人身边出来，不回开场位置
-    const at = near && near.alive && near.present ? near : home;
+    // near【新】（三打祝家庄祝氏三杰复活）：在这个人身边出来，不回开场位置；cell：在这格附近出来（白龙庙援军好汉复活回渡口）
+    const at = near && near.alive && near.present ? near : cell ?? home;
     Object.assign(u, { alive: true, defending: false, poisonTurns: 0, stunTurns: 0, panicTurns: 0, buffs: [], x: at.x, y: at.y, ai: { ...home.ai, point: { ...home.ai.point } } });
     this.ambushers.delete(u.uid);
     refreshStats(u, this.data);
@@ -1401,9 +1401,11 @@ export class Battle {
     if (nr !== null && st.points >= nr) {
       const fallen = this.units.filter((u) => u.side === 'player' && !u.alive && this.homes.has(u.uid)).sort((a, b) => b.level - a.level)[0];
       if (fallen) {
-        this.respawn(fallen);
+        // 开场就在庙旁的好汉回庙旁；后来的援军好汉随机回一处渡口
+        const z = f.waves.some((w) => w.units.includes(fallen.uid)) ? f.zones[this.rng.int(f.zones.length)] : null;
+        this.respawn(fallen, undefined, z ? zoneCenter(z) : undefined);
         st.revived = (st.revived ?? 0) + 1;
-        this.emit({ type: 'message', text: `援軍點數到了 ${nr}：${fallen.name}重整旗鼓，回到廟旁再戰！` });
+        this.emit({ type: 'message', text: `援軍點數到了 ${nr}：${fallen.name}重整旗鼓，回到${z ? z.name : '廟旁'}再戰！` });
         this.emit({ type: 'hp', uid: fallen.uid, hp: fallen.hp, mp: fallen.mp, delta: 0 });
       }
     }
@@ -1446,13 +1448,19 @@ export class Battle {
     }
   }
 
-  /** 援军在开场写好的位置（白龙庙旁）登场，谁去哪个渡口由玩家自己派（负责人 2026-11-28） */
+  /** 援军随机挑一处渡口，在它旁边登场（不管渡口在哪边手里；负责人 2026-11-28） */
   private landWave(w: FerryInput['waves'][number]) {
+    const zones = this.ferries!.zones;
+    const z = zones[this.rng.int(zones.length)];
+    const c = zoneCenter(z);
     for (const uid of w.units) {
       const u = this.unit(uid);
-      if (u && u.alive && !u.present) this.appear(u);
+      if (!u || !u.alive || u.present) continue;
+      u.x = c.x;
+      u.y = c.y;
+      this.appear(u);
     }
-    this.emit({ type: 'message', text: `援軍點數到了 ${w.at}：${w.name}趕到廟旁！` });
+    this.emit({ type: 'message', text: `援軍點數到了 ${w.at}：${w.name}趕到${z.name}！` });
     this.flags.add(w.flag);
   }
 
