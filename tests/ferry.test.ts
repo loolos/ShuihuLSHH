@@ -127,4 +127,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('白龙庙夺
     expect(dead.hp).toBe(dead.stats.maxHp);
     expect(b.ferryInfo()!.next!.at).toBe(24);
   });
+  it('我方夺下渡口后，都监从离它最近的本阵 / 亲随里派 3–6 人去夺', () => {
+    const b = make();
+    seize(b, 1, heroes(b).slice(0, 3));
+    tickOf(b)();
+    expect(b.ferry!.owner[1]).toBe('ours');
+    spawn(b, 'enemy');
+    const sent = b.active().filter((u) => b.ferry!.sent?.[u.uid]);
+    expect(sent.length).toBeGreaterThanOrEqual(3);
+    expect(sent.length).toBeLessThanOrEqual(6);
+    for (const u of sent) {
+      expect(u.ai.mode).toBe(17);
+      expect(b.ferryTaskLabel(u)?.text).toBe('奪·北塘渡'.replace('奪', b.ferryTaskLabel(u)!.short));
+      expect(ids[u.uid]).not.toBe('dujian');
+    }
+    // 只派一次，下回合不再派
+    spawn(b, 'enemy');
+    expect(b.active().filter((u) => b.ferry!.sent?.[u.uid]).length).toBe(sent.length);
+  });
 });

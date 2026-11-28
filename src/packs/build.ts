@@ -444,6 +444,7 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     heldFlags: (fy.held ?? []).map((h) => ({ n: h.n, flag: flagRef(h.flag) })),
     ...(fy.revive ? { revive: fy.revive } : {}),
     ...(fy.allHeld?.length ? { allHeld: fy.allHeld.map(idx) } : {}),
+    ...(fy.dispatch ? { dispatch: { by: idx(fy.dispatch.by), n: fy.dispatch.n } } : {}),
   };
   const cart: StageInput['cart'] = stage.cart && {
     uid: idx(stage.cart.unit),
