@@ -126,7 +126,7 @@
   {
    "id": "huarong",
    "class": "huarong",
-   "side": "ally",
+   "side": "player",
    "x": 23,
    "y": 26,
    "level": 30,
