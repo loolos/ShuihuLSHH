@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, CHAIN_CAP } from '../src/rules/battle.ts';
+import { attackRange } from '../src/rules/unit.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -97,6 +98,29 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     freeze(b);
     b.endPlayerPhase();
   };
+
+  it('连环马：长枪普攻打 1–2 格；挨打时 4 格内每匹别的连环马替它挨一成，最多五匹，分担的马撞不死', () => {
+    const { b, get } = open('guashuai');
+    const hs = horses(b);
+    expect(attackRange(hs[0], (b as unknown as { data: Parameters<typeof attackRange>[1] }).data)).toEqual([1, 2]);
+    hs.forEach((u, i) => Object.assign(u, { present: true, x: 3 + (i % 4) * 9, y: 14 + Math.floor(i / 4) * 5 }));
+    for (const u of b.units) if (u.side === 'enemy' && !hs.includes(u)) u.present = false;
+    const [t, a, c, d, e, f, g] = hs;
+    // 旁边 6 匹：只有最近的 5 匹分担
+    [a, c, d, e, f, g].forEach((u, i) => Object.assign(u, { x: t.x + 1 + (i % 3), y: t.y + Math.floor(i / 3) + (i % 3 === 0 ? 1 : 0) }));
+    b.refreshChains();
+    const share = (b as unknown as { chainShare(t: Unit, n: number): number }).chainShare.bind(b);
+    const hp = [a, c, d, e, f, g].map((u) => u.hp);
+    expect(share(t, 100)).toBe(50);
+    expect([a, c, d, e, f, g].map((u, i) => hp[i] - u.hp).sort()).toEqual([0, 10, 10, 10, 10, 10]);
+    // 分担的马最多扣到 1 点
+    for (const u of [a, c, d, e, f, g]) u.hp = 3;
+    expect(share(t, 100)).toBe(100 - 2 * 5);
+    // 单独一匹没人分担
+    Object.assign(t, { x: 16, y: 9 });
+    expect(share(t, 100)).toBe(100);
+    void get;
+  });
 
   it('车轮战：开场只有秦明、韩滔出阵单挑，其余人（连同阵后候着的连环马）观战；一阵打完换下一阵', () => {
     const { b, get } = open('guashuai');

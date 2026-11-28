@@ -345,6 +345,8 @@ export type Occupancy = Map<number, { t: Unit; i: number }[]> & { self?: { t: Un
 
 /** 连环马（Battle.refreshChains，负责人 2026-11-28）：菱形半径、第一匹邻马的加成、每多一匹、封顶（百分比）、倒下时绊住紧挨着的马移动几格 */
 export const CHAIN_RADIUS = 4, CHAIN_FIRST = 30, CHAIN_EACH = 5, CHAIN_CAP = 60, CHAIN_TRIP = 3;
+/** 连环分担【新】（负责人 2026-11-28）：连环马挨打时，4 格内每匹别的连环马替它挨 10%，最多 5 匹（50%）；分担的马撞不死（至少留 1 点） */
+export const CHAIN_SHARE = 10, CHAIN_SHARE_MAX = 5;
 const CHAIN_SOURCE = '连环马';
 
 export class Battle {
@@ -1930,7 +1932,8 @@ export class Battle {
         continue;
       }
       const hp0 = t.hp;
-      t.hp = Math.max(this.spared(t) ? 1 : 0, t.hp - r.damage);
+      const own = this.chainShare(t, r.damage);
+      t.hp = Math.max(this.spared(t) ? 1 : 0, t.hp - own);
       total += r.damage;
       if (u.side === 'player' && t.side === 'enemy' && r.damage > 0) this.lastHitBy[t.uid] = u.uid;
       t.facing = facingTowards(t, u, t.facing); // 受击时转向攻击者
@@ -2057,6 +2060,24 @@ export class Battle {
       this.teamExp += teamShare(total);
       this.tallyExp('team', teamShare(total));
     }
+  }
+
+  /** 连环分担：返回目标自己承担的伤害，其余分给 4 格内别的连环马（近的先分） */
+  private chainShare(t: Unit, damage: number): number {
+    if (damage <= 0 || !this.data.classes[t.classId]?.chain) return damage;
+    const mates = this.units
+      .filter((m) => m !== t && m.alive && m.present && m.side === t.side && !this.spectators.has(m.uid) && this.data.classes[m.classId]?.chain && Math.abs(m.x - t.x) + Math.abs(m.y - t.y) <= CHAIN_RADIUS)
+      .sort((p, q) => Math.abs(p.x - t.x) + Math.abs(p.y - t.y) - (Math.abs(q.x - t.x) + Math.abs(q.y - t.y)))
+      .slice(0, CHAIN_SHARE_MAX);
+    let own = damage;
+    for (const m of mates) {
+      const part = Math.min(m.hp - 1, Math.floor((damage * CHAIN_SHARE) / 100));
+      if (part <= 0) continue;
+      own -= part;
+      m.hp -= part;
+      this.emit({ type: 'hp', uid: m.uid, hp: m.hp, mp: m.mp, delta: -part, text: '分担' });
+    }
+    return own;
   }
 
   /**
