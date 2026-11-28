@@ -85,7 +85,8 @@ export const CHAPTERS: ChapterDef[] = [
   // 谢朱仝私放之恩；朱仝随吴用上山，讲盂兰盆节小衙内被李逵抱走害死（雷横不知情，此时才听说）；武龙拿秦明、李应的事对比吐槽；
   // 小关打死殷天锡（李逵追殷天锡、柴进丹书铁券镇住闲汉，打死后从后门逃）；过场李逵回山报信（高廉是高俅的叔伯兄弟，宋江头一回主动攻打州城）；中关妖法困宋江（高廉每三回合妖风 + 神兵，宋江天书回风返火吹回去，铜牌召猛兽）
   // 负责人 2026-11-27：蓟州寻公孙胜（原著第 53 回、第 54 回开头）五段：荤酒误神行（李逵偷吃牛肉、甲马收不住脚）、智取公孙胜、夜斧松鹤轩（潜行）、云坠蓟州衙、真人授五雷
-  { name: '大破高唐州', stages: ['mainline/leiheng-zhutong', 'mainline/yintianxi', 'mainline/baoxin', 'mainline/shenbing', 'mainline/jiama', 'mainline/erxianshan', 'mainline/pijian', 'mainline/jizhoufu', 'mainline/chuanfa'] },
+  // 负责人 2026-11-28：破高唐州（原著第 54 回后半）：传法之后的城镇武冈镇（酒店里遇汤隆，入伙）；大关入云龙斗法破高廉（公孙胜五雷天心正法破神兵 → 夜劫寨 → 高廉驾云，雷横砍做两段）；小关黑旋风探穴救柴进（枯井迷宫，李逵坐箩下井）
+  { name: '大破高唐州', stages: ['mainline/leiheng-zhutong', 'mainline/yintianxi', 'mainline/baoxin', 'mainline/shenbing', 'mainline/jiama', 'mainline/erxianshan', 'mainline/pijian', 'mainline/jizhoufu', 'mainline/chuanfa', 'mainline/polian', 'mainline/jiuchai'] },
 ];
 
 /**
