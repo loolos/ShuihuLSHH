@@ -2794,7 +2794,8 @@ export class Battle {
           if (v & 2) {
             if (sel.present) this.hide(sel, false);
           } else if (v & 1 && sel.present) {
-            const reach = this.reachOf(sel, 99);
+            // args.through【新】（破高廉：高廉退城是剧情走位，被围住也照退）：不管谁挡路，穿人过去，只是不停在有人的格子上
+            const reach = op.args?.through ? this.board.reach(sel, 99, new Set()) : this.reachOf(sel, 99);
             let path = reach.has(key(px, py)) && !this.occupied(sel).has(key(px, py)) ? pathTo(reach, px, py) : [];
             // args.nearFree【新】：目标格被占了或走不到，就去离它最近（同样近取路短）的空格
             if (path.length <= 1 && op.args?.nearFree && (sel.x !== px || sel.y !== py)) {
@@ -2809,7 +2810,15 @@ export class Battle {
               }
             }
             // args.steps【新】：只走前几步（破高廉：高廉往城下退两步）
-            if (op.args?.steps && path.length > op.args.steps + 1) path = path.slice(0, op.args.steps + 1);
+            if (op.args?.steps && path.length > op.args.steps + 1) {
+              // 穿人走时停在有人的格子上就往回找最近的空格，前面都没有就往前找
+              const taken = op.args.through ? this.occupied(sel) : new Set<string>();
+              const free = (c: { x: number; y: number }) => !taken.has(key(c.x, c.y));
+              let end = op.args.steps;
+              while (end > 0 && !free(path[end])) end--;
+              if (end === 0) { end = op.args.steps; while (end < path.length - 1 && !free(path[end])) end++; }
+              path = path.slice(0, end + 1);
+            }
             if (path.length > 1) this.walk(sel, path, true);
           }
           break;

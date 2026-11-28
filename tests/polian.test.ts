@@ -109,8 +109,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     expect(gl.present).toBe(true);
     expect(b.status).toBe('playing');
     // 高廉不到六成往城下退；退了一回合孙立、朱仝、雷横截住
+    // 退城是剧情走位：四面被好汉围住也照样退出去（负责人 2026-11-28）
+    const ring = ['likui', 'tanglong', 'huarong', 'hero'].map(get);
+    const g0 = { x: gl.x, y: gl.y };
+    for (const [u, [dx, dy]] of ring.map((u, i) => [u, [[0, 1], [0, -1], [1, 0], [-1, 0]][i]] as const)) { u.x = g0.x + dx; u.y = g0.y + dy; }
     gl.hp = Math.floor(gl.stats.maxHp * 0.5);
     step();
+    expect(Math.abs(gl.x - g0.x) + Math.abs(gl.y - g0.y), '高廉被围住也要退出去').toBeGreaterThanOrEqual(2);
     expect(gl.ai.mode === 4 || get('sunli').present).toBe(true);
     // 退的时候最后一搏：又招出 6 个飞天神兵、五种猛兽各一
     for (const id of ['ls0', 'ls5', 'lm0', 'lm4']) expect(get(id).present || !get(id).alive, id).toBe(true);
