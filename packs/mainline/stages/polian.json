@@ -10709,17 +10709,31 @@
     [
      "say",
      "gaolian",
-     "且退回城去，再作计较！……众神兵，与我挡住追兵！"
+     "且退回城去，再作计较！"
+    ],
+    [
+     "move",
+     "gaolian",
+     19,
+     5,
+     {
+      "nearest": true,
+      "steps": 2
+     }
+    ],
+    [
+     "say",
+     "gaolian",
+     "……众神兵，与我挡住追兵！"
     ],
     [
      "narrate",
-     "高廉一面退，一面把聚兽铜牌乱敲，拼着最后的法力，又招出一彪飞天神兵和一群猛兽来断后！"
+     "高廉退了两步，把聚兽铜牌乱敲，拼着最后的法力，又招出一彪飞天神兵和一群猛兽，直扑追来的好汉们断后！"
     ],
     [
      "appear",
      "ls0",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10730,7 +10744,6 @@
      "appear",
      "ls1",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10741,7 +10754,6 @@
      "appear",
      "ls2",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10752,7 +10764,6 @@
      "appear",
      "ls3",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10763,7 +10774,6 @@
      "appear",
      "ls4",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10774,7 +10784,6 @@
      "appear",
      "ls5",
      {
-      "near": "gaolian",
       "ring": [
        2,
        4
@@ -10785,35 +10794,50 @@
      "appear",
      "lm0",
      {
-      "near": "gaolian"
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "lm1",
      {
-      "near": "gaolian"
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "lm2",
      {
-      "near": "gaolian"
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "lm3",
      {
-      "near": "gaolian"
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [
      "appear",
      "lm4",
      {
-      "near": "gaolian"
+      "ring": [
+       2,
+       4
+      ]
      }
     ],
     [

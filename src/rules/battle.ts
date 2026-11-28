@@ -2808,6 +2808,8 @@ export class Battle {
                 if (d < bestD || (d === bestD && p.length < path.length)) { bestD = d; path = p; }
               }
             }
+            // args.steps【新】：只走前几步（破高廉：高廉往城下退两步）
+            if (op.args?.steps && path.length > op.args.steps + 1) path = path.slice(0, op.args.steps + 1);
             if (path.length > 1) this.walk(sel, path, true);
           }
           break;
