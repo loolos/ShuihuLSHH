@@ -1876,6 +1876,17 @@ export class Battle {
         if (t !== u) t.turnStart = null;
         return this.addBuffs(t, skill.selfBuffs, name);
       }
+      if (skill.buffAlly && isChargeSkill(skill) && skill.restoreHp) {
+        // 红颜回春（负责人 2026-11-28）：气、体力、增益都给所选的人（自己或相邻队友）
+        const t = targets[0] ?? u;
+        if (t !== u) t.turnStart = null;
+        const hp0 = t.hp, mp0 = t.mp;
+        t.mp = Math.min(t.stats.maxMp, t.mp + Math.floor(t.stats.maxMp / Math.max(1, skill.power)));
+        t.hp = Math.min(t.stats.maxHp, t.hp + Math.floor(t.stats.maxHp / skill.restoreHp));
+        this.emit({ type: 'hp', uid: t.uid, hp: t.hp, mp: t.mp, delta: t.hp - hp0, mpDelta: t.mp - mp0, text: name });
+        if (u.side === 'player') this.gainExp(u, healExp(t.hp - hp0, this.rng), 'heal');
+        return this.addBuffs(t, skill.selfBuffs, name);
+      }
       if (skill.buffAlly && isChargeSkill(skill)) {
         // 可给队友的集气技（晁盖 天王聚义式、吴用 运筹帷幄）：气回给施放者自己，增益加在所选的人（自己或相邻队友）身上
         const t = targets[0] ?? u;

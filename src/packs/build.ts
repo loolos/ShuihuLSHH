@@ -301,6 +301,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     // 借来的原版技能如果挂了好汉自身增益（HERO_SELF_BUFFS），包里的技能不跟着继承，只认自己写的
     selfBuffs: s.selfBuffs?.length ? s.selfBuffs.map((b) => ({ ...b })) : undefined,
     buffAlly: s.buffAlly || undefined,
+    restoreHp: s.restoreHp || undefined,
     healRegen: s.healRegen ? { ...s.healRegen } : undefined,
     cure: s.cure || undefined,
     poison: s.poison ?? t.poison,

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Battle, CHAIN_CAP } from '../src/rules/battle.ts';
 import { attackRange } from '../src/rules/unit.ts';
+import { learnedSkills, skillBonusText } from '../src/rules/skills.ts';
 import { compileStage } from '../src/packs/build.ts';
 import { chapterOf } from '../src/rules/chapters.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -136,6 +137,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     after(b);
     expect(active('linchong') || active('huyanzhuo') || active('sunli')).toBe(false);
     expect(active('husanniang') && active('pengqi')).toBe(true);
+  });
+
+  it('扈三娘 红颜回春：给自己或相邻队友回一半气、三分之一体力，再加敏捷', () => {
+    const { b, get } = open('guashuai');
+    const hs = get('husanniang'), lin = get('linchong');
+    (b as unknown as { spectators: Set<number> }).spectators.clear();
+    const s = learnedSkills(hs, (b as unknown as { data: Parameters<typeof learnedSkills>[1] }).data).find((x) => x.name === '红颜回春')!;
+    expect(s).toMatchObject({ type: 8, buffAlly: true, restoreHp: 3, power: 2, mpCost: 0 });
+    expect(skillBonusText(s)).toContain('回体1/3');
+    Object.assign(lin, { x: hs.x + 1, y: hs.y });
+    lin.hp = 1; lin.mp = 0;
+    const hsMp = hs.mp, ag0 = lin.stats.agility;
+    b.useSkill(hs, s, { x: lin.x, y: lin.y });
+    expect(lin.mp).toBe(Math.floor(lin.stats.maxMp / 2));
+    expect(lin.hp).toBe(1 + Math.floor(lin.stats.maxHp / 3));
+    expect(lin.stats.agility).toBe(ag0 + 30);
+    expect(hs.mp).toBe(hsMp);
   });
 
   it('冲锋完顺手那一枪不限直线：周围菱形 2 格内（斜对角也算）打得着，3 格外不打', () => {
@@ -289,9 +307,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     // 打倒 8 匹
     for (const u of ws) kill(b, u, hero);
     after(b);
-    expect(b.objectives.join('\n')).toContain('水寨');
-    // 留一个在外面：不过关
+    // 第二波连环马还没上阵：吴用还不叫撤（负责人 2026-11-28：起码撑到第二波上阵）
     const out = ps[1];
+    Object.assign(out, { x: 18, y: 20 });
+    const mb = get('mb0'), mbY = mb.y;
+    expect(b.objectives.join('\n')).toContain('撑到第二波连环马上阵');
+    expect(b.objectives.join('\n')).not.toContain('全部退进水寨');
+    // 第二波上阵（冲锋）后的下一回合：叫撤，胜利条件换成退进水寨
+    for (let i = 0; i < 4 && mb.y === mbY; i++) { freeze(b); b.endPlayerPhase(); }
+    expect(mb.y).toBeLessThan(mbY);
+    expect(b.objectives.join('\n')).toContain('全部退进水寨');
+    // 留一个在外面：不过关
     Object.assign(out, { x: 18, y: 20 });
     freeze(b);
     b.endPlayerPhase();

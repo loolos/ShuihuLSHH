@@ -230,6 +230,7 @@ export function skillBonusText(s: SkillDef): string {
   const parts: string[] = [];
   if (isSupportSkill(s)) {
     if (s.power > 0) parts.push(`${isAllyChargeSkill(s) ? '友方回气' : isChargeSkill(s) ? '回气' : '回体'}1/${s.power}`);
+    if (s.restoreHp) parts.push(`回体1/${s.restoreHp}`);
   } else if (s.power) parts.push(`威${sign(s.power)}`);
   if (s.hitMod) parts.push(`命${sign(s.hitMod)}`);
   if (s.critMod) parts.push(`必${sign(s.critMod)}`);

@@ -131,6 +131,8 @@ export interface PackSkillJson {
   selfBuffs?: { stat: BuffStat; value: number; turns: number }[];
   /** 架势技可给自己或相邻一格的队友用（另写 rangeMin 0、rangeMax 1）【新】 */
   buffAlly?: boolean;
+  /** buffAlly 集气技把回气、回体（最大体力 1/restoreHp）、增益都给所选的人【新】（扈三娘 红颜回春） */
+  restoreHp?: number;
   /** 回复技附加持续回体：之后 turns 回合每回合回最大体力的 1/divisor【新】 */
   healRegen?: { divisor: number; turns: number };
   /** 回复技顺带解毒、解昏迷 */
