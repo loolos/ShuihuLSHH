@@ -205,6 +205,19 @@
     "frames": 8,
     "ms": 55
    }
+  },
+  "fly-kick2": {
+   "source": "FlyKick2",
+   "front": {
+    "file": "fly-kick2-front.png",
+    "frames": 10,
+    "ms": 55
+   },
+   "back": {
+    "file": "fly-kick2-back.png",
+    "frames": 10,
+    "ms": 55
+   }
   }
  }
 }

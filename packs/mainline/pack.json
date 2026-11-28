@@ -1973,7 +1973,7 @@
         "id": "dz-tazhen3",
         "name": "疾风踏阵LV3",
         "from": 225,
-        "anim": "fly-kick",
+        "anim": "fly-kick2",
         "learnLevel": 28,
         "type": 15,
         "rangeMin": 1,
@@ -1986,11 +1986,9 @@
         "stun": 0,
         "poison": 0,
         "effect": 20,
-        "hitAt": [
-          0.5
-        ]
+        "hitAt": [0.4, 0.6]
       },
-      {"id": "dz-tazhen4", "name": "疾风踏阵LV4", "from": 225, "anim": "fly-kick", "learnLevel": 36, "type": 15, "rangeMin": 1, "rangeMax": 1, "area": 2, "power": 70, "mpCost": 60, "hitMod": 10, "critMod": 5, "stun": 0, "poison": 0, "effect": 20, "hitAt": [0.5]},
+      {"id": "dz-tazhen4", "name": "疾风踏阵LV4", "from": 225, "anim": "fly-kick2", "learnLevel": 36, "type": 15, "rangeMin": 1, "rangeMax": 1, "area": 2, "power": 70, "mpCost": 60, "hitMod": 10, "critMod": 5, "stun": 0, "poison": 0, "effect": 20, "hitAt": [0.4, 0.6]},
         {"id": "dz-shenxing", "name": "神行法", "from": 227, "anim": "ninja-jump", "power": 0, "buffAlly": true, "rangeMin": 0, "rangeMax": 1, "mpCost": 45, "learnLevel": 24, "selfBuffs": [{"stat": "move", "value": 2, "turns": 5}, {"stat": "agility", "value": 40, "turns": 5}]},
         {"id": "dz-shenxing-2", "name": "神行法LV2", "from": 227, "anim": "ninja-jump", "power": 0, "buffAlly": true, "rangeMin": 0, "rangeMax": 1, "mpCost": 60, "learnLevel": 40, "selfBuffs": [{"stat": "move", "value": 3, "turns": 5}, {"stat": "agility", "value": 55, "turns": 5}]}
     ],
