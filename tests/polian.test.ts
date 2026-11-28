@@ -60,7 +60,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     expect(gl.present).toBe(true);
     expect([gl.x, gl.y]).toEqual([18, 15]);
     expect(get('xueyuanhui').present).toBe(false);
-    expect(summons().length).toBe(26);
+    expect(summons().length).toBe(36);
     for (const id of ['lvfang', 'guosheng', 'sunli', 'zhutong', 'leiheng']) expect(get(id).present, id).toBe(false);
     const said: string[] = [];
     const step = () => { freeze(); for (const e of b.endPlayerPhase()) if (e.type === 'say' || e.type === 'status') said.push(e.type === 'say' ? e.text : `status:${e.text}`); };

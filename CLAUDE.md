@@ -36,7 +36,7 @@
 | `node --experimental-transform-types tools/est-exp.ts` | 不跑战斗、按期望值估算每关经验总量和我方等级（0.1 秒；假定敌人全部打倒，对照列「设计」= 自有敌人基础等级平均 + 1） |
 | `node tools/gen-sound.ts <原版 Sound 目录>` | 把原版音效压成 MP3（去重）写到 `gamedata/sound/`（需要 ffmpeg；负责人 2026-11-12 同意入库） |
 | `node --experimental-transform-types tools/measure-assets.ts` | 统计网页版启动和每关要下载的图像 |
-| `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发 |
+| `node --experimental-transform-types tools/sim-pack.ts [包名] [关卡] [局数]` | 扩展包关卡试打：双方都交给 AI，打印胜率、回合数、剧情触发（`SIM_STORY_ITEM=1` 让我方用剧情道具，如破高廉的天书） |
 | `node --experimental-transform-types tools/check-facing.ts [--side] [--fix]` | 查关卡开场朝向：开场就在场上的人背对最近的对手就列出来（扩展包关卡、改过的原版关卡；原版本来的朝向、潜行哨兵不算），`--fix` 直接改 JSON（负责人 2026-11-21：士兵要看着要抓的人） |
 | `node --experimental-transform-types tools/sim-cuju.ts [局数]` | 蹴鞠外传试打：双方都交给蹴鞠 AI，打印胜率、比分、出界 / 拦截次数（§15.25） |
 | `node --experimental-transform-types tools/sim-royale.ts [局数] [玩家职业号]` | 好汉聚义（吃鸡外传）试打：玩家也交给吃鸡 AI，打印吃鸡率、名次、回合数、毒死 / 开宝箱数（§15.31；`WATCH=1` 玩家倒下后打完整局） |
