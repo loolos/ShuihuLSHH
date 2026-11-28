@@ -137,6 +137,23 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     expect(ev.slice(castAt).some((e) => e.type === 'attack' && sb.some((u) => u.uid === e.uid))).toBe(true);
   });
 
+  it('破高廉：第一回合就用天书，高廉第一回合照样招飞天神兵，反害自家留到第二回合（负责人 2026-11-28）', () => {
+    const { b, get } = open('polian');
+    const sb = ['sb00', 'sb01', 'sb02', 'sb03'].map(get);
+    const gs = get('gongsun');
+    const book = rt.itemIds.get('tianshu-wulei')!;
+    b.useItem(gs, gs.slots.indexOf(book));
+    const freeze = () => { for (const u of b.units) if (u.side !== 'player') u.ai.mode = 8; };
+    freeze();
+    let said = b.endPlayerPhase().filter((e) => e.type === 'say').map((e) => (e as { text: string }).text);
+    expect(sb.some((u) => u.present)).toBe(true);
+    expect(said.some((x) => x.includes('倒卷回去'))).toBe(false);
+    freeze();
+    said = b.endPlayerPhase().filter((e) => e.type === 'say').map((e) => (e as { text: string }).text);
+    expect(said.some((x) => x.includes('倒卷回去'))).toBe(true);
+    expect(said.some((x) => x.includes('飞沙走石'))).toBe(false);
+  });
+
   it('破高廉：第一次有好汉走到高廉身边 2 格以内，高廉当场招出 4 个飞天神兵和一群猛兽（负责人 2026-11-28）', () => {
     const { b, get } = open('polian');
     const gl = get('gaolian'), lk = get('likui');
