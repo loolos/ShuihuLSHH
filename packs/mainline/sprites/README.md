@@ -28,7 +28,7 @@
 | `wolf-black/` | 黑影（探穴救柴进井底的野兽）：`wolf/` 每帧按亮度压到近黑（`shuihu-design/polian-gen/blackwolf.py`），动作同狼 |
 | `stag/`、`donkey/`、`cow/`、`bull/` | 鹿、驴、牛、公牛：idle、walk、headbutt 低头顶、kick 后踢、charge 奔跑（`Gallop`）、hit、defend 低头（`Idle_Headlow`）、death |
 | `lion/` | 狮子：idle、walk、bite 扑咬（`Attack Jaw`）、paw 拍击（`Attack Right Paw`）、pounce 飞扑（`Jumping`，带前冲位移）、roar 吼（也当防御）、recoil 后退（`Walk Back`，当受击；模型没有受击动作）、death |
-| `bear/` | 熊：idle（`Stand_Idle_01`）、walk（原动作带根位移，渲染后按身体质心逐帧对齐成原地走）、rear-swipe 人立拍击（`Attack_StandAngry_01_High`）、hit（`Hit_Stand_F01`）、defend（`StandAngry_Breathing_01`）、death（`Death_Stand_R01`）。模型里 `_L` / `_R`、`Attack_StandAngry_01_Low` 等动作中途会转身，没用 |
+| `bear/` | 熊：idle（`Stand_Idle_01`）、walk（原动作带根位移，渲染后按身体质心逐帧对齐成原地走）、rear-swipe 人立拍击（`Attack_StandAngry_01_High`，原速 3 秒太慢，`sprites.json` 里每帧改成 150 ms，整段 1.2 秒，与虎狼相当）、hit（`Hit_Stand_F01`，每帧改成 100 ms）、defend（`StandAngry_Breathing_01`）、death（`Death_Stand_R01`）。模型里 `_L` / `_R`、`Attack_StandAngry_01_Low` 等动作中途会转身，没用 |
 | `boar/` | 野猪：idle、walk（`Walk_F_IP`）、gore 拱（`Attack_F`）、gore-up 挑（`Attack_Up`）、charge 冲撞（`Attack_Run_IP`）、hit（也当防御）、death（`Death_L`） |
 
 ## 来源与授权

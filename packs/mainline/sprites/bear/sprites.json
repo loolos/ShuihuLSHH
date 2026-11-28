@@ -40,12 +40,12 @@
    "front": {
     "file": "rear-swipe-front.png",
     "frames": 8,
-    "ms": 375
+    "ms": 150
    },
    "back": {
     "file": "rear-swipe-back.png",
     "frames": 8,
-    "ms": 375
+    "ms": 150
    }
   },
   "hit": {
@@ -53,12 +53,12 @@
    "front": {
     "file": "hit-front.png",
     "frames": 8,
-    "ms": 358
+    "ms": 100
    },
    "back": {
     "file": "hit-back.png",
     "frames": 8,
-    "ms": 358
+    "ms": 100
    }
   },
   "defend": {
