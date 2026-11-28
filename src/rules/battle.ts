@@ -2186,11 +2186,13 @@ export class Battle {
       }
     }
     this.refreshChains();
-    // 冲到跟前就顺手砍一下（负责人 2026-11-28：冲锋完要攻击）：打得到谁就打体力最少的那个，照常结算反击和经验
+    // 冲到跟前就顺手砍一下（负责人 2026-11-28：冲锋完要攻击）：打得到谁就打体力最少的那个，照常结算反击和经验。
+    // 这一下不限直线：周围菱形 2 格（射程更远就按射程）内的都打得到（负责人 2026-11-28）
     for (const u of who) {
       if (!u.alive || !u.present) continue;
-      const r = this.onTower(u, attackRange(u, this.data));
-      const foes = this.foesOf(u).filter((t) => !this.spectators.has(t.uid) && inAttackRange(u, t, r));
+      const [lo, hi] = this.onTower(u, attackRange(u, this.data));
+      const reach = Math.max(2, hi);
+      const foes = this.foesOf(u).filter((t) => !this.spectators.has(t.uid) && dist(u, t) >= lo && dist(u, t) <= reach);
       if (!foes.length) continue;
       foes.sort((p, q) => p.hp - q.hp);
       this.cast(u, attackSkill(u, this.data), foes[0], false);

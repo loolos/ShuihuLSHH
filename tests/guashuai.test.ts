@@ -122,6 +122,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     void get;
   });
 
+  it('冲锋完顺手那一枪不限直线：周围菱形 2 格内（斜对角也算）打得着，3 格外不打', () => {
+    const { b, get } = open('guashuai');
+    const hs = horses(b);
+    for (const u of b.units) if (u !== hs[0] && u !== get('linchong')) u.present = false;
+    const h = hs[0], lin = get('linchong');
+    Object.assign(h, { present: true, x: 16, y: 20 });
+    (b as unknown as { spectators: Set<number> }).spectators.clear();
+    const charge = (b as unknown as { charge(a: object): unknown[] }).charge.bind(b);
+    const hit = () => { const hp0 = lin.hp; lin.hp = lin.stats.maxHp; charge({ units: [b.units.indexOf(h)], dir: 0, dist: 0 }); void hp0; return lin.hp < lin.stats.maxHp; };
+    let any = false;
+    for (let i = 0; i < 6 && !any; i++) { Object.assign(lin, { x: 17, y: 21 }); any = hit(); }
+    expect(any).toBe(true);
+    Object.assign(lin, { x: 18, y: 21 });
+    expect(hit()).toBe(false);
+  });
+
   it('车轮战：开场只有秦明、韩滔出阵单挑，其余人（连同阵后候着的连环马）观战；一阵打完换下一阵', () => {
     const { b, get } = open('guashuai');
     const sp = watching(b);
