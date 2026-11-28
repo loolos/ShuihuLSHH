@@ -631,7 +631,7 @@ export class BattleScene extends Phaser.Scene {
         const tip = this.armed && sameCell(this.armed, c) ? `${more}　再点一次施放` : more;
         if (isSupportSkill(m.skill)) this.ui.showUnit(t, null, tip);
         else if (m.skill.drug) this.ui.showUnit(t, null, `${tip}　${m.skill.drugText ? `${m.skill.drugText.replace(/！$/, '')} ${m.skill.drug} 回合` : `喝下就麻翻 ${m.skill.drug} 回合`}（不伤人）`);
-        else this.ui.showUnit(t, b.preview(u, t, m.skill), tip);
+        else this.ui.showUnit(t, b.preview(u, t, m.skill, c), tip);
       } else if (c && b.skillCells(u, m.skill).some((t) => sameCell(t, c))) {
         this.ui.showUnit(u, null, `${name}：这里没有可作用的目标`);
       } else {

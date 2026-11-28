@@ -1,6 +1,9 @@
 // 后期好汉技能：本项目自有配置，不改 HUM 或同形象的 NPC 职业。
 import type { SkillDef } from './data.ts';
 
+/** 萬夫莫敵扇形每往后一行伤害少几成（第 0 行 100%，第 8 行 70%） */
+export const WANFU_ROW_FALLOFF = 0.0375;
+
 export type AreaOffset = readonly [side: number, forward: number];
 const ring: AreaOffset[] = [-1, 0, 1].flatMap(x => [-1, 0, 1].filter(y => x || y).map(y => [x, y] as const));
 export const LATE_PATTERNS = {
@@ -106,15 +109,15 @@ function heroSkillTiersBase(cls: number, own: SkillDef[]): SkillDef[] {
  return own.flatMap(s => {
   if(cls===0&&[10,11,12].includes(s.skillId)){
    const tier=s.skillId-10;
-   const updated={...s,hitMod:5*(tier+1),critMod:20,
+   // 负责人 2026-11-28：扇形越往后伤害越低，每行 −3.75%（第 9 行 = LV5 最后一行 70%），各级同一行同一系数
+   const updated={...s,hitMod:5*(tier+1),critMod:20,rowFalloff:WANFU_ROW_FALLOFF,
     hits:tier===2?[{frame:8,percent:50,dir:0},{frame:12,percent:50,dir:0}]:s.hits};
    if(tier!==2)return [updated];
    // LV5（负责人 2026-11-25，30–40 级补技能）：40 级，范围 9，命中 +25
    // 负责人 2026-11-26：清兵太猛，必杀各级都固定 +20，威力 LV3 起都是 55
-   // 负责人 2026-11-28：后期一招清兵太多，LV4、LV5 必杀 +20 → +5（同千軍萬馬、公孫勝），伤害 ×0.85
    const lv4={...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
-    learnLevel:28,mpCost:210,power:55,area:8,hitMod:20,critMod:5,damageScale:0.85};
-   return [updated,lv4,{...lv4,skillId:1314,name:s.name.replace(/LV3$/,'LV5'),learnLevel:40,mpCost:250,power:55,area:9,hitMod:25,critMod:5,
+    learnLevel:28,mpCost:210,power:55,area:8,hitMod:20,critMod:20};
+   return [updated,lv4,{...lv4,skillId:1314,name:s.name.replace(/LV3$/,'LV5'),learnLevel:40,mpCost:250,power:55,area:9,hitMod:25,critMod:20,
     hits:[{frame:6,percent:33,dir:0},{frame:9,percent:33,dir:0},{frame:12,percent:34,dir:0}]}]; // LV5 三段（负责人 2026-11-26）
   }
   // 千軍萬馬（武龍，类型 0 落点往前一线）：负责人 2026-11-22 加 LV4，命中 +5/+10/+15/+20，

@@ -3,7 +3,7 @@ import { key, type Cell } from './board.ts';
 import { previewAttack } from './combat.ts';
 import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
-import { castRange, isAllyChargeSkill, isRechargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills } from './skills.ts';
+import { castRange, falloffSkill, isAllyChargeSkill, isRechargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, hostile, type Unit } from './unit.ts';
 
 export interface AiPlan {
@@ -85,7 +85,7 @@ export function bestAttack(b: Battle, u: Unit, only?: Unit, budget = u.stats.mov
         let expected = 0, kills = 0;
         for (const t of hit) {
           if (b.walled(t, at)) continue;
-          const p = previewAttack(self, t, skill);
+          const p = previewAttack(self, t, falloffSkill(skill, at, cell, t));
           // 含命中、必杀概率，并按剩余体力截断；不预掷命中，不因耗气或少走路压过人数/伤害。
           expected += (p.hit / 100) * ((1 - p.crit / 100) * Math.min(t.hp, p.damage) + (p.crit / 100) * Math.min(t.hp, p.critDamage));
           if (p.hit > 0 && p.damage >= t.hp) kills++;

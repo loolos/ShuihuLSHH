@@ -205,6 +205,17 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
 }
 
 /**
+ * 扇形按行衰减（SkillDef.rowFalloff，萬夫莫敵）：目标 t 在扇形第几行（落点那行为 0），返回把衰减并进 damageScale 的技能；没有衰减就原样返回。
+ * from 是施放者所在格（决定扇形朝向，同 areaCells）。
+ */
+export function falloffSkill(s: SkillDef, from: Cell, at: Cell, t: Cell): SkillDef {
+  if (!s.rowFalloff || s.type !== 1) return s;
+  const dir = DIRS[facingTowards(from, at, 0)];
+  const row = Math.max(0, (t.x - at.x) * dir.x + (t.y - at.y) * dir.y);
+  return row ? { ...s, damageScale: (s.damageScale ?? 1) * Math.max(0, 1 - row * s.rowFalloff) } : s;
+}
+
+/**
  * 技能菜单里每个技能下面的简略加成【新】（负责人 2026-11-13）：威力、命中修正、必杀修正、中毒率、昏迷率，
  * 如"威+25 命+40 必+50 毒20% 昏10%"；为 0 的项不显示，减益显示负数（"命-10"）。
  * 命中修正显示技能数据里的原值，不换算成实际的命中倍数。回复技 / 集气技的威力是回复除数，显示成"回体1/4""回气1/2"。
