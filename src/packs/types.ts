@@ -114,6 +114,8 @@ export interface PackSkillJson {
   areaOrigin?: 'target';
   /** 相对选中格的范围偏移：[横向,前方]，随施放方向旋转。 */
   areaPattern?: [number, number][];
+  /** 范围按层衰减：往外每层伤害少几成（见 SkillDef.ringFalloff） */
+  ringFalloff?: number;
   /** 出手动作与命中帧的播放倍率，默认1；不改变规则伤害。 */
   castSpeed?: number;
   /** 命中时受击者身上的简单画面效果：blood = 溅血、explosion = 爆炸（Effect.lib 第 40 组）（只是画面） */

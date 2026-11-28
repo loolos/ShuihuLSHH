@@ -281,6 +281,7 @@ function packSkill(s: PackSkillJson, skillId: number, group: number | null, temp
     castCycles: s.castCycles,
     areaOrigin: s.areaOrigin,
     areaPattern: s.areaPattern,
+    ringFalloff: s.ringFalloff,
     castSpeed: s.castSpeed,
     hitFx: s.hitFx,
     arrowFx: s.arrowFx,
