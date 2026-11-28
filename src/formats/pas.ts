@@ -77,7 +77,7 @@ export function parsePasHeader(buf: Buffer): PasHeader {
 // ───────────── 区块与指令（事件脚本），结构见 docs/binary-formats.md §8 ─────────────
 
 export type PasTrigger =
-  | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战；−1（必须 flagged）= 第 2 回合起任何一回合开始时，标志一满足就执行【新】
+  | { kind: 'turn'; turn: number; /** 扩展包【新】：区块写了 if / unless，执行前要检查标志 */ flagged?: boolean; /** 扩展包【新】：在这一回合的敌军回合开始时执行（不是我方回合开始） */ enemyPhase?: boolean } // 参数 N：第 N + 1 回合开始时；0 = 开战；−1（必须 flagged）= 第 2 回合起任何一回合开始时，标志一满足就执行【新】
   | { kind: 'death'; char: number } // 角色号；1000 = 主角
   /** chars（扩展包【新】）：这几个角色都在范围里才触发（劫法场：宋江、戴宗都逃到出口）；没有时看 char */
   | { kind: 'area'; char: number; x1: number; y1: number; x2: number; y2: number; chars?: number[]; /** 扩展包【新】：区块写了 if / unless（教学关的将台，§15.26） */ flagged?: boolean; /** 扩展包【新】：地图上区域旁写的字（默认「撤退」） */ label?: string; /** 【新】回合结束（下回合开始前）才检查 */ atTurnEnd?: boolean; /** 【新】走路时路过区域里任何一格就算（射虎的窝弓） */ pass?: boolean; /** 【新】这一方任何一个在场的人进去都算（怒破何观察：哪位好汉都能放火），这时不看 char */ side?: 'player' | 'ours' }
