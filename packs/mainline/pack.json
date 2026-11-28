@@ -2349,7 +2349,7 @@
         "id": "lk-yunqi",
         "name": "沉息蓄锋",
         "from": 227,
-        "anim": "crouch-idle",
+        "anim": "power-up",
         "poison": 0,
         "stun": 0,
         "power": 2,
@@ -2455,15 +2455,15 @@
         "hitFx": "explosion"
     },
     {"id": "lk-kuanglan-lv5", "name": "狂澜裂岳LV5", "from": 42, "anim": "axe-7", "poison": 0, "stun": 20, "hitAt": [0.071429, 0.214286, 0.357143, 0.5, 0.642857, 0.785714, 0.928571], "power": 80, "mpCost": 140, "learnLevel": 40, "type": 3, "rangeMin": 1, "rangeMax": 7, "area": 2, "critMod": 20, "hitMod": 0, "effect": 0, "hitFx": "explosion"},
-        {"id": "lk-hengshen", "name": "铁牛横身", "from": 227, "anim": "crouch-idle", "power": 0, "mpCost": 55, "learnLevel": 24, "selfBuffs": [{"stat": "defense", "value": 35, "turns": 5}, {"stat": "regenHp", "value": 15, "turns": 5}]},
-        {"id": "lk-hengshen-2", "name": "铁牛横身LV2", "from": 227, "anim": "crouch-idle", "power": 0, "mpCost": 70, "learnLevel": 40, "selfBuffs": [{"stat": "defense", "value": 50, "turns": 5}, {"stat": "regenHp", "value": 22, "turns": 5}]}
+        {"id": "lk-hengshen", "name": "铁牛横身", "from": 227, "anim": "block", "power": 0, "mpCost": 55, "learnLevel": 24, "selfBuffs": [{"stat": "defense", "value": 35, "turns": 5}, {"stat": "regenHp", "value": 15, "turns": 5}]},
+        {"id": "lk-hengshen-2", "name": "铁牛横身LV2", "from": 227, "anim": "block", "power": 0, "mpCost": 70, "learnLevel": 40, "selfBuffs": [{"stat": "defense", "value": 50, "turns": 5}, {"stat": "regenHp", "value": 22, "turns": 5}]}
 ],
     "sprite": {
       "sheet": "sprites/likui",
       "idle": "idle",
       "walk": "walk",
       "hurt": "hit-chest",
-      "defend": "crouch-idle"
+      "defend": "block"
     },
     "face": {
       "file": "faces/likui.png"
