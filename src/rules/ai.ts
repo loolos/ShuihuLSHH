@@ -443,8 +443,56 @@ export function planAi(b: Battle, u: Unit): AiPlan {
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
+      // 抢囚车的关【新】：敌人、友军（和试打的我方）都去抢车
+      if (b.cart && u.uid !== b.cart.uid) return cartPlan(b, u);
       return defaultPlan(b, u);
   }
+}
+
+/**
+ * 抢囚车 AI【新】（法场劫人，负责人 2026-11-28）：回合结束时车旁一格里人多的一方推 / 拉车，所以——
+ * 1. 体力很低先吃药 / 回血；
+ * 2. 车旁一格（周围 8 格）里有能打到人的位置，就站过去打（站位只在车旁挑）；
+ * 3. 打不到人但挤得到车旁：挤过去（敌人先挑车头前面那格，挡住去路）；已经在车旁就不走开；
+ * 4. 挤不到车旁：不往远离车的方向走、顺路打得到人就打；都不行就往车那边赶路。
+ */
+export function cartPlan(b: Battle, u: Unit): AiPlan {
+  const heal = healIfLow(b, u) ?? healPlan(b, u);
+  if (heal) return heal;
+  const cv = b.cartView();
+  if (!cv) return defaultPlan(b, u);
+  const cart = cv.route[cv.at];
+  const atk = bestAttack(b, u, undefined, u.stats.move, (c) => b.nextToCart(c));
+  if (atk) return atk;
+  if (b.nextToCart(u)) return withCharge(b, u, {});
+  const W = b.board.width;
+  const reach = b.reachOf(u, u.stats.move);
+  const occ = b.occupied(u);
+  // 车头前面一格（敌人去堵）或后面一格（我方不必挡自己的路）
+  const ahead = cv.route[Math.min(cv.route.length - 1, cv.at + 1)];
+  const slots = [...reach.values()].filter((n) => b.nextToCart(n) && !occ.has(key(n.x, n.y)));
+  if (slots.length) {
+    const block = (n: Cell) => (u.side === 'enemy' ? Number(n.x === ahead.x && n.y === ahead.y) : -Number(n.x === ahead.x && n.y === ahead.y));
+    const best = slots.reduce((a, n) => (block(n) > block(a) || (block(n) === block(a) && n.cost < a.cost) ? n : a));
+    return withCharge(b, u, { path: b.pathOf(reach, best) });
+  }
+  // 敌人挤不到车旁：站到车要走的路上（前面 2–4 格），把车堵住【新】
+  if (u.side === 'enemy') {
+    const block = cv.route.slice(cv.at + 2, cv.at + 5);
+    const stand = [...reach.values()].filter((n) => block.some((c) => c.x === n.x && c.y === n.y) && !occ.has(key(n.x, n.y)));
+    if (stand.length) {
+      const n = stand.reduce((a, c) => (c.cost < a.cost ? c : a));
+      const hit = bestAttack(b, u, undefined, u.stats.move, (c) => c.x === n.x && c.y === n.y);
+      return hit ?? withCharge(b, u, { path: b.pathOf(reach, n) });
+    }
+  }
+  const goals: Cell[] = [];
+  for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) if ((dx || dy) && b.board.passable(cart.x + dx, cart.y + dy)) goals.push({ x: cart.x + dx, y: cart.y + dy });
+  const field = b.fieldFor(u, goals);
+  const here = field[u.y * W + u.x];
+  const onWay = bestAttack(b, u, undefined, u.stats.move, (c) => field[c.y * W + c.x] <= here);
+  if (onWay) return onWay;
+  return marchPlan(b, u, goals) ?? withCharge(b, u, approach(b, u, goals, 0));
 }
 
 /** AI 12 的屋子范围：目标点 = 左上 (x1, y1)，目标 = x2 << 8 | y2（含边界） */

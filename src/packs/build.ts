@@ -445,13 +445,23 @@ export function compileStage(rt: PackRuntime, stage: PackStageJson, files: FileS
     ...(fy.revive ? { revive: fy.revive } : {}),
     ...(fy.allHeld?.length ? { allHeld: fy.allHeld.map(idx) } : {}),
   };
+  const cart: StageInput['cart'] = stage.cart && {
+    uid: idx(stage.cart.unit),
+    route: expandRoute(stage.cart.route, stage.id),
+    forward: stage.cart.forward ?? 3,
+    back: stage.cart.back ?? 1,
+    flag: flagRef(stage.cart.flag),
+    ...(stage.cart.label ? { label: stage.cart.label } : {}),
+  };
+  if (cart && (units[cart.uid].x !== cart.route[0].x || units[cart.uid].y !== cart.route[0].y)) fail(`${stage.id}: 囚车 ${stage.cart!.unit} 不在路线起点`);
+  if (cart) for (const c of cart.route) if (!board.passable(c.x, c.y)) fail(`${stage.id}: 囚车路线 (${c.x},${c.y}) 走不通`);
   const goals = compileGoals(stage, flagIds, flagRef);
   const aiPrefer: Record<number, number[]> = {};
   for (const [uid, list] of Object.entries(stage.aiPrefer ?? {})) aiPrefer[charOf(uid)] = list.map(skillRef);
   const names: Record<number, string> = {};
   stage.units.forEach((u, i) => u.name && (names[i] = u.name));
   const clearGold = stage.pov ? 0 : stage.rewards?.gold;
-  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.units.some((u) => u.disguise || u.seer) ? { disguise: { units: stage.units.flatMap((u, i) => u.disguise ? [i] : []), seers: Object.fromEntries(stage.units.flatMap((u, i) => u.seer ? [[i, u.seer]] : [])), moves: Object.fromEntries(stage.units.flatMap((u, i) => u.disguiseMove ? [[i, u.disguiseMove]] : [])), ...(stage.disguise?.flag ? { flag: flagRef(stage.disguise.flag) } : {}) } } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])), ...(goals ? { goals } : {}), ...(siege ? { siege } : {}), ...(stage.towers ? { towers: { cells: stage.towers.cells.map(cell), bonus: stage.towers.bonus } } : {}), ...(ferries ? { ferries } : {}) };
+  return { name: packStageName(rt.id, stage.id), board, units, blocks, data: rt.data, seed: opts.seed, text: opts.text, aiPrefer, names, hpMultipliers: Object.fromEntries(stage.units.flatMap((u, i) => u.hpMultiplier === undefined ? [] : [[i, u.hpMultiplier]])), spectators: stage.units.flatMap((u, i) => u.spectator ? [i] : []), prisonCarts: stage.units.flatMap((u, i) => u.prisonCart ? [i] : []), clearGold, watchers: Object.fromEntries(stage.units.flatMap((u, i) => u.watch === undefined ? [] : [[i, u.watch]])), watchTrust: Object.fromEntries(stage.units.flatMap((u, i) => u.trusts?.length ? [[i, u.trusts.map(classRef)]] : [])), watchQuestion: stage.units.flatMap((u, i) => u.question ? [i] : []), patrols: Object.fromEntries(stage.units.flatMap((u, i) => u.patrol?.length ? [[i, u.patrol.map(([x, y]) => ({ x, y }))]] : [])), ...(stage.stealth ? { stealth: { lose: stage.stealth.lose, ...(stage.stealth.flag ? { flag: flagRef(stage.stealth.flag) } : {}) } } : {}), enemyRanks: stage.cuju || stage.royale ? {} : Object.fromEntries(units.filter(u=>u.side==='enemy' && stage.units[u.index].ai!==8 && !stage.units[u.index].spectator).map(u=>[u.index,stage.units[u.index].enemyRank ?? enemyRank(u.type)])), party: opts.party, ...(stage.map.seal?.length ? { sealed: stage.map.seal.map(([x, y, tile]) => ({ x, y, ...(tile !== undefined ? { tile } : {}) })) } : {}), ...(stage.cuju ? { cuju: stage.cuju } : {}), ...(stage.royale ? { royale: royaleInput(rt, stage) } : {}), ...(stage.units.some((u) => u.disguise || u.seer) ? { disguise: { units: stage.units.flatMap((u, i) => u.disguise ? [i] : []), seers: Object.fromEntries(stage.units.flatMap((u, i) => u.seer ? [[i, u.seer]] : [])), moves: Object.fromEntries(stage.units.flatMap((u, i) => u.disguiseMove ? [[i, u.disguiseMove]] : [])), ...(stage.disguise?.flag ? { flag: flagRef(stage.disguise.flag) } : {}) } } : {}), ...(stage.banquet ? { banquet: { flag: flagRef(stage.banquet.flag), sight: stage.banquet.sight ?? 2 } } : {}), toasts: Object.fromEntries(stage.units.flatMap((u, i) => u.toasts?.length ? [[i, u.toasts]] : [])), extraSkills: Object.fromEntries(stage.units.flatMap((u, i) => u.skills?.length ? [[i, u.skills.map(skillRef)]] : [])), drinks: Object.fromEntries(stage.units.flatMap((u, i) => u.drink ? [[i, { refuse: u.drink.refuse ?? 0, turns: u.drink.turns, by: u.drink.by?.map(classRef), ...(u.drink.light ? { light: true } : {}) }]] : [])), ...(goals ? { goals } : {}), ...(siege ? { siege } : {}), ...(stage.towers ? { towers: { cells: stage.towers.cells.map(cell), bonus: stage.towers.bonus } } : {}), ...(cart ? { cart } : {}), ...(ferries ? { ferries } : {}) };
 }
 
 /** 外传默认配装按每个人自己的等级；包自带装备和 gearAt:none 剧情例外保留。 */
@@ -906,4 +916,20 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
   const ci = ops.findIndex((o) => o.op === 120);
   if (ci >= 0 && ci !== ops.length - 1) fail(`第 ${index} 个区块：choice 必须是区块最后一条指令`);
   return { index, head: [], trigger, cond, ops };
+}
+
+/** 抢囚车路线：拐点之间（同一行或同一列）补满格子【新】 */
+export function expandRoute(points: [number, number][], stage = ''): { x: number; y: number }[] {
+  const out: { x: number; y: number }[] = [];
+  points.forEach(([x, y], i) => {
+    if (i === 0) return void out.push({ x, y });
+    const p = out[out.length - 1];
+    if (p.x !== x && p.y !== y) throw new Error(`${stage}: 囚车路线 (${p.x},${p.y}) → (${x},${y}) 不在同一行或同一列`);
+    while (p.x !== x || p.y !== y) {
+      const last = out[out.length - 1];
+      out.push({ x: last.x + Math.sign(x - last.x), y: last.y + Math.sign(y - last.y) });
+      if (out[out.length - 1].x === x && out[out.length - 1].y === y) break;
+    }
+  });
+  return out;
 }

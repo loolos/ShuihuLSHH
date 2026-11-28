@@ -23,7 +23,9 @@
       "x": 41,
       "y": 13,
       "facing": 2,
-      "level": 25
+      "level": 25,
+      "prisonCart": true,
+      "spectator": true
     },
     {
       "id": "daizong",
@@ -570,7 +572,8 @@
       "levelOffset": 2
     },
     {
-      "id": "g5", "facing": 0,
+      "id": "g5",
+      "facing": 0,
       "class": 32,
       "side": "enemy",
       "x": 42,
@@ -1363,6 +1366,852 @@
       "hidden": true,
       "name": "土兵",
       "levelOffset": 2
+    },
+    {
+      "id": "rn0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 44,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 45,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rn0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 46,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rn1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 44,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 45,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rn1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 46,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rn2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 43,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 44,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rn2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 45,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rn2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 46,
+      "y": 4,
+      "facing": 2,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "re0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "re0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "re1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "re1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "re2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 12,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "re2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "re2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 13,
+      "facing": 1,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rw0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rw0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rw1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rw1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rw2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 9,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rw2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rw2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 10,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rm0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 23,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rm0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 23,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rm1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 23,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rm1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 23,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rm2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 23,
+      "y": 22,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rm2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 22,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rm2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 23,
+      "y": 23,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rl0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rl0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rl1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rl1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rl2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 21,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 22,
+      "y": 42,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rl2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 21,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rl2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 22,
+      "y": 43,
+      "facing": 3,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rs0_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs0_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs0_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rs0_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rs1_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs1_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs1_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rs1_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
+    },
+    {
+      "id": "rs2_0",
+      "class": 32,
+      "side": "enemy",
+      "x": 52,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs2_1",
+      "class": 32,
+      "side": "enemy",
+      "x": 53,
+      "y": 46,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "土兵"
+    },
+    {
+      "id": "rs2_2",
+      "class": 34,
+      "side": "enemy",
+      "x": 52,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 1
+    },
+    {
+      "id": "rs2_3",
+      "class": 43,
+      "side": "enemy",
+      "x": 53,
+      "y": 47,
+      "facing": 0,
+      "level": 23,
+      "hidden": true,
+      "levelOffset": 2,
+      "name": "骑兵"
     }
   ],
   "script": [
@@ -1371,11 +2220,11 @@
       "do": [
         [
           "objective",
-          "胜利：宋江、戴宗都逃到地图最下方的出口（往江边去）\n失败：宋江、戴宗或李逵倒下；超过 20 回合"
+          "胜利：把关着宋江的囚车推到地图最下方的江边\n失败：好汉全部倒下；超过 21 回合\n推车：我方回合结束时，囚车周围一圈 8 格里好汉比官兵多，就往江边推（多几人推几格，最多 2 格）；官兵回合结束时官兵多，就往回拉（最多 2 格）；车前有官兵挡着就推不动。官兵会不停地从各个街口赶来抢车"
         ],
         [
           "turnLimit",
-          20
+          21
         ],
         [
           "bind",
@@ -1393,7 +2242,7 @@
         ],
         [
           "narrate",
-          "江州十字路口，法场已经扎起。土兵和刀棒刽子手把宋江、戴宗押到法场中间，团团枪棒围住。"
+          "江州十字路口，法场已经扎起。土兵和刀棒刽子手把宋江钉在囚车里推到法场中间，戴宗绑在一旁，团团枪棒围住。"
         ],
         [
           "narrate",
@@ -1672,7 +2521,7 @@
         ],
         [
           "narrate",
-          "（我方好汉走到宋江或戴宗身边，就能割断绳索。）"
+          "（宋江钉在囚车里，一时打不开。好汉围在车旁就能把车往江边推；官兵也会围上来抢车。）"
         ]
       ]
     },
@@ -1741,7 +2590,24 @@
         [
           "say",
           "chaogai",
-          "众兄弟，动手！先救宋江哥哥和戴院长！"
+          "众兄弟，动手！宋江哥哥钉在囚车里，一时开不得——只顾推车，往江边去！"
+        ],
+        [
+          "cleanse",
+          "daizong"
+        ],
+        [
+          "narrate",
+          "戴宗趁乱挣断了绳索，就地拴上甲马，作起神行法来。"
+        ],
+        [
+          "say",
+          "daizong",
+          "哥哥休慌！小弟先到江边去寻船接应！"
+        ],
+        [
+          "leave",
+          "daizong"
         ],
         [
           "narrate",
@@ -1879,6 +2745,99 @@
         [
           "appear",
           "x3_2"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rn0_0",
+              "rn0_1",
+              "rn0_2",
+              "rn0_3"
+            ],
+            [
+              "rn1_0",
+              "rn1_1",
+              "rn1_2",
+              "rn1_3"
+            ],
+            [
+              "rn2_0",
+              "rn2_1",
+              "rn2_2",
+              "rn2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "re0_0",
+              "re0_1",
+              "re0_2",
+              "re0_3"
+            ],
+            [
+              "re1_0",
+              "re1_1",
+              "re1_2",
+              "re1_3"
+            ],
+            [
+              "re2_0",
+              "re2_1",
+              "re2_2",
+              "re2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -1950,6 +2909,99 @@
         [
           "appear",
           "s4_3b"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rn0_0",
+              "rn0_1",
+              "rn0_2",
+              "rn0_3"
+            ],
+            [
+              "rn1_0",
+              "rn1_1",
+              "rn1_2",
+              "rn1_3"
+            ],
+            [
+              "rn2_0",
+              "rn2_1",
+              "rn2_2",
+              "rn2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "re0_0",
+              "re0_1",
+              "re0_2",
+              "re0_3"
+            ],
+            [
+              "re1_0",
+              "re1_1",
+              "re1_2",
+              "re1_3"
+            ],
+            [
+              "re2_0",
+              "re2_1",
+              "re2_2",
+              "re2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rw0_0",
+              "rw0_1",
+              "rw0_2",
+              "rw0_3"
+            ],
+            [
+              "rw1_0",
+              "rw1_1",
+              "rw1_2",
+              "rw1_3"
+            ],
+            [
+              "rw2_0",
+              "rw2_1",
+              "rw2_2",
+              "rw2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2006,6 +3058,99 @@
         [
           "appear",
           "x5_5"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "re0_0",
+              "re0_1",
+              "re0_2",
+              "re0_3"
+            ],
+            [
+              "re1_0",
+              "re1_1",
+              "re1_2",
+              "re1_3"
+            ],
+            [
+              "re2_0",
+              "re2_1",
+              "re2_2",
+              "re2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rw0_0",
+              "rw0_1",
+              "rw0_2",
+              "rw0_3"
+            ],
+            [
+              "rw1_0",
+              "rw1_1",
+              "rw1_2",
+              "rw1_3"
+            ],
+            [
+              "rw2_0",
+              "rw2_1",
+              "rw2_2",
+              "rw2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2049,6 +3194,99 @@
         [
           "appear",
           "w6_4b"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rw0_0",
+              "rw0_1",
+              "rw0_2",
+              "rw0_3"
+            ],
+            [
+              "rw1_0",
+              "rw1_1",
+              "rw1_2",
+              "rw1_3"
+            ],
+            [
+              "rw2_0",
+              "rw2_1",
+              "rw2_2",
+              "rw2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rn0_0",
+              "rn0_1",
+              "rn0_2",
+              "rn0_3"
+            ],
+            [
+              "rn1_0",
+              "rn1_1",
+              "rn1_2",
+              "rn1_3"
+            ],
+            [
+              "rn2_0",
+              "rn2_1",
+              "rn2_2",
+              "rn2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2092,6 +3330,99 @@
         [
           "appear",
           "s7_4b"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2135,6 +3466,99 @@
         [
           "appear",
           "x8_4b"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2194,6 +3618,99 @@
         [
           "appear",
           "x9_2b"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
@@ -2205,110 +3722,1214 @@
         [
           "narrate",
           "城门口的官兵也赶来拦截！"
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
     {
       "on": {
-        "near": "songjiang"
+        "turn": 11
       },
       "do": [
         [
-          "narrate",
-          "好汉割断绳索，扶起宋江，递过一口剑。"
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ],
         [
-          "cleanse",
-          "songjiang"
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ],
         [
-          "setEquip",
-          "songjiang",
-          0,
-          63
-        ],
-        [
-          "say",
-          "songjiang",
-          "众位兄弟舍命来救，宋江死里得生！"
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
     {
       "on": {
-        "near": "daizong"
+        "turn": 12
       },
       "do": [
         [
-          "narrate",
-          "好汉割断戴宗身上的绳索。"
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ],
         [
-          "cleanse",
-          "daizong"
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ],
         [
-          "say",
-          "daizong",
-          "多谢众位好汉！"
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
       ]
     },
     {
       "on": {
-        "atTurnEnd": true,
-        "enter": [
-          "songjiang",
-          "daizong"
+        "turn": 13
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ],
-        "area": [
-          30,
-          52,
-          41,
-          53
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
         ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 14
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 15
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 16
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 17
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 18
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 19
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 20
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "turn": 21
+      },
+      "do": [
+        [
+          "respawn",
+          [
+            [
+              "rm0_0",
+              "rm0_1",
+              "rm0_2",
+              "rm0_3"
+            ],
+            [
+              "rm1_0",
+              "rm1_1",
+              "rm1_2",
+              "rm1_3"
+            ],
+            [
+              "rm2_0",
+              "rm2_1",
+              "rm2_2",
+              "rm2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rl0_0",
+              "rl0_1",
+              "rl0_2",
+              "rl0_3"
+            ],
+            [
+              "rl1_0",
+              "rl1_1",
+              "rl1_2",
+              "rl1_3"
+            ],
+            [
+              "rl2_0",
+              "rl2_1",
+              "rl2_2",
+              "rl2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ],
+        [
+          "respawn",
+          [
+            [
+              "rs0_0",
+              "rs0_1",
+              "rs0_2",
+              "rs0_3"
+            ],
+            [
+              "rs1_0",
+              "rs1_1",
+              "rs1_2",
+              "rs1_3"
+            ],
+            [
+              "rs2_0",
+              "rs2_1",
+              "rs2_2",
+              "rs2_3"
+            ]
+          ],
+          {
+            "say": [
+              "休叫劫囚车的走了！",
+              "拿住梁山泊的贼，知府相公重重有赏！",
+              "把囚车拖回法场去！",
+              "围住那辆车子！"
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "on": {
+        "flag": "escaped"
       },
       "do": [
         [
           "narrate",
-          "众好汉跟着李逵，一路杀出城来，直到江边。"
+          "众好汉推着囚车，一路杀出城来，直到江边，七手八脚打开囚车，扶出宋江。"
         ],
         [
           "victory",
-          "救出了宋江、戴宗！"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "dead": "songjiang"
-      },
-      "do": [
-        [
-          "defeat",
-          "宋江被杀，劫法场失败。"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "dead": "daizong"
-      },
-      "do": [
-        [
-          "defeat",
-          "戴宗被杀，劫法场失败。"
-        ]
-      ]
-    },
-    {
-      "on": {
-        "dead": "likui"
-      },
-      "do": [
-        [
-          "defeat",
-          "李逵倒下了。"
+          "救出了宋江！"
         ]
       ]
     }
@@ -2316,5 +4937,13 @@
   "dynamicLevels": true,
   "rewards": {
     "gold": 800
+  },
+  "cart": {
+    "unit": "songjiang",
+    "route": [[41, 13], [41, 52]],
+    "forward": 2,
+    "back": 2,
+    "flag": "escaped",
+    "label": "江边"
   }
 }

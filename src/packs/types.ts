@@ -257,6 +257,14 @@ export interface PackStageJson {
     allHeld?: string[];
   };
   /**
+   * 抢囚车【新】（法场劫人，负责人 2026-11-28，§15.9）：unit 坐在囚车上（写 prisonCart + spectator，开场绑住），沿 route 走
+   * （拐点 [[x, y], …]，相邻两点要同一行或同一列，中间的格子自动补上；第一个点是车开场的格子）。
+   * 我方回合结束时车旁一格（周围 8 格）里我方 + 友军比敌人多，就往终点推 min(多出的人数, forward) 格（默认 3）；
+   * 敌方回合结束时敌人多，就拉回 min(多出的人数, back) 格（默认 1）；推到终点设上 flag。label 是终点旁写的字。
+   * 敌人（和 AI 模式 0 的友军、试打的我方）改用抢车 AI：先挑车旁一格能打到人的位置，再挤到车旁，挤不过去才顺路打人。
+   */
+  cart?: { unit: string; route: [number, number][]; forward?: number; back?: number; flag: string; label?: string };
+  /**
    * 攻庄【新】（三打祝家庄，§15.34）：gates = 庄门（door 是站在门板格上、AI 8 的敌人，体力固定 hp；cells 是整扇门的格子，要写进 map.seal；
    * guards 是门卫，不受墙外 y > wallY 的人伤害，都不在场了、回合结束时我方有人站在 inner 格上就从里面开门；开门设上 flag）；
    * carts = 囚车格，snare.skills 打中体力 pct% 以下的我方好汉（spare 职业除外）拖进空囚车，囚车旁刷出 cartGuards 里还没在场的一组；

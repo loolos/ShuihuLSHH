@@ -81,6 +81,8 @@ const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as cons
 /** 好汉聚义的毒圈颜色 */
 const POISON_COLOR = 0xa050f0;
 /** 胜负条件区域的颜色【新】：撤退出口青色、敌人逃跑出口品红，和阵营色、宝箱黄都分得开 */
+/** 抢囚车还要走的路【新】 */
+const CART_ROUTE_COLOR = 0xffe070;
 const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' }, trap: { color: 0xff9a2e, label: '机关' }, ferryOurs: { color: 0x4a8ff0, label: '渡口' }, ferryFoe: { color: 0xff4040, label: '渡口' } } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
@@ -148,6 +150,8 @@ export class BattleScene extends Phaser.Scene {
   /** 好汉聚义的毒圈（圈外紫色、现在的圈紫线、下一个圈白线） */
   private ringG!: Phaser.GameObjects.Graphics;
   private zoneSig = '';
+  /** 抢囚车【新】：车头上的「好汉 : 官兵」人数牌 */
+  private cartText: Phaser.GameObjects.Text | null = null;
   private zones: MiniZone[] = [];
   /** 火势蔓延【新】：着火的格子和格子上的火焰 */
   private fireCells: Cell[] = [];
@@ -218,6 +222,7 @@ export class BattleScene extends Phaser.Scene {
     // 上一关的撤退 / 敌逃区域和着火格子不能带进下一关（本关一个区域都没有时 drawZones 不会重算，小地图会一直画旧的）
     this.zones = [];
     this.zoneSig = '';
+    this.cartText = null;
     this.fireCells = [];
     this.fireSprites = new Map();
   }
@@ -810,6 +815,7 @@ export class BattleScene extends Phaser.Scene {
     this.updateFog();
     this.placeFloat();
     this.drawZones();
+    this.drawCartCount();
     this.drawRing();
     this.drawMinimap();
     this.syncGhosts();
@@ -871,7 +877,8 @@ export class BattleScene extends Phaser.Scene {
   private drawZones() {
     const zs = this.battle.objectiveZones();
     const ws = this.battle.watchZones();
-    const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|') + ws.map((w) => `/${w.x},${w.y},${w.facing},${w.r},${w.spotted}`).join('');
+    const cv = this.battle.cartView();
+    const sig = zs.map((z) => `${z.kind}:${z.x1},${z.y1},${z.x2},${z.y2}`).join('|') + ws.map((w) => `/${w.x},${w.y},${w.facing},${w.r},${w.spotted}`).join('') + (cv ? `#${cv.at}` : '');
     if (sig === this.zoneSig) return;
     this.zoneSig = sig;
     this.zones = zs.map((z) => ({ ...z, color: `#${ZONE_STYLE[z.kind].color.toString(16).padStart(6, '0')}`, label: z.label ?? ZONE_STYLE[z.kind].label }));
@@ -882,12 +889,32 @@ export class BattleScene extends Phaser.Scene {
       const pts = zoneCorners(z).map((p) => new Phaser.Math.Vector2(p.x, p.y));
       g.lineStyle(3, color, 0.9).strokePoints(pts, true);
     }
+    // 抢囚车【新】：车还要走的路画成一串淡黄格子
+    if (cv) for (const c of cv.route.slice(cv.at + 1)) this.diamond(g, c, CART_ROUTE_COLOR, 0.16);
     // 潜行关的哨兵警戒范围（只有正前方）【新】：黄色 = 还没发现，红色 = 已经发现（要赶快打倒）
     const W = this.battle.board.width, H = this.battle.board.height;
     for (const w of ws)
       for (let y = Math.max(0, w.y - w.r); y <= Math.min(H - 1, w.y + w.r); y++)
         for (let x = Math.max(0, w.x - w.r); x <= Math.min(W - 1, w.x + w.r); x++)
           if (watcherSees(w, { x, y }, w.r) && this.battle.board.passable(x, y)) this.diamond(g, { x, y }, w.spotted ? 0xff4040 : 0xffd040, 0.2);
+  }
+
+  /**
+   * 抢囚车【新】（负责人 2026-11-28）：囚车头上挂一块「好汉 n : m 官兵」的牌子，数的是车周围 8 格里的人；
+   * 好汉多是绿字（我方回合结束往江边推），官兵多是红字（官兵回合结束往回拉），一样多白字。跟着车的画面位置走。
+   */
+  private drawCartCount() {
+    const cv = this.story ? null : this.battle.cartView();
+    const s = cv && this.sprites.get(cv.uid);
+    if (!cv || !s || !s.spr.visible) {
+      this.cartText?.setVisible(false);
+      return;
+    }
+    const text = `${loc('好汉')} ${cv.ours} : ${cv.foes} ${loc('官兵')}`;
+    const color = cv.ours > cv.foes ? '#8cff8c' : cv.foes > cv.ours ? '#ff8080' : '#ffffff';
+    this.cartText ??= this.add.text(0, 0, '', { fontFamily: 'serif', fontSize: '18px', fontStyle: 'bold', stroke: '#000000', strokeThickness: 4 }).setOrigin(0.5, 1).setDepth(99999);
+    if (this.cartText.text !== text) this.cartText.setText(text);
+    this.cartText.setColor(color).setPosition(s.spr.x, s.spr.y - barTop(s.head) - 4).setVisible(true);
   }
 
   /** 好汉聚义的毒圈【新】：圈外的格子染紫，现在的圈画紫线，下一个圈（提前公布）画白线；变了才重画 */
