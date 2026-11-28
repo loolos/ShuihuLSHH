@@ -68,6 +68,8 @@ export interface Unit {
   stunTurns: number;
   /** 逃窜还剩几回合【新】（怒破何观察放火，指令 124）：乱走，不攻击、不防御 */
   panicTurns?: number;
+  /** 连环马加成（百分比）【新】：Battle.refreshChains 按 4 格内的同伴算，受伤 ×100/(100+它)，防御另用增益「连环马」加 */
+  chainBonus?: number;
   /** 道具带来的限时效果（增益、抗毒、抗昏） */
   buffs: Buff[];
   // 本回合行动状态

@@ -152,8 +152,10 @@
     "mainline/pijian": {"likui":48},
     "mainline/jizhoufu": {"likui":48},
     "mainline/chuanfa": {"daizong":48,"likui":50},
-    "mainline/polian": {"0":56,"2":48,"10":45,"11":45,"sj-fugitive":51,"qinming":46,"likui":50,"tanglong":48,"leiheng":43},
+    "mainline/polian": {"0":56,"2":48,"10":45,"11":45,"sj-fugitive":51,"qinming":46,"likui":50,"tanglong":47,"leiheng":42,"huarong":42},
     "mainline/jiuchai": {"likui":52},
+    "mainline/gaotaiwei": {},
+    "mainline/guashuai": {"0":58,"11":47,"qinming":48,"huarong":44,"husanniang":47,"sunli":42,"pengqi":47},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":21,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }

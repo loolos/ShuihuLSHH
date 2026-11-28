@@ -245,6 +245,7 @@ function packClass(c: PackClassJson, id: number, skills: SkillDef[], itemRef: (v
     goldCap: 0,
     defaultItems: items,
     skills: c.hero ? skills.map(heroSkillNoHitMod) : skills,
+    ...(c.chain ? { chain: true } : {}),
   };
 }
 
@@ -514,12 +515,17 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     // if / unless：再要求剧本标志设上（条件 100）/ 没设（条件 101）【新】
     cond = andAll([cond, ...flagConds(b, r)]);
   }
+  else if ('killed' in on || 'fallen' in on) {
+    // killed【新】：这种职业的敌人倒下了至少 count 个；fallen【新】：我方倒下了至少这么多人（呼延灼挂帅），可配 if / unless
+    trigger = { kind: 'cond' };
+    cond = andAll(['killed' in on ? { type: 104, arg: r.classRef(on.killed), n: on.count ?? 1 } : { type: 105, arg: 0, n: on.fallen }, ...flagConds(b, r)]);
+  }
   else if ('flag' in on) {
     // 剧本标志设上时（剧情选项的分支）【新】
     trigger = { kind: 'cond' };
     cond = andAll([{ type: 100, arg: r.flagRef(on.flag) }, ...flagConds(b, r)]);
   }
-  else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
+  else if ((b.if !== undefined || b.unless !== undefined) && !('killed' in on) && !('fallen' in on) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
   else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.enemyPhase ? { enemyPhase: true } : {}) };
   // dead 写单位 id；没有这个单位时当职业名（劫牢带枷的解珍：换了职业也要判负）【新】
   else if ('dead' in on) trigger = { kind: 'death', char: r.hasUnit?.(on.dead) === false ? r.classRef(on.dead) : r.charOf(on.dead) };
@@ -527,9 +533,10 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     const [x1, y1, x2, y2] = on.area;
     // enter: "player"：我方任何一个在场的人走进去都算（智取无为军的探查点、放火点）【新】
     // enter: "ours"：我方、友军任何一个进去都算（神兵困公明：好汉杀到高廉跟前）【新】
-    const anyone = on.enter === 'player' || on.enter === 'ours';
+    // enter: "all"：在场的我方全都进去才算【新】（呼延灼挂帅：全员退进水寨）
+    const anyone = on.enter === 'player' || on.enter === 'ours' || on.enter === 'all';
     const who = anyone ? [0] : Array.isArray(on.enter) ? on.enter.map(r.charOf) : [r.charOf(on.enter)];
-    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: on.enter === 'ours' ? 'ours' as const : 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.pass ? { pass: true } : {}) };
+    trigger = { kind: 'area', char: who[0], x1, y1, x2, y2, ...(anyone ? { side: on.enter === 'ours' ? 'ours' as const : on.enter === 'all' ? 'all' as const : 'player' as const } : {}), ...(who.length > 1 ? { chars: who } : {}), ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.label ? { label: on.label } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.pass ? { pass: true } : {}) };
   } else if ('near' in on) {
     const target = r.unitRef(on.near).act;
     trigger = { kind: 'near', char: target.type, uid: target.index, ...(on.by ? { by: r.charOf(on.by) } : {}), ...(on.playerPhase ? { playerPhase: true } : {}), ...(on.atTurnEnd ? { atTurnEnd: true } : {}), ...(on.range ? { range: on.range } : {}), ...(on.ours ? { ours: true } : {}) };
@@ -755,6 +762,15 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         if (o.style && o.style !== 'dust' && o.style !== 'wind' && o.style !== 'none') fail(`第 ${index} 个区块：gust 的 style 只能是 dust / wind / none（none = 不画风尘，只让人乱逃）`);
         const args = Object.fromEntries(Object.entries({ style: o.style, radius: o.radius, turns: o.turns, panic: o.panic, spare: o.spare?.map(r.classRef), x: o.x, y: o.y, focus: o.focus || undefined, caster: o.caster !== undefined ? r.unitRef(o.caster).act.group : undefined, stun: o.stun, hurt: o.hurt, back: o.back || undefined, pick: o.pick, poison: o.poison, push: o.push, banish: o.banish, wither: o.wither, drain: o.drain, classes: o.of?.map(r.classRef) }).filter(([, v]) => v !== undefined));
         ops.push({ op: 126, flag: null, value: 0, args });
+        break;
+      }
+      case 'charge': {
+        // ['charge', [单位…], {dir, dist, hurt, panic, of}] 集体冲锋（指令 135）【新】（呼延灼挂帅的连环马）：这几个人朝 dir（朝向号）笔直冲 dist 格，
+        // 撞到的我方 / 友军挨一下必中的普通攻击（×hurt）并被挤到两边；panic = 友军里 of 这几种职业的人逃窜几回合
+        const ids = Array.isArray(a[0]) ? (a[0] as unknown[]) : fail(`第 ${index} 个区块：charge 要写单位列表`);
+        const o = (a[1] ?? {}) as { dir?: number; dist?: number; hurt?: number; panic?: number; of?: unknown[] };
+        const args = Object.fromEntries(Object.entries({ units: ids.map((id) => r.unitRef(id).act.index), dir: o.dir, dist: o.dist, hurt: o.hurt, panic: o.panic, classes: o.of?.map(r.classRef) }).filter(([, v]) => v !== undefined));
+        ops.push({ op: 135, flag: null, value: 0, args });
         break;
       }
       case 'rout': {

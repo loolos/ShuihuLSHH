@@ -87,6 +87,8 @@ export const CHAPTERS: ChapterDef[] = [
   // 负责人 2026-11-27：蓟州寻公孙胜（原著第 53 回、第 54 回开头）五段：荤酒误神行（李逵偷吃牛肉、甲马收不住脚）、智取公孙胜、夜斧松鹤轩（潜行）、云坠蓟州衙、真人授五雷
   // 负责人 2026-11-28：破高唐州（原著第 54 回后半）：传法之后的城镇武冈镇（酒店里遇汤隆，入伙）；大关入云龙斗法破高廉（公孙胜五雷天心正法破神兵 → 夜劫寨 → 高廉驾云，雷横砍做两段）；小关黑旋风探穴救柴进（枯井迷宫，李逵坐箩下井）
   { name: '大破高唐州', stages: ['mainline/leiheng-zhutong', 'mainline/yintianxi', 'mainline/baoxin', 'mainline/shenbing', 'mainline/jiama', 'mainline/erxianshan', 'mainline/pijian', 'mainline/jizhoufu', 'mainline/chuanfa', 'mainline/polian', 'mainline/jiuchai'] },
+  // 负责人 2026-11-28：呼延灼挂帅（原著第 54 回末–55 回）新开一章：过场高太尉大兴三路兵（高俅保举呼延灼、连环马之计提前交代）；中型战斗呼延灼挂帅（车轮战捉彭玘 → 连环马两批冲锋，打倒 8 匹后全员退进水寨）
+  { name: '呼延灼挂帅', stages: ['mainline/gaotaiwei', 'mainline/guashuai'] },
 ];
 
 /**

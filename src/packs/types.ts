@@ -35,6 +35,8 @@ export interface PackClassJson {
   items?: (number | string)[];
   /** 好汉（我方可操作的人物）：技能不带命中修正，载入时改成 0 并折算威力（heroSkillNoHitMod，负责人 2026-11-22） */
   hero?: boolean;
+  /** 连环马【新】（呼延灼挂帅）：4 格内有同阵营的连环马就防御 +30%、受伤按体力 +30% 折算，每多一匹再 +5%，封顶 +60%；倒下时紧挨着的连环马移动 −3 一回合 */
+  chain?: boolean;
   /** 第一项是普通攻击 */
   skills: PackSkillJson[];
   /** 形象：包里的精灵图条（SheetSprite），或者借原版职业的动画并换色（BorrowSprite） */
@@ -380,12 +382,16 @@ export type PackTrigger =
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */
-  /** enter: "player" = 我方任何一个在场的人进去都算【新】；"ours" = 我方或友军【新】 */
+  /** enter: "player" = 我方任何一个在场的人进去都算【新】；"ours" = 我方或友军【新】；"all" = 在场的我方全都进去才算【新】 */
   | { enter: string | string[]; area: [number, number, number, number]; label?: string; /** 回合结束（敌方行动完、下回合开始前）人还在里面才触发【新】 */ atTurnEnd?: boolean; /** 走路时路过区域里任何一格就触发，不必停在里面（射虎的窝弓）【新】 */ pass?: boolean } /* 可配 if / unless：标志不满足时不触发，也不在地图上标出 */
   /** 在场我方走到这个人身边（相邻一格）；by 可限定为指定角色 */
   | { near: string; by?: string; playerPhase?: boolean; /** 几格以内算走近（默认 1）【新】 */ range?: number; /** 友军走近也算【新】 */ ours?: boolean; /** 回合结束（敌方行动完、下回合开始前）还在身边才触发【新】 */ atTurnEnd?: boolean }
   /** 剧本标志设上时（["flag", 名字] 或 ["choice", ...] 选中某项） */
   | { flag: string }
+  /** 这种职业（包里职业 id 或原版职业号）的敌人倒下了至少 count 个（默认 1）【新】（呼延灼挂帅：打倒 8 匹连环马），可配 if / unless */
+  | { killed: string | number; count?: number }
+  /** 我方（不算观战的人）倒下了至少这么多人【新】（呼延灼挂帅：阵亡到 4 人就输），可配 if / unless */
+  | { fallen: number }
   /** 目标生命低于最大值的 below%（可配 if / unless）；spare = 区块没执行时这人挨打至少留 1 点体力，不会在触发前被一下打死 */
   | { hp: string; below: number; spare?: boolean }
   /** 出手之后：用过全部 skills，或累计出手 count 次 */

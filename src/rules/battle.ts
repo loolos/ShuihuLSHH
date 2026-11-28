@@ -174,6 +174,8 @@ export interface ObjectiveZone {
   chars: number[];
   /** 区域旁写的字；没有时按 kind（撤退 / 敌逃） */
   label?: string;
+  /** 在场的我方全都要进去（区域触发 side all）【新】 */
+  all?: boolean;
 }
 
 /** 条件树里"选定某人（4）且坐标在范围内（5–10）"的部分 → 矩形；"或"的两边各算一个 */
@@ -340,6 +342,10 @@ const QUESTIONS = ['站住！卖柴的，你往哪里去？', '兀那汉子，�
 
 /** Battle.occupancy 建的表：格子编号 → 站在那里的人（和他在 units 里的次序） */
 export type Occupancy = Map<number, { t: Unit; i: number }[]> & { self?: { t: Unit; i: number } };
+
+/** 连环马（Battle.refreshChains，负责人 2026-11-28）：菱形半径、第一匹邻马的加成、每多一匹、封顶（百分比）、倒下时绊住紧挨着的马移动几格 */
+export const CHAIN_RADIUS = 4, CHAIN_FIRST = 30, CHAIN_EACH = 5, CHAIN_CAP = 60, CHAIN_TRIP = 3;
+const CHAIN_SOURCE = '连环马';
 
 export class Battle {
   readonly spectators: ReadonlySet<number>;
@@ -732,6 +738,7 @@ export class Battle {
     return out;
   }
   preview(u: Unit, t: Unit, skill = attackSkill(u, this.data)): AttackPreview {
+    this.refreshChains();
     return previewAttack(u, t, skill);
   }
 
@@ -1022,7 +1029,7 @@ export class Battle {
       if (t.kind === 'area' && t.flagged && !this.flagsOk(b)) continue;
       const rects =
         t.kind === 'area'
-          ? [{ chars: t.side ? [] : t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2, label: t.label }]
+          ? [{ chars: t.side ? [] : t.chars ?? [t.char], x1: t.x1, y1: t.y1, x2: t.x2, y2: t.y2, label: t.label, all: t.side === 'all' }]
           : t.kind === 'cond'
             ? condZones(b.cond).map((r) => ({ ...r, chars: [r.char >= 1000 ? r.char - 1000 : r.char] }))
             : [];
@@ -1037,6 +1044,7 @@ export class Battle {
           y2: Math.min(H - 1, Math.max(r.y1, r.y2)),
           chars,
           ...('label' in r && r.label ? { label: r.label } : {}),
+          ...('all' in r && r.all ? { all: true } : {}),
         };
         if (z.x1 > z.x2 || z.y1 > z.y2) continue;
         // N-add03：两种嘍囉各有一个区块指向同一个出口，合成一个
@@ -1400,6 +1408,7 @@ export class Battle {
       u.turnStart = null;
       u.ended = u.stunTurns > 0;
     }
+    this.refreshChains();
     this.emit({ type: 'phase', side, turn: this.turn });
     const prompt = this.data.prompts?.[0];
     if (side === 'player' && this.awaitingSignal && prompt) this.emit({ type: 'ask', prompt });
@@ -1802,6 +1811,7 @@ export class Battle {
     u.y = last.y;
     u.facing = facingTowards(prev, last, u.facing);
     this.emit(script ? { type: 'move', uid: u.uid, path, facing: u.facing, script } : { type: 'move', uid: u.uid, path, facing: u.facing });
+    this.refreshChains();
     if (this.siege && u.side !== 'enemy') this.freeCaptives();
     // 原版只有我方在移动的每一帧检查脚下的格子（0x405500 → 0x409c30），踩上宝箱才拾起。
     // 重制版【新：负责人 2026-11-12】：只有我方，走到宝箱上或上下左右相邻的格子（路过也算）就自动打开
@@ -1896,6 +1906,7 @@ export class Battle {
       return this.addBuffs(u, skill.selfBuffs, name);
     }
     const feint = this.tune?.feint;
+    this.refreshChains();
     const att = this.towerSelf(u);
     const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : this.walled(t, u) ? wallHit(skill) : rollAttack(att, t, skill, this.rng, counter) }));
     if (feint?.flag !== undefined && hits.some(({ t }) => u.classId === feint.by && t.classId === feint.target)) this.flags.add(feint.flag);
@@ -2027,6 +2038,7 @@ export class Battle {
     this.emit({ type: 'die', uid: t.uid });
     this.emit({ type: 'message', text: `${t.name}戰敗了。` });
     this.pendingDeaths.push(t.classId);
+    if (this.data.classes[t.classId]?.chain) this.tripChain(t);
     if (this.royale) return this.royaleOut(t, u);
     // 庄门打破【新】：不给银子、经验
     const gate = this.doors.get(t.uid);
@@ -2044,6 +2056,119 @@ export class Battle {
       this.teamExp += teamShare(total);
       this.tallyExp('team', teamShare(total));
     }
+  }
+
+  /**
+   * 连环马【新】（呼延灼挂帅，负责人 2026-11-28）：菱形 4 格内有同阵营的连环马（职业 chain），就防御 +30%、受伤按体力 +30% 折算（×100/130），
+   * 每多一匹再 +5%，封顶 +60%。邻马倒下、走开立刻重算：走路、倒下、登场、剧本、每次出手前都算一遍。防御挂成增益「连环马」，状态栏看得到
+   */
+  refreshChains() {
+    const chain = this.units.filter((u) => u.alive && u.present && this.data.classes[u.classId]?.chain);
+    if (!chain.length && !this.units.some((u) => u.chainBonus)) return;
+    for (const u of this.units) {
+      if (!this.data.classes[u.classId]?.chain) continue;
+      const n = u.alive && u.present ? chain.filter((v) => v !== u && v.side === u.side && Math.abs(v.x - u.x) + Math.abs(v.y - u.y) <= CHAIN_RADIUS).length : 0;
+      const bonus = n ? Math.min(CHAIN_CAP, CHAIN_FIRST + CHAIN_EACH * (n - 1)) : 0;
+      const old = u.buffs.find((b) => b.source?.startsWith(CHAIN_SOURCE));
+      const source = `${CHAIN_SOURCE}×${n + 1}`;
+      if ((u.chainBonus ?? 0) === bonus && (bonus === 0 ? !old : old?.source === source)) continue;
+      u.chainBonus = bonus;
+      const def0 = u.stats.defense - (old?.value ?? 0);
+      u.buffs = u.buffs.filter((b) => b !== old);
+      if (bonus) u.buffs.push({ stat: 'defense', value: Math.round((def0 * bonus) / 100), turns: 0, source });
+      refreshStats(u, this.data);
+    }
+  }
+
+  /** 连环马倒下【新】（负责人 2026-11-28）：铁环连着，紧挨着它的连环马被绊住，移动 −3 一回合（还能出手） */
+  private tripChain(t: Unit) {
+    for (const v of this.active()) {
+      if (v.side !== t.side || !this.data.classes[v.classId]?.chain || Math.abs(v.x - t.x) + Math.abs(v.y - t.y) !== 1) continue;
+      v.buffs = applyBuffs(v.buffs, [{ stat: 'move', value: -CHAIN_TRIP, turns: 1 }], '连环绊');
+      refreshStats(v, this.data);
+      if (v.side === this.phase && !v.acted) v.movementRemaining = Math.min(v.movementRemaining, v.stats.move);
+      this.emit({ type: 'status', uid: v.uid, text: '被絆住' });
+    }
+    this.refreshChains();
+  }
+
+  /**
+   * 集体冲锋【新】（呼延灼挂帅，负责人 2026-11-28）：units 这几个人一齐朝 dir 方向笔直冲 dist 格（离前头近的先冲）。撞到我方 / 友军：
+   * 按冲锋的人普通攻击必中结算伤害（hurt 倍，撞不死人，至少留 1 点体力），把人挤到冲锋方向的左右空格（挤不开就停在他跟前）；自己人挡路就从身边穿过去（停在最后一个空格），走不通就停。
+   * 我方回合以外冲锋，冲过的人本回合不再行动。panic = 冲锋时在场的友军小兵（ally 里 classes 这几种职业）逃窜几回合
+   */
+  private charge(a: { units?: number[]; dir?: number; dist?: number; hurt?: number; panic?: number; classes?: number[] }) {
+    const d = DIRS[a.dir ?? 2]; // 朝向：0 = −y、1 = −x、2 = +y、3 = +x
+    const who = (a.units ?? []).map((i) => this.units[i]).filter((u) => u?.alive && u.present);
+    who.sort((p, q) => (q.x - p.x) * d.x + (q.y - p.y) * d.y);
+    const hurt = a.hurt ?? 1;
+    const moves: { u: Unit; path: Cell[] }[] = [];
+    const hits: { u: Unit; t: Unit; damage: number }[] = [];
+    const pushes: { t: Unit; path: Cell[] }[] = [];
+    for (const u of who) {
+      const path: Cell[] = [{ x: u.x, y: u.y }];
+      // 自己人挡在前面就从他身边穿过去（只是不能停在他那一格），最后停在走过的最后一个空格
+      let cur = { x: u.x, y: u.y }, stop = 0;
+      for (let s = 0; s < (a.dist ?? 6); s++) {
+        const n = { x: cur.x + d.x, y: cur.y + d.y };
+        if (!this.board.inBounds(n.x, n.y) || !this.board.passable(n.x, n.y)) break;
+        const t = this.unitAt(n.x, n.y);
+        if (t && (t.side === u.side || this.spectators.has(t.uid) || !hostile(u, t))) {
+          cur = n;
+          path.push(n);
+          continue;
+        }
+        if (t) {
+          // 撞上了：先算伤害，再往两边挤（左右随机先后）
+          const r = rollAttack(u, t, attackSkill(u, this.data), this.rng, true);
+          hits.push({ u, t, damage: Math.max(1, Math.round(r.damage * hurt)) });
+          const sides = [{ x: d.y, y: -d.x }, { x: -d.y, y: d.x }];
+          if (this.rng.chance(50)) sides.reverse();
+          const to = sides.map((o) => ({ x: t.x + o.x, y: t.y + o.y })).find((c) => this.board.inBounds(c.x, c.y) && this.board.passable(c.x, c.y) && !this.unitAt(c.x, c.y));
+          if (!to) break;
+          pushes.push({ t, path: [{ x: t.x, y: t.y }, to] });
+          t.x = to.x;
+          t.y = to.y;
+        }
+        cur = n;
+        path.push(n);
+        stop = path.length - 1;
+      }
+      path.length = stop + 1;
+      u.x = path[stop].x;
+      u.y = path[stop].y;
+      u.facing = a.dir ?? u.facing;
+      if (path.length > 1) moves.push({ u, path });
+      if (this.phase !== 'player' && u.side === this.phase) {
+        u.acted = true;
+        u.ended = true;
+        u.movementRemaining = 0;
+      }
+    }
+    if (who[0]) this.emit({ type: 'focus', x: who[0].x, y: who[0].y });
+    for (const m of moves) this.emit({ type: 'move', uid: m.u.uid, path: m.path, facing: m.u.facing, script: true });
+    for (const p of pushes) this.emit({ type: 'move', uid: p.t.uid, path: p.path, facing: p.t.facing, script: true });
+    for (const h of hits) {
+      if (!h.t.alive) continue;
+      const hp0 = h.t.hp;
+      // 冲锋撞不死人（至少留 1 点体力），撞倒了交给之后的厮杀
+      h.t.hp = Math.max(1, h.t.hp - h.damage);
+      this.emit({ type: 'hp', uid: h.t.uid, hp: h.t.hp, mp: h.t.mp, delta: h.t.hp - hp0, text: '被撞' });
+      if (h.t.side === 'player') this.gainExp(h.t, takenExp(h.damage, false, this.rng), 'taken');
+    }
+    if (hits.length) this.emit({ type: 'message', text: `連環馬衝撞了 ${new Set(hits.map((h) => h.t.uid)).size} 人！` });
+    if (a.panic) {
+      for (const u of this.active()) {
+        if (u.side !== 'ally' || this.spectators.has(u.uid) || this.isBound(u) || !(a.classes ?? []).includes(u.classId)) continue;
+        u.panicTurns = Math.max(u.panicTurns ?? 0, a.panic);
+        if (u.defending) {
+          u.defending = false;
+          this.emit({ type: 'defend', uid: u.uid, on: false });
+        }
+        this.emit({ type: 'status', uid: u.uid, text: '逃竄' });
+      }
+    }
+    this.refreshChains();
   }
 
   /** 按来源累计本关我方获得的经验（tools/sim-exp.ts 统计用；全队经验按入池时计） */
@@ -2272,6 +2397,11 @@ export class Battle {
     const cellIn = (c: Cell) => c.x >= Math.min(t.x1, t.x2) && c.x <= Math.max(t.x1, t.x2) && c.y >= Math.min(t.y1, t.y2) && c.y <= Math.max(t.y1, t.y2);
     // pass【新】：刚走的这一步路过区域里任何一格也算（射虎：大虫路过窝弓就中箭）
     const inside = (u: Unit) => cellIn(u) || (!!t.pass && this.passed?.uid === u.uid && this.passed.path.some(cellIn));
+    // all【新】（呼延灼挂帅：在场的好汉全部退进水寨）：在场能动的我方全都在里面（至少一个人），返回最后一个
+    if (t.side === 'all') {
+      const ps = this.units.filter((u) => u.side === 'player' && u.alive && u.present && !this.spectators.has(u.uid) && !this.prisonCarts.has(u.uid));
+      return ps.length && ps.every(inside) ? ps[ps.length - 1] : undefined;
+    }
     if (t.side) return this.units.find((u) => (t.side === 'ours' ? u.side !== 'enemy' : u.side === t.side) && u.alive && u.present && !this.spectators.has(u.uid) && !this.isBound(u) && inside(u));
     if (t.chars) {
       let last: Unit | undefined;
@@ -2610,6 +2740,12 @@ export class Battle {
       // 103：编号 arg 的那个人已经倒下（智赚二龙山：打倒山门头领）【新】
       case 103:
         return !!this.units.find((u) => u.uid === c.arg && !u.alive);
+      // 104：职业 arg 的敌人倒下了至少 n 个【新】（呼延灼挂帅：打倒 8 匹连环马才能撤）
+      case 104:
+        return this.units.filter((u) => u.classId === c.arg && u.side === 'enemy' && !u.alive).length >= ('n' in c ? (c.n ?? 1) : 1);
+      // 105：我方倒下了至少 n 人【新】（呼延灼挂帅：阵亡到 4 人就输），不算观战、囚车里的人
+      case 105:
+        return this.units.filter((u) => u.side === 'player' && !u.alive && !this.spectators.has(u.uid) && !this.prisonCarts.has(u.uid)).length >= ('n' in c ? (c.n ?? 1) : 1);
       // 扩展包全敌战败：尚未登场的隐藏增援也必须打倒。
       case 102:
         return !this.units.some(u => u.side === 'enemy' && u.alive);
@@ -2676,6 +2812,7 @@ export class Battle {
     } finally {
       this.scriptDepth--;
     }
+    this.refreshChains();
     this.syncGoals();
   }
 
@@ -3290,6 +3427,10 @@ export class Battle {
           this.emit({ type: 'bgm', tracks, ...(op.args?.sting ? { sting: op.args.sting } : {}) });
           break;
         }
+        // 135 集体冲锋【新】（呼延灼挂帅的连环马）：见 charge
+        case 135:
+          this.charge(op.args ?? {});
+          break;
         // 122 改 AI 模式（扩展包【新】）
         case 122:
           if (sel) sel.ai.mode = op.value;
