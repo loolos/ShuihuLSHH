@@ -160,6 +160,11 @@
   "fly-kick": {
    "from": "FlyKick",
    "ms": 55
+  },
+  "fly-kick2": {
+   "from": "FlyKick2",
+   "frames": 10,
+   "ms": 55
   }
  },
  "concat": {
