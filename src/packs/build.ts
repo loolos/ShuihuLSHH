@@ -520,7 +520,7 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
     cond = andAll([{ type: 100, arg: r.flagRef(on.flag) }, ...flagConds(b, r)]);
   }
   else if ((b.if !== undefined || b.unless !== undefined) && !('near' in on) && !('hp' in on) && !('turn' in on) && !('did' in on) && !('enter' in on)) fail(`第 ${index} 个区块：if / unless 只能配 enemiesDefeated / allEnemiesDefeated / near / hp / turn / flag / did / enter`);
-  else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}) };
+  else if ('turn' in on) trigger = { kind: 'turn', turn: on.turn - 1, ...(b.if !== undefined || b.unless !== undefined ? { flagged: true } : {}), ...(on.enemyPhase ? { enemyPhase: true } : {}) };
   // dead 写单位 id；没有这个单位时当职业名（劫牢带枷的解珍：换了职业也要判负）【新】
   else if ('dead' in on) trigger = { kind: 'death', char: r.hasUnit?.(on.dead) === false ? r.classRef(on.dead) : r.charOf(on.dead) };
   else if ('enter' in on) {

@@ -587,8 +587,8 @@
    "id": "os00",
    "class": "shenbing",
    "side": "enemy",
-   "x": 12,
-   "y": 16,
+   "x": 16,
+   "y": 10,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -600,8 +600,8 @@
    "id": "os01",
    "class": "shenbing",
    "side": "enemy",
-   "x": 13,
-   "y": 16,
+   "x": 18,
+   "y": 9,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -613,8 +613,8 @@
    "id": "os02",
    "class": "shenbing",
    "side": "enemy",
-   "x": 14,
-   "y": 16,
+   "x": 20,
+   "y": 10,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -626,8 +626,8 @@
    "id": "os03",
    "class": "shenbing",
    "side": "enemy",
-   "x": 15,
-   "y": 16,
+   "x": 18,
+   "y": 11,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -639,7 +639,7 @@
    "id": "os04",
    "class": "shenbing",
    "side": "enemy",
-   "x": 12,
+   "x": 16,
    "y": 18,
    "level": 30,
    "facing": 2,
@@ -652,8 +652,8 @@
    "id": "os05",
    "class": "shenbing",
    "side": "enemy",
-   "x": 13,
-   "y": 18,
+   "x": 18,
+   "y": 19,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -665,7 +665,7 @@
    "id": "os06",
    "class": "shenbing",
    "side": "enemy",
-   "x": 14,
+   "x": 20,
    "y": 18,
    "level": 30,
    "facing": 2,
@@ -678,8 +678,8 @@
    "id": "os07",
    "class": "shenbing",
    "side": "enemy",
-   "x": 15,
-   "y": 18,
+   "x": 18,
+   "y": 17,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -691,8 +691,8 @@
    "id": "os10",
    "class": "shenbing",
    "side": "enemy",
-   "x": 21,
-   "y": 16,
+   "x": 13,
+   "y": 14,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -704,7 +704,7 @@
    "id": "os11",
    "class": "shenbing",
    "side": "enemy",
-   "x": 22,
+   "x": 12,
    "y": 16,
    "level": 30,
    "facing": 2,
@@ -717,8 +717,8 @@
    "id": "os12",
    "class": "shenbing",
    "side": "enemy",
-   "x": 23,
-   "y": 16,
+   "x": 14,
+   "y": 17,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -730,8 +730,8 @@
    "id": "os13",
    "class": "shenbing",
    "side": "enemy",
-   "x": 24,
-   "y": 16,
+   "x": 11,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -743,8 +743,8 @@
    "id": "os14",
    "class": "shenbing",
    "side": "enemy",
-   "x": 21,
-   "y": 18,
+   "x": 22,
+   "y": 14,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -756,8 +756,8 @@
    "id": "os15",
    "class": "shenbing",
    "side": "enemy",
-   "x": 22,
-   "y": 18,
+   "x": 24,
+   "y": 16,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -769,8 +769,8 @@
    "id": "os16",
    "class": "shenbing",
    "side": "enemy",
-   "x": 23,
-   "y": 18,
+   "x": 22,
+   "y": 17,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -782,8 +782,8 @@
    "id": "os17",
    "class": "shenbing",
    "side": "enemy",
-   "x": 24,
-   "y": 18,
+   "x": 25,
+   "y": 13,
    "level": 30,
    "facing": 2,
    "ai": 0,
@@ -795,8 +795,8 @@
    "id": "om00",
    "class": "lion",
    "side": "enemy",
-   "x": 6,
-   "y": 20,
+   "x": 4,
+   "y": 18,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -807,8 +807,8 @@
    "id": "om01",
    "class": "yiling-tiger",
    "side": "enemy",
-   "x": 7,
-   "y": 20,
+   "x": 6,
+   "y": 19,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -819,8 +819,8 @@
    "id": "om02",
    "class": "wolf",
    "side": "enemy",
-   "x": 6,
-   "y": 21,
+   "x": 4,
+   "y": 20,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -843,7 +843,7 @@
    "id": "om04",
    "class": "boar",
    "side": "enemy",
-   "x": 6,
+   "x": 5,
    "y": 22,
    "level": 30,
    "facing": 3,
@@ -855,8 +855,8 @@
    "id": "om10",
    "class": "lion",
    "side": "enemy",
-   "x": 6,
-   "y": 25,
+   "x": 4,
+   "y": 24,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -867,7 +867,7 @@
    "id": "om11",
    "class": "yiling-tiger",
    "side": "enemy",
-   "x": 7,
+   "x": 6,
    "y": 25,
    "level": 30,
    "facing": 3,
@@ -879,8 +879,8 @@
    "id": "om12",
    "class": "wolf",
    "side": "enemy",
-   "x": 6,
-   "y": 26,
+   "x": 4,
+   "y": 25,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -892,7 +892,7 @@
    "class": "bear",
    "side": "enemy",
    "x": 7,
-   "y": 26,
+   "y": 27,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -903,8 +903,8 @@
    "id": "om14",
    "class": "boar",
    "side": "enemy",
-   "x": 6,
-   "y": 27,
+   "x": 5,
+   "y": 28,
    "level": 30,
    "facing": 3,
    "ai": 0,
@@ -915,8 +915,8 @@
    "id": "om20",
    "class": "lion",
    "side": "enemy",
-   "x": 30,
-   "y": 22,
+   "x": 29,
+   "y": 18,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -928,7 +928,7 @@
    "class": "yiling-tiger",
    "side": "enemy",
    "x": 31,
-   "y": 23,
+   "y": 18,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -939,8 +939,8 @@
    "id": "om22",
    "class": "wolf",
    "side": "enemy",
-   "x": 30,
-   "y": 23,
+   "x": 29,
+   "y": 20,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -951,8 +951,8 @@
    "id": "om23",
    "class": "bear",
    "side": "enemy",
-   "x": 31,
-   "y": 24,
+   "x": 33,
+   "y": 21,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -964,7 +964,7 @@
    "class": "boar",
    "side": "enemy",
    "x": 30,
-   "y": 24,
+   "y": 22,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -975,8 +975,8 @@
    "id": "om30",
    "class": "lion",
    "side": "enemy",
-   "x": 30,
-   "y": 26,
+   "x": 29,
+   "y": 24,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -988,7 +988,7 @@
    "class": "yiling-tiger",
    "side": "enemy",
    "x": 31,
-   "y": 26,
+   "y": 25,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -999,8 +999,8 @@
    "id": "om32",
    "class": "wolf",
    "side": "enemy",
-   "x": 30,
-   "y": 27,
+   "x": 29,
+   "y": 26,
    "level": 30,
    "facing": 1,
    "ai": 0,
@@ -1011,7 +1011,7 @@
    "id": "om33",
    "class": "bear",
    "side": "enemy",
-   "x": 31,
+   "x": 32,
    "y": 27,
    "level": 30,
    "facing": 1,
@@ -2200,7 +2200,8 @@
   },
   {
    "on": {
-    "turn": 2
+    "turn": 1,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -2301,7 +2302,8 @@
   },
   {
    "on": {
-    "turn": 2
+    "turn": 1,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -2331,177 +2333,14 @@
   },
   {
    "on": {
-    "turn": 3
+    "turn": 2,
+    "enemyPhase": true
    },
    "if": [
     "k1"
    ],
    "unless": [
     "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "unless": [
-    "k1",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb00",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb01",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb02",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb03",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb04",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb05",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb06",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb07",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k1"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "if": "huifeng",
-   "unless": "dead",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
-    ],
-    [
-     "rout",
-     {
-      "panic": 20,
-      "turns": 2
-     }
-    ],
-    [
-     "say",
-     "gaolian",
-     "这道士是哪里来的？怎地我的法反倒不灵了！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": [
-    "k2"
-   ],
-   "unless": [
-    "k3",
     "huifeng",
     "pofa",
     "dead"
@@ -2527,46 +2366,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 4
+    "turn": 2,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -2667,7 +2474,8 @@
   },
   {
    "on": {
-    "turn": 4
+    "turn": 2,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -2697,13 +2505,14 @@
   },
   {
    "on": {
-    "turn": 5
+    "turn": 3,
+    "enemyPhase": true
    },
    "if": [
-    "k3"
+    "k2"
    ],
    "unless": [
-    "k4",
+    "k3",
     "huifeng",
     "pofa",
     "dead"
@@ -2711,7 +2520,7 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -2750,19 +2559,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 5
+    "turn": 3,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -2788,46 +2598,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 5
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 5
+    "turn": 3,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -2928,7 +2706,8 @@
   },
   {
    "on": {
-    "turn": 5
+    "turn": 3,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -2958,7 +2737,274 @@
   },
   {
    "on": {
-    "turn": 6
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": [
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb00",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb01",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb02",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb03",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb04",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": [
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "unless": [
+    "k1",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb00",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb01",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb02",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb03",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb04",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb05",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb06",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb07",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": "huifeng",
+   "unless": "dead",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
+    ],
+    [
+     "rout",
+     {
+      "panic": 20,
+      "turns": 2
+     }
+    ],
+    [
+     "say",
+     "gaolian",
+     "这道士是哪里来的？怎地我的法反倒不灵了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -3062,7 +3108,8 @@
   },
   {
    "on": {
-    "turn": 6
+    "turn": 5,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -3076,7 +3123,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3115,19 +3196,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 6
+    "turn": 5,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -3153,46 +3235,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 6
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 6
+    "turn": 5,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -3293,7 +3343,8 @@
   },
   {
    "on": {
-    "turn": 6
+    "turn": 5,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -3323,7 +3374,8 @@
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "if": [
     "k5"
@@ -3337,16 +3389,21 @@
    "do": [
     [
      "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
     ],
     [
      "gust",
      {
       "caster": "gaolian",
       "pick": 33,
-      "poison": 3,
-      "style": "dust"
+      "stun": 2,
+      "style": "wind",
+      "push": 5
      }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
     ],
     [
      "flag",
@@ -3356,7 +3413,8 @@
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -3460,7 +3518,8 @@
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -3474,7 +3533,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -3513,19 +3606,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -3551,46 +3645,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 7
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -3691,7 +3753,8 @@
   },
   {
    "on": {
-    "turn": 7
+    "turn": 6,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -3721,7 +3784,8 @@
   },
   {
    "on": {
-    "turn": 8
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": [
     "k6"
@@ -3735,443 +3799,7 @@
    "do": [
     [
      "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind",
-      "push": 5
-     }
-    ],
-    [
-     "narrate",
-     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
-    ],
-    [
-     "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k6"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": [
-    "k4"
-   ],
-   "unless": [
-    "k5",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb10",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb11",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb12",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb13",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb14",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb15",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb16",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k5"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": [
-    "k3"
-   ],
-   "unless": [
-    "k4",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
-    ],
-    [
-     "appear",
-     "mb00",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb01",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb02",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb03",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb04",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "flag",
-     "k4"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": [
-    "k2"
-   ],
-   "unless": [
-    "k3",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind",
-      "push": 5
-     }
-    ],
-    [
-     "narrate",
-     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
-    ],
-    [
-     "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "unless": [
-    "k1",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb00",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb01",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb02",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb03",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb04",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb05",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb06",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb07",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k1"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": "huifeng",
-   "unless": "dead",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
-    ],
-    [
-     "rout",
-     {
-      "panic": 20,
-      "turns": 2
-     }
-    ],
-    [
-     "say",
-     "gaolian",
-     "这道士是哪里来的？怎地我的法反倒不灵了！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "if": [
-    "k7"
-   ],
-   "unless": [
-    "k8",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -4210,19 +3838,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -4248,46 +3877,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -4391,7 +3988,8 @@
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -4405,7 +4003,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -4444,19 +4076,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -4482,46 +4115,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -4622,7 +4223,8 @@
   },
   {
    "on": {
-    "turn": 9
+    "turn": 7,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -4652,7 +4254,512 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb10",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb14",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb00",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb01",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb02",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb03",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb04",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": [
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "unless": [
+    "k1",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb00",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb01",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb02",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb03",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb04",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb05",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb06",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb07",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": "huifeng",
+   "unless": "dead",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
+    ],
+    [
+     "rout",
+     {
+      "panic": 20,
+      "turns": 2
+     }
+    ],
+    [
+     "say",
+     "gaolian",
+     "这道士是哪里来的？怎地我的法反倒不灵了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -4756,7 +4863,8 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -4770,7 +4878,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -4809,19 +4951,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -4847,46 +4990,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 10
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -4990,7 +5101,8 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -5004,7 +5116,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -5043,19 +5189,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -5081,46 +5228,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 10
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -5221,7 +5336,8 @@
   },
   {
    "on": {
-    "turn": 10
+    "turn": 9,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -5251,7 +5367,8 @@
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
     "k9"
@@ -5265,16 +5382,21 @@
    "do": [
     [
      "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
     ],
     [
      "gust",
      {
       "caster": "gaolian",
       "pick": 33,
-      "poison": 3,
-      "style": "dust"
+      "stun": 2,
+      "style": "wind",
+      "push": 5
      }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
     ],
     [
      "flag",
@@ -5284,7 +5406,8 @@
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -5388,7 +5511,8 @@
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -5402,7 +5526,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -5441,19 +5599,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -5479,46 +5638,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 11
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -5622,7 +5749,8 @@
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -5636,7 +5764,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -5675,19 +5837,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -5713,46 +5876,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 11
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -5853,7 +5984,8 @@
   },
   {
    "on": {
-    "turn": 11
+    "turn": 10,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -5883,7 +6015,8 @@
   },
   {
    "on": {
-    "turn": 12
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
     "k10"
@@ -5897,677 +6030,7 @@
    "do": [
     [
      "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind",
-      "push": 5
-     }
-    ],
-    [
-     "narrate",
-     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
-    ],
-    [
-     "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k10"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k8"
-   ],
-   "unless": [
-    "k9",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb20",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb21",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb22",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb23",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb24",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb25",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb26",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb27",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k9"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k7"
-   ],
-   "unless": [
-    "k8",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
-    ],
-    [
-     "appear",
-     "mb10",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb11",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb12",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb13",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb14",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "flag",
-     "k8"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k6"
-   ],
-   "unless": [
-    "k7",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind",
-      "push": 5
-     }
-    ],
-    [
-     "narrate",
-     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
-    ],
-    [
-     "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k6"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k4"
-   ],
-   "unless": [
-    "k5",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb10",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb11",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb12",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb13",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb14",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb15",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb16",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb17",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k5"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k3"
-   ],
-   "unless": [
-    "k4",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
-    ],
-    [
-     "appear",
-     "mb00",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb01",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb02",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb03",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "appear",
-     "mb04",
-     {
-      "near": "gaolian"
-     }
-    ],
-    [
-     "flag",
-     "k4"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k2"
-   ],
-   "unless": [
-    "k3",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "stun": 2,
-      "style": "wind",
-      "push": 5
-     }
-    ],
-    [
-     "narrate",
-     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
-    ],
-    [
-     "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
-     "k2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "unless": [
-    "k1",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
-    ],
-    [
-     "appear",
-     "sb00",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb01",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb02",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb03",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb04",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb05",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb06",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "appear",
-     "sb07",
-     {
-      "ring": [
-       4,
-       7
-      ]
-     }
-    ],
-    [
-     "flag",
-     "k1"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": "huifeng",
-   "unless": "dead",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
-    ],
-    [
-     "rout",
-     {
-      "panic": 20,
-      "turns": 2
-     }
-    ],
-    [
-     "say",
-     "gaolian",
-     "这道士是哪里来的？怎地我的法反倒不灵了！"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 13
-   },
-   "if": [
-    "k11"
-   ],
-   "unless": [
-    "k12",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -6606,19 +6069,20 @@
     ],
     [
      "flag",
-     "k12"
+     "k11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
-    "k10"
+    "k9"
    ],
    "unless": [
-    "k11",
+    "k10",
     "huifeng",
     "pofa",
     "dead"
@@ -6644,46 +6108,14 @@
     ],
     [
      "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 13
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -6787,7 +6219,8 @@
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -6801,7 +6234,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -6840,19 +6307,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -6878,46 +6346,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 13
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -7021,7 +6457,8 @@
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -7035,7 +6472,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7074,19 +6545,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -7112,46 +6584,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 13
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -7252,7 +6692,8 @@
   },
   {
    "on": {
-    "turn": 13
+    "turn": 11,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -7282,7 +6723,8 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
     "k11"
@@ -7296,7 +6738,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12,
+    "enemyPhase": true
+   },
+   "if": [
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7335,19 +6811,20 @@
     ],
     [
      "flag",
-     "k12"
+     "k11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
-    "k10"
+    "k9"
    ],
    "unless": [
-    "k11",
+    "k10",
     "huifeng",
     "pofa",
     "dead"
@@ -7373,46 +6850,14 @@
     ],
     [
      "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 14
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -7516,7 +6961,8 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -7530,7 +6976,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7569,19 +7049,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -7607,46 +7088,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 14
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -7750,7 +7199,8 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -7764,7 +7214,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -7803,19 +7287,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -7841,46 +7326,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 14
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -7981,7 +7434,8 @@
   },
   {
    "on": {
-    "turn": 14
+    "turn": 12,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -8011,7 +7465,8 @@
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
     "k11"
@@ -8025,7 +7480,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13,
+    "enemyPhase": true
+   },
+   "if": [
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -8064,19 +7553,20 @@
     ],
     [
      "flag",
-     "k12"
+     "k11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
-    "k10"
+    "k9"
    ],
    "unless": [
-    "k11",
+    "k10",
     "huifeng",
     "pofa",
     "dead"
@@ -8102,46 +7592,14 @@
     ],
     [
      "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 15
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -8245,7 +7703,8 @@
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -8259,7 +7718,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -8298,19 +7791,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -8336,46 +7830,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 15
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -8479,7 +7941,8 @@
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -8493,7 +7956,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -8532,19 +8029,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -8570,46 +8068,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 15
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -8710,7 +8176,8 @@
   },
   {
    "on": {
-    "turn": 15
+    "turn": 13,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -8740,7 +8207,8 @@
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
     "k11"
@@ -8754,7 +8222,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14,
+    "enemyPhase": true
+   },
+   "if": [
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -8793,19 +8295,20 @@
     ],
     [
      "flag",
-     "k12"
+     "k11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
-    "k10"
+    "k9"
    ],
    "unless": [
-    "k11",
+    "k10",
     "huifeng",
     "pofa",
     "dead"
@@ -8831,46 +8334,14 @@
     ],
     [
      "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 16
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -8974,7 +8445,8 @@
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -8988,7 +8460,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -9027,19 +8533,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -9065,46 +8572,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 16
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -9208,7 +8683,8 @@
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -9222,7 +8698,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -9261,19 +8771,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -9299,46 +8810,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 16
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -9439,7 +8918,8 @@
   },
   {
    "on": {
-    "turn": 16
+    "turn": 14,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -9469,7 +8949,8 @@
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
     "k11"
@@ -9483,7 +8964,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15,
+    "enemyPhase": true
+   },
+   "if": [
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -9522,19 +9037,20 @@
     ],
     [
      "flag",
-     "k12"
+     "k11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
-    "k10"
+    "k9"
    ],
    "unless": [
-    "k11",
+    "k10",
     "huifeng",
     "pofa",
     "dead"
@@ -9560,46 +9076,14 @@
     ],
     [
      "flag",
-     "k11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 17
-   },
-   "if": [
-    "k9"
-   ],
-   "unless": [
-    "k10",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
     "k8"
@@ -9703,7 +9187,8 @@
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
     "k7"
@@ -9717,7 +9202,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -9756,19 +9275,20 @@
     ],
     [
      "flag",
-     "k8"
+     "k7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
-    "k6"
+    "k5"
    ],
    "unless": [
-    "k7",
+    "k6",
     "huifeng",
     "pofa",
     "dead"
@@ -9794,46 +9314,14 @@
     ],
     [
      "flag",
-     "k7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 17
-   },
-   "if": [
-    "k5"
-   ],
-   "unless": [
-    "k6",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
     "k4"
@@ -9937,7 +9425,8 @@
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
     "k3"
@@ -9951,7 +9440,41 @@
    "do": [
     [
      "narrate",
-     "高廉又敲铜牌，黑气里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
     ],
     [
      "appear",
@@ -9990,19 +9513,20 @@
     ],
     [
      "flag",
-     "k4"
+     "k3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": [
-    "k2"
+    "k1"
    ],
    "unless": [
-    "k3",
+    "k2",
     "huifeng",
     "pofa",
     "dead"
@@ -10028,46 +9552,14 @@
     ],
     [
      "flag",
-     "k3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 17
-   },
-   "if": [
-    "k1"
-   ],
-   "unless": [
-    "k2",
-    "huifeng",
-    "pofa",
-    "dead"
-   ],
-   "do": [
-    [
-     "narrate",
-     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
-    ],
-    [
-     "gust",
-     {
-      "caster": "gaolian",
-      "pick": 33,
-      "poison": 3,
-      "style": "dust"
-     }
-    ],
-    [
-     "flag",
      "k2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "unless": [
     "k1",
@@ -10168,7 +9660,8 @@
   },
   {
    "on": {
-    "turn": 17
+    "turn": 15,
+    "enemyPhase": true
    },
    "if": "huifeng",
    "unless": "dead",
@@ -10198,7 +9691,750 @@
   },
   {
    "on": {
-    "turn": 2
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k11"
+   ],
+   "unless": [
+    "k12",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k10"
+   ],
+   "unless": [
+    "k11",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb20",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb21",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb22",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb23",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb24",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k9"
+   ],
+   "unless": [
+    "k10",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k8"
+   ],
+   "unless": [
+    "k9",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb20",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb21",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb22",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb23",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb24",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb25",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb26",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb27",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k7"
+   ],
+   "unless": [
+    "k8",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k6"
+   ],
+   "unless": [
+    "k7",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb10",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb11",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb12",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb13",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb14",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k5"
+   ],
+   "unless": [
+    "k6",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k4"
+   ],
+   "unless": [
+    "k5",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb10",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb11",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb12",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb13",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb14",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb15",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb16",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb17",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k3"
+   ],
+   "unless": [
+    "k4",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把太阿宝剑望空一指，口中念念有词，喝声「疾！」，平地里升起一道黑气，罩住了梁山阵中好些人马！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "poison": 3,
+      "style": "dust"
+     }
+    ],
+    [
+     "flag",
+     "k4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k2"
+   ],
+   "unless": [
+    "k3",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又敲铜牌，黄砂里窜出一群猛兽来：狮子、老虎、豺狼、黑熊、野猪，张牙舞爪扑向好汉们！"
+    ],
+    [
+     "appear",
+     "mb00",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb01",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb02",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb03",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "mb04",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "flag",
+     "k3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": [
+    "k1"
+   ],
+   "unless": [
+    "k2",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉又喝一声「疾！」，卷起一阵怪风，飞沙走石，劈面打来！"
+    ],
+    [
+     "gust",
+     {
+      "caster": "gaolian",
+      "pick": 33,
+      "stun": 2,
+      "style": "wind",
+      "push": 5
+     }
+    ],
+    [
+     "narrate",
+     "冲在前头的好汉被吹得站立不住，连人带马倒退出去，哪里近得高廉身边！"
+    ],
+    [
+     "flag",
+     "k2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "unless": [
+    "k1",
+    "huifeng",
+    "pofa",
+    "dead"
+   ],
+   "do": [
+    [
+     "narrate",
+     "高廉把剑在聚兽铜牌上一敲，梁山人马四下里忽地卷起一阵黄砂，黄砂里杀出一彪飞天神兵，个个戴着鬼脸面具，把好汉们围在当中！"
+    ],
+    [
+     "appear",
+     "sb00",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb01",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb02",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb03",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb04",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb05",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb06",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "appear",
+     "sb07",
+     {
+      "ring": [
+       4,
+       7
+      ]
+     }
+    ],
+    [
+     "flag",
+     "k1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": "huifeng",
+   "unless": "dead",
+   "do": [
+    [
+     "flag",
+     "huifeng",
+     false
+    ],
+    [
+     "narrate",
+     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
+    ],
+    [
+     "rout",
+     {
+      "panic": 20,
+      "turns": 2
+     }
+    ],
+    [
+     "say",
+     "gaolian",
+     "这道士是哪里来的？怎地我的法反倒不灵了！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 1,
+    "enemyPhase": true
    },
    "unless": [
     "pofa"

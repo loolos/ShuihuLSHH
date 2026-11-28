@@ -64,16 +64,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     for (const id of ['lvfang', 'guosheng', 'sunli', 'zhutong', 'leiheng']) expect(get(id).present, id).toBe(false);
     const said: string[] = [];
     const step = () => { freeze(); for (const e of b.endPlayerPhase()) if (e.type === 'say' || e.type === 'status') said.push(e.type === 'say' ? e.text : `status:${e.text}`); };
-    step(); // 第 2 回合神兵
+    step(); // 第 1 回合的敌军回合一开始：神兵（顺序 神兵 → 刮风 → 猛兽 → 黑气，负责人 2026-11-28）
     expect(said.some((x) => x.includes('飞天神兵'))).toBe(true);
-    step(); // 第 3 回合黑气
-    expect(said.some((x) => x.includes('黑气'))).toBe(true);
-    expect(get('lvfang').present).toBe(false);
-    step(); // 第 4 回合飞沙；吕方、郭盛从两边杀来
-    for (const id of ['lvfang', 'guosheng', 'lw0', 'le1']) expect(get(id).present, id).toBe(true);
-    step(); // 第 5 回合猛兽
-    expect(b.turn).toBe(5);
+    step(); // 刮风
     expect(said.some((x) => x.includes('飞沙走石'))).toBe(true);
+    expect(get('lvfang').present).toBe(false);
+    step(); // 猛兽；第 4 回合吕方、郭盛从两边杀来
+    for (const id of ['lvfang', 'guosheng', 'lw0', 'le1']) expect(get(id).present, id).toBe(true);
+    step(); // 黑气
+    expect(b.turn).toBe(5);
+    expect(said.some((x) => x.includes('黑气'))).toBe(true);
     expect(said.some((x) => x.includes('猛兽'))).toBe(true);
     const gs = get('gongsun');
     const book = rt.itemIds.get('tianshu-wulei')!;
@@ -124,6 +124,17 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     gl.hp = Math.floor(gl.stats.maxHp * 0.15);
     step();
     expect(b.status).toBe('won');
+  });
+
+  it('破高廉：高廉在敌军回合一开始作法，招出来的飞天神兵当回合就动手（负责人 2026-11-28）', () => {
+    const { b, get } = open('polian');
+    const sb = ['sb00', 'sb01', 'sb02', 'sb03'].map(get);
+    expect(sb.some((u) => u.present)).toBe(false);
+    const ev = b.endPlayerPhase();
+    const enemyAt = ev.findIndex((e) => e.type === 'phase' && e.side === 'enemy');
+    const castAt = ev.findIndex((e) => e.type === 'say' && e.text.includes('飞天神兵'));
+    expect(castAt).toBeGreaterThan(enemyAt);
+    expect(ev.slice(castAt).some((e) => e.type === 'attack' && sb.some((u) => u.uid === e.uid))).toBe(true);
   });
 
   it('救柴进：李逵在箩底，摸到井底的柴进，柴进跟着走；两人回到箩筐那里，过关', () => {

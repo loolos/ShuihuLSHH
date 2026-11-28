@@ -375,7 +375,8 @@ export type PackTrigger =
   | 'allEnemiesDefeated'
   /** 同 enemiesDefeated，但被蒙汗药麻翻、还睡着的敌人不算【新】（杯酒救铁牛） */
   | 'awakeEnemiesDefeated'
-  | { turn: number }
+  /** enemyPhase【新】：第 turn 回合的敌军回合开始时触发（敌人行动之前；破高廉作法，招出来的当回合就动） */
+  | { turn: number; enemyPhase?: boolean }
   | { dead: string }
   /** 进入区域；写数组时这几个人都到了区域里才触发 */
   /** label：这个区域算过关目标、在地图上标出时旁边写的字（默认「撤退」，教学关写「目标」「将台」） */

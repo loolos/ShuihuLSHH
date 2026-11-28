@@ -1192,6 +1192,8 @@ export class Battle {
     }
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
+      if (side === 'enemy') this.enemyPhaseTriggers();
+      if (this.status !== 'playing') return this.flush();
       for (const u of this.units.filter((x) => x.side === side && x.alive && !this.spectators.has(x.uid) && (x.present || this.ambushers.has(x.uid)))) {
         if (this.status !== 'playing') break;
         if (!u.alive || u.ended) continue;
@@ -2336,12 +2338,27 @@ export class Battle {
     }
     if (!this.checkNear(true)) return;
     for (const b of this.blocks) {
-      if (b.trigger.kind !== 'turn' || this.status !== 'playing') continue;
+      if (b.trigger.kind !== 'turn' || b.trigger.enemyPhase || this.status !== 'playing') continue;
       // 回合 −1【新】：第 2 回合起任何一回合开始时，标志满足就执行（叫阵晁家庄：教头认输后，下一回合开始接着比下一阵）
       const at = b.trigger.turn === -1 && b.trigger.flagged ? param > 0 : (this.turnAt[b.index] ?? b.trigger.turn) === param;
       if (at && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
     }
     this.runCondBlocks();
+  }
+
+  /**
+   * 敌军回合开始时的回合区块【新】（破高廉，负责人 2026-11-28：高廉在敌军回合一开始作法，招出来的神兵猛兽当回合就动）：
+   * {turn: n, enemyPhase: true} 在第 n 回合的敌军回合开始、敌人行动之前执行
+   */
+  private enemyPhaseTriggers() {
+    // 这时候登场的人（平常敌军回合登场要等下回合）当回合就跟着行动
+    const away = this.units.filter((u) => u.side === 'enemy' && !u.present);
+    for (const b of this.blocks) {
+      if (b.trigger.kind !== 'turn' || !b.trigger.enemyPhase || this.fired.has(b.index) || this.status !== 'playing') continue;
+      if (b.trigger.turn + 1 === this.turn && (!b.trigger.flagged || this.flagsOk(b))) this.runBlock(b);
+    }
+    if (this.status === 'playing') this.runCondBlocks();
+    for (const u of away) if (u.present && u.alive && u.side === 'enemy') u.ended = u.stunTurns > 0;
   }
 
   /** 还没执行的回合增援区块（回合触发、点名放人、不判胜负），按（可能提前了的）回合先后排 */
