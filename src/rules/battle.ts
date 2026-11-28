@@ -11,7 +11,7 @@ import { attackParts, canCounter, previewAttack, rollAttack, watcherSees, type A
 import { killGold, stageClearGold } from './gold.ts';
 import { counterExp, dodgeExp, expToNext, healExp, hitExp, itemExp, killDamage, killerShare, killExp, restExp, splitTeamExp, takenExp, teamShare } from './exp.ts';
 import { applyBuffs, BAG_SLOTS, buffName, buffShort, type Buff, type BuffStat, canEquip, EQUIP_SLOTS, equipSlotOf, freeBagSlot, SLOT_COUNT, isUsable, itemBuffs, itemOf, type GameData, type SkillDef } from './data.ts';
-import { areaCells, castCells, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
+import { areaCells, castCells, falloffSkill, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
@@ -737,9 +737,10 @@ export class Battle {
       for (let k = lo; k <= hi; k++) if (this.board.inBounds(u.x + d.x * k, u.y + d.y * k)) out.push({ x: u.x + d.x * k, y: u.y + d.y * k });
     return out;
   }
-  preview(u: Unit, t: Unit, skill = attackSkill(u, this.data)): AttackPreview {
+  /** cell：技能施放点（扇形按行衰减的技能要用它算目标在第几行） */
+  preview(u: Unit, t: Unit, skill = attackSkill(u, this.data), cell?: Cell): AttackPreview {
     this.refreshChains();
-    return previewAttack(u, t, skill);
+    return previewAttack(u, t, cell ? falloffSkill(skill, u, cell, t) : skill);
   }
 
   /** 暗中才能用的招式（skill.covert）【新】：有伪装的关卡里，自己已经被识破 / 去掉伪装就用不了（乐和的铁叫子：开打以后没人听得入神） */
@@ -1908,7 +1909,7 @@ export class Battle {
     const feint = this.tune?.feint;
     this.refreshChains();
     const att = this.towerSelf(u);
-    const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : this.walled(t, u) ? wallHit(skill) : rollAttack(att, t, skill, this.rng, counter) }));
+    const hits = targets.map((t) => ({ t, r: feint && u.classId === feint.by && t.classId === feint.target ? feintHit(skill) : this.walled(t, u) ? wallHit(skill) : rollAttack(att, t, falloffSkill(skill, u, cell, t), this.rng, counter) }));
     if (feint?.flag !== undefined && hits.some(({ t }) => u.classId === feint.by && t.classId === feint.target)) this.flags.add(feint.flag);
     if (!counter && hits.some(({ r }) => r.backstab !== 'front')) this.noteDid(u, 'flank');
     this.noteDid(u, did);

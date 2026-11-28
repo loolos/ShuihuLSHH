@@ -1,4 +1,4 @@
-import { areaCells, castCells, learnedSkills } from '../src/rules/skills.ts';
+import { areaCells, castCells, falloffSkill, learnedSkills } from '../src/rules/skills.ts';
 import { attackParts } from '../src/rules/combat.ts';
 import { Board } from '../src/rules/board.ts';
 import type { Unit } from '../src/rules/unit.ts';
@@ -31,6 +31,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
     const tiers=d.classes[0].skills.filter(s=>[10,11,12,1309].includes(s.skillId));expect(tiers).toHaveLength(4);
     tiers.forEach((s,i)=>{
       expect(s).toMatchObject({learnLevel:[8,12,22,28][i],mpCost:[75,115,170,210][i],power:[35,45,55,55][i],critMod:20,hitMod:5+5*i,type:1,area:5+i,poison:0,stun:0});
+      expect(s.rowFalloff).toBe(0.0375);
       expect(attackParts(s)).toHaveLength(i<2?1:2);expect(attackParts(s).reduce((n,h)=>n+h.percent,0)).toBe(100);
       for(const [dx,dy]of [[0,-1],[1,0],[0,1],[-1,0]])expect(areaCells(new Board(40,40),{x:20,y:20},s,{x:20+dx,y:20+dy})).toHaveLength([13,18,25,32][i]);
     });
@@ -38,6 +39,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')) )('群伤技�
       const skills=learnedSkills({classId:0,level}as Unit,d).filter(s=>s.name.startsWith('萬夫莫敵'));
       const tier=[8,12,22,28].filter(n=>n<=level).length;expect(skills).toHaveLength(tier?1:0);if(tier)expect(skills[0]).toBe(tiers[tier-1]);
     }
+  });
+  it('萬夫莫敵扇形按行衰减：落点那行 100%，第 9 行 70%，其他技能不变',()=>{
+    const d=loadPackFromDisk('mainline').data;
+    const lv5=d.classes[0].skills.find(s=>s.skillId===1314)!;
+    const from={x:20,y:22},at={x:20,y:21};
+    expect(falloffSkill(lv5,from,at,{x:20,y:21})).toBe(lv5);
+    expect(falloffSkill(lv5,from,at,{x:21,y:17}).damageScale).toBeCloseTo(1-4*0.0375);
+    expect(falloffSkill(lv5,from,at,{x:16,y:13}).damageScale).toBeCloseTo(0.7);
+    const other=d.classes[0].skills.find(s=>s.skillId===1310)!;
+    expect(falloffSkill(other,from,at,{x:20,y:15})).toBe(other);
   });
   it('千军万马四阶：命中+5/+10/+15/+20、三四阶两段、一线3/5/7/9格、22级换成LV4',()=>{
     const d=loadPackFromDisk('mainline').data;
