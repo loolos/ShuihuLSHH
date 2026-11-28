@@ -13,7 +13,7 @@
 | 目录 | 动作 |
 |---|---|
 | `wusong/` | idle 待机（抱臂，UAL2 `Idle_FoldArms_Loop`）、walk 走、hit-chest 受击、punch-jab / punch-cross 出拳、kick 右脚踢 / kick-four 左右交替踢（玉环鸳鸯脚）、death01 倒地、roll 翻滚（闪避）、crouch-idle 蹲伏（防御） |
-| `likui/` | idle 待机（单手举斧，`Pistol_Idle_Loop`）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、crouch-idle 蹲伏（防御 / 运气）、death01 倒地、roll 翻滚 |
+| `likui/` | idle 待机（单手举斧，`Pistol_Idle_Loop`）、walk 走、hit-chest 受击、sword-attack 劈砍、punch-cross 连劈、power-up 握拳蓄力（回气沉息蓄锋，Mixamo 剑盾包 `SS_sword_and_shield_power_up`）、block 格挡（防御 / 铁牛横身，UAL2 `Sword_Block`）、crouch-idle 蹲伏（只剩李鬼防御在用）、death01 倒地、roll 翻滚 |
 | `peiruhai/` | 裴如海（光头和尚）：idle 待机、walk 走、hit-chest 受击、punch-jab 出拳（念珠）、crouch-idle 蹲伏（防御）、death01 倒地。服装 `src/outfit-peiruhai.json`，`--height 1.72`，其余参数同武松 |
 | `gudasao/` | 顾大嫂（女假人，双短刀）：idle、walk、hit-chest、defend 格挡、death01、roll、slash-a/b/c 单斩、slash-combo 连斩、heavy-combo 重斩连招、dash 冲刺斩、throw 飞刀。配方 `gamedata/models/characters/gudasao.json`；spin（Mixamo 斧包 360 度旋斩，母大虫旋刀） |
 | `shixiu/` | 石秀（深蓝短褂、朴刀）：同顾大嫂的剑术动作（没有 throw），待机用 Sword_Idle。配方 `characters/shixiu.json` |
@@ -67,6 +67,9 @@ venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui --anims UAL1
   --actions Pistol_Idle_Loop,Walk_Loop,Hit_Chest,Sword_Attack,Punch_Cross,Crouch_Idle_Loop,Death01,Roll
 venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui-thrust ...同上参数... \
   --outfit packs/mainline/sprites/src/outfit-likui-thrust.json --actions Punch_Cross
+# 回气 power-up、防御 block（2026-11-28 换掉蹲伏）：剑盾包从项目文件夹 shuihu-design/models/mixamo/ 复制过来
+venv/bin/python tools/render-sprites.py UAL1_Standard.glb out/likui-2 --anims UAL1_Standard.glb,UAL2_Standard.glb,mixamo-sword-shield.glb ...同上参数... \
+  --outfit packs/mainline/sprites/src/outfit-likui.json --actions SS_sword_and_shield_power_up,Sword_Block
 ```
 
 渲染完要改文件名：动作名改成小写，用连字符连接，去掉 `_Loop`。

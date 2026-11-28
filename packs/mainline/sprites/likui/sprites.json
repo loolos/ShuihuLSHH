@@ -233,6 +233,32 @@
     "ms": 40,
     "cycles": 7
    }
+  },
+  "power-up": {
+   "source": "SS_sword_and_shield_power_up (Mixamo)",
+   "front": {
+    "file": "power-up-front.png",
+    "frames": 8,
+    "ms": 296
+   },
+   "back": {
+    "file": "power-up-back.png",
+    "frames": 8,
+    "ms": 296
+   }
+  },
+  "block": {
+   "source": "Sword_Block",
+   "front": {
+    "file": "block-front.png",
+    "frames": 8,
+    "ms": 154
+   },
+   "back": {
+    "file": "block-back.png",
+    "frames": 8,
+    "ms": 154
+   }
   }
  }
 }
