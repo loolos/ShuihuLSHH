@@ -126,7 +126,9 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(s.units.filter((u) => u.side === 'player')).toHaveLength(18);
     // 撤退方向（第 4–9 回合南街）的援兵各队翻倍，右下街口的第 2、3 回合不加
     expect(s.units.filter((u) => u.side === 'enemy' && u.id.endsWith('b')).map((u) => u.id.split('_')[0])).not.toContain('x2');
-    expect(s.units.filter((u) => u.side === 'enemy')).toHaveLength(76);
+    // 开场和各回合登场的 76 人，另有 6 个街口各 3 组（每组 4 人）轮着刷出来抢囚车
+    expect(s.units.filter((u) => u.side === 'enemy' && !/^r[a-z]\d_\d$/.test(u.id))).toHaveLength(76);
+    expect(s.units.filter((u) => /^r[a-z]\d_\d$/.test(u.id))).toHaveLength(72);
     expect(get('wulong').present).toBe(false);
     (b as unknown as { runTurnTriggers: (n: number) => void }).runTurnTriggers(1);
     expect(get('wulong').present).toBe(true);
@@ -138,6 +140,68 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('第二十二
     expect(disguised.length).toBe(18);
     for (const d of disguised) expect(b.spectators.has(d.uid)).toBe(true);
     expect(b.foesOf(guan).some((t) => disguised.includes(t))).toBe(false);
+  });
+
+  it('法场抢囚车（负责人 2026-11-28）：宋江钉在囚车上不挨打；我方回合结束时车旁好汉多就往江边推，自己人挡路换位置', () => {
+    const { b, get } = open('fachang');
+    const sj = get('songjiang');
+    expect(b.cart?.uid).toBe(sj.uid);
+    expect(b.isBound(sj)).toBe(true);
+    const guan = b.units.find((u) => u.side === 'enemy' && u.present && u.alive)!;
+    expect(b.foesOf(guan)).not.toContain(sj);
+    // 只留三个好汉站在车旁，前面一格站着自己人（换位置），其余的人都不在场
+    for (const u of b.units) if (u !== sj && u.present) { u.present = false; }
+    const [lk, cg, hr] = [get('likui'), get('chaogai'), get('huarong')];
+    for (const [u, x, y] of [[lk, 40, 13], [cg, 42, 13], [hr, 41, 14]] as const) Object.assign(u, { present: true, alive: true, x, y });
+    expect(b.cartView()).toMatchObject({ at: 0, ours: 3, foes: 0 });
+    (b as unknown as { cartTick: (w: string) => void }).cartTick('ours');
+    expect(b.cartView()!.at).toBe(2);
+    expect([sj.x, sj.y]).toEqual([41, 15]);
+    expect([hr.x, hr.y]).toEqual([41, 13]);
+    // 车前站着官兵就推不动
+    Object.assign(guan, { x: 41, y: 16, present: true, alive: true });
+    for (const [u, x, y] of [[lk, 40, 15], [cg, 42, 15], [hr, 40, 14]] as const) Object.assign(u, { x, y });
+    const ev = (b as unknown as { out: BattleEvent[] }).out;
+    (b as unknown as { cartTick: (w: string) => void }).cartTick('ours');
+    expect(b.cartView()!.at).toBe(2);
+    expect(ev.some((e) => e.type === 'message' && e.text.includes('推不動'))).toBe(true);
+    // 官兵回合结束时官兵多：往回拉
+    for (const u of [lk, cg, hr]) u.present = false;
+    const foes = b.units.filter((u) => u.side === 'enemy' && u !== guan).slice(0, 2);
+    for (const [u, x, y] of [[foes[0], 40, 16], [foes[1], 42, 16]] as const) Object.assign(u, { x, y, present: true, alive: true });
+    (b as unknown as { cartTick: (w: string) => void }).cartTick('enemy');
+    expect(b.cartView()!.at).toBe(0);
+  });
+
+  it('法场抢囚车：推到江边过关；好汉全倒下才输（车上的宋江不算）', () => {
+    const { b, get } = open('fachang');
+    const sj = get('songjiang');
+    const end = b.cart!.route.length - 1;
+    (b as unknown as { cartAt: number }).cartAt = end - 1;
+    Object.assign(sj, b.cart!.route[end - 1]);
+    for (const u of b.units) if (u !== sj && u.present) u.present = false;
+    const lk = get('likui');
+    Object.assign(lk, { present: true, alive: true, x: sj.x - 1, y: sj.y });
+    (b as unknown as { cartTick: (w: string) => void }).cartTick('ours');
+    expect(b.status).toBe('won');
+    const o = open('fachang');
+    for (const u of o.b.units) if (u.side === 'player' && u !== o.get('songjiang')) u.alive = false;
+    after(o.b);
+    expect(o.b.status).toBe('lost');
+  });
+
+  it('法场抢囚车 AI：官兵先挑车旁能打到人的位置', () => {
+    const { b, get } = open('fachang');
+    const sj = get('songjiang');
+    for (const u of b.units) if (u !== sj && u.present) u.present = false;
+    const lk = get('likui');
+    Object.assign(lk, { present: true, alive: true, x: 40, y: 14 });
+    const g = b.units.find((u) => u.side === 'enemy' && b.data.classes[u.classId] && u.ai.mode === 0)!;
+    Object.assign(g, { present: true, alive: true, x: 37, y: 15 });
+    const plan = planAi(b, g);
+    const end = plan.path?.at(-1) ?? g;
+    expect(b.nextToCart(end)).toBe(true);
+    expect(plan.target).toBe(lk);
   });
 
   it('白龙庙主线版：外传的 26 名可控好汉加李俊共 27 人；武龙开场就在庙旁；新做的穆弘等人用主线职业', () => {
