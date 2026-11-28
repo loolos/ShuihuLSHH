@@ -229,7 +229,7 @@ function startGame(assets: Assets) {
     // 主线插关 / 续篇：按它关联的原版关卡配主线人物，再把插关排在最前
     if (value.startsWith('itown:')) {
       const ref = value.slice(6), e = inserts.find(x=>x.ref===ref);
-      if (e?.townAfter) return { ...c, ...(fresh(c) ? { gold: presetGold(ref, true) } : {}), inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
+      if (e?.townAfter) return { ...c, ...(fresh(c) ? { gold: presetGold(ref, true) } : {}), inserts: replayInsertProgress(c, inserts, insertAfter(ref) ?? ''), finished: undefined, town: undefined, insert: undefined, insertPreset: undefined, insertTown: { pack: ref.split('/')[0], next: insertAfter(ref) ?? '', town: e.townAfter, seen: false } };
     }
     if (value.startsWith('ins:')) {
       const e = inserts.find((x) => x.ref === value.slice(4));
@@ -241,8 +241,8 @@ function startGame(assets: Assets) {
       }
     }
     const t = /^town:/.test(value) ? towns.get(Number(value.slice(5))) : undefined;
-    if (t) return { ...inheritAssets(c, jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c, insertGold)), insert: undefined, finished: undefined };
-    return { ...inheritAssets(c, jumpTo(assets.files, assets.data, stages, Number(value), c, { insertGold })), insert: undefined, town: undefined, finished: undefined };
+    if (t) return { ...inheritAssets(c, jumpToTown(assets.files, assets.data, stages, Number(value.slice(5)), t.town, t.next, c, insertGold)), insert: undefined, insertPreset: undefined, finished: undefined };
+    return { ...inheritAssets(c, jumpTo(assets.files, assets.data, stages, Number(value), c, { insertGold })), insert: undefined, insertPreset: undefined, town: undefined, finished: undefined };
   };
   const asked = params.get('stage')?.toLowerCase();
   if (asked?.startsWith('itown:')) {
@@ -378,7 +378,7 @@ function startGame(assets: Assets) {
         campaign = x;
         if (t) writeSave(x); // 城镇里随时存档（读档回到城镇）；单独整备等进了下一关再存
       },
-      onLeave: leave,
+      onLeave: (x) => leave({ ...x, insertPreset: undefined }), // 城镇里换的装备带进下一战，不再按选关预设重配
       feast: t ? feastOption(String(t), nextOf(stageOf(c.stage)), () => undefined) : undefined,
     });
   };
@@ -664,7 +664,8 @@ function startGame(assets: Assets) {
       leaveLabel: `出发：${rt.stages.find(s => `${rt.id}/${s.id}` === stop.next)?.title ?? '下一关'} ▸`,
       feast: FEAST_PLACES[stop.next] ? { place: FEAST_PLACES[stop.next], stages: [FEAST_PLACES[stop.next].battle ?? stop.next], resolve: (k) => rt.classIds.get(k) } : undefined,
       onChange: x => { campaign = saveTownParty(x, rt); writeSave(campaign); },
-      onLeave: x => { const saved = saveTownParty(x, rt); goTo({ ...saved, insertTown: undefined, insert: stop.next, finished: undefined }); },
+      onLeave: x => { const saved = saveTownParty(x, rt); // 城镇里换的装备要带进下一战：清掉选关预设，免得进关又按预设重新配装（负责人 2026-11-28：武冈镇换的装备进破高廉被换回去）
+        goTo({ ...saved, insertTown: undefined, insert: stop.next, insertPreset: undefined, finished: undefined }); },
     });
     setupEl.hidden = true;
   };
