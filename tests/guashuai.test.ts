@@ -1,4 +1,4 @@
-// 第三十五章「呼延灼挂帅」：过场高太尉大兴三路兵、战斗呼延灼挂帅（连环马光环、集体冲锋、打倒 8 匹后全员退进水寨，docs/game-design.md §15.36）
+// 第三十五章「呼延灼挂帅」：过场高太尉大兴三路兵、战斗呼延灼挂帅（车轮战单挑、连环马阵后候着、活捉彭玘即冲锋、连环马光环、打倒 8 匹后全员退进水寨，docs/game-design.md §15.36）
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -86,61 +86,95 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(hs[0].buffs.some((x) => x.source?.startsWith('连环马'))).toBe(false);
   });
 
-  it('车轮战捉彭玘：彭玘体力不到三成被扈三娘活捉；下一回合敌军回合开始第一批连环马冲锋（撞人、挤开、喽啰逃窜）；三回合后第二批从两翼冲锋', () => {
+  const watching = (b: Battle) => (b as unknown as { spectators: Set<number> }).spectators;
+  /** 一路单挑打到活捉彭玘（直接改体力再结算） */
+  const toCapture = (b: Battle, get: (id: string) => Unit) => {
+    for (const [id, pct] of [['hantao', 0.4], ['huyanzhuo', 0.6], ['huyanzhuo', 0.35], ['pengqi', 0.2]] as const) {
+      const u = get(id);
+      u.hp = Math.floor(u.stats.maxHp * pct);
+      after(b);
+    }
+  };
+
+  it('车轮战：开场只有秦明、韩滔出阵单挑，其余人（连同阵后候着的连环马）观战；一阵打完换下一阵', () => {
     const { b, get } = open('guashuai');
+    const sp = watching(b);
+    const active = (id: string) => !sp.has(get(id).uid);
+    expect(active('qinming') && active('hantao')).toBe(true);
+    for (const id of ['hero', 'linchong', 'huyanzhuo', 'pengqi', 'g00', 'lb0', 'ma0', 'mb0']) expect(active(id), id).toBe(false);
+    // 连环马一开场就在场上
+    for (const id of ['ma0', 'ma7', 'mb0', 'mb7']) expect(get(id).present, id).toBe(true);
+    expect(get('nu0').present).toBe(false);
+    expect(get('nb0').present).toBe(false);
+    // 韩滔败走 → 林冲战呼延灼
+    get('hantao').hp = Math.floor(get('hantao').stats.maxHp * 0.4);
+    after(b);
+    expect(get('hantao').present).toBe(false);
+    expect(active('qinming')).toBe(false);
+    expect(active('linchong') && active('huyanzhuo')).toBe(true);
+    // 林冲自己撑不住也换人：孙立接着战呼延灼
+    get('linchong').hp = Math.floor(get('linchong').stats.maxHp * 0.2);
+    after(b);
+    expect(get('linchong').hp).toBeGreaterThan(0);
+    expect(active('linchong')).toBe(false);
+    expect(active('sunli') && active('huyanzhuo')).toBe(true);
+    // 呼延灼退回本阵 → 扈三娘战彭玘
+    get('huyanzhuo').hp = Math.floor(get('huyanzhuo').stats.maxHp * 0.35);
+    after(b);
+    expect(active('huyanzhuo') || active('sunli')).toBe(false);
+    expect(active('husanniang') && active('pengqi')).toBe(true);
+    // 扈三娘撑不住：花荣替下；花荣也撑不住：众人一齐上
+    get('husanniang').hp = 1;
+    after(b);
+    expect(active('husanniang')).toBe(false);
+    expect(active('huarong')).toBe(true);
+    get('huarong').hp = 1;
+    after(b);
+    for (const id of ['hero', 'qinming', 'linchong', 'husanniang', 'sunli']) expect(active(id), id).toBe(true);
+    expect(active('ma0')).toBe(false);
+  });
+
+  it('活捉彭玘的同时连环马立刻冲锋（撞人、挤开、喽啰逃窜），当回合不再动、下回合自由行动；两回合后两翼第二批冲锋（带两队步军）', () => {
+    const { b, get } = open('guashuai');
+    const lead = ['ma0', 'ma1', 'ma2', 'ma3', 'ma4', 'ma5', 'ma6', 'ma7'].map(get);
+    const m = get('ma0');
+    const y0 = m.y;
+    const qm = get('qinming');
+    // 前三阵打完，秦明回到原位观战；把他挪到马的正前方
+    for (const [id, pct] of [['hantao', 0.4], ['huyanzhuo', 0.6], ['huyanzhuo', 0.35]] as const) { get(id).hp = Math.floor(get(id).stats.maxHp * pct); after(b); }
+    Object.assign(qm, { x: m.x, y: m.y - 6 });
+    const hp0 = qm.hp;
     const pq = get('pengqi');
-    expect(pq.present).toBe(true);
-    for (const id of ['ma0', 'mb0', 'nu0']) expect(get(id).present, id).toBe(false);
-    // 彭玘体力打到三成以下
     pq.hp = Math.floor(pq.stats.maxHp * 0.2);
     after(b);
     expect(pq.present).toBe(false);
-    // 第 1 回合的敌军回合：连环马还不来（给玩家一整个回合）
-    freeze(b);
-    b.endPlayerPhase();
-    expect(get('ma0').present).toBe(false);
-    // 第 2 回合：把一个好汉、一个喽啰摆在第一排马的正前方
-    const lead = horses(b).filter((u) => u.uid <= get('ma7').uid && u.uid >= get('ma0').uid);
-    const m = lead.find((u) => u.uid === get('ma0').uid)!;
-    const qm = get('qinming');
-    Object.assign(qm, { x: m.x, y: m.y - 6 });
-    const lb = get('lb0');
-    const hp0 = qm.hp;
-    freeze(b);
-    const ev = b.endPlayerPhase();
-    for (const u of lead) expect(u.present, u.name).toBe(true);
+    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
-    expect(get('mb0').present).toBe(false);
-    // 秦明被撞：掉血、被挤到旁边（不在原来那一列），撞不死
+    expect(m.y).toBeLessThan(y0);
     expect(qm.hp).toBeLessThan(hp0);
     expect(qm.hp).toBeGreaterThan(0);
     expect(qm.x).not.toBe(m.x);
-    expect(ev.some((e) => e.type === 'hp' && e.uid === qm.uid && (e as { text?: string }).text === '被撞')).toBe(true);
-    // 马冲了十来格；喽啰逃窜两回合
-    expect(m.y).toBeLessThan(get('ma0').y + 1);
-    expect(lb.alive && lb.panicTurns).toBeTruthy();
-    // 三回合后第二批从两翼冲锋
-    for (let i = 0; i < 2; i++) { freeze(b); b.endPlayerPhase(); expect(get('mb0').present).toBe(false); }
-    freeze(b);
-    b.endPlayerPhase(); // 第 5 回合的敌军回合
-    expect(b.turn).toBe(6);
-    for (let i = 0; i < 8; i++) expect(get(`mb${i}`).present, `mb${i}`).toBe(true);
-  });
-
-  it('没捉到彭玘也是第 6 回合敌军回合开始出阵', () => {
-    const { b, get } = open('guashuai');
-    for (let i = 0; i < 5; i++) { freeze(b); b.endPlayerPhase(); expect(get('ma0').present, `第 ${b.turn} 回合`).toBe(false); }
+    expect(b.units.filter((u) => u.side === 'ally' && u.alive && u.panicTurns).length).toBeGreaterThan(0);
+    // 第二批还在两翼候着
+    const mb = get('mb0');
+    const mb0 = { x: mb.x, y: mb.y };
+    // 当回合敌军回合连环马不动
+    const pos = lead.map((u) => `${u.x},${u.y}`).join(' ');
+    b.endPlayerPhase();
+    expect(lead.map((u) => `${u.x},${u.y}`).join(' ')).toBe(pos);
+    expect(lead.every((u) => u.ai.mode === 0)).toBe(true);
+    freeze(b); b.endPlayerPhase(); expect(mb.y).toBe(mb0.y);
     freeze(b);
     b.endPlayerPhase();
-    expect(get('ma0').present).toBe(true);
+    expect(mb.y).toBeLessThan(mb0.y);
+    for (const id of ['nb0', 'nb15']) expect(get(id).present, id).toBe(true);
   });
 
   it('打倒 8 匹连环马之后，在场的好汉全部退进水寨（回合结束判定）才过关，彭玘入伙成我方；阵亡到 4 人判负', () => {
     const { b, get } = open('guashuai');
-    for (let i = 0; i < 6; i++) { freeze(b); b.endPlayerPhase(); }
+    toCapture(b, get);
     const hero = get('hero');
-    const ws = horses(b).filter((u) => u.present);
-    expect(ws.length).toBe(8);
+    const ws = horses(b).slice(0, 8);
     // 先全员进水寨：还没打满 8 匹，不算
     const ps = b.units.filter((u) => u.side === 'player' && u.present && u.alive);
     const inside = [...Array(14 * 6).keys()].map((k) => ({ x: 11 + (k % 14), y: 4 + Math.floor(k / 14) })).filter((c) => b.board.passable(c.x, c.y));
@@ -171,6 +205,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
 
   it('我方阵亡到 4 人判负', () => {
     const { b, get } = open('guashuai');
+    toCapture(b, get);
     const e = get('g00');
     for (const id of ['qinming', 'linchong', 'huarong']) kill(b, get(id), e);
     after(b);
