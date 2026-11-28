@@ -419,6 +419,7 @@ export type PackTrigger =
  * ["setAi", 单位, 模式] 改 AI 模式；
  * ["bgm", 歌单 | null, {sting}] 换背景曲【新】（指令 134）：歌单写一首曲名或几首的数组（gamedata/bgm/index.json 的 tracks），null = 不换；
  *   sting = 先插播一段短曲（如三打发号）。时光倒流会跟着换回。只在关键剧情用（负责人 2026-11-25：用多了乱）；
+ * ["recover", 单位, 百分比] 剧情回血：生命回到最大值的这个百分比（已经更高就不动）【新】（指令 136，呼延灼挂帅败回本阵的将领）；
  * ["wound", 单位, 百分比] 剧情受伤：生命降到最大值的这个百分比（已经更低就不动，至少留 1 点），飘「重伤」【新】（李应中箭）；
  * ["fire", [[x, y], ...], {panic, turns, spare, focus}] 放火：格子冒火，离火最近的 panic 个敌人逃窜 turns 回合（spare = 不逃的职业）；
  * ["gust", {style, radius, turns, panic, spare, x, y, focus}] 黑尘（dust）/ 怪风（wind）：区域中心（或 x, y）radius 格内的敌人逃窜 turns 回合；

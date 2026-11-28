@@ -245,6 +245,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     // 所有人回来参战：单挑败回本阵的韩滔、呼延灼也照常应战（负责人 2026-11-28）
     expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
     for (const id of ['huyanzhuo', 'hantao']) expect(get(id).present, id).toBe(true);
+    // 单挑败回本阵的两人回到五成体力再参战
+    for (const id of ['huyanzhuo', 'hantao']) expect(get(id).hp, id).toBeGreaterThanOrEqual(Math.round(get(id).stats.maxHp * 0.5));
     // 第二段再被打败就正常退场
     for (const id of ['huyanzhuo', 'hantao']) {
       get(id).hp = Math.floor(get(id).stats.maxHp * 0.2);

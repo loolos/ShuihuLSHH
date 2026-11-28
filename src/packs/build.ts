@@ -843,6 +843,15 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(128, pct);
         break;
       }
+      case 'recover': {
+        // ['recover', 谁, 百分比] 剧情回血（指令 136）：生命回到最大值的这个百分比（已经更高就不动），不结算经验【新】
+        // （负责人 2026-11-28：呼延灼挂帅单挑败回本阵的将领回到五成再参战）
+        const pct = Number(a[1]);
+        if (!(pct > 0 && pct <= 100)) fail(`第 ${index} 个区块：recover 的百分比要在 1–100 之间`);
+        select(a[0]);
+        op(136, pct);
+        break;
+      }
       case 'unmask': {
         // ['unmask', 谁 | "all", {quiet}] 现出原形：去掉伪装（指令 130）【新】（劫牢放出解珍解宝、三打发号）
         const quiet = (a[1] as { quiet?: boolean } | undefined)?.quiet;
