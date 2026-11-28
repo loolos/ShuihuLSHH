@@ -14,6 +14,7 @@ import { applyBuffs, BAG_SLOTS, buffName, buffShort, type Buff, type BuffStat, c
 import { areaCells, castCells, falloffSkill, castRange, isAllyChargeSkill, isChargeSkill, isRechargeSkill, isSelfChargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills, skillById, skillsLearnedAt } from './skills.ts';
 import { Rng } from './rng.ts';
 import { Fire, type FireInput } from './fire.ts';
+import { inZone as inFerry, zoneDist, type FerryInput, type FerrySide, type FerryState } from './ferry.ts';
 import { basicReaches, canStand, inField as fieldHas, kickCritChance, kickDistance, kickHitChance, kickPower, MISS_FACTOR, otherTeam, resolveBall, rollKick, throwIn, traceLine, type BallPlayer, type BallResult, type CujuRules, type Team } from './cuju.ts';
 import { cujuPhase } from './cuju-ai.ts';
 import { firstZone, inZone, mainArea, nextZone, openCells, NPC_TEAM, type RoyaleRules, type RoyaleState, type Zone } from './royale.ts';
@@ -88,6 +89,8 @@ export type BattleEvent =
   | { type: 'defend'; uid: number; on: boolean }
   | { type: 'die'; uid: number }
   | { type: 'message'; text: string }
+  /** 夺渡口【新】：渡口换了主人（画面重画渡口颜色） */
+  | { type: 'ferry'; zone: number; owner: FerrySide }
   | { type: 'subtitle'; text: string }
   /** 剧情演出（扩展包指令 109–113【新】）：只放画面，不改战斗状态 */
   | { type: 'uproot'; cells: { x: number; y: number }[] }
@@ -166,7 +169,8 @@ export const TURN_HINT_STAGES = ['N13'] as const;
  * chars 是要进去的角色号（劫法场这类要几个人都到的，列出全部）。
  */
 export interface ObjectiveZone {
-  kind: 'goal' | 'danger' | 'trap';
+  /** ferryOurs / ferryFoe：夺渡口的渡口（我方 / 敌方占着）【新】 */
+  kind: 'goal' | 'danger' | 'trap' | 'ferryOurs' | 'ferryFoe';
   x1: number;
   y1: number;
   x2: number;
@@ -231,6 +235,8 @@ export interface StageInput {
   towers?: { cells: { x: number; y: number }[]; bonus: number };
   /** 攻庄【新】（三打祝家庄，§15.34）：庄门、门卫、囚车、挠钩拖人 */
   siege?: SiegeInput;
+  /** 夺渡口【新】（白龙庙，src/rules/ferry.ts） */
+  ferries?: FerryInput;
   /** 火势蔓延【新】（rules.fire 换成格子号，见 src/rules/fire.ts） */
   fire?: FireInput;
   name: string;
@@ -426,6 +432,9 @@ export class Battle {
   private readonly ranks = new Map<number, EnemyRank>();
   /** 攻庄【新】 */
   readonly siege?: SiegeInput;
+  /** 夺渡口【新】 */
+  readonly ferries?: FerryInput;
+  ferry?: FerryState;
   /** 门：单位 → 第几座门 */
   private readonly doors = new Map<number, number>();
   /** 门卫 */
@@ -513,6 +522,7 @@ export class Battle {
     this.towerCells = new Set((input.towers?.cells ?? []).map((c) => c.y * input.board.width + c.x));
     this.towerBonus = input.towers?.bonus ?? 0;
     this.siege = input.siege;
+    this.ferries = input.ferries;
     input.siege?.gates.forEach((g, i) => {
       this.doors.set(g.door, i);
       for (const id of g.guards) this.gateGuards.add(id);
@@ -614,6 +624,7 @@ export class Battle {
     }
     for (const uid of this.watchers.keys()) if (this.units[uid]) this.units[uid].unaware = true;
     for (const u of this.units) this.homes.set(u.uid, { x: u.x, y: u.y, ai: { ...u.ai, point: { ...u.ai.point } } });
+    if (input.ferries) this.setupFerries(input.ferries);
     // 庄门体力固定（不随等级变）【新】
     for (const uid of this.doors.keys()) {
       const u = this.unit(uid);
@@ -1056,6 +1067,8 @@ export class Battle {
         else out.push(z);
       }
     }
+    // 夺渡口【新】：渡口按归属上色，旁边写渡口名
+    this.ferries?.zones.forEach((z, i) => out.push({ kind: this.ferry!.owner[i] === 'ours' ? 'ferryOurs' : 'ferryFoe', x1: z.x1, y1: z.y1, x2: z.x2, y2: z.y2, chars: [], label: z.name }));
     return out;
   }
 
@@ -1156,6 +1169,171 @@ export class Battle {
     return this.flush();
   }
 
+  // ───────────── 夺渡口【新】（白龙庙，src/rules/ferry.ts） ─────────────
+
+  private setupFerries(f: FerryInput) {
+    const st: FerryState = { owner: f.zones.map((_, i) => f.owner?.[i] ?? 'enemy'), points: 0, wave: 0, role: {}, home: {} };
+    for (const [uid, i] of Object.entries(f.bind)) { st.home[Number(uid)] = i; st.role[Number(uid)] = 'd'; }
+    for (const side of ['ours', 'enemy'] as const) f.pools[side].forEach((ids, i) => ids.forEach((uid) => { st.home[uid] = i; st.role[uid] = 'd'; }));
+    this.ferry = st;
+    this.ferryFlags();
+  }
+
+  /** 算在哪一边：我方、友军（梁山喽啰）一边，敌方一边 */
+  ferrySide(u: Unit): FerrySide {
+    return u.side === 'enemy' ? 'enemy' : 'ours';
+  }
+
+  /** 渡口里两边各有几个人（被绑的、观战的不算） */
+  ferryCount(i: number): Record<FerrySide, number> {
+    const z = this.ferries!.zones[i];
+    const n = { ours: 0, enemy: 0 };
+    for (const u of this.active()) if (!this.spectators.has(u.uid) && !this.isBound(u) && inFerry(z, u)) n[this.ferrySide(u)]++;
+    return n;
+  }
+
+  /** 正在守这个渡口的人（属于这个渡口、分派去守的，活着在场） */
+  private ferryDefenders(i: number, side: FerrySide) {
+    const st = this.ferry!;
+    return this.active().filter((u) => st.home[u.uid] === i && st.role[u.uid] === 'd' && this.ferrySide(u) === side);
+  }
+
+  /**
+   * 这人的任务（AI 17 / 18 和状态栏用）：守 / 夺哪个渡口。守的人渡口丢了就去夺回来；
+   * 攻的人去最近一个在对方手里的渡口，都在自己手里就回去守自己的渡口。
+   * AI 18（都监亲随）不属于哪个渡口：对方占着渡口就去夺最近的一处，没有就没有任务（照常主动进攻）。
+   */
+  ferryTask(u: Unit): { kind: 'hold' | 'take'; zone: number } | null {
+    const st = this.ferry;
+    if (!st || !u.alive || !u.present) return null;
+    const side = this.ferrySide(u);
+    const raider = st.home[u.uid] === undefined && u.ai.mode === 18;
+    if (st.home[u.uid] === undefined && !raider) return null;
+    const home = st.home[u.uid];
+    if (raider || st.role[u.uid] === 'a') {
+      let best = -1, bd = Infinity;
+      this.ferries!.zones.forEach((z, i) => {
+        if (st.owner[i] === side) return;
+        const d = zoneDist(z, u);
+        if (d < bd) { bd = d; best = i; }
+      });
+      if (best >= 0) return { kind: 'take', zone: best };
+      // AI 18（都监亲随，负责人 2026-11-28）：对方一处渡口都没有就照常主动进攻
+      if (raider) return null;
+    }
+    return { kind: st.owner[home] === side ? 'hold' : 'take', zone: home };
+  }
+
+  /** 状态栏、头顶上的任务字样 */
+  ferryTaskLabel(u: Unit): { short: string; text: string } | null {
+    const t = this.ferryTask(u);
+    if (!t) return null;
+    const name = this.ferries!.zones[t.zone].name;
+    return t.kind === 'hold' ? { short: '守', text: `守·${name}` } : { short: '夺', text: `夺·${name}` };
+  }
+
+  /** 援军到齐后下一次复活要攒到几点；不复活的关是 null */
+  private nextRevive(): number | null {
+    const f = this.ferries!, st = this.ferry!;
+    if (!f.revive || st.wave < f.waves.length) return null;
+    return (f.waves.at(-1)?.at ?? 0) + f.revive * ((st.revived ?? 0) + 1);
+  }
+
+  /** 顶栏：援军点数和下一拨（援军到齐后是复活） */
+  ferryInfo(): { points: number; next?: { at: number; name: string }; held: number } | null {
+    const st = this.ferry;
+    if (!st) return null;
+    const w = this.ferries!.waves[st.wave];
+    const nr = w ? null : this.nextRevive();
+    const next = w ? { at: w.at, name: w.name } : nr !== null ? { at: nr, name: '复活一位倒下的好汉' } : undefined;
+    return { points: st.points, held: st.owner.filter((o) => o === 'ours').length, ...(next ? { next } : {}) };
+  }
+
+  private ferryFlags() {
+    const held = this.ferry!.owner.filter((o) => o === 'ours').length;
+    for (const h of this.ferries!.heldFlags) {
+      if (held >= h.n) this.flags.add(h.flag);
+      else this.flags.delete(h.flag);
+    }
+  }
+
+  /** 整回合结束：比人数定归属 → 攒援军点数、来援军（或复活） → 守的人不够就叫攻的人回来。刷兵在友军 / 敌方回合开始时（ferrySpawn） */
+  private ferryTick() {
+    const f = this.ferries!, st = this.ferry!;
+    const before = st.owner.filter((o) => o === 'ours').length;
+    f.zones.forEach((z, i) => {
+      const n = this.ferryCount(i);
+      const now: FerrySide = n.ours > n.enemy ? 'ours' : n.enemy > n.ours ? 'enemy' : st.owner[i];
+      if (now === st.owner[i]) return;
+      st.owner[i] = now;
+      this.emit({ type: 'message', text: now === 'ours' ? `梁山好漢奪下了${z.name}！` : `官軍奪回了${z.name}！` });
+      this.emit({ type: 'ferry', zone: i, owner: now });
+    });
+    const held = st.owner.filter((o) => o === 'ours').length;
+    // 刚占齐全部渡口：下个敌方回合开始时都监身边加刷一队马军
+    if (held === f.zones.length && before < held && f.allHeld?.length) st.allHeldDue = true;
+    st.points += held;
+    while (st.wave < f.waves.length && st.points >= f.waves[st.wave].at) this.landWave(f.waves[st.wave++]);
+    // 援军到齐后攒够点数复活一位倒下的好汉（一次一个）
+    const nr = this.nextRevive();
+    if (nr !== null && st.points >= nr) {
+      const fallen = this.units.filter((u) => u.side === 'player' && !u.alive && this.homes.has(u.uid)).sort((a, b) => b.level - a.level)[0];
+      if (fallen) {
+        this.respawn(fallen);
+        st.revived = (st.revived ?? 0) + 1;
+        this.emit({ type: 'message', text: `援軍點數到了 ${nr}：${fallen.name}重整旗鼓，回到廟旁再戰！` });
+        this.emit({ type: 'hp', uid: fallen.uid, hp: fallen.hp, mp: fallen.mp, delta: 0 });
+      }
+    }
+    // 守的人不够了：离渡口最近的攻的人回来补位
+    f.zones.forEach((z, i) => {
+      const side = st.owner[i];
+      const away = this.active().filter((u) => st.home[u.uid] === i && st.role[u.uid] === 'a' && this.ferrySide(u) === side).sort((a, b) => zoneDist(z, a) - zoneDist(z, b));
+      for (let k = this.ferryDefenders(i, side).length; k < f.hold && away.length; k++) st.role[away.shift()!.uid] = 'd';
+    });
+    this.ferryFlags();
+  }
+
+  /**
+   * 渡口刷兵（负责人 2026-11-28：刷出来要能立刻行动）：友军回合开始时我方渡口刷梁山喽啰，敌方回合开始时官军渡口刷官兵
+   * （和刚占齐渡口时加刷的马军）。新刷的兵：渡口守的人不到 hold 个就守，否则去进攻。
+   */
+  private ferrySpawn(phase: Side) {
+    const f = this.ferries!, st = this.ferry!;
+    const side: FerrySide = phase === 'enemy' ? 'enemy' : 'ours';
+    const ready = (u: Unit) => { u.ended = false; u.acted = false; u.movementRemaining = u.stats.move; u.forcedMarch = false; u.turnStart = null; };
+    f.zones.forEach((_, i) => {
+      if (st.owner[i] !== side) return;
+      const [lo, hi] = f.spawn;
+      let n = lo + this.rng.int(hi - lo + 1);
+      for (const uid of f.pools[side][i] ?? []) {
+        if (n <= 0) break;
+        if (!this.offField(uid)) continue;
+        const u = this.unit(uid)!;
+        st.role[uid] = this.ferryDefenders(i, side).length < f.hold ? 'd' : 'a';
+        this.respawn(u);
+        ready(u);
+        n--;
+      }
+    });
+    if (side === 'enemy' && st.allHeldDue) {
+      st.allHeldDue = false;
+      const who = (f.allHeld ?? []).filter((uid) => this.offField(uid));
+      for (const uid of who) { const u = this.unit(uid)!; this.respawn(u); ready(u); }
+      if (who.length) this.emit({ type: 'message', text: '渡口盡失，都監大怒，又遣一隊馬軍殺來！' });
+    }
+  }
+
+  /** 援军在开场写好的位置（白龙庙旁）登场，谁去哪个渡口由玩家自己派（负责人 2026-11-28） */
+  private landWave(w: FerryInput['waves'][number]) {
+    for (const uid of w.units) {
+      const u = this.unit(uid);
+      if (u && u.alive && !u.present) this.appear(u);
+    }
+    this.emit({ type: 'message', text: `援軍點數到了 ${w.at}：${w.name}趕到廟旁！` });
+    this.flags.add(w.flag);
+  }
+
   /** 上一阵出战的人走回出列前的位置（站不了就站最近的空格），改成观战 */
   private sendDuelistBack() {
     const d = this.duelist;
@@ -1203,6 +1381,7 @@ export class Battle {
     }
     for (const side of ['ally', 'enemy'] as const) {
       this.startPhase(side);
+      if (this.ferry) this.ferrySpawn(side);
       if (side === 'enemy') this.enemyPhaseTriggers();
       if (this.status !== 'playing') return this.flush();
       for (const u of this.units.filter((x) => x.side === side && x.alive && !this.spectators.has(x.uid) && (x.present || this.ambushers.has(x.uid)))) {
@@ -1233,6 +1412,7 @@ export class Battle {
       spotters: this.spotters, cuju: this.cuju, royale: this.royale, credited: [...this.credited], lastHitBy: this.lastHitBy, fire: this.fire?.save(), blaze: this.blaze, stealthOver: this.stealthOver, bgm: this.bgm, unsealed: [...this.unsealed], trapSeals: this.trapSeals.map((c) => ({ ...c })),
       fought: [...this.fought], duelist: this.duelist, refused: this.refused, drugged: [...this.drugged],
       ...(this.siege ? { carts: [...this.prisonCarts], homes: [...this.homes] } : {}),
+      ...(this.ferry ? { ferry: this.ferry } : {}),
     });
   }
 
@@ -1293,6 +1473,7 @@ export class Battle {
     this.refused = s.refused ?? {};
     this.drugged = new Set(s.drugged ?? []);
     if (this.cuju && s.cuju) this.cuju = s.cuju;
+    if (this.ferry && s.ferry) this.ferry = s.ferry;
     if (this.royale && s.royale) this.royale = s.royale;
     if (this.fire && s.fire) this.fire.load(s.fire);
     this.blaze = s.blaze ?? [];
@@ -1337,6 +1518,7 @@ export class Battle {
   private startTurn(t: number) {
     this.turn = t;
     if (t > 1) this.insiderGates();
+    if (t > 1 && this.ferry) this.ferryTick();
     if (t > 1) this.runTurnTriggers(t - 1);
     if (this.status !== 'playing') return;
     if (this.cuju && this.cujuClock(t)) return;

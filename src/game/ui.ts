@@ -149,6 +149,8 @@ export class BattleUI {
   }
 
   spectators: ReadonlySet<number> = new Set();
+  /** 夺渡口的任务字样（守·北渡 / 夺·东渡）【新】 */
+  taskOf: (u: Unit) => string | null = () => null;
 
   showUnit(u: Unit | null, preview?: AttackPreview | null, hint = '', item?: { title: string; lines: string[]; warn?: string }) {
     if (!u) {
@@ -158,7 +160,7 @@ export class BattleUI {
     const s = u.stats;
     const pct = (a: number, b: number) => `${Math.round((100 * a) / Math.max(1, b))}%`;
     const buffs = buffLabels(u.buffs);
-    const states = [this.spectators.has(u.uid) && u.side !== 'enemy' && '观战', !!u.disguised && '伪装（敌人认不出，出手就被识破）', u.defending && '防御中', ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), !!u.panicTurns && `逃窜 ${u.panicTurns}`, u.ended && u.side === 'player' && '已行动']
+    const states = [this.spectators.has(u.uid) && u.side !== 'enemy' && '观战', !!u.disguised && '伪装（敌人认不出，出手就被识破）', u.defending && '防御中', this.taskOf(u), ...buffs, u.poisonTurns > 0 && `中毒 ${u.poisonTurns}`, u.stunTurns > 0 && (u.stunTurns >= 1000 ? '被绑' : `昏迷 ${u.stunTurns}`), !!u.panicTurns && `逃窜 ${u.panicTurns}`, u.ended && u.side === 'player' && '已行动']
       .filter((state): state is string => typeof state === 'string');
     const face = this.portrait(u.classId);
     this.panel.innerHTML = `

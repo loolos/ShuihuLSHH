@@ -5,6 +5,7 @@ import { isHealing, itemOf, type SkillDef } from './data.ts';
 import { forcedExtra, type Battle } from './battle.ts';
 import { castRange, falloffSkill, isAllyChargeSkill, isRechargeSkill, isHealSkill, isStanceSkill, isSupportSkill, learnedSkills } from './skills.ts';
 import { attackRange, attackSkill, dist, hostile, type Unit } from './unit.ts';
+import { inZone, zoneCells, zoneDist, type FerryZone } from './ferry.ts';
 
 export interface AiPlan {
   path?: Cell[]; // 含起点
@@ -435,6 +436,10 @@ export function planAi(b: Battle, u: Unit): AiPlan {
       if (!target) return defaultPlan(b, u);
       return bestAttack(b, u, target) ?? bestAttack(b, u) ?? marchPlan(b, u, [target]) ?? approach(b, u, [target]);
     }
+    case 17:
+    case 18:
+      // 【新】守渡 / 夺渡（白龙庙，负责人 2026-11-28）：见 ferryPlan；18 = 都监亲随，对方占着渡口就去夺，没有就主动进攻
+      return ferryPlan(b, u) ?? defaultPlan(b, u);
     case 8: // 原地不动
       return {};
     default: // 0、7（被事件放出后）、9：原版的默认行为
@@ -452,3 +457,51 @@ export function inGuardRoom(u: Unit, c: Cell): boolean {
 }
 
 export const cellKey = (c: Cell) => key(c.x, c.y);
+
+/**
+ * AI 17 守渡 / 夺渡【新】（白龙庙，负责人 2026-11-28，§15.23.1）。任务由 Battle.ferryTask 给：
+ * 守：渡口附近（radius 格）没有对手就守在渡口里或紧挨着它；有对手靠近就迎击，只从离渡口 2 格以内出手，不被引远；
+ * 夺：先从渡口里能打到人的格子出手，走得进渡口就进去站着，否则从渡口附近打人，再不行就往渡口赶。
+ * 敌兵、我方的梁山喽啰都用这一套（试打的我方好汉也借 take 用）。
+ */
+export function ferryPlan(b: Battle, u: Unit): AiPlan | null {
+  const task = b.ferryTask(u);
+  if (!task) return null;
+  const z = b.ferries!.zones[task.zone];
+  const heal = healIfLow(b, u) ?? healPlan(b, u);
+  if (heal) return heal;
+  return task.kind === 'hold' ? holdFerry(b, u, z) : takeFerry(b, u, z);
+}
+
+export function holdFerry(b: Battle, u: Unit, z: FerryZone): AiPlan {
+  const radius = b.ferries!.radius;
+  const near = b.aiFoesOf(u).filter((t) => zoneDist(z, t) <= radius);
+  if (near.length) {
+    const hit = bestAttack(b, u, undefined, u.stats.move, (c) => zoneDist(z, c) <= 2);
+    if (hit && hit.target && zoneDist(z, hit.target) <= radius + 2) return hit;
+  }
+  if (zoneDist(z, u) <= 1) return withCharge(b, u, {});
+  return withCharge(b, u, approach(b, u, zoneCells(z), 0));
+}
+
+/** 夺渡：也给试打的我方好汉用 */
+export function takeFerry(b: Battle, u: Unit, z: FerryZone): AiPlan {
+  const radius = b.ferries!.radius;
+  const inside = bestAttack(b, u, undefined, u.stats.move, (c) => inZone(z, c));
+  if (inside) return inside;
+  // 走得进渡口就进去站着（离对手最近的那格，好下回合接着打）
+  const reach = b.reachOf(u, u.stats.move);
+  const foes = b.aiFoesOf(u);
+  let best: { x: number; y: number; cost: number } | null = null, bd = Infinity;
+  for (const n of reach.values()) {
+    const who = b.unitAt(n.x, n.y);
+    if (!inZone(z, n) || (who && who !== u)) continue;
+    const d = foes.length ? Math.min(...foes.map((t) => dist(n, t))) : 0;
+    if (d < bd) { bd = d; best = n; }
+  }
+  if (best) return withCharge(b, u, best.x === u.x && best.y === u.y ? {} : { path: b.pathOf(reach, best) });
+  const around = bestAttack(b, u, undefined, u.stats.move, (c) => zoneDist(z, c) <= radius);
+  if (around) return around;
+  const goals = zoneCells(z);
+  return marchPlan(b, u, goals) ?? withCharge(b, u, approach(b, u, goals, 0));
+}

@@ -81,7 +81,7 @@ const SIDE_COLOR = { player: 0x6fbf5a, ally: 0x2e6e3e, enemy: 0xd0603e } as cons
 /** 好汉聚义的毒圈颜色 */
 const POISON_COLOR = 0xa050f0;
 /** 胜负条件区域的颜色【新】：撤退出口青色、敌人逃跑出口品红，和阵营色、宝箱黄都分得开 */
-const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' }, trap: { color: 0xff9a2e, label: '机关' } } as const;
+const ZONE_STYLE = { goal: { color: 0x4fe3ff, label: '撤退' }, danger: { color: 0xff5ad8, label: '敌逃' }, trap: { color: 0xff9a2e, label: '机关' }, ferryOurs: { color: 0x4a8ff0, label: '渡口' }, ferryFoe: { color: 0xff4040, label: '渡口' } } as const;
 const MP_COLOR = 0xe0c040;
 const EXP_COLOR = 0x4a8ff0;
 const ACTED_FRAME = 0xb8b8b8; // 行动完的灰框
@@ -128,7 +128,7 @@ export class BattleScene extends Phaser.Scene {
   private onEnd?: BattleSceneData['onEnd'];
   battle!: Battle;
   /** head：头顶高度（世界像素，见 classHead），状态条和飘字放在它上面 */
-  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; cart?: Phaser.GameObjects.Image; head: number }>();
+  private sprites = new Map<number, { spr: Phaser.GameObjects.Sprite; bar: Phaser.GameObjects.Graphics; cart?: Phaser.GameObjects.Image; head: number; tag?: Phaser.GameObjects.Text }>();
   /**
    * 画面上的人物状态。规则引擎一次算完整个敌方回合，事件再逐个回放；
    * 回放期间画面必须按事件推进，不能直接读引擎里的最终位置和体力。
@@ -230,6 +230,7 @@ export class BattleScene extends Phaser.Scene {
     const input = this.makeInput ? this.makeInput() : loadStage(files, this.assets.data, this.stageName, { seed: this.seed, text: this.assets.tr, party: this.party, joinLevel: this.joinLevel });
     this.battle = new Battle(this.feast ? { ...input, feast: this.feast } : input);
     this.ui.spectators = this.battle.spectators;
+    this.ui.taskOf = (u) => this.battle.ferryTaskLabel(u)?.text ?? null;
     for (const u of this.battle.units) this.vs(u); // 开场先记下每个人的样子（剧本换职业时画面要等回放到那一步）
     // 网页版：进关时只下载了走路、受击、防御和普通攻击，已学会的技能动画在后台接着下载
     void prefetchSkills(this.assets, this.battle.units.map((u) => ({ classId: u.classId, skills: learnedSkills(u, this.assets.data) })));
@@ -354,6 +355,9 @@ export class BattleScene extends Phaser.Scene {
       const k = me ? this.battle.royaleKills(me) : { heroes: 0, npcs: 0 };
       return this.ui.setTurn(turn, limit, `${phase}　剩 ${this.battle.royaleHeroes().length} 人　击败 ${k.heroes}${k.npcs ? `（小头目 ${k.npcs}）` : ''}　${cd === null ? '最后一圈' : cd <= 1 ? '下回合缩圈' : `${cd} 回合后缩圈`}`);
     }
+    // 夺渡口【新】：援军点数和下一拨
+    const fi = this.battle.ferryInfo();
+    if (fi) return this.ui.setTurn(turn, limit, `${phase}　渡口 ${fi.held}/${this.battle.ferries!.zones.length}　援军 ${fi.points}${fi.next ? `/${fi.next.at}（${fi.next.name.startsWith('复活') ? '' : '下一拨：'}${fi.next.name}）` : '（已到齐）'}`);
     const c = this.battle.cuju;
     if (!c) return this.ui.setTurn(turn, limit, phase);
     const extra = turn > c.rules.turns ? '（加时）' : '';
@@ -444,7 +448,7 @@ export class BattleScene extends Phaser.Scene {
     const s = this.sprites.get(u.uid);
     // 灰色跟着观战 / 行动完的状态走（观战改回出战时只发一条 hp 事件，这里顺手刷新）
     if (s) { if (this.actedDone(u)) s.spr.setTint(0x808080); else s.spr.clearTint(); }
-    if (this.battle.spectators.has(u.uid)) { s?.bar.clear(); return; }
+    if (this.battle.spectators.has(u.uid)) { s?.bar.clear(); s?.tag?.setVisible(false); return; }
     if (!s) return;
     const v = this.vs(u);
     const p = cellToWorld(v.x, v.y);
@@ -463,6 +467,12 @@ export class BattleScene extends Phaser.Scene {
     else if (u.disguised) s.bar.lineStyle(1, DISGUISE_FRAME, 1).strokeRect(p.x - w / 2 - 1.5, top - 0.5, w + 3, rows.length * 3 + 2);
     s.bar.fillStyle(0x000000, 0.7).fillRect(p.x - w / 2 - 1, top, w + 2, rows.length * 3 + 1);
     rows.forEach(([color, r], i) => s.bar.fillStyle(done ? dimColor(color) : color, 1).fillRect(p.x - w / 2, top + 1 + i * 3, Math.round(w * Math.min(1, Math.max(0, r))), 2));
+    // 夺渡口【新】（负责人 2026-11-28）：守渡 / 夺渡的人状态条左边挂一个「守」「夺」字
+    const task = this.battle.ferryTaskLabel(u);
+    if (task) {
+      s.tag ??= this.add.text(0, 0, '', { fontFamily: 'serif', fontSize: '11px', fontStyle: 'bold', color: '#ffffff', stroke: '#000000', strokeThickness: 3 }).setOrigin(1, 0.5);
+      s.tag.setText(loc(task.short)).setColor(task.short === '守' ? '#9fd0ff' : '#ffb070').setPosition(p.x - w / 2 - 2, top + (rows.length * 3 + 1) / 2).setDepth(depthOf(v.x, v.y, 9)).setVisible(s.spr.visible);
+    } else s.tag?.setVisible(false);
   }
 
   /** 站在这一格的人物的头顶高度（飘字从状态条上面弹出） */
@@ -781,10 +791,12 @@ export class BattleScene extends Phaser.Scene {
         s.spr.setVisible(false);
         s.bar.setVisible(false);
         s.cart?.setVisible(false);
+        s.tag?.setVisible(false);
       } else if (seen && this.fogHidden.delete(u.uid)) {
         s.spr.setVisible(true);
         s.bar.setVisible(true);
         s.cart?.setVisible(true);
+        s.tag?.setVisible(true);
       }
     }
   }
@@ -1101,6 +1113,7 @@ export class BattleScene extends Phaser.Scene {
       s.spr.destroy();
       s.bar.destroy();
       s.cart?.destroy();
+      s.tag?.destroy();
     }
     this.sprites.clear();
     this.view.clear();
@@ -1349,6 +1362,7 @@ export class BattleScene extends Phaser.Scene {
         const s = this.sprites.get(e.uid);
         s?.bar.destroy();
         s?.cart?.destroy();
+        s?.tag?.destroy();
         s?.spr.destroy();
         this.sprites.delete(e.uid);
         break;
@@ -1559,6 +1573,7 @@ export class BattleScene extends Phaser.Scene {
     for (const s of gone) {
       s.bar.destroy();
       s.cart?.destroy();
+      s.tag?.destroy();
     }
     if (gone.length) await this.fade(gone.map((s) => s.spr), 0, LEAVE_MS);
     for (const e of group) {
@@ -2125,6 +2140,7 @@ export class BattleScene extends Phaser.Scene {
         if (s) {
           s.bar.destroy();
           s.cart?.destroy();
+      s.tag?.destroy();
           await this.fade(s.spr, 0, e.type === 'die' ? 500 : LEAVE_MS);
           s.spr.destroy();
           this.sprites.delete(e.uid);

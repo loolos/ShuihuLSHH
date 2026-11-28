@@ -238,6 +238,25 @@ export interface PackStageJson {
   /** 城楼【新】（三打祝家庄，§15.34）：站在这些格子上的敌人，射程 ≥ 2 的攻击和招式再远 bonus 格（远程伤害按加长后的射程递减） */
   towers?: { cells: [number, number][]; bonus: number };
   /**
+   * 夺渡口【新】（白龙庙，负责人 2026-11-28，§15.23.1）：zones 渡口（rect = [x1, y1, x2, y2]，含边界）；整回合结束比人数定归属，
+   * 占着的一边每回合在渡口从 pools 里刷 spawn[0]–spawn[1] 个兵（pools.ours / enemy 按渡口顺序各一组单位 id，同组同时最多活这么多人）；
+   * 渡口守满 hold 人后新刷的兵去进攻；守渡的人只理会 radius 格内的对手（AI 17）。我方每占一个渡口每回合攒 1 点，
+   * 到 waves[k].at 就让 units 登场并设上标志 flag；援军到齐后每再攒 revive 点复活一位倒下的好汉；held：我方占着至少 n 个渡口时设上 flag（不够就清掉）。单位字段 ferry = 开场守哪个渡口（渡口名）
+   */
+  ferries?: {
+    zones: { name: string; rect: [number, number, number, number] }[];
+    radius?: number;
+    hold?: number;
+    spawn?: [number, number];
+    pools: { ours: string[][]; enemy: string[][] };
+    waves: { at: number; name: string; units: string[]; flag: string }[];
+    held?: { n: number; flag: string }[];
+    /** 援军到齐后每再攒这么多点复活一位倒下的好汉 */
+    revive?: number;
+    /** 我方刚占齐全部渡口的那个回合末，在开场位置刷出这些人（藏着的单位 id；还活着的不重刷） */
+    allHeld?: string[];
+  };
+  /**
    * 攻庄【新】（三打祝家庄，§15.34）：gates = 庄门（door 是站在门板格上、AI 8 的敌人，体力固定 hp；cells 是整扇门的格子，要写进 map.seal；
    * guards 是门卫，不受墙外 y > wallY 的人伤害，都不在场了、回合结束时我方有人站在 inner 格上就从里面开门；开门设上 flag）；
    * carts = 囚车格，snare.skills 打中体力 pct% 以下的我方好汉（spare 职业除外）拖进空囚车，囚车旁刷出 cartGuards 里还没在场的一组；
@@ -333,6 +352,8 @@ export interface PackUnitJson {
   hidden?: boolean;
   /** 被押送者的囚车外观；解开绑缚后移除，只影响画面。 */
   prisonCart?: boolean;
+  /** 夺渡口【新】：开场守哪个渡口（stage.ferries.zones 的 name），配 AI 17 */
+  ferry?: string;
   /** 观战演员：不可行动、不可成为攻击或技能的目标；仍占据自己的格子。 */
   spectator?: boolean;
   /** 只在对话里出声、不上地图：开局隐藏，say 点名时也不登场（例如景阳冈的酒家） */
