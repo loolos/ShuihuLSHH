@@ -8,6 +8,9 @@
  "map": {
   "custom": "kujing"
  },
+ "fog": {
+  "radius": 2
+ },
  "bgm": [
   "eerie",
   "story"
@@ -19,7 +22,7 @@
    "lose": [
     "李逵倒下"
    ],
-   "hint": "地洞弯弯曲曲，走不通就回头换一条路"
+   "hint": "井底伸手不见五指，只看得见李逵身边几步；地洞弯弯曲曲，走不通就回头换一条路。路上有黑影挡道，打倒了才过得去"
   },
   {
    "if": "found",
@@ -28,7 +31,7 @@
     "李逵倒下",
     "柴进倒下"
    ],
-   "hint": "柴进伤得重，走得很慢，别把他丢下"
+   "hint": "柴进伤得重，走得慢，别把他丢下；回去的路上还有黑影"
   }
  ],
  "units": [
@@ -52,6 +55,61 @@
    "ai": 8,
    "target": "likui",
    "name": "柴进"
+  },
+  {
+   "id": "lang1",
+   "class": "heiying",
+   "side": "enemy",
+   "x": 6,
+   "y": 9,
+   "level": 30,
+   "facing": 1,
+   "ai": 12,
+   "guardArea": [
+    4,
+    7,
+    8,
+    11
+   ],
+   "enemyRank": "troop",
+   "levelOffset": -3,
+   "hpMultiplier": 0.8,
+   "name": "黑影"
+  },
+  {
+   "id": "lang2",
+   "class": "heiying",
+   "side": "enemy",
+   "x": 10,
+   "y": 15,
+   "level": 30,
+   "facing": 1,
+   "ai": 12,
+   "guardArea": [
+    8,
+    13,
+    12,
+    17
+   ],
+   "enemyRank": "troop",
+   "levelOffset": -3,
+   "hpMultiplier": 0.8,
+   "name": "黑影"
+  },
+  {
+   "id": "lang3",
+   "class": "heiying",
+   "side": "enemy",
+   "x": 11,
+   "y": 11,
+   "level": 30,
+   "facing": 1,
+   "ai": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -3,
+   "hpMultiplier": 0.8,
+   "name": "黑影"
   }
  ],
  "script": [
@@ -92,7 +150,7 @@
      "chaijin",
      "move",
      {
-      "add": -2,
+      "add": -1,
       "turns": 0
      }
     ],
@@ -124,10 +182,56 @@
    "on": {
     "enter": "likui",
     "area": [
+     4,
+     7,
+     8,
+     11
+    ],
+    "pass": true
+   },
+   "do": [
+    [
+     "narrate",
+     "黑暗里一双绿莹莹的眼睛亮了一亮，喉咙里呜呜作响，一团黑影堵住了去路。"
+    ],
+    [
+     "say",
+     "likui",
+     "甚鸟东西？是狗是狼，挡了铁牛的路，吃俺一斧！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "likui",
+    "area": [
+     8,
+     13,
+     12,
+     17
+    ],
+    "pass": true
+   },
+   "do": [
+    [
+     "narrate",
+     "前面又是一团黑影，伏在洞里一动不动，只听得它磨牙。"
+    ],
+    [
+     "say",
+     "likui",
+     "这井底下倒养着一窝畜生！"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "enter": "likui",
+    "area": [
      9,
      9,
-     1,
-     1
+     9,
+     9
     ],
     "pass": true
    },
@@ -186,6 +290,19 @@
     [
      "narrate",
      "柴进伤得重，只能扶着洞壁，一步一挪跟着李逵走。"
+    ],
+    [
+     "appear",
+     "lang3"
+    ],
+    [
+     "narrate",
+     "来路上又有窸窸窣窣的声响，一团黑影闻着血腥气追了过来。"
+    ],
+    [
+     "say",
+     "likui",
+     "大官人莫怕，躲在铁牛背后！"
     ]
    ]
   },
@@ -196,7 +313,7 @@
      1,
      13,
      3,
-     3
+     15
     ],
     "label": "箩筐"
    },

@@ -50,6 +50,8 @@ export interface BattleSceneData {
   tint?: StageTint;
   /** 剧情关（过场）：不画「本回合已行动」的变灰（负责人 2026-11-22） */
   story?: boolean;
+  /** 视野迷雾【新】（扩展包关卡的 fog，探穴救柴进）：radius = 我方人物周围探开几格（切比雪夫距离） */
+  fog?: { radius?: number };
 }
 
 type Mode =
@@ -109,6 +111,13 @@ export class BattleScene extends Phaser.Scene {
   private mapName = 'N01';
   private tint: StageTint | undefined;
   private story = false;
+  /** 视野迷雾【新】：我方周围探开的半径；没有迷雾为 undefined。探开过的格子一直亮着 */
+  private fogR: number | undefined;
+  private fogSeen: Uint8Array = new Uint8Array(0);
+  /** 还没探开的格子盖的黑块（格子序号 → 图），探开就拿掉 */
+  private fogImages = new Map<number, Phaser.GameObjects.Image>();
+  /** 站在没探开的格子上、被迷雾藏起来的人（uid） */
+  private fogHidden = new Set<number>();
   /** 当前的天色滤镜（剧情里可以换，扩展包指令 tint） */
   private tintFilter?: Phaser.Filters.Controller;
   private makeInput?: () => StageInput;
@@ -188,6 +197,7 @@ export class BattleScene extends Phaser.Scene {
     this.mapName = data.map ?? (data.assets.files ? stageMap(data.assets.files, data.stage) : data.stage);
     this.tint = data.tint;
     this.story = !!data.story;
+    this.fogR = data.fog ? Math.max(0, data.fog.radius ?? 2) : undefined;
     this.makeInput = data.makeInput;
     this.sprites = new Map();
     this.view = new Map();
@@ -269,6 +279,7 @@ export class BattleScene extends Phaser.Scene {
     this.placeBall();
     this.ring = this.battle.royale && { zone: this.battle.royale.zone, next: this.battle.royale.next };
     for (const u of this.battle.units) if (u.present) this.spawn(u);
+    this.setupFog(map.width, map.height);
 
     // 相机：可拖动范围覆盖整张地图
     const cam = this.cameras.main;
@@ -290,6 +301,7 @@ export class BattleScene extends Phaser.Scene {
       height: map.height,
       ground: (x, y) => map.cells[y * map.width + x][0]?.tile ?? 0,
       blocked: (x, y) => !board.passable(x, y),
+      hidden: this.fogR === undefined ? undefined : (x, y) => !this.fogSeen[y * map.width + x],
       tile: (t) => {
         const fr = this.assets.ground.frame(t);
         if (!fr.width || !fr.height) return null;
@@ -596,7 +608,7 @@ export class BattleScene extends Phaser.Scene {
     const m = this.mode;
     if (m.kind === 'idle') {
       this.ui.setCommands(null);
-      const h = this.hoverCell && this.battle.unitAt(this.hoverCell.x, this.hoverCell.y);
+      const h = this.hoverCell && !this.fogged(this.hoverCell.x, this.hoverCell.y) && this.battle.unitAt(this.hoverCell.x, this.hoverCell.y);
       this.ui.showUnit(h || null);
       return;
     }
@@ -701,7 +713,89 @@ export class BattleScene extends Phaser.Scene {
     this.ui.placeCommands((s.spr.x - v.x) * cam.zoom + cam.x, (s.spr.y - 30 - v.y) * cam.zoom + cam.y, (HALF_W + 16) * cam.zoom);
   }
 
+  /** 视野迷雾【新】：开场整张地图盖黑块（地图外的空格也盖，不然空格和黑块颜色不同，看得出路），先按我方开场位置探开一次 */
+  private setupFog(w: number, h: number) {
+    this.fogImages.clear();
+    this.fogHidden.clear();
+    this.fogSeen = new Uint8Array(w * h);
+    if (this.fogR === undefined) return;
+    const key = textureFor(this, 'fog-cell', () => {
+      const c = document.createElement('canvas');
+      c.width = HALF_W * 2 + 2;
+      c.height = HALF_H * 2 + 2;
+      const g = c.getContext('2d')!;
+      g.fillStyle = '#000';
+      g.beginPath();
+      g.moveTo(HALF_W + 1, 0);
+      g.lineTo(HALF_W * 2 + 2, HALF_H + 1);
+      g.lineTo(HALF_W + 1, HALF_H * 2 + 2);
+      g.lineTo(0, HALF_H + 1);
+      g.closePath();
+      g.fill();
+      return c;
+    });
+    for (let y = 0; y < h; y++)
+      for (let x = 0; x < w; x++) {
+        const p = cellToWorld(x, y);
+        // 盖在这一格所有东西上面、前一排的人物下面（depthOf 每排 16 层）
+        this.fogImages.set(y * w + x, this.add.image(p.x, p.y, key).setDepth(depthOf(x, y, 15)));
+      }
+    this.updateFog();
+  }
+
+  /** 每帧：按我方人物画面上的位置（走动中按精灵所在的格子）探开周围，藏起 / 放出没探开格子上的人 */
+  private updateFog() {
+    const r = this.fogR;
+    if (r === undefined) return;
+    const w = this.battle.board.width, h = this.battle.board.height;
+    let changed = false;
+    const reveal = (cx: number, cy: number) => {
+      for (let y = Math.max(0, cy - r); y <= Math.min(h - 1, cy + r); y++)
+        for (let x = Math.max(0, cx - r); x <= Math.min(w - 1, cx + r); x++) {
+          const i = y * w + x;
+          if (this.fogSeen[i]) continue;
+          this.fogSeen[i] = 1;
+          this.fogImages.get(i)?.destroy();
+          this.fogImages.delete(i);
+          changed = true;
+        }
+    };
+    for (const u of this.battle.units) {
+      if (u.side !== 'player') continue;
+      const s = this.sprites.get(u.uid);
+      if (!s) continue;
+      const v = this.vs(u);
+      reveal(v.x, v.y);
+      const a = s.spr.x / HALF_W, b = s.spr.y / HALF_H;
+      reveal(Math.round((a + b) / 2), Math.round((b - a) / 2));
+    }
+    if (changed) this.minimap?.redraw();
+    for (const u of this.battle.units) {
+      if (u.side === 'player') continue;
+      const s = this.sprites.get(u.uid);
+      if (!s) continue;
+      const v = this.vs(u);
+      const seen = v.x >= 0 && v.y >= 0 && v.x < w && v.y < h && !!this.fogSeen[v.y * w + v.x];
+      if (!seen && !this.fogHidden.has(u.uid)) {
+        this.fogHidden.add(u.uid);
+        s.spr.setVisible(false);
+        s.bar.setVisible(false);
+        s.cart?.setVisible(false);
+      } else if (seen && this.fogHidden.delete(u.uid)) {
+        s.spr.setVisible(true);
+        s.bar.setVisible(true);
+        s.cart?.setVisible(true);
+      }
+    }
+  }
+
+  /** 视野迷雾：这一格还没探开（小地图、悬停查看用） */
+  private fogged(x: number, y: number) {
+    return this.fogR !== undefined && !this.fogSeen[y * this.battle.board.width + x];
+  }
+
   update() {
+    this.updateFog();
     this.placeFloat();
     this.drawZones();
     this.drawRing();
@@ -810,6 +904,7 @@ export class BattleScene extends Phaser.Scene {
     const marks: MiniMark[] = [];
     for (const k of this.groundItems.keys()) {
       const [x, y] = k.split(',').map(Number);
+      if (this.fogged(x, y)) continue;
       marks.push({ x, y, color: '#f0c860' });
     }
     // 敌方先画，我方压在上面
@@ -817,6 +912,7 @@ export class BattleScene extends Phaser.Scene {
     const units = this.battle.units.filter((u) => this.sprites.has(u.uid)).sort((a, b) => order[a.side] - order[b.side]);
     for (const u of units) {
       const v = this.vs(u);
+      if (u.side !== 'player' && this.fogged(v.x, v.y)) continue; // 迷雾里的人不画
       // 好汉聚义的小头目画成橙色，和对手好汉分开
       // 我方回合：已行动完的红框，还没行动的加粗白框（lolo 2026-11-25）；其余黑框
       const waiting = !this.story && u.side === 'player' && this.battle.phase === 'player' && !u.ended;

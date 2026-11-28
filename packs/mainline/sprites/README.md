@@ -25,6 +25,7 @@
 | `jiezhen-jia/`、`jiebao-jia/` | 带枷的解珍、解宝（去掉钢叉，脖子上套木枷）：idle、walk、hit、defend、ram（枷撞）、spin（枷打）。配方 `characters/jiezhen-jia.json`、`jiebao-jia.json` |
 | `tiger/` | idle 待机、walk 走、attack 扑咬、attack-paw 拍击、hit-back 受击、go-to-sleep 伏下（倒地 / 伏低） |
 | `wolf/`、`fox/` | 狼、狐狸：idle 待机、walk 走、attack 扑咬、pounce 飞扑（`Gallop_Jump`）、hit 受击、defend 低头伏身（`Idle_2_HeadLow`）、death 倒地 |
+| `wolf-black/` | 黑影（探穴救柴进井底的野兽）：`wolf/` 每帧按亮度压到近黑（`shuihu-design/polian-gen/blackwolf.py`），动作同狼 |
 | `stag/`、`donkey/`、`cow/`、`bull/` | 鹿、驴、牛、公牛：idle、walk、headbutt 低头顶、kick 后踢、charge 奔跑（`Gallop`）、hit、defend 低头（`Idle_Headlow`）、death |
 | `lion/` | 狮子：idle、walk、bite 扑咬（`Attack Jaw`）、paw 拍击（`Attack Right Paw`）、pounce 飞扑（`Jumping`，带前冲位移）、roar 吼（也当防御）、recoil 后退（`Walk Back`，当受击；模型没有受击动作）、death |
 | `bear/` | 熊：idle（`Stand_Idle_01`）、walk（原动作带根位移，渲染后按身体质心逐帧对齐成原地走）、rear-swipe 人立拍击（`Attack_StandAngry_01_High`）、hit（`Hit_Stand_F01`）、defend（`StandAngry_Breathing_01`）、death（`Death_Stand_R01`）。模型里 `_L` / `_R`、`Attack_StandAngry_01_Low` 等动作中途会转身，没用 |

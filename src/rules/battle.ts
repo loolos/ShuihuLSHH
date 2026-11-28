@@ -1638,7 +1638,10 @@ export class Battle {
     target.turnStart = null; // 用在别人身上：对方也不能再撤销移动
     for (const x of area) x.turnStart = null;
     this.noteDid(u, 'item', used);
+    const fired = this.fired.size;
     this.checkDid();
+    // 剧情道具设了标志（公孙胜照天书三回破尽妖法）：flag 区块立刻接着演，不等下一次行动【新】
+    if (this.fired.size > fired && this.status === 'playing') this.runCondBlocks();
     return this.flush();
   }
 
@@ -3034,6 +3037,24 @@ export class Battle {
             while (gone.length < n) gone.push(pool.splice(this.rng.int(pool.length), 1)[0]);
             for (const u of gone) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: 'wind' });
             for (const u of gone) this.hide(u, false);
+            break;
+          }
+          // 五雷降神兵【新】（入云龙斗法破高廉，负责人 2026-11-28）：施法的人 radius 步以内这几种职业的敌人，体力一齐降到最大体力的 wither%
+          if (a.wither) {
+            const c = a.caster !== undefined ? this.unit(this.groups.get(a.caster) ?? -1) : undefined;
+            if (!c?.present || !c.alive) break;
+            const r = a.radius ?? 8;
+            const hit = this.active().filter((u) => u.side === 'enemy' && (a.classes ?? []).includes(u.classId) && Math.abs(u.x - c.x) + Math.abs(u.y - c.y) <= r);
+            this.emit({ type: 'focus', x: c.x, y: c.y });
+            for (const u of hit) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'dust' ? 'dust' : 'wind' });
+            for (const u of hit) {
+              const hp = Math.max(1, Math.floor((u.stats.maxHp * a.wither) / 100));
+              if (u.hp > hp) {
+                const delta = hp - u.hp;
+                u.hp = hp;
+                this.emit({ type: 'hp', uid: u.uid, hp: u.hp, mp: u.mp, delta });
+              }
+            }
             break;
           }
           const t = b.trigger;

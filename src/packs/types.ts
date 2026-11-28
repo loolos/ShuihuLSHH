@@ -275,6 +275,11 @@ export interface PackStageJson {
   disguise?: { flag?: string };
   /** 天色滤镜（§15.15）：夜、雪、黄昏；只改画面，不改规则 */
   tint?: 'night' | 'snow' | 'dusk';
+  /**
+   * 视野迷雾【新】（lolo 2026-11-28，探穴救柴进）：开场整张地图黑着，我方人物周围 radius 格（切比雪夫距离，默认 2 = 5×5）探开，
+   * 探开过的格子一直亮着；没探开的格子上的人、宝箱不画，小地图同样。只改画面，不改规则（敌人照常行动）
+   */
+  fog?: { radius?: number };
   /** 背景音乐（music.ts 的曲目名；数组 = 轮放的歌单） */
   bgm?: string | string[];
   /**
