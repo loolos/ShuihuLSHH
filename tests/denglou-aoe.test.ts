@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { Board } from '../src/rules/board.ts';
-import { areaCells, castCells, castRange, learnedSkills, skillTags } from '../src/rules/skills.ts';
+import { areaCells, castCells, castRange, falloffSkill, learnedSkills, skillTags } from '../src/rules/skills.ts';
 import type { Unit } from '../src/rules/unit.ts';
 import { GRUNT_CLASSES } from '../src/rules/growth.ts';
 import { loadPackFromDisk } from '../tools/sim-pack.ts';
@@ -42,6 +42,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('登州诸人
       expect(cells).not.toContainEqual(me);
       expect(skillTags(s)).toContain('回旋');
     });
+  });
+
+  it('母大虫旋刀 LV3、LV4 最外一层伤害 85%，紧挨的一层不变（负责人 2026-11-28）', () => {
+    const t = tiers('母大虫旋刀');
+    for (const s of t.slice(2)) {
+      const scales = areaCells(board, me, s, me).map((c) => falloffSkill(s, me, me, c).damageScale ?? 1);
+      for (const [c, k] of areaCells(board, me, s, me).map((c, i) => [c, scales[i]] as const))
+        expect(k).toBeCloseTo(Math.max(Math.abs(c.x - me.x), Math.abs(c.y - me.y)) === 2 ? 0.85 : 1);
+    }
+    for (const s of t.slice(0, 2)) expect(s.ringFalloff).toBeUndefined();
   });
 
   it('孙新双鞭齐下：LV1 打 4 格三角、LV2 打 9 格三角，尖朝自己、往外展开（负责人 2026-11-26）', () => {

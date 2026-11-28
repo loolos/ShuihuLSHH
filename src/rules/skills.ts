@@ -205,14 +205,19 @@ export function areaCells(board: Board, from: Cell, s: SkillDef, at: Cell): Cell
 }
 
 /**
- * 扇形按行衰减（SkillDef.rowFalloff，萬夫莫敵）：目标 t 在扇形第几行（落点那行为 0），返回把衰减并进 damageScale 的技能；没有衰减就原样返回。
- * from 是施放者所在格（决定扇形朝向，同 areaCells）。
+ * 范围衰减，返回把衰减并进 damageScale 的技能；没有衰减就原样返回。from 是施放者所在格（决定扇形朝向，同 areaCells）。
+ * - 扇形按行（SkillDef.rowFalloff，萬夫莫敵）：目标在扇形第几行（落点那行为 0）；
+ * - 按层（SkillDef.ringFalloff，母大虫旋刀）：离施放点横、竖较大的距离，第 1 层不衰减。
  */
 export function falloffSkill(s: SkillDef, from: Cell, at: Cell, t: Cell): SkillDef {
-  if (!s.rowFalloff || s.type !== 1) return s;
-  const dir = DIRS[facingTowards(from, at, 0)];
-  const row = Math.max(0, (t.x - at.x) * dir.x + (t.y - at.y) * dir.y);
-  return row ? { ...s, damageScale: (s.damageScale ?? 1) * Math.max(0, 1 - row * s.rowFalloff) } : s;
+  let f = 1;
+  if (s.rowFalloff && s.type === 1) {
+    const dir = DIRS[facingTowards(from, at, 0)];
+    f = 1 - Math.max(0, (t.x - at.x) * dir.x + (t.y - at.y) * dir.y) * s.rowFalloff;
+  } else if (s.ringFalloff) {
+    f = 1 - Math.max(0, Math.max(Math.abs(t.x - at.x), Math.abs(t.y - at.y)) - 1) * s.ringFalloff;
+  }
+  return f < 1 ? { ...s, damageScale: (s.damageScale ?? 1) * Math.max(0, f) } : s;
 }
 
 /**
