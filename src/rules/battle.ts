@@ -2194,9 +2194,7 @@ export class Battle {
       const reach = Math.max(2, hi);
       const foes = this.foesOf(u).filter((t) => !this.spectators.has(t.uid) && dist(u, t) >= lo && dist(u, t) <= reach);
       if (!foes.length) continue;
-      // 先打小兵（友军喽啰等非我方可操作的人），再挑体力最少的（负责人 2026-11-28：连环马那一枪主要打小兵）
-      const troop = (t: Unit) => (t.side === 'player' ? 1 : 0);
-      foes.sort((p, q) => troop(p) - troop(q) || p.hp - q.hp);
+      foes.sort((p, q) => p.hp - q.hp);
       this.cast(u, attackSkill(u, this.data), foes[0], false);
     }
     this.refreshChains();
