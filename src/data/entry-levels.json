@@ -150,8 +150,10 @@
     "mainline/jiama": {"daizong":39,"likui":48},
     "mainline/erxianshan": {"daizong":41,"likui":48},
     "mainline/pijian": {"likui":48},
-    "mainline/jizhoufu": {"likui":49},
-    "mainline/chuanfa": {"daizong":48,"likui":51},
+    "mainline/jizhoufu": {"likui":48},
+    "mainline/chuanfa": {"daizong":48,"likui":50},
+    "mainline/polian": {"0":56,"2":48,"10":45,"11":45,"sj-fugitive":51,"qinming":46,"likui":50,"tanglong":48,"leiheng":43},
+    "mainline/jiuchai": {"likui":52},
     "n-add04b": {"0":10,"3":10,"5":8,"13":8,"15":8},
     "n-add09b": {"0":21,"3":20,"5":19,"11":18,"13":19,"15":19,"16":20}
   }

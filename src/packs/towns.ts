@@ -6,9 +6,9 @@ import type { PackRuntime } from './build.ts';
 import { townParty } from './campaign.ts';
 import entryLevels from '../data/entry-levels.json' with { type: 'json' };
 
-const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨', 'mainline/ruzhuang': '独龙冈营寨' };
+const NAMES: Record<string, string> = { 'mainline/shiyong': '村镇整备', 'mainline/yuanyanglou': '孟州整备', 'mainline/jieyangzhen': '揭阳岭整备', 'mainline/fachang': '梁山泊整备', 'mainline/yekun': '清风山整备', 'mainline/zhujiadian': '独龙冈整备', 'mainline/panduolu': '独龙冈下寨', 'mainline/ruzhuang': '独龙冈营寨', 'mainline/polian': '武冈镇' };
 /** 这些城镇开放下一战的全部我方，缺的人物按入场等级配齐装备。 */
-const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang']);
+const NEXT_ROSTER = new Set(['mainline/yuanyanglou', 'mainline/jieyangzhen', 'mainline/fachang', 'mainline/yekun', 'mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang', 'mainline/polian']);
 /** 下一战里中途才来的我方（隐藏开场）不进城镇名单：独龙冈整备只有杨雄、石秀、时迁、武龙，鲁智深、武松半路赶到 */
 const OPENING_ONLY = new Set(['mainline/zhujiadian', 'mainline/panduolu', 'mainline/ruzhuang']);
 /** 名单照哪一关的开场我方配：三打祝家庄前的营寨（负责人 2026-11-25）下一关是孙立入庄的过场，名单按大仗 sanda 开场（内应 + 宋江一队，押在囚车里的不算） */
@@ -49,7 +49,18 @@ export function prepareInsertTown(c: CampaignState, rt: PackRuntime, next: strin
   return { ...view, active };
 }
 
+/** 入城对白：actor 是包职业名，原版人物写职业号的字符串（公孙胜 '2'） */
 export function insertTownIntro(next: string): { actor: string; text: string }[] {
+  // 武冈镇（原著第 54 回）：李逵、公孙胜回高唐州路上在镇上遇汤隆。负责人 2026-11-28：不做小关，就当是酒店里说的话，给破高廉做整备
+  if (next === 'mainline/polian') return [
+    { actor: 'tanglong', text: '方才那条铁瓜锤，好汉提起来便似耍灯草一般！小人打了半辈子铁，不曾见这般力气。敢问高姓大名？' },
+    { actor: 'likui', text: '俺便是梁山泊黑旋风李逵！你那锤打得也好，铁牛借来耍一耍，你倒不恼。' },
+    { actor: 'tanglong', text: '原来是李大哥！小人姓汤名隆，父亲原是延安府知寨，因打铁上，在老种经略相公帐前叙用。近年父亲在任上亡故，小人贪赌，流落江湖，权在这武冈镇打铁度日。' },
+    { actor: 'tanglong', text: '小人入骨好使枪棒，为是浑身有些麻点，人都叫小人做金钱豹子。久闻梁山泊大名，只恨无人引进。' },
+    { actor: '2', text: '宋公明哥哥正在高唐州厮杀，要人用。你若肯去，便同我们入伙。' },
+    { actor: 'likui', text: '好！戴院长先回寨报信去了。兄弟收拾了家伙，吃饱了酒，同铁牛杀奔高唐州！' },
+    { actor: '2', text: '高廉那厮的妖法，贫道已得师父传了破法。诸位且在镇上补足药品，整顿兵器，便去会他。' },
+  ];
   if (next === 'mainline/yekun') return [
     { actor: 'huarong', text: '多亏二龙山三位兄弟援手，救得哥哥出来。只是黄信那厮逃了回去，青州必然发兵来打清风山。' },
     { actor: 'sj-fugitive', text: '鲁大师、武二郎、杨制使已自回山。我等且在山下村坊补些药品，整顿兵器，提防官军。' },

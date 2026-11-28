@@ -650,7 +650,7 @@ function startGame(assets: Assets) {
     const u = new URL(location.href); u.searchParams.set('stage', spot); history.replaceState(null,'',u);
     if (!stop.seen) {
       for (const line of insertTownIntro(stop.next)) {
-        const actor = rt.classIds.get(line.actor)!;
+        const actor = rt.classIds.get(line.actor) ?? Number(line.actor); // 原版人物写职业号（公孙胜 '2'）
         await ui.say(rt.data.classes[actor].name, line.text, actor);
         if (ticket !== loading) return;
       }

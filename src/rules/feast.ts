@@ -115,6 +115,14 @@ export const FEAST_PLACES: Record<string, FeastPlace> = {
       { who: '@yangxiong', text: '兄弟说得是。时迁，你那手脚也收着些。' },
     ],
   },
+  // 武冈镇 → 入云龙斗法破高廉：李逵、公孙胜在镇上认了汤隆，明日赶回高唐州
+  'mainline/polian': {
+    lines: [
+      { who: '@likui', text: '店家，好酒好肉只管上来！今日认了个打铁的兄弟，铁牛做东！' },
+      { who: '@tanglong', text: '到了高唐州，哥哥们看小弟这条铁瓜锤！' },
+      { who: 2, text: '贫道以茶代酒。明日破那高廉妖法，众位只管向前。' },
+    ],
+  },
 };
 
 /** 名单的平均等级（四舍五入，至少 1） */

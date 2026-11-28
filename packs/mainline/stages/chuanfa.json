@@ -5,6 +5,7 @@
  "rewards": {
   "gold": 0
  },
+ "townAfter": 11,
  "map": {
   "custom": "xuannvmiao"
  },
