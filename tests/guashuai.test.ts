@@ -224,9 +224,15 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(b.turnLimit).toBe(t0 + 20); // 冲阵那一回合起再给 20 回合
     const horseIds = new Set(lead.map((u) => u.uid));
     expect(ev.some((e) => e.type === 'attack' && horseIds.has((e as { uid: number }).uid))).toBe(true);
-    // 呼延灼不退场，撤到兵后面观战；其余人都回来参战
-    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual(['双鞭呼延灼']);
-    expect(get('huyanzhuo').present).toBe(true);
+    // 所有人回来参战：单挑败回本阵的韩滔、呼延灼也照常应战（负责人 2026-11-28）
+    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
+    for (const id of ['huyanzhuo', 'hantao']) expect(get(id).present, id).toBe(true);
+    // 第二段再被打败就正常退场
+    for (const id of ['huyanzhuo', 'hantao']) {
+      get(id).hp = Math.floor(get(id).stats.maxHp * 0.2);
+      after(b);
+      expect(get(id).present, id).toBe(false);
+    }
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
     expect(m.y).toBeLessThan(y0);
     // 第一批冲 10 格，停在我方第一排喽啰（y=16）身前

@@ -2170,26 +2170,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -2419,26 +2399,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -2672,26 +2632,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -2921,26 +2861,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -3174,26 +3094,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -3423,26 +3323,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -3676,26 +3556,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -3925,26 +3785,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -4178,26 +4018,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -4427,26 +4247,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -4680,26 +4480,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -4929,26 +4709,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -5182,26 +4942,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -5431,26 +5171,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -5684,26 +5404,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -5933,26 +5633,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -6186,26 +5866,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -6435,26 +6095,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -6688,26 +6328,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -6937,26 +6557,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -7190,26 +6790,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -7439,26 +7019,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -7692,26 +7252,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -7941,26 +7481,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -8194,26 +7714,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -8443,26 +7943,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -8696,26 +8176,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -8945,26 +8405,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -9198,26 +8638,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -9447,26 +8867,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -9700,26 +9100,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -9949,26 +9329,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -10202,26 +9562,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -10451,26 +9791,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -10704,26 +10024,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -10953,26 +10253,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -11206,26 +10486,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -11455,26 +10715,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -11708,26 +10948,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -11957,26 +11177,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -12210,26 +11410,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -12459,26 +11639,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -12712,26 +11872,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -12961,26 +12101,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -13214,26 +12334,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -13463,26 +12563,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -13716,26 +12796,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -13965,26 +13025,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -14218,26 +13258,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -14467,26 +13487,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -14720,26 +13720,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -14969,26 +13949,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -15222,26 +14182,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -15471,26 +14411,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -15724,26 +14644,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -15973,26 +14873,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -16226,26 +15106,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -16475,26 +15335,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -16728,26 +15568,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -16977,26 +15797,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -17238,26 +16038,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -17446,26 +16226,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -17658,26 +16418,6 @@
      "nu7"
     ],
     [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
-    ],
-    [
      "charge",
      [
       "ma0",
@@ -17866,26 +16606,6 @@
     [
      "appear",
      "nu7"
-    ],
-    [
-     "move",
-     "huyanzhuo",
-     18,
-     26,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     0
-    ],
-    [
-     "spectate",
-     "huyanzhuo",
-     true
     ],
     [
      "charge",
@@ -32374,27 +31094,34 @@
    "do": [
     [
      "narrate",
-     "韩滔抵挡不住，拖着枣木槊败回本阵。"
+     "韩滔又抵挡不住，拖着枣木槊败走了。"
     ],
     [
-     "move",
-     "hantao",
-     12,
-     25,
-     {
-      "nearest": true,
-      "through": true
-     }
+     "leave",
+     "hantao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "huyanzhuo",
+    "below": 30,
+    "spare": true
+   },
+   "if": "p2",
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "好厉害的草寇！……且收兵，来日再战！"
     ],
     [
-     "face",
-     "hantao",
-     0
+     "narrate",
+     "呼延灼拨转踢雪乌骓，败回本阵去了。"
     ],
     [
-     "spectate",
-     "hantao",
-     true
+     "leave",
+     "huyanzhuo"
     ]
    ]
   },
