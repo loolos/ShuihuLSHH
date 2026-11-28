@@ -111,9 +111,10 @@ function heroSkillTiersBase(cls: number, own: SkillDef[]): SkillDef[] {
    if(tier!==2)return [updated];
    // LV5（负责人 2026-11-25，30–40 级补技能）：40 级，范围 9，命中 +25
    // 负责人 2026-11-26：清兵太猛，必杀各级都固定 +20，威力 LV3 起都是 55
+   // 负责人 2026-11-28：后期一招清兵太多，LV4、LV5 必杀 +20 → +5（同千軍萬馬、公孫勝），伤害 ×0.85
    const lv4={...updated,skillId:1309,soundId:s.soundId??s.skillId,name:s.name.replace(/LV3$/,'LV4'),
-    learnLevel:28,mpCost:210,power:55,area:8,hitMod:20,critMod:20};
-   return [updated,lv4,{...lv4,skillId:1314,name:s.name.replace(/LV3$/,'LV5'),learnLevel:40,mpCost:250,power:55,area:9,hitMod:25,critMod:20,
+    learnLevel:28,mpCost:210,power:55,area:8,hitMod:20,critMod:5,damageScale:0.85};
+   return [updated,lv4,{...lv4,skillId:1314,name:s.name.replace(/LV3$/,'LV5'),learnLevel:40,mpCost:250,power:55,area:9,hitMod:25,critMod:5,
     hits:[{frame:6,percent:33,dir:0},{frame:9,percent:33,dir:0},{frame:12,percent:34,dir:0}]}]; // LV5 三段（负责人 2026-11-26）
   }
   // 千軍萬馬（武龍，类型 0 落点往前一线）：负责人 2026-11-22 加 LV4，命中 +5/+10/+15/+20，
