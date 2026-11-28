@@ -122,6 +122,22 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     void get;
   });
 
+  it('第二阵：呼延灼掉血但林冲没事就不换人；林冲把呼延灼打到四成以下，呼延灼退回本阵，直接第四阵', () => {
+    const { b, get } = open('guashuai');
+    const sp = watching(b);
+    const active = (id: string) => !sp.has(get(id).uid);
+    get('hantao').hp = Math.floor(get('hantao').stats.maxHp * 0.4);
+    after(b);
+    get('huyanzhuo').hp = Math.floor(get('huyanzhuo').stats.maxHp * 0.6);
+    after(b);
+    expect(active('linchong') && active('huyanzhuo')).toBe(true);
+    expect(active('sunli')).toBe(false);
+    get('huyanzhuo').hp = Math.floor(get('huyanzhuo').stats.maxHp * 0.35);
+    after(b);
+    expect(active('linchong') || active('huyanzhuo') || active('sunli')).toBe(false);
+    expect(active('husanniang') && active('pengqi')).toBe(true);
+  });
+
   it('冲锋完顺手那一枪不限直线：周围菱形 2 格内（斜对角也算）打得着，3 格外不打', () => {
     const { b, get } = open('guashuai');
     const hs = horses(b);

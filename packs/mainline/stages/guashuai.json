@@ -1267,83 +1267,6 @@
   },
   {
    "on": {
-    "hp": "huyanzhuo",
-    "below": 70,
-    "spare": true
-   },
-   "if": "d2",
-   "unless": [
-    "d3",
-    "p2"
-   ],
-   "do": [
-    [
-     "narrate",
-     "两个斗到五十合，不分胜败。"
-    ],
-    [
-     "say",
-     "wuyong",
-     "林冲兄弟歇一歇！孙立兄弟，第三阵！"
-    ],
-    [
-     "move",
-     "linchong",
-     16,
-     14,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "spectate",
-     "linchong",
-     true
-    ],
-    [
-     "spectate",
-     "sunli",
-     false
-    ],
-    [
-     "move",
-     "sunli",
-     18,
-     17,
-     {
-      "nearest": true,
-      "through": true
-     }
-    ],
-    [
-     "face",
-     "sunli",
-     "huyanzhuo"
-    ],
-    [
-     "face",
-     "huyanzhuo",
-     "sunli"
-    ],
-    [
-     "say",
-     "sunli",
-     "呼延灼！病尉迟孙立来会你！"
-    ],
-    [
-     "say",
-     "huyanzhuo",
-     "你也使鞭？好，看是你的鞭硬，还是呼延家的鞭硬！"
-    ],
-    [
-     "flag",
-     "d3"
-    ]
-   ]
-  },
-  {
-   "on": {
     "hp": "linchong",
     "below": 30,
     "spare": true
@@ -1578,6 +1501,117 @@
      "spectate",
      "sunli",
      true
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "move",
+     "husanniang",
+     18,
+     17,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "pengqi",
+     false
+    ],
+    [
+     "move",
+     "pengqi",
+     18,
+     19,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "face",
+     "husanniang",
+     "pengqi"
+    ],
+    [
+     "face",
+     "pengqi",
+     "husanniang"
+    ],
+    [
+     "say",
+     "pengqi",
+     "天目将彭玘在此！哪个敢来？"
+    ],
+    [
+     "say",
+     "husanniang",
+     "一丈青扈三娘来也！"
+    ],
+    [
+     "flag",
+     "d4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "hp": "huyanzhuo",
+    "below": 40,
+    "spare": true
+   },
+   "if": "d2",
+   "unless": [
+    "d3",
+    "p2"
+   ],
+   "do": [
+    [
+     "narrate",
+     "两个斗到五十余合，呼延灼渐渐抵挡不住。"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "好个豹子头！……且回本阵，再与你们计较！"
+    ],
+    [
+     "move",
+     "huyanzhuo",
+     18,
+     25,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     true
+    ],
+    [
+     "move",
+     "linchong",
+     16,
+     14,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "linchong",
+     true
+    ],
+    [
+     "flag",
+     "d3"
     ],
     [
      "spectate",
