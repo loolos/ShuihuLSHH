@@ -812,6 +812,126 @@
    "levelOffset": 1
   },
   {
+   "id": "om20",
+   "class": "lion",
+   "side": "enemy",
+   "x": 5,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om21",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 6,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om22",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 5,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om23",
+   "class": "bear",
+   "side": "enemy",
+   "x": 6,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om24",
+   "class": "boar",
+   "side": "enemy",
+   "x": 5,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om30",
+   "class": "lion",
+   "side": "enemy",
+   "x": 31,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om31",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 33,
+   "y": 6,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om32",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 30,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om33",
+   "class": "bear",
+   "side": "enemy",
+   "x": 33,
+   "y": 7,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "om34",
+   "class": "boar",
+   "side": "enemy",
+   "x": 31,
+   "y": 8,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
    "id": "sb00",
    "class": "shenbing",
    "side": "enemy",
@@ -1771,6 +1891,46 @@
     [
      "appear",
      "om14"
+    ],
+    [
+     "appear",
+     "om20"
+    ],
+    [
+     "appear",
+     "om21"
+    ],
+    [
+     "appear",
+     "om22"
+    ],
+    [
+     "appear",
+     "om23"
+    ],
+    [
+     "appear",
+     "om24"
+    ],
+    [
+     "appear",
+     "om30"
+    ],
+    [
+     "appear",
+     "om31"
+    ],
+    [
+     "appear",
+     "om32"
+    ],
+    [
+     "appear",
+     "om33"
+    ],
+    [
+     "appear",
+     "om34"
     ],
     [
      "say",
@@ -10086,6 +10246,46 @@
     ],
     [
      "leave",
+     "om20"
+    ],
+    [
+     "leave",
+     "om21"
+    ],
+    [
+     "leave",
+     "om22"
+    ],
+    [
+     "leave",
+     "om23"
+    ],
+    [
+     "leave",
+     "om24"
+    ],
+    [
+     "leave",
+     "om30"
+    ],
+    [
+     "leave",
+     "om31"
+    ],
+    [
+     "leave",
+     "om32"
+    ],
+    [
+     "leave",
+     "om33"
+    ],
+    [
+     "leave",
+     "om34"
+    ],
+    [
+     "leave",
      "sb00"
     ],
     [
@@ -10587,6 +10787,46 @@
     [
      "leave",
      "om14"
+    ],
+    [
+     "leave",
+     "om20"
+    ],
+    [
+     "leave",
+     "om21"
+    ],
+    [
+     "leave",
+     "om22"
+    ],
+    [
+     "leave",
+     "om23"
+    ],
+    [
+     "leave",
+     "om24"
+    ],
+    [
+     "leave",
+     "om30"
+    ],
+    [
+     "leave",
+     "om31"
+    ],
+    [
+     "leave",
+     "om32"
+    ],
+    [
+     "leave",
+     "om33"
+    ],
+    [
+     "leave",
+     "om34"
     ],
     [
      "leave",

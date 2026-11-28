@@ -14,6 +14,7 @@ import { joinLevel, newCampaign, partyOf } from '../src/rules/campaign.ts';
 import type { StageInput } from '../src/rules/battle.ts';
 import { useDiskCustomMaps } from '../src/packs/custom-maps-node.ts';
 import { buildPack, compileStage, type SpriteSheetJson } from '../src/packs/build.ts';
+import { itemOf } from '../src/rules/data.ts';
 import type { PackJson, PackStageJson } from '../src/packs/types.ts';
 import { DATA, NodeFiles } from './sim-lib.ts';
 import { applyOrders, FIGHT_FIRST, hasOrder } from './sim-orders.ts';
@@ -224,6 +225,11 @@ if (import.meta.main ?? process.argv[1]?.endsWith('sim-pack.ts')) {
         const heal = u.hp < u.stats.maxHp * 0.45 ? b.usableSlots(u)[0] : undefined;
         if (heal !== undefined) ev.push(...b.useItem(u, heal, u));
         // 气不到三成：包里有只回气的药（包子之类）就吃（负责人 2026-11-27）
+        // SIM_STORY_ITEM=1：剧情道具（破高廉的天书）身边 8 步内有 6 个以上敌人就用（默认不用，算悲观的胜率）
+        if (process.env.SIM_STORY_ITEM) {
+          const k = u.slots.findIndex((id) => id && itemOf(b.data, id)?.story);
+          if (k >= 0 && b.foesOf(u).filter((t) => Math.abs(t.x - u.x) + Math.abs(t.y - u.y) <= 8).length >= 6) ev.push(...b.useItem(u, k, u));
+        }
         const mpSlot = mpItemSlot(b, u);
         if (mpSlot >= 0 && b.usableSlots(u).includes(mpSlot)) ev.push(...b.useItem(u, mpSlot, u));
         if (!b.foesOf(u).length) {
