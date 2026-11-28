@@ -192,6 +192,19 @@
     "ms": 85,
     "cycles": 2
    }
+  },
+  "fly-kick": {
+   "source": "FlyKick",
+   "front": {
+    "file": "fly-kick-front.png",
+    "frames": 8,
+    "ms": 55
+   },
+   "back": {
+    "file": "fly-kick-back.png",
+    "frames": 8,
+    "ms": 55
+   }
   }
  }
 }

@@ -140,7 +140,10 @@
  },
  "out": "packs/mainline/sprites/daizong",
  "frames": 8,
- "poses": "packs/mainline/sprites/src/poses-wusong.json",
+ "poses": [
+  "packs/mainline/sprites/src/poses-wusong.json",
+  "packs/mainline/sprites/src/poses-daizong.json"
+ ],
  "actions": {
   "idle": "Spell_Simple_Idle_Loop",
   "walk": "Walk_Loop",
@@ -153,7 +156,11 @@
   "kick-r": "Kick_R",
   "kick-l": "Kick_L",
   "ninja-jump": "NinjaJump_Start",
-  "slide": "Slide_Start"
+  "slide": "Slide_Start",
+  "fly-kick": {
+   "from": "FlyKick",
+   "ms": 55
+  }
  },
  "concat": {
   "kick-rl": {
