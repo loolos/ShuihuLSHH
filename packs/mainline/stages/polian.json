@@ -1424,6 +1424,144 @@
    "levelOffset": 1
   },
   {
+   "id": "ls0",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 2,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ls1",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 5,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ls2",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 6,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ls3",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 0,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ls4",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 9,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "ls5",
+   "class": "shenbing",
+   "side": "enemy",
+   "x": 7,
+   "y": 29,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1,
+   "name": "飞天神兵"
+  },
+  {
+   "id": "lm0",
+   "class": "lion",
+   "side": "enemy",
+   "x": 11,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "lm1",
+   "class": "yiling-tiger",
+   "side": "enemy",
+   "x": 12,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "lm2",
+   "class": "wolf",
+   "side": "enemy",
+   "x": 12,
+   "y": 35,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "lm3",
+   "class": "bear",
+   "side": "enemy",
+   "x": 13,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
+   "id": "lm4",
+   "class": "boar",
+   "side": "enemy",
+   "x": 14,
+   "y": 34,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "levelOffset": 1
+  },
+  {
    "id": "lvfang",
    "class": "lvfang",
    "side": "ally",
@@ -10453,6 +10591,50 @@
      "mb24"
     ],
     [
+     "leave",
+     "ls0"
+    ],
+    [
+     "leave",
+     "ls1"
+    ],
+    [
+     "leave",
+     "ls2"
+    ],
+    [
+     "leave",
+     "ls3"
+    ],
+    [
+     "leave",
+     "ls4"
+    ],
+    [
+     "leave",
+     "ls5"
+    ],
+    [
+     "leave",
+     "lm0"
+    ],
+    [
+     "leave",
+     "lm1"
+    ],
+    [
+     "leave",
+     "lm2"
+    ],
+    [
+     "leave",
+     "lm3"
+    ],
+    [
+     "leave",
+     "lm4"
+    ],
+    [
      "narrate",
      "众人看那些怪兽时，都是白纸剪的虎豹走兽，黄砂也都尽数消散。"
     ],
@@ -10527,7 +10709,112 @@
     [
      "say",
      "gaolian",
-     "且退回城去，再作计较！"
+     "且退回城去，再作计较！……众神兵，与我挡住追兵！"
+    ],
+    [
+     "narrate",
+     "高廉一面退，一面把聚兽铜牌乱敲，拼着最后的法力，又招出一彪飞天神兵和一群猛兽来断后！"
+    ],
+    [
+     "appear",
+     "ls0",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "ls1",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "ls2",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "ls3",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "ls4",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "ls5",
+     {
+      "near": "gaolian",
+      "ring": [
+       2,
+       4
+      ]
+     }
+    ],
+    [
+     "appear",
+     "lm0",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "lm1",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "lm2",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "lm3",
+     {
+      "near": "gaolian"
+     }
+    ],
+    [
+     "appear",
+     "lm4",
+     {
+      "near": "gaolian"
+     }
     ],
     [
      "setAi",
@@ -10995,6 +11282,50 @@
     [
      "leave",
      "mb24"
+    ],
+    [
+     "leave",
+     "ls0"
+    ],
+    [
+     "leave",
+     "ls1"
+    ],
+    [
+     "leave",
+     "ls2"
+    ],
+    [
+     "leave",
+     "ls3"
+    ],
+    [
+     "leave",
+     "ls4"
+    ],
+    [
+     "leave",
+     "ls5"
+    ],
+    [
+     "leave",
+     "lm0"
+    ],
+    [
+     "leave",
+     "lm1"
+    ],
+    [
+     "leave",
+     "lm2"
+    ],
+    [
+     "leave",
+     "lm3"
+    ],
+    [
+     "leave",
+     "lm4"
     ],
     [
      "standDown",
