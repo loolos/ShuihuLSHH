@@ -507,7 +507,7 @@ function startGame(assets: Assets) {
       void music.play(packBgm);
       chapterSting(`pack:${rt.id}`);
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed, story: stageKind(stage) === '剧情',
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, fog: stage.fog, ui, seed, story: stageKind(stage) === '剧情',
         makeInput: () => compileStage(rt, st, assets.files, { seed, text: assets.tr }),
         onEnd: (b: Battle, won: boolean, text: string) => onPackEnd(value, b, won, text),
       };
@@ -566,7 +566,7 @@ function startGame(assets: Assets) {
       const party = stage.tutorial ? new Map() : packParty(campaign, rt);
       const join = joinLevel({ ...campaign, members: [...party.values()] });
       const data = {
-        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, ui, seed, story: stageKind(stage) === '剧情',
+        assets: pa, stage: packStageName(rt.id, stage.id), map: stageMapName(stage.map), tint: stage.tint, fog: stage.fog, ui, seed, story: stageKind(stage) === '剧情',
         makeInput: () => ({ ...compileStage(rt, stage, assets.files, { seed, text: assets.tr, party, joinLevel: join, preset: campaign.insertPreset === ref }) }),
         feast: feastFor(campaign, ref),
         onEnd: (b: Battle, won: boolean, text: string) => onInsertEnd(ref, e.pov, b, won, text),

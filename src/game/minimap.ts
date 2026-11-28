@@ -91,6 +91,8 @@ export interface MinimapSource {
   /** 地表图块号（0 = 地图外的空格，不画） */
   ground: (x: number, y: number) => number;
   blocked: (x: number, y: number) => boolean;
+  /** 视野迷雾【新】：还没探开的格子不画（探开后调 redraw） */
+  hidden?: (x: number, y: number) => boolean;
   /** 地表图块的图和锚点 */
   tile: (t: number) => { img: CanvasImageSource; w: number; h: number; ax: number; ay: number } | null;
 }
@@ -186,16 +188,23 @@ export class Minimap {
     this.drawBase();
   }
 
+  /** 底图变了（迷雾探开了新格子）：重画底图 */
+  redraw() {
+    if (this.layout) this.drawBase();
+  }
+
   private drawBase() {
     const { src, layout: l } = this;
     const g = this.base.getContext('2d')!;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.clearRect(0, 0, this.base.width, this.base.height);
     g.setTransform(this.dpr * l.scale, 0, 0, this.dpr * l.scale, -l.minX * l.scale * this.dpr, -l.minY * l.scale * this.dpr);
     g.imageSmoothingEnabled = true;
     // 原版只画地表图块（0x412cf0）
     for (let y = 0; y < src.height; y++)
       for (let x = 0; x < src.width; x++) {
         const t = src.ground(x, y);
-        if (!t) continue;
+        if (!t || src.hidden?.(x, y)) continue;
         const fr = src.tile(t);
         if (!fr) continue;
         const cx = (x - y) * HALF_W, cy = (x + y) * HALF_H;
@@ -206,7 +215,7 @@ export class Minimap {
     g.beginPath();
     for (let y = 0; y < src.height; y++)
       for (let x = 0; x < src.width; x++) {
-        if (!src.ground(x, y) || !src.blocked(x, y)) continue;
+        if (!src.ground(x, y) || !src.blocked(x, y) || src.hidden?.(x, y)) continue;
         const cx = (x - y) * HALF_W, cy = (x + y) * HALF_H;
         g.moveTo(cx, cy - HALF_H);
         g.lineTo(cx + HALF_W, cy);
