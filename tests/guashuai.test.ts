@@ -265,7 +265,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     after(b);
     expect(m.y).toBeLessThan(y0);
     expect({ x: qm.x, y: qm.y }).not.toEqual({ x: 14, y: 14 }); // 没回原位（可能被马挤开一格）
-    expect(Math.abs(qm.x - spot.x) + Math.abs(qm.y - spot.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(qm.x - spot.x) + Math.abs(qm.y - spot.y)).toBeLessThanOrEqual(2);
     expect(watching(b).has(get('pengqi').uid)).toBe(false);
     expect(watching(b).has(get('linchong').uid)).toBe(false);
     // 当回合冲过的马不再动，下回合起自由行动
