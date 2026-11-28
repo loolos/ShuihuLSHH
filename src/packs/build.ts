@@ -601,8 +601,9 @@ function compileBlock(b: PackBlockJson, index: number, r: Refs): PasBlock {
         op(15, Number(a[2]));
         {
           // {steps: n}【新】（破高廉：高廉先往城下退两步再作法）：朝那一格走，最多走 n 步
-          const mo = (a[3] ?? {}) as { nearest?: boolean; steps?: number };
-          const margs = { ...(mo.nearest ? { nearFree: true } : {}), ...(mo.steps ? { steps: Number(mo.steps) } : {}) };
+          const mo = (a[3] ?? {}) as { nearest?: boolean; steps?: number; through?: boolean };
+          // {through: true}【新】：剧情走位，被围住也穿人过去
+          const margs = { ...(mo.nearest ? { nearFree: true } : {}), ...(mo.steps ? { steps: Number(mo.steps) } : {}), ...(mo.through ? { through: true } : {}) };
           op(17, 1, Object.keys(margs).length ? { args: margs } : {});
         }
         break;
