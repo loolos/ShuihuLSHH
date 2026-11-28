@@ -94,14 +94,19 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
       u.hp = Math.floor(u.stats.maxHp * pct);
       after(b);
     }
+    freeze(b);
+    b.endPlayerPhase();
   };
 
   it('车轮战：开场只有秦明、韩滔出阵单挑，其余人（连同阵后候着的连环马）观战；一阵打完换下一阵', () => {
     const { b, get } = open('guashuai');
     const sp = watching(b);
     const active = (id: string) => !sp.has(get(id).uid);
+    const y0ma = get('ma0').y;
     expect(active('qinming') && active('hantao')).toBe(true);
-    for (const id of ['hero', 'linchong', 'huyanzhuo', 'pengqi', 'g00', 'lb0', 'ma0', 'mb0']) expect(active(id), id).toBe(false);
+    for (const id of ['hero', 'linchong', 'huyanzhuo', 'pengqi', 'lb0']) expect(active(id), id).toBe(false);
+    // 观战的官兵、连环马原地不动，但打得着（打倒了就坏了规矩）
+    for (const id of ['g00', 'ma0', 'mb0']) expect(active(id) && get(id).ai.mode === 8, id).toBe(true);
     // 连环马一开场就在场上
     for (const id of ['ma0', 'ma7', 'mb0', 'mb7']) expect(get(id).present, id).toBe(true);
     expect(get('nu0').present).toBe(false);
@@ -131,43 +136,70 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     get('huarong').hp = 1;
     after(b);
     for (const id of ['hero', 'qinming', 'linchong', 'husanniang', 'sunli']) expect(active(id), id).toBe(true);
-    expect(active('ma0')).toBe(false);
+    expect(get('ma0').y).toBe(y0ma);
   });
 
-  it('活捉彭玘的同时连环马立刻冲锋（撞人、挤开、喽啰逃窜），当回合不再动、下回合自由行动；两回合后两翼第二批冲锋（带两队步军）', () => {
+  it('活捉彭玘后单挑的好汉回原位、回合结束；敌军回合一开始连环马冲锋（撞人、挤开、喽啰逃窜、冲到跟前顺手砍一下）；两回合后两翼第二批冲锋（带两队步军）', () => {
     const { b, get } = open('guashuai');
     const lead = ['ma0', 'ma1', 'ma2', 'ma3', 'ma4', 'ma5', 'ma6', 'ma7'].map(get);
     const m = get('ma0');
     const y0 = m.y;
     const qm = get('qinming');
-    // 前三阵打完，秦明回到原位观战；把他挪到马的正前方
+    const hs = get('husanniang');
+    const home = { x: hs.x, y: hs.y };
     for (const [id, pct] of [['hantao', 0.4], ['huyanzhuo', 0.6], ['huyanzhuo', 0.35]] as const) { get(id).hp = Math.floor(get(id).stats.maxHp * pct); after(b); }
-    Object.assign(qm, { x: m.x, y: m.y - 6 });
-    const hp0 = qm.hp;
     const pq = get('pengqi');
     pq.hp = Math.floor(pq.stats.maxHp * 0.2);
     after(b);
     expect(pq.present).toBe(false);
+    // 扈三娘回到原位，好汉都在观战：我方回合打完了，连环马还没动
+    expect({ x: hs.x, y: hs.y }).toEqual(home);
+    expect(b.playerPhaseDone()).toBe(true);
+    expect(m.y).toBe(y0);
+    // 把秦明挪到马的正前方，结束回合
+    Object.assign(qm, { x: m.x, y: m.y - 14 });
+    const hp0 = qm.hp;
+    const ev = b.endPlayerPhase();
+    const horseIds = new Set(lead.map((u) => u.uid));
+    expect(ev.some((e) => e.type === 'attack' && horseIds.has((e as { uid: number }).uid))).toBe(true);
     expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
     expect(m.y).toBeLessThan(y0);
     expect(qm.hp).toBeLessThan(hp0);
-    expect(qm.hp).toBeGreaterThan(0);
     expect(qm.x).not.toBe(m.x);
     expect(b.units.filter((u) => u.side === 'ally' && u.alive && u.panicTurns).length).toBeGreaterThan(0);
-    // 第二批还在两翼候着
+    expect(lead.every((u) => u.ai.mode === 0)).toBe(true);
+    // 第二批还在两翼候着，两回合后冲锋
     const mb = get('mb0');
     const mb0 = { x: mb.x, y: mb.y };
-    // 当回合敌军回合连环马不动
-    const pos = lead.map((u) => `${u.x},${u.y}`).join(' ');
-    b.endPlayerPhase();
-    expect(lead.map((u) => `${u.x},${u.y}`).join(' ')).toBe(pos);
-    expect(lead.every((u) => u.ai.mode === 0)).toBe(true);
     freeze(b); b.endPlayerPhase(); expect(mb.y).toBe(mb0.y);
     freeze(b);
     b.endPlayerPhase();
     expect(mb.y).toBeLessThan(mb0.y);
     for (const id of ['nb0', 'nb15']) expect(get(id).present, id).toBe(true);
+  });
+
+  it('坏了规矩：单挑的好汉打倒观战的官兵，连环马当场冲锋，单挑的人不回原位，彭玘也上阵；混战里彭玘不到三成照样被活捉', () => {
+    const { b, get } = open('guashuai');
+    const qm = get('qinming');
+    const spot = { x: qm.x, y: qm.y };
+    const m = get('ma0');
+    const y0 = m.y;
+    kill(b, get('g00'), qm);
+    after(b);
+    expect(m.y).toBeLessThan(y0);
+    expect({ x: qm.x, y: qm.y }).not.toEqual({ x: 14, y: 14 }); // 没回原位（可能被马挤开一格）
+    expect(Math.abs(qm.x - spot.x) + Math.abs(qm.y - spot.y)).toBeLessThanOrEqual(1);
+    expect(watching(b).has(get('pengqi').uid)).toBe(false);
+    expect(watching(b).has(get('linchong').uid)).toBe(false);
+    // 当回合冲过的马不再动，下回合起自由行动
+    expect(m.ai.mode).toBe(8);
+    b.endPlayerPhase();
+    expect(m.ai.mode).toBe(0);
+    const pq = get('pengqi');
+    pq.hp = Math.floor(pq.stats.maxHp * 0.2);
+    after(b);
+    expect(pq.present).toBe(false);
   });
 
   it('打倒 8 匹连环马之后，在场的好汉全部退进水寨（回合结束判定）才过关，彭玘入伙成我方；阵亡到 4 人判负', () => {
