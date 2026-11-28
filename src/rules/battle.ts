@@ -3043,12 +3043,18 @@ export class Battle {
           if (a.wither) {
             const c = a.caster !== undefined ? this.unit(this.groups.get(a.caster) ?? -1) : undefined;
             if (!c?.present || !c.alive) break;
-            const r = a.radius ?? 8;
-            const hit = this.active().filter((u) => u.side === 'enemy' && (a.classes ?? []).includes(u.classId) && Math.abs(u.x - c.x) + Math.abs(u.y - c.y) <= r);
+            // drain = [近, 远]【新】（负责人 2026-11-28）：全场都打到，掉最大体力的百分之几，紧挨着掉「近」、离 radius 步及以外掉「远」，
+            // 中间按步数线性过渡；体力最低留到 wither%（已经更低的不动）。没写 drain 时照旧：radius 步以内直接降到 wither%
+            const drain = a.drain;
+            const r = a.radius ?? (drain ? 16 : 8);
+            const dist = (u: Unit) => Math.abs(u.x - c.x) + Math.abs(u.y - c.y);
+            const hit = this.active().filter((u) => u.side === 'enemy' && (a.classes ?? []).includes(u.classId) && (drain || dist(u) <= r));
             this.emit({ type: 'focus', x: c.x, y: c.y });
             for (const u of hit) this.emit({ type: 'gust', x: u.x, y: u.y, radius: 0, style: a.style === 'dust' ? 'dust' : 'wind' });
             for (const u of hit) {
-              const hp = Math.max(1, Math.floor((u.stats.maxHp * a.wither) / 100));
+              const floor = Math.max(1, Math.floor((u.stats.maxHp * a.wither) / 100));
+              const lossPct = drain ? drain[0] + ((drain[1] - drain[0]) * Math.min(1, Math.max(0, dist(u) - 1) / Math.max(1, r - 1))) : 100;
+              const hp = drain ? Math.max(floor, u.hp - Math.round((u.stats.maxHp * lossPct) / 100)) : floor;
               if (u.hp > hp) {
                 const delta = hp - u.hp;
                 u.hp = hp;
