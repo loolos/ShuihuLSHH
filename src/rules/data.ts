@@ -273,14 +273,19 @@ function withHeroSelfBuffs(cls: number, s: SkillDef): SkillDef {
   // 如魚得水、回復計：持续回体 + 解毒解昏迷（负责人 2026-11-26）
   return { ...s, ...(b ? { selfBuffs: b.map((x) => ({ ...x })) } : {}), ...(r ? { healRegen: { ...r }, cure: true } : {}), ...(ally ? { buffAlly: true, rangeMin: 0, rangeMax: 1 } : {}) };
 }
+/** 原版职业表里后来当我方好汉用的敌方职业：杜遷 69、宋萬 70（负责人 2026-11-28：命中也不扣） */
+export const EXTRA_HERO_CLASSES: ReadonlySet<number> = new Set([69, 70]);
+/** 技能按好汉规则处理的原版职业（0–17 号好汉 + EXTRA_HERO_CLASSES） */
+export const isHeroClass = (classId: number): boolean => classId < HERO_CLASS_COUNT || EXTRA_HERO_CLASSES.has(classId);
+
 export function noHeroHitPenalty<T extends Pick<SkillDef, 'power' | 'hitMod'>>(classId: number, s: T): T {
-  if (classId >= HERO_CLASS_COUNT || s.hitMod >= 0) return s;
+  if (!isHeroClass(classId) || s.hitMod >= 0) return s;
   return { ...s, power: Math.max(1, s.power + s.hitMod), hitMod: 0 };
 }
 
 /**
  * 好汉技能不扣命中【新】（负责人 2026-11-22 扩到全部好汉："所有扣命中的改，加命中的不改"）：
- * 职业号 0–17 的全部技能（含后加的分级、后期技、自定技能）和扩展包里标了 `hero` 的职业，负的命中修正最后都改成 0，
+ * 职业号 0–17（及杜遷 69、宋萬 70）的全部技能（含后加的分级、后期技、自定技能）和扩展包里标了 `hero` 的职业，负的命中修正最后都改成 0，
  * 威力下降等额，最低 1（同 noHeroHitPenalty）。正的命中修正不变。集气、回复类（类型 8 / 9 / 11）只清修正，不动威力。
  */
 export function heroSkillNoHitMod<T extends Pick<SkillDef, 'power' | 'hitMod' | 'type'>>(s: T): T {
@@ -484,7 +489,7 @@ export function buildClasses(records: ClassRecord[], names: string[], skillNames
         ...[...own, ...troopSkills(r.id, own)].map((s) => capTroopReach(r.id, s)),
         ...lateHeroSkills(r.id, all),
         ...(CLASS_EXTRA_SKILLS[r.id] ?? []).map((s) => ({ ...s, hits: s.hits.map((h) => ({ ...h })) })),
-      ]).map(s => balanceHeroAoe(r.id, s)).map((s) => (r.id < HERO_CLASS_COUNT ? withHeroSelfBuffs(r.id, heroSkillNoHitMod(s)) : s)),
+      ]).map(s => balanceHeroAoe(r.id, s)).map((s) => (isHeroClass(r.id) ? withHeroSelfBuffs(r.id, heroSkillNoHitMod(s)) : s)),
     };
   });
 }

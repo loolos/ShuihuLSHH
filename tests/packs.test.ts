@@ -72,7 +72,10 @@ describe.skipIf(!has)('花荣与白胜监守自盗远程衰减', () => {
         expect(rangedFactor(actor,{x:0,y:1} as Unit,skill)).toBeCloseTo(1);
         expect(rangedFactor(actor,{x:0,y:skill.rangeMax} as Unit,skill)).toBeCloseTo(0.6);
         actor.stats.rangeBonus=2;expect(rangedFactor(actor,{x:0,y:skill.rangeMax+2} as Unit,skill)).toBeCloseTo(0.6);
-      }else if (c.id !== id && c.id !== rt.classIds.get('shiqian') && !(c.id === rt.classIds.get('liying') && skill.name.includes('飞刀'))) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
+      }else if (c.id !== id && c.id !== rt.classIds.get('shiqian') && !(c.id === rt.classIds.get('liying') && skill.name.includes('飞刀'))
+        // 负责人 2026-11-28：好汉远程都按 100%→60%（薛永 病大虫掌、侯健 飞针走线、顾大嫂 飞刀）
+        && !(c.id === rt.classIds.get('xueyong') && skill.name === '病大虫掌') && !(c.id === rt.classIds.get('houjian') && skill.name === '飞针走线')
+        && !(c.id === rt.classIds.get('gudasao') && skill.name === '飞刀')) expect(skill.rangedDamage, `${pack}/${c.name}/${skill.name}`).toBeUndefined();
     }
   });
 });

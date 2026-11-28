@@ -244,9 +244,18 @@ function packClass(c: PackClassJson, id: number, skills: SkillDef[], itemRef: (v
     weaponType: c.weaponType ?? 0,
     goldCap: 0,
     defaultItems: items,
-    skills: c.hero ? skills.map(heroSkillNoHitMod) : skills,
+    skills: c.hero ? skills.map(heroPackSkill) : skills,
     ...(c.chain ? { chain: true } : {}),
   };
+}
+
+/**
+ * 好汉的技能（负责人 2026-11-22 / 2026-11-28）：负命中折算成威力（heroSkillNoHitMod）；负必杀归 0；
+ * 借敌兵远射技（如薛永 病大虫掌借教頭 劈空掌）时不继承敌兵的固定伤害系数和 AI 标记，远程打折按技能自己写的 rangedDamage
+ */
+function heroPackSkill(s: SkillDef): SkillDef {
+  const { damageScale: _scale, volley: _volley, ...rest } = heroSkillNoHitMod(s);
+  return { ...rest, critMod: Math.max(0, rest.critMod) };
 }
 
 /** 命中位置（动画的 0–1）→ 原版帧号：按 45 ms 一帧换算，BattleScene 按这个时间点结算受击 */
