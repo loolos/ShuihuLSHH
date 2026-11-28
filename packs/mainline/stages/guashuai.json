@@ -20,7 +20,7 @@
     "我方阵亡达到 4 人",
     "超过 25 回合"
    ],
-   "hint": "一阵一个好汉出马单挑，其余人观战；出马的好汉体力不到三成就退下换人"
+   "hint": "一阵一个好汉出马单挑，其余人观战；出马的好汉体力不到三成就退下换人。单挑只打对阵的将领，打倒观战的官兵就是坏了规矩，官军会一拥而上"
   },
   {
    "if": "d1",
@@ -263,7 +263,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 8
   },
   {
    "id": "g01",
@@ -274,7 +275,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "都头"
+   "name": "都头",
+   "ai": 8
   },
   {
    "id": "g02",
@@ -285,7 +287,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "g03",
@@ -296,7 +299,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "g10",
@@ -307,7 +311,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 8
   },
   {
    "id": "g11",
@@ -318,7 +323,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "都头"
+   "name": "都头",
+   "ai": 8
   },
   {
    "id": "g12",
@@ -329,7 +335,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "g13",
@@ -340,7 +347,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "g20",
@@ -351,7 +359,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "官兵"
+   "name": "官兵",
+   "ai": 8
   },
   {
    "id": "g21",
@@ -362,7 +371,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "都头"
+   "name": "都头",
+   "ai": 8
   },
   {
    "id": "g22",
@@ -373,7 +383,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "g23",
@@ -384,7 +395,8 @@
    "level": 30,
    "facing": 0,
    "levelOffset": 2,
-   "name": "弓手"
+   "name": "弓手",
+   "ai": 8
   },
   {
    "id": "ma0",
@@ -689,54 +701,6 @@
    "hidden": true,
    "levelOffset": 2,
    "name": "弓弩手"
-  },
-  {
-   "id": "nu8",
-   "class": 32,
-   "side": "enemy",
-   "x": 14,
-   "y": 31,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "nu9",
-   "class": 38,
-   "side": "enemy",
-   "x": 17,
-   "y": 31,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "都头"
-  },
-  {
-   "id": "nu10",
-   "class": 32,
-   "side": "enemy",
-   "x": 20,
-   "y": 31,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "官兵"
-  },
-  {
-   "id": "nu11",
-   "class": 38,
-   "side": "enemy",
-   "x": 23,
-   "y": 31,
-   "level": 30,
-   "facing": 0,
-   "hidden": true,
-   "levelOffset": 2,
-   "name": "都头"
   },
   {
    "id": "nb0",
@@ -1053,146 +1017,6 @@
     ],
     [
      "spectate",
-     "g00",
-     true
-    ],
-    [
-     "spectate",
-     "g01",
-     true
-    ],
-    [
-     "spectate",
-     "g02",
-     true
-    ],
-    [
-     "spectate",
-     "g03",
-     true
-    ],
-    [
-     "spectate",
-     "g10",
-     true
-    ],
-    [
-     "spectate",
-     "g11",
-     true
-    ],
-    [
-     "spectate",
-     "g12",
-     true
-    ],
-    [
-     "spectate",
-     "g13",
-     true
-    ],
-    [
-     "spectate",
-     "g20",
-     true
-    ],
-    [
-     "spectate",
-     "g21",
-     true
-    ],
-    [
-     "spectate",
-     "g22",
-     true
-    ],
-    [
-     "spectate",
-     "g23",
-     true
-    ],
-    [
-     "spectate",
-     "ma0",
-     true
-    ],
-    [
-     "spectate",
-     "ma1",
-     true
-    ],
-    [
-     "spectate",
-     "ma2",
-     true
-    ],
-    [
-     "spectate",
-     "ma3",
-     true
-    ],
-    [
-     "spectate",
-     "ma4",
-     true
-    ],
-    [
-     "spectate",
-     "ma5",
-     true
-    ],
-    [
-     "spectate",
-     "ma6",
-     true
-    ],
-    [
-     "spectate",
-     "ma7",
-     true
-    ],
-    [
-     "spectate",
-     "mb0",
-     true
-    ],
-    [
-     "spectate",
-     "mb1",
-     true
-    ],
-    [
-     "spectate",
-     "mb2",
-     true
-    ],
-    [
-     "spectate",
-     "mb3",
-     true
-    ],
-    [
-     "spectate",
-     "mb4",
-     true
-    ],
-    [
-     "spectate",
-     "mb5",
-     true
-    ],
-    [
-     "spectate",
-     "mb6",
-     true
-    ],
-    [
-     "spectate",
-     "mb7",
-     true
-    ],
-    [
-     "spectate",
      "qinming",
      false
     ],
@@ -1244,7 +1068,10 @@
     "spare": true
    },
    "if": "d1",
-   "unless": "d2",
+   "unless": [
+    "d2",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1337,7 +1164,10 @@
     "spare": true
    },
    "if": "d1",
-   "unless": "d2",
+   "unless": [
+    "d2",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1442,7 +1272,10 @@
     "spare": true
    },
    "if": "d2",
-   "unless": "d3",
+   "unless": [
+    "d3",
+    "p2"
+   ],
    "do": [
     [
      "narrate",
@@ -1516,7 +1349,10 @@
     "spare": true
    },
    "if": "d2",
-   "unless": "d3",
+   "unless": [
+    "d3",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1591,7 +1427,10 @@
     "spare": true
    },
    "if": "d3",
-   "unless": "d4",
+   "unless": [
+    "d4",
+    "p2"
+   ],
    "do": [
     [
      "narrate",
@@ -1695,7 +1534,10 @@
     "spare": true
    },
    "if": "d3",
-   "unless": "d4",
+   "unless": [
+    "d4",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1800,7 +1642,10 @@
     "spare": true
    },
    "if": "d4",
-   "unless": "d5",
+   "unless": [
+    "d5",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1860,7 +1705,10 @@
     "spare": true
    },
    "if": "d5",
-   "unless": "caught",
+   "unless": [
+    "caught",
+    "p2"
+   ],
    "do": [
     [
      "say",
@@ -1910,6 +1758,7 @@
     "spare": true
    },
    "if": "d4",
+   "unless": "p2",
    "do": [
     [
      "say",
@@ -1955,13 +1804,122 @@
      "caught"
     ],
     [
+     "say",
+     "huyanzhuo",
+     "（远远望见）彭玘被捉了！……罢了，不与你们斗将了！"
+    ],
+    [
+     "narrate",
+     "众好汉各自回阵。"
+    ],
+    [
+     "move",
+     "hero",
+     18,
+     13,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "hero",
+     true
+    ],
+    [
+     "move",
+     "qinming",
+     14,
+     14,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "qinming",
+     true
+    ],
+    [
+     "move",
+     "linchong",
+     16,
+     14,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "linchong",
+     true
+    ],
+    [
+     "move",
+     "huarong",
+     18,
+     12,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "huarong",
+     true
+    ],
+    [
+     "move",
+     "husanniang",
+     20,
+     14,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "husanniang",
+     true
+    ],
+    [
+     "move",
+     "sunli",
+     22,
+     14,
+     {
+      "nearest": true,
+      "through": true
+     }
+    ],
+    [
+     "spectate",
+     "sunli",
+     true
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 1,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
      "focus",
      "huyanzhuo"
     ],
     [
      "say",
      "huyanzhuo",
-     "彭玘被捉了！……罢了，不与你们斗将了！连环马，冲！"
+     "连环马，冲！"
     ],
     [
      "narrate",
@@ -2038,143 +1996,212 @@
      false
     ],
     [
-     "spectate",
-     "g00",
-     false
+     "appear",
+     "nu0"
     ],
     [
-     "spectate",
-     "g01",
-     false
+     "appear",
+     "nu1"
     ],
     [
-     "spectate",
-     "g02",
-     false
+     "appear",
+     "nu2"
     ],
     [
-     "spectate",
-     "g03",
-     false
+     "appear",
+     "nu3"
     ],
     [
-     "spectate",
-     "g10",
-     false
+     "appear",
+     "nu4"
     ],
     [
-     "spectate",
-     "g11",
-     false
+     "appear",
+     "nu5"
     ],
     [
-     "spectate",
-     "g12",
-     false
+     "appear",
+     "nu6"
     ],
     [
-     "spectate",
-     "g13",
-     false
+     "appear",
+     "nu7"
     ],
     [
-     "spectate",
-     "g20",
-     false
+     "leave",
+     "huyanzhuo"
     ],
     [
-     "spectate",
-     "g21",
-     false
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
     ],
     [
-     "spectate",
-     "g22",
-     false
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
     ],
     [
-     "spectate",
-     "g23",
-     false
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
     ],
     [
-     "spectate",
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
      "ma0",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma1",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma2",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma3",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma4",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma5",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma6",
-     false
+     0
     ],
     [
-     "spectate",
+     "setAi",
      "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm1"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
      false
     ],
     [
      "spectate",
-     "mb0",
+     "qinming",
      false
     ],
     [
      "spectate",
-     "mb1",
+     "linchong",
      false
     ],
     [
      "spectate",
-     "mb2",
+     "huarong",
      false
     ],
     [
      "spectate",
-     "mb3",
+     "husanniang",
      false
     ],
     [
      "spectate",
-     "mb4",
+     "sunli",
      false
     ],
     [
      "spectate",
-     "mb5",
+     "lb0",
      false
     ],
     [
      "spectate",
-     "mb6",
+     "lb1",
      false
     ],
     [
      "spectate",
-     "mb7",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
      false
     ],
     [
@@ -2210,22 +2237,6 @@
      "nu7"
     ],
     [
-     "appear",
-     "nu8"
-    ],
-    [
-     "appear",
-     "nu9"
-    ],
-    [
-     "appear",
-     "nu10"
-    ],
-    [
-     "appear",
-     "nu11"
-    ],
-    [
      "leave",
      "huyanzhuo"
     ],
@@ -2243,7 +2254,7 @@
      ],
      {
       "dir": 0,
-      "dist": 12,
+      "dist": 14,
       "hurt": 1.0,
       "panic": 2,
       "of": [
@@ -2264,6 +2275,5585 @@
     [
      "flag",
      "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm3"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm4"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm5"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm6"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm7"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm8"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm9"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm10"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm11"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm12"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm13"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm14"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm15"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm16"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm17"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm18"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm19"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm20"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm21"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm22"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm23"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 24,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm24"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 25,
+    "enemyPhase": true
+   },
+   "if": "caught",
+   "unless": "p2",
+   "do": [
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ],
+    [
+     "flag",
+     "arm25"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": 32,
+    "count": 1
+   },
+   "if": "d1",
+   "unless": [
+    "p2",
+    "caught"
+   ],
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "（大怒）说好了斗将，草寇竟敢暗算我的兵！"
+    ],
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "spectate",
+     "pengqi",
+     false
+    ],
+    [
+     "flag",
+     "foul"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": 38,
+    "count": 1
+   },
+   "if": "d1",
+   "unless": [
+    "p2",
+    "caught"
+   ],
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "（大怒）说好了斗将，草寇竟敢暗算我的兵！"
+    ],
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "spectate",
+     "pengqi",
+     false
+    ],
+    [
+     "flag",
+     "foul"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": 34,
+    "count": 1
+   },
+   "if": "d1",
+   "unless": [
+    "p2",
+    "caught"
+   ],
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "（大怒）说好了斗将，草寇竟敢暗算我的兵！"
+    ],
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "spectate",
+     "pengqi",
+     false
+    ],
+    [
+     "flag",
+     "foul"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": "lianhuan",
+    "count": 1
+   },
+   "if": "d1",
+   "unless": [
+    "p2",
+    "caught"
+   ],
+   "do": [
+    [
+     "say",
+     "huyanzhuo",
+     "（大怒）说好了斗将，草寇竟敢暗算我的兵！"
+    ],
+    [
+     "focus",
+     "huyanzhuo"
+    ],
+    [
+     "say",
+     "huyanzhuo",
+     "连环马，冲！"
+    ],
+    [
+     "narrate",
+     "只听得官军阵里一声炮响，阵后候着的连环马一齐发作：马带马甲，人披铁铠，只露着一对眼睛，铁环连锁，一齐踏将过来！"
+    ],
+    [
+     "spectate",
+     "hero",
+     false
+    ],
+    [
+     "spectate",
+     "qinming",
+     false
+    ],
+    [
+     "spectate",
+     "linchong",
+     false
+    ],
+    [
+     "spectate",
+     "huarong",
+     false
+    ],
+    [
+     "spectate",
+     "husanniang",
+     false
+    ],
+    [
+     "spectate",
+     "sunli",
+     false
+    ],
+    [
+     "spectate",
+     "lb0",
+     false
+    ],
+    [
+     "spectate",
+     "lb1",
+     false
+    ],
+    [
+     "spectate",
+     "lb2",
+     false
+    ],
+    [
+     "spectate",
+     "lb3",
+     false
+    ],
+    [
+     "spectate",
+     "lb4",
+     false
+    ],
+    [
+     "spectate",
+     "lb5",
+     false
+    ],
+    [
+     "spectate",
+     "huyanzhuo",
+     false
+    ],
+    [
+     "spectate",
+     "hantao",
+     false
+    ],
+    [
+     "appear",
+     "nu0"
+    ],
+    [
+     "appear",
+     "nu1"
+    ],
+    [
+     "appear",
+     "nu2"
+    ],
+    [
+     "appear",
+     "nu3"
+    ],
+    [
+     "appear",
+     "nu4"
+    ],
+    [
+     "appear",
+     "nu5"
+    ],
+    [
+     "appear",
+     "nu6"
+    ],
+    [
+     "appear",
+     "nu7"
+    ],
+    [
+     "leave",
+     "huyanzhuo"
+    ],
+    [
+     "charge",
+     [
+      "ma0",
+      "ma1",
+      "ma2",
+      "ma3",
+      "ma4",
+      "ma5",
+      "ma6",
+      "ma7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "narrate",
+     "连环马一冲，梁山阵脚大乱，喽啰们哭爹叫娘，四散奔逃！"
+    ],
+    [
+     "say",
+     "wuyong",
+     "不好！那马都是铁环连着的，挤在一处刀枪不入。叫众兄弟引开单匹再打，先废了他几匹马，再退回水寨！"
+    ],
+    [
+     "flag",
+     "p2"
+    ],
+    [
+     "spectate",
+     "pengqi",
+     false
+    ],
+    [
+     "flag",
+     "foul"
     ]
    ]
   },
@@ -2272,12 +7862,16 @@
     "turn": 1,
     "enemyPhase": true
    },
-   "if": "p2",
-   "unless": "armed",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
      "flag",
-     "armed"
+     "freeing"
+    ],
+    [
+     "flag",
+     "free1"
     ],
     [
      "flag",
@@ -2289,7 +7883,77 @@
    "on": {
     "turn": 2
    },
-   "if": "arm1",
+   "if": "free1",
+   "do": [
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 2,
+    "enemyPhase": true
+   },
+   "if": "foul",
+   "unless": "freeing",
+   "do": [
+    [
+     "flag",
+     "freeing"
+    ],
+    [
+     "flag",
+     "free2"
+    ],
+    [
+     "flag",
+     "arm2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3
+   },
+   "if": "free2",
    "do": [
     [
      "setAi",
@@ -2338,168 +8002,28 @@
     "turn": 3,
     "enemyPhase": true
    },
-   "if": "arm1",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free3"
+    ],
+    [
+     "flag",
+     "arm3"
     ]
    ]
   },
   {
    "on": {
-    "turn": 2,
-    "enemyPhase": true
+    "turn": 4
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 3
-   },
-   "if": "arm2",
+   "if": "free3",
    "do": [
     [
      "setAi",
@@ -2548,168 +8072,28 @@
     "turn": 4,
     "enemyPhase": true
    },
-   "if": "arm2",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free4"
+    ],
+    [
+     "flag",
+     "arm4"
     ]
    ]
   },
   {
    "on": {
-    "turn": 3,
-    "enemyPhase": true
+    "turn": 5
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm3"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 4
-   },
-   "if": "arm3",
+   "if": "free4",
    "do": [
     [
      "setAi",
@@ -2758,168 +8142,28 @@
     "turn": 5,
     "enemyPhase": true
    },
-   "if": "arm3",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free5"
+    ],
+    [
+     "flag",
+     "arm5"
     ]
    ]
   },
   {
    "on": {
-    "turn": 4,
-    "enemyPhase": true
+    "turn": 6
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm4"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 5
-   },
-   "if": "arm4",
+   "if": "free5",
    "do": [
     [
      "setAi",
@@ -2968,168 +8212,28 @@
     "turn": 6,
     "enemyPhase": true
    },
-   "if": "arm4",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free6"
+    ],
+    [
+     "flag",
+     "arm6"
     ]
    ]
   },
   {
    "on": {
-    "turn": 5,
-    "enemyPhase": true
+    "turn": 7
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm5"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 6
-   },
-   "if": "arm5",
+   "if": "free6",
    "do": [
     [
      "setAi",
@@ -3178,168 +8282,28 @@
     "turn": 7,
     "enemyPhase": true
    },
-   "if": "arm5",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free7"
+    ],
+    [
+     "flag",
+     "arm7"
     ]
    ]
   },
   {
    "on": {
-    "turn": 6,
-    "enemyPhase": true
+    "turn": 8
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm6"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 7
-   },
-   "if": "arm6",
+   "if": "free7",
    "do": [
     [
      "setAi",
@@ -3388,168 +8352,28 @@
     "turn": 8,
     "enemyPhase": true
    },
-   "if": "arm6",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free8"
+    ],
+    [
+     "flag",
+     "arm8"
     ]
    ]
   },
   {
    "on": {
-    "turn": 7,
-    "enemyPhase": true
+    "turn": 9
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm7"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 8
-   },
-   "if": "arm7",
+   "if": "free8",
    "do": [
     [
      "setAi",
@@ -3598,168 +8422,28 @@
     "turn": 9,
     "enemyPhase": true
    },
-   "if": "arm7",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free9"
+    ],
+    [
+     "flag",
+     "arm9"
     ]
    ]
   },
   {
    "on": {
-    "turn": 8,
-    "enemyPhase": true
+    "turn": 10
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm8"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 9
-   },
-   "if": "arm8",
+   "if": "free9",
    "do": [
     [
      "setAi",
@@ -3808,168 +8492,28 @@
     "turn": 10,
     "enemyPhase": true
    },
-   "if": "arm8",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free10"
+    ],
+    [
+     "flag",
+     "arm10"
     ]
    ]
   },
   {
    "on": {
-    "turn": 9,
-    "enemyPhase": true
+    "turn": 11
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm9"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 10
-   },
-   "if": "arm9",
+   "if": "free10",
    "do": [
     [
      "setAi",
@@ -4018,168 +8562,28 @@
     "turn": 11,
     "enemyPhase": true
    },
-   "if": "arm9",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free11"
+    ],
+    [
+     "flag",
+     "arm11"
     ]
    ]
   },
   {
    "on": {
-    "turn": 10,
-    "enemyPhase": true
+    "turn": 12
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm10"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 11
-   },
-   "if": "arm10",
+   "if": "free11",
    "do": [
     [
      "setAi",
@@ -4228,168 +8632,28 @@
     "turn": 12,
     "enemyPhase": true
    },
-   "if": "arm10",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free12"
+    ],
+    [
+     "flag",
+     "arm12"
     ]
    ]
   },
   {
    "on": {
-    "turn": 11,
-    "enemyPhase": true
+    "turn": 13
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm11"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 12
-   },
-   "if": "arm11",
+   "if": "free12",
    "do": [
     [
      "setAi",
@@ -4438,168 +8702,28 @@
     "turn": 13,
     "enemyPhase": true
    },
-   "if": "arm11",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free13"
+    ],
+    [
+     "flag",
+     "arm13"
     ]
    ]
   },
   {
    "on": {
-    "turn": 12,
-    "enemyPhase": true
+    "turn": 14
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm12"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 13
-   },
-   "if": "arm12",
+   "if": "free13",
    "do": [
     [
      "setAi",
@@ -4648,168 +8772,28 @@
     "turn": 14,
     "enemyPhase": true
    },
-   "if": "arm12",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free14"
+    ],
+    [
+     "flag",
+     "arm14"
     ]
    ]
   },
   {
    "on": {
-    "turn": 13,
-    "enemyPhase": true
+    "turn": 15
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm13"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 14
-   },
-   "if": "arm13",
+   "if": "free14",
    "do": [
     [
      "setAi",
@@ -4858,168 +8842,28 @@
     "turn": 15,
     "enemyPhase": true
    },
-   "if": "arm13",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free15"
+    ],
+    [
+     "flag",
+     "arm15"
     ]
    ]
   },
   {
    "on": {
-    "turn": 14,
-    "enemyPhase": true
+    "turn": 16
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm14"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 15
-   },
-   "if": "arm14",
+   "if": "free15",
    "do": [
     [
      "setAi",
@@ -5068,168 +8912,28 @@
     "turn": 16,
     "enemyPhase": true
    },
-   "if": "arm14",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free16"
+    ],
+    [
+     "flag",
+     "arm16"
     ]
    ]
   },
   {
    "on": {
-    "turn": 15,
-    "enemyPhase": true
+    "turn": 17
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm15"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 16
-   },
-   "if": "arm15",
+   "if": "free16",
    "do": [
     [
      "setAi",
@@ -5278,168 +8982,28 @@
     "turn": 17,
     "enemyPhase": true
    },
-   "if": "arm15",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free17"
+    ],
+    [
+     "flag",
+     "arm17"
     ]
    ]
   },
   {
    "on": {
-    "turn": 16,
-    "enemyPhase": true
+    "turn": 18
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm16"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 17
-   },
-   "if": "arm16",
+   "if": "free17",
    "do": [
     [
      "setAi",
@@ -5488,168 +9052,28 @@
     "turn": 18,
     "enemyPhase": true
    },
-   "if": "arm16",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free18"
+    ],
+    [
+     "flag",
+     "arm18"
     ]
    ]
   },
   {
    "on": {
-    "turn": 17,
-    "enemyPhase": true
+    "turn": 19
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm17"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 18
-   },
-   "if": "arm17",
+   "if": "free18",
    "do": [
     [
      "setAi",
@@ -5698,168 +9122,28 @@
     "turn": 19,
     "enemyPhase": true
    },
-   "if": "arm17",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free19"
+    ],
+    [
+     "flag",
+     "arm19"
     ]
    ]
   },
   {
    "on": {
-    "turn": 18,
-    "enemyPhase": true
+    "turn": 20
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm18"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 19
-   },
-   "if": "arm18",
+   "if": "free19",
    "do": [
     [
      "setAi",
@@ -5908,168 +9192,28 @@
     "turn": 20,
     "enemyPhase": true
    },
-   "if": "arm18",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free20"
+    ],
+    [
+     "flag",
+     "arm20"
     ]
    ]
   },
   {
    "on": {
-    "turn": 19,
-    "enemyPhase": true
+    "turn": 21
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm19"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 20
-   },
-   "if": "arm19",
+   "if": "free20",
    "do": [
     [
      "setAi",
@@ -6118,168 +9262,28 @@
     "turn": 21,
     "enemyPhase": true
    },
-   "if": "arm19",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free21"
+    ],
+    [
+     "flag",
+     "arm21"
     ]
    ]
   },
   {
    "on": {
-    "turn": 20,
-    "enemyPhase": true
+    "turn": 22
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm20"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 21
-   },
-   "if": "arm20",
+   "if": "free21",
    "do": [
     [
      "setAi",
@@ -6328,168 +9332,28 @@
     "turn": 22,
     "enemyPhase": true
    },
-   "if": "arm20",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free22"
+    ],
+    [
+     "flag",
+     "arm22"
     ]
    ]
   },
   {
    "on": {
-    "turn": 21,
-    "enemyPhase": true
+    "turn": 23
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm21"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 22
-   },
-   "if": "arm21",
+   "if": "free22",
    "do": [
     [
      "setAi",
@@ -6538,168 +9402,28 @@
     "turn": 23,
     "enemyPhase": true
    },
-   "if": "arm21",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free23"
+    ],
+    [
+     "flag",
+     "arm23"
     ]
    ]
   },
   {
    "on": {
-    "turn": 22,
-    "enemyPhase": true
+    "turn": 24
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm22"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 23
-   },
-   "if": "arm22",
+   "if": "free23",
    "do": [
     [
      "setAi",
@@ -6748,168 +9472,28 @@
     "turn": 24,
     "enemyPhase": true
    },
-   "if": "arm22",
+   "if": "foul",
+   "unless": "freeing",
    "do": [
     [
-     "narrate",
-     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
-    ],
-    [
-     "charge",
-     [
-      "mb0",
-      "mb1",
-      "mb2",
-      "mb3",
-      "mb4",
-      "mb5",
-      "mb6",
-      "mb7"
-     ],
-     {
-      "dir": 0,
-      "dist": 12,
-      "hurt": 1.0,
-      "panic": 2,
-      "of": [
-       44,
-       45
-      ]
-     }
-    ],
-    [
-     "appear",
-     "nb0"
-    ],
-    [
-     "appear",
-     "nb1"
-    ],
-    [
-     "appear",
-     "nb2"
-    ],
-    [
-     "appear",
-     "nb3"
-    ],
-    [
-     "appear",
-     "nb4"
-    ],
-    [
-     "appear",
-     "nb5"
-    ],
-    [
-     "appear",
-     "nb6"
-    ],
-    [
-     "appear",
-     "nb7"
-    ],
-    [
-     "appear",
-     "nb8"
-    ],
-    [
-     "appear",
-     "nb9"
-    ],
-    [
-     "appear",
-     "nb10"
-    ],
-    [
-     "appear",
-     "nb11"
-    ],
-    [
-     "appear",
-     "nb12"
-    ],
-    [
-     "appear",
-     "nb13"
-    ],
-    [
-     "appear",
-     "nb14"
-    ],
-    [
-     "appear",
-     "nb15"
-    ],
-    [
-     "setAi",
-     "mb0",
-     0
-    ],
-    [
-     "setAi",
-     "mb1",
-     0
-    ],
-    [
-     "setAi",
-     "mb2",
-     0
-    ],
-    [
-     "setAi",
-     "mb3",
-     0
-    ],
-    [
-     "setAi",
-     "mb4",
-     0
-    ],
-    [
-     "setAi",
-     "mb5",
-     0
-    ],
-    [
-     "setAi",
-     "mb6",
-     0
-    ],
-    [
-     "setAi",
-     "mb7",
-     0
+     "flag",
+     "freeing"
     ],
     [
      "flag",
-     "w2"
+     "free24"
+    ],
+    [
+     "flag",
+     "arm24"
     ]
    ]
   },
   {
    "on": {
-    "turn": 23,
-    "enemyPhase": true
+    "turn": 25
    },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm23"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 24
-   },
-   "if": "arm23",
+   "if": "free24",
    "do": [
     [
      "setAi",
@@ -6958,7 +9542,77 @@
     "turn": 25,
     "enemyPhase": true
    },
-   "if": "arm23",
+   "if": "foul",
+   "unless": "freeing",
+   "do": [
+    [
+     "flag",
+     "freeing"
+    ],
+    [
+     "flag",
+     "free25"
+    ],
+    [
+     "flag",
+     "arm25"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 26
+   },
+   "if": "free25",
+   "do": [
+    [
+     "setAi",
+     "ma0",
+     0
+    ],
+    [
+     "setAi",
+     "ma1",
+     0
+    ],
+    [
+     "setAi",
+     "ma2",
+     0
+    ],
+    [
+     "setAi",
+     "ma3",
+     0
+    ],
+    [
+     "setAi",
+     "ma4",
+     0
+    ],
+    [
+     "setAi",
+     "ma5",
+     0
+    ],
+    [
+     "setAi",
+     "ma6",
+     0
+    ],
+    [
+     "setAi",
+     "ma7",
+     0
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 3,
+    "enemyPhase": true
+   },
+   "if": "arm1",
    "do": [
     [
      "narrate",
@@ -6978,7 +9632,2887 @@
      ],
      {
       "dir": 0,
-      "dist": 12,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 4,
+    "enemyPhase": true
+   },
+   "if": "arm2",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 5,
+    "enemyPhase": true
+   },
+   "if": "arm3",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 6,
+    "enemyPhase": true
+   },
+   "if": "arm4",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 7,
+    "enemyPhase": true
+   },
+   "if": "arm5",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 8,
+    "enemyPhase": true
+   },
+   "if": "arm6",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 9,
+    "enemyPhase": true
+   },
+   "if": "arm7",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 10,
+    "enemyPhase": true
+   },
+   "if": "arm8",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 11,
+    "enemyPhase": true
+   },
+   "if": "arm9",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 12,
+    "enemyPhase": true
+   },
+   "if": "arm10",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 13,
+    "enemyPhase": true
+   },
+   "if": "arm11",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 14,
+    "enemyPhase": true
+   },
+   "if": "arm12",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 15,
+    "enemyPhase": true
+   },
+   "if": "arm13",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 16,
+    "enemyPhase": true
+   },
+   "if": "arm14",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 17,
+    "enemyPhase": true
+   },
+   "if": "arm15",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 18,
+    "enemyPhase": true
+   },
+   "if": "arm16",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 19,
+    "enemyPhase": true
+   },
+   "if": "arm17",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 20,
+    "enemyPhase": true
+   },
+   "if": "arm18",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 21,
+    "enemyPhase": true
+   },
+   "if": "arm19",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 22,
+    "enemyPhase": true
+   },
+   "if": "arm20",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
+    ],
+    [
+     "flag",
+     "w2"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "turn": 23,
+    "enemyPhase": true
+   },
+   "if": "arm21",
+   "do": [
+    [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
       "hurt": 1.0,
       "panic": 2,
       "of": [
@@ -7102,64 +12636,286 @@
     "turn": 24,
     "enemyPhase": true
    },
-   "if": "p2",
-   "unless": "armed",
+   "if": "arm22",
    "do": [
     [
-     "flag",
-     "armed"
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
+     "setAi",
+     "mb0",
+     0
+    ],
+    [
+     "setAi",
+     "mb1",
+     0
+    ],
+    [
+     "setAi",
+     "mb2",
+     0
+    ],
+    [
+     "setAi",
+     "mb3",
+     0
+    ],
+    [
+     "setAi",
+     "mb4",
+     0
+    ],
+    [
+     "setAi",
+     "mb5",
+     0
+    ],
+    [
+     "setAi",
+     "mb6",
+     0
+    ],
+    [
+     "setAi",
+     "mb7",
+     0
     ],
     [
      "flag",
-     "arm24"
+     "w2"
     ]
    ]
   },
   {
    "on": {
-    "turn": 25
+    "turn": 25,
+    "enemyPhase": true
    },
-   "if": "arm24",
+   "if": "arm23",
    "do": [
     [
+     "narrate",
+     "左右两边又是一声炮响，两翼候着的第二批连环马包抄过来！"
+    ],
+    [
+     "charge",
+     [
+      "mb0",
+      "mb1",
+      "mb2",
+      "mb3",
+      "mb4",
+      "mb5",
+      "mb6",
+      "mb7"
+     ],
+     {
+      "dir": 0,
+      "dist": 14,
+      "hurt": 1.0,
+      "panic": 2,
+      "of": [
+       44,
+       45
+      ]
+     }
+    ],
+    [
+     "appear",
+     "nb0"
+    ],
+    [
+     "appear",
+     "nb1"
+    ],
+    [
+     "appear",
+     "nb2"
+    ],
+    [
+     "appear",
+     "nb3"
+    ],
+    [
+     "appear",
+     "nb4"
+    ],
+    [
+     "appear",
+     "nb5"
+    ],
+    [
+     "appear",
+     "nb6"
+    ],
+    [
+     "appear",
+     "nb7"
+    ],
+    [
+     "appear",
+     "nb8"
+    ],
+    [
+     "appear",
+     "nb9"
+    ],
+    [
+     "appear",
+     "nb10"
+    ],
+    [
+     "appear",
+     "nb11"
+    ],
+    [
+     "appear",
+     "nb12"
+    ],
+    [
+     "appear",
+     "nb13"
+    ],
+    [
+     "appear",
+     "nb14"
+    ],
+    [
+     "appear",
+     "nb15"
+    ],
+    [
      "setAi",
-     "ma0",
+     "mb0",
      0
     ],
     [
      "setAi",
-     "ma1",
+     "mb1",
      0
     ],
     [
      "setAi",
-     "ma2",
+     "mb2",
      0
     ],
     [
      "setAi",
-     "ma3",
+     "mb3",
      0
     ],
     [
      "setAi",
-     "ma4",
+     "mb4",
      0
     ],
     [
      "setAi",
-     "ma5",
+     "mb5",
      0
     ],
     [
      "setAi",
-     "ma6",
+     "mb6",
      0
     ],
     [
      "setAi",
-     "ma7",
+     "mb7",
      0
+    ],
+    [
+     "flag",
+     "w2"
     ]
    ]
   },
@@ -7188,7 +12944,7 @@
      ],
      {
       "dir": 0,
-      "dist": 12,
+      "dist": 14,
       "hurt": 1.0,
       "panic": 2,
       "of": [
@@ -7304,72 +13060,6 @@
     [
      "flag",
      "w2"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 25,
-    "enemyPhase": true
-   },
-   "if": "p2",
-   "unless": "armed",
-   "do": [
-    [
-     "flag",
-     "armed"
-    ],
-    [
-     "flag",
-     "arm25"
-    ]
-   ]
-  },
-  {
-   "on": {
-    "turn": 26
-   },
-   "if": "arm25",
-   "do": [
-    [
-     "setAi",
-     "ma0",
-     0
-    ],
-    [
-     "setAi",
-     "ma1",
-     0
-    ],
-    [
-     "setAi",
-     "ma2",
-     0
-    ],
-    [
-     "setAi",
-     "ma3",
-     0
-    ],
-    [
-     "setAi",
-     "ma4",
-     0
-    ],
-    [
-     "setAi",
-     "ma5",
-     0
-    ],
-    [
-     "setAi",
-     "ma6",
-     0
-    ],
-    [
-     "setAi",
-     "ma7",
-     0
     ]
    ]
   },
@@ -7398,7 +13088,7 @@
      ],
      {
       "dir": 0,
-      "dist": 12,
+      "dist": 14,
       "hurt": 1.0,
       "panic": 2,
       "of": [
@@ -7519,6 +13209,34 @@
   },
   {
    "on": {
+    "hp": "pengqi",
+    "below": 30,
+    "spare": true
+   },
+   "if": "p2",
+   "unless": "caught",
+   "do": [
+    [
+     "say",
+     "husanniang",
+     "彭玘哪里走！"
+    ],
+    [
+     "narrate",
+     "扈三娘从袍底下取出红锦套索，望彭玘一抛，套个正着，拖下马来，众喽啰把他捆了。"
+    ],
+    [
+     "capture",
+     "pengqi"
+    ],
+    [
+     "flag",
+     "caught"
+    ]
+   ]
+  },
+  {
+   "on": {
     "hp": "hantao",
     "below": 30,
     "spare": true
@@ -7532,6 +13250,28 @@
     [
      "leave",
      "hantao"
+    ]
+   ]
+  },
+  {
+   "on": {
+    "killed": "lianhuan",
+    "count": 8
+   },
+   "if": "p2",
+   "unless": "caught",
+   "do": [
+    [
+     "narrate",
+     "混战之中，扈三娘瞅准彭玘，一索套下马来，众喽啰把他捆了。"
+    ],
+    [
+     "capture",
+     "pengqi"
+    ],
+    [
+     "flag",
+     "caught"
     ]
    ]
   },
