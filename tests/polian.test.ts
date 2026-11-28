@@ -150,10 +150,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
     b.move(likui, near.x, near.y);
     expect(cj.ai.mode).toBe(5);
     // 找到柴进，回程有一只黑影窜出来
-    expect(get('lang3').present).toBe(true);
+    for (const id of ['lang3', 'lang4', 'lang5']) expect(get(id).present, id).toBe(true);
     b.endPlayerPhase();
     expect(b.status).toBe('playing');
-    for (const id of ['lang1', 'lang2', 'lang3']) kill(b, get(id), likui);
+    for (const id of ['lang1', 'lang2', 'lang3', 'lang4', 'lang5']) kill(b, get(id), likui);
     expect(b.status).toBe('playing');
     // 箩筐只有起点那一小块：站在箩筐房间外面一格还不算（以前区域写错成一大片）
     cj.x = 1; cj.y = 12; likui.x = 1; likui.y = 11;
@@ -174,7 +174,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('破高唐州
       expect(w.ai.mode).toBe(12);
       expect(w.stats.maxHp).toBeLessThan(get('likui').stats.maxHp);
     }
-    expect(get('lang3').present).toBe(false);
+    for (const id of ['lang3', 'lang4', 'lang5']) expect(get(id).present, id).toBe(false);
     // 李逵站在起点不动，黑影不过来
     b.endPlayerPhase();
     for (const id of ['lang1', 'lang2']) expect([get(id).x, get(id).y]).toEqual([stage.units.find((u) => u.id === id)!.x, stage.units.find((u) => u.id === id)!.y]);

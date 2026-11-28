@@ -110,6 +110,36 @@
    "levelOffset": -3,
    "hpMultiplier": 0.8,
    "name": "黑影"
+  },
+  {
+   "id": "lang4",
+   "class": "heiying",
+   "side": "enemy",
+   "x": 9,
+   "y": 7,
+   "level": 30,
+   "facing": 3,
+   "ai": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -3,
+   "hpMultiplier": 0.8,
+   "name": "黑影"
+  },
+  {
+   "id": "lang5",
+   "class": "heiying",
+   "side": "enemy",
+   "x": 7,
+   "y": 13,
+   "level": 30,
+   "facing": 2,
+   "ai": 0,
+   "hidden": true,
+   "enemyRank": "troop",
+   "levelOffset": -3,
+   "hpMultiplier": 0.8,
+   "name": "黑影"
   }
  ],
  "script": [
@@ -296,8 +326,16 @@
      "lang3"
     ],
     [
+     "appear",
+     "lang4"
+    ],
+    [
+     "appear",
+     "lang5"
+    ],
+    [
      "narrate",
-     "来路上又有窸窸窣窣的声响，一团黑影闻着血腥气追了过来。"
+     "来路上又有窸窸窣窣的声响，几团黑影闻着血腥气，从黑处一前一后追了过来。"
     ],
     [
      "say",
