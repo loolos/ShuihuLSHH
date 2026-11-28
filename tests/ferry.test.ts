@@ -127,22 +127,27 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('白龙庙夺
     expect(dead.hp).toBe(dead.stats.maxHp);
     expect(b.ferryInfo()!.next!.at).toBe(24);
   });
-  it('我方夺下渡口后，都监从离它最近的本阵 / 亲随里派 3–6 人去夺', () => {
+  it('敌方回合刷完兵后，都监从没任务的戒备兵 / 亲随里就近派 3–6 人去夺我方渡口；有任务、在进攻的不再派', () => {
     const b = make();
+    const dispatch = () => (b as unknown as { ferryDispatch(): void }).ferryDispatch();
     seize(b, 1, heroes(b).slice(0, 3));
     tickOf(b)();
     expect(b.ferry!.owner[1]).toBe('ours');
-    spawn(b, 'enemy');
+    const attackers = b.active().filter((u) => u.side === 'enemy' && u.ai.mode === 0);
+    dispatch();
     const sent = b.active().filter((u) => b.ferry!.sent?.[u.uid]);
     expect(sent.length).toBeGreaterThanOrEqual(3);
     expect(sent.length).toBeLessThanOrEqual(6);
     for (const u of sent) {
       expect(u.ai.mode).toBe(17);
-      expect(b.ferryTaskLabel(u)?.text).toBe('奪·北塘渡'.replace('奪', b.ferryTaskLabel(u)!.short));
+      expect(b.ferryTask(u)).toEqual({ kind: 'take', zone: 1 });
       expect(ids[u.uid]).not.toBe('dujian');
     }
-    // 只派一次，下回合不再派
-    spawn(b, 'enemy');
-    expect(b.active().filter((u) => b.ferry!.sent?.[u.uid]).length).toBe(sent.length);
+    // 下个敌方回合再派一批，已派的不变；主动进攻的不派
+    dispatch();
+    const sent2 = b.active().filter((u) => b.ferry!.sent?.[u.uid]);
+    expect(sent2.length).toBeGreaterThan(sent.length);
+    for (const u of sent) expect(b.ferryTask(u)?.zone).toBe(1);
+    for (const u of attackers) expect(b.ferry!.sent?.[u.uid]).toBeUndefined();
   });
 });

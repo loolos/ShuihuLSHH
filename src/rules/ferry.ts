@@ -33,7 +33,7 @@ export interface FerryInput {
   revive?: number;
   /** 我方刚占齐全部渡口的那个回合末，在开场位置刷出这些人（都监身边的马军，负责人 2026-11-28；还活着的不重刷） */
   allHeld?: number[];
-  /** 我方夺下一处渡口后，下个敌方回合开始时 by（都监）从离那处渡口最近的敌兵里挑 n[0]–n[1] 个去夺回（负责人 2026-11-28） */
+  /** 每个敌方回合刷完兵后，我方手里的每处渡口，by（都监）从还没任务的敌兵里挑离它最近的 n[0]–n[1] 个去夺（负责人 2026-11-28） */
   dispatch?: { by: number; n: [number, number] };
   /** 开场归属，不写都是敌方 */
   owner?: FerrySide[];
@@ -48,8 +48,6 @@ export interface FerryState {
   revived?: number;
   /** 刚占齐全部渡口，下个敌方回合开始时加刷 allHeld */
   allHeldDue?: boolean;
-  /** 刚被我方夺下、等着都监派兵去夺回的渡口 */
-  lostDue?: number[];
   /** 都监派去夺渡口的人（重新刷出来时任务清掉） */
   sent?: Record<number, true>;
   /** 守（d）还是攻（a） */
