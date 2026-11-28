@@ -1390,6 +1390,7 @@ export class Battle {
       const now: FerrySide = n.ours > n.enemy ? 'ours' : n.enemy > n.ours ? 'enemy' : st.owner[i];
       if (now === st.owner[i]) return;
       st.owner[i] = now;
+      if (now === 'ours') st.fresh = [...(st.fresh ?? []).filter((k) => k !== i), i];
       this.emit({ type: 'message', text: now === 'ours' ? `梁山好漢奪下了${z.name}！` : `官軍奪回了${z.name}！` });
       this.emit({ type: 'ferry', zone: i, owner: now });
     });
@@ -1452,7 +1453,7 @@ export class Battle {
 
   /**
    * 都监就近派兵夺渡口（负责人 2026-11-28）：每个敌方回合开始、刷完兵之后，我方手里的每处渡口，
-   * 都监从还没有任务的敌兵里挑离它最近的 3–6 个（随机）去夺（改 AI 17，归这处渡口：夺回后就守）。
+   * 都监从还没有任务的敌兵里挑离它最近的几个去夺：刚丢的那回合 3–6 个（随机），之后仍在我方手里每回合再派 2 个（改 AI 17，归这处渡口：夺回后就守）。
    * 没有任务 = 不属于哪个渡口、也不在主动进攻：本阵还在戒备的（AI 2）和都监身边刷出来的亲随（AI 18）。
    * 已经有夺渡任务的不再改，已经主动进攻的也不重新派。
    */
@@ -1463,7 +1464,8 @@ export class Battle {
       if (st.owner[i] !== 'ours') return;
       const pool = this.active().filter((u) => u.side === 'enemy' && u.uid !== d.by && st.home[u.uid] === undefined && (u.ai.mode === 2 || u.ai.mode === 18))
         .sort((a, b) => zoneDist(z, a) - zoneDist(z, b));
-      const n = Math.min(pool.length, d.n[0] + this.rng.int(d.n[1] - d.n[0] + 1));
+      const first = !!st.fresh?.includes(i);
+      const n = Math.min(pool.length, first ? d.n[0] + this.rng.int(d.n[1] - d.n[0] + 1) : d.then ?? 0);
       if (!n) return;
       for (const u of pool.slice(0, n)) {
         st.home[u.uid] = i;
@@ -1471,9 +1473,10 @@ export class Battle {
         (st.sent ??= {})[u.uid] = true;
         u.ai.mode = 17;
       }
-      if (by && by.alive && by.present) this.emit({ type: 'say', uid: by.uid, speaker: by.name, text: `${z.name}落在賊人手裡！離得近的${n}個，速速給我奪回來！` });
+      if (by && by.alive && by.present) this.emit({ type: 'say', uid: by.uid, speaker: by.name, text: first ? `${z.name}落在賊人手裡！離得近的${n}個，速速給我奪回來！` : `${z.name}還沒奪回來？再去${n}個！` });
       else this.emit({ type: 'message', text: `官軍${n}人轉去奪${z.name}！` });
     });
+    st.fresh = [];
   }
 
   /** 援军随机挑一处渡口，在它旁边登场（不管渡口在哪边手里；负责人 2026-11-28） */

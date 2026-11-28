@@ -255,8 +255,8 @@ export interface PackStageJson {
     revive?: number;
     /** 我方刚占齐全部渡口的那个回合末，在开场位置刷出这些人（藏着的单位 id；还活着的不重刷） */
     allHeld?: string[];
-    /** 每个敌方回合刷完兵后，我方手里的每处渡口，by 喊一声，从还没任务的敌兵（不属于渡口、不在主动进攻：AI 2 / 18）里挑最近的 n[0]–n[1] 个改成去夺它 */
-    dispatch?: { by: string; n: [number, number] };
+    /** 每个敌方回合刷完兵后，我方手里的每处渡口，by 喊一声，从还没任务的敌兵（不属于渡口、不在主动进攻：AI 2 / 18）里挑最近的人改成去夺它：刚丢的那回合 n[0]–n[1] 个，之后每回合 then 个 */
+    dispatch?: { by: string; n: [number, number]; then?: number };
   };
   /**
    * 抢囚车【新】（法场劫人，负责人 2026-11-28，§15.9）：unit 坐在囚车上（写 prisonCart + spectator，开场绑住），沿 route 走
