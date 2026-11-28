@@ -134,7 +134,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     expect(active('ma0')).toBe(false);
   });
 
-  it('活捉彭玘的同时连环马立刻冲锋（撞人、挤开、喽啰逃窜），当回合不再动、下回合自由行动；两回合后两翼第二批冲锋（带两队步军）', () => {
+  it('活捉彭玘的同时连环马立刻冲锋（撞人、挤开、喽啰逃窜、冲到跟前顺手砍一下），当回合不再动、下回合自由行动；两回合后两翼第二批冲锋（带两队步军）', () => {
     const { b, get } = open('guashuai');
     const lead = ['ma0', 'ma1', 'ma2', 'ma3', 'ma4', 'ma5', 'ma6', 'ma7'].map(get);
     const m = get('ma0');
@@ -146,8 +146,13 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     const hp0 = qm.hp;
     const pq = get('pengqi');
     pq.hp = Math.floor(pq.stats.maxHp * 0.2);
+    const buf = b as unknown as { out: { type: string; uid?: number }[] };
+    buf.out = [];
     after(b);
     expect(pq.present).toBe(false);
+    // 冲到跟前的马顺手砍一下
+    const horseIds = new Set(lead.map((u) => u.uid));
+    expect(buf.out.some((e) => e.type === 'attack' && horseIds.has(e.uid!))).toBe(true);
     expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
     expect(m.y).toBeLessThan(y0);

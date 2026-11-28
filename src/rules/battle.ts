@@ -2140,11 +2140,6 @@ export class Battle {
       u.y = path[stop].y;
       u.facing = a.dir ?? u.facing;
       if (path.length > 1) moves.push({ u, path });
-      if (this.phase !== 'player' && u.side === this.phase) {
-        u.acted = true;
-        u.ended = true;
-        u.movementRemaining = 0;
-      }
     }
     if (who[0]) this.emit({ type: 'focus', x: who[0].x, y: who[0].y });
     for (const m of moves) this.emit({ type: 'move', uid: m.u.uid, path: m.path, facing: m.u.facing, script: true });
@@ -2170,6 +2165,24 @@ export class Battle {
       }
     }
     this.refreshChains();
+    // 冲到跟前就顺手砍一下（负责人 2026-11-28：冲锋完要攻击）：打得到谁就打体力最少的那个，照常结算反击和经验
+    for (const u of who) {
+      if (!u.alive || !u.present) continue;
+      const r = this.onTower(u, attackRange(u, this.data));
+      const foes = this.foesOf(u).filter((t) => !this.spectators.has(t.uid) && inAttackRange(u, t, r));
+      if (!foes.length) continue;
+      foes.sort((p, q) => p.hp - q.hp);
+      this.cast(u, attackSkill(u, this.data), foes[0], false);
+    }
+    this.refreshChains();
+    // 敌军回合冲锋的人（连同顺手的这一下）这一回合不再行动
+    for (const u of who) {
+      if (this.phase !== 'player' && u.side === this.phase) {
+        u.acted = true;
+        u.ended = true;
+        u.movementRemaining = 0;
+      }
+    }
   }
 
   /** 按来源累计本关我方获得的经验（tools/sim-exp.ts 统计用；全队经验按入池时计） */
