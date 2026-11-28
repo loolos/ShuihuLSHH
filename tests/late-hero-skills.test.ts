@@ -50,7 +50,7 @@ describe.skipIf(!fs.existsSync(`${DATA}/Data/Human.hum`))('后期好汉技能',(
  });
  it('晁盖29级远程大十字9格，三段100%伤害，10%昏迷且不重复加回气',()=>{
   const c=data.classes[12],s=c.skills.find(s=>s.name==='天王震岳')!;
-  expect(s).toMatchObject({skillId:1213,learnLevel:29,rangeMin:2,rangeMax:5,mpCost:105,power:20,hitMod:5,critMod:-5,stun:10,poison:0,damageScale:1,targetShape:'diamond',fxTint:0xffcc66});
+  expect(s).toMatchObject({skillId:1213,learnLevel:29,rangeMin:2,rangeMax:5,mpCost:105,power:20,hitMod:5,critMod:0,stun:10,poison:0,damageScale:1,targetShape:'diamond',fxTint:0xffcc66});
   expect(s.hits.map(h=>h.percent)).toEqual([30,30,40]);
   expect(c.skills.filter(s=>s.type===8)).toHaveLength(1);
   expect(areaCells(board,{x:10,y:15},s,{x:10,y:10}).map(c=>`${c.x},${c.y}`).sort()).toEqual(['10,10','9,10','8,10','11,10','12,10','10,9','10,8','10,11','10,12'].sort());

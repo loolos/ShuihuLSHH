@@ -27,3 +27,19 @@ describe('扩展包好汉标记', () => {
     expect(missing).toEqual([]);
   });
 });
+
+import { loadPackFromDisk } from '../tools/sim-pack.ts';
+import { isHeroClass } from '../src/rules/data.ts';
+
+describe.skipIf(!fs.existsSync(path.resolve(import.meta.dirname, '../gamedata/tables')))('好汉技能没有负面修正', () => {
+  it('好汉（原版 0–17、杜遷、宋萬、包里标 hero 的）技能不扣命中、不扣必杀、不带敌兵固定伤害系数', () => {
+    const rt = loadPackFromDisk('mainline');
+    const heroes = new Set(pack.classes.filter((c: { hero?: boolean }) => c.hero).map((c: { id: string }) => rt.classIds.get(c.id)));
+    const bad: string[] = [];
+    for (const c of rt.data.classes) {
+      if (!c || !(isHeroClass(c.id) || heroes.has(c.id))) continue;
+      for (const s of c.skills) if (s.hitMod < 0 || s.critMod < 0 || s.damageScale !== undefined && s.damageScale < 1 || s.volley) bad.push(`${c.name}/${s.name}`);
+    }
+    expect(bad).toEqual([]);
+  });
+});

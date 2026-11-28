@@ -23,22 +23,22 @@ export const LATE_PATTERNS = {
 } satisfies Record<string, readonly AreaOffset[]>;
 
 type Entry = { cls:number; name:string; level:number; range:readonly[number,number]; pattern:keyof typeof LATE_PATTERNS; weights:number[]; mp:number; power:number; hit:number; crit:number; fx:number; poison?:number; stun?:number; free?:boolean };
-// 伤害100%；多段按权重分摊。广范围以低威力、耗气及必杀修正平衡。
+// 伤害100%；多段按权重分摊。广范围以低威力、耗气平衡；好汉技能不带负的必杀修正（负责人 2026-11-28）。
 export const LATE_HERO_SKILLS: Entry[] = [
  {cls:7,name:'分水穿浪',level:26,range:[1,5],pattern:'water',weights:[30,30,40],mp:110,power:15,hit:5,crit:0,fx:49},
- {cls:9,name:'横江拍浪',level:27,range:[2,5],pattern:'wave',weights:[25,25,25,25],mp:115,power:10,hit:5,crit:-5,fx:49,stun:10},
+ {cls:9,name:'横江拍浪',level:27,range:[2,5],pattern:'wave',weights:[25,25,25,25],mp:115,power:10,hit:5,crit:0,fx:49,stun:10},
  {cls:13,name:'跳涧飞枪',level:26,range:[2,6],pattern:'corner',weights:[40,60],mp:85,power:25,hit:10,crit:5,fx:44},
- {cls:13,name:'猛虎摆尾',level:29,range:[1,4],pattern:'ring',weights:[30,30,40],mp:125,power:10,hit:0,crit:-5,fx:44,stun:10},
- {cls:17,name:'赤发断魂',level:28,range:[2,5],pattern:'cross',weights:[20,20,20,20,20],mp:140,power:10,hit:0,crit:-10,fx:35},
+ {cls:13,name:'猛虎摆尾',level:29,range:[1,4],pattern:'ring',weights:[30,30,40],mp:125,power:10,hit:0,crit:0,fx:44,stun:10},
+ {cls:17,name:'赤发断魂',level:28,range:[2,5],pattern:'cross',weights:[20,20,20,20,20],mp:140,power:10,hit:0,crit:0,fx:35},
  {cls:14,name:'青面飞刃',level:27,range:[2,6],pattern:'wings',weights:[25,25,50],mp:100,power:30,hit:10,crit:5,fx:44},
  {cls:15,name:'蛇影分锋',level:26,range:[1,5],pattern:'fork',weights:[30,30,40],mp:95,power:15,hit:5,crit:0,fx:35,poison:15},
  {cls:15,name:'游蛇追命',level:29,range:[2,5],pattern:'snake',weights:[20,20,20,20,20],mp:115,power:20,hit:5,crit:0,fx:35,poison:20},
- {cls:5,name:'破阵飞石',level:26,range:[2,6],pattern:'ring',weights:[30,30,40],mp:120,power:0,hit:5,crit:-10,fx:44,stun:10,free:true},
- {cls:5,name:'截阵连锋',level:30,range:[2,5],pattern:'ranks',weights:[25,25,25,25],mp:125,power:15,hit:5,crit:-5,fx:44,free:true},
- {cls:16,name:'伏虎震杖',level:28,range:[1,4],pattern:'fan',weights:[35,65],mp:135,power:15,hit:0,crit:-10,fx:38,stun:15},
+ {cls:5,name:'破阵飞石',level:26,range:[2,6],pattern:'ring',weights:[30,30,40],mp:120,power:0,hit:5,crit:0,fx:44,stun:10,free:true},
+ {cls:5,name:'截阵连锋',level:30,range:[2,5],pattern:'ranks',weights:[25,25,25,25],mp:125,power:15,hit:5,crit:0,fx:44,free:true},
+ {cls:16,name:'伏虎震杖',level:28,range:[1,4],pattern:'fan',weights:[35,65],mp:135,power:15,hit:0,crit:0,fx:38,stun:15},
  {cls:11,name:'回马扫阵',level:29,range:[2,5],pattern:'spear',weights:[20,20,25,35],mp:115,power:20,hit:10,crit:0,fx:32},
- {cls:4,name:'撒钉封路',level:27,range:[2,6],pattern:'plum',weights:[20,20,20,20,20],mp:100,power:0,hit:15,crit:-10,fx:44,poison:15,free:true},
- {cls:12,name:'天王震岳',level:29,range:[2,5],pattern:'quake',weights:[30,30,40],mp:140,power:20,hit:5,crit:-5,fx:38,stun:10,free:true},
+ {cls:4,name:'撒钉封路',level:27,range:[2,6],pattern:'plum',weights:[20,20,20,20,20],mp:100,power:0,hit:15,crit:0,fx:44,poison:15,free:true},
+ {cls:12,name:'天王震岳',level:29,range:[2,5],pattern:'quake',weights:[30,30,40],mp:140,power:20,hit:5,crit:0,fx:38,stun:10,free:true},
 ];
 
 export function lateHeroSkills(cls: number, existing: SkillDef[]): SkillDef[] {
