@@ -47,8 +47,8 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
   it('连环马光环：4 格内有同伴防御 +30%、受伤按 ×100/130 折算，每多一匹 +5%，封顶 +60%；倒下时紧挨着的马少走 3 格', () => {
     const { b, get } = open('guashuai');
     const hs = horses(b);
-    // 先把 16 匹马都放到场上排开：每匹之间隔 9 格，谁也不挨着
-    hs.forEach((u, i) => { Object.assign(u, { present: true, x: 3 + (i % 4) * 9, y: 14 + Math.floor(i / 4) * 5 }); });
+    // 先把 20 匹马都放到场上排开：每匹之间隔 6 格以上，谁也不挨着
+    hs.forEach((u, i) => { Object.assign(u, { present: true, x: 3 + (i % 5) * 7, y: 9 + Math.floor(i / 5) * 6 }); });
     for (const u of b.units) if (u.side === 'enemy' && !hs.includes(u)) u.present = false;
     b.refreshChains();
     const [a, c, d] = hs;
@@ -103,7 +103,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     const { b, get } = open('guashuai');
     const hs = horses(b);
     expect(attackRange(hs[0], (b as unknown as { data: Parameters<typeof attackRange>[1] }).data)).toEqual([1, 2]);
-    hs.forEach((u, i) => Object.assign(u, { present: true, x: 3 + (i % 4) * 9, y: 14 + Math.floor(i / 4) * 5 }));
+    hs.forEach((u, i) => Object.assign(u, { present: true, x: 3 + (i % 5) * 7, y: 9 + Math.floor(i / 5) * 6 }));
     for (const u of b.units) if (u.side === 'enemy' && !hs.includes(u)) u.present = false;
     const [t, a, c, d, e, f, g] = hs;
     // 旁边 6 匹：只有最近的 5 匹分担
@@ -117,9 +117,25 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     for (const u of [a, c, d, e, f, g]) u.hp = 3;
     expect(share(t, 100)).toBe(100 - 2 * 5);
     // 单独一匹没人分担
-    Object.assign(t, { x: 16, y: 9 });
+    Object.assign(t, { x: 14, y: 12 });
     expect(share(t, 100)).toBe(100);
     void get;
+  });
+
+  it('第二阵：呼延灼掉血但林冲没事就不换人；林冲把呼延灼打到四成以下，呼延灼退回本阵，直接第四阵', () => {
+    const { b, get } = open('guashuai');
+    const sp = watching(b);
+    const active = (id: string) => !sp.has(get(id).uid);
+    get('hantao').hp = Math.floor(get('hantao').stats.maxHp * 0.4);
+    after(b);
+    get('huyanzhuo').hp = Math.floor(get('huyanzhuo').stats.maxHp * 0.6);
+    after(b);
+    expect(active('linchong') && active('huyanzhuo')).toBe(true);
+    expect(active('sunli')).toBe(false);
+    get('huyanzhuo').hp = Math.floor(get('huyanzhuo').stats.maxHp * 0.35);
+    after(b);
+    expect(active('linchong') || active('huyanzhuo') || active('sunli')).toBe(false);
+    expect(active('husanniang') && active('pengqi')).toBe(true);
   });
 
   it('冲锋完顺手那一枪不限直线：周围菱形 2 格内（斜对角也算）打得着，3 格外不打', () => {
@@ -154,7 +170,10 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     // 韩滔败走 → 林冲战呼延灼
     get('hantao').hp = Math.floor(get('hantao').stats.maxHp * 0.4);
     after(b);
-    expect(get('hantao').present).toBe(false);
+    // 韩滔没被捉：撤到自己的兵后面观战，不从地图上消失
+    expect(get('hantao').present).toBe(true);
+    expect(active('hantao')).toBe(false);
+    expect(get('hantao').y).toBeGreaterThan(get('g00').y);
     expect(active('qinming')).toBe(false);
     expect(active('linchong') && active('huyanzhuo')).toBe(true);
     // 林冲自己撑不住也换人：孙立接着战呼延灼
@@ -181,7 +200,7 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
 
   it('活捉彭玘后单挑的好汉回原位、回合结束；敌军回合一开始连环马冲锋（撞人、挤开、喽啰逃窜、冲到跟前顺手砍一下）；两回合后两翼第二批冲锋（带两队步军）', () => {
     const { b, get } = open('guashuai');
-    const lead = ['ma0', 'ma1', 'ma2', 'ma3', 'ma4', 'ma5', 'ma6', 'ma7'].map(get);
+    const lead = Array.from({ length: 10 }, (_, i) => get(`ma${i}`));
     const m = get('ma0');
     const y0 = m.y;
     const qm = get('qinming');
@@ -202,14 +221,16 @@ describe.skipIf(!fs.existsSync(path.join(DATA, 'Data/Human.hum')))('呼延灼挂
     const ev = b.endPlayerPhase();
     const horseIds = new Set(lead.map((u) => u.uid));
     expect(ev.some((e) => e.type === 'attack' && horseIds.has((e as { uid: number }).uid))).toBe(true);
-    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual([]);
+    // 呼延灼不退场，撤到兵后面观战；其余人都回来参战
+    expect(b.units.filter((u) => u.present && !u.name.match(/宋江|吴用/) && watching(b).has(u.uid)).map((u) => u.name)).toEqual(['双鞭呼延灼']);
+    expect(get('huyanzhuo').present).toBe(true);
     for (const id of ['nu0', 'nu3']) expect(get(id).present, id).toBe(true);
     expect(m.y).toBeLessThan(y0);
     expect(qm.hp).toBeLessThan(hp0);
     expect(qm.x).not.toBe(m.x);
     expect(b.units.filter((u) => u.side === 'ally' && u.alive && u.panicTurns).length).toBeGreaterThan(0);
     expect(lead.every((u) => u.ai.mode === 0)).toBe(true);
-    // 第二批还在两翼候着，两回合后冲锋
+    // 第二批还在后排候着，两回合后冲锋
     const mb = get('mb0');
     const mb0 = { x: mb.x, y: mb.y };
     freeze(b); b.endPlayerPhase(); expect(mb.y).toBe(mb0.y);
