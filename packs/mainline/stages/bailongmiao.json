@@ -4259,6 +4259,36 @@
           "dujian"
         ],
         [
+          "say",
+          "dujian",
+          "前排听令！给我压上去，拿住宋江！"
+        ],
+        [
+          "setAi",
+          "dense-guard-1",
+          0
+        ],
+        [
+          "setAi",
+          "dense-guard-2",
+          0
+        ],
+        [
+          "setAi",
+          "dense-guard-3",
+          0
+        ],
+        [
+          "setAi",
+          "dense-guard-5",
+          0
+        ],
+        [
+          "setAi",
+          "dense-south-6",
+          0
+        ],
+        [
           "appear",
           "boss-cav-2-1"
         ],
@@ -4291,6 +4321,55 @@
       },
       "do": [
         [
+          "focus",
+          "dujian"
+        ],
+        [
+          "say",
+          "dujian",
+          "第二排跟上！休叫贼人夺了渡口！"
+        ],
+        [
+          "setAi",
+          "dense-south-1",
+          0
+        ],
+        [
+          "setAi",
+          "dense-south-2",
+          0
+        ],
+        [
+          "setAi",
+          "dense-south-3",
+          0
+        ],
+        [
+          "setAi",
+          "dense-south-5",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-1",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-2",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-5",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-6",
+          0
+        ],
+        [
           "narrate",
           "右方通路又有一队官军杀到！"
         ],
@@ -4317,10 +4396,6 @@
         [
           "appear",
           "r3_6"
-        ],
-        [
-          "focus",
-          "dujian"
         ],
         [
           "appear",
@@ -4387,6 +4462,51 @@
           "dujian"
         ],
         [
+          "say",
+          "dujian",
+          "第三排，左右包抄白龙庙！"
+        ],
+        [
+          "setAi",
+          "d1",
+          0
+        ],
+        [
+          "setAi",
+          "d5",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-3",
+          0
+        ],
+        [
+          "setAi",
+          "e12",
+          0
+        ],
+        [
+          "setAi",
+          "e14",
+          0
+        ],
+        [
+          "setAi",
+          "e16",
+          0
+        ],
+        [
+          "setAi",
+          "e17",
+          0
+        ],
+        [
+          "setAi",
+          "g4",
+          0
+        ],
+        [
           "appear",
           "boss-cav-4-1"
         ],
@@ -4419,6 +4539,55 @@
       },
       "do": [
         [
+          "focus",
+          "dujian"
+        ],
+        [
+          "say",
+          "dujian",
+          "第四排也上！一个也休放走！"
+        ],
+        [
+          "setAi",
+          "e11",
+          0
+        ],
+        [
+          "setAi",
+          "e2",
+          0
+        ],
+        [
+          "setAi",
+          "e4",
+          0
+        ],
+        [
+          "setAi",
+          "e5",
+          0
+        ],
+        [
+          "setAi",
+          "e7",
+          0
+        ],
+        [
+          "setAi",
+          "e8",
+          0
+        ],
+        [
+          "setAi",
+          "g2",
+          0
+        ],
+        [
+          "setAi",
+          "g3",
+          0
+        ],
+        [
           "narrate",
           "右方通路又有一队官军杀到！"
         ],
@@ -4445,10 +4614,6 @@
         [
           "appear",
           "r5_6"
-        ],
-        [
-          "focus",
-          "dujian"
         ],
         [
           "appear",
@@ -4487,6 +4652,51 @@
           "dujian"
         ],
         [
+          "say",
+          "dujian",
+          "第五排压上！谁拿得宋江，重重有赏！"
+        ],
+        [
+          "setAi",
+          "dense-guard-4",
+          0
+        ],
+        [
+          "setAi",
+          "dense-south-4",
+          0
+        ],
+        [
+          "setAi",
+          "dense-west-4",
+          0
+        ],
+        [
+          "setAi",
+          "e1",
+          0
+        ],
+        [
+          "setAi",
+          "e13",
+          0
+        ],
+        [
+          "setAi",
+          "g1",
+          0
+        ],
+        [
+          "setAi",
+          "g7",
+          0
+        ],
+        [
+          "setAi",
+          "g8",
+          0
+        ],
+        [
           "appear",
           "boss-cav-6-1"
         ],
@@ -4519,6 +4729,55 @@
       },
       "do": [
         [
+          "focus",
+          "dujian"
+        ],
+        [
+          "say",
+          "dujian",
+          "本阵尽数出击！只留近卫在此！"
+        ],
+        [
+          "setAi",
+          "e10",
+          0
+        ],
+        [
+          "setAi",
+          "e15",
+          0
+        ],
+        [
+          "setAi",
+          "e18",
+          0
+        ],
+        [
+          "setAi",
+          "e3",
+          0
+        ],
+        [
+          "setAi",
+          "e6",
+          0
+        ],
+        [
+          "setAi",
+          "e9",
+          0
+        ],
+        [
+          "setAi",
+          "g5",
+          0
+        ],
+        [
+          "setAi",
+          "g6",
+          0
+        ],
+        [
           "narrate",
           "右方通路又有一队官军杀到！"
         ],
@@ -4545,10 +4804,6 @@
         [
           "appear",
           "r7_6"
-        ],
-        [
-          "focus",
-          "dujian"
         ],
         [
           "appear",
