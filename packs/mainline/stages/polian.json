@@ -2317,7 +2317,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -2414,37 +2413,6 @@
   },
   {
    "on": {
-    "turn": 1,
-    "enemyPhase": true
-   },
-   "if": "huifeng",
-   "unless": "dead",
-   "do": [
-    [
-     "flag",
-     "huifeng",
-     false
-    ],
-    [
-     "narrate",
-     "高廉又要作法，那法却被五雷天心正法破了，黄砂黑气倒卷回去，刮得高廉阵中人马乱撞！"
-    ],
-    [
-     "rout",
-     {
-      "panic": 20,
-      "turns": 2
-     }
-    ],
-    [
-     "say",
-     "gaolian",
-     "这道士是哪里来的？怎地我的法反倒不灵了！"
-    ]
-   ]
-  },
-  {
-   "on": {
     "turn": 2,
     "enemyPhase": true
    },
@@ -2489,7 +2457,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -2721,7 +2688,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -2987,7 +2953,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -3358,7 +3323,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -3768,7 +3732,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -4238,7 +4201,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -4742,7 +4704,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -5351,7 +5312,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -5999,7 +5959,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -6707,7 +6666,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -7449,7 +7407,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -8191,7 +8148,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -8933,7 +8889,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -9675,7 +9630,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
@@ -10417,7 +10371,6 @@
    },
    "unless": [
     "k1",
-    "huifeng",
     "pofa",
     "dead"
    ],
